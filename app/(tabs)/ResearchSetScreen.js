@@ -1,0 +1,527 @@
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  TextInput,
+  Dimensions,
+} from "react-native";
+import StatSlider from "../../components/StatSlider";
+import ElementsImagesSelector from "../../components/ElementsImagesSelector";
+import { useState, useEffect, useContext, createContext } from "react";
+import Checkbox from "expo-checkbox";
+import { Modal } from "react-native";
+import { Alert } from "react-native";
+
+import { imageSize } from "../../components/PressableImage";
+
+import SetCard from "../../components/SetCard";
+import {
+  initializePressableImages,
+  handlePressImage,
+} from "../../utils/pressableImagesFunctions";
+
+import {
+  setAllInfos,
+  statNames,
+  bodyTypeNames,
+  bodyTypeNamesDisplay,
+} from "../../data/data";
+import ResultsNumber from "../../components/ResultsNumberSelector";
+import ElementsImagesDeselector from "../../components/ElementsImagesDeselector";
+import { StatSliderResultSelectorModal } from "../../components/StatSliderResultSelectorModal";
+import { StatSliderResultSelectorPressable } from "../../components/StatSliderResultSelectorPressable";
+
+const screenWidth = Dimensions.get("window").width;
+
+const ResearchSetScreen = () => {
+  const [chosenStats, setChosenStats] = useState(
+    statNames.map((statName) => ({
+      name: statName,
+      checked: false,
+      value: 0,
+      statFilterNumber: 0,
+      setStatFilterNumber: (newState) => {
+        setChosenStats((prevStats) =>
+          prevStats.map((stat) =>
+            stat.name === statName
+              ? { ...stat, statFilterNumber: newState }
+              : stat
+          )
+        );
+      },
+    }))
+  );
+
+  const [isFoundedStatsVisible, setIsFoundedStatsVisible] = useState(
+    statNames.map((statName) => ({
+      name: statName,
+      checked: false,
+    }))
+  );
+
+  const [chosenBodyType, setChosenBodyType] = useState(
+    bodyTypeNames.map((bodyTypeName, index) => ({
+      name: bodyTypeName,
+      nameDisplay: bodyTypeNamesDisplay[index],
+      checked: true,
+    }))
+  );
+
+  const [resultsNumber, setResultsNumber] = useState(5);
+
+  const [setsToShow, setSetsToShow] = useState([]);
+
+  const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);
+  const [foundedStatsModalVisible, setFoundedStatsModalVisible] =
+    useState(false);
+  const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const [resultsNumberModalVisible, setResultsNumberModalVisible] =
+    useState(false);
+
+  const [pressableImages, setPressableImages] = useState(
+    initializePressableImages(false)
+  );
+  const handlePressImageCompleted = (categoryKey, classKey, imageKey) => {
+    handlePressImage(setPressableImages, categoryKey, classKey, imageKey);
+  };
+
+  const elementsFilterObjectToList = (pressableImages) => {
+    const selectedElementsIds7categories = [];
+
+    // Parcourir chaque catégorie
+    Object.entries(pressableImages).forEach(([, classes]) => {
+      const pressedClasses = [];
+
+      // Parcourir chaque classe dans la catégorie
+      Object.entries(classes).forEach(([classKey, images]) => {
+        // Si au moins une image est pressée (true), ajouter la classe à pressedClasses
+        const isAnyImagePressed = Object.values(images).some(
+          ({ pressed }) => pressed
+        );
+        if (isAnyImagePressed) {
+          pressedClasses.push(+classKey); // +str pour convertir en entier
+        }
+      });
+      // Ajouter la liste des classes pressées (ou une liste vide) à result
+      selectedElementsIds7categories.push(pressedClasses);
+    });
+
+    const selectedBodies = [
+      ...new Set([
+        ...selectedElementsIds7categories[1],
+        ...selectedElementsIds7categories[2],
+        ...selectedElementsIds7categories[3],
+        ...selectedElementsIds7categories[4],
+      ]),
+    ];
+
+    const selectedElementsIds4categories = [
+      ...selectedElementsIds7categories.slice(0, 1),
+      selectedBodies,
+      ...selectedElementsIds7categories.slice(5),
+    ];
+
+    return selectedElementsIds4categories;
+  };
+
+  // Inverser l'état checked des stats
+  const toggleCheck = (setList, name) => {
+    setList((prev) =>
+      prev.map((item) =>
+        item.name === name ? { ...item, checked: !item.checked } : item
+      )
+    );
+  };
+
+  // Mettre à jour la valeur du slider
+  const updateSliderValue = (name, newValue) => {
+    setChosenStats(
+      chosenStats.map((stat) =>
+        stat.name === name ? { ...stat, value: newValue } : stat
+      )
+    );
+  };
+
+  const search = () => {
+    const chosenStatsChecked = chosenStats.map((stat) => stat.checked);
+    const chosenStatsValue = chosenStats.map((stat) => stat.value);
+    const chosenStatsFilterNumber = chosenStats.map(
+      (stat) => stat.statFilterNumber
+    );
+
+    const chosenBodyTypeList = chosenBodyType
+      .filter((bodyType) => bodyType.checked)
+      .map((bodyType) => bodyType.name);
+
+    const chosenElementsIds = elementsFilterObjectToList(pressableImages);
+
+    if (!chosenStatsChecked.includes(true) || chosenBodyTypeList.length === 0) {
+      setSetsToShow([]); // Ou gérer l'état de "rien trouvé"
+      return; // Sortir si aucun filtre n'est sélectionné
+    }
+
+    const gaps = setAllInfos.reduce((acc, setInfo, setIndex) => {
+      const [, set_i_ElementsIds, set_i_Stats, set_i_BodyCategories] = setInfo;
+
+      // Vérifier si au moins un type de corps est présent
+      const listIsSetElementAccepted = set_i_ElementsIds.map(
+        (elementId, categoryIndex) => {
+          const category_x_ElementIds = chosenElementsIds[categoryIndex];
+          return (
+            category_x_ElementIds.includes(elementId) ||
+            category_x_ElementIds.length === 0
+          );
+        }
+      );
+      if (
+        !set_i_BodyCategories.some((item) =>
+          chosenBodyTypeList.includes(item)
+        ) ||
+        listIsSetElementAccepted.includes(false) // si (le set ne contient aucun type de vehicule choisi OU le set contient au moins un element non choisi)
+      ) {
+        return acc; // Ignorer si le type de corps ne correspond pas
+      }
+
+      let gap = 0;
+      let validSet = true; // Pour suivre la validité des statistiques
+
+      chosenStatsChecked.forEach((checked, statIndex) => {
+        if (checked) {
+          const setValue = set_i_Stats[statIndex];
+          const chosenValue = Number(chosenStatsValue[statIndex]);
+          const statFilterNumber = chosenStatsFilterNumber[statIndex];
+
+          if (statFilterNumber === 2 && setValue !== chosenValue) {
+            validSet = false; // Écart trouvé
+          } else if (statFilterNumber === 1 && setValue < chosenValue) {
+            validSet = false; // Écart trouvé
+          } else {
+            gap += (chosenValue - setValue) ** 2; // Calculer le gap
+          }
+        }
+      });
+
+      if (validSet) {
+        acc.push({ index: setIndex, gap });
+      }
+
+      return acc;
+    }, []);
+
+    gaps.sort((a, b) => a.gap - b.gap);
+
+    if (gaps.length === 0) {
+      setSetsToShow([]); // Ou gérer l'état de "rien trouvé"
+    } else {
+      const setsFound = gaps
+        .slice(0, Math.min(resultsNumber, gaps.length))
+        .map(({ index }) => {
+          const [, setSeekedElementsIds, setSeekedStats] = setAllInfos[index];
+          return [setSeekedElementsIds, setSeekedStats];
+        });
+      setSetsToShow(setsFound);
+    }
+  };
+
+  return (
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.text}>ResearchSetScreen</Text>
+        <View style={styles.statSlidersContainer}>
+          <Text
+            style={[
+              styles.text,
+              {
+                margin: 4,
+                paddingHorizontal: 10,
+                backgroundColor: "white",
+                borderRadius: 5,
+              },
+            ]}
+          >
+            Statistiques recherchées
+          </Text>
+          {/* Afficher le slider uniquement si la case est cochée */}
+          {chosenStats.map(
+            (stat) =>
+              stat.checked && (
+                <StatSlider
+                  key={stat.name}
+                  name={stat.name}
+                  sliderValue={stat.value}
+                  setSliderValue={(newValue) =>
+                    updateSliderValue(stat.name, newValue)
+                  }
+                  statFilterNumber={stat.statFilterNumber}
+                  setStatFilterNumber={stat.setStatFilterNumber}
+                />
+              )
+          )}
+        </View>
+
+        <View style={styles.pressablesContainer}>
+          <Pressable
+            style={styles.pressable}
+            onPress={() => setChosenStatsModalVisible(true)}
+          >
+            <Text>➕</Text>
+          </Pressable>
+
+          <Pressable
+            style={[styles.pressable, { marginHorizontal: 10 }]}
+            onPress={() => setFilterModalVisible(true)}
+          >
+            <Text>📌</Text>
+          </Pressable>
+
+          <Pressable
+            style={[styles.pressable, { flex: 1 }]}
+            onPress={() => search()}
+          >
+            <Text style={styles.researchPressable}>Rechercher</Text>
+          </Pressable>
+
+          <Pressable
+            style={[styles.pressable, { marginHorizontal: 10 }]}
+            onPress={() => setResultsNumberModalVisible(true)}
+          >
+            <Text>5️⃣</Text>
+          </Pressable>
+
+          <StatSliderResultSelectorPressable
+            setFoundedStatsModalVisible={setFoundedStatsModalVisible}
+          />
+        </View>
+
+        <Modal
+          animationType="none" // Utilise slide, fade, none pour les animations
+          transparent={true} // Définit si le fond est transparent
+          visible={chosenStatsModalVisible}
+          onRequestClose={() => setChosenStatsModalVisible(false)} // Fonction pour fermer le modal
+        >
+          <ScrollView>
+            <View style={styles.modalBackground}>
+              <View style={styles.modalContainer}>
+                <Text style={styles.modalText}>
+                  Ceci est une fenêtre modale
+                </Text>
+                <View style={styles.checkBoxesContainer}>
+                  {chosenStats.map((stat) => (
+                    <View key={stat.name} style={styles.checkBoxContainer}>
+                      <Checkbox
+                        value={stat.checked}
+                        onValueChange={() =>
+                          toggleCheck(setChosenStats, stat.name)
+                        }
+                        style={styles.checkbox}
+                      />
+                      <Text style={styles.checkBoxItemLabel}>{stat.name}</Text>
+                    </View>
+                  ))}
+                </View>
+                <Pressable
+                  style={styles.pressable}
+                  onPress={() => setChosenStatsModalVisible(false)}
+                >
+                  <Text style={styles.pressableText}>Fermer</Text>
+                </Pressable>
+              </View>
+            </View>
+          </ScrollView>
+        </Modal>
+
+        <Modal
+          animationType="none" // Utilise slide, fade, none pour les animations
+          transparent={true} // Définit si le fond est transparent
+          visible={filterModalVisible}
+          onRequestClose={() => setFilterModalVisible(false)} // Fonction pour fermer le modal
+        >
+          <ScrollView>
+            <View style={styles.modalBackground}>
+              <View style={styles.modalContainer}>
+                <Text style={styles.modalText}>
+                  Ceci est une fenêtre modale
+                </Text>
+                <View style={styles.checkBoxesContainer}>
+                  {chosenBodyType.map((bodyType) => (
+                    <View key={bodyType.name} style={styles.checkBoxContainer}>
+                      <Checkbox
+                        value={bodyType.checked}
+                        onValueChange={() =>
+                          toggleCheck(setChosenBodyType, bodyType.name)
+                        }
+                        style={styles.checkbox}
+                      />
+                      <Text style={styles.checkBoxItemLabel}>
+                        {bodyType.nameDisplay}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
+
+                <View style={styles.elementsImagesDeselector}>
+                  <ElementsImagesDeselector
+                    pressableImages={pressableImages}
+                    handlePressImage={handlePressImageCompleted}
+                    displayCase={false}
+                  />
+                </View>
+
+                <ElementsImagesSelector
+                  pressableImages={pressableImages}
+                  handlePressImage={handlePressImageCompleted}
+                  displayCase={false}
+                />
+                <Pressable
+                  style={styles.pressable}
+                  onPress={() => setFilterModalVisible(false)}
+                >
+                  <Text style={styles.pressableText}>Fermer</Text>
+                </Pressable>
+              </View>
+            </View>
+          </ScrollView>
+        </Modal>
+
+        <Modal
+          animationType="none" // Utilise slide, fade, none pour les animations
+          transparent={true} // Définit si le fond est transparent
+          visible={resultsNumberModalVisible}
+          onRequestClose={() => setResultsNumberModalVisible(false)} // Fonction pour fermer le modal
+        >
+          <View style={styles.modalBackground}>
+            <View style={styles.modalContainer}>
+              <Text style={styles.modalText}>Ceci est une fenêtre modale</Text>
+              <View style={styles.checkBoxesContainer}>
+                <View style={styles.checkBoxContainer}>
+                  <ResultsNumber
+                    resultsNumber={resultsNumber}
+                    setResultsNumber={setResultsNumber}
+                  />
+                </View>
+              </View>
+              <Pressable
+                style={styles.pressable}
+                onPress={() => setResultsNumberModalVisible(false)}
+              >
+                <Text style={styles.pressableText}>Fermer</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+
+        <StatSliderResultSelectorModal
+          foundedStatsModalVisible={foundedStatsModalVisible}
+          setFoundedStatsModalVisible={setFoundedStatsModalVisible}
+          isFoundedStatsVisible={isFoundedStatsVisible}
+          setIsFoundedStatsVisible={setIsFoundedStatsVisible}
+          toggleCheck={toggleCheck}
+        />
+
+        <View style={styles.setCardContainer}>
+          {setsToShow.map((setToShow, index) => {
+            return (
+              <SetCard
+                key={index}
+                setToShow={setToShow}
+                isFoundedStatsVisible={isFoundedStatsVisible}
+                chosenStats={chosenStats}
+              />
+            );
+          })}
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+export default ResearchSetScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  img: {
+    height: 30,
+    width: 30,
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  checkBoxContainer: {
+    marginBottom: 2,
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: "red",
+  },
+  checkbox: {
+    width: 30,
+    height: 30,
+  },
+  checkBoxItemLabel: {
+    fontSize: 18,
+    marginVertical: 10,
+  },
+  checkBoxesContainer: {
+    marginBottom: 20,
+    alignItems: "flex-start",
+    backgroundColor: "blue",
+  },
+  statSlidersContainer: {
+    paddingHorizontal: 6,
+    borderRadius: 4,
+    alignItems: "center",
+    backgroundColor: "blue",
+    marginBottom: 8,
+    minHeight: 100,
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContainer: {
+    backgroundColor: "purple",
+    borderRadius: 10,
+    alignItems: "center",
+    width: 6 * imageSize,
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  pressable: {
+    padding: 10,
+    backgroundColor: "#007BFF",
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  pressableText: {
+    color: "white",
+    fontSize: 16,
+  },
+  pressablesContainer: {
+    width: screenWidth * 0.87 + 20,
+    flexDirection: "row",
+  },
+  researchPressable: {
+    fontSize: 20,
+  },
+  setCardContainer: {
+    padding: 20,
+    alignItems: "center",
+    backgroundColor: "blue",
+  },
+  elementsImagesDeselector: {
+    width: "100%",
+    alignItems: "flex-start",
+    backgroundColor: "red",
+  },
+});
