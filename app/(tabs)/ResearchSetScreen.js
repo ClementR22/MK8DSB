@@ -1,3 +1,4 @@
+import { useState, useEffect, useContext, createContext } from "react";
 import {
   View,
   Text,
@@ -6,28 +7,31 @@ import {
   Pressable,
   TextInput,
   Dimensions,
+  Modal,
+  Alert,
 } from "react-native";
-import StatSlider from "../../components/StatSlider";
-import ElementsImagesSelector from "../../components/ElementsImagesSelector";
-import { useState, useEffect, useContext, createContext } from "react";
 import Checkbox from "expo-checkbox";
-import { Modal } from "react-native";
-import { Alert } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
-import { imageSize } from "../../components/PressableImage";
 
-import SetCard from "../../components/SetCard";
 import {
   initializePressableImages,
-  handlePressImage,
+  handlePressImage
 } from "../../utils/pressableImagesFunctions";
 
+// Utils
 import {
   setAllInfos,
   statNames,
   bodyTypeNames,
   bodyTypeNamesDisplay,
 } from "../../data/data";
+
+// Components import
+import StatSlider from "../../components/StatSlider";
+import ElementsImagesSelector from "../../components/ElementsImagesSelector";
+import { imageSize } from "../../components/PressableImage";
+import SetCard from "../../components/SetCard";
 import ResultsNumber from "../../components/ResultsNumberSelector";
 import ElementsImagesDeselector from "../../components/ElementsImagesDeselector";
 import { StatSliderResultSelectorModal } from "../../components/StatSliderResultSelectorModal";
@@ -228,7 +232,32 @@ const ResearchSetScreen = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.text}>ResearchSetScreen</Text>
+        <View
+          id="Title_bar"
+          style={[
+            styles.text,
+            {
+              width: "100vw",
+              height: 64,
+              backgroundColor: "white",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between"
+            }
+        ]}>
+          <Text style={{margin: 16}}>
+            <MaterialIcons name="home" size={24}></MaterialIcons>
+          </Text>
+
+          <Text style={{
+            fontSize: "22px"
+          }}>Coucou</Text>
+
+          <Pressable style={styles.button_icon}>
+            <MaterialIcons name="more-vert" size={24}></MaterialIcons>
+          </Pressable>
+        </View>
         <View style={styles.statSlidersContainer}>
           <Text
             style={[
@@ -445,33 +474,40 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
   img: {
     height: 30,
     width: 30,
   },
+
   text: {
     fontSize: 24,
     fontWeight: "bold",
   },
+
   checkBoxContainer: {
     marginBottom: 2,
     alignItems: "center",
     flexDirection: "row",
     backgroundColor: "red",
   },
+
   checkbox: {
     width: 30,
     height: 30,
   },
+
   checkBoxItemLabel: {
     fontSize: 18,
     marginVertical: 10,
   },
+
   checkBoxesContainer: {
     marginBottom: 20,
     alignItems: "flex-start",
     backgroundColor: "blue",
   },
+
   statSlidersContainer: {
     paddingHorizontal: 6,
     borderRadius: 4,
@@ -480,22 +516,26 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     minHeight: 100,
   },
+
   modalBackground: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
+
   modalContainer: {
     backgroundColor: "purple",
     borderRadius: 10,
     alignItems: "center",
     width: 6 * imageSize,
   },
+
   modalText: {
     fontSize: 18,
     marginBottom: 20,
   },
+
   pressable: {
     padding: 10,
     backgroundColor: "#007BFF",
@@ -503,25 +543,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
   pressableText: {
     color: "white",
     fontSize: 16,
   },
+
   pressablesContainer: {
     width: screenWidth * 0.87 + 20,
     flexDirection: "row",
   },
+
   researchPressable: {
     fontSize: 20,
   },
+
   setCardContainer: {
     padding: 20,
     alignItems: "center",
     backgroundColor: "blue",
   },
+
   elementsImagesDeselector: {
     width: "100%",
     alignItems: "flex-start",
     backgroundColor: "red",
   },
+
+  button_icon: {
+    margin: 16,
+  }
 });
