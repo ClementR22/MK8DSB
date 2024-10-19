@@ -83,6 +83,7 @@ const ResearchSetScreen = () => {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [resultsNumberModalVisible, setResultsNumberModalVisible] =
     useState(false);
+  const [menuModalVisible, setMenuModalVisible] = useState(false);
 
   const [pressableImages, setPressableImages] = useState(
     initializePressableImages(false)
@@ -243,10 +244,11 @@ const ResearchSetScreen = () => {
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              justifyContent: "space-between"
+              justifyContent: "space-between",
+              marginBottom: 10,
             }
-        ]}>
-          <Text style={{margin: 16}}>
+          ]}>
+          <Text style={{ margin: 16 }}>
             <MaterialIcons name="home" size={24}></MaterialIcons>
           </Text>
 
@@ -254,19 +256,33 @@ const ResearchSetScreen = () => {
             fontSize: "22px"
           }}>Coucou</Text>
 
-          <Pressable style={styles.button_icon}>
+          <Pressable style={styles.button_icon} onPress={() => setMenuModalVisible(true)}>
             <MaterialIcons name="more-vert" size={24}></MaterialIcons>
           </Pressable>
+          <Modal
+            animationType="none" // Utilise slide, fade, none pour les animations
+            transparent={true} // Définit si le fond est transparent
+            visible={menuModalVisible}
+            onRequestClose={() => setMenuModalVisible(false)} // Fonction pour fermer le modal
+          >
+            <div style={{
+              position: "absolute",
+              right: 50,
+              top: 50,
+              backgroundColor: "red",
+            }}>Coucou</div>
+          </Modal>
         </View>
+
         <View style={styles.statSlidersContainer}>
           <Text
             style={[
               styles.text,
               {
-                margin: 4,
                 paddingHorizontal: 10,
-                backgroundColor: "white",
                 borderRadius: 5,
+                marginBottom: 16,
+                color: "#1D1B20",
               },
             ]}
           >
@@ -509,11 +525,12 @@ const styles = StyleSheet.create({
   },
 
   statSlidersContainer: {
-    paddingHorizontal: 6,
-    borderRadius: 4,
+    padding: 24,
+    borderRadius: 24,
     alignItems: "center",
-    backgroundColor: "blue",
+    backgroundColor: "#ECE6F0",
     marginBottom: 8,
+    maxWidth: "95vw",
     minHeight: 100,
   },
 
