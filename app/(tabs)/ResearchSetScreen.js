@@ -389,22 +389,22 @@ const ResearchSetScreen = () => {
             <View style={styles.modalBackground}>
               <View style={styles.modalContainer}>
                 <Text style={styles.modalText}>
-                  Ceci est une fenêtre modale
+                  Filtre
                 </Text>
                 <View style={styles.checkBoxesContainer}>
                   {chosenBodyType.map((bodyType) => (
-                    <View key={bodyType.name} style={styles.checkBoxContainer}>
-                      <Checkbox
-                        value={bodyType.checked}
-                        onValueChange={() =>
-                          toggleCheck(setChosenBodyType, bodyType.name)
-                        }
-                        style={styles.checkbox}
-                      />
+                    <Pressable onPress={() => toggleCheck(setChosenBodyType, bodyType.name)} key={bodyType.name} style={[styles.checkBoxContainer, {width: "85vw", height:64, padding: 24, display: "flex", justifyContent: "space-between"}]}>
                       <Text style={styles.checkBoxItemLabel}>
                         {bodyType.nameDisplay}
                       </Text>
-                    </View>
+                      <Checkbox
+                        value={bodyType.checked}
+                        // onValueChange={() =>
+                        //   toggleCheck(setChosenBodyType, bodyType.name)
+                        // }
+                        style={styles.checkbox}
+                      />
+                    </Pressable>
                   ))}
                 </View>
 
@@ -505,7 +505,6 @@ const styles = StyleSheet.create({
 
   checkBoxContainer: {
     marginBottom: 2,
-    flexGrow: 1,
     alignItems: "center",
     flexDirection: "row",
     backgroundColor: "#ECE6F0",
@@ -525,7 +524,6 @@ const styles = StyleSheet.create({
   checkBoxesContainer: {
     marginBottom: 20,
     alignItems: "flex-start",
-    flexGrow: 1,
     backgroundColor: "blue",
   },
 
