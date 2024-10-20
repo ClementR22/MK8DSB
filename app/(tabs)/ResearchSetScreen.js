@@ -349,7 +349,7 @@ const ResearchSetScreen = () => {
           onRequestClose={() => setChosenStatsModalVisible(false)} // Fonction pour fermer le modal
         >
           <ScrollView>
-            <View style={styles.modalBackground}>
+            <Pressable style={styles.modalBackground} onPress={() => setChosenStatsModalVisible(false)}>
               <View style={styles.modalContainer}>
                 <Text style={styles.modalText}>
                   Ceci est une fenêtre modale
@@ -375,7 +375,7 @@ const ResearchSetScreen = () => {
                   <Text style={styles.pressableText}>Fermer</Text>
                 </Pressable>
               </View>
-            </View>
+            </Pressable>
           </ScrollView>
         </Modal>
 
@@ -386,7 +386,7 @@ const ResearchSetScreen = () => {
           onRequestClose={() => setFilterModalVisible(false)} // Fonction pour fermer le modal
         >
           <ScrollView>
-            <View style={styles.modalBackground}>
+            <Pressable style={styles.modalBackground} onPress={() => setFilterModalVisible(false)}>
               <View style={styles.modalContainer}>
                 <Text style={styles.modalText}>
                   Filtre
@@ -399,9 +399,10 @@ const ResearchSetScreen = () => {
                       </Text>
                       <Checkbox
                         value={bodyType.checked}
-                        // onValueChange={() =>
-                        //   toggleCheck(setChosenBodyType, bodyType.name)
-                        // }
+                        // Moving checkbox toggle to pressable
+                        /* onValueChange={() =>
+                          toggleCheck(setChosenBodyType, bodyType.name)
+                        } */
                         style={styles.checkbox}
                       />
                     </Pressable>
@@ -428,7 +429,7 @@ const ResearchSetScreen = () => {
                   <Text style={styles.pressableText}>Fermer</Text>
                 </Pressable>
               </View>
-            </View>
+            </Pressable>
           </ScrollView>
         </Modal>
 
@@ -438,7 +439,7 @@ const ResearchSetScreen = () => {
           visible={resultsNumberModalVisible}
           onRequestClose={() => setResultsNumberModalVisible(false)} // Fonction pour fermer le modal
         >
-          <View style={styles.modalBackground}>
+          <Pressable style={styles.modalBackground} onPress={() => setResultsNumberModalVisible(false)}>
             <View style={styles.modalContainer}>
               <Text style={styles.modalText}>Nombre de résultats</Text>
               <View style={styles.checkBoxesContainer}>
@@ -456,7 +457,7 @@ const ResearchSetScreen = () => {
                 <Text style={styles.pressableText}>Fermer</Text>
               </Pressable>
             </View>
-          </View>
+          </Pressable>
         </Modal>
 
         <StatSliderResultSelectorModal
@@ -541,6 +542,7 @@ const styles = StyleSheet.create({
   },
 
   modalBackground: {
+    cursor: "auto",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

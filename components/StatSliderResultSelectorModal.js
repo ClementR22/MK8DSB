@@ -23,7 +23,7 @@ export const StatSliderResultSelectorModal = ({
       onRequestClose={() => setFoundedStatsModalVisible(false)} // Fonction pour fermer le modal
     >
       <ScrollView>
-        <View style={styles.modalBackground}>
+        <Pressable style={styles.modalBackground} onPress={() => setFoundedStatsModalVisible(false)}>
           <View style={styles.modalContainer}>
             <Text style={styles.modalText}>Ceci est une fenêtre modale</Text>
             <View style={styles.checkBoxesContainer}>
@@ -47,7 +47,7 @@ export const StatSliderResultSelectorModal = ({
               <Text style={styles.pressableText}>Fermer</Text>
             </Pressable>
           </View>
-        </View>
+        </Pressable>
       </ScrollView>
     </Modal>
   );
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: "blue",
   },
   modalBackground: {
+    cursor: "auto",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
