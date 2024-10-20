@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Slider } from "@miblanchard/react-native-slider";
 import StatFilterSelector from "./StatFilterSelector";
 
-const screenWidth = Dimensions.get("window").width;
+// const screenWidth = Dimensions.get("window").width;
 
 const StatSlider = ({
   name,
@@ -44,15 +44,17 @@ const StatSlider = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 5,
-    paddingVertical: 3,
-    backgroundColor: "#f0f8ff",
-    borderWidth: 5,
-    borderRadius: 4,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: "#FEF7FF",
+    borderWidth: 2,
+    borderRadius: 12,
+    borderColor: "#CAC4D0",
     marginBottom: 6,
+    width: "80vw"
   },
   containerTop: {
-    width: "100",
+    width: "auto",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -62,19 +64,23 @@ const styles = StyleSheet.create({
     marginLeft: 0,
   },
   sliderContainer: {
-    width: screenWidth * 0.87,
+    // Note : can use vh and vw as view height and view width for screen size
+    // width: "84vw",
+
     height: 20,
     alignItems: "stretch",
     justifyContent: "center",
   },
   thumb: {
-    width: 20,
-    height: 20,
+    width: 4,
+    height: 30,
     borderRadius: 10,
+    backgroundColor: "#6750A4",
   },
   track: {
     height: 8,
     borderRadius: 4,
+    backgroundColor: "#E8DEF8",
   },
 });
 

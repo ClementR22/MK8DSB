@@ -531,7 +531,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#ECE6F0",
     marginBottom: 8,
     maxWidth: "95vw",
+    minWidth: "80vw",
     minHeight: 100,
+    display: "flex",
+    flexDirection: "column",
   },
 
   modalBackground: {

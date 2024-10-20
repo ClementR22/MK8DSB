@@ -1,8 +1,9 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
 const StatFilterSelector = ({ statFilterNumber, setStatFilterNumber }) => {
-  const filterList = ["≃", "≥", "="];
+  const filterList = ["approximately-equal", "greater-than-or-equal", "equal"];
 
   const handlePress = () => {
     const nextIndex = (statFilterNumber + 1) % filterList.length;
@@ -17,21 +18,27 @@ const StatFilterSelector = ({ statFilterNumber, setStatFilterNumber }) => {
         styles.selectedFilter, // le style reste actif car un seul bouton
       ]}
     >
-      <Text style={styles.selectedText}>{filterList[statFilterNumber]}</Text>
+      <MaterialCommunityIcons
+        name={filterList[statFilterNumber]}
+        size={24}
+        style={styles.selectedText}
+      ></MaterialCommunityIcons>
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   pressable: {
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    backgroundColor: "#007BFF",
+    display: "flex",
+    height: 40,
+    width: 40,
+    borderRadius: 100,
+    backgroundColor: "#6750A4",
+    justifyContent: "center",
+    alignItems: "center"
   },
   selectedText: {
     color: "#fff",
-    fontSize: 18,
   },
 });
 
