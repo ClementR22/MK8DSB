@@ -1,14 +1,16 @@
 import { Pressable, StyleSheet, Text } from "react-native";
 
+import { button_icon_style } from "./_styles.js";
+
 export const StatSliderResultSelectorPressable = ({
   setFoundedStatsModalVisible,
 }) => {
   return (
     <Pressable
-      style={styles.pressable}
+      style={button_icon_style.container}
       onPress={() => setFoundedStatsModalVisible(true)}
     >
-      <Text>👁️</Text>
+      <Text style={button_icon_style.icon}>👁️</Text>
     </Pressable>
   );
 };

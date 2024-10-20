@@ -1,5 +1,7 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import { button_icon_style } from "./_styles.js";
 
 const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
   // Fonction pour incrémenter
@@ -18,11 +20,11 @@ const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
     <View style={styles.container}>
       <Text style={styles.resultsNumberText}>{resultsNumber}</Text>
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.button} onPress={decrement}>
-          <Text style={styles.buttonText}>-</Text>
+        <Pressable style={button_icon_style.container} onPress={decrement}>
+          <MaterialCommunityIcons name="plus" color={"white"}></MaterialCommunityIcons>
         </Pressable>
-        <Pressable style={styles.button} onPress={increment}>
-          <Text style={styles.buttonText}>+</Text>
+        <Pressable style={button_icon_style.container} onPress={increment}>
+          <MaterialCommunityIcons name="minus" color={"white"}></MaterialCommunityIcons>
         </Pressable>
       </View>
     </View>
@@ -34,6 +36,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "none",
+    margin: 10,
   },
   resultsNumberText: {
     fontSize: 48,
@@ -41,6 +45,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
+    justifyContent: "space-around",
+    gap: 10,
   },
   button: {
     backgroundColor: "#007BFF",

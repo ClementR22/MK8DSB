@@ -37,6 +37,8 @@ import ElementsImagesDeselector from "../../components/ElementsImagesDeselector"
 import { StatSliderResultSelectorModal } from "../../components/StatSliderResultSelectorModal";
 import { StatSliderResultSelectorPressable } from "../../components/StatSliderResultSelectorPressable";
 
+import { button_icon_style, button_style } from "../../components/_styles.js";
+
 const screenWidth = Dimensions.get("window").width;
 
 const ResearchSetScreen = () => {
@@ -265,12 +267,12 @@ const ResearchSetScreen = () => {
             visible={menuModalVisible}
             onRequestClose={() => setMenuModalVisible(false)} // Fonction pour fermer le modal
           >
-            <div style={{
+            <Text style={{
               position: "absolute",
               right: 50,
               top: 50,
               backgroundColor: "red",
-            }}>Coucou</div>
+            }}>Coucou</Text>
           </Modal>
         </View>
 
@@ -308,28 +310,28 @@ const ResearchSetScreen = () => {
 
         <View style={styles.pressablesContainer}>
           <Pressable
-            style={styles.pressable}
+            style={button_icon_style.container}
             onPress={() => setChosenStatsModalVisible(true)}
           >
-            <Text>➕</Text>
+            <Text style={button_icon_style.icon}>➕</Text>
           </Pressable>
 
           <Pressable
-            style={[styles.pressable, { marginHorizontal: 10 }]}
+            style={button_icon_style.container}
             onPress={() => setFilterModalVisible(true)}
           >
             <Text>📌</Text>
           </Pressable>
 
           <Pressable
-            style={[styles.pressable, { flex: 1 }]}
+            style={[button_style.container, { flexGrow: 1 }]}
             onPress={() => search()}
           >
-            <Text style={styles.researchPressable}>Rechercher</Text>
+            <Text style={button_style.text}>Rechercher</Text>
           </Pressable>
 
           <Pressable
-            style={[styles.pressable, { marginHorizontal: 10 }]}
+            style={button_icon_style.container}
             onPress={() => setResultsNumberModalVisible(true)}
           >
             <Text>5️⃣</Text>
@@ -438,7 +440,7 @@ const ResearchSetScreen = () => {
         >
           <View style={styles.modalBackground}>
             <View style={styles.modalContainer}>
-              <Text style={styles.modalText}>Ceci est une fenêtre modale</Text>
+              <Text style={styles.modalText}>Nombre de résultats</Text>
               <View style={styles.checkBoxesContainer}>
                 <View style={styles.checkBoxContainer}>
                   <ResultsNumber
@@ -503,9 +505,11 @@ const styles = StyleSheet.create({
 
   checkBoxContainer: {
     marginBottom: 2,
+    flexGrow: 1,
     alignItems: "center",
     flexDirection: "row",
-    backgroundColor: "red",
+    backgroundColor: "#ECE6F0",
+    borderRadius: 24,
   },
 
   checkbox: {
@@ -521,6 +525,7 @@ const styles = StyleSheet.create({
   checkBoxesContainer: {
     marginBottom: 20,
     alignItems: "flex-start",
+    flexGrow: 1,
     backgroundColor: "blue",
   },
 
@@ -545,6 +550,7 @@ const styles = StyleSheet.create({
   },
 
   modalContainer: {
+    margin: 24,
     backgroundColor: "purple",
     borderRadius: 10,
     alignItems: "center",
@@ -572,6 +578,8 @@ const styles = StyleSheet.create({
   pressablesContainer: {
     width: screenWidth * 0.87 + 20,
     flexDirection: "row",
+    gap: 10,
+    marginBottom: 10,
   },
 
   researchPressable: {
@@ -579,9 +587,14 @@ const styles = StyleSheet.create({
   },
 
   setCardContainer: {
+    display: "flex",
+    margin: 16,
+    marginBottom: 0,
     padding: 20,
     alignItems: "center",
-    backgroundColor: "blue",
+    backgroundColor: "#ECE6F0",
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
   },
 
   elementsImagesDeselector: {
