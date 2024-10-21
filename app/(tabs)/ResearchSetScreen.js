@@ -38,8 +38,15 @@ import ElementsImagesDeselector from "../../components/ElementsImagesDeselector"
 import { StatSliderResultSelectorModal } from "../../components/StatSliderResultSelectorModal";
 import { StatSliderResultSelectorPressable } from "../../components/StatSliderResultSelectorPressable";
 
-import { button_icon, button, button_outline } from "../../components/styles/button";
-import th, { shadow_12dp, shadow_3dp } from "../../components/styles/light_theme";
+import {
+  button_icon,
+  button,
+  button_outline,
+} from "../../components/styles/button";
+import th, {
+  shadow_12dp,
+  shadow_3dp,
+} from "../../components/styles/light_theme";
 import { modal } from "../../components/styles/modal";
 import checkbox from "../../components/styles/checkbox";
 
@@ -367,11 +374,15 @@ const ResearchSetScreen = () => {
           </Pressable>
 
           <Pressable
-            style={[button.container, { flexDirection: "row", paddingRight: 24, paddingLeft: 16 }, shadow_3dp]}
+            style={[
+              button.container,
+              { flexDirection: "row", paddingRight: 24, paddingLeft: 16 },
+              shadow_3dp,
+            ]}
             onPress={() => search()}
           >
             <MaterialCommunityIcons name="magnify" size={24} color={"white"} />
-            <Text style={[button.text, {marginLeft: 8}]}>Rechercher</Text>
+            <Text style={[button.text, { marginLeft: 8 }]}>Rechercher</Text>
           </Pressable>
 
           <Pressable
@@ -401,7 +412,11 @@ const ResearchSetScreen = () => {
                 <Text style={modal.title_center}>Affichage</Text>
                 <View style={modal.content}>
                   {chosenStats.map((stat) => (
-                    <Pressable onPress={() => toggleCheck(setChosenStats, stat.name)} key={stat.name} style={checkbox.container}>
+                    <Pressable
+                      onPress={() => toggleCheck(setChosenStats, stat.name)}
+                      key={stat.name}
+                      style={checkbox.container}
+                    >
                       <Checkbox
                         value={stat.checked}
                         // onValueChange={() =>
@@ -415,7 +430,11 @@ const ResearchSetScreen = () => {
                   ))}
                 </View>
                 <Pressable
-                  style={[button.container, modal.close_button_center, filterModalButtonHover ? shadow_12dp : null]}
+                  style={[
+                    button.container,
+                    modal.close_button_center,
+                    filterModalButtonHover ? shadow_12dp : null,
+                  ]}
                   onHoverIn={() => setFilterModalButtonHover(true)}
                   onHoverOut={() => setFilterModalButtonHover(false)}
                   onPress={() => setChosenStatsModalVisible(false)}
@@ -425,6 +444,7 @@ const ResearchSetScreen = () => {
               </Pressable>
             </Pressable>
           </ScrollView>
+          <Toast />
         </Modal>
 
         <Modal
@@ -435,21 +455,33 @@ const ResearchSetScreen = () => {
           key="modal-filter"
         >
           <ScrollView>
-            <Pressable style={modal.background} onPress={() => setFilterModalVisible(false)}>
+            <Pressable
+              style={modal.background}
+              onPress={() => setFilterModalVisible(false)}
+            >
               <Pressable style={modal.container}>
-                <Text style={modal.title_center}>
-                  Filtre
-                </Text>
-                <View style={{paddingHorizontal: 48, borderColor: "black", borderTopWidth: 1, borderBottomWidth: 1}}>
+                <Text style={modal.title_center}>Filtre</Text>
+                <View
+                  style={{
+                    paddingHorizontal: 48,
+                    borderColor: "black",
+                    borderTopWidth: 1,
+                    borderBottomWidth: 1,
+                  }}
+                >
                   {chosenBodyType.map((bodyType) => (
-                    <Pressable onPress={() => toggleCheck(setChosenBodyType, bodyType.name)} key={bodyType.name} style={checkbox.container}>
+                    <Pressable
+                      onPress={() =>
+                        toggleCheck(setChosenBodyType, bodyType.name)
+                      }
+                      key={bodyType.name}
+                      style={checkbox.container}
+                    >
                       <Checkbox
                         value={bodyType.checked}
                         style={checkbox.square}
                       />
-                      <Text style={checkbox.text}>
-                        {bodyType.nameDisplay}
-                      </Text>
+                      <Text style={checkbox.text}>{bodyType.nameDisplay}</Text>
                     </Pressable>
                   ))}
                 </View>
@@ -504,7 +536,11 @@ const ResearchSetScreen = () => {
               <Pressable
                 onHoverIn={() => setFilterModalButtonHover(true)}
                 onHoverOut={() => setFilterModalButtonHover(false)}
-                style={[button.container, modal.close_button_center, filterModalButtonHover ? shadow_12dp : null]}
+                style={[
+                  button.container,
+                  modal.close_button_center,
+                  filterModalButtonHover ? shadow_12dp : null,
+                ]}
                 onPress={() => setResultsNumberModalVisible(false)}
               >
                 <Text style={button.text}>Valider</Text>
