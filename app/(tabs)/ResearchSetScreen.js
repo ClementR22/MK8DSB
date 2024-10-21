@@ -360,7 +360,7 @@ const ResearchSetScreen = () => {
           </Pressable>
 
           <Pressable
-            style={[styles.pressable, { marginHorizontal: 10 }]}
+            style={[button_icon.container, shadow_3dp]}
             onPress={() => setFilterModalVisible(true)}
           >
             <MaterialCommunityIcons name="pin" size={24} color={"white"} />
@@ -629,7 +629,7 @@ const styles = StyleSheet.create({
   },
 
   pressablesContainer: {
-    width: screenWidth * 0.87 + 20,
+    // width: screenWidth * 0.87 + 20,
     flexDirection: "row",
     gap: 10,
     marginBottom: 10,
