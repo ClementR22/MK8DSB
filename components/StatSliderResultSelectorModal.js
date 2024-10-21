@@ -7,6 +7,9 @@ import { Modal } from "react-native";
 import { StyleSheet } from "react-native";
 
 import { imageSize } from "./PressableImage";
+import { modal } from "./styles/modal";
+import { button } from "./styles/button";
+import checkbox from "./styles/checkbox";
 
 export const StatSliderResultSelectorModal = ({
   foundedStatsModalVisible,
@@ -23,30 +26,30 @@ export const StatSliderResultSelectorModal = ({
       onRequestClose={() => setFoundedStatsModalVisible(false)} // Fonction pour fermer le modal
     >
       <ScrollView>
-        <Pressable style={styles.modalBackground} onPress={() => setFoundedStatsModalVisible(false)}>
-          <View style={styles.modalContainer}>
-            <Text style={styles.modalText}>Stats à afficher</Text>
-            <View style={styles.checkBoxesContainer}>
+        <Pressable style={modal.background} onPress={() => setFoundedStatsModalVisible(false)}>
+          <Pressable style={modal.container}>
+            <Text style={modal.title_center}>Stats à afficher</Text>
+            <View style={modal.content}>
               {isFoundedStatsVisible.map((stat) => (
-                <View key={stat.name} style={styles.checkBoxContainer}>
+                <View key={stat.name} style={checkbox.container}>
                   <Checkbox
                     value={stat.checked}
                     onValueChange={() =>
                       toggleCheck(setIsFoundedStatsVisible, stat.name)
                     }
-                    style={styles.checkbox}
+                    style={checkbox.square}
                   />
-                  <Text style={styles.checkBoxItemLabel}>{stat.name}</Text>
+                  <Text style={checkbox.text}>{stat.name}</Text>
                 </View>
               ))}
             </View>
             <Pressable
-              style={styles.pressable}
+              style={[button.container, modal.close_button_center]}
               onPress={() => setFoundedStatsModalVisible(false)}
             >
-              <Text style={styles.pressableText}>Fermer</Text>
+              <Text style={button.text}>Fermer</Text>
             </Pressable>
-          </View>
+          </Pressable>
         </Pressable>
       </ScrollView>
     </Modal>
@@ -54,16 +57,6 @@ export const StatSliderResultSelectorModal = ({
 };
 
 const styles = StyleSheet.create({
-  checkBoxContainer: {
-    marginBottom: 2,
-    alignItems: "center",
-    flexDirection: "row",
-    backgroundColor: "red",
-  },
-  checkbox: {
-    width: 30,
-    height: 30,
-  },
   checkBoxItemLabel: {
     fontSize: 18,
     marginVertical: 10,

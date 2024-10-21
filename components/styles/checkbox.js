@@ -2,6 +2,12 @@ import { StyleSheet } from "react-native";
 import th from "./light_theme";
 
 export default checkbox = StyleSheet.create({
+    container: {
+        marginBottom: 2,
+        alignItems: "center",
+        flexDirection: "row",
+        borderRadius: 24,
+    },
     square: {
         width: 18,
         height: 18,

@@ -38,7 +38,7 @@ import { StatSliderResultSelectorModal } from "../../components/StatSliderResult
 import { StatSliderResultSelectorPressable } from "../../components/StatSliderResultSelectorPressable";
 
 import { button_icon, button, button_outline } from "../../components/styles/button";
-import th, { shadow_3dp } from "../../components/styles/light_theme";
+import th, { shadow_12dp, shadow_3dp } from "../../components/styles/light_theme";
 import { modal } from "../../components/styles/modal";
 import checkbox from "../../components/styles/checkbox";
 
@@ -355,12 +355,12 @@ const ResearchSetScreen = () => {
           <ScrollView>
             <Pressable style={modal.background} onPress={() => setChosenStatsModalVisible(false)}>
               <Pressable style={modal.container}>
-                <Text style={modal.title}>
+                <Text style={modal.title_center}>
                   Affichage
                 </Text>
                 <View style={modal.content}>
                   {chosenStats.map((stat) => (
-                    <Pressable onPress={() => toggleCheck(setChosenStats, stat.name)} key={stat.name} style={styles.checkBoxContainer}>
+                    <Pressable onPress={() => toggleCheck(setChosenStats, stat.name)} key={stat.name} style={checkbox.container}>
                       <Checkbox
                         value={stat.checked}
                         // onValueChange={() =>
@@ -374,12 +374,12 @@ const ResearchSetScreen = () => {
                   ))}
                 </View>
                 <Pressable
-                  style={[button_outline.container, modal.close_button_right, filterModalButtonHover ? button_outline.hover : null]}
+                  style={[button.container, modal.close_button_center, filterModalButtonHover ? shadow_12dp : null]}
                   onHoverIn={() => setFilterModalButtonHover(true)}
                   onHoverOut={() => setFilterModalButtonHover(false)}
                   onPress={() => setChosenStatsModalVisible(false)}
                 >
-                  <Text style={button_outline.text}>Valider</Text>
+                  <Text style={button.text}>Valider</Text>
                 </Pressable>
               </Pressable>
             </Pressable>
@@ -391,6 +391,7 @@ const ResearchSetScreen = () => {
           transparent={true} // Définit si le fond est transparent
           visible={filterModalVisible}
           onRequestClose={() => setFilterModalVisible(false)} // Fonction pour fermer le modal
+          key="modal-filter"
         >
           <ScrollView>
             <Pressable style={styles.modalBackground} onPress={() => setFilterModalVisible(false)}>
@@ -398,18 +399,14 @@ const ResearchSetScreen = () => {
                 <Text style={styles.modalText}>
                   Filtre
                 </Text>
-                <View style={styles.checkBoxesContainer}>
+                <View style={checkbox.container}>
                   {chosenBodyType.map((bodyType) => (
                     <Pressable onPress={() => toggleCheck(setChosenBodyType, bodyType.name)} key={bodyType.name} style={[styles.checkBoxContainer, { width: "85vw", height: 64, padding: 24, display: "flex", justifyContent: "space-between" }]}>
-                      <Text style={styles.checkBoxItemLabel}>
+                      <Text style={checkbox.text}>
                         {bodyType.nameDisplay}
                       </Text>
                       <Checkbox
                         value={bodyType.checked}
-                        // Moving checkbox toggle to pressable
-                        /* onValueChange={() =>
-                          toggleCheck(setChosenBodyType, bodyType.name)
-                        } */
                         style={styles.checkbox}
                       />
                     </Pressable>
@@ -445,6 +442,7 @@ const ResearchSetScreen = () => {
           transparent={true} // Définit si le fond est transparent
           visible={resultsNumberModalVisible}
           onRequestClose={() => setResultsNumberModalVisible(false)} // Fonction pour fermer le modal
+          key="modal-resultNumber"
         >
           <Pressable style={styles.modalBackground} onPress={() => setResultsNumberModalVisible(false)}>
             <Pressable style={modal.container}>
@@ -458,10 +456,10 @@ const ResearchSetScreen = () => {
               <Pressable
                 onHoverIn={() => setFilterModalButtonHover(true)}
                 onHoverOut={() => setFilterModalButtonHover(false)}
-                style={[button_outline.container, modal.close_button_center, filterModalButtonHover ? button_outline.hover : null]}
+                style={[button.container, modal.close_button_center, filterModalButtonHover ? shadow_12dp : null]}
                 onPress={() => setResultsNumberModalVisible(false)}
               >
-                <Text style={button_outline.text}>Fermer</Text>
+                <Text style={button.text}>Valider</Text>
               </Pressable>
             </Pressable>
           </Pressable>
@@ -473,6 +471,7 @@ const ResearchSetScreen = () => {
           isFoundedStatsVisible={isFoundedStatsVisible}
           setIsFoundedStatsVisible={setIsFoundedStatsVisible}
           toggleCheck={toggleCheck}
+          key="modal-statSlider"
         />
 
         <View style={styles.setCardContainer}>
@@ -509,14 +508,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 24,
     fontWeight: "bold",
-  },
-
-  checkBoxContainer: {
-    marginBottom: 2,
-    alignItems: "center",
-    flexDirection: "row",
-    backgroundColor: "#ECE6F0",
-    borderRadius: 24,
   },
 
   checkbox: {
