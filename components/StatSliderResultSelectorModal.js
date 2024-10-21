@@ -15,8 +15,8 @@ import th from './styles/light_theme';
 export const StatSliderResultSelectorModal = ({
   foundedStatsModalVisible,
   setFoundedStatsModalVisible,
-  isFoundedStatsVisible,
-  setIsFoundedStatsVisible,
+  isFoundStatsVisible,
+  setIsFoundStatsVisible,
   toggleCheck,
 }) => {
   return (
@@ -31,8 +31,8 @@ export const StatSliderResultSelectorModal = ({
           <Pressable style={modal.container}>
             <Text style={modal.title_center}>Stats à afficher</Text>
             <View style={modal.content}>
-              {isFoundedStatsVisible.map((stat) => (
-                <Pressable key={stat.name} style={checkbox.container} onPress={() => toggleCheck(setIsFoundedStatsVisible, stat.name)}>
+              {isFoundStatsVisible.map((stat) => (
+                <Pressable key={stat.name} style={checkbox.container} onPress={() => toggleCheck(setIsFoundStatsVisible, stat.name)}>
                   <Checkbox
                     value={stat.checked}
                     style={checkbox.square}

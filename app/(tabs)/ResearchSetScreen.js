@@ -63,7 +63,7 @@ const ResearchSetScreen = () => {
     }))
   );
 
-  const [isFoundedStatsVisible, setIsFoundedStatsVisible] = useState(
+  const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
     statNames.map((statName) => ({
       name: statName,
       checked: false,
@@ -473,8 +473,8 @@ const ResearchSetScreen = () => {
         <StatSliderResultSelectorModal
           foundedStatsModalVisible={foundedStatsModalVisible}
           setFoundedStatsModalVisible={setFoundedStatsModalVisible}
-          isFoundedStatsVisible={isFoundedStatsVisible}
-          setIsFoundedStatsVisible={setIsFoundedStatsVisible}
+          isFoundStatsVisible={isFoundStatsVisible}
+          setIsFoundStatsVisible={setIsFoundStatsVisible}
           toggleCheck={toggleCheck}
           key="modal-statSlider"
         />
@@ -485,7 +485,7 @@ const ResearchSetScreen = () => {
               <SetCard
                 key={index}
                 setToShow={setToShow}
-                isFoundedStatsVisible={isFoundedStatsVisible}
+                isFoundStatsVisible={isFoundStatsVisible}
                 chosenStats={chosenStats}
               />
             );

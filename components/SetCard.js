@@ -19,7 +19,7 @@ const bodyDenominations = ["kart", "bike", "sportBike", "ATV"];
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
 
-const SetCard = ({ setToShow, isFoundedStatsVisible, chosenStats }) => {
+const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [setToShowElementsIds, setToShowStats] = Array.isArray(setToShow)
     ? setToShow
@@ -38,7 +38,7 @@ const SetCard = ({ setToShow, isFoundedStatsVisible, chosenStats }) => {
             <Text key={index}>{elementsAllClassName[index][id]}</Text>
           ))}
 
-          {isFoundedStatsVisible.map(({ name, checked }, index) => {
+          {isFoundStatsVisible.map(({ name, checked }, index) => {
             if (checked) {
               return (
                 <View key={index} style={styles.sliderContainer}>
