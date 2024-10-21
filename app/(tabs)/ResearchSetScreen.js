@@ -9,14 +9,15 @@ import {
   Dimensions,
   Modal,
   Alert,
+  StatusBar,
 } from "react-native";
 import Checkbox from "expo-checkbox";
 import { MaterialIcons } from "@expo/vector-icons";
-
+import Toast from "react-native-toast-message";
 
 import {
   initializePressableImages,
-  handlePressImage
+  handlePressImage,
 } from "../../utils/pressableImagesFunctions";
 
 // Utils
@@ -37,7 +38,11 @@ import ElementsImagesDeselector from "../../components/ElementsImagesDeselector"
 import { StatSliderResultSelectorModal } from "../../components/StatSliderResultSelectorModal";
 import { StatSliderResultSelectorPressable } from "../../components/StatSliderResultSelectorPressable";
 
-import { button_icon, button, button_outline } from "../../components/styles/button";
+import {
+  button_icon,
+  button,
+  button_outline,
+} from "../../components/styles/button";
 import th, { shadow_3dp } from "../../components/styles/light_theme";
 import { modal } from "../../components/styles/modal";
 import checkbox from "../../components/styles/checkbox";
@@ -46,22 +51,35 @@ const screenWidth = Dimensions.get("window").width;
 
 const ResearchSetScreen = () => {
   const [chosenStats, setChosenStats] = useState(
-    statNames.map((statName) => ({
-      name: statName,
-      checked: false,
-      value: 0,
-      statFilterNumber: 0,
-      setStatFilterNumber: (newState) => {
-        setChosenStats((prevStats) =>
-          prevStats.map((stat) =>
-            stat.name === statName
-              ? { ...stat, statFilterNumber: newState }
-              : stat
-          )
-        );
-      },
-    }))
+    statNames.map((statName, index) => {
+      return {
+        name: statName,
+        checked: index === 0,
+        value: 0,
+        statFilterNumber: 0,
+        setStatFilterNumber: (newState) => {
+          setChosenStats((prevStats) =>
+            prevStats.map((stat) =>
+              stat.name === statName
+                ? { ...stat, statFilterNumber: newState }
+                : stat
+            )
+          );
+        },
+      };
+    })
   );
+
+  const showToast = () => {
+    console.log("ok");
+    Toast.show({
+      type: "success",
+      text1: "Hello",
+      text2: "Ceci est une alerte temporaire 👋",
+      position: "bottom", // Ou 'bottom'
+      visibilityTime: 3000, // 3 secondes
+    });
+  };
 
   const [isFoundedStatsVisible, setIsFoundedStatsVisible] = useState(
     statNames.map((statName) => ({
@@ -86,7 +104,7 @@ const ResearchSetScreen = () => {
   const [foundedStatsModalVisible, setFoundedStatsModalVisible] =
     useState(false);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
-  const [filterModalButtonHover, setFilterModalButtonHover] = useState(false)
+  const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
   const [resultsNumberModalVisible, setResultsNumberModalVisible] =
     useState(false);
   const [menuModalVisible, setMenuModalVisible] = useState(false);
@@ -139,11 +157,24 @@ const ResearchSetScreen = () => {
 
   // Inverser l'état checked des stats
   const toggleCheck = (setList, name) => {
-    setList((prev) =>
-      prev.map((item) =>
+    setList((prev) => {
+      const newList = prev.map((item) =>
         item.name === name ? { ...item, checked: !item.checked } : item
-      )
-    );
+      );
+
+      // Vérifiez s'il reste au moins un checked
+      const hasChecked = newList.some((item) => item.checked);
+
+      // Si tous les éléments sont décochés, rétablissez l'état de l'élément
+      if (!hasChecked) {
+        showToast();
+        return newList.map((item) =>
+          item.name === name ? { ...item, checked: true } : item
+        );
+      }
+
+      return newList;
+    });
   };
 
   // Mettre à jour la valeur du slider
@@ -252,17 +283,25 @@ const ResearchSetScreen = () => {
               alignItems: "center",
               justifyContent: "space-between",
               marginBottom: 10,
-            }
-          ]}>
+            },
+          ]}
+        >
           <Text style={{ margin: 16 }}>
             <MaterialIcons name="home" size={24}></MaterialIcons>
           </Text>
 
-          <Text style={{
-            fontSize: "22px"
-          }}>Coucou</Text>
+          <Text
+            style={{
+              fontSize: "22px",
+            }}
+          >
+            Coucou
+          </Text>
 
-          <Pressable style={styles.button_icon} onPress={() => setMenuModalVisible(true)}>
+          <Pressable
+            style={styles.button_icon}
+            onPress={() => setMenuModalVisible(true)}
+          >
             <MaterialIcons name="more-vert" size={24}></MaterialIcons>
           </Pressable>
           <Modal
@@ -271,12 +310,16 @@ const ResearchSetScreen = () => {
             visible={menuModalVisible}
             onRequestClose={() => setMenuModalVisible(false)} // Fonction pour fermer le modal
           >
-            <Text style={{
-              position: "absolute",
-              right: 50,
-              top: 50,
-              backgroundColor: "red",
-            }}>Coucou</Text>
+            <Text
+              style={{
+                position: "absolute",
+                right: 50,
+                top: 50,
+                backgroundColor: "red",
+              }}
+            >
+              Coucou
+            </Text>
           </Modal>
         </View>
 
@@ -321,7 +364,7 @@ const ResearchSetScreen = () => {
           </Pressable>
 
           <Pressable
-            style={[button_icon.container, shadow_3dp]}
+            style={[styles.pressable, { marginHorizontal: 10 }]}
             onPress={() => setFilterModalVisible(true)}
           >
             <Text>📌</Text>
@@ -353,28 +396,37 @@ const ResearchSetScreen = () => {
           onRequestClose={() => setChosenStatsModalVisible(false)} // Fonction pour fermer le modal
         >
           <ScrollView>
-            <Pressable style={modal.background} onPress={() => setChosenStatsModalVisible(false)}>
+            <Pressable
+              style={modal.background}
+              onPress={() => setChosenStatsModalVisible(false)}
+            >
               <Pressable style={modal.container}>
-                <Text style={modal.title}>
-                  Affichage
-                </Text>
+                <Text style={modal.title}>Affichage</Text>
                 <View style={modal.content}>
                   {chosenStats.map((stat) => (
-                    <Pressable onPress={() => toggleCheck(setChosenStats, stat.name)} key={stat.name} style={styles.checkBoxContainer}>
+                    <Pressable
+                      onPress={() => toggleCheck(setChosenStats, stat.name)}
+                      key={stat.name}
+                      style={styles.checkBoxContainer}
+                    >
                       <Checkbox
                         value={stat.checked}
                         // onValueChange={() =>
                         //   toggleCheck(setChosenStats, stat.name)
                         // }
                         style={checkbox.square}
-                        color={{true: th.primary, false: th.on_primary}}
+                        color={{ true: th.primary, false: th.on_primary }}
                       />
                       <Text style={checkbox.text}>{stat.name}</Text>
                     </Pressable>
                   ))}
                 </View>
                 <Pressable
-                  style={[button_outline.container, modal.close_button_right, filterModalButtonHover ? button_outline.hover : null]}
+                  style={[
+                    button_outline.container,
+                    modal.close_button_right,
+                    filterModalButtonHover ? button_outline.hover : null,
+                  ]}
                   onHoverIn={() => setFilterModalButtonHover(true)}
                   onHoverOut={() => setFilterModalButtonHover(false)}
                   onPress={() => setChosenStatsModalVisible(false)}
@@ -393,14 +445,30 @@ const ResearchSetScreen = () => {
           onRequestClose={() => setFilterModalVisible(false)} // Fonction pour fermer le modal
         >
           <ScrollView>
-            <Pressable style={styles.modalBackground} onPress={() => setFilterModalVisible(false)}>
+            <Pressable
+              style={styles.modalBackground}
+              onPress={() => setFilterModalVisible(false)}
+            >
               <View style={styles.modalContainer}>
-                <Text style={styles.modalText}>
-                  Filtre
-                </Text>
+                <Text style={styles.modalText}>Filtre</Text>
                 <View style={styles.checkBoxesContainer}>
                   {chosenBodyType.map((bodyType) => (
-                    <Pressable onPress={() => toggleCheck(setChosenBodyType, bodyType.name)} key={bodyType.name} style={[styles.checkBoxContainer, { width: "85vw", height: 64, padding: 24, display: "flex", justifyContent: "space-between" }]}>
+                    <Pressable
+                      onPress={() =>
+                        toggleCheck(setChosenBodyType, bodyType.name)
+                      }
+                      key={bodyType.name}
+                      style={[
+                        styles.checkBoxContainer,
+                        {
+                          width: "85vw",
+                          height: 64,
+                          padding: 24,
+                          display: "flex",
+                          justifyContent: "space-between",
+                        },
+                      ]}
+                    >
                       <Text style={styles.checkBoxItemLabel}>
                         {bodyType.nameDisplay}
                       </Text>
@@ -446,19 +514,26 @@ const ResearchSetScreen = () => {
           visible={resultsNumberModalVisible}
           onRequestClose={() => setResultsNumberModalVisible(false)} // Fonction pour fermer le modal
         >
-          <Pressable style={styles.modalBackground} onPress={() => setResultsNumberModalVisible(false)}>
+          <Pressable
+            style={styles.modalBackground}
+            onPress={() => setResultsNumberModalVisible(false)}
+          >
             <Pressable style={modal.container}>
               <Text style={modal.title_center}>Nombre de résultats</Text>
-                <View style={styles.checkBoxContainer}>
-                  <ResultsNumber
-                    resultsNumber={resultsNumber}
-                    setResultsNumber={setResultsNumber}
-                  />
-                </View>
+              <View style={styles.checkBoxContainer}>
+                <ResultsNumber
+                  resultsNumber={resultsNumber}
+                  setResultsNumber={setResultsNumber}
+                />
+              </View>
               <Pressable
                 onHoverIn={() => setFilterModalButtonHover(true)}
                 onHoverOut={() => setFilterModalButtonHover(false)}
-                style={[button_outline.container, modal.close_button_center, filterModalButtonHover ? button_outline.hover : null]}
+                style={[
+                  button_outline.container,
+                  modal.close_button_center,
+                  filterModalButtonHover ? button_outline.hover : null,
+                ]}
                 onPress={() => setResultsNumberModalVisible(false)}
               >
                 <Text style={button_outline.text}>Fermer</Text>
@@ -619,5 +694,5 @@ const styles = StyleSheet.create({
 
   button_icon: {
     margin: 16,
-  }
+  },
 });

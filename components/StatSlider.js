@@ -26,17 +26,19 @@ const StatSlider = ({
         </View>
       </View>
 
-      <View style={styles.sliderContainer}>
-        <Slider
-          value={sliderValue}
-          onValueChange={([value]) => setSliderValue(value)}
-          minimumValue={0}
-          maximumValue={6}
-          step={0.25}
-          thumbStyle={styles.thumb}
-          trackStyle={styles.track}
-          thumbTouchSize={{ width: 10, height: 10 }}
-        />
+      <View style={styles.containerBottom}>
+        <View style={styles.sliderContainer}>
+          <Slider
+            value={sliderValue}
+            onValueChange={([value]) => setSliderValue(value)}
+            minimumValue={0}
+            maximumValue={6}
+            step={0.25}
+            thumbStyle={styles.thumb}
+            trackStyle={styles.track}
+            thumbTouchSize={{ width: 10, height: 10 }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -51,17 +53,23 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderColor: "#CAC4D0",
     marginBottom: 6,
-    width: "80vw"
+    width: "80vw",
   },
   containerTop: {
     width: "auto",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    padding: 3,
   },
   text: {
-    fontSize: 20,
-    marginLeft: 0,
+    fontSize: 22,
+    marginLeft: 6,
+  },
+  containerBottom: {
+    width: "100",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
   },
   sliderContainer: {
     // Note : can use vh and vw as view height and view width for screen size
