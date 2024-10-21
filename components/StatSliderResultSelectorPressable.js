@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text } from "react-native";
 
 import { button_icon } from "./styles/button";
 import { shadow_3dp } from "./styles/light_theme";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export const StatSliderResultSelectorPressable = ({
   setFoundedStatsModalVisible,
@@ -11,7 +12,7 @@ export const StatSliderResultSelectorPressable = ({
       style={[button_icon.container, shadow_3dp]}
       onPress={() => setFoundedStatsModalVisible(true)}
     >
-      <Text style={button_icon.icon}>👁️</Text>
+      <MaterialCommunityIcons name="eye" size={24} color={"white"} />
     </Pressable>
   );
 };

@@ -10,6 +10,7 @@ import { imageSize } from "./PressableImage";
 import { modal } from "./styles/modal";
 import { button } from "./styles/button";
 import checkbox from "./styles/checkbox";
+import th from './styles/light_theme';
 
 export const StatSliderResultSelectorModal = ({
   foundedStatsModalVisible,
@@ -31,16 +32,14 @@ export const StatSliderResultSelectorModal = ({
             <Text style={modal.title_center}>Stats à afficher</Text>
             <View style={modal.content}>
               {isFoundedStatsVisible.map((stat) => (
-                <View key={stat.name} style={checkbox.container}>
+                <Pressable key={stat.name} style={checkbox.container} onPress={() => toggleCheck(setIsFoundedStatsVisible, stat.name)}>
                   <Checkbox
                     value={stat.checked}
-                    onValueChange={() =>
-                      toggleCheck(setIsFoundedStatsVisible, stat.name)
-                    }
                     style={checkbox.square}
+                    color={{true: th.primary, false: th.on_primary}}
                   />
                   <Text style={checkbox.text}>{stat.name}</Text>
-                </View>
+                </Pressable>
               ))}
             </View>
             <Pressable

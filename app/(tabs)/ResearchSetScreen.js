@@ -11,7 +11,7 @@ import {
   Alert,
 } from "react-native";
 import Checkbox from "expo-checkbox";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 
 
 import {
@@ -317,28 +317,29 @@ const ResearchSetScreen = () => {
             style={[button_icon.container, shadow_3dp]}
             onPress={() => setChosenStatsModalVisible(true)}
           >
-            <Text style={button_icon.icon}>➕</Text>
+            <MaterialCommunityIcons name="plus" size={24} color={"white"} />
           </Pressable>
 
           <Pressable
             style={[button_icon.container, shadow_3dp]}
             onPress={() => setFilterModalVisible(true)}
           >
-            <Text>📌</Text>
+            <MaterialCommunityIcons name="pin" size={24} color={"white"} />
           </Pressable>
 
           <Pressable
-            style={[button.container, { flexGrow: 1 }, shadow_3dp]}
+            style={[button.container, { flexDirection: "row", paddingRight: 24, paddingLeft: 16 }, shadow_3dp]}
             onPress={() => search()}
           >
-            <Text style={button.text}>Rechercher</Text>
+            <MaterialCommunityIcons name="magnify" size={24} color={"white"} />
+            <Text style={[button.text, {marginLeft: 8}]}>Rechercher</Text>
           </Pressable>
 
           <Pressable
             style={[button_icon.container, shadow_3dp]}
             onPress={() => setResultsNumberModalVisible(true)}
           >
-            <Text>5️⃣</Text>
+            <MaterialIcons name="numbers" size={24} color={"white"} />
           </Pressable>
 
           <StatSliderResultSelectorPressable
@@ -394,25 +395,26 @@ const ResearchSetScreen = () => {
           key="modal-filter"
         >
           <ScrollView>
-            <Pressable style={styles.modalBackground} onPress={() => setFilterModalVisible(false)}>
-              <View style={styles.modalContainer}>
-                <Text style={styles.modalText}>
+            <Pressable style={modal.background} onPress={() => setFilterModalVisible(false)}>
+              <Pressable style={modal.container}>
+                <Text style={modal.title_center}>
                   Filtre
                 </Text>
-                <View style={checkbox.container}>
+                <View style={{paddingHorizontal: 48, borderColor: "black", borderTopWidth: 1, borderBottomWidth: 1}}>
                   {chosenBodyType.map((bodyType) => (
-                    <Pressable onPress={() => toggleCheck(setChosenBodyType, bodyType.name)} key={bodyType.name} style={[styles.checkBoxContainer, { width: "85vw", height: 64, padding: 24, display: "flex", justifyContent: "space-between" }]}>
+                    <Pressable onPress={() => toggleCheck(setChosenBodyType, bodyType.name)} key={bodyType.name} style={checkbox.container}>
+                      <Checkbox
+                        value={bodyType.checked}
+                        style={checkbox.square}
+                      />
                       <Text style={checkbox.text}>
                         {bodyType.nameDisplay}
                       </Text>
-                      <Checkbox
-                        value={bodyType.checked}
-                        style={styles.checkbox}
-                      />
                     </Pressable>
                   ))}
                 </View>
 
+                {/* Category selector row */}
                 <View style={styles.elementsImagesDeselector}>
                   <ElementsImagesDeselector
                     pressableImages={pressableImages}
@@ -421,18 +423,21 @@ const ResearchSetScreen = () => {
                   />
                 </View>
 
+                {/* Subcategory selector */}
                 <ElementsImagesSelector
                   pressableImages={pressableImages}
                   handlePressImage={handlePressImageCompleted}
                   displayCase={false}
                 />
+
+                {/* Close button */}
                 <Pressable
-                  style={styles.pressable}
+                  style={button.container}
                   onPress={() => setFilterModalVisible(false)}
                 >
-                  <Text style={styles.pressableText}>Fermer</Text>
+                  <Text style={button.text}>Valider</Text>
                 </Pressable>
-              </View>
+              </Pressable>
             </Pressable>
           </ScrollView>
         </Modal>

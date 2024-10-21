@@ -11,7 +11,8 @@ const ElementsImagesDeselector = ({
     <View
       style={{
         backgroundColor: "green",
-        flexDirection: display ? "row" : "column",
+        overflow: "scroll",
+        flexDirection: "row",
         paddingHorizontal: 10,
       }}
     >

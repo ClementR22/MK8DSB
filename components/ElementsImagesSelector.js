@@ -52,10 +52,10 @@ const ElementsImagesSelector = ({
     });
 
     return filteredImages.map(([categoryKey, categoryValue]) => (
-      <View key={categoryKey} style={styles.categoryContainer}>
+      <View key={"content-"+ categoryKey} style={[styles.categoryContainer, {maxHeight: 300, overflow: "scroll"}]}>
         <Text style={styles.text}>{allElementNamesDisplay[categoryKey]}</Text>
         {Object.entries(categoryValue).map(([classKey, classValue]) => (
-          <View key={classKey} style={styles.classContainer}>
+          <View key={"classKey" + classKey} style={styles.classContainer}>
             {Object.entries(classValue).map(
               ([imageKey, { source, pressed }], imgIndex) => (
                 <View
@@ -80,9 +80,9 @@ const ElementsImagesSelector = ({
   };
 
   return (
-    <View style={styles.outerContainer}>
+    <View style={styles.outerContainer} key={"outerContainer"}>
       {/* Navigation par onglets */}
-      <View style={styles.tabContainer}>
+      <View style={styles.tabContainer} key={"tabContainer"}>
         {allElementNamesIntern.map((elementName, index) => (
           <Pressable
             key={elementName} // Ajout de la key ici

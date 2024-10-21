@@ -17,7 +17,7 @@ export const modal = StyleSheet.create({
         cursor: "auto",
         alignSelf: "center",
         minWidth: 280,
-        maxWidth: 560,
+        maxWidth: "90vw",
         borderRadius: 28,
         paddingVertical: 24,
         backgroundColor: "#ECE6F0",
