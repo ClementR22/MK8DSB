@@ -26,17 +26,19 @@ const StatSlider = ({
         </View>
       </View>
 
-      <View style={styles.sliderContainer}>
-        <Slider
-          value={sliderValue}
-          onValueChange={([value]) => setSliderValue(value)}
-          minimumValue={0}
-          maximumValue={6}
-          step={0.25}
-          thumbStyle={styles.thumb}
-          trackStyle={styles.track}
-          thumbTouchSize={{ width: 10, height: 10 }}
-        />
+      <View style={styles.containerBottom}>
+        <View style={styles.sliderContainer}>
+          <Slider
+            value={sliderValue}
+            onValueChange={([value]) => setSliderValue(value)}
+            minimumValue={0}
+            maximumValue={6}
+            step={0.25}
+            thumbStyle={styles.thumb}
+            trackStyle={styles.track}
+            thumbTouchSize={{ width: 10, height: 10 }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -44,25 +46,31 @@ const StatSlider = ({
 
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
     paddingHorizontal: 5,
     paddingVertical: 3,
-    backgroundColor: "#f0f8ff",
-    borderWidth: 5,
+    backgroundColor: "blue",
     borderRadius: 4,
-    marginBottom: 6,
+    marginBottom: 15,
   },
   containerTop: {
     width: "100",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    padding: 3,
   },
   text: {
-    fontSize: 20,
-    marginLeft: 0,
+    fontSize: 22,
+    marginLeft: 6,
+  },
+  containerBottom: {
+    width: "100",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
   },
   sliderContainer: {
-    width: screenWidth * 0.87,
+    width: "100%",
     height: 20,
     alignItems: "stretch",
     justifyContent: "center",

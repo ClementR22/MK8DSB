@@ -6,6 +6,8 @@ import {
   Pressable,
   TextInput,
   Dimensions,
+  SafeAreaView,
+  StatusBar,
 } from "react-native";
 import StatSlider from "../../components/StatSlider";
 import ElementsImagesSelector from "../../components/ElementsImagesSelector";
@@ -13,6 +15,7 @@ import { useState, useEffect, useContext, createContext } from "react";
 import Checkbox from "expo-checkbox";
 import { Modal } from "react-native";
 import { Alert } from "react-native";
+import Toast from "react-native-toast-message";
 
 import { imageSize } from "../../components/PressableImage";
 
@@ -37,22 +40,35 @@ const screenWidth = Dimensions.get("window").width;
 
 const ResearchSetScreen = () => {
   const [chosenStats, setChosenStats] = useState(
-    statNames.map((statName) => ({
-      name: statName,
-      checked: false,
-      value: 0,
-      statFilterNumber: 0,
-      setStatFilterNumber: (newState) => {
-        setChosenStats((prevStats) =>
-          prevStats.map((stat) =>
-            stat.name === statName
-              ? { ...stat, statFilterNumber: newState }
-              : stat
-          )
-        );
-      },
-    }))
+    statNames.map((statName, index) => {
+      return {
+        name: statName,
+        checked: index === 0,
+        value: 0,
+        statFilterNumber: 0,
+        setStatFilterNumber: (newState) => {
+          setChosenStats((prevStats) =>
+            prevStats.map((stat) =>
+              stat.name === statName
+                ? { ...stat, statFilterNumber: newState }
+                : stat
+            )
+          );
+        },
+      };
+    })
   );
+
+  const showToast = () => {
+    console.log("ok");
+    Toast.show({
+      type: "success",
+      text1: "Hello",
+      text2: "Ceci est une alerte temporaire 👋",
+      position: "bottom", // Ou 'bottom'
+      visibilityTime: 3000, // 3 secondes
+    });
+  };
 
   const [isFoundedStatsVisible, setIsFoundedStatsVisible] = useState(
     statNames.map((statName) => ({
@@ -128,11 +144,24 @@ const ResearchSetScreen = () => {
 
   // Inverser l'état checked des stats
   const toggleCheck = (setList, name) => {
-    setList((prev) =>
-      prev.map((item) =>
+    setList((prev) => {
+      const newList = prev.map((item) =>
         item.name === name ? { ...item, checked: !item.checked } : item
-      )
-    );
+      );
+
+      // Vérifiez s'il reste au moins un checked
+      const hasChecked = newList.some((item) => item.checked);
+
+      // Si tous les éléments sont décochés, rétablissez l'état de l'élément
+      if (!hasChecked) {
+        showToast();
+        return newList.map((item) =>
+          item.name === name ? { ...item, checked: true } : item
+        );
+      }
+
+      return newList;
+    });
   };
 
   // Mettre à jour la valeur du slider
@@ -226,238 +255,274 @@ const ResearchSetScreen = () => {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.text}>ResearchSetScreen</Text>
-        <View style={styles.statSlidersContainer}>
-          <Text
-            style={[
-              styles.text,
-              {
-                margin: 4,
-                paddingHorizontal: 10,
-                backgroundColor: "white",
-                borderRadius: 5,
-              },
-            ]}
-          >
-            Statistiques recherchées
-          </Text>
-          {/* Afficher le slider uniquement si la case est cochée */}
-          {chosenStats.map(
-            (stat) =>
-              stat.checked && (
-                <StatSlider
-                  key={stat.name}
-                  name={stat.name}
-                  sliderValue={stat.value}
-                  setSliderValue={(newValue) =>
-                    updateSliderValue(stat.name, newValue)
-                  }
-                  statFilterNumber={stat.statFilterNumber}
-                  setStatFilterNumber={stat.setStatFilterNumber}
-                />
+    <SafeAreaView style={styles.safeAreaView}>
+      <ScrollView>
+        <StatusBar
+          translucent={false}
+          backgroundColor="black"
+          barStyle="light-content"
+        />
+        <View style={styles.container}>
+          <View style={styles.statSlidersContainer}>
+            <Text style={styles.title}>Statistiques recherchées</Text>
+            {chosenStats.some((stat) => stat.checked) ? (
+              chosenStats.map(
+                (stat) =>
+                  stat.checked && (
+                    <StatSlider
+                      key={stat.name}
+                      name={stat.name}
+                      sliderValue={stat.value}
+                      setSliderValue={(newValue) =>
+                        updateSliderValue(stat.name, newValue)
+                      }
+                      statFilterNumber={stat.statFilterNumber}
+                      setStatFilterNumber={stat.setStatFilterNumber}
+                    />
+                  )
               )
-          )}
-        </View>
+            ) : (
+              <Text style={styles.errorText}>
+                Choisissez des stats avec le bouton ➕
+              </Text>
+            )}
+          </View>
 
-        <View style={styles.pressablesContainer}>
-          <Pressable
-            style={styles.pressable}
-            onPress={() => setChosenStatsModalVisible(true)}
+          <View style={styles.pressablesContainer}>
+            <Pressable
+              style={styles.pressable}
+              onPress={() => setChosenStatsModalVisible(true)}
+            >
+              <Text>➕</Text>
+            </Pressable>
+
+            <Pressable
+              style={[styles.pressable, { marginHorizontal: 10 }]}
+              onPress={() => setFilterModalVisible(true)}
+            >
+              <Text>📌</Text>
+            </Pressable>
+
+            <Pressable
+              style={[styles.pressable, { flex: 1 }]}
+              onPress={() => {
+                console.log("Aucun élément sélectionné, affichage du toast");
+                search();
+              }}
+            >
+              <Text style={styles.researchPressable}>Rechercher</Text>
+            </Pressable>
+
+            <Pressable
+              style={[styles.pressable, { marginHorizontal: 10 }]}
+              onPress={() => setResultsNumberModalVisible(true)}
+            >
+              <Text>5️⃣</Text>
+            </Pressable>
+
+            <StatSliderResultSelectorPressable
+              setFoundedStatsModalVisible={setFoundedStatsModalVisible}
+            />
+          </View>
+
+          <Modal
+            animationType="none" // Utilise slide, fade, none pour les animations
+            transparent={true} // Définit si le fond est transparent
+            visible={chosenStatsModalVisible}
+            onRequestClose={() => setChosenStatsModalVisible(false)} // Fonction pour fermer le modal
           >
-            <Text>➕</Text>
-          </Pressable>
-
-          <Pressable
-            style={[styles.pressable, { marginHorizontal: 10 }]}
-            onPress={() => setFilterModalVisible(true)}
-          >
-            <Text>📌</Text>
-          </Pressable>
-
-          <Pressable
-            style={[styles.pressable, { flex: 1 }]}
-            onPress={() => search()}
-          >
-            <Text style={styles.researchPressable}>Rechercher</Text>
-          </Pressable>
-
-          <Pressable
-            style={[styles.pressable, { marginHorizontal: 10 }]}
-            onPress={() => setResultsNumberModalVisible(true)}
-          >
-            <Text>5️⃣</Text>
-          </Pressable>
-
-          <StatSliderResultSelectorPressable
-            setFoundedStatsModalVisible={setFoundedStatsModalVisible}
-          />
-        </View>
-
-        <Modal
-          animationType="none" // Utilise slide, fade, none pour les animations
-          transparent={true} // Définit si le fond est transparent
-          visible={chosenStatsModalVisible}
-          onRequestClose={() => setChosenStatsModalVisible(false)} // Fonction pour fermer le modal
-        >
-          <ScrollView>
-            <View style={styles.modalBackground}>
-              <View style={styles.modalContainer}>
-                <Text style={styles.modalText}>
-                  Ceci est une fenêtre modale
-                </Text>
-                <View style={styles.checkBoxesContainer}>
-                  {chosenStats.map((stat) => (
-                    <View key={stat.name} style={styles.checkBoxContainer}>
-                      <Checkbox
-                        value={stat.checked}
-                        onValueChange={() =>
-                          toggleCheck(setChosenStats, stat.name)
-                        }
-                        style={styles.checkbox}
-                      />
-                      <Text style={styles.checkBoxItemLabel}>{stat.name}</Text>
-                    </View>
-                  ))}
+            <ScrollView>
+              <View style={styles.modalBackground}>
+                <View style={styles.modalContainer}>
+                  <Text style={styles.modalText}>
+                    Ceci est une fenêtre modale 1
+                  </Text>
+                  <View style={styles.checkBoxesContainer}>
+                    {chosenStats.map((stat) => (
+                      <View key={stat.name} style={styles.checkBoxContainer}>
+                        <Checkbox
+                          value={stat.checked}
+                          onValueChange={() =>
+                            toggleCheck(setChosenStats, stat.name)
+                          }
+                          style={styles.checkbox}
+                        />
+                        <Text style={styles.checkBoxItemLabel}>
+                          {stat.name}
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+                  <Pressable
+                    style={styles.pressable}
+                    onPress={() => setChosenStatsModalVisible(false)}
+                  >
+                    <Text style={styles.pressableText}>Fermer</Text>
+                  </Pressable>
                 </View>
-                <Pressable
-                  style={styles.pressable}
-                  onPress={() => setChosenStatsModalVisible(false)}
-                >
-                  <Text style={styles.pressableText}>Fermer</Text>
-                </Pressable>
               </View>
-            </View>
-          </ScrollView>
-        </Modal>
+            </ScrollView>
+            <Toast ref={(ref) => Toast.setRef(ref)} />
+          </Modal>
 
-        <Modal
-          animationType="none" // Utilise slide, fade, none pour les animations
-          transparent={true} // Définit si le fond est transparent
-          visible={filterModalVisible}
-          onRequestClose={() => setFilterModalVisible(false)} // Fonction pour fermer le modal
-        >
-          <ScrollView>
-            <View style={styles.modalBackground}>
-              <View style={styles.modalContainer}>
-                <Text style={styles.modalText}>
-                  Ceci est une fenêtre modale
-                </Text>
-                <View style={styles.checkBoxesContainer}>
-                  {chosenBodyType.map((bodyType) => (
-                    <View key={bodyType.name} style={styles.checkBoxContainer}>
-                      <Checkbox
-                        value={bodyType.checked}
-                        onValueChange={() =>
-                          toggleCheck(setChosenBodyType, bodyType.name)
-                        }
-                        style={styles.checkbox}
-                      />
-                      <Text style={styles.checkBoxItemLabel}>
-                        {bodyType.nameDisplay}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
+          <Modal
+            animationType="none" // Utilise slide, fade, none pour les animations
+            transparent={true} // Définit si le fond est transparent
+            visible={filterModalVisible}
+            onRequestClose={() => setFilterModalVisible(false)} // Fonction pour fermer le modal
+          >
+            <ScrollView>
+              <View style={styles.modalBackground}>
+                <View style={styles.modalContainer}>
+                  <Text style={styles.modalText}>
+                    Ceci est une fenêtre modale
+                  </Text>
+                  <View style={styles.checkBoxesContainer}>
+                    {chosenBodyType.map((bodyType) => (
+                      <View
+                        key={bodyType.name}
+                        style={styles.checkBoxContainer}
+                      >
+                        <Checkbox
+                          value={bodyType.checked}
+                          onValueChange={() =>
+                            toggleCheck(setChosenBodyType, bodyType.name)
+                          }
+                          style={styles.checkbox}
+                        />
+                        <Text style={styles.checkBoxItemLabel}>
+                          {bodyType.nameDisplay}
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
 
-                <View style={styles.elementsImagesDeselector}>
-                  <ElementsImagesDeselector
+                  <View style={styles.elementsImagesDeselector}>
+                    <ElementsImagesDeselector
+                      pressableImages={pressableImages}
+                      handlePressImage={handlePressImageCompleted}
+                      displayCase={false}
+                    />
+                  </View>
+
+                  <ElementsImagesSelector
                     pressableImages={pressableImages}
                     handlePressImage={handlePressImageCompleted}
                     displayCase={false}
                   />
+                  <Pressable
+                    style={styles.pressable}
+                    onPress={() => setFilterModalVisible(false)}
+                  >
+                    <Text style={styles.pressableText}>Fermer</Text>
+                  </Pressable>
                 </View>
+              </View>
+            </ScrollView>
+          </Modal>
 
-                <ElementsImagesSelector
-                  pressableImages={pressableImages}
-                  handlePressImage={handlePressImageCompleted}
-                  displayCase={false}
-                />
+          <Modal
+            animationType="none" // Utilise slide, fade, none pour les animations
+            transparent={true} // Définit si le fond est transparent
+            visible={resultsNumberModalVisible}
+            onRequestClose={() => setResultsNumberModalVisible(false)} // Fonction pour fermer le modal
+          >
+            <View style={styles.modalBackground}>
+              <View style={styles.modalContainer}>
+                <Text style={styles.modalText}>
+                  Ceci est une fenêtre modale
+                </Text>
+                <View style={styles.checkBoxesContainer}>
+                  <View style={styles.checkBoxContainer}>
+                    <ResultsNumber
+                      resultsNumber={resultsNumber}
+                      setResultsNumber={setResultsNumber}
+                    />
+                  </View>
+                </View>
                 <Pressable
                   style={styles.pressable}
-                  onPress={() => setFilterModalVisible(false)}
+                  onPress={() => setResultsNumberModalVisible(false)}
                 >
                   <Text style={styles.pressableText}>Fermer</Text>
                 </Pressable>
               </View>
             </View>
-          </ScrollView>
-        </Modal>
+          </Modal>
 
-        <Modal
-          animationType="none" // Utilise slide, fade, none pour les animations
-          transparent={true} // Définit si le fond est transparent
-          visible={resultsNumberModalVisible}
-          onRequestClose={() => setResultsNumberModalVisible(false)} // Fonction pour fermer le modal
-        >
-          <View style={styles.modalBackground}>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalText}>Ceci est une fenêtre modale</Text>
-              <View style={styles.checkBoxesContainer}>
-                <View style={styles.checkBoxContainer}>
-                  <ResultsNumber
-                    resultsNumber={resultsNumber}
-                    setResultsNumber={setResultsNumber}
-                  />
-                </View>
-              </View>
-              <Pressable
-                style={styles.pressable}
-                onPress={() => setResultsNumberModalVisible(false)}
-              >
-                <Text style={styles.pressableText}>Fermer</Text>
-              </Pressable>
-            </View>
+          <StatSliderResultSelectorModal
+            foundedStatsModalVisible={foundedStatsModalVisible}
+            setFoundedStatsModalVisible={setFoundedStatsModalVisible}
+            isFoundedStatsVisible={isFoundedStatsVisible}
+            setIsFoundedStatsVisible={setIsFoundedStatsVisible}
+            toggleCheck={toggleCheck}
+          />
+
+          <View style={styles.setCardContainer}>
+            {setsToShow.map((setToShow, index) => {
+              return (
+                <SetCard
+                  key={index}
+                  setToShow={setToShow}
+                  isFoundedStatsVisible={isFoundedStatsVisible}
+                  chosenStats={chosenStats}
+                />
+              );
+            })}
           </View>
-        </Modal>
-
-        <StatSliderResultSelectorModal
-          foundedStatsModalVisible={foundedStatsModalVisible}
-          setFoundedStatsModalVisible={setFoundedStatsModalVisible}
-          isFoundedStatsVisible={isFoundedStatsVisible}
-          setIsFoundedStatsVisible={setIsFoundedStatsVisible}
-          toggleCheck={toggleCheck}
-        />
-
-        <View style={styles.setCardContainer}>
-          {setsToShow.map((setToShow, index) => {
-            return (
-              <SetCard
-                key={index}
-                setToShow={setToShow}
-                isFoundedStatsVisible={isFoundedStatsVisible}
-                chosenStats={chosenStats}
-              />
-            );
-          })}
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 export default ResearchSetScreen;
 
 const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+    backgroundColor: "#F5F5F5",
+  },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 10,
+    paddingTop: 10,
   },
-  img: {
-    height: 30,
-    width: 30,
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: "bold",
+  statSlidersContainer: {
+    display: "flex",
+    width: "100%",
+    borderRadius: 4,
+    alignItems: "center",
+    marginBottom: 5,
   },
   checkBoxContainer: {
     marginBottom: 2,
     alignItems: "center",
     flexDirection: "row",
     backgroundColor: "red",
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: "bold",
+    marginHorizontal: 4,
+    marginBottom: 15,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    color: "#333333",
+  },
+  text: {
+    fontSize: 18,
+  },
+  errorText: {
+    fontSize: 18, // Taille du texte pour qu'il soit lisible mais pas trop grand
+    fontWeight: "bold", // Texte en gras pour le rendre plus visible
+    textAlign: "center", // Centrer le texte dans l'écran (optionnel)
+  },
+  img: {
+    height: 30,
+    width: 30,
   },
   checkbox: {
     width: 30,
@@ -471,14 +536,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: "flex-start",
     backgroundColor: "blue",
-  },
-  statSlidersContainer: {
-    paddingHorizontal: 6,
-    borderRadius: 4,
-    alignItems: "center",
-    backgroundColor: "blue",
-    marginBottom: 8,
-    minHeight: 100,
   },
   modalBackground: {
     flex: 1,
@@ -498,7 +555,8 @@ const styles = StyleSheet.create({
   },
   pressable: {
     padding: 10,
-    backgroundColor: "#007BFF",
+    borderColor: "#FF4500", //#00BFFF
+    borderWidth: 5,
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
