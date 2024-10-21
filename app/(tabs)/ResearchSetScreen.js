@@ -9,14 +9,15 @@ import {
   Dimensions,
   Modal,
   Alert,
+  StatusBar,
 } from "react-native";
 import Checkbox from "expo-checkbox";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-
+import Toast from "react-native-toast-message";
 
 import {
   initializePressableImages,
-  handlePressImage
+  handlePressImage,
 } from "../../utils/pressableImagesFunctions";
 
 // Utils
@@ -46,22 +47,35 @@ const screenWidth = Dimensions.get("window").width;
 
 const ResearchSetScreen = () => {
   const [chosenStats, setChosenStats] = useState(
-    statNames.map((statName) => ({
-      name: statName,
-      checked: false,
-      value: 0,
-      statFilterNumber: 0,
-      setStatFilterNumber: (newState) => {
-        setChosenStats((prevStats) =>
-          prevStats.map((stat) =>
-            stat.name === statName
-              ? { ...stat, statFilterNumber: newState }
-              : stat
-          )
-        );
-      },
-    }))
+    statNames.map((statName, index) => {
+      return {
+        name: statName,
+        checked: index === 0,
+        value: 0,
+        statFilterNumber: 0,
+        setStatFilterNumber: (newState) => {
+          setChosenStats((prevStats) =>
+            prevStats.map((stat) =>
+              stat.name === statName
+                ? { ...stat, statFilterNumber: newState }
+                : stat
+            )
+          );
+        },
+      };
+    })
   );
+
+  const showToast = () => {
+    console.log("ok");
+    Toast.show({
+      type: "success",
+      text1: "Hello",
+      text2: "Ceci est une alerte temporaire 👋",
+      position: "bottom", // Ou 'bottom'
+      visibilityTime: 3000, // 3 secondes
+    });
+  };
 
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
     statNames.map((statName) => ({
@@ -86,7 +100,7 @@ const ResearchSetScreen = () => {
   const [foundedStatsModalVisible, setFoundedStatsModalVisible] =
     useState(false);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
-  const [filterModalButtonHover, setFilterModalButtonHover] = useState(false)
+  const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
   const [resultsNumberModalVisible, setResultsNumberModalVisible] =
     useState(false);
   const [menuModalVisible, setMenuModalVisible] = useState(false);
@@ -139,11 +153,24 @@ const ResearchSetScreen = () => {
 
   // Inverser l'état checked des stats
   const toggleCheck = (setList, name) => {
-    setList((prev) =>
-      prev.map((item) =>
+    setList((prev) => {
+      const newList = prev.map((item) =>
         item.name === name ? { ...item, checked: !item.checked } : item
-      )
-    );
+      );
+
+      // Vérifiez s'il reste au moins un checked
+      const hasChecked = newList.some((item) => item.checked);
+
+      // Si tous les éléments sont décochés, rétablissez l'état de l'élément
+      if (!hasChecked) {
+        showToast();
+        return newList.map((item) =>
+          item.name === name ? { ...item, checked: true } : item
+        );
+      }
+
+      return newList;
+    });
   };
 
   // Mettre à jour la valeur du slider
@@ -252,17 +279,25 @@ const ResearchSetScreen = () => {
               alignItems: "center",
               justifyContent: "space-between",
               marginBottom: 10,
-            }
-          ]}>
+            },
+          ]}
+        >
           <Text style={{ margin: 16 }}>
             <MaterialIcons name="home" size={24}></MaterialIcons>
           </Text>
 
-          <Text style={{
-            fontSize: "22px"
-          }}>Coucou</Text>
+          <Text
+            style={{
+              fontSize: 22,
+            }}
+          >
+            Coucou
+          </Text>
 
-          <Pressable style={styles.button_icon} onPress={() => setMenuModalVisible(true)}>
+          <Pressable
+            style={styles.button_icon}
+            onPress={() => setMenuModalVisible(true)}
+          >
             <MaterialIcons name="more-vert" size={24}></MaterialIcons>
           </Pressable>
           <Modal
@@ -271,12 +306,16 @@ const ResearchSetScreen = () => {
             visible={menuModalVisible}
             onRequestClose={() => setMenuModalVisible(false)} // Fonction pour fermer le modal
           >
-            <Text style={{
-              position: "absolute",
-              right: 50,
-              top: 50,
-              backgroundColor: "red",
-            }}>Coucou</Text>
+            <Text
+              style={{
+                position: "absolute",
+                right: 50,
+                top: 50,
+                backgroundColor: "red",
+              }}
+            >
+              Coucou
+            </Text>
           </Modal>
         </View>
 
@@ -321,7 +360,7 @@ const ResearchSetScreen = () => {
           </Pressable>
 
           <Pressable
-            style={[button_icon.container, shadow_3dp]}
+            style={[styles.pressable, { marginHorizontal: 10 }]}
             onPress={() => setFilterModalVisible(true)}
           >
             <MaterialCommunityIcons name="pin" size={24} color={"white"} />
@@ -354,11 +393,12 @@ const ResearchSetScreen = () => {
           onRequestClose={() => setChosenStatsModalVisible(false)} // Fonction pour fermer le modal
         >
           <ScrollView>
-            <Pressable style={modal.background} onPress={() => setChosenStatsModalVisible(false)}>
+            <Pressable
+              style={modal.background}
+              onPress={() => setChosenStatsModalVisible(false)}
+            >
               <Pressable style={modal.container}>
-                <Text style={modal.title_center}>
-                  Affichage
-                </Text>
+                <Text style={modal.title_center}>Affichage</Text>
                 <View style={modal.content}>
                   {chosenStats.map((stat) => (
                     <Pressable onPress={() => toggleCheck(setChosenStats, stat.name)} key={stat.name} style={checkbox.container}>
@@ -368,7 +408,7 @@ const ResearchSetScreen = () => {
                         //   toggleCheck(setChosenStats, stat.name)
                         // }
                         style={checkbox.square}
-                        color={{true: th.primary, false: th.on_primary}}
+                        color={{ true: th.primary, false: th.on_primary }}
                       />
                       <Text style={checkbox.text}>{stat.name}</Text>
                     </Pressable>
@@ -449,15 +489,18 @@ const ResearchSetScreen = () => {
           onRequestClose={() => setResultsNumberModalVisible(false)} // Fonction pour fermer le modal
           key="modal-resultNumber"
         >
-          <Pressable style={styles.modalBackground} onPress={() => setResultsNumberModalVisible(false)}>
+          <Pressable
+            style={styles.modalBackground}
+            onPress={() => setResultsNumberModalVisible(false)}
+          >
             <Pressable style={modal.container}>
               <Text style={modal.title_center}>Nombre de résultats</Text>
-                <View style={styles.checkBoxContainer}>
-                  <ResultsNumber
-                    resultsNumber={resultsNumber}
-                    setResultsNumber={setResultsNumber}
-                  />
-                </View>
+              <View style={styles.checkBoxContainer}>
+                <ResultsNumber
+                  resultsNumber={resultsNumber}
+                  setResultsNumber={setResultsNumber}
+                />
+              </View>
               <Pressable
                 onHoverIn={() => setFilterModalButtonHover(true)}
                 onHoverOut={() => setFilterModalButtonHover(false)}
@@ -615,5 +658,5 @@ const styles = StyleSheet.create({
 
   button_icon: {
     margin: 16,
-  }
+  },
 });

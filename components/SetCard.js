@@ -8,9 +8,10 @@ import {
   Image,
   Modal,
   Platform,
+  Alert,
 } from "react-native";
 import { elementsAllClassName } from "../data/data";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native";
 import { elementsImages } from "../data/data";
 import StatSliderResult from "./StatSliderResult";
 
@@ -27,11 +28,11 @@ const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
 
   const displaySetImages = () => {
     setIsModalVisible(true);
+    console.log("hey");
   };
 
   return (
     <View>
-      <Text>{setToShowElementsIds}</Text>
       <Pressable onPress={displaySetImages}>
         <View style={styles.container}>
           {setToShowElementsIds.map((id, index) => (

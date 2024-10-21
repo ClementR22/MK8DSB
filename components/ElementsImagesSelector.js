@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   classContainer: {
     flexDirection: "row",
     marginVertical: 3,
-    backgroundColor: "green",
+    backgroundColor: "white",
   },
   text: {
     fontSize: 25,

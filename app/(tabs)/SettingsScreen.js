@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet } from "react-native";
+import App from "../../components/App";
 
 const SettingsScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>SettingsScreen</Text>
+      <App />
     </View>
   );
 };

@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: "#6750A4",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   selectedText: {
     color: "#fff",
