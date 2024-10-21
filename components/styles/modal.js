@@ -37,5 +37,22 @@ export const modal = StyleSheet.create({
         paddingHorizontal: 24,
         fontSize: 24,
         marginBottom: 16,
+    },
+    title_center: {
+        alignSelf: "center",
+        paddingHorizontal: 24,
+        fontSize: 24,
+        marginBottom: 16,
+    },
+    close_button_center: {
+        flexGrow: 1,
+        alignSelf: "center",
+        width: 100,
+    },
+    close_button_right: {
+        flexGrow: 1,
+        alignSelf: "flex-end",
+        width: 100,
+        marginRight: 24
     }
 })

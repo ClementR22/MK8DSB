@@ -18,15 +18,13 @@ const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
 
   return (
     <View style={styles.container}>
+      <Pressable style={button_icon.container} onPress={decrement}>
+        <MaterialCommunityIcons name="minus" color={"white"}></MaterialCommunityIcons>
+      </Pressable>
       <Text style={styles.resultsNumberText}>{resultsNumber}</Text>
-      <View style={styles.buttonContainer}>
-        <Pressable style={button_icon.container} onPress={decrement}>
-          <MaterialCommunityIcons name="plus" color={"white"}></MaterialCommunityIcons>
-        </Pressable>
-        <Pressable style={button_icon.container} onPress={increment}>
-          <MaterialCommunityIcons name="minus" color={"white"}></MaterialCommunityIcons>
-        </Pressable>
-      </View>
+      <Pressable style={button_icon.container} onPress={increment}>
+        <MaterialCommunityIcons name="plus" color={"white"}></MaterialCommunityIcons>
+      </Pressable>
     </View>
   );
 };
@@ -38,26 +36,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "none",
     margin: 10,
+    flexDirection: "row",
+    paddingHorizontal: 14,
   },
   resultsNumberText: {
     fontSize: 48,
-    marginBottom: 20,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    gap: 10,
-  },
-  button: {
-    backgroundColor: "#007BFF",
-    padding: 20,
-    marginHorizontal: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "#FFFFFF",
-    fontSize: 24,
-  },
+    textAlign: "center",
+    width: "auto",
+    flexGrow: 1,
+  }
 });
 
 export default ResultsNumber;

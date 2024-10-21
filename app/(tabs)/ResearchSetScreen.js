@@ -374,7 +374,7 @@ const ResearchSetScreen = () => {
                   ))}
                 </View>
                 <Pressable
-                  style={[button_outline.container, { flexGrow: 1, alignSelf: "flex-end", width: 100, marginRight: 24 }, filterModalButtonHover ? button_outline.hover : null]}
+                  style={[button_outline.container, modal.close_button_right, filterModalButtonHover ? button_outline.hover : null]}
                   onHoverIn={() => setFilterModalButtonHover(true)}
                   onHoverOut={() => setFilterModalButtonHover(false)}
                   onPress={() => setChosenStatsModalVisible(false)}
@@ -447,23 +447,23 @@ const ResearchSetScreen = () => {
           onRequestClose={() => setResultsNumberModalVisible(false)} // Fonction pour fermer le modal
         >
           <Pressable style={styles.modalBackground} onPress={() => setResultsNumberModalVisible(false)}>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalText}>Nombre de résultats</Text>
-              <View style={styles.checkBoxesContainer}>
+            <Pressable style={modal.container}>
+              <Text style={modal.title_center}>Nombre de résultats</Text>
                 <View style={styles.checkBoxContainer}>
                   <ResultsNumber
                     resultsNumber={resultsNumber}
                     setResultsNumber={setResultsNumber}
                   />
                 </View>
-              </View>
               <Pressable
-                style={styles.pressable}
+                onHoverIn={() => setFilterModalButtonHover(true)}
+                onHoverOut={() => setFilterModalButtonHover(false)}
+                style={[button_outline.container, modal.close_button_center, filterModalButtonHover ? button_outline.hover : null]}
                 onPress={() => setResultsNumberModalVisible(false)}
               >
-                <Text style={styles.pressableText}>Fermer</Text>
+                <Text style={button_outline.text}>Fermer</Text>
               </Pressable>
-            </View>
+            </Pressable>
           </Pressable>
         </Modal>
 
