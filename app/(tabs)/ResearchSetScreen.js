@@ -292,7 +292,7 @@ const ResearchSetScreen = () => {
 
           <Text
             style={{
-              fontSize: "22px",
+              fontSize: 22,
             }}
           >
             Coucou

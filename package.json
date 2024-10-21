@@ -17,7 +17,6 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@miblanchard/react-native-slider": "^2.6.0",
-    "@react-native-community/slider": "^4.5.3",
     "@react-navigation/native": "^6.0.2",
     "expo": "^51.0.38",
     "expo-checkbox": "^3.0.0",
