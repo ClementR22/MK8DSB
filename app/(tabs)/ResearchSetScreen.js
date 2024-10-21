@@ -37,7 +37,10 @@ import ElementsImagesDeselector from "../../components/ElementsImagesDeselector"
 import { StatSliderResultSelectorModal } from "../../components/StatSliderResultSelectorModal";
 import { StatSliderResultSelectorPressable } from "../../components/StatSliderResultSelectorPressable";
 
-import { button_icon_style, button_style } from "../../components/_styles.js";
+import { button_icon, button, button_outline } from "../../components/styles/button";
+import th, { shadow_3dp } from "../../components/styles/light_theme";
+import { modal } from "../../components/styles/modal";
+import checkbox from "../../components/styles/checkbox";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -83,6 +86,7 @@ const ResearchSetScreen = () => {
   const [foundedStatsModalVisible, setFoundedStatsModalVisible] =
     useState(false);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const [filterModalButtonHover, setFilterModalButtonHover] = useState(false)
   const [resultsNumberModalVisible, setResultsNumberModalVisible] =
     useState(false);
   const [menuModalVisible, setMenuModalVisible] = useState(false);
@@ -310,28 +314,28 @@ const ResearchSetScreen = () => {
 
         <View style={styles.pressablesContainer}>
           <Pressable
-            style={button_icon_style.container}
+            style={[button_icon.container, shadow_3dp]}
             onPress={() => setChosenStatsModalVisible(true)}
           >
-            <Text style={button_icon_style.icon}>➕</Text>
+            <Text style={button_icon.icon}>➕</Text>
           </Pressable>
 
           <Pressable
-            style={button_icon_style.container}
+            style={[button_icon.container, shadow_3dp]}
             onPress={() => setFilterModalVisible(true)}
           >
             <Text>📌</Text>
           </Pressable>
 
           <Pressable
-            style={[button_style.container, { flexGrow: 1 }]}
+            style={[button.container, { flexGrow: 1 }, shadow_3dp]}
             onPress={() => search()}
           >
-            <Text style={button_style.text}>Rechercher</Text>
+            <Text style={button.text}>Rechercher</Text>
           </Pressable>
 
           <Pressable
-            style={button_icon_style.container}
+            style={[button_icon.container, shadow_3dp]}
             onPress={() => setResultsNumberModalVisible(true)}
           >
             <Text>5️⃣</Text>
@@ -349,32 +353,35 @@ const ResearchSetScreen = () => {
           onRequestClose={() => setChosenStatsModalVisible(false)} // Fonction pour fermer le modal
         >
           <ScrollView>
-            <Pressable style={styles.modalBackground} onPress={() => setChosenStatsModalVisible(false)}>
-              <View style={styles.modalContainer}>
-                <Text style={styles.modalText}>
-                  Ceci est une fenêtre modale
+            <Pressable style={modal.background} onPress={() => setChosenStatsModalVisible(false)}>
+              <Pressable style={modal.container}>
+                <Text style={modal.title}>
+                  Affichage
                 </Text>
-                <View style={styles.checkBoxesContainer}>
+                <View style={modal.content}>
                   {chosenStats.map((stat) => (
-                    <View key={stat.name} style={styles.checkBoxContainer}>
+                    <Pressable onPress={() => toggleCheck(setChosenStats, stat.name)} key={stat.name} style={styles.checkBoxContainer}>
                       <Checkbox
                         value={stat.checked}
-                        onValueChange={() =>
-                          toggleCheck(setChosenStats, stat.name)
-                        }
-                        style={styles.checkbox}
+                        // onValueChange={() =>
+                        //   toggleCheck(setChosenStats, stat.name)
+                        // }
+                        style={checkbox.square}
+                        color={{true: th.primary, false: th.on_primary}}
                       />
-                      <Text style={styles.checkBoxItemLabel}>{stat.name}</Text>
-                    </View>
+                      <Text style={checkbox.text}>{stat.name}</Text>
+                    </Pressable>
                   ))}
                 </View>
                 <Pressable
-                  style={styles.pressable}
+                  style={[button_outline.container, { flexGrow: 1, alignSelf: "flex-end", width: 100, marginRight: 24 }, filterModalButtonHover ? button_outline.hover : null]}
+                  onHoverIn={() => setFilterModalButtonHover(true)}
+                  onHoverOut={() => setFilterModalButtonHover(false)}
                   onPress={() => setChosenStatsModalVisible(false)}
                 >
-                  <Text style={styles.pressableText}>Fermer</Text>
+                  <Text style={button_outline.text}>Valider</Text>
                 </Pressable>
-              </View>
+              </Pressable>
             </Pressable>
           </ScrollView>
         </Modal>
@@ -393,7 +400,7 @@ const ResearchSetScreen = () => {
                 </Text>
                 <View style={styles.checkBoxesContainer}>
                   {chosenBodyType.map((bodyType) => (
-                    <Pressable onPress={() => toggleCheck(setChosenBodyType, bodyType.name)} key={bodyType.name} style={[styles.checkBoxContainer, {width: "85vw", height:64, padding: 24, display: "flex", justifyContent: "space-between"}]}>
+                    <Pressable onPress={() => toggleCheck(setChosenBodyType, bodyType.name)} key={bodyType.name} style={[styles.checkBoxContainer, { width: "85vw", height: 64, padding: 24, display: "flex", justifyContent: "space-between" }]}>
                       <Text style={styles.checkBoxItemLabel}>
                         {bodyType.nameDisplay}
                       </Text>
@@ -524,8 +531,14 @@ const styles = StyleSheet.create({
 
   checkBoxesContainer: {
     marginBottom: 20,
+    maxHeight: 300,
+    overflow: "scroll",
     alignItems: "flex-start",
-    backgroundColor: "blue",
+    // backgroundColor: "none",
+    borderTopColor: "#000",
+    borderTopWidth: 1,
+    borderBottomColor: "#000",
+    borderBottomWidth: 1,
   },
 
   statSlidersContainer: {
@@ -551,10 +564,11 @@ const styles = StyleSheet.create({
 
   modalContainer: {
     margin: 24,
-    backgroundColor: "purple",
+    backgroundColor: th.surface_container,
     borderRadius: 10,
     alignItems: "center",
-    width: 6 * imageSize,
+    // width: 6 * imageSize,
+    minWidth: 260,
   },
 
   modalText: {

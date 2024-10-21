@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import { button_icon_style } from "./_styles.js";
+import { button_icon } from "./styles/button";
 
 const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
   // Fonction pour incrémenter
@@ -20,10 +20,10 @@ const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
     <View style={styles.container}>
       <Text style={styles.resultsNumberText}>{resultsNumber}</Text>
       <View style={styles.buttonContainer}>
-        <Pressable style={button_icon_style.container} onPress={decrement}>
+        <Pressable style={button_icon.container} onPress={decrement}>
           <MaterialCommunityIcons name="plus" color={"white"}></MaterialCommunityIcons>
         </Pressable>
-        <Pressable style={button_icon_style.container} onPress={increment}>
+        <Pressable style={button_icon.container} onPress={increment}>
           <MaterialCommunityIcons name="minus" color={"white"}></MaterialCommunityIcons>
         </Pressable>
       </View>

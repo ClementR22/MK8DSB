@@ -1,0 +1,116 @@
+// Default Material 3 theme (https://m3.material.io/styles/color/static/baseline)
+
+export default theme = {
+    primary: "#6750A4",
+    on_primary: "#FFFFFF",
+    primary_container: "#EADDFF",
+    on_primary_container: "#4F378B",
+
+    secondary: "#625B71",
+    on_secondary: "#FFFFFF",
+    secondary_container: "#E8DEF8",
+    on_secondary_container: "#4A4458",
+
+    tertiary: "#7D5260",
+    on_tertiary: "#FFFFFF",
+    tertiary_container: "#FFD8E4",
+    on_tertiary_container: "#633B48",
+
+    error: "#B3261E",
+    on_error: "#FFFFFF",
+    error_container: "#F9DEDC",
+    on_error_container: "#8C1D18",
+
+    surface: "#FEF7FF",
+    on_surface: "#1D1B20",
+    surface_variant: "#E7E0EC",
+    on_surface_variant: "#49454F",
+    surface_container_highest: "#E6E0E9",
+    surface_container_high: "#ECE6F0",
+    surface_container: "#F3EDF7",
+    surface_container_low: "#F7F2FA",
+    surface_container_lowest: "#FFFFFF",
+    inverse_surface: "#322F35",
+    inverse_on_surface: "#F5EFF7",
+    surface_tint: "#6750A4",
+
+    outline: "#79747E",
+    outline_variant: "#CAC4D0",
+
+    scrim: "#000000",
+    shadow: "#000000",
+
+    primary_hover: "rgba(103, 80, 164, 0.08)",
+
+    // Standard CSS Material elevation
+    /*
+    shadow_0dp: "0",
+    shadow_1dp: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+    shadow_3dp: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+    shadow_6dp: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
+    shadow_8dp: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)",
+    shadow_12dp: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
+
+    shadow_hover: "all 0.3s cubic-bezier(.25,.8,.25,1)",
+    //*/
+}
+
+export const shadow_1dp = {
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+
+    elevation: 1,
+}
+
+export const shadow_3dp = {
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
+}
+
+export const shadow_6dp = {
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+
+    elevation: 6,
+}
+
+export const shadow_8dp = {
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 4,
+    },
+    shadowOpacity: 0.30,
+    shadowRadius: 4.65,
+
+    elevation: 8,
+}
+
+export const shadow_12dp = {
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+
+    elevation: 12,
+}

@@ -25,7 +25,7 @@ export const StatSliderResultSelectorModal = ({
       <ScrollView>
         <Pressable style={styles.modalBackground} onPress={() => setFoundedStatsModalVisible(false)}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalText}>Ceci est une fenêtre modale</Text>
+            <Text style={styles.modalText}>Stats à afficher</Text>
             <View style={styles.checkBoxesContainer}>
               {isFoundedStatsVisible.map((stat) => (
                 <View key={stat.name} style={styles.checkBoxContainer}>
