@@ -14,6 +14,10 @@ import { elementsAllClassName } from "../data/data";
 import { ScrollView } from "react-native";
 import { elementsImages } from "../data/data";
 import StatSliderResult from "./StatSliderResult";
+import { modal } from "./styles/modal";
+import { button } from "./styles/button";
+import { card } from "./styles/card";
+import th from "./styles/light_theme";
 
 const elementDenominations = ["character", "body", "wheels", "glider"];
 const bodyDenominations = ["kart", "bike", "sportBike", "ATV"];
@@ -33,30 +37,28 @@ const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
 
   return (
     <View>
-      <Pressable onPress={displaySetImages}>
-        <View style={styles.container}>
-          {setToShowElementsIds.map((id, index) => (
-            <Text key={index}>{elementsAllClassName[index][id]}</Text>
-          ))}
+      <Pressable style={card.container} onPress={displaySetImages}>
+        {setToShowElementsIds.map((id, index) => (
+          <Text key={"element" + index}>{elementsAllClassName[index][id]}</Text>
+        ))}
 
-          {isFoundStatsVisible.map(({ name, checked }, index) => {
-            if (checked) {
-              return (
-                <View key={index} style={styles.sliderContainer}>
-                  <Text key={index} style={styles.text}>
-                    {name} : {JSON.stringify(setToShowStats[index])}
-                  </Text>
-                  <StatSliderResult
-                    chosenValue={chosenStats[index].value}
-                    foundValue={setToShowStats[index]}
-                    isChosen={chosenStats[index].checked}
-                  />
-                </View>
-              );
-            }
-            return null;
-          })}
-        </View>
+        {isFoundStatsVisible.map(({ name, checked }, index) => {
+          if (checked) {
+            return (
+              <View key={index} style={styles.sliderContainer}>
+                <Text key={index} style={styles.text}>
+                  {name} : {JSON.stringify(setToShowStats[index])}
+                </Text>
+                <StatSliderResult
+                  chosenValue={chosenStats[index].value}
+                  foundValue={setToShowStats[index]}
+                  isChosen={chosenStats[index].checked}
+                />
+              </View>
+            );
+          }
+          return null;
+        })}
       </Pressable>
 
       <Modal
@@ -66,8 +68,8 @@ const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
         onRequestClose={() => setIsModalVisible(false)}
       >
         <ScrollView>
-          <View style={styles.modalBackground}>
-            <View style={styles.modalContainer}>
+          <Pressable onPress={() => setIsModalVisible(false)} style={modal.background}>
+            <Pressable style={modal.container}>
               {setToShowElementsIds.map((elementId, index) => {
                 const elementKey = elementDenominations[index];
                 let imagesToDisplay = null;
@@ -101,13 +103,13 @@ const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
                 ) : null;
               })}
               <Pressable
-                style={styles.closePressable}
+                style={[button.container, modal.close_button_center]}
                 onPress={() => setIsModalVisible(false)}
               >
-                <Text style={styles.pressableText}>Fermer</Text>
+                <Text style={button.text}>Fermer</Text>
               </Pressable>
-            </View>
-          </View>
+            </Pressable>
+          </Pressable>
         </ScrollView>
       </Modal>
     </View>
@@ -117,18 +119,9 @@ const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
 export default SetCard;
 
 const styles = StyleSheet.create({
-  container: {
-    width: screenWidth * 0.9,
-    marginVertical: 4,
-    alignItems: "flex-start",
-    backgroundColor: "gray",
-    paddingHorizontal: 0,
-    borderColor: "green",
-    borderWidth: 3,
-  },
   sliderContainer: {
     width: "100%",
-    backgroundColor: "green",
+    backgroundColor: th.surface_container,
   },
   text: {
     fontSize: 14,
@@ -155,7 +148,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   elementView: {
+    justifyContent: "space-evenly",
     flexDirection: "row",
+    paddingHorizontal: 16, // TODO: Fix 5 character width
   },
   image: {
     width: imageWidth,

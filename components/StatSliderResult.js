@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
+import th from "./styles/light_theme";
 
 const StatSliderResult = ({ chosenValue, foundValue, isChosen }) => {
   if (!isChosen) {
@@ -14,7 +15,7 @@ const StatSliderResult = ({ chosenValue, foundValue, isChosen }) => {
   };
 
   const getBackgroundColor = () => {
-    return bonusFound > 0 ? "blue" : bonusFound < 0 ? "red" : "black";
+    return bonusFound > 0 ? "#34be4d" : bonusFound < 0 ? "#ff6240" : "black";
   };
 
   return (
@@ -25,7 +26,7 @@ const StatSliderResult = ({ chosenValue, foundValue, isChosen }) => {
           style={[
             styles.trackSegment,
             {
-              backgroundColor: "black",
+              backgroundColor: th.primary,
               flex: getFlexForSegment(chosenValue, bonusFound),
             },
           ]}
@@ -39,8 +40,10 @@ const StatSliderResult = ({ chosenValue, foundValue, isChosen }) => {
               {
                 width: 10,
                 borderWidth: 3,
-                backgroundColor: getBackgroundColor(),
-                borderColor: "yellow",
+                borderTopRightRadius: 100,
+                borderBottomRightRadius: 100,
+                backgroundColor: th.primary,
+                borderColor: th.primary,
               },
             ]}
           />
@@ -66,7 +69,7 @@ const StatSliderResult = ({ chosenValue, foundValue, isChosen }) => {
                 width: 10,
                 borderWidth: 3,
                 backgroundColor: getBackgroundColor(),
-                borderColor: "yellow",
+                borderColor: th.primary,
               },
             ]}
           />
@@ -77,7 +80,7 @@ const StatSliderResult = ({ chosenValue, foundValue, isChosen }) => {
           style={[
             styles.trackSegment,
             {
-              backgroundColor: "gray",
+              backgroundColor: th.secondary_container,
               flex: getFlexForSegment(6 - foundValue, bonusFound),
             },
           ]}
@@ -91,7 +94,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     paddingHorizontal: 8,
-    backgroundColor: "purple",
+    // backgroundColor: "purple",
   },
   sliderTrack: {
     flexDirection: "row",
