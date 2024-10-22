@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Slider } from "@miblanchard/react-native-slider";
 import StatFilterSelector from "./StatFilterSelector";
 
+import { vw } from "./styles/light_theme";
+
 // const screenWidth = Dimensions.get("window").width;
 
 const StatSlider = ({
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderColor: "#CAC4D0",
     marginBottom: 6,
-    width: "80vw",
+    width: 0.80*vw,
   },
   containerTop: {
     width: "auto",
@@ -72,9 +74,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   sliderContainer: {
-    // Note : can use vh and vw as view height and view width for screen size
-    // width: "84vw",
-
     height: 20,
     alignItems: "stretch",
     justifyContent: "center",

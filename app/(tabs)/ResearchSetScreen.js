@@ -49,6 +49,7 @@ import th, {
 } from "../../components/styles/light_theme";
 import { modal } from "../../components/styles/modal";
 import checkbox from "../../components/styles/checkbox";
+import { vw } from "../../components/styles/light_theme";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -278,7 +279,7 @@ const ResearchSetScreen = () => {
           style={[
             styles.text,
             {
-              width: "100vw",
+              width: vw,
               height: 64,
               backgroundColor: "white",
               display: "flex",
@@ -286,6 +287,7 @@ const ResearchSetScreen = () => {
               alignItems: "center",
               justifyContent: "space-between",
               marginBottom: 10,
+              marginTop: 24,
             },
           ]}
         >
@@ -562,7 +564,7 @@ const ResearchSetScreen = () => {
           {setsToShow.map((setToShow, index) => {
             return (
               <SetCard
-                key={index}
+                key={"card" + index}
                 setToShow={setToShow}
                 isFoundStatsVisible={isFoundStatsVisible}
                 chosenStats={chosenStats}
@@ -622,8 +624,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#ECE6F0",
     marginBottom: 8,
-    maxWidth: "95vw",
-    minWidth: "80vw",
+    maxWidth: 0.95 * vw,
+    minWidth: 0.80 * vw,
     minHeight: 100,
     display: "flex",
     flexDirection: "column",
@@ -680,10 +682,11 @@ const styles = StyleSheet.create({
     margin: 16,
     marginBottom: 0,
     padding: 20,
-    alignItems: "center",
+    alignItems: "stretch",
     backgroundColor: "#ECE6F0",
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
+    rowGap: 16
   },
 
   elementsImagesDeselector: {

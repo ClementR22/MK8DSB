@@ -1,3 +1,8 @@
+import { Dimensions } from "react-native";
+
+export const vh = Dimensions.get('screen').height;
+export const vw = Dimensions.get('screen').width;
+
 // Default Material 3 theme (https://m3.material.io/styles/color/static/baseline)
 
 export default theme = {

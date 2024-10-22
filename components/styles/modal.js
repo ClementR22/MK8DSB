@@ -1,23 +1,25 @@
 import { StyleSheet } from "react-native";
 import { button } from "./button";
+import { vh, vw } from "./light_theme";
 
 export const modal = StyleSheet.create({
     background: {
         cursor: "auto",
         zIndex: -1,
         position: "absolute",
-        width: "100vw",
-        height: "100vh",
+        width: vw,
+        height: vh,
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
     },
     container: {
+        zIndex: 10,
         cursor: "auto",
         alignSelf: "center",
         minWidth: 280,
-        maxWidth: "90vw",
+        maxWidth: 0.90*vw,
         borderRadius: 28,
         paddingVertical: 24,
         backgroundColor: "#ECE6F0",
