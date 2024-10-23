@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import th from "./light_theme";
+import th from "./theme";
 
 export default checkbox = StyleSheet.create({
     container: {

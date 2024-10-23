@@ -46,10 +46,10 @@ import {
 import th, {
   shadow_12dp,
   shadow_3dp,
-} from "../../components/styles/light_theme";
+  vh, vw
+} from "../../components/styles/theme";
 import { modal } from "../../components/styles/modal";
 import checkbox from "../../components/styles/checkbox";
-import { vw } from "../../components/styles/light_theme";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -270,10 +270,11 @@ const ResearchSetScreen = () => {
       setSetsToShow(setsFound);
     }
   };
+  console.log(setsToShow);
 
   return (
     <ScrollView>
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: th.surface }]}>
         <View
           id="Title_bar"
           style={[
@@ -287,17 +288,19 @@ const ResearchSetScreen = () => {
               alignItems: "center",
               justifyContent: "space-between",
               marginBottom: 10,
+              backgroundColor: th.surface_container_highest,
               marginTop: 24,
             },
           ]}
         >
           <Text style={{ margin: 16 }}>
-            <MaterialIcons name="home" size={24}></MaterialIcons>
+            <MaterialIcons name="home" size={24} color={th.on_surface}></MaterialIcons>
           </Text>
 
           <Text
             style={{
               fontSize: 22,
+              color: th.on_surface,
             }}
           >
             Coucou
@@ -307,7 +310,7 @@ const ResearchSetScreen = () => {
             style={styles.button_icon}
             onPress={() => setMenuModalVisible(true)}
           >
-            <MaterialIcons name="more-vert" size={24}></MaterialIcons>
+            <MaterialIcons name="more-vert" size={24} color={th.on_surface}></MaterialIcons>
           </Pressable>
           <Modal
             animationType="none" // Utilise slide, fade, none pour les animations
@@ -336,7 +339,7 @@ const ResearchSetScreen = () => {
                 paddingHorizontal: 10,
                 borderRadius: 5,
                 marginBottom: 16,
-                color: "#1D1B20",
+                color: th.on_surface,
               },
             ]}
           >
@@ -365,14 +368,14 @@ const ResearchSetScreen = () => {
             style={[button_icon.container, shadow_3dp]}
             onPress={() => setChosenStatsModalVisible(true)}
           >
-            <MaterialCommunityIcons name="plus" size={24} color={"white"} />
+            <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
           </Pressable>
 
           <Pressable
             style={[button_icon.container, shadow_3dp]}
             onPress={() => setFilterModalVisible(true)}
           >
-            <MaterialCommunityIcons name="pin" size={24} color={"white"} />
+            <MaterialCommunityIcons name="pin" size={24} color={th.on_primary} />
           </Pressable>
 
           <Pressable
@@ -383,7 +386,7 @@ const ResearchSetScreen = () => {
             ]}
             onPress={() => search()}
           >
-            <MaterialCommunityIcons name="magnify" size={24} color={"white"} />
+            <MaterialCommunityIcons name="magnify" size={24} color={th.on_primary} />
             <Text style={[button.text, { marginLeft: 8 }]}>Rechercher</Text>
           </Pressable>
 
@@ -391,7 +394,7 @@ const ResearchSetScreen = () => {
             style={[button_icon.container, shadow_3dp]}
             onPress={() => setResultsNumberModalVisible(true)}
           >
-            <MaterialIcons name="numbers" size={24} color={"white"} />
+            <MaterialIcons name="numbers" size={24} color={th.on_primary} />
           </Pressable>
 
           <StatSliderResultSelectorPressable
@@ -560,7 +563,10 @@ const ResearchSetScreen = () => {
           key="modal-statSlider"
         />
 
-        <View style={styles.setCardContainer}>
+        <View key="cardsContainer" style={styles.setCardContainer}>
+          <View style={setsToShow.length == 0 ? { paddingBottom: 0.282*vh} : { display: "none" }}>
+            <MaterialCommunityIcons name="chat-question" size={72} color={th.on_surface} style={{ marginHorizontal: 72 }} />
+          </View>
           {setsToShow.map((setToShow, index) => {
             return (
               <SetCard
@@ -622,7 +628,7 @@ const styles = StyleSheet.create({
     padding: 24,
     borderRadius: 24,
     alignItems: "center",
-    backgroundColor: "#ECE6F0",
+    backgroundColor: th.surface_container_high,
     marginBottom: 8,
     maxWidth: 0.95 * vw,
     minWidth: 0.80 * vw,
@@ -679,11 +685,12 @@ const styles = StyleSheet.create({
 
   setCardContainer: {
     display: "flex",
+    flexGrow: 1,
     margin: 16,
     marginBottom: 0,
     padding: 20,
     alignItems: "stretch",
-    backgroundColor: "#ECE6F0",
+    backgroundColor: th.surface_container_high,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     rowGap: 16

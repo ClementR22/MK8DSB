@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Slider } from "@miblanchard/react-native-slider";
 import StatFilterSelector from "./StatFilterSelector";
 
-import { vw } from "./styles/light_theme";
+import th, { vw } from "./styles/theme";
 
 // const screenWidth = Dimensions.get("window").width;
 
@@ -50,10 +50,10 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 12,
     paddingVertical: 8,
-    backgroundColor: "#FEF7FF",
+    backgroundColor: th.surface,
     borderWidth: 2,
     borderRadius: 12,
-    borderColor: "#CAC4D0",
+    borderColor: th.outline_variant,
     marginBottom: 6,
     width: 0.80*vw,
   },
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     padding: 3,
   },
   text: {
+    color: th.on_surface,
     fontSize: 22,
     marginLeft: 6,
   },
@@ -82,12 +83,12 @@ const styles = StyleSheet.create({
     width: 4,
     height: 30,
     borderRadius: 10,
-    backgroundColor: "#6750A4",
+    backgroundColor: th.primary,
   },
   track: {
     height: 8,
     borderRadius: 4,
-    backgroundColor: "#E8DEF8",
+    backgroundColor: th.secondary_container,
   },
 });
 

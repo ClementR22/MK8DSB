@@ -10,7 +10,7 @@ import { imageSize } from "./PressableImage";
 import { modal } from "./styles/modal";
 import { button } from "./styles/button";
 import checkbox from "./styles/checkbox";
-import th from './styles/light_theme';
+import th from './styles/theme';
 
 export const StatSliderResultSelectorModal = ({
   foundedStatsModalVisible,

@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { button_icon } from "./styles/button";
-import { shadow_12dp } from "./styles/light_theme";
+import { shadow_12dp } from "./styles/theme";
 
 const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
   const [hovered_1, setHover_1] = useState(false)

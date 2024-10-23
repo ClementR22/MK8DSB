@@ -17,7 +17,7 @@ import StatSliderResult from "./StatSliderResult";
 import { modal } from "./styles/modal";
 import { button } from "./styles/button";
 import { card } from "./styles/card";
-import th from "./styles/light_theme";
+import th from "./styles/theme";
 
 const elementDenominations = ["character", "body", "wheels", "glider"];
 const bodyDenominations = ["kart", "bike", "sportBike", "ATV"];
@@ -39,7 +39,7 @@ const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
     <View>
       <Pressable style={card.container} onPress={displaySetImages}>
         {setToShowElementsIds.map((id, index) => (
-          <Text key={"element" + index}>{elementsAllClassName[index][id]}</Text>
+          <Text key={"element" + index} style={card.text}>{elementsAllClassName[index][id]}</Text>
         ))}
 
         {isFoundStatsVisible.map(({ name, checked }, index) => {

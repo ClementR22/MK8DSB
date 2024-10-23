@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import th from "./styles/light_theme";
+import th from "./styles/theme";
 
 const StatSliderResult = ({ chosenValue, foundValue, isChosen }) => {
   if (!isChosen) {

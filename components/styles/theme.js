@@ -1,11 +1,12 @@
 import { Dimensions } from "react-native";
+import { useColorScheme } from "react-native";
 
 export const vh = Dimensions.get('screen').height;
 export const vw = Dimensions.get('screen').width;
 
 // Default Material 3 theme (https://m3.material.io/styles/color/static/baseline)
 
-export default theme = {
+export const light_theme = {
     primary: "#6750A4",
     on_primary: "#FFFFFF",
     primary_container: "#EADDFF",
@@ -58,6 +59,50 @@ export default theme = {
 
     shadow_hover: "all 0.3s cubic-bezier(.25,.8,.25,1)",
     //*/
+}
+
+
+export const dark_theme = {
+    primary: "#D0BCFF",
+    on_primary: "#381E72",
+    primary_container: "#4F378B",
+    on_primary_container: "#EADDFF",
+
+    secondary: "#CCC2DC",
+    on_secondary: "#332D41",
+    secondary_container: "#4A4458",
+    on_secondary_container: "#E8DEF8",
+
+    tertiary: "#EFB8C8",
+    on_tertiary: "#492532",
+    tertiary_container: "#633B48",
+    on_tertiary_container: "#FFD8E4",
+
+    error: "#F2B8B5",
+    on_error: "#601410",
+    error_container: "#8C1D18",
+    on_error_container: "#F9DEDC",
+
+    surface: "#141218",
+    on_surface: "#E6E0E9",
+    surface_variant: "#49454F",
+    on_surface_variant: "#CAC4D0",
+    surface_container_highest: "#36343B",
+    surface_container_high: "#2B2930",
+    surface_container: "#211F26",
+    surface_container_low: "#1D1B20",
+    surface_container_lowest: "#0F0D13",
+    inverse_surface: "#E6E0E9",
+    inverse_on_surface: "#322F35",
+    surface_tint: "#D0BCFF",
+
+    outline: "#938F99",
+    outline_variant: "#49454F",
+
+    scrim: "#000000",
+    shadow: "#000000",
+
+    primary_hover: "rgba(103, 80, 164, 0.08)",
 }
 
 export const shadow_1dp = {
@@ -119,3 +164,7 @@ export const shadow_12dp = {
 
     elevation: 12,
 }
+
+colorSheme = useColorScheme() === "dark" ? dark_theme : light_theme
+
+export default colorSheme

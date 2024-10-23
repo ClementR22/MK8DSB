@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import th from "./light_theme";
+import th from "./theme";
 
 export const card = StyleSheet.create({
     container: {
@@ -7,4 +7,7 @@ export const card = StyleSheet.create({
         borderRadius: 12,
         padding: 16,
     },
+    text: {
+        color: th.on_surface,
+    }
 })

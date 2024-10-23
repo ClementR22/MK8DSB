@@ -1,20 +1,20 @@
 import { StyleSheet } from "react-native";
-import th from "./light_theme";
-import { shadow_3dp } from "./light_theme";
+import th from "./theme";
+import { shadow_3dp } from "./theme";
 
 export const button = StyleSheet.create({
   container: {
     display: "flex",
     height: 40,
     borderRadius: 100,
-    backgroundColor: "#6750A4",
+    backgroundColor: th.primary,
     justifyContent: "center",
     alignItems: "center",
   },
   text: {
     fontWeight: "500",
     fontSize: 14,
-    color: "#fff",
+    color: th.on_primary,
   },
 });
 
@@ -24,12 +24,12 @@ export const button_icon = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 100,
-    backgroundColor: "#6750A4",
+    backgroundColor: th.primary,
     justifyContent: "center",
     alignItems: "center",
   },
   icon: {
-    color: "#fff",
+    color: th.on_primary,
   },
 });
 

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { button } from "./button";
-import { vh, vw } from "./light_theme";
+import th, { vh, vw } from "./theme";
 
 export const modal = StyleSheet.create({
     background: {
@@ -22,7 +22,7 @@ export const modal = StyleSheet.create({
         maxWidth: 0.90*vw,
         borderRadius: 28,
         paddingVertical: 24,
-        backgroundColor: "#ECE6F0",
+        backgroundColor: th.surface_container_high,
     },
     content: {
         marginBottom: 20,
@@ -30,17 +30,19 @@ export const modal = StyleSheet.create({
         overflow: "scroll",
         alignItems: "flex-start",
         paddingHorizontal: 24,
-        borderTopColor: "#000",
+        borderTopColor: th.outline,
         borderTopWidth: 1,
-        borderBottomColor: "#000",
+        borderBottomColor: th.outline,
         borderBottomWidth: 1,
     },
     title: {
+        color: th.on_surface,
         paddingHorizontal: 24,
         fontSize: 24,
         marginBottom: 16,
     },
     title_center: {
+        color: th.on_surface,
         alignSelf: "center",
         paddingHorizontal: 24,
         fontSize: 24,
