@@ -46,7 +46,8 @@ import {
 import th, {
   shadow_12dp,
   shadow_3dp,
-  vh, vw
+  vh,
+  vw,
 } from "../../components/styles/theme";
 import { modal } from "../../components/styles/modal";
 import checkbox from "../../components/styles/checkbox";
@@ -294,7 +295,11 @@ const ResearchSetScreen = () => {
           ]}
         >
           <Text style={{ margin: 16 }}>
-            <MaterialIcons name="home" size={24} color={th.on_surface}></MaterialIcons>
+            <MaterialIcons
+              name="home"
+              size={24}
+              color={th.on_surface}
+            ></MaterialIcons>
           </Text>
 
           <Text
@@ -310,7 +315,11 @@ const ResearchSetScreen = () => {
             style={styles.button_icon}
             onPress={() => setMenuModalVisible(true)}
           >
-            <MaterialIcons name="more-vert" size={24} color={th.on_surface}></MaterialIcons>
+            <MaterialIcons
+              name="more-vert"
+              size={24}
+              color={th.on_surface}
+            ></MaterialIcons>
           </Pressable>
           <Modal
             animationType="none" // Utilise slide, fade, none pour les animations
@@ -368,14 +377,22 @@ const ResearchSetScreen = () => {
             style={[button_icon.container, shadow_3dp]}
             onPress={() => setChosenStatsModalVisible(true)}
           >
-            <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
+            <MaterialCommunityIcons
+              name="plus"
+              size={24}
+              color={th.on_primary}
+            />
           </Pressable>
 
           <Pressable
             style={[button_icon.container, shadow_3dp]}
             onPress={() => setFilterModalVisible(true)}
           >
-            <MaterialCommunityIcons name="pin" size={24} color={th.on_primary} />
+            <MaterialCommunityIcons
+              name="pin"
+              size={24}
+              color={th.on_primary}
+            />
           </Pressable>
 
           <Pressable
@@ -386,7 +403,11 @@ const ResearchSetScreen = () => {
             ]}
             onPress={() => search()}
           >
-            <MaterialCommunityIcons name="magnify" size={24} color={th.on_primary} />
+            <MaterialCommunityIcons
+              name="magnify"
+              size={24}
+              color={th.on_primary}
+            />
             <Text style={[button.text, { marginLeft: 8 }]}>Rechercher</Text>
           </Pressable>
 
@@ -564,8 +585,19 @@ const ResearchSetScreen = () => {
         />
 
         <View key="cardsContainer" style={styles.setCardContainer}>
-          <View style={setsToShow.length == 0 ? { paddingBottom: 0.282*vh} : { display: "none" }}>
-            <MaterialCommunityIcons name="chat-question" size={72} color={th.on_surface} style={{ marginHorizontal: 72 }} />
+          <View
+            style={
+              setsToShow.length == 0
+                ? { paddingBottom: 0.282 * vh }
+                : { display: "none" }
+            }
+          >
+            <MaterialCommunityIcons
+              name="chat-question"
+              size={72}
+              color={th.on_surface}
+              style={{ marginHorizontal: 72 }}
+            />
           </View>
           {setsToShow.map((setToShow, index) => {
             return (
@@ -631,7 +663,7 @@ const styles = StyleSheet.create({
     backgroundColor: th.surface_container_high,
     marginBottom: 8,
     maxWidth: 0.95 * vw,
-    minWidth: 0.80 * vw,
+    minWidth: 0.8 * vw,
     minHeight: 100,
     display: "flex",
     flexDirection: "column",
@@ -693,7 +725,7 @@ const styles = StyleSheet.create({
     backgroundColor: th.surface_container_high,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    rowGap: 16
+    rowGap: 16,
   },
 
   elementsImagesDeselector: {

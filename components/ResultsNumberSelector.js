@@ -5,8 +5,8 @@ import { button_icon } from "./styles/button";
 import { shadow_12dp } from "./styles/theme";
 
 const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
-  const [hovered_1, setHover_1] = useState(false)
-  const [hovered_2, setHover_2] = useState(false)
+  const [hovered_1, setHover_1] = useState(false);
+  const [hovered_2, setHover_2] = useState(false);
 
   // Fonction pour incrémenter
   const increment = () => {
@@ -27,8 +27,11 @@ const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
         onPress={decrement}
         onHoverIn={() => setHover_1(true)}
         onHoverOut={() => setHover_1(false)}
-        >
-        <MaterialCommunityIcons name="minus" color={"white"}></MaterialCommunityIcons>
+      >
+        <MaterialCommunityIcons
+          name="minus"
+          color={"white"}
+        ></MaterialCommunityIcons>
       </Pressable>
       <Text style={styles.resultsNumberText}>{resultsNumber}</Text>
       <Pressable
@@ -37,7 +40,10 @@ const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
         onHoverIn={() => setHover_2(true)}
         onHoverOut={() => setHover_2(false)}
       >
-        <MaterialCommunityIcons name="plus" color={"white"}></MaterialCommunityIcons>
+        <MaterialCommunityIcons
+          name="plus"
+          color={"white"}
+        ></MaterialCommunityIcons>
       </Pressable>
     </View>
   );
@@ -45,7 +51,6 @@ const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "none",
@@ -58,7 +63,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: "auto",
     flexGrow: 1,
-  }
+  },
 });
 
 export default ResultsNumber;
