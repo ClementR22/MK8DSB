@@ -35,7 +35,7 @@ import { imageSize } from "../../components/PressableImage";
 import SetCard from "../../components/SetCard";
 import ResultsNumber from "../../components/ResultsNumberSelector";
 import ElementsImagesDeselector from "../../components/ElementsImagesDeselector";
-import { StatSliderResultSelectorModal } from "../../components/StatSliderResultSelectorModal";
+import MyModal from "../../components/MyModal";
 import { StatSliderResultSelectorPressable } from "../../components/StatSliderResultSelectorPressable";
 
 import {
@@ -51,6 +51,9 @@ import th, {
 } from "../../components/styles/theme";
 import { modal } from "../../components/styles/modal";
 import checkbox from "../../components/styles/checkbox";
+import PressableStat from "../../components/PressableStat";
+import ModalContent from "../../components/ModalContent";
+import FilterSelector from "../../components/FilterSelector";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -161,21 +164,23 @@ const ResearchSetScreen = () => {
   };
 
   // Inverser l'état checked des stats
-  const toggleCheck = (setList, name) => {
+  const toggleCheck = (setList, name, keepOneCondition = true) => {
     setList((prev) => {
       const newList = prev.map((item) =>
         item.name === name ? { ...item, checked: !item.checked } : item
       );
 
-      // Vérifiez s'il reste au moins un checked
-      const hasChecked = newList.some((item) => item.checked);
+      if (keepOneCondition) {
+        // Vérifiez s'il reste au moins un checked
+        const hasChecked = newList.some((item) => item.checked);
 
-      // Si tous les éléments sont décochés, rétablissez l'état de l'élément
-      if (!hasChecked) {
-        showToast();
-        return newList.map((item) =>
-          item.name === name ? { ...item, checked: true } : item
-        );
+        // Si tous les éléments sont décochés, rétablissez l'état de l'élément
+        if (!hasChecked) {
+          showToast();
+          return newList.map((item) =>
+            item.name === name ? { ...item, checked: true } : item
+          );
+        }
       }
 
       return newList;
@@ -423,165 +428,55 @@ const ResearchSetScreen = () => {
           />
         </View>
 
-        <Modal
-          animationType="none" // Utilise slide, fade, none pour les animations
-          transparent={true} // Définit si le fond est transparent
-          visible={chosenStatsModalVisible}
-          onRequestClose={() => setChosenStatsModalVisible(false)} // Fonction pour fermer le modal
-        >
-          <ScrollView>
-            <Pressable
-              style={modal.background}
-              onPress={() => setChosenStatsModalVisible(false)}
-            >
-              <Pressable style={modal.container}>
-                <Text style={modal.title_center}>Affichage</Text>
-                <View style={modal.content}>
-                  {chosenStats.map((stat) => (
-                    <Pressable
-                      onPress={() => toggleCheck(setChosenStats, stat.name)}
-                      key={stat.name}
-                      style={checkbox.container}
-                    >
-                      <Checkbox
-                        value={stat.checked}
-                        // onValueChange={() =>
-                        //   toggleCheck(setChosenStats, stat.name)
-                        // }
-                        style={checkbox.square}
-                        color={{ true: th.primary, false: th.on_primary }}
-                      />
-                      <Text style={checkbox.text}>{stat.name}</Text>
-                    </Pressable>
-                  ))}
-                </View>
-                <Pressable
-                  style={[
-                    button.container,
-                    modal.close_button_center,
-                    filterModalButtonHover ? shadow_12dp : null,
-                  ]}
-                  onHoverIn={() => setFilterModalButtonHover(true)}
-                  onHoverOut={() => setFilterModalButtonHover(false)}
-                  onPress={() => setChosenStatsModalVisible(false)}
-                >
-                  <Text style={button.text}>Valider</Text>
-                </Pressable>
-              </Pressable>
-            </Pressable>
-          </ScrollView>
-          <Toast />
-        </Modal>
+        <MyModal
+          modalTitle="Affichage"
+          isModalVisible={chosenStatsModalVisible}
+          setIsModalVisible={setChosenStatsModalVisible}
+          ModalContent={ModalContent}
+          contentProps={{
+            isFoundStatsVisible: chosenStats, // Utilisation correcte des paires clé-valeur
+            setIsFoundStatsVisible: setChosenStats,
+            toggleCheck: toggleCheck,
+            keepOneCondition: true,
+          }}
+        />
 
-        <Modal
-          animationType="none" // Utilise slide, fade, none pour les animations
-          transparent={true} // Définit si le fond est transparent
-          visible={filterModalVisible}
-          onRequestClose={() => setFilterModalVisible(false)} // Fonction pour fermer le modal
-          key="modal-filter"
-        >
-          <ScrollView>
-            <Pressable
-              style={modal.background}
-              onPress={() => setFilterModalVisible(false)}
-            >
-              <Pressable style={modal.container}>
-                <Text style={modal.title_center}>Filtre</Text>
-                <View
-                  style={{
-                    paddingHorizontal: 48,
-                    borderColor: "black",
-                    borderTopWidth: 1,
-                    borderBottomWidth: 1,
-                  }}
-                >
-                  {chosenBodyType.map((bodyType) => (
-                    <Pressable
-                      onPress={() =>
-                        toggleCheck(setChosenBodyType, bodyType.name)
-                      }
-                      key={bodyType.name}
-                      style={checkbox.container}
-                    >
-                      <Checkbox
-                        value={bodyType.checked}
-                        style={checkbox.square}
-                      />
-                      <Text style={checkbox.text}>{bodyType.nameDisplay}</Text>
-                    </Pressable>
-                  ))}
-                </View>
+        <MyModal
+          modalTitle="Filtre"
+          isModalVisible={filterModalVisible}
+          setIsModalVisible={setFilterModalVisible}
+          ModalContent={FilterSelector}
+          contentProps={{
+            chosenBodyType: chosenBodyType,
+            setChosenBodyType: setChosenBodyType,
+            pressableImages: pressableImages,
+            handlePressImageCompleted: handlePressImageCompleted,
+            toggleCheck: toggleCheck,
+          }}
+        />
 
-                {/* Category selector row */}
-                <View style={styles.elementsImagesDeselector}>
-                  <ElementsImagesDeselector
-                    pressableImages={pressableImages}
-                    handlePressImage={handlePressImageCompleted}
-                    displayCase={false}
-                  />
-                </View>
+        <MyModal
+          modalTitle="Nombre de résultats"
+          isModalVisible={resultsNumberModalVisible}
+          setIsModalVisible={setResultsNumberModalVisible}
+          ModalContent={ResultsNumber}
+          contentProps={{
+            resultsNumber: resultsNumber, // Utilisation correcte des paires clé-valeur
+            setResultsNumber: setResultsNumber,
+          }}
+        />
 
-                {/* Subcategory selector */}
-                <ElementsImagesSelector
-                  pressableImages={pressableImages}
-                  handlePressImage={handlePressImageCompleted}
-                  displayCase={false}
-                />
-
-                {/* Close button */}
-                <Pressable
-                  style={button.container}
-                  onPress={() => setFilterModalVisible(false)}
-                >
-                  <Text style={button.text}>Valider</Text>
-                </Pressable>
-              </Pressable>
-            </Pressable>
-          </ScrollView>
-        </Modal>
-
-        <Modal
-          animationType="none" // Utilise slide, fade, none pour les animations
-          transparent={true} // Définit si le fond est transparent
-          visible={resultsNumberModalVisible}
-          onRequestClose={() => setResultsNumberModalVisible(false)} // Fonction pour fermer le modal
-          key="modal-resultNumber"
-        >
-          <Pressable
-            style={styles.modalBackground}
-            onPress={() => setResultsNumberModalVisible(false)}
-          >
-            <Pressable style={modal.container}>
-              <Text style={modal.title_center}>Nombre de résultats</Text>
-              <View style={styles.checkBoxContainer}>
-                <ResultsNumber
-                  resultsNumber={resultsNumber}
-                  setResultsNumber={setResultsNumber}
-                />
-              </View>
-              <Pressable
-                onHoverIn={() => setFilterModalButtonHover(true)}
-                onHoverOut={() => setFilterModalButtonHover(false)}
-                style={[
-                  button.container,
-                  modal.close_button_center,
-                  filterModalButtonHover ? shadow_12dp : null,
-                ]}
-                onPress={() => setResultsNumberModalVisible(false)}
-              >
-                <Text style={button.text}>Valider</Text>
-              </Pressable>
-            </Pressable>
-          </Pressable>
-        </Modal>
-
-        <StatSliderResultSelectorModal
-          foundedStatsModalVisible={foundedStatsModalVisible}
-          setFoundedStatsModalVisible={setFoundedStatsModalVisible}
-          isFoundStatsVisible={isFoundStatsVisible}
-          setIsFoundStatsVisible={setIsFoundStatsVisible}
-          toggleCheck={toggleCheck}
-          key="modal-statSlider"
+        <MyModal
+          modalTitle="Stats à afficher"
+          isModalVisible={foundedStatsModalVisible}
+          setIsModalVisible={setFoundedStatsModalVisible}
+          ModalContent={ModalContent}
+          contentProps={{
+            isFoundStatsVisible: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
+            setIsFoundStatsVisible: setIsFoundStatsVisible,
+            toggleCheck: toggleCheck,
+            keepOneCondition: false,
+          }}
         />
 
         <View key="cardsContainer" style={styles.setCardContainer}>

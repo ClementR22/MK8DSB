@@ -28,7 +28,7 @@ export const modal = StyleSheet.create({
     marginBottom: 20,
     maxHeight: 300,
     overflow: "scroll",
-    alignItems: "flex-start",
+    //alignItems: "flex-start",
     paddingHorizontal: 24,
     borderTopColor: th.outline,
     borderTopWidth: 1,
