@@ -15,32 +15,32 @@ import checkbox from "./styles/checkbox";
 import th from "./styles/theme";
 import PressableStat from "./PressableStat";
 
-const ModalContent = ({
+const StatSelector = ({
   isFoundStatsVisible,
   setIsFoundStatsVisible,
   toggleCheck,
   keepOneCondition,
 }) => {
   return (
-    <View
-      style={[modal.content, styles.listContainer, { backgroundColor: "red" }]}
-    >
-      <ScrollView>
-        {isFoundStatsVisible.map((stat) => (
-          <PressableStat
-            key={stat.name}
-            stat={stat}
-            setList={setIsFoundStatsVisible}
-            toggleCheck={toggleCheck}
-            keepOneCondition={keepOneCondition}
-          />
-        ))}
-      </ScrollView>
+    <View style={styles.listContainer}>
+      <View style={[modal.content]}>
+        <ScrollView>
+          {isFoundStatsVisible.map((stat) => (
+            <PressableStat
+              key={stat.name}
+              stat={stat}
+              setList={setIsFoundStatsVisible}
+              toggleCheck={toggleCheck}
+              keepOneCondition={keepOneCondition}
+            />
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 };
 
-export default ModalContent;
+export default StatSelector;
 
 const styles = StyleSheet.create({
   listContainer: {

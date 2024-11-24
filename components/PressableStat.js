@@ -18,7 +18,7 @@ const PressableStat = ({ stat, setList, toggleCheck, keepOneCondition }) => {
   return (
     <Pressable
       style={[
-        checkbox.container,
+        modal.pressableStat,
         { backgroundColor: stat.checked ? "red" : "blue" },
       ]}
       onPress={() =>

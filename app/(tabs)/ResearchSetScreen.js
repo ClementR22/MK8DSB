@@ -11,6 +11,8 @@ import {
   Alert,
   StatusBar,
 } from "react-native";
+import { useRef } from "react";
+import { useCallback } from "react";
 import Checkbox from "expo-checkbox";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
@@ -36,6 +38,7 @@ import SetCard from "../../components/SetCard";
 import ResultsNumber from "../../components/ResultsNumberSelector";
 import ElementsImagesDeselector from "../../components/ElementsImagesDeselector";
 import MyModal from "../../components/MyModal";
+import FilterModal from "../../components/FilterModal";
 import { StatSliderResultSelectorPressable } from "../../components/StatSliderResultSelectorPressable";
 
 import {
@@ -52,7 +55,7 @@ import th, {
 import { modal } from "../../components/styles/modal";
 import checkbox from "../../components/styles/checkbox";
 import PressableStat from "../../components/PressableStat";
-import ModalContent from "../../components/ModalContent";
+import StatSelector from "../../components/StatSelector";
 import FilterSelector from "../../components/FilterSelector";
 
 const screenWidth = Dimensions.get("window").width;
@@ -112,6 +115,12 @@ const ResearchSetScreen = () => {
   const [foundedStatsModalVisible, setFoundedStatsModalVisible] =
     useState(false);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
+  // Référence pour le modal
+  const bottomSheetModalRef = useRef(null);
+  // Fonction pour ouvrir le modal
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
   const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
   const [resultsNumberModalVisible, setResultsNumberModalVisible] =
     useState(false);
@@ -391,7 +400,9 @@ const ResearchSetScreen = () => {
 
           <Pressable
             style={[button_icon.container, shadow_3dp]}
-            onPress={() => setFilterModalVisible(true)}
+            onPress={() => {
+              setFilterModalVisible(true);
+            }}
           >
             <MaterialCommunityIcons
               name="pin"
@@ -432,7 +443,7 @@ const ResearchSetScreen = () => {
           modalTitle="Affichage"
           isModalVisible={chosenStatsModalVisible}
           setIsModalVisible={setChosenStatsModalVisible}
-          ModalContent={ModalContent}
+          ModalContent={StatSelector}
           contentProps={{
             isFoundStatsVisible: chosenStats, // Utilisation correcte des paires clé-valeur
             setIsFoundStatsVisible: setChosenStats,
@@ -441,18 +452,19 @@ const ResearchSetScreen = () => {
           }}
         />
 
-        <MyModal
-          modalTitle="Filtre"
+        <FilterModal
+          modalTitle="Affichage"
           isModalVisible={filterModalVisible}
           setIsModalVisible={setFilterModalVisible}
-          ModalContent={FilterSelector}
-          contentProps={{
-            chosenBodyType: chosenBodyType,
-            setChosenBodyType: setChosenBodyType,
-            pressableImages: pressableImages,
-            handlePressImageCompleted: handlePressImageCompleted,
+          bottomSheetModalRef={bottomSheetModalRef}
+          handlePresentModalPress={handlePresentModalPress}
+          //ModalContent={StatSelector}
+          /* contentProps={{
+            isFoundStatsVisible: chosenStats, // Utilisation correcte des paires clé-valeur
+            setIsFoundStatsVisible: setChosenStats,
             toggleCheck: toggleCheck,
-          }}
+            keepOneCondition: true,
+          }} */
         />
 
         <MyModal
@@ -470,7 +482,7 @@ const ResearchSetScreen = () => {
           modalTitle="Stats à afficher"
           isModalVisible={foundedStatsModalVisible}
           setIsModalVisible={setFoundedStatsModalVisible}
-          ModalContent={ModalContent}
+          ModalContent={StatSelector}
           contentProps={{
             isFoundStatsVisible: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
             setIsFoundStatsVisible: setIsFoundStatsVisible,

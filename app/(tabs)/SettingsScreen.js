@@ -1,9 +1,12 @@
 import { View, Text, StyleSheet } from "react-native";
+import Test from "../../components/Test";
+import FilterModal from "../../components/FilterModal";
 
 const SettingsScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>SettingsScreen</Text>
+      <FilterModal />
     </View>
   );
 };
