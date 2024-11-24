@@ -82,7 +82,7 @@ const ResearchSetScreen = () => {
   );
 
   const showToast = () => {
-    console.log("ok");
+    console.log("montre Toast");
     Toast.show({
       type: "success",
       text1: "Hello",
@@ -115,12 +115,7 @@ const ResearchSetScreen = () => {
   const [foundedStatsModalVisible, setFoundedStatsModalVisible] =
     useState(false);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
-  // Référence pour le modal
-  const bottomSheetModalRef = useRef(null);
-  // Fonction pour ouvrir le modal
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
+
   const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
   const [resultsNumberModalVisible, setResultsNumberModalVisible] =
     useState(false);
@@ -285,7 +280,6 @@ const ResearchSetScreen = () => {
       setSetsToShow(setsFound);
     }
   };
-  console.log(setsToShow);
 
   return (
     <ScrollView>
@@ -400,9 +394,7 @@ const ResearchSetScreen = () => {
 
           <Pressable
             style={[button_icon.container, shadow_3dp]}
-            onPress={() => {
-              setFilterModalVisible(true);
-            }}
+            onPress={() => setFilterModalVisible(true)}
           >
             <MaterialCommunityIcons
               name="pin"
@@ -456,8 +448,10 @@ const ResearchSetScreen = () => {
           modalTitle="Affichage"
           isModalVisible={filterModalVisible}
           setIsModalVisible={setFilterModalVisible}
-          bottomSheetModalRef={bottomSheetModalRef}
-          handlePresentModalPress={handlePresentModalPress}
+          chosenBodyType={chosenBodyType}
+          setChosenBodyType={setChosenBodyType}
+          toggleCheck={toggleCheck}
+          showToast={showToast}
           //ModalContent={StatSelector}
           /* contentProps={{
             isFoundStatsVisible: chosenStats, // Utilisation correcte des paires clé-valeur

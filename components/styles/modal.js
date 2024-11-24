@@ -5,6 +5,7 @@ import PressableStat from "../PressableStat";
 
 export const modal = StyleSheet.create({
   background: {
+    ...StyleSheet.absoluteFillObject,
     cursor: "auto",
     zIndex: -1,
     position: "absolute",

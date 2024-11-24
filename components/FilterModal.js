@@ -1,81 +1,78 @@
 import React, { useEffect, useMemo } from "react";
-import { Text, Pressable, StyleSheet, Modal } from "react-native";
+import { Text, Pressable, StyleSheet, Modal, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { button_icon } from "./styles/button";
-import { shadow_3dp } from "./styles/theme";
-import { modal } from "./styles/modal";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
+import { modal } from "./styles/modal"; // Vérifie si modal.background est bien défini ici
+import { button_icon } from "./styles/button";
+import { shadow_3dp } from "./styles/theme";
+import Test from "./Test";
+import { useRef } from "react";
+import { useCallback } from "react";
 
 const FilterModal = ({
   modalTitle = "Affichage",
   isModalVisible,
   setIsModalVisible,
-  bottomSheetModalRef,
-  handlePresentModalPress,
+  chosenBodyType,
+  setChosenBodyType,
+  toggleCheck,
 }) => {
-  // Points de snap du BottomSheet
-  const snapPoints = useMemo(() => ["25%", "50%", "90%"], []);
+  // Référence pour le modal
+  const bottomSheetModalRef = useRef(null);
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
 
-  // Ouvrir le BottomSheet lorsque le Modal est visible
+  const snapPoints = useMemo(() => ["50%", "90%"], []);
+
   useEffect(() => {
     if (isModalVisible) {
-      handlePresentModalPress(); // Appelle la fonction pour ouvrir le BottomSheet
+      handlePresentModalPress();
     }
   }, [isModalVisible, handlePresentModalPress]);
 
   return (
     <Modal
-      animationType="none"
-      transparent={true}
+      animationType="none" // Animation (slide, fade, none)
+      transparent={true} // Fond transparent
       visible={isModalVisible}
-      onRequestClose={() => setIsModalVisible(false)} // Ferme le Modal principal
+      onRequestClose={() => setIsModalVisible(false)} // Ferme le modal
     >
-      <GestureHandlerRootView>
-        {/* Fond du Modal qui ferme le Modal au clic */}
-        <Pressable
-          style={modal.background}
-          onPress={() => setIsModalVisible(false)}
-        >
-          {/* Contenu du Modal */}
-          <BottomSheetModalProvider>
-            <BottomSheetModal
-              ref={bottomSheetModalRef}
-              snapPoints={snapPoints}
-              onDismiss={() => setIsModalVisible(false)} // Ferme le Modal principal lorsque le BottomSheet est fermé
-            >
-              <BottomSheetView style={styles.contentContainer}>
-                <Text style={modal.title_center}>{modalTitle}</Text>
-                <Text style={styles.modalText}>
-                  Voici un contenu de modal 🎉
-                </Text>
-              </BottomSheetView>
-            </BottomSheetModal>
-          </BottomSheetModalProvider>
-        </Pressable>
-      </GestureHandlerRootView>
+      <Test
+        modalTitle={modalTitle}
+        setIsModalVisible={setIsModalVisible}
+        bottomSheetModalRef={bottomSheetModalRef}
+        chosenBodyType={chosenBodyType}
+        setChosenBodyType={setChosenBodyType}
+        toggleCheck={toggleCheck}
+      />
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  modalContainer: {
+  modalContent: {
     flex: 1,
-    justifyContent: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Fond semi-transparent
+    justifyContent: "flex-end", // Place le contenu en bas
   },
   contentContainer: {
-    flex: 1,
     padding: 20,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    backgroundColor: "white", // Couleur du contenu
+    borderRadius: 10,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 10,
   },
   modalText: {
     fontSize: 16,
-    marginBottom: 20,
+    color: "blue", // Changer la couleur pour que le texte se distingue
   },
 });
 

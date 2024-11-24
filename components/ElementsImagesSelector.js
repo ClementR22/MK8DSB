@@ -52,7 +52,13 @@ const ElementsImagesSelector = ({
     });
 
     return filteredImages.map(([categoryKey, categoryValue]) => (
-      <View key={"content-"+ categoryKey} style={[styles.categoryContainer, {maxHeight: 300, overflow: "scroll"}]}>
+      <View
+        key={"content-" + categoryKey}
+        style={[
+          styles.categoryContainer,
+          { maxHeight: 300, overflow: "scroll" },
+        ]}
+      >
         <Text style={styles.text}>{allElementNamesDisplay[categoryKey]}</Text>
         {Object.entries(categoryValue).map(([classKey, classValue]) => (
           <View key={"classKey" + classKey} style={styles.classContainer}>
@@ -68,7 +74,6 @@ const ElementsImagesSelector = ({
                     setPressableImage={() =>
                       handlePressImage(categoryKey, classKey, imageKey)
                     }
-                    disabled={false}
                   />
                 </View>
               )

@@ -34,7 +34,7 @@ const MyModal = ({
         style={modal.background}
         onPress={() => setIsModalVisible(false)}
       >
-        <Pressable style={modal.container}>
+        <View style={modal.container} onStartShouldSetResponder={() => true}>
           <Text style={modal.title_center}>{modalTitle}</Text>
           <ModalContent {...contentProps} />
           <Pressable
@@ -49,7 +49,7 @@ const MyModal = ({
           >
             <Text style={button.text}>Valider</Text>
           </Pressable>
-        </Pressable>
+        </View>
       </Pressable>
     </Modal>
   );
