@@ -11,6 +11,7 @@ import {
   Alert,
   StatusBar,
 } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useRef } from "react";
 import { useCallback } from "react";
 import Checkbox from "expo-checkbox";
@@ -282,237 +283,239 @@ const ResearchSetScreen = () => {
   };
 
   return (
-    <ScrollView>
-      <View style={[styles.container, { backgroundColor: th.surface }]}>
-        <View
-          id="Title_bar"
-          style={[
-            styles.text,
-            {
-              width: vw,
-              height: 64,
-              backgroundColor: "white",
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: 10,
-              backgroundColor: th.surface_container_highest,
-              marginTop: 24,
-            },
-          ]}
-        >
-          <Text style={{ margin: 16 }}>
-            <MaterialIcons
-              name="home"
-              size={24}
-              color={th.on_surface}
-            ></MaterialIcons>
-          </Text>
+    <SafeAreaProvider>
+      <ScrollView>
+        <View style={[styles.container, { backgroundColor: th.surface }]}>
+          <View
+            id="Title_bar"
+            style={[
+              styles.text,
+              {
+                width: vw,
+                height: 64,
+                backgroundColor: "white",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: 10,
+                backgroundColor: th.surface_container_highest,
+                // marginTop: 24,
+              },
+            ]}
+          >
+            <Text style={{ margin: 16 }}>
+              <MaterialIcons
+                name="home"
+                size={24}
+                color={th.on_surface}
+              ></MaterialIcons>
+            </Text>
 
-          <Text
-            style={{
-              fontSize: 22,
-              color: th.on_surface,
-            }}
-          >
-            Coucou
-          </Text>
-
-          <Pressable
-            style={styles.button_icon}
-            onPress={() => setMenuModalVisible(true)}
-          >
-            <MaterialIcons
-              name="more-vert"
-              size={24}
-              color={th.on_surface}
-            ></MaterialIcons>
-          </Pressable>
-          <Modal
-            animationType="none" // Utilise slide, fade, none pour les animations
-            transparent={true} // Définit si le fond est transparent
-            visible={menuModalVisible}
-            onRequestClose={() => setMenuModalVisible(false)} // Fonction pour fermer le modal
-          >
             <Text
               style={{
-                position: "absolute",
-                right: 50,
-                top: 50,
-                backgroundColor: "red",
+                fontSize: 22,
+                color: th.on_surface,
               }}
             >
               Coucou
             </Text>
-          </Modal>
-        </View>
 
-        <View style={styles.statSlidersContainer}>
-          <Text
-            style={[
-              styles.text,
-              {
-                paddingHorizontal: 10,
-                borderRadius: 5,
-                marginBottom: 16,
-                color: th.on_surface,
-              },
-            ]}
-          >
-            Statistiques recherchées
-          </Text>
-          {/* Afficher le slider uniquement si la case est cochée */}
-          {chosenStats.map(
-            (stat) =>
-              stat.checked && (
-                <StatSlider
-                  key={stat.name}
-                  name={stat.name}
-                  sliderValue={stat.value}
-                  setSliderValue={(newValue) =>
-                    updateSliderValue(stat.name, newValue)
-                  }
-                  statFilterNumber={stat.statFilterNumber}
-                  setStatFilterNumber={stat.setStatFilterNumber}
-                />
-              )
-          )}
-        </View>
+            <Pressable
+              style={styles.button_icon}
+              onPress={() => setMenuModalVisible(true)}
+            >
+              <MaterialIcons
+                name="more-vert"
+                size={24}
+                color={th.on_surface}
+              ></MaterialIcons>
+            </Pressable>
+            <Modal
+              animationType="none" // Utilise slide, fade, none pour les animations
+              transparent={true} // Définit si le fond est transparent
+              visible={menuModalVisible}
+              onRequestClose={() => setMenuModalVisible(false)} // Fonction pour fermer le modal
+            >
+              <Text
+                style={{
+                  position: "absolute",
+                  right: 50,
+                  top: 50,
+                  backgroundColor: "red",
+                }}
+              >
+                Coucou
+              </Text>
+            </Modal>
+          </View>
 
-        <View style={styles.pressablesContainer}>
-          <Pressable
-            style={[button_icon.container, shadow_3dp]}
-            onPress={() => setChosenStatsModalVisible(true)}
-          >
-            <MaterialCommunityIcons
-              name="plus"
-              size={24}
-              color={th.on_primary}
-            />
-          </Pressable>
+          <View style={styles.statSlidersContainer}>
+            <Text
+              style={[
+                styles.text,
+                {
+                  paddingHorizontal: 10,
+                  borderRadius: 5,
+                  marginBottom: 16,
+                  color: th.on_surface,
+                },
+              ]}
+            >
+              Statistiques recherchées
+            </Text>
+            {/* Afficher le slider uniquement si la case est cochée */}
+            {chosenStats.map(
+              (stat) =>
+                stat.checked && (
+                  <StatSlider
+                    key={stat.name}
+                    name={stat.name}
+                    sliderValue={stat.value}
+                    setSliderValue={(newValue) =>
+                      updateSliderValue(stat.name, newValue)
+                    }
+                    statFilterNumber={stat.statFilterNumber}
+                    setStatFilterNumber={stat.setStatFilterNumber}
+                  />
+                )
+            )}
+          </View>
 
-          <Pressable
-            style={[button_icon.container, shadow_3dp]}
-            onPress={() => setFilterModalVisible(true)}
-          >
-            <MaterialCommunityIcons
-              name="pin"
-              size={24}
-              color={th.on_primary}
-            />
-          </Pressable>
+          <View style={styles.pressablesContainer}>
+            <Pressable
+              style={[button_icon.container, shadow_3dp]}
+              onPress={() => setChosenStatsModalVisible(true)}
+            >
+              <MaterialCommunityIcons
+                name="plus"
+                size={24}
+                color={th.on_primary}
+              />
+            </Pressable>
 
-          <Pressable
-            style={[
-              button.container,
-              { flexDirection: "row", paddingRight: 24, paddingLeft: 16 },
-              shadow_3dp,
-            ]}
-            onPress={() => search()}
-          >
-            <MaterialCommunityIcons
-              name="magnify"
-              size={24}
-              color={th.on_primary}
-            />
-            <Text style={[button.text, { marginLeft: 8 }]}>Rechercher</Text>
-          </Pressable>
+            <Pressable
+              style={[button_icon.container, shadow_3dp]}
+              onPress={() => setFilterModalVisible(true)}
+            >
+              <MaterialCommunityIcons
+                name="pin"
+                size={24}
+                color={th.on_primary}
+              />
+            </Pressable>
 
-          <Pressable
-            style={[button_icon.container, shadow_3dp]}
-            onPress={() => setResultsNumberModalVisible(true)}
-          >
-            <MaterialIcons name="numbers" size={24} color={th.on_primary} />
-          </Pressable>
+            <Pressable
+              style={[
+                button.container,
+                { flexDirection: "row", paddingRight: 24, paddingLeft: 16 },
+                shadow_3dp,
+              ]}
+              onPress={() => search()}
+            >
+              <MaterialCommunityIcons
+                name="magnify"
+                size={24}
+                color={th.on_primary}
+              />
+              <Text style={[button.text, { marginLeft: 8 }]}>Rechercher</Text>
+            </Pressable>
 
-          <StatSliderResultSelectorPressable
-            setFoundedStatsModalVisible={setFoundedStatsModalVisible}
-          />
-        </View>
+            <Pressable
+              style={[button_icon.container, shadow_3dp]}
+              onPress={() => setResultsNumberModalVisible(true)}
+            >
+              <MaterialIcons name="numbers" size={24} color={th.on_primary} />
+            </Pressable>
 
-        <MyModal
-          modalTitle="Affichage"
-          isModalVisible={chosenStatsModalVisible}
-          setIsModalVisible={setChosenStatsModalVisible}
-          ModalContent={StatSelector}
-          contentProps={{
-            isFoundStatsVisible: chosenStats, // Utilisation correcte des paires clé-valeur
-            setIsFoundStatsVisible: setChosenStats,
-            toggleCheck: toggleCheck,
-            keepOneCondition: true,
-          }}
-        />
-
-        <FilterModal
-          modalTitle="Affichage"
-          isModalVisible={filterModalVisible}
-          setIsModalVisible={setFilterModalVisible}
-          chosenBodyType={chosenBodyType}
-          setChosenBodyType={setChosenBodyType}
-          toggleCheck={toggleCheck}
-          showToast={showToast}
-          //ModalContent={StatSelector}
-          /* contentProps={{
-            isFoundStatsVisible: chosenStats, // Utilisation correcte des paires clé-valeur
-            setIsFoundStatsVisible: setChosenStats,
-            toggleCheck: toggleCheck,
-            keepOneCondition: true,
-          }} */
-        />
-
-        <MyModal
-          modalTitle="Nombre de résultats"
-          isModalVisible={resultsNumberModalVisible}
-          setIsModalVisible={setResultsNumberModalVisible}
-          ModalContent={ResultsNumber}
-          contentProps={{
-            resultsNumber: resultsNumber, // Utilisation correcte des paires clé-valeur
-            setResultsNumber: setResultsNumber,
-          }}
-        />
-
-        <MyModal
-          modalTitle="Stats à afficher"
-          isModalVisible={foundedStatsModalVisible}
-          setIsModalVisible={setFoundedStatsModalVisible}
-          ModalContent={StatSelector}
-          contentProps={{
-            isFoundStatsVisible: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
-            setIsFoundStatsVisible: setIsFoundStatsVisible,
-            toggleCheck: toggleCheck,
-            keepOneCondition: false,
-          }}
-        />
-
-        <View key="cardsContainer" style={styles.setCardContainer}>
-          <View
-            style={
-              setsToShow.length == 0
-                ? { paddingBottom: 0.282 * vh }
-                : { display: "none" }
-            }
-          >
-            <MaterialCommunityIcons
-              name="chat-question"
-              size={72}
-              color={th.on_surface}
-              style={{ marginHorizontal: 72 }}
+            <StatSliderResultSelectorPressable
+              setFoundedStatsModalVisible={setFoundedStatsModalVisible}
             />
           </View>
-          {setsToShow.map((setToShow, index) => {
-            return (
-              <SetCard
-                key={"card" + index}
-                setToShow={setToShow}
-                isFoundStatsVisible={isFoundStatsVisible}
-                chosenStats={chosenStats}
+
+          <MyModal
+            modalTitle="Affichage"
+            isModalVisible={chosenStatsModalVisible}
+            setIsModalVisible={setChosenStatsModalVisible}
+            ModalContent={StatSelector}
+            contentProps={{
+              isFoundStatsVisible: chosenStats, // Utilisation correcte des paires clé-valeur
+              setIsFoundStatsVisible: setChosenStats,
+              toggleCheck: toggleCheck,
+              keepOneCondition: true,
+            }}
+          />
+
+          <FilterModal
+            modalTitle="Affichage"
+            isModalVisible={filterModalVisible}
+            setIsModalVisible={setFilterModalVisible}
+            chosenBodyType={chosenBodyType}
+            setChosenBodyType={setChosenBodyType}
+            toggleCheck={toggleCheck}
+            showToast={showToast}
+            //ModalContent={StatSelector}
+            /* contentProps={{
+              isFoundStatsVisible: chosenStats, // Utilisation correcte des paires clé-valeur
+              setIsFoundStatsVisible: setChosenStats,
+              toggleCheck: toggleCheck,
+              keepOneCondition: true,
+            }} */
+          />
+
+          <MyModal
+            modalTitle="Nombre de résultats"
+            isModalVisible={resultsNumberModalVisible}
+            setIsModalVisible={setResultsNumberModalVisible}
+            ModalContent={ResultsNumber}
+            contentProps={{
+              resultsNumber: resultsNumber, // Utilisation correcte des paires clé-valeur
+              setResultsNumber: setResultsNumber,
+            }}
+          />
+
+          <MyModal
+            modalTitle="Stats à afficher"
+            isModalVisible={foundedStatsModalVisible}
+            setIsModalVisible={setFoundedStatsModalVisible}
+            ModalContent={StatSelector}
+            contentProps={{
+              isFoundStatsVisible: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
+              setIsFoundStatsVisible: setIsFoundStatsVisible,
+              toggleCheck: toggleCheck,
+              keepOneCondition: false,
+            }}
+          />
+
+          <View key="cardsContainer" style={styles.setCardContainer}>
+            <View
+              style={
+                setsToShow.length == 0
+                  ? { paddingBottom: 0.282 * vh }
+                  : { display: "none" }
+              }
+            >
+              <MaterialCommunityIcons
+                name="chat-question"
+                size={72}
+                color={th.on_surface}
+                style={{ marginHorizontal: 72 }}
               />
-            );
-          })}
+            </View>
+            {setsToShow.map((setToShow, index) => {
+              return (
+                <SetCard
+                  key={"card" + index}
+                  setToShow={setToShow}
+                  isFoundStatsVisible={isFoundStatsVisible}
+                  chosenStats={chosenStats}
+                />
+              );
+            })}
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaProvider>
   );
 };
 
