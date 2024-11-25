@@ -17,14 +17,16 @@ import th from "./styles/theme";
 const PressableStat = ({ stat, setList, toggleCheck, keepOneCondition }) => {
   return (
     <Pressable
-      style={[
-        modal.pressableStat,
-        { backgroundColor: stat.checked ? "red" : "blue" },
-      ]}
+      style={checkbox.container}
       onPress={() =>
         toggleCheck(setList, stat.name, (keepOneCondition = keepOneCondition))
       }
     >
+      <Checkbox
+        value={stat.checked}
+        style={checkbox.square}
+        color={{ true: th.primary, false: th.on_primary }}
+      />
       <Text style={checkbox.text}>{stat.name}</Text>
     </Pressable>
   );
