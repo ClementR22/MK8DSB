@@ -9,9 +9,9 @@ import {
 import { modal } from "./styles/modal"; // Vérifie si modal.background est bien défini ici
 import { button_icon } from "./styles/button";
 import { shadow_3dp } from "./styles/theme";
-import Test from "./Test";
 import { useRef } from "react";
 import { useCallback } from "react";
+import FilterModalContent from "./FilterModalContent";
 
 const FilterModal = ({
   modalTitle = "Affichage",
@@ -42,7 +42,7 @@ const FilterModal = ({
       visible={isModalVisible}
       onRequestClose={() => setIsModalVisible(false)} // Ferme le modal
     >
-      <Test
+      <FilterModalContent
         modalTitle={modalTitle}
         setIsModalVisible={setIsModalVisible}
         bottomSheetModalRef={bottomSheetModalRef}

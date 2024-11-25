@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 import { button } from "./button";
 import th, { vh, vw } from "./theme";
-import PressableStat from "../PressableStat";
 
 export const modal = StyleSheet.create({
   background: {

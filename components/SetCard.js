@@ -34,7 +34,6 @@ const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
 
   const displaySetImages = () => {
     setIsModalVisible(true);
-    console.log("hey");
   };
 
   return (
