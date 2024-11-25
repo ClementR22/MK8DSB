@@ -25,44 +25,50 @@ const Test = ({
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
-        <BottomSheetModal
-          snapPoints={snapPoints}
-          ref={bottomSheetModalRef}
-          style={styles.bottomSheetModal}
-          onDismiss={() => {
-            setIsModalVisible(false);
-          }}
+        <Pressable
+          style={modal.background}
+          onPress={() => setIsModalVisible(false)}
         >
-          <BottomSheetView style={styles.contentContainer}>
-            <Text style={modal.title_center}>{modalTitle}</Text>
-            <View>
-              {chosenBodyType.map((bodyType) => {
-                return (
-                  <Chip
-                    key={[bodyType.name, bodyType.checked]} // bodyType.checked a été ajouté dans la key pour forcer le chip à re-render
-                    onPress={() => {
-                      console.log(bodyType.name);
-                      toggleCheck(setChosenBodyType, bodyType.name); // Basculer la sélection
-                    }}
-                    style={[
-                      styles.chip,
-                      { backgroundColor: bodyType.checked ? "green" : "red" }, // Changer la couleur
-                    ]}
-                  >
-                    {console.log("bodyType.checked", bodyType.checked)}
-                    {bodyType.nameDisplay} {/* Afficher le nom plus lisible */}
-                  </Chip>
-                );
-              })}
-              {/* 
+          <BottomSheetModal
+            snapPoints={snapPoints}
+            ref={bottomSheetModalRef}
+            style={styles.bottomSheetModal}
+            onDismiss={() => {
+              setIsModalVisible(false);
+            }}
+          >
+            <BottomSheetView style={styles.contentContainer}>
+              <Text style={modal.title_center}>{modalTitle}</Text>
+              <View>
+                {chosenBodyType.map((bodyType) => {
+                  return (
+                    <Chip
+                      key={[bodyType.name, bodyType.checked]} // bodyType.checked a été ajouté dans la key pour forcer le chip à re-render
+                      onPress={() => {
+                        console.log(bodyType.name);
+                        toggleCheck(setChosenBodyType, bodyType.name); // Basculer la sélection
+                      }}
+                      style={[
+                        styles.chip,
+                        { backgroundColor: bodyType.checked ? "green" : "red" }, // Changer la couleur
+                      ]}
+                    >
+                      {console.log("bodyType.checked", bodyType.checked)}
+                      {bodyType.nameDisplay}{" "}
+                      {/* Afficher le nom plus lisible */}
+                    </Chip>
+                  );
+                })}
+                {/* 
               <ElementsImagesSelector
                   pressableImages={pressableImages}
                   handlePressImage={handlePressImageCompleted}
                   displayCase={false}
                 /> */}
-            </View>
-          </BottomSheetView>
-        </BottomSheetModal>
+              </View>
+            </BottomSheetView>
+          </BottomSheetModal>
+        </Pressable>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );
