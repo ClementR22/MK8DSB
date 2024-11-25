@@ -23,7 +23,7 @@ const StatSelector = ({
 }) => {
   return (
     <View style={styles.listContainer}>
-      <View style={[modal.content]}>
+      <View style={modal.content}>
         <ScrollView>
           {isFoundStatsVisible.map((stat) => (
             <PressableStat

@@ -18,10 +18,7 @@ import Checkbox from "expo-checkbox";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 
-import {
-  initializePressableImages,
-  handlePressImage,
-} from "../../utils/pressableImagesFunctions";
+import { initializePressableImages } from "../../utils/pressableImagesFunctions";
 
 // Utils
 import {
@@ -57,7 +54,7 @@ import { modal } from "../../components/styles/modal";
 import checkbox from "../../components/styles/checkbox";
 import PressableStat from "../../components/PressableStat";
 import StatSelector from "../../components/StatSelector";
-import FilterSelector from "../../components/FilterSelector";
+import FilterSelector from "../../components/ElementsFilterSelector";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -117,7 +114,6 @@ const ResearchSetScreen = () => {
     useState(false);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
 
-  const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
   const [resultsNumberModalVisible, setResultsNumberModalVisible] =
     useState(false);
   const [menuModalVisible, setMenuModalVisible] = useState(false);
@@ -125,9 +121,6 @@ const ResearchSetScreen = () => {
   const [pressableImages, setPressableImages] = useState(
     initializePressableImages(false)
   );
-  const handlePressImageCompleted = (categoryKey, classKey, imageKey) => {
-    handlePressImage(setPressableImages, categoryKey, classKey, imageKey);
-  };
 
   const elementsFilterObjectToList = (pressableImages) => {
     const selectedElementsIds7categories = [];
@@ -452,6 +445,7 @@ const ResearchSetScreen = () => {
             setIsModalVisible={setFilterModalVisible}
             chosenBodyType={chosenBodyType}
             setChosenBodyType={setChosenBodyType}
+            pressableImages={pressableImages}
             toggleCheck={toggleCheck}
             showToast={showToast}
             //ModalContent={StatSelector}

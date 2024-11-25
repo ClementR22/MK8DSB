@@ -11,7 +11,7 @@ import { button_icon } from "./styles/button";
 import { shadow_3dp } from "./styles/theme";
 import { useRef } from "react";
 import { useCallback } from "react";
-import FilterModalContent from "./FilterModalContent";
+import ElementsFilterSelector from "./ElementsFilterSelector";
 
 const FilterModal = ({
   modalTitle = "Affichage",
@@ -19,6 +19,7 @@ const FilterModal = ({
   setIsModalVisible,
   chosenBodyType,
   setChosenBodyType,
+  pressableImages,
   toggleCheck,
 }) => {
   // Référence pour le modal
@@ -42,14 +43,33 @@ const FilterModal = ({
       visible={isModalVisible}
       onRequestClose={() => setIsModalVisible(false)} // Ferme le modal
     >
-      <FilterModalContent
-        modalTitle={modalTitle}
-        setIsModalVisible={setIsModalVisible}
-        bottomSheetModalRef={bottomSheetModalRef}
-        chosenBodyType={chosenBodyType}
-        setChosenBodyType={setChosenBodyType}
-        toggleCheck={toggleCheck}
-      />
+      <GestureHandlerRootView>
+        <BottomSheetModalProvider>
+          <Pressable
+            style={modal.background}
+            onPress={() => setIsModalVisible(false)}
+          >
+            <BottomSheetModal
+              snapPoints={snapPoints}
+              ref={bottomSheetModalRef}
+              style={styles.bottomSheetModal}
+              onDismiss={() => {
+                setIsModalVisible(false);
+              }}
+            >
+              <BottomSheetView style={styles.contentContainer}>
+                <Text style={modal.title_center}>{modalTitle}</Text>
+                <ElementsFilterSelector
+                  chosenBodyType={chosenBodyType}
+                  setChosenBodyType={setChosenBodyType}
+                  pressableImages={pressableImages}
+                  toggleCheck={toggleCheck}
+                />
+              </BottomSheetView>
+            </BottomSheetModal>
+          </Pressable>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </Modal>
   );
 };

@@ -16,16 +16,17 @@ import th from "./styles/theme";
 import PressableStat from "./PressableStat";
 import ElementsImagesDeselector from "./ElementsImagesDeselector";
 import ElementsImagesSelector from "./ElementsImagesSelector";
+import handlePressImage from "../utils/pressableImagesFunctions";
+import { Chip } from "react-native-paper";
 
-const FilterSelector = ({
+const ElementsFilterSelector = ({
   chosenBodyType,
   setChosenBodyType,
   pressableImages,
-  handlePressImageCompleted,
   toggleCheck,
 }) => {
   return (
-    <ScrollView style={modal.content}>
+    <ScrollView style={[modal.content, { backgroundColor: "red" }]}>
       <View
         style={{
           paddingHorizontal: 48,
@@ -34,43 +35,44 @@ const FilterSelector = ({
           borderBottomWidth: 1,
         }}
       >
-        <Text>Salut</Text>
-        <Text>Salut</Text>
-        <Text>Salut</Text>
-        <Text>Salut</Text>
-        <Text>Salut</Text>
-        {chosenBodyType.map((bodyType) => (
-          <Pressable
-            onPress={() => toggleCheck(setChosenBodyType, bodyType.name)}
-            key={bodyType.name}
-            style={checkbox.container}
-          >
-            <Checkbox value={bodyType.checked} style={checkbox.square} />
-            <Text style={checkbox.text}>{bodyType.nameDisplay}</Text>
-          </Pressable>
-        ))}
+        {chosenBodyType.map((bodyType) => {
+          return (
+            <Chip
+              key={[bodyType.name, bodyType.checked]} // bodyType.checked a été ajouté dans la key pour forcer le chip à re-render
+              onPress={() => {
+                toggleCheck(setChosenBodyType, bodyType.name); // Basculer la sélection
+              }}
+              style={[
+                styles.chip,
+                { backgroundColor: bodyType.checked ? "green" : "red" }, // Changer la couleur
+              ]}
+            >
+              {bodyType.nameDisplay} {/* Afficher le nom plus lisible */}
+            </Chip>
+          );
+        })}
       </View>
 
       {/* Category selector row */}
-      <View style={styles.elementsImagesDeselector}>
+      {/* <View style={styles.elementsImagesDeselector}>
         <ElementsImagesDeselector
           pressableImages={pressableImages}
           handlePressImage={handlePressImageCompleted}
           displayCase={false}
         />
-      </View>
+      </View> */}
 
       {/* Subcategory selector */}
-      <ElementsImagesSelector
+      {/* <ElementsImagesSelector
         pressableImages={pressableImages}
         handlePressImage={handlePressImageCompleted}
         displayCase={false}
-      />
+      /> */}
     </ScrollView>
   );
 };
 
-export default FilterSelector;
+export default ElementsFilterSelector;
 
 styles = StyleSheet.create({
   elementsImagesDeselector: {
