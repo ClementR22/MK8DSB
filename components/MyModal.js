@@ -22,6 +22,7 @@ const MyModal = ({
   setIsModalVisible,
   ModalContent,
   contentProps,
+  closeButtonText = "Valider",
 }) => {
   const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
   return (
@@ -48,7 +49,7 @@ const MyModal = ({
             onHoverOut={() => setFilterModalButtonHover(false)}
             onPress={() => setIsModalVisible(false)}
           >
-            <Text style={button.text}>Valider</Text>
+            <Text style={button.text}>{closeButtonText}</Text>
           </Pressable>
         </View>
       </Pressable>
