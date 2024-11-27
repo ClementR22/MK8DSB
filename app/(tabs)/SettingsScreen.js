@@ -1,13 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
-import { useState } from "react";
-import { bodyTypeNames, bodyTypeNamesDisplay } from "../../data/data";
-
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const SettingsScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>SettingsScreen</Text>
+      <Text style={styles.title}>SettingsScreen</Text>
     </View>
   );
 };
@@ -20,9 +16,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  text: {
-    fontSize: 24,
+  title: {
+    fontSize: 20,
     fontWeight: "bold",
     marginBottom: 16,
+    backgroundColor: "red",
+    padding: 8,
+    color: "white",
+  },
+  chipsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    marginTop: 16,
   },
 });

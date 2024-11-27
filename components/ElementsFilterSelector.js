@@ -17,41 +17,47 @@ import PressableStat from "./PressableStat";
 import ElementsImagesDeselector from "./ElementsImagesDeselector";
 import ElementsImagesSelector from "./ElementsImagesSelector";
 import handlePressImage from "../utils/pressableImagesFunctions";
-import { Chip } from "react-native-paper";
+import MyChip from "./MyChip";
+import { elementsImages } from "@/data/data";
 
 const ElementsFilterSelector = ({
   chosenBodyType,
   setChosenBodyType,
   pressableImages,
+  setPressableImages,
   toggleCheck,
 }) => {
+  const handlePressImageCompleted = (categoryKey, classKey, imageKey) => {
+    handlePressImage(setPressableImages, categoryKey, classKey, imageKey);
+  };
+  const bodyTypeIcons = [
+    elementsImages.kart[0][0].uri,
+    elementsImages.bike[11][1].uri,
+    elementsImages.sportBike[7][1].uri,
+    elementsImages.ATV[6][2].uri,
+  ];
   return (
-    <ScrollView style={[modal.content, { backgroundColor: "red" }]}>
-      <View
-        style={{
-          paddingHorizontal: 48,
-          borderColor: "black",
-          borderTopWidth: 1,
-          borderBottomWidth: 1,
-        }}
-      >
-        {chosenBodyType.map((bodyType) => {
+    <ScrollView style={modal.content}>
+      <View key="body type" style={styles.bodyTypeContainer}>
+        {chosenBodyType.map((bodyType, index) => {
           return (
-            <Chip
-              key={[bodyType.name, bodyType.checked]} // bodyType.checked a été ajouté dans la key pour forcer le chip à re-render
+            <MyChip
+              name={bodyType.nameDisplay}
+              selected={bodyType.checked}
               onPress={() => {
-                toggleCheck(setChosenBodyType, bodyType.name); // Basculer la sélection
+                toggleCheck(setChosenBodyType, bodyType.name);
               }}
-              style={[
-                styles.chip,
-                { backgroundColor: bodyType.checked ? "green" : "red" }, // Changer la couleur
-              ]}
-            >
-              {bodyType.nameDisplay} {/* Afficher le nom plus lisible */}
-            </Chip>
+              uri={bodyTypeIcons[index]}
+            />
           );
         })}
       </View>
+      <ElementsImagesSelector
+        pressableImages={pressableImages}
+        setPressableImages={setPressableImages}
+        handlePressImage={handlePressImageCompleted}
+        displayCase={false}
+      />
 
       {/* Category selector row */}
       {/* <View style={styles.elementsImagesDeselector}>
@@ -79,5 +85,12 @@ styles = StyleSheet.create({
     width: "100%",
     alignItems: "flex-start",
     backgroundColor: "red",
+  },
+  bodyTypeContainer: {
+    paddingVertical: 20,
+    paddingHorizontal: 6,
+    backgroundColor: "purple",
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
 });

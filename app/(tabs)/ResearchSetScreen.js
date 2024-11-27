@@ -446,6 +446,7 @@ const ResearchSetScreen = () => {
             chosenBodyType={chosenBodyType}
             setChosenBodyType={setChosenBodyType}
             pressableImages={pressableImages}
+            setPressableImages={setPressableImages}
             toggleCheck={toggleCheck}
             showToast={showToast}
             //ModalContent={StatSelector}

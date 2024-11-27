@@ -8,78 +8,114 @@ import {
   Image,
 } from "react-native";
 import PressableImage from "./PressableImage";
+import MyChip from "./MyChip";
 import {
   elementsImages,
   closeImage,
   allElementNames,
   allElementNamesDisplay,
+  elementsAllClassName,
 } from "../data/data";
 
 const iconSize = 38;
 
 const ElementsImagesSelector = ({
   pressableImages,
+  setPressableImages,
   handlePressImage,
   displayCase,
 }) => {
-  let elementIcons = [
-    elementsImages.character[9].image1,
-    elementsImages.kart[0].image1,
-    elementsImages.bike[11].image2,
-    elementsImages.sportBike[7].image2,
-    elementsImages.ATV[6].image3,
-    elementsImages.wheels[0].image1,
-    elementsImages.glider[0].image1,
+  console.log(elementsImages.character[9][0].uri);
+  const elementIcons = [
+    elementsImages.character[9][0].uri,
+    elementsImages.kart[0][0].uri,
+    elementsImages.bike[11][1].uri,
+    elementsImages.sportBike[7][1].uri,
+    elementsImages.ATV[6][2].uri,
+    elementsImages.wheels[0][0].uri,
+    elementsImages.glider[0][0].uri,
   ];
-
-  let allElementNamesIntern = allElementNames;
-
-  if (displayCase) {
-    elementIcons = elementIcons.concat(closeImage); //elementIcons.concat(images.glider[0].image2);
-    allElementNamesIntern = allElementNames.concat("empty");
-  }
 
   // État pour suivre l'onglet sélectionné
   const [selectedTab, setSelectedTab] = useState(
     displayCase ? "empty" : "kart"
   );
 
+  const handleChipPress = (categoryKey, classKey, imageKey) => {
+    setPressableImages((prevImages) => ({
+      ...prevImages,
+      [categoryKey]: {
+        ...prevImages[categoryKey],
+        [classKey]: {
+          ...prevImages[categoryKey][classKey],
+          [imageKey]: {
+            ...prevImages[categoryKey][classKey][imageKey],
+            pressed: !prevImages[categoryKey][classKey][imageKey].pressed,
+          },
+        },
+      },
+    }));
+  };
+
   // Fonction pour rendre le contenu de l'onglet sélectionné
   const renderContent = () => {
     // Filtre les catégories en fonction de l'onglet sélectionné
-    const filteredImages = Object.entries(pressableImages).filter(([key]) => {
-      return key === selectedTab;
-    });
+    const selectedCategoryImages = Object.entries(pressableImages).filter(
+      ([key]) => {
+        return key === selectedTab;
+      }
+    );
 
-    return filteredImages.map(([categoryKey, categoryValue]) => (
-      <View
-        key={"content-" + categoryKey}
-        style={[
-          styles.categoryContainer,
-          { maxHeight: 300, overflow: "scroll" },
-        ]}
-      >
-        <Text style={styles.text}>{allElementNamesDisplay[categoryKey]}</Text>
-        {Object.entries(categoryValue).map(([classKey, classValue]) => (
-          <View key={"classKey" + classKey} style={styles.classContainer}>
-            {Object.entries(classValue).map(
-              ([imageKey, { source, pressed }], imgIndex) => (
-                <View
-                  key={`${categoryKey}-${classKey}-${imageKey}-${imgIndex}`}
-                >
-                  <PressableImage
-                    imageKey={`${categoryKey}-${classKey}-${imageKey}-${imgIndex}`}
-                    source={source}
-                    pressed={pressed}
-                    setPressableImage={() =>
-                      handlePressImage(categoryKey, classKey, imageKey)
-                    }
+    return selectedCategoryImages.map(([categoryKey, categoryValue]) => (
+      <View style={styles.contentContainer}>
+        <View style={styles.categoryContainer}>
+          {selectedCategoryImages.flatMap(([categoryKey, categoryValue]) =>
+            Object.entries(categoryValue).flatMap(([classKey, classImages]) =>
+              Object.entries(classImages).map(
+                ([elementKey, { name, uri, pressed }]) => (
+                  <MyChip
+                    key={`${categoryKey}-${classKey}-${elementKey}`}
+                    name={name}
+                    selected={pressed}
+                    onPress={() => {
+                      handleChipPress(categoryKey, classKey, elementKey);
+                    }}
+                    uri={uri}
                   />
-                </View>
+                )
               )
-            )}
-          </View>
-        ))}
+            )
+          )}
+        </View>
+
+        {/*  OU BIEN RANGEMENT PAR CLASSE
+        
+        {selectedCategoryImages.map(([categoryKey, categoryValue]) =>
+          Object.entries(categoryValue).map(([classKey, classImages]) => (
+            <ScrollView
+              key={classKey}
+              horizontal={true}
+              contentContainerStyle={styles.classContainerScrollable}
+              style={styles.classContainer}
+            >
+              {Object.entries(classImages).map(
+                ([elementKey, { name, uri, pressed }]) => {
+                  return (
+                    <MyChip
+                      key={`${classKey}-${elementKey}`}
+                      name={name}
+                      selected={pressed}
+                      onPress={() => {
+                        handleChipPress(categoryKey, classKey, elementKey);
+                      }}
+                      uri={uri}
+                    />
+                  );
+                }
+              )}
+            </ScrollView>
+          ))
+        )} */}
       </View>
     ));
   };
@@ -88,7 +124,7 @@ const ElementsImagesSelector = ({
     <View style={styles.outerContainer} key={"outerContainer"}>
       {/* Navigation par onglets */}
       <View style={styles.tabContainer} key={"tabContainer"}>
-        {allElementNamesIntern.map((elementName, index) => (
+        {allElementNames.map((elementName, index) => (
           <Pressable
             key={elementName} // Ajout de la key ici
             style={[
@@ -104,7 +140,6 @@ const ElementsImagesSelector = ({
               style={styles.image}
               resizeMode="contain"
             />
-            {/* <Text style={styles.tabText}>{elementIcon}</Text> */}
           </Pressable>
         ))}
       </View>
@@ -117,6 +152,8 @@ const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
     width: "100%",
+    backgroundColor: "blue",
+    padding: 20,
   },
   tabContainer: {
     flexDirection: "row",
@@ -137,14 +174,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  categoryContainer: {
+  contentContainer: {
     alignItems: "center",
-    backgroundColor: "red",
+    backgroundColor: "yellow",
+    padding: 10,
+    width: "100%",
   },
   classContainer: {
     flexDirection: "row",
     marginVertical: 3,
     backgroundColor: "white",
+    //flexWrap: "wrap",
+    overflow: "hidden",
   },
   text: {
     fontSize: 25,
@@ -154,6 +195,13 @@ const styles = StyleSheet.create({
   image: {
     width: iconSize,
     height: iconSize,
+  },
+  categoryContainer: {
+    backgroundColor: "green",
+    // RANGEMENT PAR CLASSE : width: "100%",
+    // SINON :
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
 });
 

@@ -6,9 +6,10 @@ export const initializePressableImages = (defaultSelectedImages) => {
     pressableImages[categoryKey] = {};
     Object.entries(classes).forEach(([classKey, imagesValues]) => {
       pressableImages[categoryKey][classKey] = {};
-      Object.entries(imagesValues).forEach(([imageKey, imageValue]) => {
+      Object.entries(imagesValues).forEach(([imageKey, { name, uri }]) => {
         pressableImages[categoryKey][classKey][imageKey] = {
-          source: imageValue,
+          name: name,
+          uri: uri,
           pressed: false,
         };
       });

@@ -20,6 +20,7 @@ const FilterModal = ({
   chosenBodyType,
   setChosenBodyType,
   pressableImages,
+  setPressableImages,
   toggleCheck,
 }) => {
   // Référence pour le modal
@@ -63,6 +64,7 @@ const FilterModal = ({
                   chosenBodyType={chosenBodyType}
                   setChosenBodyType={setChosenBodyType}
                   pressableImages={pressableImages}
+                  setPressableImages={setPressableImages}
                   toggleCheck={toggleCheck}
                 />
               </BottomSheetView>
