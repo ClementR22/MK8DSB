@@ -12,22 +12,23 @@ import { imageSize } from "./PressableImage";
 import { modal } from "./styles/modal";
 import { button } from "./styles/button";
 import checkbox from "./styles/checkbox";
-import th from "./styles/theme";
+import { useTheme } from "./styles/theme";
 
 const PressableStat = ({ stat, setList, toggleCheck, keepOneCondition }) => {
+  const th = useTheme();
   return (
     <Pressable
-      style={checkbox.container}
+      style={checkbox(th).container}
       onPress={() =>
         toggleCheck(setList, stat.name, (keepOneCondition = keepOneCondition))
       }
     >
       <Checkbox
         value={stat.checked}
-        style={checkbox.square}
+        style={checkbox(th).square}
         color={{ true: th.primary, false: th.on_primary }}
       />
-      <Text style={checkbox.text}>{stat.name}</Text>
+      <Text style={checkbox(th).text}>{stat.name}</Text>
     </Pressable>
   );
 };

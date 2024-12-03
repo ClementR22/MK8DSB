@@ -50,6 +50,7 @@ import {
 import th, {
   shadow_12dp,
   shadow_3dp,
+  useTheme,
   vh,
   vw,
 } from "../../components/styles/theme";
@@ -63,6 +64,7 @@ import { elementsAllInfos } from "../../data/data";
 const screenWidth = Dimensions.get("window").width;
 
 const SearchSetScreen = () => {
+  const th = useTheme();
   const [chosenStats, setChosenStats] = useState(
     statNames.map((statName, index) => {
       return {
@@ -342,7 +344,12 @@ const SearchSetScreen = () => {
             </Modal>
           </View>
 
-          <View style={styles.statSlidersContainer}>
+          <View
+            style={[
+              styles.statSlidersContainer,
+              { backgroundColor: th.surface_container_high },
+            ]}
+          >
             <Text
               style={[
                 styles.text,
@@ -357,7 +364,7 @@ const SearchSetScreen = () => {
               {translate("SearchedStats")}
             </Text>
             {/* Afficher le slider uniquement si la case est cochée */}
-            {chosenStats.map(
+            {/* {chosenStats.map(
               (stat) =>
                 stat.checked && (
                   <StatSlider
@@ -371,12 +378,12 @@ const SearchSetScreen = () => {
                     setStatFilterNumber={stat.setStatFilterNumber}
                   />
                 )
-            )}
+            )} */}
           </View>
 
           <View style={styles.pressablesContainer}>
             <Pressable
-              style={[button_icon.container, shadow_3dp]}
+              style={[button_icon(th).container, shadow_3dp]}
               onPress={() => setChosenStatsModalVisible(true)}
             >
               <MaterialCommunityIcons
@@ -387,7 +394,7 @@ const SearchSetScreen = () => {
             </Pressable>
 
             <Pressable
-              style={[button_icon.container, shadow_3dp]}
+              style={[button_icon(th).container, shadow_3dp]}
               onPress={() => setFilterModalVisible(true)}
             >
               <MaterialCommunityIcons
@@ -399,7 +406,7 @@ const SearchSetScreen = () => {
 
             <Pressable
               style={[
-                button.container,
+                button(th).container,
                 { flexDirection: "row", paddingRight: 24, paddingLeft: 16 },
                 shadow_3dp,
               ]}
@@ -410,13 +417,13 @@ const SearchSetScreen = () => {
                 size={24}
                 color={th.on_primary}
               />
-              <Text style={[button.text, { marginLeft: 8 }]}>
+              <Text style={[button(th).text, { marginLeft: 8 }]}>
                 {translate("Search")}
               </Text>
             </Pressable>
 
             <Pressable
-              style={[button_icon.container, shadow_3dp]}
+              style={[button_icon(th).container, shadow_3dp]}
               onPress={() => setResultsNumberModalVisible(true)}
             >
               <MaterialIcons name="numbers" size={24} color={th.on_primary} />
@@ -483,7 +490,13 @@ const SearchSetScreen = () => {
             }}
           />
 
-          <View key="cardsContainer" style={styles.setCardContainer}>
+          <View
+            key="cardsContainer"
+            style={[
+              styles.setCardContainer,
+              { backgroundColor: th.surface_container_high },
+            ]}
+          >
             <View
               style={
                 setsToShow.length == 0
@@ -560,7 +573,7 @@ const styles = StyleSheet.create({
     padding: 24,
     borderRadius: 24,
     alignItems: "center",
-    backgroundColor: th.surface_container_high,
+    //backgroundColor: th.surface_container_high,
     marginBottom: 8,
     maxWidth: 0.95 * vw,
     minWidth: 0.8 * vw,
@@ -575,15 +588,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-
-  modalContainer: {
-    margin: 24,
-    backgroundColor: th.surface_container,
-    borderRadius: 10,
-    alignItems: "center",
-    // width: 6 * imageSize,
-    minWidth: 260,
   },
 
   modalText: {
@@ -622,7 +626,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     padding: 20,
     alignItems: "stretch",
-    backgroundColor: th.surface_container_high,
+    //backgroundColor: th.surface_container_high,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     rowGap: 16,

@@ -1,8 +1,10 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import th from "./styles/theme";
+import { useTheme } from "./styles/theme";
 
 const StatSliderResult = ({ chosenValue, foundValue, isChosen }) => {
+  const th = useTheme();
+
   if (!isChosen) {
     chosenValue = foundValue;
   }

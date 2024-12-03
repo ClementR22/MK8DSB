@@ -12,8 +12,8 @@ import { imageSize } from "./PressableImage";
 import { modal } from "./styles/modal";
 import { button } from "./styles/button";
 import checkbox from "./styles/checkbox";
-import th from "./styles/theme";
 import PressableStat from "./PressableStat";
+import { useTheme } from "./styles/theme";
 
 const StatSelector = ({
   isFoundStatsVisible,
@@ -21,9 +21,10 @@ const StatSelector = ({
   toggleCheck,
   keepOneCondition,
 }) => {
+  const th = useTheme();
   return (
     <View style={styles.listContainer}>
-      <View style={modal.content}>
+      <View style={modal(th).content}>
         <ScrollView>
           {isFoundStatsVisible.map((stat) => (
             <PressableStat

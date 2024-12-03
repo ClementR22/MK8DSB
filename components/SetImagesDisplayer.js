@@ -65,10 +65,6 @@ const SetImagesDisplayer = ({ setToShowElementsIds }) => {
 export default SetImagesDisplayer;
 
 const styles = StyleSheet.create({
-  sliderContainer: {
-    width: "100%",
-    backgroundColor: th.surface_container,
-  },
   text: {
     fontSize: 14,
     fontWeight: "bold",

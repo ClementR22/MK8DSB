@@ -15,6 +15,7 @@ import checkbox from "./styles/checkbox";
 import th from "./styles/theme";
 import PressableStat from "./PressableStat";
 import { shadow_12dp } from "./styles/theme";
+import { useTheme } from "./styles/theme";
 
 const MyModal = ({
   modalTitle,
@@ -24,6 +25,12 @@ const MyModal = ({
   contentProps,
   closeButtonText = "Valider",
 }) => {
+  const th = useTheme();
+  console.log("dans MyModal, th=", th);
+  console.log(
+    "et dans MyModal, th.surface_container_high",
+    th.surface_container_high
+  );
   const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
   return (
     <Modal
@@ -33,23 +40,27 @@ const MyModal = ({
       onRequestClose={() => setIsModalVisible(false)} // Ferme le modal
     >
       <Pressable
-        style={modal.background}
+        style={modal(th).background}
         onPress={() => setIsModalVisible(false)}
       >
-        <View style={modal.container} onStartShouldSetResponder={() => true}>
-          <Text style={modal.title_center}>{modalTitle}</Text>
+        {console.log(modal(th).container)}
+        <View
+          style={modal(th).container} //modal(th).container}
+          onStartShouldSetResponder={() => true}
+        >
+          <Text style={modal(th).title_center}>{modalTitle}</Text>
           <ModalContent {...contentProps} />
           <Pressable
             style={[
-              button.container,
-              modal.close_button_center,
+              button(th).container,
+              modal(th).close_button_center,
               filterModalButtonHover ? shadow_12dp : null,
             ]}
             onHoverIn={() => setFilterModalButtonHover(true)}
             onHoverOut={() => setFilterModalButtonHover(false)}
             onPress={() => setIsModalVisible(false)}
           >
-            <Text style={button.text}>{closeButtonText}</Text>
+            <Text style={button(th).text}>{closeButtonText}</Text>
           </Pressable>
         </View>
       </Pressable>

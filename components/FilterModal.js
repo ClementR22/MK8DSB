@@ -12,6 +12,7 @@ import { shadow_3dp } from "./styles/theme";
 import { useRef } from "react";
 import { useCallback } from "react";
 import ElementsFilterSelector from "./ElementsFilterSelector";
+import { useTheme } from "./styles/theme";
 
 const FilterModal = ({
   modalTitle = "Affichage",
@@ -23,6 +24,7 @@ const FilterModal = ({
   setPressableImages,
   toggleCheck,
 }) => {
+  const th = useTheme();
   // Référence pour le modal
   const bottomSheetModalRef = useRef(null);
   const handlePresentModalPress = useCallback(() => {
@@ -47,7 +49,7 @@ const FilterModal = ({
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
           <Pressable
-            style={modal.background}
+            style={modal(th).background}
             onPress={() => setIsModalVisible(false)}
           >
             <BottomSheetModal
@@ -59,7 +61,7 @@ const FilterModal = ({
               }}
             >
               <BottomSheetView style={styles.contentContainer}>
-                <Text style={modal.title_center}>{modalTitle}</Text>
+                <Text style={modal(th).title_center}>{modalTitle}</Text>
                 <ElementsFilterSelector
                   chosenBodyType={chosenBodyType}
                   setChosenBodyType={setChosenBodyType}

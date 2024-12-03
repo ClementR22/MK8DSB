@@ -17,7 +17,7 @@ import StatSliderResult from "./StatSliderResult";
 import { modal } from "./styles/modal";
 import { button } from "./styles/button";
 import { card } from "./styles/card";
-import th from "./styles/theme";
+import { useTheme } from "./styles/theme";
 import MyModal from "./MyModal";
 import SetImagesDisplayer from "./SetImagesDisplayer";
 
@@ -27,6 +27,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
 
 const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
+  const th = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [setToShowElementsIds, setToShowStats] = Array.isArray(setToShow)
     ? setToShow
@@ -38,9 +39,9 @@ const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
 
   return (
     <View>
-      <Pressable style={card.container} onPress={displaySetImages}>
+      <Pressable style={card(th).container} onPress={displaySetImages}>
         {setToShowElementsIds.map((id, index) => (
-          <Text key={"element" + index} style={card.text}>
+          <Text key={"element" + index} style={card(th).text}>
             {elementsAllClassName[index][id]}
           </Text>
         ))}
@@ -48,7 +49,13 @@ const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
         {isFoundStatsVisible.map(({ name, checked }, index) => {
           if (checked) {
             return (
-              <View key={index} style={styles.sliderContainer}>
+              <View
+                key={index}
+                style={[
+                  styles.sliderContainer,
+                  { backgroundColor: th.surface_container },
+                ]}
+              >
                 <Text key={index} style={styles.text}>
                   {name} : {JSON.stringify(setToShowStats[index])}
                 </Text>
@@ -81,7 +88,7 @@ export default SetCard;
 const styles = StyleSheet.create({
   sliderContainer: {
     width: "100%",
-    backgroundColor: th.surface_container,
+    //backgroundColor: th.surface_container,
   },
   text: {
     fontSize: 14,

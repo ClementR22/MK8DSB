@@ -1,8 +1,6 @@
-import { useState } from "react";
-
-export const [language, setLanguage] = useState("fr");
-
-export const translate = (key) => translations[language]?.[key] || key;
+export const translate = (key, language) => {
+  return translations[language]?.[key] || key;
+};
 
 const translations = {
   en: {

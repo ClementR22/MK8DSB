@@ -14,7 +14,7 @@ export const LanguageProvider = ({ children }) => {
 };
 
 // Hook pour accéder au contexte facilement
-export const useLanguage = () => useContext(LanguageContext);
+//export const useLanguage = () => useContext(LanguageContext);
 
 /* AJOUTER QUELQUE PART
 <View style={{ flexDirection: "row", justifyContent: "space-around" }}>

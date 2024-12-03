@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { button_icon } from "./styles/button";
 import { shadow_12dp } from "./styles/theme";
+import { useTheme } from "./styles/theme";
 
 const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
+  const th = useTheme();
   const [hovered_1, setHover_1] = useState(false);
   const [hovered_2, setHover_2] = useState(false);
 
@@ -23,7 +25,7 @@ const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
   return (
     <View style={styles.container}>
       <Pressable
-        style={[button_icon.container, hovered_1 ? shadow_12dp : null]}
+        style={[button_icon(th).container, hovered_1 ? shadow_12dp : null]}
         onPress={decrement}
         onHoverIn={() => setHover_1(true)}
         onHoverOut={() => setHover_1(false)}
@@ -35,7 +37,7 @@ const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
       </Pressable>
       <Text style={styles.resultsNumberText}>{resultsNumber}</Text>
       <Pressable
-        style={[button_icon.container, hovered_2 ? shadow_12dp : null]}
+        style={[button_icon(th).container, hovered_2 ? shadow_12dp : null]}
         onPress={increment}
         onHoverIn={() => setHover_2(true)}
         onHoverOut={() => setHover_2(false)}
