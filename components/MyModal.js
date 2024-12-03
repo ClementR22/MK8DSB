@@ -26,11 +26,7 @@ const MyModal = ({
   closeButtonText = "Valider",
 }) => {
   const th = useTheme();
-  console.log("dans MyModal, th=", th);
-  console.log(
-    "et dans MyModal, th.surface_container_high",
-    th.surface_container_high
-  );
+
   const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
   return (
     <Modal
@@ -43,7 +39,6 @@ const MyModal = ({
         style={modal(th).background}
         onPress={() => setIsModalVisible(false)}
       >
-        {console.log(modal(th).container)}
         <View
           style={modal(th).container} //modal(th).container}
           onStartShouldSetResponder={() => true}

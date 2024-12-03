@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext } from "react";
 
 // Création du contexte
-const LanguageContext = createContext();
+export const LanguageContext = createContext();
 
 // Fournisseur de contexte
 export const LanguageProvider = ({ children }) => {

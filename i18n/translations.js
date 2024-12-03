@@ -1,4 +1,8 @@
-export const translate = (key, language) => {
+import { useContext } from "react";
+import { LanguageContext } from "../i18n/LanguageContext";
+
+export const translate = (key) => {
+  const { language } = useContext(LanguageContext); // Accès direct à la langue depuis le contexte
   return translations[language]?.[key] || key;
 };
 

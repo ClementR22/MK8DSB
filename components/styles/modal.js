@@ -2,11 +2,8 @@ import { StyleSheet } from "react-native";
 import { button } from "./button";
 import { vh, vw } from "./theme";
 
-export const modal = (th) => {
-  console.log("dans modal.js, th =", th);
-  console.log(" et th.surface_container_high", th.surface_container_high);
-
-  return StyleSheet.create({
+export const modal = (th) =>
+  StyleSheet.create({
     background: {
       ...StyleSheet.absoluteFillObject,
       cursor: "auto",
@@ -70,4 +67,3 @@ export const modal = (th) => {
       borderRadius: 24,
     },
   });
-};
