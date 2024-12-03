@@ -16,7 +16,6 @@ import th from "./styles/theme";
 import PressableStat from "./PressableStat";
 import ElementsImagesDeselector from "./ElementsImagesDeselector";
 import ElementsImagesSelector from "./ElementsImagesSelector";
-import handlePressImage from "../utils/pressableImagesFunctions";
 import MyChip from "./MyChip";
 import { elementsImages } from "@/data/data";
 import { useTheme } from "./styles/theme";
@@ -24,14 +23,10 @@ import { useTheme } from "./styles/theme";
 const ElementsFilterSelector = ({
   chosenBodyType,
   setChosenBodyType,
-  pressableImages,
-  setPressableImages,
   toggleCheck,
 }) => {
   const th = useTheme();
-  const handlePressImageCompleted = (categoryKey, classKey, imageKey) => {
-    handlePressImage(setPressableImages, categoryKey, classKey, imageKey);
-  };
+
   const bodyTypeIcons = [
     elementsImages.kart[0][0].uri,
     elementsImages.bike[11][1].uri,
@@ -42,8 +37,10 @@ const ElementsFilterSelector = ({
     <ScrollView style={modal(th).content}>
       <View key="body type" style={styles.bodyTypeContainer}>
         {chosenBodyType.map((bodyType, index) => {
+          console.log(index);
           return (
             <MyChip
+              key={index}
               name={bodyType.nameDisplay}
               selected={bodyType.checked}
               onPress={() => {
@@ -54,12 +51,7 @@ const ElementsFilterSelector = ({
           );
         })}
       </View>
-      <ElementsImagesSelector
-        pressableImages={pressableImages}
-        setPressableImages={setPressableImages}
-        handlePressImage={handlePressImageCompleted}
-        displayCase={false}
-      />
+      <ElementsImagesSelector displayCase={false} />
 
       {/* Category selector row */}
       {/* <View style={styles.elementsImagesDeselector}>

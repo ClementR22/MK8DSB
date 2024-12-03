@@ -1,12 +1,11 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import PressableImage from "./PressableImage";
+import { usePressableImages } from "../utils/usePressableImages";
 
-const ElementsImagesDeselector = ({
-  pressableImages,
-  handlePressImage,
-  display,
-}) => {
+const ElementsImagesDeselector = ({ display }) => {
+  const { pressableImages, handlePressImage, handlePressImageUnique } =
+    usePressableImages();
   return (
     <View
       style={{

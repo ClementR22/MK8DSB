@@ -16,16 +16,14 @@ import {
   allElementNamesDisplay,
   elementsAllClassName,
 } from "../data/data";
+import { usePressableImages } from "../utils/usePressableImages";
 
 const iconSize = 38;
 
-const ElementsImagesSelector = ({
-  pressableImages,
-  setPressableImages,
-  handlePressImage,
-  displayCase,
-}) => {
-  console.log(elementsImages.character[9][0].uri);
+const ElementsImagesSelector = ({ displayCase }) => {
+  const { pressableImages, handlePressImage, handlePressImageUnique } =
+    usePressableImages();
+
   const elementIcons = [
     elementsImages.character[9][0].uri,
     elementsImages.kart[0][0].uri,
@@ -41,22 +39,6 @@ const ElementsImagesSelector = ({
     displayCase ? "empty" : "kart"
   );
 
-  const handleChipPress = (categoryKey, classKey, imageKey) => {
-    setPressableImages((prevImages) => ({
-      ...prevImages,
-      [categoryKey]: {
-        ...prevImages[categoryKey],
-        [classKey]: {
-          ...prevImages[categoryKey][classKey],
-          [imageKey]: {
-            ...prevImages[categoryKey][classKey][imageKey],
-            pressed: !prevImages[categoryKey][classKey][imageKey].pressed,
-          },
-        },
-      },
-    }));
-  };
-
   // Fonction pour rendre le contenu de l'onglet sélectionné
   const renderContent = () => {
     // Filtre les catégories en fonction de l'onglet sélectionné
@@ -66,27 +48,28 @@ const ElementsImagesSelector = ({
       }
     );
 
-    return selectedCategoryImages.map(([categoryKey, categoryValue]) => (
-      <View style={styles.contentContainer}>
-        <View style={styles.categoryContainer}>
-          {selectedCategoryImages.flatMap(([categoryKey, categoryValue]) =>
-            Object.entries(categoryValue).flatMap(([classKey, classImages]) =>
-              Object.entries(classImages).map(
-                ([elementKey, { name, uri, pressed }]) => (
+    return (
+      <View style={styles.categoryContainer}>
+        {selectedCategoryImages.flatMap(([categoryKey, categoryValue]) =>
+          Object.entries(categoryValue).flatMap(([classKey, classImages]) =>
+            Object.entries(classImages).map(
+              ([elementKey, { name, uri, pressed }]) => {
+                console.log(name);
+                return (
                   <MyChip
                     key={`${categoryKey}-${classKey}-${elementKey}`}
                     name={name}
                     selected={pressed}
                     onPress={() => {
-                      handleChipPress(categoryKey, classKey, elementKey);
+                      handlePressImage(selectedTab, classKey, elementKey);
                     }}
                     uri={uri}
                   />
-                )
-              )
+                );
+              }
             )
-          )}
-        </View>
+          )
+        )}
 
         {/*  OU BIEN RANGEMENT PAR CLASSE
         
@@ -117,7 +100,7 @@ const ElementsImagesSelector = ({
           ))
         )} */}
       </View>
-    ));
+    );
   };
 
   return (
@@ -173,12 +156,6 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: 16,
     fontWeight: "bold",
-  },
-  contentContainer: {
-    alignItems: "center",
-    backgroundColor: "yellow",
-    padding: 10,
-    width: "100%",
   },
   classContainer: {
     flexDirection: "row",

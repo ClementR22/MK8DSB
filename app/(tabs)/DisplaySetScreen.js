@@ -19,10 +19,6 @@ import { imageSize } from "../../components/PressableImage";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 import SetCard from "../../components/SetCard";
-import {
-  initializePressableImages,
-  handlePressImageUnique,
-} from "../../utils/pressableImagesFunctions";
 
 import {
   statNames,

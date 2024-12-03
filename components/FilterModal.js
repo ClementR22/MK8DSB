@@ -20,8 +20,6 @@ const FilterModal = ({
   setIsModalVisible,
   chosenBodyType,
   setChosenBodyType,
-  pressableImages,
-  setPressableImages,
   toggleCheck,
 }) => {
   const th = useTheme();
@@ -65,8 +63,6 @@ const FilterModal = ({
                 <ElementsFilterSelector
                   chosenBodyType={chosenBodyType}
                   setChosenBodyType={setChosenBodyType}
-                  pressableImages={pressableImages}
-                  setPressableImages={setPressableImages}
                   toggleCheck={toggleCheck}
                 />
               </BottomSheetView>

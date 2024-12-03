@@ -1,6 +1,7 @@
 import React from "react";
 import { Chip } from "react-native-paper";
 import { View, Image } from "react-native";
+import { translate } from "../i18n/translations";
 
 const MyChip = ({ name, selected, onPress, uri }) => {
   return (
@@ -12,7 +13,7 @@ const MyChip = ({ name, selected, onPress, uri }) => {
         textStyle={styles.chipText}
         avatar={<Image source={uri} style={styles.image} />}
       >
-        {name}
+        {translate(name)}
       </Chip>
     </View>
   );

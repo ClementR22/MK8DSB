@@ -18,11 +18,6 @@ import Checkbox from "expo-checkbox";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 
-import {
-  pressableImages,
-  setPressableImages,
-} from "../../utils/pressableImagesFunctions";
-
 // Utils
 import {
   setAllInfos,
@@ -60,11 +55,16 @@ import PressableStat from "../../components/PressableStat";
 import StatSelector from "../../components/StatSelector";
 import { translate } from "../../i18n/translations";
 import { elementsAllInfos } from "../../data/data";
+import { usePressableImages } from "../../utils/usePressableImages";
 
 const screenWidth = Dimensions.get("window").width;
 
 const SearchSetScreen = () => {
   const th = useTheme();
+
+  const { pressableImages, handlePressImage, handlePressImageUnique } =
+    usePressableImages();
+
   const [chosenStats, setChosenStats] = useState(
     statNames.map((statName, index) => {
       return {
@@ -453,8 +453,6 @@ const SearchSetScreen = () => {
             setIsModalVisible={setFilterModalVisible}
             chosenBodyType={chosenBodyType}
             setChosenBodyType={setChosenBodyType}
-            pressableImages={pressableImages}
-            setPressableImages={setPressableImages}
             toggleCheck={toggleCheck}
             showToast={showToast}
             //ModalContent={StatSelector}
