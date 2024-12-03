@@ -54,7 +54,6 @@ const ElementsImagesSelector = ({ displayCase }) => {
           Object.entries(categoryValue).flatMap(([classKey, classImages]) =>
             Object.entries(classImages).map(
               ([elementKey, { name, uri, pressed }]) => {
-                console.log(name);
                 return (
                   <MyChip
                     key={`${categoryKey}-${classKey}-${elementKey}`}

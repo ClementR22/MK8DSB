@@ -37,7 +37,6 @@ const ElementsFilterSelector = ({
     <ScrollView style={modal(th).content}>
       <View key="body type" style={styles.bodyTypeContainer}>
         {chosenBodyType.map((bodyType, index) => {
-          console.log(index);
           return (
             <MyChip
               key={index}

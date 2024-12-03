@@ -48583,660 +48583,1312 @@ export const setAllInfos = [
   ],
 ];
 
-export const elementsImages = {
-  character: {
-    0: {
-      0: {
-        name: "Baby Peach",
-        uri: require("../assets/images/elementsImages/characters/Baby Peach.png"),
-      },
-      1: {
-        name: "Baby Daisy",
-        uri: require("../assets/images/elementsImages/characters/Baby Daisy.png"),
-      },
-    },
-    1: {
-      0: {
-        name: "Baby Rosalina",
-        uri: require("../assets/images/elementsImages/characters/Baby Rosalina.png"),
-      },
-      1: {
-        name: "Lemmy",
-        uri: require("../assets/images/elementsImages/characters/Lemmy.png"),
-      },
-    },
-    2: {
-      0: {
-        name: "Baby Mario",
-        uri: require("../assets/images/elementsImages/characters/Baby Mario.png"),
-      },
-      1: {
-        name: "/Baby Luigi",
-        uri: require("../assets/images/elementsImages/characters/Baby Luigi.png"),
-      },
-      2: {
-        name: "Dry Bones",
-        uri: require("../assets/images/elementsImages/characters/Dry Bones.png"),
-      },
-      3: {
-        name: "Light Mii",
-        uri: require("../assets/images/elementsImages/characters/Light Mii.png"),
-      },
-    },
-    3: {
-      0: {
-        name: "Toadette",
-        uri: require("../assets/images/elementsImages/characters/Toadette.png"),
-      },
-      1: {
-        name: "Wendy",
-        uri: require("../assets/images/elementsImages/characters/Wendy.png"),
-      },
-      2: {
-        name: "Isabelle",
-        uri: require("../assets/images/elementsImages/characters/Isabelle.png"),
-      },
-    },
-    4: {
-      0: {
-        name: "Koopa",
-        uri: require("../assets/images/elementsImages/characters/Koopa.png"),
-      },
-      1: {
-        name: "Lakitu",
-        uri: require("../assets/images/elementsImages/characters/Lakitu.png"),
-      },
-      2: {
-        name: "Bowser Jr.",
-        uri: require("../assets/images/elementsImages/characters/Bowser Jr..png"),
-      },
-    },
-    5: {
-      0: {
-        name: "Toad",
-        uri: require("../assets/images/elementsImages/characters/Toad.png"),
-      },
-      1: {
-        name: "Shy Guy",
-        uri: require("../assets/images/elementsImages/characters/Shy Guy.png"),
-      },
-      2: {
-        name: "Larry",
-        uri: require("../assets/images/elementsImages/characters/Larry.png"),
-      },
-    },
-    6: {
-      0: {
-        name: "Cat Peach",
-        uri: require("../assets/images/elementsImages/characters/Cat Peach.png"),
-      },
-      1: {
-        name: "Inkling Girl",
-        uri: require("../assets/images/elementsImages/characters/Inkling Girl.png"),
-      },
-      2: {
-        name: "Villager Female",
-        uri: require("../assets/images/elementsImages/characters/Villager Female.png"),
-      },
-      3: {
-        name: "Diddy Kong",
-        uri: require("../assets/images/elementsImages/characters/Diddy Kong.png"),
-      },
-    },
-    7: {
-      0: {
-        name: "Peach",
-        uri: require("../assets/images/elementsImages/characters/Peach.png"),
-      },
-      1: {
-        name: "Daisy",
-        uri: require("../assets/images/elementsImages/characters/Daisy.png"),
-      },
-      2: {
-        name: "Yoshi",
-        uri: require("../assets/images/elementsImages/characters/Yoshi.png"),
-      },
-      3: {
-        name: "Birdo",
-        uri: require("../assets/images/elementsImages/characters/Birdo.png"),
-      },
-      4: {
-        name: "Peachette",
-        uri: require("../assets/images/elementsImages/characters/Peachette.png"),
-      },
-    },
-    8: {
-      0: {
-        name: "Tanooki Mario",
-        uri: require("../assets/images/elementsImages/characters/Tanooki Mario.png"),
-      },
-      1: {
-        name: "Inkling Boy",
-        uri: require("../assets/images/elementsImages/characters/Inkling Boy.png"),
-      },
-      2: {
-        name: "Villager Male",
-        uri: require("../assets/images/elementsImages/characters/Villager Male.png"),
-      },
-    },
-    9: {
-      0: {
-        name: "Mario",
-        uri: require("../assets/images/elementsImages/characters/Mario.png"),
-      },
-      1: {
-        name: "Ludwig",
-        uri: require("../assets/images/elementsImages/characters/Ludwig.png"),
-      },
-      2: {
-        name: "Medium Mii",
-        uri: require("../assets/images/elementsImages/characters/Medium Mii.png"),
-      },
-    },
-    10: {
-      0: {
-        name: "Luigi",
-        uri: require("../assets/images/elementsImages/characters/Luigi.png"),
-      },
-      1: {
-        name: "Iggy",
-        uri: require("../assets/images/elementsImages/characters/Iggy.png"),
-      },
-      2: {
-        name: "Kamek",
-        uri: require("../assets/images/elementsImages/characters/Kamek.png"),
-      },
-    },
-    11: {
-      0: {
-        name: "Rosalina",
-        uri: require("../assets/images/elementsImages/characters/Rosalina.png"),
-      },
-      1: {
-        name: "King Boo",
-        uri: require("../assets/images/elementsImages/characters/King Boo.png"),
-      },
-      2: {
-        name: "Link",
-        uri: require("../assets/images/elementsImages/characters/Link.png"),
-      },
-      3: {
-        name: "Pauline",
-        uri: require("../assets/images/elementsImages/characters/Pauline.png"),
-      },
-    },
-    12: {
-      0: {
-        name: "Petey Piranha",
-        uri: require("../assets/images/elementsImages/characters/Petey Piranha.png"),
-      },
-      1: {
-        name: "Metal Mario",
-        uri: require("../assets/images/elementsImages/characters/Metal Mario.png"),
-      },
-      2: {
-        name: "Pink Gold Peach",
-        uri: require("../assets/images/elementsImages/characters/Pink Gold Peach.png"),
-      },
-    },
-    13: {
-      0: {
-        name: "Waluigi",
-        uri: require("../assets/images/elementsImages/characters/Waluigi.png"),
-      },
-      1: {
-        name: "Donkey Kong",
-        uri: require("../assets/images/elementsImages/characters/Donkey Kong.png"),
-      },
-      2: {
-        name: "Roy",
-        uri: require("../assets/images/elementsImages/characters/Roy.png"),
-      },
-      3: {
-        name: "Wiggler",
-        uri: require("../assets/images/elementsImages/characters/Wiggler.png"),
-      },
-    },
-    14: {
-      0: {
-        name: "Wario",
-        uri: require("../assets/images/elementsImages/characters/Wario.png"),
-      },
-      1: {
-        name: "Dry Bowser",
-        uri: require("../assets/images/elementsImages/characters/Dry Bowser.png"),
-      },
-      2: {
-        name: "Heavy Mii",
-        uri: require("../assets/images/elementsImages/characters/Heavy Mii.png"),
-      },
-      3: {
-        name: "Funky Kong",
-        uri: require("../assets/images/elementsImages/characters/Funky Kong.png"),
-      },
-    },
-    15: {
-      0: {
-        name: "Bowser",
-        uri: require("../assets/images/elementsImages/characters/Bowser.png"),
-      },
-      1: {
-        name: "Morton",
-        uri: require("../assets/images/elementsImages/characters/Morton.png"),
-      },
+export const elementsAllInfosList = [
+  {
+    name: "Mario",
+    category: "character",
+    classId: "9",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Mario.png",
+      width: 110,
+      height: 111,
     },
   },
-
-  kart: {
-    0: {
-      0: {
-        name: "Standard Kart",
-        uri: require("../assets/images/elementsImages/karts/Standard Kart.png"),
-      },
-      1: {
-        name: "300 SL Roadster",
-        uri: require("../assets/images/elementsImages/karts/300 SL Roadster.png"),
-      },
-    },
-    1: {
-      0: {
-        name: "Pipe Frame",
-        uri: require("../assets/images/elementsImages/karts/Pipe Frame.png"),
-      },
-    },
-    2: {
-      0: {
-        name: "Mach 8",
-        uri: require("../assets/images/elementsImages/karts/Mach 8.png"),
-      },
-      1: {
-        name: "Sports Coupe",
-        uri: require("../assets/images/elementsImages/karts/Sports Coupe.png"),
-      },
-    },
-    3: {
-      0: {
-        name: "Steel Driver",
-        uri: require("../assets/images/elementsImages/karts/Steel Driver.png"),
-      },
-      1: {
-        name: "Tri-Speeder",
-        uri: require("../assets/images/elementsImages/karts/Tri-Speeder.png"),
-      },
-    },
-    4: {
-      0: {
-        name: "Cat Cruiser",
-        uri: require("../assets/images/elementsImages/karts/Cat Cruiser.png"),
-      },
-    },
-    5: {
-      0: {
-        name: "B-Dasher",
-        uri: require("../assets/images/elementsImages/karts/B-Dasher.png"),
-      },
-      1: {
-        name: "Circuit Special",
-        uri: require("../assets/images/elementsImages/karts/Circuit Special.png"),
-      },
-      2: {
-        name: "P-Wing",
-        uri: require("../assets/images/elementsImages/karts/P-Wing.png"),
-      },
-    },
-    6: {
-      0: {
-        name: "Badwagon",
-        uri: require("../assets/images/elementsImages/karts/Badwagon.png"),
-      },
-      1: {
-        name: "GLA",
-        uri: require("../assets/images/elementsImages/karts/GLA.png"),
-      },
-    },
-    7: {
-      0: {
-        name: "Prancer",
-        uri: require("../assets/images/elementsImages/karts/Prancer.png"),
-      },
-    },
-    8: {
-      0: {
-        name: "Biddybuggy",
-        uri: require("../assets/images/elementsImages/karts/Biddybuggy.png"),
-      },
-    },
-    9: {
-      0: {
-        name: "Streetle",
-        uri: require("../assets/images/elementsImages/karts/Streetle.png"),
-      },
-      1: {
-        name: "Landship",
-        uri: require("../assets/images/elementsImages/karts/Landship.png"),
-      },
-    },
-    10: {
-      0: {
-        name: "Sneaker",
-        uri: require("../assets/images/elementsImages/karts/Sneaker.png"),
-      },
-      1: {
-        name: "Gold Kart",
-        uri: require("../assets/images/elementsImages/karts/Gold Kart.png"),
-      },
-    },
-    11: {
-      0: {
-        name: "W 25 Silver Arrow",
-        uri: require("../assets/images/elementsImages/karts/W 25 Silver Arrow.png"),
-      },
-    },
-    12: {
-      0: {
-        name: "Blue Falcon",
-        uri: require("../assets/images/elementsImages/karts/Blue Falcon.png"),
-      },
-    },
-    13: {
-      0: {
-        name: "Tanooki Buggy",
-        uri: require("../assets/images/elementsImages/karts/Tanooki Buggy.png"),
-      },
-      1: {
-        name: "Koopa Clown",
-        uri: require("../assets/images/elementsImages/karts/Koopa Clown.png"),
-      },
+  {
+    name: "Luigi",
+    category: "character",
+    classId: "10",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Luigi.png",
+      width: 107,
+      height: 120,
     },
   },
-
-  bike: {
-    0: {
-      2: {
-        name: "The Duke",
-        uri: require("../assets/images/elementsImages/bikes/The Duke.png"),
-      },
-    },
-    1: {
-      1: {
-        name: "Varmint",
-        uri: require("../assets/images/elementsImages/bikes/Varmint.png"),
-      },
-      2: {
-        name: "City Tripper",
-        uri: require("../assets/images/elementsImages/bikes/City Tripper.png"),
-      },
-    },
-    8: {
-      1: {
-        name: "Mr. Scooty",
-        uri: require("../assets/images/elementsImages/bikes/Mr. Scooty.png"),
-      },
-    },
-    11: {
-      1: {
-        name: "Standard Bike",
-        uri: require("../assets/images/elementsImages/bikes/Standard Bike.png"),
-      },
-      2: {
-        name: "Flame Rider",
-        uri: require("../assets/images/elementsImages/bikes/Flame Rider.png"),
-      },
-    },
-    13: {
-      2: {
-        name: "Master Cycle Zero",
-        uri: require("../assets/images/elementsImages/bikes/Master Cycle Zero.png"),
-      },
+  {
+    name: "Peach",
+    category: "character",
+    classId: "7",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Peach.png",
+      width: 124,
+      height: 125,
     },
   },
-
-  sportBike: {
-    4: {
-      1: {
-        name: "Comet",
-        uri: require("../assets/images/elementsImages/sport bikes/Comet.png"),
-      },
-      2: {
-        name: "Yoshi Bike",
-        uri: require("../assets/images/elementsImages/sport bikes/Yoshi Bike.png"),
-      },
-    },
-    7: {
-      1: {
-        name: "Sport Bike",
-        uri: require("../assets/images/elementsImages/sport bikes/Sport Bike.png"),
-      },
-      2: {
-        name: "Jet Bike",
-        uri: require("../assets/images/elementsImages/sport bikes/Jet Bike.png"),
-      },
-    },
-    10: {
-      2: {
-        name: "Master Cycle",
-        uri: require("../assets/images/elementsImages/sport bikes/Master Cycle.png"),
-      },
+  {
+    name: "Daisy",
+    category: "character",
+    classId: "7",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Daisy.png",
+      width: 112,
+      height: 122,
     },
   },
-
-  ATV: {
-    2: {
-      2: {
-        name: "Inkstriker",
-        uri: require("../assets/images/elementsImages/ATVs/Inkstriker.png"),
-      },
-    },
-    3: {
-      2: {
-        name: "Bone Rattler",
-        uri: require("../assets/images/elementsImages/ATVs/Bone Rattler.png"),
-      },
-    },
-    4: {
-      3: {
-        name: "Teddy Buggy",
-        uri: require("../assets/images/elementsImages/ATVs/Teddy Buggy.png"),
-      },
-    },
-    6: {
-      2: {
-        name: "Standard ATV",
-        uri: require("../assets/images/elementsImages/ATVs/Standard ATV.png"),
-      },
-    },
-    11: {
-      3: {
-        name: "Wild Wiggler",
-        uri: require("../assets/images/elementsImages/ATVs/Wild Wiggler.png"),
-      },
-    },
-    12: {
-      1: {
-        name: "Splat Buggy",
-        uri: require("../assets/images/elementsImages/ATVs/Splat Buggy.png"),
-      },
+  {
+    name: "Rosalina",
+    category: "character",
+    classId: "11",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Rosalina.png",
+      width: 110,
+      height: 127,
     },
   },
-
-  wheels: {
-    0: {
-      0: {
-        name: "Standard",
-        uri: require("../assets/images/elementsImages/wheels/Standard.png"),
-      },
-      1: {
-        name: "Blue Standard",
-        uri: require("../assets/images/elementsImages/wheels/Blue Standard.png"),
-      },
-      2: {
-        name: "GLA Tires",
-        uri: require("../assets/images/elementsImages/wheels/GLA Tires.png"),
-      },
-    },
-    1: {
-      0: {
-        name: "Monster",
-        uri: require("../assets/images/elementsImages/wheels/Monster.png"),
-      },
-      1: {
-        name: "Hot Monster",
-        uri: require("../assets/images/elementsImages/wheels/Hot Monster.png"),
-      },
-      2: {
-        name: "Ancient Tires",
-        uri: require("../assets/images/elementsImages/wheels/Ancient Tires.png"),
-      },
-    },
-    2: {
-      0: {
-        name: "Roller",
-        uri: require("../assets/images/elementsImages/wheels/Roller.png"),
-      },
-      1: {
-        name: "Azure Roller",
-        uri: require("../assets/images/elementsImages/wheels/Azure Roller.png"),
-      },
-    },
-    3: {
-      0: {
-        name: "Slim",
-        uri: require("../assets/images/elementsImages/wheels/Slim.png"),
-      },
-      1: {
-        name: "Crimson Slim",
-        uri: require("../assets/images/elementsImages/wheels/Crimson Slim.png"),
-      },
-      2: {
-        name: "Wood",
-        uri: require("../assets/images/elementsImages/wheels/Wood.png"),
-      },
-    },
-    4: {
-      0: {
-        name: "Slick",
-        uri: require("../assets/images/elementsImages/wheels/Slick.png"),
-      },
-      1: {
-        name: "Cyber Slick",
-        uri: require("../assets/images/elementsImages/wheels/Cyber Slick.png"),
-      },
-    },
-    5: {
-      0: {
-        name: "Metal",
-        uri: require("../assets/images/elementsImages/wheels/Metal.png"),
-      },
-      1: {
-        name: "Gold Tires",
-        uri: require("../assets/images/elementsImages/wheels/Gold Tires.png"),
-      },
-    },
-    6: {
-      0: {
-        name: "Button",
-        uri: require("../assets/images/elementsImages/wheels/Button.png"),
-      },
-      1: {
-        name: "Leaf Tires",
-        uri: require("../assets/images/elementsImages/wheels/Leaf Tires.png"),
-      },
-    },
-    7: {
-      0: {
-        name: "Off-Road",
-        uri: require("../assets/images/elementsImages/wheels/Off-Road.png"),
-      },
-      1: {
-        name: "Retro Off-Road",
-        uri: require("../assets/images/elementsImages/wheels/Retro Off-Road.png"),
-      },
-      2: {
-        name: "Triforce Tires",
-        uri: require("../assets/images/elementsImages/wheels/Triforce Tires.png"),
-      },
-    },
-    8: {
-      0: {
-        name: "Cushion",
-        uri: require("../assets/images/elementsImages/wheels/Cushion.png"),
-      },
-      1: {
-        name: "Sponge",
-        uri: require("../assets/images/elementsImages/wheels/Sponge.png"),
-      },
+  {
+    name: "TanookiMario",
+    category: "character",
+    classId: "8",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Tanooki Mario.png",
+      width: 111,
+      height: 116,
     },
   },
-  glider: {
-    0: {
-      0: {
-        name: "Super Glider",
-        uri: require("../assets/images/elementsImages/gliders/Super Glider.png"),
-      },
-      1: {
-        name: "Waddle Wing",
-        uri: require("../assets/images/elementsImages/gliders/Waddle Wing.png"),
-      },
-      2: {
-        name: "Hylian Kite",
-        uri: require("../assets/images/elementsImages/gliders/Hylian Kite.png"),
-      },
-    },
-    1: {
-      0: {
-        name: "Cloud Glider",
-        uri: require("../assets/images/elementsImages/gliders/Cloud Glider.png"),
-      },
-      1: {
-        name: "Parachute Glider",
-        uri: require("../assets/images/elementsImages/gliders/Parachute Glider.png"),
-      },
-      2: {
-        name: "Flower Glider",
-        uri: require("../assets/images/elementsImages/gliders/Flower Glider.png"),
-      },
-      3: {
-        name: "Paper Glider",
-        uri: require("../assets/images/elementsImages/gliders/Paper Glider.png"),
-      },
-    },
-    2: {
-      0: {
-        name: "Wario Wing",
-        uri: require("../assets/images/elementsImages/gliders/Wario Wing.png"),
-      },
-      1: {
-        name: "Plane Glider",
-        uri: require("../assets/images/elementsImages/gliders/Plane Glider.png"),
-      },
-      2: {
-        name: "Gold Glider",
-        uri: require("../assets/images/elementsImages/gliders/Gold Glider.png"),
-      },
-      3: {
-        name: "Paraglider",
-        uri: require("../assets/images/elementsImages/gliders/Paraglider.png"),
-      },
-    },
-    3: {
-      0: {
-        name: "Peach Parasol",
-        uri: require("../assets/images/elementsImages/gliders/Peach Parasol.png"),
-      },
-      1: {
-        name: "Bowser Kite",
-        uri: require("../assets/images/elementsImages/gliders/Bowser Kite.png"),
-      },
-      2: {
-        name: "Parafoil Glider",
-        uri: require("../assets/images/elementsImages/gliders/Parafoil Glider.png"),
-      },
-      3: {
-        name: "MKTV Parafoil Glider",
-        uri: require("../assets/images/elementsImages/gliders/MKTV Parafoil Glider.png"),
-      },
+  {
+    name: "CatPeach",
+    category: "character",
+    classId: "6",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Cat Peach.png",
+      width: 106,
+      height: 122,
     },
   },
-};
-
-export const closeImage = require("../assets/images/close.png");
+  {
+    name: "Birdo",
+    category: "character",
+    classId: "7",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Birdo.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "Yoshi",
+    category: "character",
+    classId: "7",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Yoshi.png",
+      width: 114,
+      height: 108,
+    },
+  },
+  {
+    name: "Toad",
+    category: "character",
+    classId: "5",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Toad.png",
+      width: 104,
+      height: 108,
+    },
+  },
+  {
+    name: "Koopa",
+    category: "character",
+    classId: "4",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Koopa.png",
+      width: 96,
+      height: 96,
+    },
+  },
+  {
+    name: "ShyGuy",
+    category: "character",
+    classId: "5",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Shy Guy.png",
+      width: 107,
+      height: 105,
+    },
+  },
+  {
+    name: "Lakitu",
+    category: "character",
+    classId: "4",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Lakitu.png",
+      width: 96,
+      height: 117,
+    },
+  },
+  {
+    name: "Toadette",
+    category: "character",
+    classId: 3,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Toadette.png",
+      width: 126,
+      height: 106,
+    },
+  },
+  {
+    name: "KingBoo",
+    category: "character",
+    classId: "11",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/King Boo.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "PeteyPiranha",
+    category: "character",
+    classId: "12",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Petey Piranha.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "BabyMario",
+    category: "character",
+    classId: 2,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Baby Mario.png",
+      width: 106,
+      height: 100,
+    },
+  },
+  {
+    name: "BabyLuigi",
+    category: "character",
+    classId: 2,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Baby Luigi.png",
+      width: 102,
+      height: 105,
+    },
+  },
+  {
+    name: "BabyPeach",
+    category: "character",
+    classId: 0,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Baby Peach.png",
+      width: 96,
+      height: 127,
+    },
+  },
+  {
+    name: "BabyDaisy",
+    category: "character",
+    classId: 0,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Baby Daisy.png",
+      width: 96,
+      height: 127,
+    },
+  },
+  {
+    name: "BabyRosalina",
+    category: "character",
+    classId: 1,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Baby Rosalina.png",
+      width: 101,
+      height: 126,
+    },
+  },
+  {
+    name: "MetalMario",
+    category: "character",
+    classId: "12",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Metal Mario.png",
+      width: 108,
+      height: 111,
+    },
+  },
+  {
+    name: "PinkGoldPeach",
+    category: "character",
+    classId: "12",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Pink Gold Peach.png",
+      width: 123,
+      height: 126,
+    },
+  },
+  {
+    name: "Wiggler",
+    category: "character",
+    classId: "13",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Wiggler.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "Wario",
+    category: "character",
+    classId: "14",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Wario.png",
+      width: 123,
+      height: 111,
+    },
+  },
+  {
+    name: "Waluigi",
+    category: "character",
+    classId: "13",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Waluigi.png",
+      width: 105,
+      height: 122,
+    },
+  },
+  {
+    name: "DonkeyKong",
+    category: "character",
+    classId: "13",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Donkey Kong.png",
+      width: 94,
+      height: 121,
+    },
+  },
+  {
+    name: "Bowser",
+    category: "character",
+    classId: "15",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Bowser.png",
+      width: 116,
+      height: 116,
+    },
+  },
+  {
+    name: "DryBones",
+    category: "character",
+    classId: 2,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Dry Bones.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "BowserJr.",
+    category: "character",
+    classId: "4",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Bowser Jr..png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "DryBowser",
+    category: "character",
+    classId: "14",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Dry Bowser.png",
+      width: 115,
+      height: 115,
+    },
+  },
+  {
+    name: "Kamek",
+    category: "character",
+    classId: "10",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Kamek.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "Lemmy",
+    category: "character",
+    classId: 1,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Lemmy.png",
+      width: 83,
+      height: 124,
+    },
+  },
+  {
+    name: "Larry",
+    category: "character",
+    classId: "5",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Larry.png",
+      width: 115,
+      height: 126,
+    },
+  },
+  {
+    name: "Wendy",
+    category: "character",
+    classId: 3,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Wendy.png",
+      width: 119,
+      height: 114,
+    },
+  },
+  {
+    name: "Ludwig",
+    category: "character",
+    classId: "9",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Ludwig.png",
+      width: 128,
+      height: 107,
+    },
+  },
+  {
+    name: "Iggy",
+    category: "character",
+    classId: "10",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Iggy.png",
+      width: 116,
+      height: 124,
+    },
+  },
+  {
+    name: "Roy",
+    category: "character",
+    classId: "13",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Roy.png",
+      width: 116,
+      height: 99,
+    },
+  },
+  {
+    name: "Morton",
+    category: "character",
+    classId: "15",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Morton.png",
+      width: 115,
+      height: 124,
+    },
+  },
+  {
+    name: "Peachette",
+    category: "character",
+    classId: "7",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Peachette.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "InklingGirl",
+    category: "character",
+    classId: "6",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Inkling Girl.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "InklingBoy",
+    category: "character",
+    classId: "8",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Inkling Boy.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "VillagerMale",
+    category: "character",
+    classId: "8",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Villager Male.png",
+      width: 119,
+      height: 113,
+    },
+  },
+  {
+    name: "VillagerFemale",
+    category: "character",
+    classId: "6",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Villager Female.png",
+      width: 115,
+      height: 104,
+    },
+  },
+  {
+    name: "Isabelle",
+    category: "character",
+    classId: 3,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Isabelle.png",
+      width: 114,
+      height: 121,
+    },
+  },
+  {
+    name: "Link",
+    category: "character",
+    classId: "11",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Link.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "DiddyKong",
+    category: "character",
+    classId: "6",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Diddy Kong.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "FunkyKong",
+    category: "character",
+    classId: "14",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Funky Kong.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "Pauline",
+    category: "character",
+    classId: "11",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Pauline.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "LightMii",
+    category: "character",
+    classId: 2,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Light Mii.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "MediumMii",
+    category: "character",
+    classId: "9",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Medium Mii.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "HeavyMii",
+    category: "character",
+    classId: "14",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Heavy Mii.png",
+      width: 128,
+      height: 128,
+    },
+  },
+  {
+    name: "StandardKart",
+    category: "kart",
+    classId: 0,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Standard Kart.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "PipeFrame",
+    category: "kart",
+    classId: 1,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Pipe Frame.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Mach8",
+    category: "kart",
+    classId: 2,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Mach 8.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "SteelDriver",
+    category: "kart",
+    classId: 3,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Steel Driver.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "CatCruiser",
+    category: "kart",
+    classId: "4",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Cat Cruiser.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "CircuitSpecial",
+    category: "kart",
+    classId: "5",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Circuit Special.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Tri-Speeder",
+    category: "kart",
+    classId: 3,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Tri-Speeder.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Badwagon",
+    category: "kart",
+    classId: "6",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Badwagon.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Prancer",
+    category: "kart",
+    classId: "7",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Prancer.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Biddybuggy",
+    category: "kart",
+    classId: "8",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Biddybuggy.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Landship",
+    category: "kart",
+    classId: "9",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Landship.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Sneaker",
+    category: "kart",
+    classId: "10",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Sneaker.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "SportsCoupe",
+    category: "kart",
+    classId: 2,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Sports Coupe.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "GoldKart",
+    category: "kart",
+    classId: "10",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Gold Kart.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "GLA",
+    category: "kart",
+    classId: "6",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/GLA.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "W25SilverArrow",
+    category: "kart",
+    classId: "11",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/W 25 Silver Arrow.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "300SLRoadster",
+    category: "kart",
+    classId: 0,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/300 SL Roadster.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "BlueFalcon",
+    category: "kart",
+    classId: "12",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Blue Falcon.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "TanookiBuggy",
+    category: "kart",
+    classId: "13",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Tanooki Buggy.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "B-Dasher",
+    category: "kart",
+    classId: "5",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/B-Dasher.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Streetle",
+    category: "kart",
+    classId: "9",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Streetle.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "P-Wing",
+    category: "kart",
+    classId: "5",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/P-Wing.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "KoopaClown",
+    category: "kart",
+    classId: "13",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Koopa Clown.png",
+      width: 140,
+      height: 100,
+    },
+  },
+  {
+    name: "StandardBike",
+    category: "bike",
+    classId: "11",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fbikes/Standard Bike.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "TheDuke",
+    category: "bike",
+    classId: 0,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fbikes/The Duke.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "FlameRider",
+    category: "bike",
+    classId: "11",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fbikes/Flame Rider.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Varmint",
+    category: "bike",
+    classId: 1,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fbikes/Varmint.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Mr.Scooty",
+    category: "bike",
+    classId: "8",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fbikes/Mr. Scooty.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "MasterCycleZero",
+    category: "bike",
+    classId: "13",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fbikes/Master Cycle Zero.png",
+      width: 150,
+      height: 96,
+    },
+  },
+  {
+    name: "CityTripper",
+    category: "bike",
+    classId: 1,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fbikes/City Tripper.png",
+      width: 144,
+      height: 92,
+    },
+  },
+  {
+    name: "Comet",
+    category: "sportBike",
+    classId: "4",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fsport%20bikes/Comet.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "SportBike",
+    category: "sportBike",
+    classId: "7",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fsport%20bikes/Sport Bike.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "JetBike",
+    category: "sportBike",
+    classId: "7",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fsport%20bikes/Jet Bike.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "YoshiBike",
+    category: "sportBike",
+    classId: "4",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fsport%20bikes/Yoshi Bike.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "MasterCycle",
+    category: "sportBike",
+    classId: "10",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fsport%20bikes/Master Cycle.png",
+      width: 144,
+      height: 92,
+    },
+  },
+  {
+    name: "StandardATV",
+    category: "ATV",
+    classId: "6",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2FATVs/Standard ATV.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "WildWiggler",
+    category: "ATV",
+    classId: "11",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2FATVs/Wild Wiggler.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "TeddyBuggy",
+    category: "ATV",
+    classId: "4",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2FATVs/Teddy Buggy.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "BoneRattler",
+    category: "ATV",
+    classId: 3,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2FATVs/Bone Rattler.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "SplatBuggy",
+    category: "ATV",
+    classId: "12",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2FATVs/Splat Buggy.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Inkstriker",
+    category: "ATV",
+    classId: 2,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2FATVs/Inkstriker.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Standard",
+    category: "wheels",
+    classId: 0,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Standard.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Monster",
+    category: "wheels",
+    classId: 1,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Monster.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Roller",
+    category: "wheels",
+    classId: 2,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Roller.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Slim",
+    category: "wheels",
+    classId: 3,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Slim.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Slick",
+    category: "wheels",
+    classId: "4",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Slick.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Metal",
+    category: "wheels",
+    classId: "5",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Metal.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Button",
+    category: "wheels",
+    classId: "6",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Button.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Off-Road",
+    category: "wheels",
+    classId: "7",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Off-Road.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Sponge",
+    category: "wheels",
+    classId: "8",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Sponge.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Wood",
+    category: "wheels",
+    classId: 3,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Wood.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Cushion",
+    category: "wheels",
+    classId: "8",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Cushion.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "BlueStandard",
+    category: "wheels",
+    classId: 0,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Blue Standard.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "HotMonster",
+    category: "wheels",
+    classId: 1,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Hot Monster.png",
+      width: 144,
+      height: 92,
+    },
+  },
+  {
+    name: "AzureRoller",
+    category: "wheels",
+    classId: 2,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Azure Roller.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "CrimsonSlim",
+    category: "wheels",
+    classId: 3,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Crimson Slim.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "CyberSlick",
+    category: "wheels",
+    classId: "4",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Cyber Slick.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "RetroOff-Road",
+    category: "wheels",
+    classId: "7",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Retro Off-Road.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "GoldTires",
+    category: "wheels",
+    classId: "5",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Gold Tires.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "GLATires",
+    category: "wheels",
+    classId: 0,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/GLA Tires.png",
+      width: 144,
+      height: 92,
+    },
+  },
+  {
+    name: "TriforceTires",
+    category: "wheels",
+    classId: "7",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Triforce Tires.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "AncientTires",
+    category: "wheels",
+    classId: 1,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Ancient Tires.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "LeafTires",
+    category: "wheels",
+    classId: "6",
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Leaf Tires.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "SuperGlider",
+    category: "glider",
+    classId: 0,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Super Glider.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "CloudGlider",
+    category: "glider",
+    classId: 1,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Cloud Glider.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "WarioWing",
+    category: "glider",
+    classId: 2,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Wario Wing.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "WaddleWing",
+    category: "glider",
+    classId: 0,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Waddle Wing.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "PeachParasol",
+    category: "glider",
+    classId: 3,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Peach Parasol.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "ParachuteGlider",
+    category: "glider",
+    classId: 1,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Parachute Glider.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "ParafoilGlider",
+    category: "glider",
+    classId: 3,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Parafoil Glider.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "FlowerGlider",
+    category: "glider",
+    classId: 1,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Flower Glider.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "BowserKite",
+    category: "glider",
+    classId: 3,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Bowser Kite.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "PlaneGlider",
+    category: "glider",
+    classId: 2,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Plane Glider.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "MKTVParafoilGlider",
+    category: "glider",
+    classId: 3,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/MKTV Parafoil Glider.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "GoldGlider",
+    category: "glider",
+    classId: 2,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Gold Glider.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "HylianKite",
+    category: "glider",
+    classId: 0,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Hylian Kite.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "Paraglider",
+    category: "glider",
+    classId: 2,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Paraglider.png",
+      width: 200,
+      height: 128,
+    },
+  },
+  {
+    name: "PaperGlider",
+    category: "glider",
+    classId: 1,
+    image: {
+      uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fgliders/Paper Glider.png",
+      width: 200,
+      height: 128,
+    },
+  },
+];
+// Transforme l'objet en une liste d'objets avec les propriétés supplémentaires
+/* const flatListWithMeta = elementsImages.map((item, index) => ({
+  id: index,
+  ...item,
+}));
+ */
+//console.log(JSON.stringify(flatListWithMeta));
