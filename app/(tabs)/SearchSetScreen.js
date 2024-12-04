@@ -62,8 +62,11 @@ const screenWidth = Dimensions.get("window").width;
 const SearchSetScreen = () => {
   const th = useTheme();
 
-  const { pressableImages, handlePressImage, handlePressImageUnique } =
-    usePressableImages();
+  const {
+    pressableImagesByCategory,
+    handlePressImage,
+    handlePressImageUnique,
+  } = usePressableImages();
 
   const [chosenStats, setChosenStats] = useState(
     statNames.map((statName, index) => {
@@ -123,25 +126,24 @@ const SearchSetScreen = () => {
     useState(false);
   const [menuModalVisible, setMenuModalVisible] = useState(false);
 
-  const elementsFilterObjectToList = (pressableImages) => {
+  const elementsFilterObjectToList = (pressableImagesByCategory) => {
     const selectedElementsIds7categories = [];
-
     // Parcourir chaque catégorie
-    Object.entries(pressableImages).forEach(([, classes]) => {
-      const pressedClasses = [];
+    Object.entries(pressableImagesByCategory).forEach(([, category]) => {
+      const pressedClassesInCategory = [];
 
       // Parcourir chaque classe dans la catégorie
-      Object.entries(classes).forEach(([classKey, images]) => {
+      Object.entries(category).forEach(([classKey, classElements]) => {
         // Si au moins une image est pressée (true), ajouter la classe à pressedClasses
-        const isAnyImagePressed = Object.values(images).some(
+        const isAnyImagePressed = Object.values(classElements).some(
           ({ pressed }) => pressed
         );
         if (isAnyImagePressed) {
-          pressedClasses.push(+classKey); // +str pour convertir en entier
+          pressedClassesInCategory.push(+classKey); // +str pour convertir en entier
         }
       });
       // Ajouter la liste des classes pressées (ou une liste vide) à result
-      selectedElementsIds7categories.push(pressedClasses);
+      selectedElementsIds7categories.push(pressedClassesInCategory);
     });
 
     const selectedBodies = [
@@ -206,7 +208,9 @@ const SearchSetScreen = () => {
       .filter((bodyType) => bodyType.checked)
       .map((bodyType) => bodyType.name);
 
-    const chosenElementsIds = elementsFilterObjectToList(pressableImages);
+    const chosenElementsIds = elementsFilterObjectToList(
+      pressableImagesByCategory
+    );
 
     if (!chosenStatsChecked.includes(true) || chosenBodyTypeList.length === 0) {
       setSetsToShow([]); // Ou gérer l'état de "rien trouvé"

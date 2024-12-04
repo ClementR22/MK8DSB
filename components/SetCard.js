@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import { elementsAllClassName } from "../data/data";
 import { ScrollView } from "react-native";
-import { elementsImages } from "../data/data";
 import StatSliderResult from "./StatSliderResult";
 import { modal } from "./styles/modal";
 import { button } from "./styles/button";

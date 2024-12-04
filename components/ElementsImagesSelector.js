@@ -66,11 +66,6 @@ const ElementsImagesSelector = ({ displayCase }) => {
                     pressed={pressed}
                     onPress={() => {
                       handlePressImage(id);
-                      console.log(
-                        "dans im selec",
-                        selectedCategoryImages,
-                        pressed
-                      );
                     }}
                     uri={image.uri}
                   />

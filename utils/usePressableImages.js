@@ -19,7 +19,6 @@ const initializePressableImagesList = (defaultSelectedImages) => {
 
 // Fonction pour initialiser pressableImagesByCategory
 const initializePressableImagesByCategory = (pressableImagesList) => {
-  console.log("initializePressableImagesByCategory");
   const pressableImagesByCategory = {};
 
   pressableImagesList.forEach((element) => {
@@ -35,8 +34,6 @@ const initializePressableImagesByCategory = (pressableImagesList) => {
 
     pressableImagesByCategory[category][classId].push(element);
   });
-
-  console.log("dans pressableImagesByCategory", pressableImagesList);
 
   return pressableImagesByCategory;
 };

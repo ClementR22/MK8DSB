@@ -9,10 +9,11 @@ import {
   Modal,
   Platform,
   Alert,
+  DrawerLayoutAndroidComponent,
 } from "react-native";
 import { elementsAllClassName } from "../data/data";
 import { ScrollView } from "react-native";
-import { elementsImages } from "../data/data";
+import { usePressableImages } from "../utils/usePressableImages";
 import StatSliderResult from "./StatSliderResult";
 import { modal } from "./styles/modal";
 import { button } from "./styles/button";
@@ -20,43 +21,52 @@ import { card } from "./styles/card";
 import th from "./styles/theme";
 import MyModal from "./MyModal";
 
-const elementDenominations = ["character", "body", "wheels", "glider"];
+const categoryDenominations = ["character", "body", "wheels", "glider"];
 const bodyDenominations = ["kart", "bike", "sportBike", "ATV"];
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
 
 const SetImagesDisplayer = ({ setToShowElementsIds }) => {
+  const { pressableImagesByCategory } = usePressableImages();
   return (
     <ScrollView>
-      {setToShowElementsIds.map((elementId, index) => {
-        const elementKey = elementDenominations[index];
-        let imagesToDisplay = null;
+      {setToShowElementsIds.map((classKey, index) => {
+        // renommer, c'est pas elementId
+        const categoryKey = categoryDenominations[index];
+        let classElementsToDisplayAllInfos = null;
+
         if (index !== 1) {
-          imagesToDisplay = elementsImages[elementKey]?.[elementId] || {};
+          classElementsToDisplayAllInfos =
+            pressableImagesByCategory[categoryKey][classKey];
         } else {
-          imagesToDisplay = {};
-          bodyDenominations.forEach((denomination) => {
-            imagesToDisplay = {
-              ...imagesToDisplay,
-              ...elementsImages[denomination]?.[elementId],
-            };
+          classElementsToDisplayAllInfos = [];
+          bodyDenominations.forEach((bodyDenomination) => {
+            const classToPush =
+              pressableImagesByCategory[bodyDenomination][classKey];
+            if (classToPush != undefined) {
+              classElementsToDisplayAllInfos.push(
+                ...pressableImagesByCategory[bodyDenomination][classKey]
+              );
+            }
           });
         }
 
-        return imagesToDisplay && Object.keys(imagesToDisplay).length > 0 ? (
+        return (
           <View key={index} style={styles.elementView}>
-            {Object.values(imagesToDisplay).map((image, imgIndex) => {
-              return (
-                <Image
-                  key={imgIndex}
-                  source={image}
-                  style={styles.image}
-                  resizeMode="contain"
-                />
-              );
-            })}
+            {Object.values(classElementsToDisplayAllInfos).map(
+              (element, index) => {
+                return (
+                  <Image
+                    key={index}
+                    source={element.image.uri}
+                    style={styles.image}
+                    resizeMode="contain"
+                  />
+                );
+              }
+            )}
           </View>
-        ) : null;
+        );
       })}
     </ScrollView>
   );
