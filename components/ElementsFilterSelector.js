@@ -24,6 +24,7 @@ const ElementsFilterSelector = ({
   chosenBodyType,
   setChosenBodyType,
   toggleCheck,
+  orderNumber,
 }) => {
   const th = useTheme();
   const bodyTypeIcons = [
@@ -50,7 +51,7 @@ const ElementsFilterSelector = ({
           );
         })}
       </View>
-      <ElementsImagesSelector displayCase={false} />
+      <ElementsImagesSelector displayCase={false} orderNumber={orderNumber} />
 
       {/* Category selector row */}
       {/* <View style={styles.elementsImagesDeselector}>

@@ -28,7 +28,6 @@ import {
 
 // Components import
 import StatSlider from "../../components/StatSlider";
-import ElementsImagesSelector from "../../components/ElementsImagesSelector";
 import { imageSize } from "../../components/PressableImage";
 import SetCard from "../../components/SetCard";
 import ResultsNumber from "../../components/ResultsNumberSelector";

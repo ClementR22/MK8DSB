@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Text, Pressable, StyleSheet, Modal, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
@@ -13,6 +13,7 @@ import { useRef } from "react";
 import { useCallback } from "react";
 import ElementsFilterSelector from "./ElementsFilterSelector";
 import { useTheme } from "./styles/theme";
+import OrderSelector from "./OrderSelector";
 
 const FilterModal = ({
   modalTitle = "Affichage",
@@ -37,6 +38,8 @@ const FilterModal = ({
     }
   }, [isModalVisible, handlePresentModalPress]);
 
+  const [orderNumber, setOrderNumber] = useState(0);
+
   return (
     <Modal
       animationType="none" // Animation (slide, fade, none)
@@ -60,10 +63,15 @@ const FilterModal = ({
             >
               <BottomSheetView style={styles.contentContainer}>
                 <Text style={modal(th).title_center}>{modalTitle}</Text>
+                <OrderSelector
+                  orderNumber={orderNumber}
+                  setOrderNumber={setOrderNumber}
+                />
                 <ElementsFilterSelector
                   chosenBodyType={chosenBodyType}
                   setChosenBodyType={setChosenBodyType}
                   toggleCheck={toggleCheck}
+                  orderNumber={orderNumber}
                 />
               </BottomSheetView>
             </BottomSheetModal>

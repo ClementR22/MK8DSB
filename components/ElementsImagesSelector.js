@@ -21,7 +21,7 @@ import { usePressableImages } from "../utils/usePressableImages";
 
 const iconSize = 38;
 
-const ElementsImagesSelector = ({ displayCase }) => {
+const ElementsImagesSelector = ({ displayCase, orderNumber }) => {
   const {
     pressableImagesList,
     pressableImagesByCategory,
@@ -47,9 +47,17 @@ const ElementsImagesSelector = ({ displayCase }) => {
   // Fonction pour rendre le contenu de l'onglet sélectionné
   const renderContent = () => {
     // Filtre les catégories en fonction de l'onglet sélectionné
-    const selectedCategoryImages = pressableImagesList.filter(
+    let selectedCategoryImages = pressableImagesList.filter(
       (element) => element.category === selectedTab
     );
+
+    console.log("orderNumber", orderNumber);
+
+    if (orderNumber === 1) {
+      selectedCategoryImages.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (orderNumber === 2) {
+      selectedCategoryImages.sort((a, b) => a.classId - b.classId);
+    }
 
     return (
       <View style={styles.categoryContainer}>
