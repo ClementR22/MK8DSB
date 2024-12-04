@@ -99,9 +99,9 @@ const SearchSetScreen = () => {
   };
 
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
-    statNames.map((statName) => ({
+    statNames.map((statName, index) => ({
       name: translate(statName),
-      checked: false,
+      checked: index === 0,
     }))
   );
 
@@ -367,7 +367,8 @@ const SearchSetScreen = () => {
               {translate("SearchedStats")}
             </Text>
             {/* Afficher le slider uniquement si la case est cochée */}
-            {/* {chosenStats.map(
+            {console.log(chosenStats)}
+            {chosenStats.map(
               (stat) =>
                 stat.checked && (
                   <StatSlider
@@ -381,7 +382,7 @@ const SearchSetScreen = () => {
                     setStatFilterNumber={stat.setStatFilterNumber}
                   />
                 )
-            )} */}
+            )}
           </View>
 
           <View style={styles.pressablesContainer}>

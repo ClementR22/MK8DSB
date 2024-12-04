@@ -12,6 +12,14 @@ const StatSlider = ({
   statFilterNumber,
   setStatFilterNumber,
 }) => {
+  console.log(
+    "dans StatSlider",
+    name,
+    sliderValue,
+    setSliderValue,
+    statFilterNumber,
+    setStatFilterNumber
+  );
   const th = useTheme();
   const statFilterIconsNames = [
     "approximately-equal",
@@ -35,6 +43,7 @@ const StatSlider = ({
           >
             {name}
           </Text>
+
           <Text style={[styles.textRight, { color: th.on_surface }]}>
             : {sliderValue}
           </Text>
@@ -54,7 +63,7 @@ const StatSlider = ({
             minimumValue={0}
             maximumValue={6}
             step={0.25}
-            thumbStyle={[styles.thumb, { backgroundColor: th.primary }]}
+            //thumbStyle={[styles.thumb, { backgroundColor: th.primary }]}
             trackStyle={[
               styles.track,
               { backgroundColor: th.secondary_container },
