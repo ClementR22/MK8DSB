@@ -21,7 +21,7 @@ const MyChip = ({ name, pressed, onPress, uri }) => {
 
 const styles = {
   chip: {
-    margin: 4, // Pour espacer les chips
+    marginHorizontal: 4, // Pour espacer les chips
     backgroundColor: "red",
   },
   chipSelected: {

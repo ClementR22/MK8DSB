@@ -46,91 +46,111 @@ const ElementsImagesSelector = ({ displayCase, orderNumber }) => {
 
   // Fonction pour rendre le contenu de l'onglet sélectionné
   const renderContent = () => {
-    // Filtre les catégories en fonction de l'onglet sélectionné
-    let selectedCategoryImages = pressableImagesList.filter(
-      (element) => element.category === selectedTab
-    );
+    if (orderNumber != 3) {
+      // Filtre les catégories en fonction de l'onglet sélectionné
+      let selectedCategoryImages = pressableImagesList.filter(
+        (element) => element.category === selectedTab
+      );
 
-    console.log("orderNumber", orderNumber);
+      switch (orderNumber) {
+        case 0:
+          selectedCategoryImages.sort((a, b) => {
+            return a.id - b.id;
+          });
+          break;
+        case 1:
+          selectedCategoryImages.sort((a, b) => a.name.localeCompare(b.name));
+          break;
+        case 2:
+          selectedCategoryImages.sort((a, b) => b.name.localeCompare(a.name));
+          break;
+      }
 
-    if (orderNumber === 1) {
-      selectedCategoryImages.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (orderNumber === 2) {
-      selectedCategoryImages.sort((a, b) => a.classId - b.classId);
+      return (
+        <View
+          style={[
+            styles.categoryContainer,
+            { flexDirection: "row", flexWrap: "wrap" },
+          ]}
+        >
+          {selectedCategoryImages.map(
+            ({ id, name, category, classId, image, pressed }) => (
+              <MyChip
+                key={id}
+                name={name}
+                pressed={pressed}
+                onPress={() => {
+                  handlePressImage(id);
+                }}
+                uri={image.uri}
+              />
+            )
+          )}
+        </View>
+      );
+    } else {
+      // OU BIEN RANGEMENT PAR CLASSE
+      const selectedCategoryImages = pressableImagesByCategory[selectedTab];
+      return (
+        <View style={styles.categoryContainer}>
+          {Object.entries(selectedCategoryImages).map(
+            ([classKey, classElements]) => (
+              <View
+                key={classKey}
+                style={[styles.classContainer, { flexDirection: "row" }]}
+              >
+                {Object.entries(classElements).map(
+                  ([
+                    elementKey,
+                    { id, name, category, classId, image, pressed },
+                  ]) => {
+                    return (
+                      <MyChip
+                        key={id}
+                        name={name}
+                        pressed={pressed}
+                        onPress={() => {
+                          handlePressImage(id);
+                        }}
+                        uri={image.uri}
+                      />
+                    );
+                  }
+                )}
+              </View>
+            )
+          )}
+        </View>
+      );
     }
-
-    return (
-      <View style={styles.categoryContainer}>
-        {selectedCategoryImages.map(
-          ({ id, name, category, classId, image, pressed }) => (
-            <MyChip
-              key={id}
-              name={name}
-              pressed={pressed}
-              onPress={() => {
-                handlePressImage(id);
-              }}
-              uri={image.uri}
-            />
-          )
-        )}
-
-        {/*  OU BIEN RANGEMENT PAR CLASSE
-        
-        {selectedCategoryImages.map(([categoryKey, categoryValue]) =>
-          Object.entries(categoryValue).map(([classKey, classImages]) => (
-            <ScrollView
-              key={classKey}
-              horizontal={true}
-              contentContainerStyle={styles.classContainerScrollable}
-              style={styles.classContainer}
-            >
-              {Object.entries(classImages).map(
-                ([elementKey, { name, uri, pressed }]) => {
-                  return (
-                    <MyChip
-                      key={`${classKey}-${elementKey}`}
-                      name={name}
-                      selected={pressed}
-                      onPress={() => {
-                        handleChipPress(categoryKey, classKey, elementKey);
-                      }}
-                      uri={uri}
-                    />
-                  );
-                }
-              )}
-            </ScrollView>
-          ))
-        )} */}
-      </View>
-    );
   };
 
   return (
-    <View style={styles.outerContainer} key={"outerContainer"}>
-      {/* Navigation par onglets */}
-      <View style={styles.tabContainer} key={"tabContainer"}>
-        {allElementNames.map((elementName, index) => (
-          <Pressable
-            key={elementName} // Ajout de la key ici
-            style={[
-              styles.tab,
-              selectedTab === elementName && styles.activeTab,
-            ]}
-            onPress={() => {
-              return setSelectedTab(elementName);
-            }}
-          >
-            <Image
-              source={elementIcons[index]}
-              style={styles.image}
-              resizeMode="contain"
-            />
-          </Pressable>
-        ))}
+    <View style={styles.categoryContainer}>
+      <View style={styles.outerContainer} key={"outerContainer"}>
+        {/* Navigation par onglets */}
+        <View style={styles.tabContainer} key={"tabContainer"}>
+          {allElementNames.map((elementName, index) => (
+            <Pressable
+              key={elementName} // Ajout de la key ici
+              style={[
+                styles.tab,
+                selectedTab === elementName && styles.activeTab,
+              ]}
+              onPress={() => {
+                return setSelectedTab(elementName);
+              }}
+            >
+              <Image
+                source={elementIcons[index]}
+                style={styles.image}
+                resizeMode="contain"
+              />
+            </Pressable>
+          ))}
+        </View>
+        {renderContent()}
       </View>
-      {renderContent()}
     </View>
   );
 };
@@ -161,13 +181,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  classContainer: {
-    flexDirection: "row",
-    marginVertical: 3,
-    backgroundColor: "white",
-    //flexWrap: "wrap",
-    overflow: "hidden",
-  },
   text: {
     fontSize: 25,
     fontWeight: "bold",
@@ -179,10 +192,13 @@ const styles = StyleSheet.create({
   },
   categoryContainer: {
     backgroundColor: "green",
-    // RANGEMENT PAR CLASSE : width: "100%",
-    // SINON :
-    flexDirection: "row",
+    rowGap: 8,
+  },
+  classContainer: {
+    marginVertical: 5,
+    backgroundColor: "white",
     flexWrap: "wrap",
+    rowGap: 2,
   },
 });
 

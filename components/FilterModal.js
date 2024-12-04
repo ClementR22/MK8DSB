@@ -13,7 +13,7 @@ import { useRef } from "react";
 import { useCallback } from "react";
 import ElementsFilterSelector from "./ElementsFilterSelector";
 import { useTheme } from "./styles/theme";
-import OrderSelector from "./OrderSelector";
+import MultiStateToggleButton from "./MultiStateToggleButton";
 
 const FilterModal = ({
   modalTitle = "Affichage",
@@ -39,6 +39,12 @@ const FilterModal = ({
   }, [isModalVisible, handlePresentModalPress]);
 
   const [orderNumber, setOrderNumber] = useState(0);
+  const imagesOrderIconsNames = [
+    "sort-numeric-ascending",
+    "sort-alphabetical-ascending",
+    "sort-alphabetical-descending",
+    "graphql",
+  ];
 
   return (
     <Modal
@@ -63,9 +69,10 @@ const FilterModal = ({
             >
               <BottomSheetView style={styles.contentContainer}>
                 <Text style={modal(th).title_center}>{modalTitle}</Text>
-                <OrderSelector
-                  orderNumber={orderNumber}
-                  setOrderNumber={setOrderNumber}
+                <MultiStateToggleButton
+                  number={orderNumber}
+                  setNumber={setOrderNumber}
+                  iconsNames={imagesOrderIconsNames}
                 />
                 <ElementsFilterSelector
                   chosenBodyType={chosenBodyType}

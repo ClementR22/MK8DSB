@@ -2,12 +2,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
-const StatFilterSelector = ({ statFilterNumber, setStatFilterNumber }) => {
-  const filterList = ["approximately-equal", "greater-than-or-equal", "equal"];
-
+const MultiStateToggleButton = ({ number, setNumber, iconsNames }) => {
   const handlePress = () => {
-    const nextIndex = (statFilterNumber + 1) % filterList.length;
-    setStatFilterNumber(nextIndex);
+    const newNumber = (number + 1) % iconsNames.length;
+    setNumber(newNumber);
   };
 
   return (
@@ -19,7 +17,7 @@ const StatFilterSelector = ({ statFilterNumber, setStatFilterNumber }) => {
       ]}
     >
       <MaterialCommunityIcons
-        name={filterList[statFilterNumber]}
+        name={iconsNames[number]}
         size={24}
         style={styles.selectedText}
       ></MaterialCommunityIcons>
@@ -42,4 +40,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StatFilterSelector;
+export default MultiStateToggleButton;

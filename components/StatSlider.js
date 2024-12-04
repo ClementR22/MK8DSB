@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Slider } from "@miblanchard/react-native-slider";
-import StatFilterSelector from "./StatFilterSelector";
+import MultiStateToggleButton from "./MultiStateToggleButton";
 
 import { useTheme, vw } from "./styles/theme";
 
@@ -13,6 +13,12 @@ const StatSlider = ({
   setStatFilterNumber,
 }) => {
   const th = useTheme();
+  const statFilterIconsNames = [
+    "approximately-equal",
+    "greater-than-or-equal",
+    "equal",
+  ];
+
   return (
     <View
       style={[
@@ -33,9 +39,10 @@ const StatSlider = ({
             : {sliderValue}
           </Text>
         </View>
-        <StatFilterSelector
-          statFilterNumber={statFilterNumber}
-          setStatFilterNumber={setStatFilterNumber}
+        <MultiStateToggleButton
+          number={statFilterNumber}
+          setNumber={setStatFilterNumber}
+          iconsNames={statFilterIconsNames}
         />
       </View>
 
