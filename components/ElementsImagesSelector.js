@@ -15,23 +15,28 @@ import {
   allElementNames,
   allElementNamesDisplay,
   elementsAllClassName,
+  elementsAllInfosList,
 } from "../data/data";
 import { usePressableImages } from "../utils/usePressableImages";
 
 const iconSize = 38;
 
 const ElementsImagesSelector = ({ displayCase }) => {
-  const { pressableImages, handlePressImage, handlePressImageUnique } =
-    usePressableImages();
+  const {
+    pressableImagesList,
+    pressableImagesByCategory,
+    handlePressImage,
+    handlePressImageUnique,
+  } = usePressableImages();
 
   const elementIcons = [
-    elementsImages.character[9][0].uri,
-    elementsImages.kart[0][0].uri,
-    elementsImages.bike[11][1].uri,
-    elementsImages.sportBike[7][1].uri,
-    elementsImages.ATV[6][2].uri,
-    elementsImages.wheels[0][0].uri,
-    elementsImages.glider[0][0].uri,
+    elementsAllInfosList[0].image.uri,
+    elementsAllInfosList[52].image.uri,
+    elementsAllInfosList[75].image.uri,
+    elementsAllInfosList[82].image.uri,
+    elementsAllInfosList[87].image.uri,
+    elementsAllInfosList[93].image.uri,
+    elementsAllInfosList[115].image.uri,
   ];
 
   // État pour suivre l'onglet sélectionné
@@ -42,27 +47,32 @@ const ElementsImagesSelector = ({ displayCase }) => {
   // Fonction pour rendre le contenu de l'onglet sélectionné
   const renderContent = () => {
     // Filtre les catégories en fonction de l'onglet sélectionné
-    const selectedCategoryImages = Object.entries(pressableImages).filter(
-      ([key]) => {
-        return key === selectedTab;
-      }
-    );
+    const selectedCategoryImages = Object.entries(
+      pressableImagesByCategory
+    ).filter(([key]) => {
+      return key === selectedTab;
+    });
 
     return (
       <View style={styles.categoryContainer}>
         {selectedCategoryImages.flatMap(([categoryKey, categoryValue]) =>
           Object.entries(categoryValue).flatMap(([classKey, classImages]) =>
             Object.entries(classImages).map(
-              ([elementKey, { name, uri, pressed }]) => {
+              ([elementKey, { id, name, image, pressed }]) => {
                 return (
                   <MyChip
                     key={`${categoryKey}-${classKey}-${elementKey}`}
                     name={name}
-                    selected={pressed}
+                    pressed={pressed}
                     onPress={() => {
-                      handlePressImage(selectedTab, classKey, elementKey);
+                      handlePressImage(id);
+                      console.log(
+                        "dans im selec",
+                        selectedCategoryImages,
+                        pressed
+                      );
                     }}
-                    uri={uri}
+                    uri={image.uri}
                   />
                 );
               }

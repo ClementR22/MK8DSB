@@ -48585,6 +48585,7 @@ export const setAllInfos = [
 
 export const elementsAllInfosList = [
   {
+    id: 0,
     name: "Mario",
     category: "character",
     classId: "9",
@@ -48595,6 +48596,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 1,
     name: "Luigi",
     category: "character",
     classId: "10",
@@ -48605,6 +48607,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 2,
     name: "Peach",
     category: "character",
     classId: "7",
@@ -48615,6 +48618,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 3,
     name: "Daisy",
     category: "character",
     classId: "7",
@@ -48625,6 +48629,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 4,
     name: "Rosalina",
     category: "character",
     classId: "11",
@@ -48635,6 +48640,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 5,
     name: "TanookiMario",
     category: "character",
     classId: "8",
@@ -48645,6 +48651,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 6,
     name: "CatPeach",
     category: "character",
     classId: "6",
@@ -48655,6 +48662,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 7,
     name: "Birdo",
     category: "character",
     classId: "7",
@@ -48665,6 +48673,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 8,
     name: "Yoshi",
     category: "character",
     classId: "7",
@@ -48675,6 +48684,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 9,
     name: "Toad",
     category: "character",
     classId: "5",
@@ -48685,6 +48695,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 10,
     name: "Koopa",
     category: "character",
     classId: "4",
@@ -48695,6 +48706,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 11,
     name: "ShyGuy",
     category: "character",
     classId: "5",
@@ -48705,6 +48717,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 12,
     name: "Lakitu",
     category: "character",
     classId: "4",
@@ -48715,6 +48728,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 13,
     name: "Toadette",
     category: "character",
     classId: 3,
@@ -48725,6 +48739,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 14,
     name: "KingBoo",
     category: "character",
     classId: "11",
@@ -48735,6 +48750,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 15,
     name: "PeteyPiranha",
     category: "character",
     classId: "12",
@@ -48745,6 +48761,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 16,
     name: "BabyMario",
     category: "character",
     classId: 2,
@@ -48755,6 +48772,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 17,
     name: "BabyLuigi",
     category: "character",
     classId: 2,
@@ -48765,6 +48783,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 18,
     name: "BabyPeach",
     category: "character",
     classId: 0,
@@ -48775,6 +48794,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 19,
     name: "BabyDaisy",
     category: "character",
     classId: 0,
@@ -48785,6 +48805,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 20,
     name: "BabyRosalina",
     category: "character",
     classId: 1,
@@ -48795,6 +48816,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 21,
     name: "MetalMario",
     category: "character",
     classId: "12",
@@ -48805,6 +48827,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 22,
     name: "PinkGoldPeach",
     category: "character",
     classId: "12",
@@ -48815,6 +48838,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 23,
     name: "Wiggler",
     category: "character",
     classId: "13",
@@ -48825,6 +48849,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 24,
     name: "Wario",
     category: "character",
     classId: "14",
@@ -48835,6 +48860,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 25,
     name: "Waluigi",
     category: "character",
     classId: "13",
@@ -48845,6 +48871,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 26,
     name: "DonkeyKong",
     category: "character",
     classId: "13",
@@ -48855,6 +48882,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 27,
     name: "Bowser",
     category: "character",
     classId: "15",
@@ -48865,6 +48893,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 28,
     name: "DryBones",
     category: "character",
     classId: 2,
@@ -48875,6 +48904,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 29,
     name: "BowserJr.",
     category: "character",
     classId: "4",
@@ -48885,6 +48915,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 30,
     name: "DryBowser",
     category: "character",
     classId: "14",
@@ -48895,6 +48926,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 31,
     name: "Kamek",
     category: "character",
     classId: "10",
@@ -48905,6 +48937,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 32,
     name: "Lemmy",
     category: "character",
     classId: 1,
@@ -48915,6 +48948,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 33,
     name: "Larry",
     category: "character",
     classId: "5",
@@ -48925,6 +48959,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 34,
     name: "Wendy",
     category: "character",
     classId: 3,
@@ -48935,6 +48970,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 35,
     name: "Ludwig",
     category: "character",
     classId: "9",
@@ -48945,6 +48981,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 36,
     name: "Iggy",
     category: "character",
     classId: "10",
@@ -48955,6 +48992,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 37,
     name: "Roy",
     category: "character",
     classId: "13",
@@ -48965,6 +49003,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 38,
     name: "Morton",
     category: "character",
     classId: "15",
@@ -48975,6 +49014,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 39,
     name: "Peachette",
     category: "character",
     classId: "7",
@@ -48985,6 +49025,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 40,
     name: "InklingGirl",
     category: "character",
     classId: "6",
@@ -48995,6 +49036,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 41,
     name: "InklingBoy",
     category: "character",
     classId: "8",
@@ -49005,6 +49047,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 42,
     name: "VillagerMale",
     category: "character",
     classId: "8",
@@ -49015,6 +49058,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 43,
     name: "VillagerFemale",
     category: "character",
     classId: "6",
@@ -49025,6 +49069,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 44,
     name: "Isabelle",
     category: "character",
     classId: 3,
@@ -49035,6 +49080,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 45,
     name: "Link",
     category: "character",
     classId: "11",
@@ -49045,6 +49091,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 46,
     name: "DiddyKong",
     category: "character",
     classId: "6",
@@ -49055,6 +49102,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 47,
     name: "FunkyKong",
     category: "character",
     classId: "14",
@@ -49065,6 +49113,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 48,
     name: "Pauline",
     category: "character",
     classId: "11",
@@ -49075,6 +49124,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 49,
     name: "LightMii",
     category: "character",
     classId: 2,
@@ -49085,6 +49135,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 50,
     name: "MediumMii",
     category: "character",
     classId: "9",
@@ -49095,6 +49146,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 51,
     name: "HeavyMii",
     category: "character",
     classId: "14",
@@ -49105,6 +49157,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 52,
     name: "StandardKart",
     category: "kart",
     classId: 0,
@@ -49115,6 +49168,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 53,
     name: "PipeFrame",
     category: "kart",
     classId: 1,
@@ -49125,6 +49179,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 54,
     name: "Mach8",
     category: "kart",
     classId: 2,
@@ -49135,6 +49190,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 55,
     name: "SteelDriver",
     category: "kart",
     classId: 3,
@@ -49145,6 +49201,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 56,
     name: "CatCruiser",
     category: "kart",
     classId: "4",
@@ -49155,6 +49212,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 57,
     name: "CircuitSpecial",
     category: "kart",
     classId: "5",
@@ -49165,6 +49223,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 58,
     name: "Tri-Speeder",
     category: "kart",
     classId: 3,
@@ -49175,6 +49234,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 59,
     name: "Badwagon",
     category: "kart",
     classId: "6",
@@ -49185,6 +49245,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 60,
     name: "Prancer",
     category: "kart",
     classId: "7",
@@ -49195,6 +49256,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 61,
     name: "Biddybuggy",
     category: "kart",
     classId: "8",
@@ -49205,6 +49267,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 62,
     name: "Landship",
     category: "kart",
     classId: "9",
@@ -49215,6 +49278,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 63,
     name: "Sneaker",
     category: "kart",
     classId: "10",
@@ -49225,6 +49289,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 64,
     name: "SportsCoupe",
     category: "kart",
     classId: 2,
@@ -49235,6 +49300,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 65,
     name: "GoldKart",
     category: "kart",
     classId: "10",
@@ -49245,6 +49311,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 66,
     name: "GLA",
     category: "kart",
     classId: "6",
@@ -49255,6 +49322,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 67,
     name: "W25SilverArrow",
     category: "kart",
     classId: "11",
@@ -49265,6 +49333,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 68,
     name: "300SLRoadster",
     category: "kart",
     classId: 0,
@@ -49275,6 +49344,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 69,
     name: "BlueFalcon",
     category: "kart",
     classId: "12",
@@ -49285,6 +49355,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 70,
     name: "TanookiBuggy",
     category: "kart",
     classId: "13",
@@ -49295,6 +49366,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 71,
     name: "B-Dasher",
     category: "kart",
     classId: "5",
@@ -49305,6 +49377,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 72,
     name: "Streetle",
     category: "kart",
     classId: "9",
@@ -49315,6 +49388,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 73,
     name: "P-Wing",
     category: "kart",
     classId: "5",
@@ -49325,6 +49399,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 74,
     name: "KoopaClown",
     category: "kart",
     classId: "13",
@@ -49335,6 +49410,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 75,
     name: "StandardBike",
     category: "bike",
     classId: "11",
@@ -49345,6 +49421,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 76,
     name: "TheDuke",
     category: "bike",
     classId: 0,
@@ -49355,6 +49432,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 77,
     name: "FlameRider",
     category: "bike",
     classId: "11",
@@ -49365,6 +49443,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 78,
     name: "Varmint",
     category: "bike",
     classId: 1,
@@ -49375,6 +49454,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 79,
     name: "Mr.Scooty",
     category: "bike",
     classId: "8",
@@ -49385,6 +49465,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 80,
     name: "MasterCycleZero",
     category: "bike",
     classId: "13",
@@ -49395,6 +49476,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 81,
     name: "CityTripper",
     category: "bike",
     classId: 1,
@@ -49405,6 +49487,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 82,
     name: "Comet",
     category: "sportBike",
     classId: "4",
@@ -49415,6 +49498,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 83,
     name: "SportBike",
     category: "sportBike",
     classId: "7",
@@ -49425,6 +49509,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 84,
     name: "JetBike",
     category: "sportBike",
     classId: "7",
@@ -49435,6 +49520,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 85,
     name: "YoshiBike",
     category: "sportBike",
     classId: "4",
@@ -49445,6 +49531,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 86,
     name: "MasterCycle",
     category: "sportBike",
     classId: "10",
@@ -49455,6 +49542,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 87,
     name: "StandardATV",
     category: "ATV",
     classId: "6",
@@ -49465,6 +49553,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 88,
     name: "WildWiggler",
     category: "ATV",
     classId: "11",
@@ -49475,6 +49564,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 89,
     name: "TeddyBuggy",
     category: "ATV",
     classId: "4",
@@ -49485,6 +49575,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 90,
     name: "BoneRattler",
     category: "ATV",
     classId: 3,
@@ -49495,6 +49586,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 91,
     name: "SplatBuggy",
     category: "ATV",
     classId: "12",
@@ -49505,6 +49597,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 92,
     name: "Inkstriker",
     category: "ATV",
     classId: 2,
@@ -49515,6 +49608,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 93,
     name: "Standard",
     category: "wheels",
     classId: 0,
@@ -49525,6 +49619,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 94,
     name: "Monster",
     category: "wheels",
     classId: 1,
@@ -49535,6 +49630,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 95,
     name: "Roller",
     category: "wheels",
     classId: 2,
@@ -49545,6 +49641,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 96,
     name: "Slim",
     category: "wheels",
     classId: 3,
@@ -49555,6 +49652,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 97,
     name: "Slick",
     category: "wheels",
     classId: "4",
@@ -49565,6 +49663,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 98,
     name: "Metal",
     category: "wheels",
     classId: "5",
@@ -49575,6 +49674,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 99,
     name: "Button",
     category: "wheels",
     classId: "6",
@@ -49585,6 +49685,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 100,
     name: "Off-Road",
     category: "wheels",
     classId: "7",
@@ -49595,6 +49696,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 101,
     name: "Sponge",
     category: "wheels",
     classId: "8",
@@ -49605,6 +49707,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 102,
     name: "Wood",
     category: "wheels",
     classId: 3,
@@ -49615,6 +49718,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 103,
     name: "Cushion",
     category: "wheels",
     classId: "8",
@@ -49625,6 +49729,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 104,
     name: "BlueStandard",
     category: "wheels",
     classId: 0,
@@ -49635,6 +49740,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 105,
     name: "HotMonster",
     category: "wheels",
     classId: 1,
@@ -49645,6 +49751,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 106,
     name: "AzureRoller",
     category: "wheels",
     classId: 2,
@@ -49655,6 +49762,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 107,
     name: "CrimsonSlim",
     category: "wheels",
     classId: 3,
@@ -49665,6 +49773,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 108,
     name: "CyberSlick",
     category: "wheels",
     classId: "4",
@@ -49675,6 +49784,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 109,
     name: "RetroOff-Road",
     category: "wheels",
     classId: "7",
@@ -49685,6 +49795,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 110,
     name: "GoldTires",
     category: "wheels",
     classId: "5",
@@ -49695,6 +49806,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 111,
     name: "GLATires",
     category: "wheels",
     classId: 0,
@@ -49705,6 +49817,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 112,
     name: "TriforceTires",
     category: "wheels",
     classId: "7",
@@ -49715,6 +49828,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 113,
     name: "AncientTires",
     category: "wheels",
     classId: 1,
@@ -49725,6 +49839,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 114,
     name: "LeafTires",
     category: "wheels",
     classId: "6",
@@ -49735,6 +49850,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 115,
     name: "SuperGlider",
     category: "glider",
     classId: 0,
@@ -49745,6 +49861,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 116,
     name: "CloudGlider",
     category: "glider",
     classId: 1,
@@ -49755,6 +49872,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 117,
     name: "WarioWing",
     category: "glider",
     classId: 2,
@@ -49765,6 +49883,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 118,
     name: "WaddleWing",
     category: "glider",
     classId: 0,
@@ -49775,6 +49894,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 119,
     name: "PeachParasol",
     category: "glider",
     classId: 3,
@@ -49785,6 +49905,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 120,
     name: "ParachuteGlider",
     category: "glider",
     classId: 1,
@@ -49795,6 +49916,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 121,
     name: "ParafoilGlider",
     category: "glider",
     classId: 3,
@@ -49805,6 +49927,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 122,
     name: "FlowerGlider",
     category: "glider",
     classId: 1,
@@ -49815,6 +49938,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 123,
     name: "BowserKite",
     category: "glider",
     classId: 3,
@@ -49825,6 +49949,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 124,
     name: "PlaneGlider",
     category: "glider",
     classId: 2,
@@ -49835,6 +49960,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 125,
     name: "MKTVParafoilGlider",
     category: "glider",
     classId: 3,
@@ -49845,6 +49971,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 126,
     name: "GoldGlider",
     category: "glider",
     classId: 2,
@@ -49855,6 +49982,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 127,
     name: "HylianKite",
     category: "glider",
     classId: 0,
@@ -49865,6 +49993,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 128,
     name: "Paraglider",
     category: "glider",
     classId: 2,
@@ -49875,6 +50004,7 @@ export const elementsAllInfosList = [
     },
   },
   {
+    id: 129,
     name: "PaperGlider",
     category: "glider",
     classId: 1,
@@ -49885,10 +50015,3 @@ export const elementsAllInfosList = [
     },
   },
 ];
-// Transforme l'objet en une liste d'objets avec les propriétés supplémentaires
-/* const flatListWithMeta = elementsImages.map((item, index) => ({
-  id: index,
-  ...item,
-}));
- */
-//console.log(JSON.stringify(flatListWithMeta));

@@ -3,13 +3,13 @@ import { Chip } from "react-native-paper";
 import { View, Image } from "react-native";
 import { translate } from "../i18n/translations";
 
-const MyChip = ({ name, selected, onPress, uri }) => {
+const MyChip = ({ name, pressed, onPress, uri }) => {
   return (
     <View>
       <Chip
-        selected={selected}
+        selected={pressed}
         onPress={onPress}
-        style={[styles.chip, selected && styles.chipSelected]}
+        style={[styles.chip, pressed && styles.chipSelected]}
         textStyle={styles.chipText}
         avatar={<Image source={uri} style={styles.image} />}
       >

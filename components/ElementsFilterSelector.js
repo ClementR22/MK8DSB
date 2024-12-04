@@ -17,7 +17,7 @@ import PressableStat from "./PressableStat";
 import ElementsImagesDeselector from "./ElementsImagesDeselector";
 import ElementsImagesSelector from "./ElementsImagesSelector";
 import MyChip from "./MyChip";
-import { elementsImages } from "@/data/data";
+import { elementsAllInfosList } from "@/data/data";
 import { useTheme } from "./styles/theme";
 
 const ElementsFilterSelector = ({
@@ -26,13 +26,13 @@ const ElementsFilterSelector = ({
   toggleCheck,
 }) => {
   const th = useTheme();
-
   const bodyTypeIcons = [
-    elementsImages.kart[0][0].uri,
-    elementsImages.bike[11][1].uri,
-    elementsImages.sportBike[7][1].uri,
-    elementsImages.ATV[6][2].uri,
+    elementsAllInfosList[52],
+    elementsAllInfosList[75],
+    elementsAllInfosList[82],
+    elementsAllInfosList[87],
   ];
+
   return (
     <ScrollView style={modal(th).content}>
       <View key="body type" style={styles.bodyTypeContainer}>
@@ -40,12 +40,12 @@ const ElementsFilterSelector = ({
           return (
             <MyChip
               key={index}
-              name={bodyType.nameDisplay}
-              selected={bodyType.checked}
+              name={bodyType.name}
+              pressed={bodyType.checked}
               onPress={() => {
                 toggleCheck(setChosenBodyType, bodyType.name);
               }}
-              uri={bodyTypeIcons[index]}
+              uri={bodyTypeIcons[index].image.uri}
             />
           );
         })}

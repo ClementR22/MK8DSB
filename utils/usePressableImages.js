@@ -1,30 +1,44 @@
 import React, { createContext, useContext, useState } from "react";
-import { elementsImages } from "../data/data";
+import { elementsAllInfosList } from "../data/data";
 
-// Fonction pour initialiser l'état pressableImages
-const initializePressableImages = (defaultSelectedImages) => {
-  const pressableImages = {};
-  Object.entries(elementsImages).forEach(([categoryKey, classes]) => {
-    pressableImages[categoryKey] = {};
-    Object.entries(classes).forEach(([classKey, imagesValues]) => {
-      pressableImages[categoryKey][classKey] = {};
-      Object.entries(imagesValues).forEach(([imageKey, { name, uri }]) => {
-        pressableImages[categoryKey][classKey][imageKey] = {
-          name,
-          uri,
-          pressed: false,
-        };
-      });
-    });
-  });
+// Fonction pour initialiser l'état pressableImagesList
+const initializePressableImagesList = (defaultSelectedImages) => {
+  // Crée une copie avec les propriétés supplémentaires
+  const pressableImagesList = elementsAllInfosList.map((item) => ({
+    ...item,
+    pressed: false, // Initialise toutes les images comme non pressées
+  }));
 
   if (defaultSelectedImages) {
-    pressableImages["character"][9]["image1"].pressed = true;
-    pressableImages["kart"][0]["image1"].pressed = true;
-    pressableImages["wheels"][0]["image1"].pressed = true;
-    pressableImages["glider"][0]["image1"].pressed = true;
+    // Exemple de configuration par défaut
+    pressableImagesList[0].pressed = true;
   }
-  return pressableImages;
+
+  return pressableImagesList;
+};
+
+// Fonction pour initialiser pressableImagesByCategory
+const initializePressableImagesByCategory = (pressableImagesList) => {
+  console.log("initializePressableImagesByCategory");
+  const pressableImagesByCategory = {};
+
+  pressableImagesList.forEach((element) => {
+    const { category, classId } = element;
+
+    if (!pressableImagesByCategory[category]) {
+      pressableImagesByCategory[category] = {};
+    }
+
+    if (!pressableImagesByCategory[category][classId]) {
+      pressableImagesByCategory[category][classId] = [];
+    }
+
+    pressableImagesByCategory[category][classId].push(element);
+  });
+
+  console.log("dans pressableImagesByCategory", pressableImagesList);
+
+  return pressableImagesByCategory;
 };
 
 // Créer le contexte
@@ -33,70 +47,46 @@ const PressableImagesContext = createContext();
 // Fournisseur du contexte
 export const PressableImagesProvider = ({
   children,
-  defaultSelectedImages = false,
+  isDefaultSelectedImages = false,
 }) => {
-  const [pressableImages, setPressableImages] = useState(
-    initializePressableImages(defaultSelectedImages)
+  const [pressableImagesList, setPressableImagesList] = useState(
+    initializePressableImagesList(isDefaultSelectedImages)
   );
 
+  const pressableImagesByCategory =
+    initializePressableImagesByCategory(pressableImagesList);
+
   // Fonction pour gérer l'état d'une image pressée
-  const handlePressImage = (categoryKey, classKey, imageKey) => {
-    setPressableImages((prev) => ({
-      ...prev,
-      [categoryKey]: {
-        ...prev[categoryKey],
-        [classKey]: {
-          ...prev[categoryKey][classKey],
-          [imageKey]: {
-            ...prev[categoryKey][classKey][imageKey],
-            pressed: !prev[categoryKey][classKey][imageKey].pressed,
-          },
-        },
-      },
-    }));
+  const handlePressImage = (id) => {
+    setPressableImagesList((prev) =>
+      prev.map((item, index) =>
+        index === id ? { ...item, pressed: !item.pressed } : item
+      )
+    );
+    // initializePressableImagesByCategory est executé automatiquement
+    // donc pressableImagesByCategory est mis à jour
   };
 
   // Fonction pour gérer l'état d'une image unique pressée
-  const handlePressImageUnique = (categoryKey, classKey, imageKey) => {
-    setPressableImages((prev) => {
-      const updatedImages = { ...prev };
-
-      // Catégories combinées
-      const combinedCategories = ["kart", "bike", "sportBike", "ATV"];
-
-      // Fonction pour activer/désactiver les images
-      const refreshImages = (
-        categories,
-        selectedClassKey,
-        selectedImageKey
-      ) => {
-        categories.forEach((category) => {
-          Object.values(updatedImages[category]).forEach((classImages) => {
-            Object.entries(classImages).forEach(([imgKey, imgValue]) => {
-              imgValue.pressed =
-                classImages === updatedImages[category][selectedClassKey] &&
-                imgKey === selectedImageKey;
-            });
-          });
-        });
-      };
-
-      refreshImages(
-        combinedCategories.includes(categoryKey)
-          ? combinedCategories
-          : [categoryKey],
-        classKey,
-        imageKey
-      );
-
-      return updatedImages;
-    });
+  const handlePressImageUnique = (category, classId, imageIndex) => {
+    setPressableImagesList((prev) =>
+      prev
+        .map((item) =>
+          item.category === category && item.classId === classId
+            ? { ...item, pressed: false }
+            : item
+        )
+        .map((item, index) =>
+          index === imageIndex ? { ...item, pressed: true } : item
+        )
+    );
   };
 
   return (
     <PressableImagesContext.Provider
       value={{
-        pressableImages,
+        pressableImagesList,
+        pressableImagesByCategory,
         handlePressImage,
         handlePressImageUnique,
       }}
