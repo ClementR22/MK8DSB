@@ -47,31 +47,23 @@ const ElementsImagesSelector = ({ displayCase }) => {
   // Fonction pour rendre le contenu de l'onglet sélectionné
   const renderContent = () => {
     // Filtre les catégories en fonction de l'onglet sélectionné
-    const selectedCategoryImages = Object.entries(
-      pressableImagesByCategory
-    ).filter(([key]) => {
-      return key === selectedTab;
-    });
+    const selectedCategoryImages = pressableImagesList.filter(
+      (element) => element.category === selectedTab
+    );
 
     return (
       <View style={styles.categoryContainer}>
-        {selectedCategoryImages.flatMap(([categoryKey, categoryValue]) =>
-          Object.entries(categoryValue).flatMap(([classKey, classImages]) =>
-            Object.entries(classImages).map(
-              ([elementKey, { id, name, image, pressed }]) => {
-                return (
-                  <MyChip
-                    key={`${categoryKey}-${classKey}-${elementKey}`}
-                    name={name}
-                    pressed={pressed}
-                    onPress={() => {
-                      handlePressImage(id);
-                    }}
-                    uri={image.uri}
-                  />
-                );
-              }
-            )
+        {selectedCategoryImages.map(
+          ({ id, name, category, classId, image, pressed }) => (
+            <MyChip
+              key={id}
+              name={name}
+              pressed={pressed}
+              onPress={() => {
+                handlePressImage(id);
+              }}
+              uri={image.uri}
+            />
           )
         )}
 
