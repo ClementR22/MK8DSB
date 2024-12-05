@@ -59,9 +59,8 @@ const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
                   {name} : {JSON.stringify(setToShowStats[index])}
                 </Text>
                 <StatSliderResult
-                  chosenValue={chosenStats[index].value}
-                  foundValue={setToShowStats[index]}
-                  isChosen={chosenStats[index].checked}
+                  value={setToShowStats[index]}
+                  wantedValue={chosenStats[index].value}
                 />
               </View>
             );
