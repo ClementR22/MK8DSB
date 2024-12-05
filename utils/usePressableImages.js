@@ -2,16 +2,19 @@ import React, { createContext, useContext, useState } from "react";
 import { elementsAllInfosList } from "../data/data";
 
 // Fonction pour initialiser l'état pressableImagesList
-const initializePressableImagesList = (defaultSelectedImages) => {
+const initializePressableImagesList = (isDefaultSelectedImages) => {
   // Crée une copie avec les propriétés supplémentaires
   const pressableImagesList = elementsAllInfosList.map((item) => ({
     ...item,
     pressed: false, // Initialise toutes les images comme non pressées
   }));
 
-  if (defaultSelectedImages) {
+  if (isDefaultSelectedImages) {
     // Exemple de configuration par défaut
     pressableImagesList[0].pressed = true;
+    pressableImagesList[90].pressed = true;
+    pressableImagesList[100].pressed = true;
+    pressableImagesList[115].pressed = true;
   }
 
   return pressableImagesList;

@@ -48588,7 +48588,7 @@ export const elementsAllInfosList = [
     id: 0,
     name: "Mario",
     category: "character",
-    classId: "9",
+    classId: 9,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Mario.png",
       width: 110,
@@ -48599,7 +48599,7 @@ export const elementsAllInfosList = [
     id: 1,
     name: "Luigi",
     category: "character",
-    classId: "10",
+    classId: 10,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Luigi.png",
       width: 107,
@@ -48610,7 +48610,7 @@ export const elementsAllInfosList = [
     id: 2,
     name: "Peach",
     category: "character",
-    classId: "7",
+    classId: 7,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Peach.png",
       width: 124,
@@ -48621,7 +48621,7 @@ export const elementsAllInfosList = [
     id: 3,
     name: "Daisy",
     category: "character",
-    classId: "7",
+    classId: 7,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Daisy.png",
       width: 112,
@@ -48632,7 +48632,7 @@ export const elementsAllInfosList = [
     id: 4,
     name: "Rosalina",
     category: "character",
-    classId: "11",
+    classId: 11,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Rosalina.png",
       width: 110,
@@ -48643,7 +48643,7 @@ export const elementsAllInfosList = [
     id: 5,
     name: "TanookiMario",
     category: "character",
-    classId: "8",
+    classId: 8,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Tanooki Mario.png",
       width: 111,
@@ -48654,7 +48654,7 @@ export const elementsAllInfosList = [
     id: 6,
     name: "CatPeach",
     category: "character",
-    classId: "6",
+    classId: 6,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Cat Peach.png",
       width: 106,
@@ -48665,7 +48665,7 @@ export const elementsAllInfosList = [
     id: 7,
     name: "Birdo",
     category: "character",
-    classId: "7",
+    classId: 7,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Birdo.png",
       width: 128,
@@ -48676,7 +48676,7 @@ export const elementsAllInfosList = [
     id: 8,
     name: "Yoshi",
     category: "character",
-    classId: "7",
+    classId: 7,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Yoshi.png",
       width: 114,
@@ -48687,7 +48687,7 @@ export const elementsAllInfosList = [
     id: 9,
     name: "Toad",
     category: "character",
-    classId: "5",
+    classId: 5,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Toad.png",
       width: 104,
@@ -48698,7 +48698,7 @@ export const elementsAllInfosList = [
     id: 10,
     name: "Koopa",
     category: "character",
-    classId: "4",
+    classId: 4,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Koopa.png",
       width: 96,
@@ -48709,7 +48709,7 @@ export const elementsAllInfosList = [
     id: 11,
     name: "ShyGuy",
     category: "character",
-    classId: "5",
+    classId: 5,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Shy Guy.png",
       width: 107,
@@ -48720,7 +48720,7 @@ export const elementsAllInfosList = [
     id: 12,
     name: "Lakitu",
     category: "character",
-    classId: "4",
+    classId: 4,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Lakitu.png",
       width: 96,
@@ -48742,7 +48742,7 @@ export const elementsAllInfosList = [
     id: 14,
     name: "KingBoo",
     category: "character",
-    classId: "11",
+    classId: 11,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/King Boo.png",
       width: 128,
@@ -48753,7 +48753,7 @@ export const elementsAllInfosList = [
     id: 15,
     name: "PeteyPiranha",
     category: "character",
-    classId: "12",
+    classId: 12,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Petey Piranha.png",
       width: 128,
@@ -48819,7 +48819,7 @@ export const elementsAllInfosList = [
     id: 21,
     name: "MetalMario",
     category: "character",
-    classId: "12",
+    classId: 12,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Metal Mario.png",
       width: 108,
@@ -48830,7 +48830,7 @@ export const elementsAllInfosList = [
     id: 22,
     name: "PinkGoldPeach",
     category: "character",
-    classId: "12",
+    classId: 12,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Pink Gold Peach.png",
       width: 123,
@@ -48841,7 +48841,7 @@ export const elementsAllInfosList = [
     id: 23,
     name: "Wiggler",
     category: "character",
-    classId: "13",
+    classId: 13,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Wiggler.png",
       width: 128,
@@ -48852,7 +48852,7 @@ export const elementsAllInfosList = [
     id: 24,
     name: "Wario",
     category: "character",
-    classId: "14",
+    classId: 14,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Wario.png",
       width: 123,
@@ -48863,7 +48863,7 @@ export const elementsAllInfosList = [
     id: 25,
     name: "Waluigi",
     category: "character",
-    classId: "13",
+    classId: 13,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Waluigi.png",
       width: 105,
@@ -48874,7 +48874,7 @@ export const elementsAllInfosList = [
     id: 26,
     name: "DonkeyKong",
     category: "character",
-    classId: "13",
+    classId: 13,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Donkey Kong.png",
       width: 94,
@@ -48885,7 +48885,7 @@ export const elementsAllInfosList = [
     id: 27,
     name: "Bowser",
     category: "character",
-    classId: "15",
+    classId: 15,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Bowser.png",
       width: 116,
@@ -48907,7 +48907,7 @@ export const elementsAllInfosList = [
     id: 29,
     name: "BowserJr.",
     category: "character",
-    classId: "4",
+    classId: 4,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Bowser Jr..png",
       width: 128,
@@ -48918,7 +48918,7 @@ export const elementsAllInfosList = [
     id: 30,
     name: "DryBowser",
     category: "character",
-    classId: "14",
+    classId: 14,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Dry Bowser.png",
       width: 115,
@@ -48929,7 +48929,7 @@ export const elementsAllInfosList = [
     id: 31,
     name: "Kamek",
     category: "character",
-    classId: "10",
+    classId: 10,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Kamek.png",
       width: 128,
@@ -48951,7 +48951,7 @@ export const elementsAllInfosList = [
     id: 33,
     name: "Larry",
     category: "character",
-    classId: "5",
+    classId: 5,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Larry.png",
       width: 115,
@@ -48973,7 +48973,7 @@ export const elementsAllInfosList = [
     id: 35,
     name: "Ludwig",
     category: "character",
-    classId: "9",
+    classId: 9,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Ludwig.png",
       width: 128,
@@ -48984,7 +48984,7 @@ export const elementsAllInfosList = [
     id: 36,
     name: "Iggy",
     category: "character",
-    classId: "10",
+    classId: 10,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Iggy.png",
       width: 116,
@@ -48995,7 +48995,7 @@ export const elementsAllInfosList = [
     id: 37,
     name: "Roy",
     category: "character",
-    classId: "13",
+    classId: 13,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Roy.png",
       width: 116,
@@ -49006,7 +49006,7 @@ export const elementsAllInfosList = [
     id: 38,
     name: "Morton",
     category: "character",
-    classId: "15",
+    classId: 15,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Morton.png",
       width: 115,
@@ -49017,7 +49017,7 @@ export const elementsAllInfosList = [
     id: 39,
     name: "Peachette",
     category: "character",
-    classId: "7",
+    classId: 7,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Peachette.png",
       width: 128,
@@ -49028,7 +49028,7 @@ export const elementsAllInfosList = [
     id: 40,
     name: "InklingGirl",
     category: "character",
-    classId: "6",
+    classId: 6,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Inkling Girl.png",
       width: 128,
@@ -49039,7 +49039,7 @@ export const elementsAllInfosList = [
     id: 41,
     name: "InklingBoy",
     category: "character",
-    classId: "8",
+    classId: 8,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Inkling Boy.png",
       width: 128,
@@ -49050,7 +49050,7 @@ export const elementsAllInfosList = [
     id: 42,
     name: "VillagerMale",
     category: "character",
-    classId: "8",
+    classId: 8,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Villager Male.png",
       width: 119,
@@ -49061,7 +49061,7 @@ export const elementsAllInfosList = [
     id: 43,
     name: "VillagerFemale",
     category: "character",
-    classId: "6",
+    classId: 6,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Villager Female.png",
       width: 115,
@@ -49083,7 +49083,7 @@ export const elementsAllInfosList = [
     id: 45,
     name: "Link",
     category: "character",
-    classId: "11",
+    classId: 11,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Link.png",
       width: 128,
@@ -49094,7 +49094,7 @@ export const elementsAllInfosList = [
     id: 46,
     name: "DiddyKong",
     category: "character",
-    classId: "6",
+    classId: 6,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Diddy Kong.png",
       width: 128,
@@ -49105,7 +49105,7 @@ export const elementsAllInfosList = [
     id: 47,
     name: "FunkyKong",
     category: "character",
-    classId: "14",
+    classId: 14,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Funky Kong.png",
       width: 128,
@@ -49116,7 +49116,7 @@ export const elementsAllInfosList = [
     id: 48,
     name: "Pauline",
     category: "character",
-    classId: "11",
+    classId: 11,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Pauline.png",
       width: 128,
@@ -49138,7 +49138,7 @@ export const elementsAllInfosList = [
     id: 50,
     name: "MediumMii",
     category: "character",
-    classId: "9",
+    classId: 9,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Medium Mii.png",
       width: 128,
@@ -49149,7 +49149,7 @@ export const elementsAllInfosList = [
     id: 51,
     name: "HeavyMii",
     category: "character",
-    classId: "14",
+    classId: 14,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fcharacters/Heavy Mii.png",
       width: 128,
@@ -49204,7 +49204,7 @@ export const elementsAllInfosList = [
     id: 56,
     name: "CatCruiser",
     category: "kart",
-    classId: "4",
+    classId: 4,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Cat Cruiser.png",
       width: 200,
@@ -49215,7 +49215,7 @@ export const elementsAllInfosList = [
     id: 57,
     name: "CircuitSpecial",
     category: "kart",
-    classId: "5",
+    classId: 5,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Circuit Special.png",
       width: 200,
@@ -49237,7 +49237,7 @@ export const elementsAllInfosList = [
     id: 59,
     name: "Badwagon",
     category: "kart",
-    classId: "6",
+    classId: 6,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Badwagon.png",
       width: 200,
@@ -49248,7 +49248,7 @@ export const elementsAllInfosList = [
     id: 60,
     name: "Prancer",
     category: "kart",
-    classId: "7",
+    classId: 7,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Prancer.png",
       width: 200,
@@ -49259,7 +49259,7 @@ export const elementsAllInfosList = [
     id: 61,
     name: "Biddybuggy",
     category: "kart",
-    classId: "8",
+    classId: 8,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Biddybuggy.png",
       width: 200,
@@ -49270,7 +49270,7 @@ export const elementsAllInfosList = [
     id: 62,
     name: "Landship",
     category: "kart",
-    classId: "9",
+    classId: 9,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Landship.png",
       width: 200,
@@ -49281,7 +49281,7 @@ export const elementsAllInfosList = [
     id: 63,
     name: "Sneaker",
     category: "kart",
-    classId: "10",
+    classId: 10,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Sneaker.png",
       width: 200,
@@ -49303,7 +49303,7 @@ export const elementsAllInfosList = [
     id: 65,
     name: "GoldKart",
     category: "kart",
-    classId: "10",
+    classId: 10,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Gold Kart.png",
       width: 200,
@@ -49314,7 +49314,7 @@ export const elementsAllInfosList = [
     id: 66,
     name: "GLA",
     category: "kart",
-    classId: "6",
+    classId: 6,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/GLA.png",
       width: 200,
@@ -49325,7 +49325,7 @@ export const elementsAllInfosList = [
     id: 67,
     name: "W25SilverArrow",
     category: "kart",
-    classId: "11",
+    classId: 11,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/W 25 Silver Arrow.png",
       width: 200,
@@ -49347,7 +49347,7 @@ export const elementsAllInfosList = [
     id: 69,
     name: "BlueFalcon",
     category: "kart",
-    classId: "12",
+    classId: 12,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Blue Falcon.png",
       width: 200,
@@ -49358,7 +49358,7 @@ export const elementsAllInfosList = [
     id: 70,
     name: "TanookiBuggy",
     category: "kart",
-    classId: "13",
+    classId: 13,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Tanooki Buggy.png",
       width: 200,
@@ -49369,7 +49369,7 @@ export const elementsAllInfosList = [
     id: 71,
     name: "B-Dasher",
     category: "kart",
-    classId: "5",
+    classId: 5,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/B-Dasher.png",
       width: 200,
@@ -49380,7 +49380,7 @@ export const elementsAllInfosList = [
     id: 72,
     name: "Streetle",
     category: "kart",
-    classId: "9",
+    classId: 9,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Streetle.png",
       width: 200,
@@ -49391,7 +49391,7 @@ export const elementsAllInfosList = [
     id: 73,
     name: "P-Wing",
     category: "kart",
-    classId: "5",
+    classId: 5,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/P-Wing.png",
       width: 200,
@@ -49402,7 +49402,7 @@ export const elementsAllInfosList = [
     id: 74,
     name: "KoopaClown",
     category: "kart",
-    classId: "13",
+    classId: 13,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fkarts/Koopa Clown.png",
       width: 140,
@@ -49413,7 +49413,7 @@ export const elementsAllInfosList = [
     id: 75,
     name: "StandardBike",
     category: "bike",
-    classId: "11",
+    classId: 11,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fbikes/Standard Bike.png",
       width: 200,
@@ -49435,7 +49435,7 @@ export const elementsAllInfosList = [
     id: 77,
     name: "FlameRider",
     category: "bike",
-    classId: "11",
+    classId: 11,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fbikes/Flame Rider.png",
       width: 200,
@@ -49457,7 +49457,7 @@ export const elementsAllInfosList = [
     id: 79,
     name: "Mr.Scooty",
     category: "bike",
-    classId: "8",
+    classId: 8,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fbikes/Mr. Scooty.png",
       width: 200,
@@ -49468,7 +49468,7 @@ export const elementsAllInfosList = [
     id: 80,
     name: "MasterCycleZero",
     category: "bike",
-    classId: "13",
+    classId: 13,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fbikes/Master Cycle Zero.png",
       width: 150,
@@ -49490,7 +49490,7 @@ export const elementsAllInfosList = [
     id: 82,
     name: "Comet",
     category: "sportBike",
-    classId: "4",
+    classId: 4,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fsport%20bikes/Comet.png",
       width: 200,
@@ -49501,7 +49501,7 @@ export const elementsAllInfosList = [
     id: 83,
     name: "SportBike",
     category: "sportBike",
-    classId: "7",
+    classId: 7,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fsport%20bikes/Sport Bike.png",
       width: 200,
@@ -49512,7 +49512,7 @@ export const elementsAllInfosList = [
     id: 84,
     name: "JetBike",
     category: "sportBike",
-    classId: "7",
+    classId: 7,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fsport%20bikes/Jet Bike.png",
       width: 200,
@@ -49523,7 +49523,7 @@ export const elementsAllInfosList = [
     id: 85,
     name: "YoshiBike",
     category: "sportBike",
-    classId: "4",
+    classId: 4,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fsport%20bikes/Yoshi Bike.png",
       width: 200,
@@ -49534,7 +49534,7 @@ export const elementsAllInfosList = [
     id: 86,
     name: "MasterCycle",
     category: "sportBike",
-    classId: "10",
+    classId: 10,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fsport%20bikes/Master Cycle.png",
       width: 144,
@@ -49545,7 +49545,7 @@ export const elementsAllInfosList = [
     id: 87,
     name: "StandardATV",
     category: "ATV",
-    classId: "6",
+    classId: 6,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2FATVs/Standard ATV.png",
       width: 200,
@@ -49556,7 +49556,7 @@ export const elementsAllInfosList = [
     id: 88,
     name: "WildWiggler",
     category: "ATV",
-    classId: "11",
+    classId: 11,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2FATVs/Wild Wiggler.png",
       width: 200,
@@ -49567,7 +49567,7 @@ export const elementsAllInfosList = [
     id: 89,
     name: "TeddyBuggy",
     category: "ATV",
-    classId: "4",
+    classId: 4,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2FATVs/Teddy Buggy.png",
       width: 200,
@@ -49589,7 +49589,7 @@ export const elementsAllInfosList = [
     id: 91,
     name: "SplatBuggy",
     category: "ATV",
-    classId: "12",
+    classId: 12,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2FATVs/Splat Buggy.png",
       width: 200,
@@ -49655,7 +49655,7 @@ export const elementsAllInfosList = [
     id: 97,
     name: "Slick",
     category: "wheels",
-    classId: "4",
+    classId: 4,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Slick.png",
       width: 200,
@@ -49666,7 +49666,7 @@ export const elementsAllInfosList = [
     id: 98,
     name: "Metal",
     category: "wheels",
-    classId: "5",
+    classId: 5,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Metal.png",
       width: 200,
@@ -49677,7 +49677,7 @@ export const elementsAllInfosList = [
     id: 99,
     name: "Button",
     category: "wheels",
-    classId: "6",
+    classId: 6,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Button.png",
       width: 200,
@@ -49688,7 +49688,7 @@ export const elementsAllInfosList = [
     id: 100,
     name: "Off-Road",
     category: "wheels",
-    classId: "7",
+    classId: 7,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Off-Road.png",
       width: 200,
@@ -49699,7 +49699,7 @@ export const elementsAllInfosList = [
     id: 101,
     name: "Sponge",
     category: "wheels",
-    classId: "8",
+    classId: 8,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Sponge.png",
       width: 200,
@@ -49721,7 +49721,7 @@ export const elementsAllInfosList = [
     id: 103,
     name: "Cushion",
     category: "wheels",
-    classId: "8",
+    classId: 8,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Cushion.png",
       width: 200,
@@ -49776,7 +49776,7 @@ export const elementsAllInfosList = [
     id: 108,
     name: "CyberSlick",
     category: "wheels",
-    classId: "4",
+    classId: 4,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Cyber Slick.png",
       width: 200,
@@ -49787,7 +49787,7 @@ export const elementsAllInfosList = [
     id: 109,
     name: "RetroOff-Road",
     category: "wheels",
-    classId: "7",
+    classId: 7,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Retro Off-Road.png",
       width: 200,
@@ -49798,7 +49798,7 @@ export const elementsAllInfosList = [
     id: 110,
     name: "GoldTires",
     category: "wheels",
-    classId: "5",
+    classId: 5,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Gold Tires.png",
       width: 200,
@@ -49820,7 +49820,7 @@ export const elementsAllInfosList = [
     id: 112,
     name: "TriforceTires",
     category: "wheels",
-    classId: "7",
+    classId: 7,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Triforce Tires.png",
       width: 200,
@@ -49842,7 +49842,7 @@ export const elementsAllInfosList = [
     id: 114,
     name: "LeafTires",
     category: "wheels",
-    classId: "6",
+    classId: 6,
     image: {
       uri: "/assets/?unstable_path=.%2Fassets%2Fimages%2FelementsImages%2Fwheels/Leaf Tires.png",
       width: 200,

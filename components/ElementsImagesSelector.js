@@ -44,6 +44,8 @@ const ElementsImagesSelector = ({ displayCase, orderNumber }) => {
     displayCase ? "empty" : "kart"
   );
 
+  console.log(selectedTab);
+
   // Fonction pour rendre le contenu de l'onglet sélectionné
   const renderContent = () => {
     if (orderNumber != 3) {
@@ -126,31 +128,29 @@ const ElementsImagesSelector = ({ displayCase, orderNumber }) => {
   };
 
   return (
-    <View style={styles.categoryContainer}>
-      <View style={styles.outerContainer} key={"outerContainer"}>
-        {/* Navigation par onglets */}
-        <View style={styles.tabContainer} key={"tabContainer"}>
-          {allElementNames.map((elementName, index) => (
-            <Pressable
-              key={elementName} // Ajout de la key ici
-              style={[
-                styles.tab,
-                selectedTab === elementName && styles.activeTab,
-              ]}
-              onPress={() => {
-                return setSelectedTab(elementName);
-              }}
-            >
-              <Image
-                source={elementIcons[index]}
-                style={styles.image}
-                resizeMode="contain"
-              />
-            </Pressable>
-          ))}
-        </View>
-        {renderContent()}
+    <View style={styles.outerContainer} key={"outerContainer"}>
+      {/* Navigation par onglets */}
+      <View style={styles.tabContainer} key={"tabContainer"}>
+        {allElementNames.map((elementName, index) => (
+          <Pressable
+            key={elementName} // Ajout de la key ici
+            style={[
+              styles.tab,
+              selectedTab === elementName && styles.activeTab,
+            ]}
+            onPress={() => {
+              return setSelectedTab(elementName);
+            }}
+          >
+            <Image
+              source={elementIcons[index]}
+              style={styles.image}
+              resizeMode="contain"
+            />
+          </Pressable>
+        ))}
       </View>
+      {renderContent()}
     </View>
   );
 };
