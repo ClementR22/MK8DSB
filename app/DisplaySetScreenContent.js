@@ -98,11 +98,6 @@ const DisplaySetScreenContent = () => {
           />
         </View>
         {/*}
-        <ElementsImagesDeselector
-          pressableImages={pressableImages}
-          handlePressImage={null}
-          display={true}
-        />
         <View style={styles.statContainer}>
           {Object.entries(statNames).map(([, name], index) => {
             const stat_i = pressedImagesStats[index];

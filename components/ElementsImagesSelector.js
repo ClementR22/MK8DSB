@@ -44,8 +44,6 @@ const ElementsImagesSelector = ({ displayCase, orderNumber }) => {
     displayCase ? "empty" : "kart"
   );
 
-  console.log(selectedTab);
-
   // Fonction pour rendre le contenu de l'onglet sélectionné
   const renderContent = () => {
     if (orderNumber != 3) {
@@ -81,9 +79,15 @@ const ElementsImagesSelector = ({ displayCase, orderNumber }) => {
                 key={id}
                 name={name}
                 pressed={pressed}
-                onPress={() => {
-                  handlePressImage(id);
-                }}
+                onPress={
+                  displayCase
+                    ? () => {
+                        handlePressImageUnique(id, category);
+                      }
+                    : () => {
+                        handlePressImage(id, category);
+                      }
+                }
                 uri={image.uri}
               />
             )

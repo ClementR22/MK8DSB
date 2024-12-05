@@ -367,7 +367,6 @@ const SearchSetScreenContent = () => {
               {translate("SearchedStats")}
             </Text>
             {/* Afficher le slider uniquement si la case est cochée */}
-            {console.log(chosenStats)}
             {chosenStats.map(
               (stat) =>
                 stat.checked && (

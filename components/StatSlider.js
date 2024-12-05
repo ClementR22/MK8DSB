@@ -12,14 +12,6 @@ const StatSlider = ({
   statFilterNumber,
   setStatFilterNumber,
 }) => {
-  console.log(
-    "dans StatSlider",
-    name,
-    sliderValue,
-    setSliderValue,
-    statFilterNumber,
-    setStatFilterNumber
-  );
   const th = useTheme();
   const statFilterIconsNames = [
     "approximately-equal",

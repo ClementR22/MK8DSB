@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import { elementsAllInfosList } from "../data/data";
+import { bodyTypeNames, elementsAllInfosList } from "../data/data";
 
 // Fonction pour initialiser l'état pressableImagesList
 const initializePressableImagesList = (isDefaultSelectedImages) => {
@@ -57,7 +57,7 @@ export const PressableImagesProvider = ({
     initializePressableImagesByCategory(pressableImagesList);
 
   // Fonction pour gérer l'état d'une image pressée
-  const handlePressImage = (id) => {
+  const handlePressImage = (id, category) => {
     setPressableImagesList((prev) =>
       prev.map((item, index) =>
         index === id ? { ...item, pressed: !item.pressed } : item
@@ -68,17 +68,22 @@ export const PressableImagesProvider = ({
   };
 
   // Fonction pour gérer l'état d'une image unique pressée
-  const handlePressImageUnique = (category, classId, imageIndex) => {
+  const handlePressImageUnique = (id, category) => {
+    const categoryList = bodyTypeNames.includes(category)
+      ? bodyTypeNames
+      : [category];
+    // categoryList = ["kart", "bike", "sportBike", "ATV"] ou bien ["character"] ou bien ["wheels"] ou bien ["glider"]
+    // on met tous les chip de la category sur false
+    // puis on selectionne le chip
     setPressableImagesList((prev) =>
-      prev
-        .map((item) =>
-          item.category === category && item.classId === classId
-            ? { ...item, pressed: false }
-            : item
-        )
-        .map((item, index) =>
-          index === imageIndex ? { ...item, pressed: true } : item
-        )
+      prev.map((item) =>
+        categoryList.includes(item.category)
+          ? { ...item, pressed: false }
+          : item
+      )
+    );
+    setPressableImagesList((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, pressed: true } : item))
     );
   };
 
