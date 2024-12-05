@@ -19,6 +19,7 @@ import { card } from "./styles/card";
 import { useTheme } from "./styles/theme";
 import MyModal from "./MyModal";
 import SetImagesDisplayer from "./SetImagesDisplayer";
+import StatSliderResultContainer from "./StatSliderResultContainer";
 
 const elementDenominations = ["character", "body", "wheels", "glider"];
 const bodyDenominations = ["kart", "bike", "sportBike", "ATV"];
@@ -44,29 +45,11 @@ const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
             {elementsAllClassName[index][id]}
           </Text>
         ))}
-
-        {isFoundStatsVisible.map(({ name, checked }, index) => {
-          if (checked) {
-            return (
-              <View
-                key={index}
-                style={[
-                  styles.sliderContainer,
-                  { backgroundColor: th.surface_container },
-                ]}
-              >
-                <Text key={index} style={styles.text}>
-                  {name} : {JSON.stringify(setToShowStats[index])}
-                </Text>
-                <StatSliderResult
-                  value={setToShowStats[index]}
-                  wantedValue={chosenStats[index].value}
-                />
-              </View>
-            );
-          }
-          return null;
-        })}
+        <StatSliderResultContainer
+          setToShowStats={setToShowStats}
+          isFoundStatsVisible={isFoundStatsVisible}
+          chosenStats={chosenStats}
+        />
       </Pressable>
 
       <MyModal

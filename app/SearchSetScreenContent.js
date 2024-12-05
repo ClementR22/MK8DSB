@@ -17,6 +17,7 @@ import { useCallback } from "react";
 import Checkbox from "expo-checkbox";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
+import { toggleCheck } from "../utils/toggleCheck";
 
 // Utils
 import {
@@ -34,7 +35,7 @@ import ResultsNumber from "../components/ResultsNumberSelector";
 import ElementsImagesDeselector from "../components/ElementsImagesDeselector";
 import MyModal from "../components/MyModal";
 import FilterModal from "../components/FilterModal";
-import { StatSliderResultSelectorPressable } from "../components/StatSliderResultSelectorPressable";
+import StatSliderResultSelectorPressable from "../components/StatSliderResultSelectorPressable";
 
 import {
   button_icon,
@@ -161,30 +162,6 @@ const SearchSetScreenContent = () => {
     ];
 
     return selectedElementsIds4categories;
-  };
-
-  // Inverser l'état checked des stats
-  const toggleCheck = (setList, name, keepOneCondition = true) => {
-    setList((prev) => {
-      const newList = prev.map((item) =>
-        item.name === name ? { ...item, checked: !item.checked } : item
-      );
-
-      if (keepOneCondition) {
-        // Vérifiez s'il reste au moins un checked
-        const hasChecked = newList.some((item) => item.checked);
-
-        // Si tous les éléments sont décochés, rétablissez l'état de l'élément
-        if (!hasChecked) {
-          showToast();
-          return newList.map((item) =>
-            item.name === name ? { ...item, checked: true } : item
-          );
-        }
-      }
-
-      return newList;
-    });
   };
 
   // Mettre à jour la valeur du slider

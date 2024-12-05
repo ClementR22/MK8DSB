@@ -37,6 +37,12 @@ import { usePressableImages } from "../utils/usePressableImages";
 import { useTheme } from "react-native-paper";
 import MultiStateToggleButton from "../components/MultiStateToggleButton";
 import { modal } from "../components/styles/modal";
+import { translate } from "../i18n/translations";
+import StatSliderResultContainer from "../components/StatSliderResultContainer";
+import StatSliderResultSelectorPressable from "../components/StatSliderResultSelectorPressable";
+import MyModal from "../components/MyModal";
+import StatSelector from "../components/StatSelector";
+import { toggleCheck } from "../utils/toggleCheck";
 
 const DisplaySetScreenContent = () => {
   const th = useTheme();
@@ -81,6 +87,16 @@ const DisplaySetScreenContent = () => {
   };
 
   const pressedImagesStats = searchSetFromElementsIds(pressedImagesIds);
+  const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
+    statNames.map((statName, index) => ({
+      name: translate(statName),
+      checked: true,
+    }))
+  );
+  const chosenStats = [null] * 12;
+
+  const [foundedStatsModalVisible, setFoundedStatsModalVisible] =
+    useState(false);
 
   return (
     <ScrollView>
@@ -91,30 +107,35 @@ const DisplaySetScreenContent = () => {
           setNumber={setOrderNumber}
           iconsNames={imagesOrderIconsNames}
         />
+        <StatSliderResultSelectorPressable
+          setFoundedStatsModalVisible={setFoundedStatsModalVisible}
+        />
+
+        <MyModal
+          modalTitle={translate("StatsToDisplay")}
+          isModalVisible={foundedStatsModalVisible}
+          setIsModalVisible={setFoundedStatsModalVisible}
+          ModalContent={StatSelector}
+          contentProps={{
+            isFoundStatsVisible: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
+            setIsFoundStatsVisible: setIsFoundStatsVisible,
+            toggleCheck: toggleCheck,
+            keepOneCondition: false,
+          }}
+        />
+
         <View style={{ padding: 20, backgroundColor: "yellow", width: "100%" }}>
           <ElementsImagesSelector
             displayCase={true}
             orderNumber={orderNumber}
           />
         </View>
-        {/*}
-        <View style={styles.statContainer}>
-          {Object.entries(statNames).map(([, name], index) => {
-            const stat_i = pressedImagesStats[index];
-            return (
-              <View key={index} style={styles.sliderContainer}>
-                <Text key={index} style={styles.text}>
-                  {name} : {JSON.stringify(stat_i)}
-                </Text>
-                <StatSliderResult
-                  chosenValue={null}
-                  foundValue={stat_i}
-                  isChosen={false}
-                />
-              </View>
-            );
-          })}
-        </View> */}
+
+        <StatSliderResultContainer
+          setToShowStats={pressedImagesStats}
+          isFoundStatsVisible={isFoundStatsVisible}
+          chosenStats={chosenStats}
+        />
       </View>
     </ScrollView>
   );

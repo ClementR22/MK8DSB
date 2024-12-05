@@ -29,6 +29,8 @@ const ElementsImagesSelector = ({ displayCase, orderNumber }) => {
     handlePressImageUnique,
   } = usePressableImages();
 
+  const allElementNamesExtended = [...allElementNames, "empty"];
+
   const elementIcons = [
     elementsAllInfosList[0].image.uri,
     elementsAllInfosList[52].image.uri,
@@ -37,6 +39,7 @@ const ElementsImagesSelector = ({ displayCase, orderNumber }) => {
     elementsAllInfosList[87].image.uri,
     elementsAllInfosList[93].image.uri,
     elementsAllInfosList[115].image.uri,
+    require("../assets/images/close.png"),
   ];
 
   // État pour suivre l'onglet sélectionné
@@ -135,7 +138,7 @@ const ElementsImagesSelector = ({ displayCase, orderNumber }) => {
     <View style={styles.outerContainer} key={"outerContainer"}>
       {/* Navigation par onglets */}
       <View style={styles.tabContainer} key={"tabContainer"}>
-        {allElementNames.map((elementName, index) => (
+        {allElementNamesExtended.map((elementName, index) => (
           <Pressable
             key={elementName} // Ajout de la key ici
             style={[

@@ -4,9 +4,7 @@ import { button_icon } from "./styles/button";
 import { useTheme, shadow_3dp } from "./styles/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export const StatSliderResultSelectorPressable = ({
-  setFoundedStatsModalVisible,
-}) => {
+const StatSliderResultSelectorPressable = ({ setFoundedStatsModalVisible }) => {
   const th = useTheme();
   return (
     <Pressable
@@ -17,3 +15,5 @@ export const StatSliderResultSelectorPressable = ({
     </Pressable>
   );
 };
+
+export default StatSliderResultSelectorPressable;
