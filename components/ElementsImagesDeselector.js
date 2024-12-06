@@ -2,48 +2,29 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import PressableImage from "./PressableImage";
 import { usePressableImages } from "../utils/usePressableImages";
+import MyChip from "./MyChip";
 
-const ElementsImagesDeselector = ({ display }) => {
-  const { pressableImages, handlePressImage, handlePressImageUnique } =
-    usePressableImages();
+const ElementsImagesDeselector = () => {
+  const { pressableImagesList, handlePressImage } = usePressableImages();
   return (
     <View
       style={{
         backgroundColor: "green",
-        overflow: "scroll",
+        rowGap: 8,
         flexDirection: "row",
-        paddingHorizontal: 10,
+        flexWrap: "wrap",
       }}
     >
-      {Object.entries(pressableImages).map(([categoryKey, categoryValue]) => (
-        <View key={categoryKey} style={styles.categoryContainer}>
-          {Object.entries(categoryValue).map(([classKey, classValue]) =>
-            Object.entries(classValue).map(
-              ([imageKey, { source, pressed }], imgIndex) => {
-                if (pressed) {
-                  return (
-                    <View
-                      key={`${categoryKey}-${classKey}-${imageKey}-${imgIndex}`} // Clé unique pour chaque élément
-                      style={styles.pressableImages}
-                    >
-                      <PressableImage
-                        imageKey={`${categoryKey}-${classKey}-${imageKey}-${imgIndex}`}
-                        source={source}
-                        pressed={pressed}
-                        setPressableImage={() =>
-                          handlePressImage(categoryKey, classKey, imageKey)
-                        }
-                        disabled={display}
-                      />
-                    </View>
-                  );
-                }
-                return null; // Ne rien afficher si `pressed` est faux
-              }
-            )
-          )}
-        </View>
-      ))}
+      {pressableImagesList
+        .filter((element) => element.pressed)
+        .map(({ id, name, category, classId, image, pressed }) => (
+          <MyChip
+            name={name}
+            pressed={pressed}
+            onPress={() => handlePressImage(id)}
+            uri={image.uri}
+          />
+        ))}
     </View>
   );
 };

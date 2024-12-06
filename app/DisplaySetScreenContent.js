@@ -101,7 +101,7 @@ const DisplaySetScreenContent = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.text}>ResearchSetScreen</Text>
+        <Text style={styles.text}>DisplaySetScreen</Text>
         <MultiStateToggleButton
           number={orderNumber}
           setNumber={setOrderNumber}

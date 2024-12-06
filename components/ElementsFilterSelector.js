@@ -51,23 +51,10 @@ const ElementsFilterSelector = ({
           );
         })}
       </View>
+
+      <ElementsImagesDeselector />
+
       <ElementsImagesSelector displayCase={false} orderNumber={orderNumber} />
-
-      {/* Category selector row */}
-      {/* <View style={styles.elementsImagesDeselector}>
-        <ElementsImagesDeselector
-          pressableImages={pressableImages}
-          handlePressImage={handlePressImageCompleted}
-          displayCase={false}
-        />
-      </View> */}
-
-      {/* Subcategory selector */}
-      {/* <ElementsImagesSelector
-        pressableImages={pressableImages}
-        handlePressImage={handlePressImageCompleted}
-        displayCase={false}
-      /> */}
     </ScrollView>
   );
 };
@@ -75,11 +62,6 @@ const ElementsFilterSelector = ({
 export default ElementsFilterSelector;
 
 styles = StyleSheet.create({
-  elementsImagesDeselector: {
-    width: "100%",
-    alignItems: "flex-start",
-    backgroundColor: "red",
-  },
   bodyTypeContainer: {
     paddingVertical: 20,
     paddingHorizontal: 6,

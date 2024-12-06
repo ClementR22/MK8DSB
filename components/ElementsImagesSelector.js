@@ -70,12 +70,7 @@ const ElementsImagesSelector = ({ displayCase, orderNumber }) => {
       }
 
       return (
-        <View
-          style={[
-            styles.categoryContainer,
-            { flexDirection: "row", flexWrap: "wrap" },
-          ]}
-        >
+        <View style={[styles.categoryContainer]}>
           {selectedCategoryImages.map(
             ({ id, name, category, classId, image, pressed }) => (
               <MyChip
@@ -200,6 +195,8 @@ const styles = StyleSheet.create({
   categoryContainer: {
     backgroundColor: "green",
     rowGap: 8,
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   classContainer: {
     marginVertical: 5,
