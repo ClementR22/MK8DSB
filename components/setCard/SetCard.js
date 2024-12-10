@@ -10,47 +10,69 @@ import {
   Platform,
   Alert,
 } from "react-native";
-import { elementsAllClassName } from "../data/data";
+import { elementsAllClassName } from "../../data/data";
 import { ScrollView } from "react-native";
-import StatSliderResult from "./StatSliderResult";
-import { modal } from "./styles/modal";
-import { button } from "./styles/button";
-import { card } from "./styles/card";
-import { useTheme } from "./styles/theme";
-import MyModal from "./MyModal";
-import SetImagesDisplayer from "./SetImagesDisplayer";
-import StatSliderResultContainer from "./StatSliderResultContainer";
+import StatSliderResult from "../statSliderResult/StatSliderResult";
+import { modal } from "../styles/modal";
+import { button } from "../styles/button";
+import { card } from "../styles/card";
+import { useTheme } from "../styles/theme";
+import MyModal from "../MyModal";
+import SetImagesDisplayer from "./SetCardImagesDisplayer";
+import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
+import { button_icon } from "../styles/button";
+import { shadow_3dp } from "../styles/theme";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const elementDenominations = ["character", "body", "wheels", "glider"];
 const bodyDenominations = ["kart", "bike", "sportBike", "ATV"];
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
 
-const SetCard = ({ setToShow, isFoundStatsVisible, chosenStats }) => {
+const SetCard = ({
+  setToShowElementsIds,
+  setToShowStats,
+  isFoundStatsVisible,
+  chosenStats,
+  isPressed = null,
+}) => {
+  //console.log("dans setCard");
+  //console.log("setToShowElementsIds", setToShowElementsIds);
   const th = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [setToShowElementsIds, setToShowStats] = Array.isArray(setToShow)
-    ? setToShow
-    : [[], []];
 
   const displaySetImages = () => {
     setIsModalVisible(true);
   };
 
   return (
-    <View>
-      <Pressable style={card(th).container} onPress={displaySetImages}>
-        {setToShowElementsIds.map((id, index) => (
-          <Text key={"element" + index} style={card(th).text}>
-            {elementsAllClassName[index][id]}
-          </Text>
-        ))}
+    <View
+      style={[
+        card(th).container,
+        isPressed == false && card(th).unPressed,
+        isPressed && card(th).pressed,
+      ]}
+    >
+      {setToShowElementsIds.map((id, index) => (
+        <Text key={"element" + index} style={card(th).text}>
+          {elementsAllClassName[index][id]}
+        </Text>
+      ))}
+
+      <Pressable
+        style={[button_icon(th).container, shadow_3dp]}
+        onPress={displaySetImages}
+      >
+        <MaterialCommunityIcons name="eye" size={24} color={th.on_primary} />
+      </Pressable>
+
+      {isPressed == null ? (
         <StatSliderResultContainer
           setToShowStats={setToShowStats}
           isFoundStatsVisible={isFoundStatsVisible}
           chosenStats={chosenStats}
         />
-      </Pressable>
+      ) : null}
 
       <MyModal
         modalTitle={""}

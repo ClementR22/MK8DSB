@@ -7,17 +7,14 @@ import {
   TextInput,
   Dimensions,
 } from "react-native";
-import StatSlider from "../components/StatSlider";
 import { useState, useEffect, useContext, createContext } from "react";
 import Checkbox from "expo-checkbox";
 import { Modal } from "react-native";
 import { Alert } from "react-native";
 
-import { imageSize } from "../components/PressableImage";
-
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-import SetCard from "../components/SetCard";
+import SetCard from "../components/setCard/SetCard";
 
 import {
   statNames,
@@ -26,23 +23,23 @@ import {
   images,
 } from "../data/data";
 
-import StatSliderResult from "../components/StatSliderResult";
+import StatSliderResult from "../components/statSliderResult/StatSliderResult";
 
 import { setAllInfos } from "../data/data";
 
 import ResultsNumber from "../components/ResultsNumberSelector";
-import ElementsImagesDeselector from "../components/ElementsImagesDeselector";
-import ElementsImagesSelector from "../components/ElementsImagesSelector";
+import ElementsSelector from "../components/elementsSelector/ElementsSelector";
 import { usePressableImages } from "../utils/usePressableImages";
 import { useTheme } from "react-native-paper";
 import MultiStateToggleButton from "../components/MultiStateToggleButton";
 import { modal } from "../components/styles/modal";
 import { translate } from "../i18n/translations";
-import StatSliderResultContainer from "../components/StatSliderResultContainer";
-import StatSliderResultSelectorPressable from "../components/StatSliderResultSelectorPressable";
+import StatSliderResultContainer from "../components/statSliderResult/StatSliderResultContainer";
+import StatSliderResultSelectorPressable from "../components/statSliderResult/StatSliderResultSelectorPressable";
 import MyModal from "../components/MyModal";
 import StatSelector from "../components/StatSelector";
 import { toggleCheck } from "../utils/toggleCheck";
+import SetCardSelector from "../components/SetCardSelector";
 
 const DisplaySetScreenContent = () => {
   const th = useTheme();
@@ -63,7 +60,7 @@ const DisplaySetScreenContent = () => {
     "graphql",
   ];
 
-  const pressedImagesIds = pressableImagesList
+  const pressedImagesIdsInit = pressableImagesList
     .filter((element) => element.pressed)
     .map((element) => {
       return element.classId;
@@ -74,7 +71,7 @@ const DisplaySetScreenContent = () => {
     return a.every((value, index) => value === b[index]); // Comparer chaque élément
   };
 
-  const searchSetFromElementsIds = (pressedImagesIds) => {
+  const searchSetStatsFromElementsIds = (pressedImagesIds) => {
     const result = setAllInfos.find(([, elementsIds]) => {
       return arraysEqual(elementsIds, pressedImagesIds);
     });
@@ -86,7 +83,8 @@ const DisplaySetScreenContent = () => {
     return null; // Retourner `null` si aucune correspondance n'est trouvée
   };
 
-  const pressedImagesStats = searchSetFromElementsIds(pressedImagesIds);
+  const pressedImagesStats =
+    searchSetStatsFromElementsIds(pressedImagesIdsInit);
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
     statNames.map((statName, index) => ({
       name: translate(statName),
@@ -97,6 +95,44 @@ const DisplaySetScreenContent = () => {
 
   const [foundedStatsModalVisible, setFoundedStatsModalVisible] =
     useState(false);
+
+  const [setsList, setSetsList] = useState([
+    { id: 0, isPressed: true, setElementIds: [] },
+  ]);
+  const [activeSetCard, setActiveSetCard] = useState(0); // Stocke l'ID de la `SetCard` active
+  const [setContents, setSetContents] = useState({}); // Stocke le contenu des `SetCards`
+
+  const addSet = () => {
+    console.log("dans addSet");
+    const newId = setsList.length;
+    setSetsList((prev) =>
+      prev.concat({
+        id: newId,
+        isPressed: false,
+        setElementIds: [],
+      })
+    );
+  };
+
+  const handleChipPress = (chipContent) => {
+    if (activeSetCard !== null) {
+      setSetContents((prev) => ({
+        ...prev,
+        [activeSetCard]: chipContent,
+      }));
+    }
+  };
+
+  const handleSetCardPress = (id) => {
+    setActiveSetCard(id); // Définir cette `SetCard` comme active
+    setSetsList((prev) =>
+      prev.map((set) => ({
+        ...set,
+        isPressed: set.id === id,
+      }))
+    );
+    //console.log("et donc 2 setsList", setsList);
+  };
 
   return (
     <ScrollView>
@@ -110,6 +146,10 @@ const DisplaySetScreenContent = () => {
         <StatSliderResultSelectorPressable
           setFoundedStatsModalVisible={setFoundedStatsModalVisible}
         />
+
+        <Pressable style={styles.addButton} onPress={addSet}>
+          <Text style={styles.addButtonText}>+</Text>
+        </Pressable>
 
         <MyModal
           modalTitle={translate("StatsToDisplay")}
@@ -125,9 +165,19 @@ const DisplaySetScreenContent = () => {
         />
 
         <View style={{ padding: 20, backgroundColor: "yellow", width: "100%" }}>
-          <ElementsImagesSelector
+          <ElementsSelector
             displayCase={true}
             orderNumber={orderNumber}
+            activeSetCard={activeSetCard}
+            setsList={setsList}
+            setSetsList={setSetsList}
+          />
+        </View>
+
+        <View style={styles.cardsContainer}>
+          <SetCardSelector
+            setsList={setsList}
+            handleSetCardPress={handleSetCardPress}
           />
         </View>
 
@@ -148,7 +198,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    padding: 20,
+  },
+  cardsContainer: {
+    width: "100%",
+    padding: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: "pink",
   },
   statContainer: {
     width: screenWidth * 0.9,
@@ -162,5 +219,27 @@ const styles = StyleSheet.create({
   sliderContainer: {
     width: "100%",
     backgroundColor: "green",
+  },
+  addButton: {
+    backgroundColor: "#4CAF50",
+    borderRadius: 25,
+    padding: 12,
+    marginBottom: 20,
+  },
+  addButtonText: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  pressable: {
+    backgroundColor: "#2196F3",
+    padding: 12,
+    marginVertical: 8,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  pressableText: {
+    color: "#fff",
+    fontSize: 16,
   },
 });

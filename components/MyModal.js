@@ -8,7 +8,6 @@ import {
   StyleSheet,
 } from "react-native";
 import Checkbox from "expo-checkbox";
-import { imageSize } from "./PressableImage";
 import { modal } from "./styles/modal";
 import { button } from "./styles/button";
 import checkbox from "./styles/checkbox";
@@ -85,7 +84,6 @@ const styles = StyleSheet.create({
     backgroundColor: "purple",
     borderRadius: 10,
     alignItems: "center",
-    width: 6 * imageSize,
   },
   modalText: {
     fontSize: 18,

@@ -1,10 +1,9 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import PressableImage from "./PressableImage";
-import { usePressableImages } from "../utils/usePressableImages";
-import MyChip from "./MyChip";
+import { usePressableImages } from "../../utils/usePressableImages";
+import MyChip from "./ElementChip";
 
-const ElementsImagesDeselector = () => {
+const ElementsDeselector = () => {
   const { pressableImagesList, handlePressImage } = usePressableImages();
   return (
     <View
@@ -40,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ElementsImagesDeselector;
+export default ElementsDeselector;

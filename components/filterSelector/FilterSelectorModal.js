@@ -6,16 +6,16 @@ import {
   BottomSheetModalProvider,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
-import { modal } from "./styles/modal"; // Vérifie si modal.background est bien défini ici
-import { button_icon } from "./styles/button";
-import { shadow_3dp } from "./styles/theme";
+import { modal } from "../styles/modal"; // Vérifie si modal.background est bien défini ici
+import { button_icon } from "../styles/button";
+import { shadow_3dp } from "../styles/theme";
 import { useRef } from "react";
 import { useCallback } from "react";
-import ElementsFilterSelector from "./ElementsFilterSelector";
-import { useTheme } from "./styles/theme";
-import MultiStateToggleButton from "./MultiStateToggleButton";
+import ElementsSelector from "./FilterSelector";
+import { useTheme } from "../styles/theme";
+import MultiStateToggleButton from "../MultiStateToggleButton";
 
-const FilterModal = ({
+const FilterSelectorModal = ({
   modalTitle = "Affichage",
   isModalVisible,
   setIsModalVisible,
@@ -74,7 +74,7 @@ const FilterModal = ({
                   setNumber={setOrderNumber}
                   iconsNames={imagesOrderIconsNames}
                 />
-                <ElementsFilterSelector
+                <ElementsSelector
                   chosenBodyType={chosenBodyType}
                   setChosenBodyType={setChosenBodyType}
                   toggleCheck={toggleCheck}
@@ -111,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FilterModal;
+export default FilterSelectorModal;

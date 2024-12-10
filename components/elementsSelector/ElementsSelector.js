@@ -7,8 +7,7 @@ import {
   Pressable,
   Image,
 } from "react-native";
-import PressableImage from "./PressableImage";
-import MyChip from "./MyChip";
+import MyChip from "./ElementChip";
 import {
   elementsImages,
   closeImage,
@@ -16,12 +15,19 @@ import {
   allElementNamesDisplay,
   elementsAllClassName,
   elementsAllInfosList,
-} from "../data/data";
-import { usePressableImages } from "../utils/usePressableImages";
+} from "../../data/data";
+import { usePressableImages } from "../../utils/usePressableImages";
 
 const iconSize = 38;
 
-const ElementsImagesSelector = ({ displayCase, orderNumber }) => {
+const ElementsSelector = ({
+  displayCase,
+  orderNumber,
+  activeSetCard,
+  setsList,
+  setSetsList,
+}) => {
+  //console.log("dans ElementsSelector");
   const {
     pressableImagesList,
     pressableImagesByCategory,
@@ -39,7 +45,7 @@ const ElementsImagesSelector = ({ displayCase, orderNumber }) => {
     elementsAllInfosList[87].image.uri,
     elementsAllInfosList[93].image.uri,
     elementsAllInfosList[115].image.uri,
-    require("../assets/images/close.png"),
+    require("../../assets/images/close.png"),
   ];
 
   // État pour suivre l'onglet sélectionné
@@ -80,7 +86,13 @@ const ElementsImagesSelector = ({ displayCase, orderNumber }) => {
                 onPress={
                   displayCase
                     ? () => {
-                        handlePressImageUnique(id, category);
+                        handlePressImageUnique(
+                          id,
+                          category,
+                          activeSetCard,
+                          setsList,
+                          setSetsList
+                        );
                       }
                     : () => {
                         handlePressImage(id, category);
@@ -206,4 +218,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ElementsImagesSelector;
+export default ElementsSelector;

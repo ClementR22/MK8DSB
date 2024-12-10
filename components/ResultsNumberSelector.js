@@ -5,7 +5,7 @@ import { button_icon } from "./styles/button";
 import { shadow_12dp } from "./styles/theme";
 import { useTheme } from "./styles/theme";
 
-const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
+const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
   const th = useTheme();
   const [hovered_1, setHover_1] = useState(false);
   const [hovered_2, setHover_2] = useState(false);
@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ResultsNumber;
+export default ResultsNumberSelector;

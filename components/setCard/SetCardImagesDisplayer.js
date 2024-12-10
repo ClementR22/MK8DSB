@@ -11,22 +11,22 @@ import {
   Alert,
   DrawerLayoutAndroidComponent,
 } from "react-native";
-import { elementsAllClassName } from "../data/data";
+import { elementsAllClassName } from "../../data/data";
 import { ScrollView } from "react-native";
-import { usePressableImages } from "../utils/usePressableImages";
-import StatSliderResult from "./StatSliderResult";
-import { modal } from "./styles/modal";
-import { button } from "./styles/button";
-import { card } from "./styles/card";
-import th from "./styles/theme";
-import MyModal from "./MyModal";
+import { usePressableImages } from "../../utils/usePressableImages";
+import StatSliderResult from "../statSliderResult/StatSliderResult";
+import { modal } from "../styles/modal";
+import { button } from "../styles/button";
+import { card } from "../styles/card";
+import th from "../styles/theme";
+import MyModal from "../MyModal";
 
 const categoryDenominations = ["character", "body", "wheels", "glider"];
 const bodyDenominations = ["kart", "bike", "sportBike", "ATV"];
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
 
-const SetImagesDisplayer = ({ setToShowElementsIds }) => {
+const SetCardImagesDisplayer = ({ setToShowElementsIds }) => {
   const { pressableImagesByCategory } = usePressableImages();
   return (
     <ScrollView>
@@ -72,7 +72,7 @@ const SetImagesDisplayer = ({ setToShowElementsIds }) => {
   );
 };
 
-export default SetImagesDisplayer;
+export default SetCardImagesDisplayer;
 
 const styles = StyleSheet.create({
   text: {

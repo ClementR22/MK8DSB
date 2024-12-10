@@ -8,19 +8,18 @@ import {
   StyleSheet,
 } from "react-native";
 import Checkbox from "expo-checkbox";
-import { imageSize } from "./PressableImage";
-import { modal } from "./styles/modal";
-import { button } from "./styles/button";
-import checkbox from "./styles/checkbox";
-import th from "./styles/theme";
-import PressableStat from "./PressableStat";
-import ElementsImagesDeselector from "./ElementsImagesDeselector";
-import ElementsImagesSelector from "./ElementsImagesSelector";
-import MyChip from "./MyChip";
+import { modal } from "../styles/modal";
+import { button } from "../styles/button";
+import checkbox from "../styles/checkbox";
+import th from "../styles/theme";
+import PressableStat from "../PressableStat";
+import ElementsDeselector from "../elementsSelector/ElementsDeselector";
+import ElementsSelector from "../elementsSelector/ElementsSelector";
+import MyChip from "../elementsSelector/ElementChip";
 import { elementsAllInfosList } from "@/data/data";
-import { useTheme } from "./styles/theme";
+import { useTheme } from "../styles/theme";
 
-const ElementsFilterSelector = ({
+const FilterSelector = ({
   chosenBodyType,
   setChosenBodyType,
   toggleCheck,
@@ -52,14 +51,14 @@ const ElementsFilterSelector = ({
         })}
       </View>
 
-      <ElementsImagesDeselector />
+      <ElementsDeselector />
 
-      <ElementsImagesSelector displayCase={false} orderNumber={orderNumber} />
+      <ElementsSelector displayCase={false} orderNumber={orderNumber} />
     </ScrollView>
   );
 };
 
-export default ElementsFilterSelector;
+export default FilterSelector;
 
 styles = StyleSheet.create({
   bodyTypeContainer: {

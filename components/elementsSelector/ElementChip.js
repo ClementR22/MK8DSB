@@ -1,9 +1,9 @@
 import React from "react";
 import { Chip } from "react-native-paper";
 import { View, Image } from "react-native";
-import { translate } from "../i18n/translations";
+import { translate } from "../../i18n/translations";
 
-const MyChip = ({ name, pressed, onPress, uri }) => {
+const ElementChip = ({ name, pressed, onPress, uri }) => {
   return (
     <View>
       <Chip
@@ -42,4 +42,4 @@ const styles = {
   },
 };
 
-export default MyChip;
+export default ElementChip;

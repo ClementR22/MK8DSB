@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import StatSliderResult from "./StatSliderResult";
-import { useTheme } from "./styles/theme";
+import { useTheme } from "../styles/theme";
 
 const StatSliderResultContainer = ({
   setToShowStats,

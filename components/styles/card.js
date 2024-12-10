@@ -8,6 +8,13 @@ export const card = (th) =>
       borderRadius: 12,
       padding: 16,
     },
+    unPressed: {
+      margin: 4,
+    },
+    pressed: {
+      borderWidth: 4,
+      margin: 0,
+    },
     text: {
       color: th.on_surface,
     },

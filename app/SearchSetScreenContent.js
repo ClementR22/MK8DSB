@@ -29,13 +29,11 @@ import {
 
 // Components import
 import StatSlider from "../components/StatSlider";
-import { imageSize } from "../components/PressableImage";
-import SetCard from "../components/SetCard";
+import SetCard from "../components/setCard/SetCard";
 import ResultsNumber from "../components/ResultsNumberSelector";
-import ElementsImagesDeselector from "../components/ElementsImagesDeselector";
 import MyModal from "../components/MyModal";
-import FilterModal from "../components/FilterModal";
-import StatSliderResultSelectorPressable from "../components/StatSliderResultSelectorPressable";
+import FilterSelectorModal from "../components/filterSelector/FilterSelectorModal";
+import StatSliderResultSelectorPressable from "../components/statSliderResult/StatSliderResultSelectorPressable";
 
 import {
   button_icon,
@@ -427,7 +425,7 @@ const SearchSetScreenContent = () => {
             }}
           />
 
-          <FilterModal
+          <FilterSelectorModal
             modalTitle={translate("Filter")}
             isModalVisible={filterModalVisible}
             setIsModalVisible={setFilterModalVisible}
@@ -489,11 +487,12 @@ const SearchSetScreenContent = () => {
                 style={{ marginHorizontal: 72 }}
               />
             </View>
-            {setsToShow.map((setToShow, index) => {
+            {setsToShow.map(([setToShowElementsIds, setToShowStats], index) => {
               return (
                 <SetCard
                   key={"card" + index}
-                  setToShow={setToShow}
+                  setToShowElementsIds={setToShowElementsIds}
+                  setToShowStats={setToShowStats}
                   isFoundStatsVisible={isFoundStatsVisible}
                   chosenStats={chosenStats}
                 />
@@ -610,7 +609,7 @@ const styles = StyleSheet.create({
     rowGap: 16,
   },
 
-  elementsImagesDeselector: {
+  ElementsDeselector: {
     width: "100%",
     alignItems: "flex-start",
     backgroundColor: "red",
