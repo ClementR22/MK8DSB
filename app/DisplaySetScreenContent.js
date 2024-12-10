@@ -40,6 +40,7 @@ import MyModal from "../components/MyModal";
 import StatSelector from "../components/StatSelector";
 import { toggleCheck } from "../utils/toggleCheck";
 import SetCardSelector from "../components/SetCardSelector";
+import { setStatusBarBackgroundColor } from "expo-status-bar";
 
 const DisplaySetScreenContent = () => {
   const th = useTheme();
@@ -49,6 +50,7 @@ const DisplaySetScreenContent = () => {
     pressableImagesByCategory,
     handlePressImage,
     handlePressImageUnique,
+    setPressableImagesList,
   } = usePressableImages();
 
   const [orderNumber, setOrderNumber] = useState(0);
@@ -85,6 +87,7 @@ const DisplaySetScreenContent = () => {
 
   const pressedImagesStats =
     searchSetStatsFromElementsIds(pressedImagesIdsInit);
+
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
     statNames.map((statName, index) => ({
       name: translate(statName),
@@ -97,30 +100,19 @@ const DisplaySetScreenContent = () => {
     useState(false);
 
   const [setsList, setSetsList] = useState([
-    { id: 0, isPressed: true, setElementIds: [] },
+    { id: 0, isPressed: true, setElementIds: [9, 0, 0, 0] },
   ]);
   const [activeSetCard, setActiveSetCard] = useState(0); // Stocke l'ID de la `SetCard` active
-  const [setContents, setSetContents] = useState({}); // Stocke le contenu des `SetCards`
 
   const addSet = () => {
-    console.log("dans addSet");
     const newId = setsList.length;
     setSetsList((prev) =>
       prev.concat({
         id: newId,
         isPressed: false,
-        setElementIds: [],
+        setElementIds: [9, 0, 0, 0],
       })
     );
-  };
-
-  const handleChipPress = (chipContent) => {
-    if (activeSetCard !== null) {
-      setSetContents((prev) => ({
-        ...prev,
-        [activeSetCard]: chipContent,
-      }));
-    }
   };
 
   const handleSetCardPress = (id) => {
@@ -131,7 +123,17 @@ const DisplaySetScreenContent = () => {
         isPressed: set.id === id,
       }))
     );
-    //console.log("et donc 2 setsList", setsList);
+
+    /* setElementsIds = setsList[id].setElementIds
+    setElementsIds.forEach((setElementId) => 
+      setPressableImagesList((prev) =>
+      prev.map((element) => {
+        const { id, name, category, classId, image, pressed } = element;
+        return(
+          id == setElementId ? 
+        : null)
+      })
+    )) */
   };
 
   return (
@@ -169,7 +171,6 @@ const DisplaySetScreenContent = () => {
             displayCase={true}
             orderNumber={orderNumber}
             activeSetCard={activeSetCard}
-            setsList={setsList}
             setSetsList={setSetsList}
           />
         </View>

@@ -36,8 +36,6 @@ const SetCard = ({
   chosenStats,
   isPressed = null,
 }) => {
-  //console.log("dans setCard");
-  //console.log("setToShowElementsIds", setToShowElementsIds);
   const th = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
