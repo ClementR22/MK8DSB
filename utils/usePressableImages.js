@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { bodyTypeNames, elementsAllInfosList } from "../data/data";
 
 // Fonction pour initialiser l'état pressableImagesList
@@ -68,7 +68,12 @@ export const PressableImagesProvider = ({
   };
 
   // Fonction pour gérer l'état d'une image unique pressée
-  const handlePressImageUnique = (id, category, activeSetCard, setSetsList) => {
+  const handlePressImageUnique = (
+    id,
+    category,
+    activeSetCard = null,
+    setSetsList
+  ) => {
     const categoryList = bodyTypeNames.includes(category)
       ? bodyTypeNames
       : [category];
@@ -82,31 +87,14 @@ export const PressableImagesProvider = ({
           : item
       )
     );
+
     setPressableImagesList((prev) => {
       const updatedPressableImagesList = prev.map((item) =>
         item.id === id ? { ...item, pressed: true } : item
       );
-      updateSetsList(activeSetCard, setSetsList, updatedPressableImagesList);
+
       return updatedPressableImagesList;
     });
-  };
-
-  const updateSetsList = (activeSetCard, setSetsList, pressableImagesList) => {
-    const pressedElementsIds = pressableImagesList
-      .filter((element) => element.pressed)
-      .map((element) => {
-        return element.classId;
-      });
-
-    if (activeSetCard !== null) {
-      setSetsList((prev) => {
-        return prev.map((item) => {
-          return item.id === activeSetCard
-            ? { ...item, setElementIds: pressedElementsIds }
-            : item;
-        });
-      });
-    }
   };
 
   return (

@@ -127,18 +127,30 @@ const DisplaySetScreenContent = () => {
         isPressed: set.id === id,
       }))
     );
-
-    /* setElementsIds = setsList[id].setElementIds
-    setElementsIds.forEach((setElementId) => 
-      setPressableImagesList((prev) =>
-      prev.map((element) => {
-        const { id, name, category, classId, image, pressed } = element;
-        return(
-          id == setElementId ? 
-        : null)
-      })
-    )) */
   };
+
+  const updateSetsList = () => {
+    console.log("updateSetsList");
+    if (activeSetCard !== null) {
+      const pressedElementsIds = pressableImagesList
+        .filter((element) => element.pressed)
+        .map((element) => {
+          return element.classId;
+        });
+
+      setSetsList((prev) =>
+        prev.map((item) =>
+          item.id === activeSetCard
+            ? { ...item, setElementIds: pressedElementsIds }
+            : item
+        )
+      );
+    }
+  };
+
+  useEffect(() => {
+    updateSetsList();
+  }, [pressableImagesList]);
 
   return (
     <ScrollView>
