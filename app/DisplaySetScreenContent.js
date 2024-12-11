@@ -30,7 +30,7 @@ import { setAllInfos } from "../data/data";
 import ResultsNumber from "../components/ResultsNumberSelector";
 import ElementsSelector from "../components/elementsSelector/ElementsSelector";
 import { usePressableImages } from "../utils/usePressableImages";
-import { useTheme } from "react-native-paper";
+import { useTheme } from "../components/styles/theme";
 import MultiStateToggleButton from "../components/MultiStateToggleButton";
 import { modal } from "../components/styles/modal";
 import { translate } from "../i18n/translations";
@@ -41,6 +41,10 @@ import StatSelector from "../components/StatSelector";
 import { toggleCheck } from "../utils/toggleCheck";
 import SetCardSelector from "../components/SetCardSelector";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
+import { button_icon } from "../components/styles/button";
+import { shadow_3dp } from "../components/styles/theme";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const DisplaySetScreenContent = () => {
   const th = useTheme();
@@ -149,8 +153,11 @@ const DisplaySetScreenContent = () => {
           setFoundedStatsModalVisible={setFoundedStatsModalVisible}
         />
 
-        <Pressable style={styles.addButton} onPress={addSet}>
-          <Text style={styles.addButtonText}>+</Text>
+        <Pressable
+          style={[button_icon(th).container, shadow_3dp]}
+          onPress={addSet}
+        >
+          <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
         </Pressable>
 
         <MyModal
