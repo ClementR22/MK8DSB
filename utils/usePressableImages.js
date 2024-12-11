@@ -12,8 +12,8 @@ const initializePressableImagesList = (isDefaultSelectedImages) => {
   if (isDefaultSelectedImages) {
     // Exemple de configuration par défaut
     pressableImagesList[0].pressed = true;
-    pressableImagesList[90].pressed = true;
-    pressableImagesList[100].pressed = true;
+    pressableImagesList[52].pressed = true;
+    pressableImagesList[93].pressed = true;
     pressableImagesList[115].pressed = true;
   }
 
