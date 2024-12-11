@@ -74,7 +74,7 @@ const ElementsSelector = ({
       }
 
       return (
-        <View style={[styles.categoryContainer]}>
+        <View style={[styles.categoryContainer, { flexDirection: "row" }]}>
           {selectedCategoryImages.map(
             ({ id, name, category, classId, image, pressed }) => (
               <MyChip
@@ -108,10 +108,7 @@ const ElementsSelector = ({
         <View style={styles.categoryContainer}>
           {Object.entries(selectedCategoryImages).map(
             ([classKey, classElements]) => (
-              <View
-                key={classKey}
-                style={[styles.classContainer, { flexDirection: "row" }]}
-              >
+              <View key={classKey} style={[styles.classContainer]}>
                 {Object.entries(classElements).map(
                   ([
                     elementKey,
@@ -204,12 +201,12 @@ const styles = StyleSheet.create({
   categoryContainer: {
     backgroundColor: "green",
     rowGap: 8,
-    flexDirection: "row",
     flexWrap: "wrap",
   },
   classContainer: {
     marginVertical: 5,
     backgroundColor: "white",
+    flexDirection: "row ",
     flexWrap: "wrap",
     rowGap: 2,
   },
