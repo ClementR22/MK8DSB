@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { bodyTypeNames, elementsAllInfosList } from "../data/data";
 
 // Fonction pour initialiser l'état pressableImagesList
@@ -72,10 +72,8 @@ export const PressableImagesProvider = ({
     id,
     category,
     activeSetCard = null,
-    setsList,
     setSetsList
   ) => {
-    //console.log("dans setPressableImagesList");
     const categoryList = bodyTypeNames.includes(category)
       ? bodyTypeNames
       : [category];
@@ -89,49 +87,14 @@ export const PressableImagesProvider = ({
           : item
       )
     );
-    setPressableImagesList((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, pressed: true } : item))
-    );
 
-    //console.log("dans unique");
-    //console.log("activeSetCard", activeSetCard);
-    //console.log("setsList", setsList);
-    const pressedElements = pressableImagesList
-      .filter((element) => element.pressed)
-      .map((element) => {
-        return element.classId;
-      });
-    //console.log("pressedElements", pressedElements);
+    setPressableImagesList((prev) => {
+      const updatedPressableImagesList = prev.map((item) =>
+        item.id === id ? { ...item, pressed: true } : item
+      );
 
-    console.log("dans unique");
-    console.log("setsList", setsList);
-    console.log("activeSetCard", activeSetCard);
-    if (activeSetCard !== null) {
-      setSetsList((prev) => {
-        console.log("prev", prev);
-        const it = prev[0];
-        console.log({ ...it, setElementIds: pressedElements });
-        console.log(
-          "le resultat sera",
-          prev.map((item) => {
-            item.id === activeSetCard
-              ? { ...item, setElementIds: pressedElements }
-              : item;
-          })
-        );
-        console.log("stop");
-        return prev.map((item) => {
-          console.log("item", item);
-          return item.id === activeSetCard
-            ? { ...item, setElementIds: pressedElements }
-            : item;
-        });
-      });
-      console.log("fin");
-      console.log("donc setsList", setsList);
-      //console.log("et donc 1 setsList", setsList);
-    }
-    console.log("et donc setsList", setsList);
+      return updatedPressableImagesList;
+    });
   };
 
   return (

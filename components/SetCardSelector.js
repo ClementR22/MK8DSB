@@ -3,9 +3,6 @@ import { Pressable, Text, View, ScrollView, StyleSheet } from "react-native";
 import SetCard from "./setCard/SetCard";
 
 const SetCardSelector = ({ setsList, handleSetCardPress }) => {
-  console.log("dans SetCardSelector");
-  console.log("setsList", setsList);
-
   return (
     <ScrollView horizontal={true}>
       <View style={{ flexDirection: "row" }}>

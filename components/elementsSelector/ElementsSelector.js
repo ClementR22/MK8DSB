@@ -27,7 +27,6 @@ const ElementsSelector = ({
   setsList,
   setSetsList,
 }) => {
-  //console.log("dans ElementsSelector");
   const {
     pressableImagesList,
     pressableImagesByCategory,
@@ -90,7 +89,6 @@ const ElementsSelector = ({
                           id,
                           category,
                           activeSetCard,
-                          setsList,
                           setSetsList
                         );
                       }

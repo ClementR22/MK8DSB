@@ -103,7 +103,6 @@ const DisplaySetScreenContent = () => {
   const [setContents, setSetContents] = useState({}); // Stocke le contenu des `SetCards`
 
   const addSet = () => {
-    console.log("dans addSet");
     const newId = setsList.length;
     setSetsList((prev) =>
       prev.concat({
@@ -131,8 +130,30 @@ const DisplaySetScreenContent = () => {
         isPressed: set.id === id,
       }))
     );
-    //console.log("et donc 2 setsList", setsList);
   };
+
+  const updateSetsList = () => {
+    console.log("updateSetsList");
+    if (activeSetCard !== null) {
+      const pressedElementsIds = pressableImagesList
+        .filter((element) => element.pressed)
+        .map((element) => {
+          return element.classId;
+        });
+
+      setSetsList((prev) =>
+        prev.map((item) =>
+          item.id === activeSetCard
+            ? { ...item, setElementIds: pressedElementsIds }
+            : item
+        )
+      );
+    }
+  };
+
+  useEffect(() => {
+    updateSetsList();
+  }, [pressableImagesList]);
 
   return (
     <ScrollView>
