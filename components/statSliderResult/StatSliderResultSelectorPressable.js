@@ -11,7 +11,11 @@ const StatSliderResultSelectorPressable = ({ setFoundedStatsModalVisible }) => {
       style={[button_icon(th).container, shadow_3dp]}
       onPress={() => setFoundedStatsModalVisible(true)}
     >
-      <MaterialCommunityIcons name="eye" size={24} color={th.on_primary} />
+      <MaterialCommunityIcons
+        name="checkbox-multiple-marked"
+        size={24}
+        color={th.on_primary}
+      />
     </Pressable>
   );
 };
