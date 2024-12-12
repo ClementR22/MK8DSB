@@ -4,35 +4,56 @@ import StatSliderResult from "./StatSliderResult";
 import { useTheme } from "../styles/theme";
 
 const StatSliderResultContainer = ({
-  setToShowStats,
+  multipleSetToShowStatsLists,
   isFoundStatsVisible,
   chosenStats,
+  displayCase = false,
 }) => {
   const th = useTheme();
-
   return (
-    <View style={{ flex: 1 }}>
-      {isFoundStatsVisible.map(({ name, checked }, index) => {
+    <View style={{ flex: 1, backgroundColor: "green" }}>
+      {isFoundStatsVisible.map(({ name, checked }, statIndex) => {
         if (checked) {
           return (
             <View
-              key={index}
+              key={statIndex}
               style={[
                 styles.sliderContainer,
-                { backgroundColor: th.surface_container },
+                { backgroundColor: "red" }, //th.surface_container },
               ]}
             >
               <Text style={styles.text}>
-                {name} : {JSON.stringify(setToShowStats[index])}
+                {name}
+                {!displayCase
+                  ? ` : ${JSON.stringify(
+                      multipleSetToShowStatsLists[0][statIndex]
+                    )}`
+                  : null}
               </Text>
-              <StatSliderResult
-                value={setToShowStats[index]}
-                wantedValue={chosenStats[index]?.value} // Vérification sécurisée
-              />
+              {multipleSetToShowStatsLists.map((setToShowStats, setIndex) => (
+                <View
+                  key={setIndex}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    backgroundColor: "yellow",
+                  }}
+                >
+                  <StatSliderResult
+                    key={setIndex}
+                    value={setToShowStats[statIndex]}
+                    wantedValue={chosenStats[statIndex]?.value}
+                  />
+                  {displayCase ? (
+                    <Text style={{ flex: 0.2 }}>
+                      {setToShowStats[statIndex]}
+                    </Text>
+                  ) : null}
+                </View>
+              ))}
             </View>
           );
         }
-        return null;
       })}
     </View>
   );
@@ -42,7 +63,7 @@ export default StatSliderResultContainer;
 
 const styles = StyleSheet.create({
   sliderContainer: {
-    width: "100%",
+    //width: "100%",
     padding: 10,
     borderRadius: 8,
     marginBottom: 10,

@@ -66,7 +66,7 @@ const SetCard = ({
 
       {isPressed == null ? (
         <StatSliderResultContainer
-          setToShowStats={setToShowStats}
+          multipleSetToShowStatsLists={[setToShowStats]}
           isFoundStatsVisible={isFoundStatsVisible}
           chosenStats={chosenStats}
         />

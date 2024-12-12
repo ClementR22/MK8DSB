@@ -94,13 +94,12 @@ const StatSliderResult = ({ value, wantedValue = null }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    flex: 1,
     paddingHorizontal: 8,
     // backgroundColor: "purple",
   },
   sliderTrack: {
     flexDirection: "row",
-    width: "100%",
     height: 10,
     borderRadius: 5,
     overflow: "hidden",

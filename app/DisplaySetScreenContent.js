@@ -89,9 +89,6 @@ const DisplaySetScreenContent = () => {
     return null; // Retourner `null` si aucune correspondance n'est trouvée
   };
 
-  const pressedImagesStats =
-    searchSetStatsFromElementsIds(pressedImagesIdsInit);
-
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
     statNames.map((statName, index) => ({
       name: translate(statName),
@@ -106,6 +103,13 @@ const DisplaySetScreenContent = () => {
   const [setsList, setSetsList] = useState([
     { id: 0, isPressed: true, setElementIds: [9, 0, 0, 0] },
   ]);
+
+  const multipleSetToShowStatsLists = setsList.map((set) => {
+    const setToShowIdsList = set.setElementIds;
+    const setToShowStatsList = searchSetStatsFromElementsIds(setToShowIdsList);
+    return setToShowStatsList;
+  });
+
   const [activeSetCard, setActiveSetCard] = useState(0); // Stocke l'ID de la `SetCard` active
 
   const addSet = () => {
@@ -130,7 +134,6 @@ const DisplaySetScreenContent = () => {
   };
 
   const updateSetsList = () => {
-    console.log("updateSetsList");
     if (activeSetCard !== null) {
       const pressedElementsIds = pressableImagesList
         .filter((element) => element.pressed)
@@ -202,9 +205,10 @@ const DisplaySetScreenContent = () => {
         </View>
 
         <StatSliderResultContainer
-          setToShowStats={pressedImagesStats}
+          multipleSetToShowStatsLists={multipleSetToShowStatsLists}
           isFoundStatsVisible={isFoundStatsVisible}
           chosenStats={chosenStats}
+          displayCase={true}
         />
       </View>
     </ScrollView>
@@ -215,7 +219,7 @@ export default DisplaySetScreenContent;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
