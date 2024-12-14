@@ -139,16 +139,18 @@ const DisplaySetScreenContent = () => {
 
   const updateSetsList = () => {
     if (activeSetCard !== null) {
-      const pressedElementsIds = pressableImagesList
+      const pressedClassIds = pressableImagesList
         .filter((element) => element.pressed)
         .map((element) => {
           return element.classId;
         });
 
+      const pressedClassIdsWithoutRepetition = [...new Set(pressedClassIds)];
+
       setSetsList((prev) =>
         prev.map((item) =>
           item.id === activeSetCard
-            ? { ...item, setClassIds: pressedElementsIds }
+            ? { ...item, setClassIds: pressedClassIdsWithoutRepetition }
             : item
         )
       );

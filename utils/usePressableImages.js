@@ -68,8 +68,8 @@ export const PressableImagesProvider = ({
   };
 
   // Fonction pour gérer l'état d'une image unique pressée
-  const handlePressImageUnique = (
-    id,
+  const handlePressImageByClass = (
+    classId,
     category,
     activeSetCard = null,
     setSetsList
@@ -83,18 +83,10 @@ export const PressableImagesProvider = ({
     setPressableImagesList((prev) =>
       prev.map((item) =>
         categoryList.includes(item.category)
-          ? { ...item, pressed: false }
+          ? { ...item, pressed: item.classId === classId }
           : item
       )
     );
-
-    setPressableImagesList((prev) => {
-      const updatedPressableImagesList = prev.map((item) =>
-        item.id === id ? { ...item, pressed: true } : item
-      );
-
-      return updatedPressableImagesList;
-    });
   };
 
   return (
@@ -103,7 +95,7 @@ export const PressableImagesProvider = ({
         pressableImagesList,
         pressableImagesByCategory,
         handlePressImage,
-        handlePressImageUnique,
+        handlePressImageByClass,
         setPressableImagesList,
       }}
     >

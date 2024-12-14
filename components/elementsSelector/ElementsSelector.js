@@ -29,7 +29,7 @@ const ElementsSelector = ({
     pressableImagesList,
     pressableImagesByCategory,
     handlePressImage,
-    handlePressImageUnique,
+    handlePressImageByClass,
   } = usePressableImages();
 
   const category7NamesExtended = [...category7Names, "empty"];
@@ -83,8 +83,8 @@ const ElementsSelector = ({
                 onPress={
                   displayCase
                     ? () => {
-                        handlePressImageUnique(
-                          id,
+                        handlePressImageByClass(
+                          classId,
                           category,
                           activeSetCard,
                           setSetsList
@@ -118,9 +118,20 @@ const ElementsSelector = ({
                         key={id}
                         name={name}
                         pressed={pressed}
-                        onPress={() => {
-                          handlePressImage(id);
-                        }}
+                        onPress={
+                          displayCase
+                            ? () => {
+                                handlePressImageByClass(
+                                  classId,
+                                  category,
+                                  activeSetCard,
+                                  setSetsList
+                                );
+                              }
+                            : () => {
+                                handlePressImage(id, category);
+                              }
+                        }
                         uri={image.uri}
                       />
                     );
