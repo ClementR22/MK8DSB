@@ -55,6 +55,7 @@ const DisplaySetScreenContent = () => {
     handlePressImage,
     handlePressImageUnique,
     setPressableImagesList,
+    handlePressSetUpdatePressableImagesList,
   } = usePressableImages();
 
   const [orderNumber, setOrderNumber] = useState(0);
@@ -135,6 +136,7 @@ const DisplaySetScreenContent = () => {
         }))
       );
     }
+    handlePressSetUpdatePressableImagesList(setsList[id].setClassIds);
   };
 
   const updateSetsList = () => {
