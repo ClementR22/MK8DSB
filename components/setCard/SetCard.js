@@ -36,6 +36,13 @@ const SetCard = ({
   chosenStats,
   isPressed = null,
 }) => {
+  console.log("dans setCard");
+  console.log(
+    setToShowElementsIds,
+    setToShowStats,
+    isFoundStatsVisible,
+    chosenStats
+  );
   const th = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -51,11 +58,18 @@ const SetCard = ({
         isPressed && card(th).pressed,
       ]}
     >
-      {setToShowElementsIds.map((id, index) => (
-        <Text key={"element" + index} style={card(th).text}>
-          {elementsAllClassName[index][id]}
-        </Text>
-      ))}
+      {setToShowElementsIds.map((id, index) => {
+        console.log(
+          "elementsAllClassName[index][id]",
+          elementsAllClassName[index][id]
+        );
+        console.log("elementsAllClassName", elementsAllClassName);
+        return (
+          <Text key={"element" + index} style={card(th).text}>
+            {elementsAllClassName[index][id]}
+          </Text>
+        );
+      })}
 
       <Pressable
         style={[button_icon(th).container, shadow_3dp]}

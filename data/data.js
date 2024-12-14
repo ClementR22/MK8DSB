@@ -102,10 +102,10 @@ export const wheelsAllClassName = {
 };
 
 export const gliderAllClassName = {
-  30: "Standard, Dendinaile, Aile hylienne",
-  31: "Aile nuages, Parachute, Aile fleurie, Aile en papier",
-  32: "Aile Wario, Planeur, Or, Paravoile",
-  33: "Ombrelle Peach, Bowser-volant, Parapente, Parapente MKTV",
+  39: "Standard, Dendinaile, Aile hylienne",
+  40: "Aile nuages, Parachute, Aile fleurie, Aile en papier",
+  41: "Aile Wario, Planeur, Or, Paravoile",
+  42: "Ombrelle Peach, Bowser-volant, Parapente, Parapente MKTV",
 };
 
 export const elementsAllClassName = {
