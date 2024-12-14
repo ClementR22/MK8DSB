@@ -6,18 +6,14 @@ const SetCardSelector = ({ setsList, handleSetCardPress }) => {
   return (
     <ScrollView horizontal={true}>
       <View style={{ flexDirection: "row" }}>
-        {setsList.map(({ id, isPressed, setElementIds }) => (
+        {setsList.map(({ id, isPressed, setClassIds }) => (
           <Pressable
             key={id}
             onPress={() => {
               return handleSetCardPress(id);
             }}
           >
-            <SetCard
-              setToShowElementsIds={setElementIds}
-              isDisplayScreenCase={true}
-              isPressed={isPressed}
-            />
+            <SetCard setToShowClassIds={setClassIds} isPressed={isPressed} />
           </Pressable>
         ))}
       </View>

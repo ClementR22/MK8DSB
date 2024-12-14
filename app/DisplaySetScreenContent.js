@@ -100,12 +100,14 @@ const DisplaySetScreenContent = () => {
   const [foundedStatsModalVisible, setFoundedStatsModalVisible] =
     useState(false);
 
+  const setClassIdsInit = [9, 16, 30, 39];
+
   const [setsList, setSetsList] = useState([
-    { id: 0, isPressed: true, setElementIds: [9, 0, 0, 0] },
+    { id: 0, isPressed: true, setClassIds: setClassIdsInit },
   ]);
 
   const multipleSetToShowStatsLists = setsList.map((set) => {
-    const setToShowIdsList = set.setElementIds;
+    const setToShowIdsList = set.setClassIds;
     const setToShowStatsList = searchSetStatsFromElementsIds(setToShowIdsList);
     return setToShowStatsList;
   });
@@ -118,19 +120,21 @@ const DisplaySetScreenContent = () => {
       prev.concat({
         id: newId,
         isPressed: false,
-        setElementIds: [9, 0, 0, 0],
+        setClassIds: setClassIdsInit,
       })
     );
   };
 
   const handleSetCardPress = (id) => {
-    setActiveSetCard(id); // Définir cette `SetCard` comme active
-    setSetsList((prev) =>
-      prev.map((set) => ({
-        ...set,
-        isPressed: set.id === id,
-      }))
-    );
+    if (activeSetCard != id) {
+      setActiveSetCard(id); // Définir cette `SetCard` comme active
+      setSetsList((prev) =>
+        prev.map((set) => ({
+          ...set,
+          isPressed: set.id === id,
+        }))
+      );
+    }
   };
 
   const updateSetsList = () => {
@@ -144,7 +148,7 @@ const DisplaySetScreenContent = () => {
       setSetsList((prev) =>
         prev.map((item) =>
           item.id === activeSetCard
-            ? { ...item, setElementIds: pressedElementsIds }
+            ? { ...item, setClassIds: pressedElementsIds }
             : item
         )
       );

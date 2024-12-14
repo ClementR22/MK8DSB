@@ -487,11 +487,11 @@ const SearchSetScreenContent = () => {
                 style={{ marginHorizontal: 72 }}
               />
             </View>
-            {setsToShow.map(([setToShowElementsIds, setToShowStats], index) => {
+            {setsToShow.map(([setToShowClassIds, setToShowStats], index) => {
               return (
                 <SetCard
                   key={"card" + index}
-                  setToShowElementsIds={setToShowElementsIds}
+                  setToShowClassIds={setToShowClassIds}
                   setToShowStats={setToShowStats}
                   isFoundStatsVisible={isFoundStatsVisible}
                   chosenStats={chosenStats}

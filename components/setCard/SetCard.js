@@ -30,19 +30,12 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
 
 const SetCard = ({
-  setToShowElementsIds,
+  setToShowClassIds,
   setToShowStats,
   isFoundStatsVisible,
   chosenStats,
   isPressed = null,
 }) => {
-  console.log("dans setCard");
-  console.log(
-    setToShowElementsIds,
-    setToShowStats,
-    isFoundStatsVisible,
-    chosenStats
-  );
   const th = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -58,15 +51,10 @@ const SetCard = ({
         isPressed && card(th).pressed,
       ]}
     >
-      {setToShowElementsIds.map((id, index) => {
-        console.log(
-          "elementsAllClassName[index][id]",
-          elementsAllClassName[index][id]
-        );
-        console.log("elementsAllClassName", elementsAllClassName);
+      {setToShowClassIds.map((id, index) => {
         return (
           <Text key={"element" + index} style={card(th).text}>
-            {elementsAllClassName[index][id]}
+            {elementsAllClassName[id]}
           </Text>
         );
       })}
@@ -91,7 +79,7 @@ const SetCard = ({
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
         ModalContent={SetImagesDisplayer}
-        contentProps={{ setToShowElementsIds: setToShowElementsIds }}
+        contentProps={{ setToShowElementsIds: setToShowClassIds }}
         closeButtonText="Fermer"
       />
     </View>
