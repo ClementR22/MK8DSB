@@ -11,8 +11,7 @@ import MyChip from "./ElementChip";
 import {
   elementsImages,
   closeImage,
-  allElementNames,
-  allElementNamesDisplay,
+  category7Names,
   elementsAllClassName,
   elementsAllInfosList,
 } from "../../data/data";
@@ -33,7 +32,7 @@ const ElementsSelector = ({
     handlePressImageUnique,
   } = usePressableImages();
 
-  const allElementNamesExtended = [...allElementNames, "empty"];
+  const category7NamesExtended = [...category7Names, "empty"];
 
   const elementIcons = [
     elementsAllInfosList[0].image.uri,
@@ -139,7 +138,7 @@ const ElementsSelector = ({
     <View style={styles.outerContainer} key={"outerContainer"}>
       {/* Navigation par onglets */}
       <View style={styles.tabContainer} key={"tabContainer"}>
-        {allElementNamesExtended.map((elementName, index) => (
+        {category7NamesExtended.map((elementName, index) => (
           <Pressable
             key={elementName} // Ajout de la key ici
             style={[
