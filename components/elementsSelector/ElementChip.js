@@ -5,17 +5,15 @@ import { translate } from "../../i18n/translations";
 
 const ElementChip = ({ name, pressed, onPress, uri }) => {
   return (
-    <View>
-      <Chip
-        selected={pressed}
-        onPress={onPress}
-        style={[styles.chip, pressed && styles.chipSelected]}
-        textStyle={styles.chipText}
-        avatar={<Image source={uri} style={styles.image} />}
-      >
-        {translate(name)}
-      </Chip>
-    </View>
+    <Chip
+      selected={pressed}
+      onPress={onPress}
+      style={[styles.chip, pressed && styles.chipSelected]}
+      textStyle={styles.chipText}
+      avatar={<Image source={uri} style={styles.image} />}
+    >
+      {translate(name)}
+    </Chip>
   );
 };
 

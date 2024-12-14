@@ -18,6 +18,7 @@ const ElementsDeselector = () => {
         .filter((element) => element.pressed)
         .map(({ id, name, category, classId, image, pressed }) => (
           <MyChip
+            key={id}
             name={name}
             pressed={pressed}
             onPress={() => handlePressImage(id)}
