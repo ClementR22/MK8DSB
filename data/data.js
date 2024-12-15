@@ -116,18 +116,18 @@ export const elementsAllClassName = {
 };
 
 export const statNames = [
-  "Vitesse sol",
-  "Vitesse anti-gravité",
-  "Vitesse eau",
-  "Vitesse air",
-  "Accélération",
-  "Poids",
-  "Maniabilité sol",
-  "Maniabilité anti-gravité",
-  "Maniabilité eau",
-  "Maniabilité air",
-  "Adhérence",
-  "Mini-turbo",
+  "speedGround",
+  "speedAntiGravity",
+  "speedWater",
+  "speedAir",
+  "acceleration",
+  "weight",
+  "handlingGround",
+  "handlingAntiGravity",
+  "handlingWater",
+  "handlingAir",
+  "traction",
+  "miniTurbo",
 ];
 
 const statNamesShortened = [

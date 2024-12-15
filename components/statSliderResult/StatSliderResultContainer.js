@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import StatSliderResult from "./StatSliderResult";
 import { useTheme } from "../styles/theme";
+import { translate } from "../../i18n/translations";
 
 const StatSliderResultContainer = ({
   multipleSetToShowStatsLists,
@@ -23,12 +24,11 @@ const StatSliderResultContainer = ({
               ]}
             >
               <Text style={styles.text}>
-                {name}
-                {!displayCase
-                  ? ` : ${JSON.stringify(
-                      multipleSetToShowStatsLists[0][statIndex]
-                    )}`
-                  : null}
+                {translate(name)}
+                {!displayCase &&
+                  ` : ${JSON.stringify(
+                    multipleSetToShowStatsLists[0][statIndex]
+                  )}`}
               </Text>
               {multipleSetToShowStatsLists.map((setToShowStats, setIndex) => (
                 <View
@@ -44,11 +44,11 @@ const StatSliderResultContainer = ({
                     value={setToShowStats[statIndex]}
                     wantedValue={chosenStats[statIndex]?.value}
                   />
-                  {displayCase ? (
+                  {displayCase && (
                     <Text style={{ flex: 0.2 }}>
                       {setToShowStats[statIndex]}
                     </Text>
-                  ) : null}
+                  )}
                 </View>
               ))}
             </View>

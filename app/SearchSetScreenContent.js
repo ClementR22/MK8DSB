@@ -69,7 +69,7 @@ const SearchSetScreenContent = () => {
   const [chosenStats, setChosenStats] = useState(
     statNames.map((statName, index) => {
       return {
-        name: translate(statName),
+        name: statName,
         checked: index === 0,
         value: 0,
         statFilterNumber: 0,
@@ -99,7 +99,7 @@ const SearchSetScreenContent = () => {
 
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
     statNames.map((statName, index) => ({
-      name: translate(statName),
+      name: statName,
       checked: index === 0,
     }))
   );
@@ -413,13 +413,13 @@ const SearchSetScreenContent = () => {
           </View>
 
           <MyModal
-            modalTitle={translate("Display")}
+            modalTitle={translate("StatsToParameter")}
             isModalVisible={chosenStatsModalVisible}
             setIsModalVisible={setChosenStatsModalVisible}
             ModalContent={StatSelector}
             contentProps={{
-              isFoundStatsVisible: chosenStats, // Utilisation correcte des paires clé-valeur
-              setIsFoundStatsVisible: setChosenStats,
+              statList: chosenStats, // Utilisation correcte des paires clé-valeur
+              setStatList: setChosenStats,
               toggleCheck: toggleCheck,
               keepOneCondition: true,
             }}
@@ -433,13 +433,6 @@ const SearchSetScreenContent = () => {
             setChosenBodyType={setChosenBodyType}
             toggleCheck={toggleCheck}
             showToast={showToast}
-            //ModalContent={StatSelector}
-            /* contentProps={{
-              isFoundStatsVisible: chosenStats, // Utilisation correcte des paires clé-valeur
-              setIsFoundStatsVisible: setChosenStats,
-              toggleCheck: toggleCheck,
-              keepOneCondition: true,
-            }} */
           />
 
           <MyModal
@@ -459,8 +452,8 @@ const SearchSetScreenContent = () => {
             setIsModalVisible={setFoundedStatsModalVisible}
             ModalContent={StatSelector}
             contentProps={{
-              isFoundStatsVisible: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
-              setIsFoundStatsVisible: setIsFoundStatsVisible,
+              statList: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
+              setStatList: setIsFoundStatsVisible,
               toggleCheck: toggleCheck,
               keepOneCondition: false,
             }}

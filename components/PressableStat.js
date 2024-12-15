@@ -12,6 +12,7 @@ import { modal } from "./styles/modal";
 import { button } from "./styles/button";
 import checkbox from "./styles/checkbox";
 import { useTheme } from "./styles/theme";
+import { translate } from "../i18n/translations";
 
 const PressableStat = ({ stat, setList, toggleCheck, keepOneCondition }) => {
   const th = useTheme();
@@ -27,7 +28,7 @@ const PressableStat = ({ stat, setList, toggleCheck, keepOneCondition }) => {
         style={checkbox(th).square}
         color={{ true: th.primary, false: th.on_primary }}
       />
-      <Text style={checkbox(th).text}>{stat.name}</Text>
+      <Text style={checkbox(th).text}>{translate(stat.name)}</Text>
     </Pressable>
   );
 };

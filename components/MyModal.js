@@ -15,6 +15,7 @@ import th from "./styles/theme";
 import PressableStat from "./PressableStat";
 import { shadow_12dp } from "./styles/theme";
 import { useTheme } from "./styles/theme";
+import { translate } from "../i18n/translations";
 
 const MyModal = ({
   modalTitle,
@@ -22,7 +23,7 @@ const MyModal = ({
   setIsModalVisible,
   ModalContent,
   contentProps,
-  closeButtonText = "Valider",
+  closeButtonText = "Close",
 }) => {
   const th = useTheme();
 
@@ -48,13 +49,13 @@ const MyModal = ({
             style={[
               button(th).container,
               modal(th).close_button_center,
-              filterModalButtonHover ? shadow_12dp : null,
+              filterModalButtonHover && shadow_12dp,
             ]}
             onHoverIn={() => setFilterModalButtonHover(true)}
             onHoverOut={() => setFilterModalButtonHover(false)}
             onPress={() => setIsModalVisible(false)}
           >
-            <Text style={button(th).text}>{closeButtonText}</Text>
+            <Text style={button(th).text}>{translate(closeButtonText)}</Text>
           </Pressable>
         </View>
       </Pressable>

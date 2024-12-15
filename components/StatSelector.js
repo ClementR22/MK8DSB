@@ -15,8 +15,8 @@ import PressableStat from "./PressableStat";
 import { useTheme } from "./styles/theme";
 
 const StatSelector = ({
-  isFoundStatsVisible,
-  setIsFoundStatsVisible,
+  statList,
+  setStatList,
   toggleCheck,
   keepOneCondition,
 }) => {
@@ -25,11 +25,11 @@ const StatSelector = ({
     <View style={styles.listContainer}>
       <View style={modal(th).content}>
         <ScrollView>
-          {isFoundStatsVisible.map((stat) => (
+          {statList.map((stat) => (
             <PressableStat
               key={stat.name}
               stat={stat}
-              setList={setIsFoundStatsVisible}
+              setList={setStatList}
               toggleCheck={toggleCheck}
               keepOneCondition={keepOneCondition}
             />

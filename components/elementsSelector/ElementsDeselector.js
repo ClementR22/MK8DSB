@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { usePressableImages } from "../../utils/usePressableImages";
-import MyChip from "./ElementChip";
+import ElementChip from "./ElementChip";
 
 const ElementsDeselector = () => {
   const { pressableImagesList, handlePressImage } = usePressableImages();
@@ -17,7 +17,7 @@ const ElementsDeselector = () => {
       {pressableImagesList
         .filter((element) => element.pressed)
         .map(({ id, name, category, classId, image, pressed }) => (
-          <MyChip
+          <ElementChip
             key={id}
             name={name}
             pressed={pressed}

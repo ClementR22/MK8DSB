@@ -66,13 +66,13 @@ const SetCard = ({
         <MaterialCommunityIcons name="eye" size={24} color={th.on_primary} />
       </Pressable>
 
-      {isPressed == null ? (
+      {isPressed == null && (
         <StatSliderResultContainer
           multipleSetToShowStatsLists={[setToShowStats]}
           isFoundStatsVisible={isFoundStatsVisible}
           chosenStats={chosenStats}
         />
-      ) : null}
+      )}
 
       <MyModal
         modalTitle={""}
@@ -80,7 +80,7 @@ const SetCard = ({
         setIsModalVisible={setIsModalVisible}
         ModalContent={SetImagesDisplayer}
         contentProps={{ setToShowElementsIds: setToShowClassIds }}
-        closeButtonText="Fermer"
+        closeButtonText="Close"
       />
     </View>
   );

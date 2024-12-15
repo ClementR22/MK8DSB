@@ -4,6 +4,7 @@ import { Slider } from "@miblanchard/react-native-slider";
 import MultiStateToggleButton from "./MultiStateToggleButton";
 
 import { useTheme, vw } from "./styles/theme";
+import { translate } from "../i18n/translations";
 
 const StatSlider = ({
   name,
@@ -33,11 +34,12 @@ const StatSlider = ({
             ellipsizeMode="middle"
             style={[styles.textLeft, { color: th.on_surface }]}
           >
-            {name}
+            {translate(name)}
           </Text>
 
           <Text style={[styles.textRight, { color: th.on_surface }]}>
-            : {sliderValue}
+            {translate(":")}
+            {sliderValue}
           </Text>
         </View>
         <MultiStateToggleButton

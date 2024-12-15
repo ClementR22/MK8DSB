@@ -15,7 +15,7 @@ import th from "../styles/theme";
 import PressableStat from "../PressableStat";
 import ElementsDeselector from "../elementsSelector/ElementsDeselector";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
-import MyChip from "../elementsSelector/ElementChip";
+import ElementChip from "../elementsSelector/ElementChip";
 import { elementsAllInfosList } from "@/data/data";
 import { useTheme } from "../styles/theme";
 
@@ -38,7 +38,7 @@ const FilterSelector = ({
       <View key="body type" style={styles.bodyTypeContainer}>
         {chosenBodyType.map((bodyType, index) => {
           return (
-            <MyChip
+            <ElementChip
               key={index}
               name={bodyType.name}
               pressed={bodyType.checked}
