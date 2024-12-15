@@ -89,7 +89,6 @@ export const PressableImagesProvider = ({
   };
 
   const handlePressSetUpdatePressableImagesList = (setClassIds) => {
-    console.log("handlePressSetUpdatePressableImagesList");
     setPressableImagesList((prev) =>
       prev.map((item) => ({
         ...item,

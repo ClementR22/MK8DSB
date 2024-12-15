@@ -46,6 +46,11 @@ const FilterSelectorModal = ({
     "graphql",
   ];
 
+  const handleCloseModal = () => {
+    bottomSheetModalRef.current?.dismiss();
+    setTimeout(() => setIsModalVisible(false), 300); // 300ms correspond à la durée de l'animation par défaut
+  };
+
   return (
     <Modal
       animationType="none" // Animation (slide, fade, none)
@@ -57,7 +62,7 @@ const FilterSelectorModal = ({
         <BottomSheetModalProvider>
           <Pressable
             style={modal(th).background}
-            onPress={() => setIsModalVisible(false)}
+            onPress={() => handleCloseModal()}
           >
             <BottomSheetModal
               snapPoints={snapPoints}
