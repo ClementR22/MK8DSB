@@ -7,7 +7,7 @@ import {
   Pressable,
   Image,
 } from "react-native";
-import MyChip from "./ElementChip";
+import ElementChip from "./ElementChip";
 import {
   elementsImages,
   closeImage,
@@ -16,6 +16,9 @@ import {
   elementsAllInfosList,
 } from "../../data/data";
 import { usePressableImages } from "../../utils/usePressableImages";
+import { translate } from "../../i18n/translations";
+import { button } from "../styles/button";
+import { useTheme } from "../styles/theme";
 
 const iconSize = 38;
 
@@ -25,6 +28,7 @@ const ElementsSelector = ({
   activeSetCard,
   setSetsList,
 }) => {
+  const th = useTheme();
   const {
     pressableImagesList,
     pressableImagesByCategory,
@@ -47,7 +51,7 @@ const ElementsSelector = ({
 
   // État pour suivre l'onglet sélectionné
   const [selectedTab, setSelectedTab] = useState(
-    displayCase ? "empty" : "kart"
+    displayCase ? "character" : "kart"
   );
 
   // Fonction pour rendre le contenu de l'onglet sélectionné
@@ -76,7 +80,7 @@ const ElementsSelector = ({
         <View style={[styles.categoryContainer, { flexDirection: "row" }]}>
           {selectedCategoryImages.map(
             ({ id, name, category, classId, image, pressed }) => (
-              <MyChip
+              <ElementChip
                 key={id}
                 name={name}
                 pressed={pressed}
@@ -114,7 +118,7 @@ const ElementsSelector = ({
                     { id, name, category, classId, image, pressed },
                   ]) => {
                     return (
-                      <MyChip
+                      <ElementChip
                         key={id}
                         name={name}
                         pressed={pressed}
@@ -169,6 +173,14 @@ const ElementsSelector = ({
         ))}
       </View>
       {renderContent()}
+      {selectedTab != "empty" && (
+        <Pressable
+          style={button(th).container}
+          onPress={() => setSelectedTab("empty")}
+        >
+          <Text style={button(th).text}>{translate("Close")}</Text>
+        </Pressable>
+      )}
     </View>
   );
 };
