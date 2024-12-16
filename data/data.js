@@ -145,7 +145,8 @@ const statNamesShortened = [
   "Mtu",
 ];
 
-const category4Names = ["character", "body", "wheels", "glider"];
+export const category4Names = ["character", "body", "wheels", "glider"];
+
 export const category7Names = [
   "character",
   "kart",

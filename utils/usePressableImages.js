@@ -1,13 +1,22 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { bodyTypeNames, elementsAllInfosList } from "../data/data";
+import { translate } from "../i18n/translations";
 
 // Fonction pour initialiser l'état pressableImagesList
 const initializePressableImagesList = (isDefaultSelectedImages) => {
   // Crée une copie avec les propriétés supplémentaires
-  const pressableImagesList = elementsAllInfosList.map((item) => ({
-    ...item,
-    pressed: false, // Initialise toutes les images comme non pressées
-  }));
+  const pressableImagesList = elementsAllInfosList.map(
+    ({ id, name, category, classId, image }) => {
+      return {
+        id: id,
+        name: translate(name),
+        category: category,
+        classId: classId,
+        image: image,
+        pressed: false, // Initialise toutes les images comme non pressées
+      };
+    }
+  );
 
   if (isDefaultSelectedImages) {
     // Exemple de configuration par défaut
@@ -27,15 +36,19 @@ const initializePressableImagesByCategory = (pressableImagesList) => {
   pressableImagesList.forEach((element) => {
     const { category, classId } = element;
 
-    if (!pressableImagesByCategory[category]) {
-      pressableImagesByCategory[category] = {};
+    const changedCategory = bodyTypeNames.includes(category)
+      ? "body"
+      : category;
+
+    if (!pressableImagesByCategory[changedCategory]) {
+      pressableImagesByCategory[changedCategory] = {};
     }
 
-    if (!pressableImagesByCategory[category][classId]) {
-      pressableImagesByCategory[category][classId] = [];
+    if (!pressableImagesByCategory[changedCategory][classId]) {
+      pressableImagesByCategory[changedCategory][classId] = [];
     }
 
-    pressableImagesByCategory[category][classId].push(element);
+    pressableImagesByCategory[changedCategory][classId].push(element);
   });
 
   return pressableImagesByCategory;

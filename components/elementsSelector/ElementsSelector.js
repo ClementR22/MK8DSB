@@ -11,9 +11,10 @@ import ElementChip from "./ElementChip";
 import {
   elementsImages,
   closeImage,
-  category7Names,
+  category4Names,
   elementsAllClassName,
   elementsAllInfosList,
+  bodyTypeNames,
 } from "../../data/data";
 import { usePressableImages } from "../../utils/usePressableImages";
 import { translate } from "../../i18n/translations";
@@ -36,14 +37,11 @@ const ElementsSelector = ({
     handlePressImageByClass,
   } = usePressableImages();
 
-  const category7NamesExtended = [...category7Names, "empty"];
+  const category4NamesExtended = [...category4Names, "empty"];
 
   const elementIcons = [
     elementsAllInfosList[0].image.uri,
     elementsAllInfosList[52].image.uri,
-    elementsAllInfosList[75].image.uri,
-    elementsAllInfosList[82].image.uri,
-    elementsAllInfosList[87].image.uri,
     elementsAllInfosList[93].image.uri,
     elementsAllInfosList[115].image.uri,
     require("../../assets/images/close.png"),
@@ -54,56 +52,116 @@ const ElementsSelector = ({
     displayCase ? "character" : "kart"
   );
 
+  const sortElements = (selectedCategoryImages, orderNumber) => {
+    switch (orderNumber) {
+      case 0:
+        selectedCategoryImages.sort((a, b) => {
+          return a.id - b.id;
+        });
+        break;
+      case 1:
+        selectedCategoryImages.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 2:
+        selectedCategoryImages.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+    }
+    return selectedCategoryImages;
+  };
+
+  const content = (selectedCategoryImages) => {
+    return (
+      <View style={[styles.categoryContainer, { flexDirection: "row" }]}>
+        {selectedCategoryImages.map(
+          ({ id, name, category, classId, image, pressed }) => (
+            <ElementChip
+              key={id}
+              name={name}
+              pressed={pressed}
+              onPress={
+                displayCase
+                  ? () => {
+                      handlePressImageByClass(
+                        classId,
+                        category,
+                        activeSetCard,
+                        setSetsList
+                      );
+                    }
+                  : () => {
+                      handlePressImage(id, category);
+                    }
+              }
+              uri={image.uri}
+            />
+          )
+        )}
+      </View>
+    );
+  };
+
+  const BodyContent = ({ selectedCategoryImages }) => (
+    <View style={styles.bodyCategoriesContainer}>
+      {Object.entries(selectedCategoryImages).map(
+        ([subCategoryKey, subCategoryImages]) => (
+          <View key={subCategoryKey}>
+            <Text style={{ flex: 1, backgroundColor: "white" }}>
+              {translate(subCategoryKey)}
+            </Text>
+            {content(subCategoryImages)}
+          </View>
+        )
+      )}
+    </View>
+  );
+
   // Fonction pour rendre le contenu de l'onglet sélectionné
   const renderContent = () => {
     if (orderNumber != 3) {
       // Filtre les catégories en fonction de l'onglet sélectionné
-      let selectedCategoryImages = pressableImagesList.filter(
-        (element) => element.category === selectedTab
-      );
+      let selectedCategoryImages = null;
 
-      switch (orderNumber) {
-        case 0:
-          selectedCategoryImages.sort((a, b) => {
-            return a.id - b.id;
-          });
-          break;
-        case 1:
-          selectedCategoryImages.sort((a, b) => a.name.localeCompare(b.name));
-          break;
-        case 2:
-          selectedCategoryImages.sort((a, b) => b.name.localeCompare(a.name));
-          break;
+      if (selectedTab == "body") {
+        selectedCategoryImages = {};
+
+        let currentSubCategoryName = "kart";
+        let currentSubCategoryList = [];
+        pressableImagesList.forEach((element) => {
+          const elementCategory = element.category;
+          if (bodyTypeNames.includes(elementCategory)) {
+            if (elementCategory != currentSubCategoryName) {
+              currentSubCategoryList = sortElements(
+                currentSubCategoryList,
+                orderNumber
+              );
+              selectedCategoryImages[currentSubCategoryName] =
+                currentSubCategoryList;
+              currentSubCategoryName = elementCategory;
+              currentSubCategoryList = [];
+            }
+            currentSubCategoryList.push(element);
+          }
+        });
+        currentSubCategoryList = sortElements(
+          currentSubCategoryList,
+          orderNumber
+        );
+        selectedCategoryImages[currentSubCategoryName] = currentSubCategoryList;
+      } else {
+        selectedCategoryImages = pressableImagesList.filter(
+          (element) => element.category === selectedTab
+        );
+        selectedCategoryImages = sortElements(
+          selectedCategoryImages,
+          orderNumber
+        );
       }
 
-      return (
-        <View style={[styles.categoryContainer, { flexDirection: "row" }]}>
-          {selectedCategoryImages.map(
-            ({ id, name, category, classId, image, pressed }) => (
-              <ElementChip
-                key={id}
-                name={name}
-                pressed={pressed}
-                onPress={
-                  displayCase
-                    ? () => {
-                        handlePressImageByClass(
-                          classId,
-                          category,
-                          activeSetCard,
-                          setSetsList
-                        );
-                      }
-                    : () => {
-                        handlePressImage(id, category);
-                      }
-                }
-                uri={image.uri}
-              />
-            )
-          )}
-        </View>
-      );
+      if (selectedTab != "body") {
+        return content(selectedCategoryImages);
+      } else {
+        return <BodyContent selectedCategoryImages={selectedCategoryImages} />;
+      }
     } else {
       // OU BIEN RANGEMENT PAR CLASSE
       const selectedCategoryImages = pressableImagesByCategory[selectedTab];
@@ -153,7 +211,7 @@ const ElementsSelector = ({
     <View style={styles.outerContainer} key={"outerContainer"}>
       {/* Navigation par onglets */}
       <View style={styles.tabContainer} key={"tabContainer"}>
-        {category7NamesExtended.map((elementName, index) => (
+        {category4NamesExtended.map((elementName, index) => (
           <Pressable
             key={elementName} // Ajout de la key ici
             style={[
@@ -220,10 +278,16 @@ const styles = StyleSheet.create({
     width: iconSize,
     height: iconSize,
   },
+  bodyCategoriesContainer: {
+    backgroundColor: "purple",
+    padding: 20,
+  },
+
   categoryContainer: {
     backgroundColor: "green",
     rowGap: 8,
     flexWrap: "wrap",
+    padding: 20,
   },
   classContainer: {
     marginVertical: 5,

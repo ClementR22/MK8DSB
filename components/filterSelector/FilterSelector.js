@@ -18,6 +18,7 @@ import ElementsSelector from "../elementsSelector/ElementsSelector";
 import ElementChip from "../elementsSelector/ElementChip";
 import { elementsAllInfosList } from "@/data/data";
 import { useTheme } from "../styles/theme";
+import { translate } from "../../i18n/translations";
 
 const FilterSelector = ({
   chosenBodyType,
@@ -40,7 +41,7 @@ const FilterSelector = ({
           return (
             <ElementChip
               key={index}
-              name={bodyType.name}
+              name={translate(bodyType.name)}
               pressed={bodyType.checked}
               onPress={() => {
                 toggleCheck(setChosenBodyType, bodyType.name);
