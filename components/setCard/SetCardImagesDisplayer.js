@@ -11,7 +11,7 @@ import {
   Alert,
   DrawerLayoutAndroidComponent,
 } from "react-native";
-import { elementsAllClassName } from "../../data/data";
+import { elementsAllClassName, category4Names } from "../../data/data";
 import { ScrollView } from "react-native";
 import { usePressableImages } from "../../utils/usePressableImages";
 import StatSliderResult from "../statSliderResult/StatSliderResult";
@@ -21,35 +21,21 @@ import { card } from "../styles/card";
 import th from "../styles/theme";
 import MyModal from "../MyModal";
 
-const categoryDenominations = ["character", "body", "wheels", "glider"];
 const bodyDenominations = ["kart", "bike", "sportBike", "ATV"];
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
 
 const SetCardImagesDisplayer = ({ setToShowElementsIds }) => {
+  console.log("setToShowElementsIds", setToShowElementsIds);
   const { pressableImagesByCategory } = usePressableImages();
+
+  console.log("pressableImagesByCategory", pressableImagesByCategory);
   return (
     <ScrollView>
       {setToShowElementsIds.map((classKey, index) => {
-        // renommer, c'est pas elementId
-        const categoryKey = categoryDenominations[index];
-        let classElementsToDisplayAllInfos = null;
-
-        if (index !== 1) {
-          classElementsToDisplayAllInfos =
-            pressableImagesByCategory[categoryKey][classKey];
-        } else {
-          classElementsToDisplayAllInfos = [];
-          bodyDenominations.forEach((bodyDenomination) => {
-            const classToPush =
-              pressableImagesByCategory[bodyDenomination][classKey];
-            if (classToPush != undefined) {
-              classElementsToDisplayAllInfos.push(
-                ...pressableImagesByCategory[bodyDenomination][classKey]
-              );
-            }
-          });
-        }
+        const categoryKey = category4Names[index];
+        classElementsToDisplayAllInfos =
+          pressableImagesByCategory[categoryKey][classKey];
 
         return (
           <View key={index} style={styles.elementView}>
