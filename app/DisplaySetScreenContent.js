@@ -126,6 +126,12 @@ const DisplaySetScreenContent = () => {
     );
   };
 
+  const removeSet = (id) => {
+    if (setsList.length != 1) {
+      setSetsList((prev) => prev.filter((set) => set.id != id));
+    }
+  };
+
   const handleSetCardPress = (id) => {
     if (activeSetCard != id) {
       setActiveSetCard(id); // Définir cette `SetCard` comme active
@@ -202,6 +208,7 @@ const DisplaySetScreenContent = () => {
             orderNumber={orderNumber}
             activeSetCard={activeSetCard}
             setSetsList={setSetsList}
+            removeSet={removeSet}
           />
         </View>
 
@@ -209,6 +216,7 @@ const DisplaySetScreenContent = () => {
           <SetCardSelector
             setsList={setsList}
             handleSetCardPress={handleSetCardPress}
+            removeSet={removeSet}
           />
         </View>
 

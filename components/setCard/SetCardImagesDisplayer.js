@@ -21,15 +21,12 @@ import { card } from "../styles/card";
 import th from "../styles/theme";
 import MyModal from "../MyModal";
 
-const bodyDenominations = ["kart", "bike", "sportBike", "ATV"];
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
 
 const SetCardImagesDisplayer = ({ setToShowElementsIds }) => {
-  console.log("setToShowElementsIds", setToShowElementsIds);
   const { pressableImagesByCategory } = usePressableImages();
 
-  console.log("pressableImagesByCategory", pressableImagesByCategory);
   return (
     <ScrollView>
       {setToShowElementsIds.map((classKey, index) => {

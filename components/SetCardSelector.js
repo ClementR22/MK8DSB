@@ -2,7 +2,7 @@ import React from "react";
 import { Pressable, Text, View, ScrollView, StyleSheet } from "react-native";
 import SetCard from "./setCard/SetCard";
 
-const SetCardSelector = ({ setsList, handleSetCardPress }) => {
+const SetCardSelector = ({ setsList, handleSetCardPress, removeSet }) => {
   return (
     <ScrollView horizontal={true}>
       <View style={{ flexDirection: "row" }}>
@@ -13,7 +13,11 @@ const SetCardSelector = ({ setsList, handleSetCardPress }) => {
               return handleSetCardPress(id);
             }}
           >
-            <SetCard setToShowClassIds={setClassIds} isPressed={isPressed} />
+            <SetCard
+              setToShowClassIds={setClassIds}
+              isPressed={isPressed}
+              removeSet={() => removeSet(id)}
+            />
           </Pressable>
         ))}
       </View>

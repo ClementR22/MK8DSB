@@ -35,6 +35,7 @@ const SetCard = ({
   isFoundStatsVisible,
   chosenStats,
   isPressed = null,
+  removeSet,
 }) => {
   const th = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -65,6 +66,19 @@ const SetCard = ({
       >
         <MaterialCommunityIcons name="eye" size={24} color={th.on_primary} />
       </Pressable>
+
+      {isPressed != null && (
+        <Pressable
+          style={[button_icon(th).container, shadow_3dp]}
+          onPress={removeSet}
+        >
+          <MaterialCommunityIcons
+            name="minus"
+            size={24}
+            color={th.on_primary}
+          />
+        </Pressable>
+      )}
 
       {isPressed == null && (
         <StatSliderResultContainer
