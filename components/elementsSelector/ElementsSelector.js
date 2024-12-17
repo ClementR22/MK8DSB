@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -28,6 +28,7 @@ const ElementsSelector = ({
   orderNumber,
   activeSetCard,
   setSetsList,
+  scrollViewRef,
 }) => {
   const th = useTheme();
   const {
@@ -69,6 +70,20 @@ const ElementsSelector = ({
     return selectedCategoryImages;
   };
 
+  const scrollToSection = (sectionRef) => {
+    sectionRef.current?.measureLayout(
+      scrollViewRef.current, // Mesurer par rapport à la ScrollView
+      (x, y) => {
+        scrollViewRef.current?.scrollTo({ y, animated: true });
+      },
+      (error) => {
+        console.error("Erreur de mesure :", error);
+      }
+    );
+  };
+
+  const sectionRefs = Array.from({ length: 4 }, () => useRef(null));
+
   const content = (selectedCategoryImages) => {
     return (
       <View style={[styles.categoryContainer, { flexDirection: "row" }]}>
@@ -101,17 +116,30 @@ const ElementsSelector = ({
   };
 
   const BodyContent = ({ selectedCategoryImages }) => (
-    <View style={styles.bodyCategoriesContainer}>
-      {Object.entries(selectedCategoryImages).map(
-        ([subCategoryKey, subCategoryImages]) => (
-          <View key={subCategoryKey}>
-            <Text style={{ flex: 1, backgroundColor: "white" }}>
-              {translate(subCategoryKey)}
-            </Text>
-            {content(subCategoryImages)}
-          </View>
-        )
-      )}
+    <View>
+      <View style={styles.bodyTypeBookmarksContainer}>
+        {bodyTypeNames.map((bodyTypeName, index) => (
+          <Pressable
+            style={button(th).container}
+            onPress={() => scrollToSection(sectionRefs[index])}
+            key={bodyTypeName}
+          >
+            <Text style={button(th).text}>{translate(bodyTypeName)}</Text>
+          </Pressable>
+        ))}
+      </View>
+      <View style={styles.bodyCategoriesContainer}>
+        {Object.entries(selectedCategoryImages).map(
+          ([subCategoryKey, subCategoryImages], index) => (
+            <View key={subCategoryKey} ref={sectionRefs[index]}>
+              <Text style={{ flex: 1, backgroundColor: "white" }}>
+                {translate(subCategoryKey)}
+              </Text>
+              {content(subCategoryImages)}
+            </View>
+          )
+        )}
+      </View>
     </View>
   );
 
@@ -295,6 +323,10 @@ const styles = StyleSheet.create({
     flexDirection: "row ",
     flexWrap: "wrap",
     rowGap: 2,
+  },
+  bodyTypeBookmarksContainer: {
+    flexDirection: "row",
+    gap: 10,
   },
 });
 

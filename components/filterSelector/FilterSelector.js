@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Modal,
@@ -34,8 +34,10 @@ const FilterSelector = ({
     elementsAllInfosList[87],
   ];
 
+  const scrollViewRef = useRef(null);
+
   return (
-    <ScrollView style={modal(th).content}>
+    <ScrollView style={modal(th).content} ref={scrollViewRef}>
       <View key="body type" style={styles.bodyTypeContainer}>
         {chosenBodyType.map((bodyType, index) => {
           return (
@@ -54,7 +56,11 @@ const FilterSelector = ({
 
       <ElementsDeselector />
 
-      <ElementsSelector displayCase={false} orderNumber={orderNumber} />
+      <ElementsSelector
+        displayCase={false}
+        orderNumber={orderNumber}
+        scrollViewRef={scrollViewRef}
+      />
     </ScrollView>
   );
 };

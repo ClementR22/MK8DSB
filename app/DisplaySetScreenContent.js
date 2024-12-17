@@ -7,7 +7,7 @@ import {
   TextInput,
   Dimensions,
 } from "react-native";
-import { useState, useEffect, useContext, createContext } from "react";
+import { useState, useEffect, useContext, createContext, useRef } from "react";
 import Checkbox from "expo-checkbox";
 import { Modal } from "react-native";
 import { Alert } from "react-native";
@@ -165,12 +165,14 @@ const DisplaySetScreenContent = () => {
     }
   };
 
+  const scrollViewRef = useRef(null);
+
   useEffect(() => {
     updateSetsList();
   }, [pressableImagesList]);
 
   return (
-    <ScrollView>
+    <ScrollView ref={scrollViewRef}>
       <View style={styles.container}>
         <Text style={styles.text}>DisplaySetScreen</Text>
         <MultiStateToggleButton
@@ -209,6 +211,7 @@ const DisplaySetScreenContent = () => {
             activeSetCard={activeSetCard}
             setSetsList={setSetsList}
             removeSet={removeSet}
+            scrollViewRef={scrollViewRef}
           />
         </View>
 
