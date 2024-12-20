@@ -125,7 +125,7 @@ const SearchSetScreenContent = () => {
   const [menuModalVisible, setMenuModalVisible] = useState(false);
 
   const elementsFilterObjectToList = (pressableImagesByCategory) => {
-    const selectedElementsIds7categories = [];
+    const selectedElementsIds4categories = [];
     // Parcourir chaque catégorie
     Object.entries(pressableImagesByCategory).forEach(([, category]) => {
       const pressedClassesInCategory = [];
@@ -141,23 +141,13 @@ const SearchSetScreenContent = () => {
         }
       });
       // Ajouter la liste des classes pressées (ou une liste vide) à result
-      selectedElementsIds7categories.push(pressedClassesInCategory);
+      selectedElementsIds4categories.push(pressedClassesInCategory);
     });
 
-    const selectedBodies = [
-      ...new Set([
-        ...selectedElementsIds7categories[1],
-        ...selectedElementsIds7categories[2],
-        ...selectedElementsIds7categories[3],
-        ...selectedElementsIds7categories[4],
-      ]),
-    ];
-
-    const selectedElementsIds4categories = [
-      ...selectedElementsIds7categories.slice(0, 1),
-      selectedBodies,
-      ...selectedElementsIds7categories.slice(5),
-    ];
+    console.log(
+      "selectedElementsIds4categories",
+      selectedElementsIds4categories
+    );
 
     return selectedElementsIds4categories;
   };
