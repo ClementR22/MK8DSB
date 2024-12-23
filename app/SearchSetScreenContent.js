@@ -125,7 +125,7 @@ const SearchSetScreenContent = () => {
   const [menuModalVisible, setMenuModalVisible] = useState(false);
 
   const elementsFilterObjectToList = (pressableImagesByCategory) => {
-    const selectedElementsIds4categories = [];
+    const selectedClassIds4categories = [];
     // Parcourir chaque catégorie
     Object.entries(pressableImagesByCategory).forEach(([, category]) => {
       const pressedClassesInCategory = [];
@@ -141,15 +141,10 @@ const SearchSetScreenContent = () => {
         }
       });
       // Ajouter la liste des classes pressées (ou une liste vide) à result
-      selectedElementsIds4categories.push(pressedClassesInCategory);
+      selectedClassIds4categories.push(pressedClassesInCategory);
     });
 
-    console.log(
-      "selectedElementsIds4categories",
-      selectedElementsIds4categories
-    );
-
-    return selectedElementsIds4categories;
+    return selectedClassIds4categories;
   };
 
   // Mettre à jour la valeur du slider

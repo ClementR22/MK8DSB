@@ -197,8 +197,8 @@ const DisplaySetScreenContent = () => {
           setIsModalVisible={setFoundedStatsModalVisible}
           ModalContent={StatSelector}
           contentProps={{
-            isFoundStatsVisible: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
-            setIsFoundStatsVisible: setIsFoundStatsVisible,
+            statList: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
+            setStatList: setIsFoundStatsVisible,
             toggleCheck: toggleCheck,
             keepOneCondition: false,
           }}
