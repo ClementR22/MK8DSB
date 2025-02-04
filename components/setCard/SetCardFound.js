@@ -10,7 +10,7 @@ import {
   Platform,
   Alert,
 } from "react-native";
-import { elementsAllClassName } from "../../data/data";
+import { elementsAllClassName, elementsAllInfosList } from "../../data/data";
 import { ScrollView } from "react-native";
 import StatSliderResult from "../statSliderResult/StatSliderResult";
 import { modal } from "../styles/modal";
@@ -23,13 +23,14 @@ import StatSliderResultContainer from "../statSliderResult/StatSliderResultConta
 import { button_icon } from "../styles/button";
 import { shadow_3dp } from "../styles/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import SetCardElementChip from "./SetCardElementChip";
 
 const elementDenominations = ["character", "body", "wheels", "glider"];
 const bodyDenominations = ["kart", "bike", "sportBike", "ATV"];
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
 
-const SetCard = ({
+const SetCardFound = ({
   setToShowClassIds,
   setToShowStats,
   isFoundStatsVisible,
@@ -45,27 +46,27 @@ const SetCard = ({
   };
 
   return (
-    <View
+    <Pressable
       style={[
         card(th).container,
         isPressed == false && card(th).unPressed,
         isPressed && card(th).pressed,
       ]}
+      onPress={displaySetImages}
     >
       {setToShowClassIds.map((id, index) => {
+        const elementsToShow = elementsAllInfosList.filter(
+          ({ classId }) => classId == id
+        );
+
         return (
-          <Text key={"element" + index} style={card(th).text}>
-            {elementsAllClassName[id]}
-          </Text>
+          <View key={index} style={styles.classContainer}>
+            {elementsToShow.map(({ name, image }) => (
+              <SetCardElementChip key={name} name={name} uri={image.uri} />
+            ))}
+          </View>
         );
       })}
-
-      <Pressable
-        style={[button_icon(th).container, shadow_3dp]}
-        onPress={displaySetImages}
-      >
-        <MaterialCommunityIcons name="eye" size={24} color={th.on_primary} />
-      </Pressable>
 
       {isPressed != null && (
         <Pressable
@@ -96,11 +97,11 @@ const SetCard = ({
         contentProps={{ setToShowElementsIds: setToShowClassIds }}
         closeButtonText="Close"
       />
-    </View>
+    </Pressable>
   );
 };
 
-export default SetCard;
+export default SetCardFound;
 
 const styles = StyleSheet.create({
   sliderContainer: {
@@ -146,5 +147,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#007BFF",
     borderRadius: 5,
     marginTop: 20,
+  },
+  classContainer: {
+    flexDirection: "row",
+    margin: 10,
+    backgroundColor: "green",
+    rowGap: 8,
+    flexWrap: "wrap",
   },
 });

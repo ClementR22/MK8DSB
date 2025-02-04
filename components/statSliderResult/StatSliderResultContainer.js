@@ -14,6 +14,7 @@ const StatSliderResultContainer = ({
   return (
     <View style={{ flex: 1, backgroundColor: "green" }}>
       {isFoundStatsVisible.map(({ name, checked }, statIndex) => {
+        translated_name = translate(name);
         if (checked) {
           return (
             <View
@@ -24,7 +25,7 @@ const StatSliderResultContainer = ({
               ]}
             >
               <Text style={styles.text}>
-                {translate(name)}
+                {translated_name}
                 {!displayCase &&
                   ` : ${JSON.stringify(
                     multipleSetToShowStatsLists[0][statIndex]

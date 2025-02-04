@@ -26,7 +26,7 @@ const iconSize = 38;
 const ElementsSelector = ({
   displayCase,
   orderNumber,
-  activeSetCard,
+  activeSetCardFound,
   setSetsList,
   scrollViewRef,
 }) => {
@@ -99,7 +99,7 @@ const ElementsSelector = ({
                       handlePressImageByClass(
                         classId,
                         category,
-                        activeSetCard,
+                        activeSetCardFound,
                         setSetsList
                       );
                     }
@@ -214,7 +214,7 @@ const ElementsSelector = ({
                                 handlePressImageByClass(
                                   classId,
                                   category,
-                                  activeSetCard,
+                                  activeSetCardFound,
                                   setSetsList
                                 );
                               }

@@ -1,0 +1,40 @@
+import React from "react";
+import { Chip } from "react-native-paper";
+import { View, Image } from "react-native";
+
+const SetCardElementChip = ({ name, uri }) => {
+  return (
+    <Chip
+      style={styles.chip}
+      textStyle={styles.chipText}
+      avatar={<Image source={uri} style={styles.image} />}
+    >
+      {name}
+    </Chip>
+  );
+};
+
+const styles = {
+  chip: {
+    marginHorizontal: 4, // Pour espacer les chips
+    backgroundColor: "red",
+  },
+  chipSelected: {
+    backgroundColor: "blue", // Couleur de fond pour un chip sélectionné
+  },
+  chipDisabled: {
+    backgroundColor: "#ccc", // Couleur pour un chip désactivé
+  },
+  chipText: {
+    fontSize: 14,
+    color: "white", // Texte visible pour les chips sélectionnés
+  },
+  image: {
+    width: 24, // Largeur de l'image
+    height: 24, // Hauteur de l'image
+    borderRadius: 0, // Pour éviter les coins arrondis
+    resizeMode: "contain",
+  },
+};
+
+export default SetCardElementChip;

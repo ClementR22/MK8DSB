@@ -29,7 +29,7 @@ import {
 
 // Components import
 import StatSlider from "../components/StatSlider";
-import SetCard from "../components/setCard/SetCard";
+import SetCardFound from "../components/setCard/SetCardFound";
 import ResultsNumber from "../components/ResultsNumberSelector";
 import MyModal from "../components/MyModal";
 import FilterSelectorModal from "../components/filterSelector/FilterSelectorModal";
@@ -116,8 +116,7 @@ const SearchSetScreenContent = () => {
   const [setsToShow, setSetsToShow] = useState([]);
 
   const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);
-  const [foundedStatsModalVisible, setFoundedStatsModalVisible] =
-    useState(false);
+  const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
 
   const [resultsNumberModalVisible, setResultsNumberModalVisible] =
@@ -392,7 +391,7 @@ const SearchSetScreenContent = () => {
           </Pressable>
 
           <StatSliderResultSelectorPressable
-            setFoundedStatsModalVisible={setFoundedStatsModalVisible}
+            setFoundStatsModalVisible={setFoundStatsModalVisible}
           />
         </View>
 
@@ -432,8 +431,8 @@ const SearchSetScreenContent = () => {
 
         <MyModal
           modalTitle={translate("StatsToDisplay")}
-          isModalVisible={foundedStatsModalVisible}
-          setIsModalVisible={setFoundedStatsModalVisible}
+          isModalVisible={foundStatsModalVisible}
+          setIsModalVisible={setFoundStatsModalVisible}
           ModalContent={StatSelector}
           contentProps={{
             statList: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
@@ -466,7 +465,7 @@ const SearchSetScreenContent = () => {
           </View>
           {setsToShow.map(([setToShowClassIds, setToShowStats], index) => {
             return (
-              <SetCard
+              <SetCardFound
                 key={"card" + index}
                 setToShowClassIds={setToShowClassIds}
                 setToShowStats={setToShowStats}

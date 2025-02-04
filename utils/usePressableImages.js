@@ -83,7 +83,7 @@ export const PressableImagesProvider = ({
   const handlePressImageByClass = (
     classId,
     category,
-    activeSetCard = null,
+    activeSetCardFound = null,
     setSetsList
   ) => {
     const categoryList = bodyTypeNames.includes(category)
