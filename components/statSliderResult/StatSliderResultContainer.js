@@ -42,6 +42,7 @@ const StatSliderResultContainer = ({
                   <StatSliderResult
                     key={setIndex}
                     value={setToShowStats[statIndex]}
+                    isWanted={chosenStats[statIndex]?.checked}
                     wantedValue={chosenStats[statIndex]?.value}
                   />
                   {displayCase && (

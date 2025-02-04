@@ -13,8 +13,9 @@ import { button } from "./styles/button";
 import checkbox from "./styles/checkbox";
 import { useTheme } from "./styles/theme";
 import { translate } from "../i18n/translations";
+import { toggleCheck } from "../utils/toggleCheck";
 
-const PressableStat = ({ stat, setList, toggleCheck, keepOneCondition }) => {
+const PressableStat = ({ stat, setList, keepOneCondition }) => {
   const th = useTheme();
   return (
     <Pressable

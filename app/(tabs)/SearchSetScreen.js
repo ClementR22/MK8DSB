@@ -4,7 +4,7 @@ import { PressableImagesProvider } from "../../utils/usePressableImages";
 const SearchSetScreen = () => {
   return (
     <PressableImagesProvider>
-      <SearchSetScreenContent />;
+      <SearchSetScreenContent />
     </PressableImagesProvider>
   );
 };

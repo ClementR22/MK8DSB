@@ -38,7 +38,6 @@ import StatSliderResultContainer from "../components/statSliderResult/StatSlider
 import StatSliderResultSelectorPressable from "../components/statSliderResult/StatSliderResultSelectorPressable";
 import MyModal from "../components/MyModal";
 import StatSelector from "../components/StatSelector";
-import { toggleCheck } from "../utils/toggleCheck";
 import SetCardSelector from "../components/SetCardSelector";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
 import { button_icon } from "../components/styles/button";
@@ -199,7 +198,6 @@ const DisplaySetScreenContent = () => {
           contentProps={{
             statList: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
             setStatList: setIsFoundStatsVisible,
-            toggleCheck: toggleCheck,
             keepOneCondition: false,
           }}
         />

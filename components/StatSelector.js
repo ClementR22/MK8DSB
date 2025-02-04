@@ -14,12 +14,7 @@ import checkbox from "./styles/checkbox";
 import PressableStat from "./PressableStat";
 import { useTheme } from "./styles/theme";
 
-const StatSelector = ({
-  statList,
-  setStatList,
-  toggleCheck,
-  keepOneCondition,
-}) => {
+const StatSelector = ({ statList, setStatList, keepOneCondition }) => {
   const th = useTheme();
   return (
     <View style={styles.listContainer}>
@@ -30,7 +25,6 @@ const StatSelector = ({
               key={stat.name}
               stat={stat}
               setList={setStatList}
-              toggleCheck={toggleCheck}
               keepOneCondition={keepOneCondition}
             />
           ))}
