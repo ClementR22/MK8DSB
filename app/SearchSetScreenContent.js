@@ -251,7 +251,7 @@ const SearchSetScreenContent = () => {
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView>
           <View style={[styles.container, { backgroundColor: th.surface }]}>
             <View
               id="Title_bar"
@@ -451,13 +451,15 @@ const SearchSetScreenContent = () => {
                 keepOneCondition: false,
               }}
             />
+          </View>
 
-            <View
-              key="cardsContainer"
-              style={[
+          <View key="cardsContainer">
+            <ScrollView
+              contentContainerStyle={[
                 styles.setCardContainer,
                 { backgroundColor: th.surface_container_high },
               ]}
+              horizontal={true}
             >
               <View
                 style={
@@ -484,7 +486,7 @@ const SearchSetScreenContent = () => {
                   />
                 );
               })}
-            </View>
+            </ScrollView>
           </View>
         </ScrollView>
       </BottomSheetModalProvider>
@@ -584,16 +586,12 @@ const styles = StyleSheet.create({
   },
 
   setCardContainer: {
-    display: "flex",
-    flexGrow: 1,
     margin: 16,
-    marginBottom: 0,
     padding: 20,
     alignItems: "stretch",
     //backgroundColor: th.surface_container_high,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    rowGap: 16,
+    borderRadius: 24,
+    columnGap: 16,
   },
 
   ElementsDeselector: {

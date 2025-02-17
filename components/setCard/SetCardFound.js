@@ -24,6 +24,8 @@ import { button_icon } from "../styles/button";
 import { shadow_3dp } from "../styles/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCardElementChip from "./SetCardElementChip";
+import { category4Names } from "../../data/data";
+import { translate } from "../../i18n/translations";
 
 const elementDenominations = ["character", "body", "wheels", "glider"];
 const bodyDenominations = ["kart", "bike", "sportBike", "ATV"];
@@ -60,10 +62,13 @@ const SetCardFound = ({
         );
 
         return (
-          <View key={index} style={styles.classContainer}>
-            {elementsToShow.map(({ name, image }) => (
-              <SetCardElementChip key={name} name={name} uri={image.uri} />
-            ))}
+          <View key={index}>
+            <View style={styles.classContainer}>
+              {elementsToShow.map(({ name, image }) => (
+                <Image key={name} source={image} style={styles.icon} />
+                //<SetCardElementChip key={name} name={name} uri={image.uri} />
+              ))}
+            </View>
           </View>
         );
       })}
@@ -150,9 +155,21 @@ const styles = StyleSheet.create({
   },
   classContainer: {
     flexDirection: "row",
-    margin: 10,
-    backgroundColor: "green",
-    rowGap: 8,
+    margin: 3,
+    rowGap: 3,
     flexWrap: "wrap",
+  },
+  textLeft: {
+    //color: th.on_surface,
+    fontSize: 20,
+    marginLeft: 6,
+    flexShrink: 1, // Permet de réduire la largeur du texte si nécessaire
+    maxWidth: "70%", // Largeur maximale pour le texte de gauche
+    overflow: "hidden", // Cache l'excédent du texte
+  },
+  icon: {
+    width: 40, // Taille fixe pour toutes les icônes
+    height: 40, // Même taille en hauteur
+    resizeMode: "contain", // Garde les proportions sans déformation
   },
 });
