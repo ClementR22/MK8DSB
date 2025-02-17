@@ -20,6 +20,7 @@ import { usePressableImages } from "../../utils/usePressableImages";
 import { translate } from "../../i18n/translations";
 import { button } from "../styles/button";
 import { useTheme } from "../styles/theme";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const iconSize = 38;
 
@@ -28,7 +29,6 @@ const ElementsSelector = ({
   orderNumber,
   activeSetCardFound,
   setSetsList,
-  scrollViewRef,
 }) => {
   const th = useTheme();
   const {
@@ -48,10 +48,11 @@ const ElementsSelector = ({
     require("../../assets/images/close.png"),
   ];
 
+  const scrollViewRef = useRef(null);
+  const [showScrollTopButton, setShowScrollTopButton] = useState(false);
+
   // État pour suivre l'onglet sélectionné
-  const [selectedTab, setSelectedTab] = useState(
-    displayCase ? "character" : "kart"
-  );
+  const [selectedTab, setSelectedTab] = useState("character");
 
   const sortElements = (selectedCategoryImages, orderNumber) => {
     switch (orderNumber) {
@@ -70,11 +71,16 @@ const ElementsSelector = ({
     return selectedCategoryImages;
   };
 
-  const scrollToSection = (sectionRef) => {
+  const handleScroll = (event) => {
+    const scrollY = event.nativeEvent.contentOffset.y;
+    setShowScrollTopButton(scrollY > 0); // Affiche le bouton après 100px de scroll
+  };
+
+  const scrollToSection = (sectionRef, animated = true) => {
     sectionRef.current?.measureLayout(
       scrollViewRef.current, // Mesurer par rapport à la ScrollView
       (x, y) => {
-        scrollViewRef.current?.scrollTo({ y, animated: true });
+        scrollViewRef.current?.scrollTo({ y, animated: animated });
       },
       (error) => {
         console.error("Erreur de mesure :", error);
@@ -82,7 +88,7 @@ const ElementsSelector = ({
     );
   };
 
-  const sectionRefs = Array.from({ length: 4 }, () => useRef(null));
+  const sectionRefs = Array.from({ length: 5 }, () => useRef(null));
 
   const content = (selectedCategoryImages) => {
     return (
@@ -236,35 +242,55 @@ const ElementsSelector = ({
   };
 
   return (
-    <View style={styles.outerContainer} key={"outerContainer"}>
+    <View
+      style={styles.outerContainer}
+      key={"outerContainer"}
+      ref={sectionRefs[4]}
+    >
       {/* Navigation par onglets */}
       <View style={styles.tabContainer} key={"tabContainer"}>
-        {category4NamesExtended.map((elementName, index) => (
-          <Pressable
-            key={elementName} // Ajout de la key ici
-            style={[
-              styles.tab,
-              selectedTab === elementName && styles.activeTab,
-            ]}
-            onPress={() => {
-              return setSelectedTab(elementName);
-            }}
-          >
-            <Image
-              source={elementIcons[index]}
-              style={styles.image}
-              resizeMode="contain"
-            />
-          </Pressable>
-        ))}
+        {(displayCase ? category4NamesExtended : category4Names).map(
+          (elementName, index) => (
+            <Pressable
+              key={elementName} // Ajout de la key ici
+              style={[
+                styles.tab,
+                selectedTab === elementName && styles.activeTab,
+              ]}
+              onPress={() => {
+                setSelectedTab(elementName);
+                scrollToSection(sectionRefs[4], false);
+              }}
+            >
+              <Image
+                source={elementIcons[index]}
+                style={styles.image}
+                resizeMode="contain"
+              />
+            </Pressable>
+          )
+        )}
       </View>
-      {renderContent()}
-      {selectedTab != "empty" && (
+
+      <ScrollView
+        onScroll={handleScroll}
+        scrollEventThrottle={64}
+        ref={scrollViewRef}
+        showsVerticalScrollIndicator={false}
+      >
+        {renderContent()}
+      </ScrollView>
+
+      {showScrollTopButton && (
         <Pressable
-          style={button(th).container}
-          onPress={() => setSelectedTab("empty")}
+          style={styles.floatingButton}
+          onPress={() => scrollToSection(sectionRefs[4])}
         >
-          <Text style={button(th).text}>{translate("Close")}</Text>
+          <MaterialCommunityIcons
+            name="chevron-up"
+            size={24}
+            color={th.on_primary}
+          />
         </Pressable>
       )}
     </View>
@@ -327,6 +353,16 @@ const styles = StyleSheet.create({
   bodyTypeBookmarksContainer: {
     flexDirection: "row",
     gap: 10,
+  },
+
+  floatingButton: {
+    position: "absolute",
+    right: 20,
+    bottom: 20,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    padding: 15,
+    borderRadius: 50,
+    elevation: 5, // Pour l'effet d'ombre sur Android
   },
 });
 

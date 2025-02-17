@@ -34,10 +34,8 @@ const FilterSelector = ({
     elementsAllInfosList[87],
   ];
 
-  const scrollViewRef = useRef(null);
-
   return (
-    <ScrollView style={modal(th).content} ref={scrollViewRef}>
+    <View style={{ flex: 1, marginBottom: 80 }}>
       <View key="body type" style={styles.bodyTypeContainer}>
         {chosenBodyType.map((bodyType, index) => {
           return (
@@ -56,18 +54,14 @@ const FilterSelector = ({
 
       <ElementsDeselector />
 
-      <ElementsSelector
-        displayCase={false}
-        orderNumber={orderNumber}
-        scrollViewRef={scrollViewRef}
-      />
-    </ScrollView>
+      <ElementsSelector displayCase={false} orderNumber={orderNumber} />
+    </View>
   );
 };
 
 export default FilterSelector;
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   bodyTypeContainer: {
     paddingVertical: 20,
     paddingHorizontal: 6,

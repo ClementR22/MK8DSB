@@ -5,39 +5,36 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetView,
+  BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
 import { modal } from "../styles/modal"; // Vérifie si modal.background est bien défini ici
 import { button_icon } from "../styles/button";
 import { shadow_3dp } from "../styles/theme";
 import { useRef } from "react";
 import { useCallback } from "react";
-import ElementsSelector from "./FilterSelector";
+import FilterSelector from "./FilterSelector";
 import { useTheme } from "../styles/theme";
 import MultiStateToggleButton from "../MultiStateToggleButton";
 
 const FilterSelectorModal = ({
-  modalTitle = "Affichage",
-  isModalVisible,
-  setIsModalVisible,
+  modalTitle,
   chosenBodyType,
   setChosenBodyType,
   toggleCheck,
+  bottomSheetModalRef,
 }) => {
   const th = useTheme();
-  // Référence pour le modal
-  const bottomSheetModalRef = useRef(null);
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
 
-  const snapPoints = useMemo(() => ["50%", "90%"], []);
+  const snapPoints = useMemo(() => ["90%"], []);
 
-  useEffect(() => {
+  /* useEffect(() => {
+    console.log("effect");
+    console.log("ismodalvisible", isModalVisible);
     if (isModalVisible) {
       handlePresentModalPress();
     }
   }, [isModalVisible, handlePresentModalPress]);
-
+ */
   const [orderNumber, setOrderNumber] = useState(0);
   const imagesOrderIconsNames = [
     "sort-numeric-ascending",
@@ -46,51 +43,43 @@ const FilterSelectorModal = ({
     "graphql",
   ];
 
-  const handleCloseModal = () => {
-    bottomSheetModalRef.current?.dismiss();
-    setTimeout(() => setIsModalVisible(false), 300); // 300ms correspond à la durée de l'animation par défaut
-  };
+  /* 
+  const handleSheetChanges = useCallback((index) => {
+    console.log("handleSheetChanges", index);
+  }, []);
+  */
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+      />
+    ),
+    []
+  );
 
   return (
-    <Modal
-      animationType="none" // Animation (slide, fade, none)
-      transparent={true} // Fond transparent
-      visible={isModalVisible}
-      onRequestClose={() => setIsModalVisible(false)} // Ferme le modal
+    <BottomSheetModal
+      snapPoints={snapPoints}
+      ref={bottomSheetModalRef}
+      backdropComponent={renderBackdrop}
     >
-      <GestureHandlerRootView>
-        <BottomSheetModalProvider>
-          <Pressable
-            style={modal(th).background}
-            onPress={() => handleCloseModal()}
-          >
-            <BottomSheetModal
-              snapPoints={snapPoints}
-              ref={bottomSheetModalRef}
-              style={styles.bottomSheetModal}
-              onDismiss={() => {
-                setIsModalVisible(false);
-              }}
-            >
-              <BottomSheetView style={styles.contentContainer}>
-                <Text style={modal(th).title_center}>{modalTitle}</Text>
-                <MultiStateToggleButton
-                  number={orderNumber}
-                  setNumber={setOrderNumber}
-                  iconsNames={imagesOrderIconsNames}
-                />
-                <ElementsSelector
-                  chosenBodyType={chosenBodyType}
-                  setChosenBodyType={setChosenBodyType}
-                  toggleCheck={toggleCheck}
-                  orderNumber={orderNumber}
-                />
-              </BottomSheetView>
-            </BottomSheetModal>
-          </Pressable>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
-    </Modal>
+      <BottomSheetView style={styles.contentContainer}>
+        <Text style={modal(th).title_center}>{modalTitle}</Text>
+        <MultiStateToggleButton
+          number={orderNumber}
+          setNumber={setOrderNumber}
+          iconsNames={imagesOrderIconsNames}
+        />
+        <FilterSelector
+          chosenBodyType={chosenBodyType}
+          setChosenBodyType={setChosenBodyType}
+          toggleCheck={toggleCheck}
+          orderNumber={orderNumber}
+        />
+      </BottomSheetView>
+    </BottomSheetModal>
   );
 };
 
@@ -101,8 +90,10 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 20,
-    backgroundColor: "white", // Couleur du contenu
-    borderRadius: 10,
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "white",
+    zIndex: 1,
   },
   modalTitle: {
     fontSize: 18,
