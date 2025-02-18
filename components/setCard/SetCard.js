@@ -54,12 +54,8 @@ const SetCard = ({
     };
   });
 
-  console.log(data);
-  console.log("data");
   const categoryWidth =
     Math.max(...data.map((item) => item.category.length)) * 7;
-
-  console.log(data);
 
   const renderItem = ({ item }) => (
     <View style={styles.row}>
@@ -69,10 +65,9 @@ const SetCard = ({
         </Text>
       )}
       <View style={styles.imagesContainer}>
-        {item.images.map((image, index) => {
-          console.log("image", image);
-          return <Image key={index} source={image} style={styles.icon} />;
-        })}
+        {item.images.map((image, index) => (
+          <Image key={index} source={image} style={styles.icon} />
+        ))}
       </View>
     </View>
   );

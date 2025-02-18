@@ -76,7 +76,7 @@ const SearchSetScreenContent = () => {
       return {
         name: statName,
         checked: index === 0,
-        value: 0,
+        value: index === 0 ? 0 : null,
         statFilterNumber: 0,
         setStatFilterNumber: (newState) => {
           setChosenStats((prevStats) =>
