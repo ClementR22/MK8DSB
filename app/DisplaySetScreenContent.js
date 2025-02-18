@@ -14,8 +14,6 @@ import { Alert } from "react-native";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-import SetCardFound from "../components/setCard/SetCardFound";
-
 import {
   statNames,
   bodyTypeNames,
@@ -38,7 +36,7 @@ import StatSliderResultContainer from "../components/statSliderResult/StatSlider
 import StatSliderResultSelectorPressable from "../components/statSliderResult/StatSliderResultSelectorPressable";
 import MyModal from "../components/MyModal";
 import StatSelector from "../components/StatSelector";
-import SetCardChosenSelector from "../components/SetCardChosenSelector";
+import SetCard from "../components/setCard/SetCard";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
 import { button_icon } from "../components/styles/button";
 import { shadow_3dp } from "../components/styles/theme";
@@ -111,7 +109,7 @@ const DisplaySetScreenContent = () => {
     return setToShowStatsList;
   });
 
-  const [activeSetCardFound, setActiveSetCardFound] = useState(0); // Stocke l'ID de la `SetCardFound` active
+  const [activeSetCardChosen, setActiveSetCardChosen] = useState(0); // Stocke l'ID de la `SetCardChosen` active
 
   const addSet = () => {
     const newId = setsList.length;
@@ -130,9 +128,9 @@ const DisplaySetScreenContent = () => {
     }
   };
 
-  const handleSetCardFoundPress = (id) => {
-    if (activeSetCardFound != id) {
-      setActiveSetCardFound(id); // Définir cette `SetCardFound` comme active
+  const handleSetCardChosenPress = (id) => {
+    if (activeSetCardChosen != id) {
+      setActiveSetCardChosen(id); // Définir cette `SetCardChosen` comme active
       setSetsList((prev) =>
         prev.map((set) => ({
           ...set,
@@ -144,7 +142,7 @@ const DisplaySetScreenContent = () => {
   };
 
   const updateSetsList = () => {
-    if (activeSetCardFound !== null) {
+    if (activeSetCardChosen !== null) {
       const pressedClassIds = pressableImagesList
         .filter((element) => element.pressed)
         .map((element) => {
@@ -155,7 +153,7 @@ const DisplaySetScreenContent = () => {
 
       setSetsList((prev) =>
         prev.map((item) =>
-          item.id === activeSetCardFound
+          item.id === activeSetCardChosen
             ? { ...item, setClassIds: pressedClassIdsWithoutRepetition }
             : item
         )
@@ -205,7 +203,7 @@ const DisplaySetScreenContent = () => {
           <ElementsSelector
             displayCase={true}
             orderNumber={orderNumber}
-            activeSetCardFound={activeSetCardFound}
+            activeSetCardChosen={activeSetCardChosen}
             setSetsList={setSetsList}
             removeSet={removeSet}
             scrollViewRef={scrollViewRef}
@@ -213,10 +211,9 @@ const DisplaySetScreenContent = () => {
         </View>
 
         <View style={styles.cardsContainer}>
-          <SetCardChosenSelector
-            setsList={setsList}
-            handleSetCardFoundPress={handleSetCardFoundPress}
-            removeSet={removeSet}
+          <SetCard
+            setToShowClassIds={setsList[0].setClassIds}
+            displayCase={true}
           />
         </View>
 

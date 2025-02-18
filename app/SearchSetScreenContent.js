@@ -34,7 +34,7 @@ import {
 
 // Components import
 import StatSlider from "../components/StatSlider";
-import SetCardFound from "../components/setCard/SetCardFound";
+import SetCard from "../components/setCard/SetCard";
 import ResultsNumber from "../components/ResultsNumberSelector";
 import MyModal from "../components/MyModal";
 import FilterSelectorModal from "../components/filterSelector/FilterSelectorModal";
@@ -465,7 +465,7 @@ const SearchSetScreenContent = () => {
               ) : null}
               {setsToShow.map(([setToShowClassIds, setToShowStats], index) => {
                 return (
-                  <SetCardFound
+                  <SetCard
                     key={"card" + index}
                     setToShowClassIds={setToShowClassIds}
                     setToShowStats={setToShowStats}

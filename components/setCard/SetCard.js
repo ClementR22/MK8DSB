@@ -26,19 +26,17 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCardElementChip from "./SetCardElementChip";
 import { category4Names } from "../../data/data";
 import { translate } from "../../i18n/translations";
+import { FlatList } from "react-native";
 
-const elementDenominations = ["character", "body", "wheels", "glider"];
-const bodyDenominations = ["kart", "bike", "sportBike", "ATV"];
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
 
-const SetCardFound = ({
+const SetCard = ({
   setToShowClassIds,
-  setToShowStats,
-  isFoundStatsVisible,
-  chosenStats,
-  isPressed = null,
-  removeSet,
+  setToShowStats = null,
+  isFoundStatsVisible = null,
+  chosenStats = null,
+  displayCase = false,
 }) => {
   const th = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -47,52 +45,56 @@ const SetCardFound = ({
     setIsModalVisible(true);
   };
 
-  return (
-    <Pressable
-      style={[
-        card(th).container,
-        isPressed == false && card(th).unPressed,
-        isPressed && card(th).pressed,
-      ]}
-      onPress={displaySetImages}
-    >
-      {setToShowClassIds.map((id, index) => {
-        const elementsToShow = elementsAllInfosList.filter(
-          ({ classId }) => classId == id
-        );
+  const data = category4Names.map((category, index) => {
+    return {
+      category: translate(category),
+      images: elementsAllInfosList
+        .filter(({ classId }) => classId === setToShowClassIds[index]) // Filtrer selon classId correspondant
+        .map((element) => element.image), // Extraire l'URI de l'image
+    };
+  });
 
-        return (
-          <View key={index}>
-            <View style={styles.classContainer}>
-              {elementsToShow.map(({ name, image }) => (
-                <Image key={name} source={image} style={styles.icon} />
-                //<SetCardElementChip key={name} name={name} uri={image.uri} />
-              ))}
-            </View>
-          </View>
-        );
-      })}
+  console.log(data);
+  console.log("data");
+  const categoryWidth =
+    Math.max(...data.map((item) => item.category.length)) * 7;
 
-      {isPressed != null && (
-        <Pressable
-          style={[button_icon(th).container, shadow_3dp]}
-          onPress={removeSet}
-        >
-          <MaterialCommunityIcons
-            name="minus"
-            size={24}
-            color={th.on_primary}
-          />
-        </Pressable>
+  console.log(data);
+
+  const renderItem = ({ item }) => (
+    <View style={styles.row}>
+      {displayCase && (
+        <Text style={[styles.category, { width: categoryWidth }]}>
+          {item.category}
+        </Text>
       )}
+      <View style={styles.imagesContainer}>
+        {item.images.map((image, index) => {
+          console.log("image", image);
+          return <Image key={index} source={image} style={styles.icon} />;
+        })}
+      </View>
+    </View>
+  );
 
-      {isPressed == null && (
+  return (
+    <View style={[card(th).container, { flex: 1 }]}>
+      <Pressable onPress={displaySetImages}>
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.category}
+          contentContainerStyle={{ flexGrow: 0 }} // Empêche la FlatList d'occuper plus d'espace que nécessaire
+        />
+      </Pressable>
+
+      {!displayCase ? (
         <StatSliderResultContainer
           multipleSetToShowStatsLists={[setToShowStats]}
           isFoundStatsVisible={isFoundStatsVisible}
           chosenStats={chosenStats}
         />
-      )}
+      ) : null}
 
       <MyModal
         modalTitle={""}
@@ -102,62 +104,24 @@ const SetCardFound = ({
         contentProps={{ setToShowElementsIds: setToShowClassIds }}
         closeButtonText="Close"
       />
-    </Pressable>
+    </View>
   );
 };
 
-export default SetCardFound;
+export default SetCard;
 
 const styles = StyleSheet.create({
-  sliderContainer: {
-    width: "100%",
-    //backgroundColor: th.surface_container,
-  },
   text: {
     fontSize: 14,
     fontWeight: "bold",
     marginBottom: 3,
     width: 300,
   },
-  modalBackground: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    padding: 20,
-  },
-  modalContainer: {
-    //width: "90%",
-    padding: 20,
-    backgroundColor: "white",
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  modalText: {
-    fontSize: 18,
-    marginBottom: 20,
-  },
-  elementView: {
-    justifyContent: "space-evenly",
-    flexDirection: "row",
-    paddingHorizontal: 16, // TODO: Fix 5 character width
-  },
-  image: {
-    width: imageWidth,
-    height: imageWidth,
-    marginBottom: 0,
-  },
   closePressable: {
     padding: 10,
     backgroundColor: "#007BFF",
     borderRadius: 5,
     marginTop: 20,
-  },
-  classContainer: {
-    flexDirection: "row",
-    margin: 3,
-    rowGap: 3,
-    flexWrap: "wrap",
   },
   textLeft: {
     //color: th.on_surface,
@@ -166,10 +130,31 @@ const styles = StyleSheet.create({
     flexShrink: 1, // Permet de réduire la largeur du texte si nécessaire
     maxWidth: "70%", // Largeur maximale pour le texte de gauche
     overflow: "hidden", // Cache l'excédent du texte
+    marginRight: 30,
   },
   icon: {
     width: 40, // Taille fixe pour toutes les icônes
     height: 40, // Même taille en hauteur
     resizeMode: "contain", // Garde les proportions sans déformation
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+  },
+  category: {
+    textAlign: "left", // Aligner à gauche
+    marginRight: 16, // Un petit espacement entre la colonne 1 et la colonne 2
+  },
+  imagesContainer: {
+    flex: 1,
+    justifyContent: "center", // Centrer le contenu de la colonne 2
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  image: {
+    width: 50,
+    height: 50,
+    margin: 5,
   },
 });

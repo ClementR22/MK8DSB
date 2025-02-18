@@ -3,6 +3,7 @@ import { View, StyleSheet, Dimensions, Pressable, Image } from "react-native";
 import { ScrollView } from "react-native";
 import { usePressableImages } from "../../utils/usePressableImages";
 import showToast from "../../utils/toast";
+import { category4Names } from "../../data/data";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
@@ -14,7 +15,7 @@ const SetCardImagesDisplayer = ({ setToShowElementsIds }) => {
     <ScrollView>
       {setToShowElementsIds.map((classKey, index) => {
         const categoryKey = category4Names[index];
-        classElementsToDisplayAllInfos =
+        const classElementsToDisplayAllInfos =
           pressableImagesByCategory[categoryKey][classKey];
 
         return (

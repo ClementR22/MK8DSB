@@ -8,6 +8,8 @@ export const translate = (key) => {
 
 const translations = {
   en: {
+    character: "Character",
+    body: "Body",
     kart: "Kart",
     bike: "Bike",
     sportBike: "Sport bike",
@@ -173,6 +175,8 @@ const translations = {
   },
 
   fr: {
+    character: "Personnage",
+    body: "Carrosserie",
     kart: "Kart",
     bike: "Moto",
     sportBike: "Moto de sport",
