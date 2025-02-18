@@ -16,6 +16,7 @@ import PressableStat from "./PressableStat";
 import { shadow_12dp } from "./styles/theme";
 import { useTheme } from "./styles/theme";
 import { translate } from "../i18n/translations";
+import Toast from "react-native-toast-message";
 
 const MyModal = ({
   modalTitle,
@@ -59,6 +60,8 @@ const MyModal = ({
           </Pressable>
         </View>
       </Pressable>
+
+      <Toast />
     </Modal>
   );
 };

@@ -27,14 +27,6 @@ const FilterSelectorModal = ({
 
   const snapPoints = useMemo(() => ["90%"], []);
 
-  /* useEffect(() => {
-    console.log("effect");
-    console.log("ismodalvisible", isModalVisible);
-    if (isModalVisible) {
-      handlePresentModalPress();
-    }
-  }, [isModalVisible, handlePresentModalPress]);
- */
   const [orderNumber, setOrderNumber] = useState(0);
   const imagesOrderIconsNames = [
     "sort-numeric-ascending",

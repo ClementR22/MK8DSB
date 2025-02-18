@@ -16,7 +16,6 @@ import { useRef } from "react";
 import { useCallback } from "react";
 import Checkbox from "expo-checkbox";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import Toast from "react-native-toast-message";
 import { toggleCheck } from "../utils/toggleCheck";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
@@ -91,17 +90,6 @@ const SearchSetScreenContent = () => {
       };
     })
   );
-
-  const showToast = () => {
-    console.log("montre Toast");
-    Toast.show({
-      type: "success",
-      text1: "Hello",
-      text2: "Ceci est une alerte temporaire 👋",
-      position: "bottom", // Ou 'bottom'
-      visibilityTime: 3000, // 3 secondes
-    });
-  };
 
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
     statNames.map((statName, index) => ({
@@ -458,23 +446,23 @@ const SearchSetScreenContent = () => {
               contentContainerStyle={[
                 styles.setCardContainer,
                 { backgroundColor: th.surface_container_high },
+                setsToShow.length == 0
+                  ? {
+                      flex: 1,
+                      paddingBottom: 0.282 * vh,
+                      justifyContent: "center",
+                    }
+                  : {},
               ]}
               horizontal={true}
             >
-              <View
-                style={
-                  setsToShow.length == 0
-                    ? { paddingBottom: 0.282 * vh }
-                    : { display: "none" }
-                }
-              >
+              {setsToShow.length == 0 ? (
                 <MaterialCommunityIcons
                   name="chat-question"
                   size={72}
                   color={th.on_surface}
-                  style={{ marginHorizontal: 72 }}
                 />
-              </View>
+              ) : null}
               {setsToShow.map(([setToShowClassIds, setToShowStats], index) => {
                 return (
                   <SetCardFound

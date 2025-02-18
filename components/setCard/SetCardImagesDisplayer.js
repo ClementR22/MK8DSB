@@ -1,25 +1,8 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  Pressable,
-  Image,
-  Modal,
-  Platform,
-  Alert,
-  DrawerLayoutAndroidComponent,
-} from "react-native";
-import { elementsAllClassName, category4Names } from "../../data/data";
+import React from "react";
+import { View, StyleSheet, Dimensions, Pressable, Image } from "react-native";
 import { ScrollView } from "react-native";
 import { usePressableImages } from "../../utils/usePressableImages";
-import StatSliderResult from "../statSliderResult/StatSliderResult";
-import { modal } from "../styles/modal";
-import { button } from "../styles/button";
-import { card } from "../styles/card";
-import th from "../styles/theme";
-import MyModal from "../MyModal";
+import showToast from "../../utils/toast";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
@@ -39,12 +22,18 @@ const SetCardImagesDisplayer = ({ setToShowElementsIds }) => {
             {Object.values(classElementsToDisplayAllInfos).map(
               (element, index) => {
                 return (
-                  <Image
+                  <Pressable
                     key={index}
-                    source={element.image.uri}
-                    style={styles.image}
-                    resizeMode="contain"
-                  />
+                    onPress={() => {
+                      showToast("yo", element.name);
+                    }}
+                  >
+                    <Image
+                      source={element.image.uri}
+                      style={styles.image}
+                      resizeMode="contain"
+                    />
+                  </Pressable>
                 );
               }
             )}
