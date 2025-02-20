@@ -11,6 +11,7 @@ const StatSliderResultContainer = ({
   displayCase = false,
 }) => {
   const th = useTheme();
+
   return (
     <View style={{ flex: 1, backgroundColor: "green" }}>
       {isFoundStatsVisible.map(({ name, checked }, statIndex) => {

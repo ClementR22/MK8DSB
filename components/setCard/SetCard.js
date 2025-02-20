@@ -22,7 +22,12 @@ import SetImagesDisplayer from "./SetCardImagesDisplayer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
 import { button_icon } from "../styles/button";
 import { shadow_3dp } from "../styles/theme";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import SetCardElementChip from "./SetCardElementChip";
 import { category4Names } from "../../data/data";
 import { translate } from "../../i18n/translations";
@@ -37,6 +42,9 @@ const SetCard = ({
   isFoundStatsVisible = null,
   chosenStats = null,
   displayCase = false,
+  handlePresentModalPressWithArg = null,
+  setCardIndex = null,
+  removeSet = null,
 }) => {
   const th = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -59,11 +67,10 @@ const SetCard = ({
 
   const renderItem = ({ item }) => (
     <View style={styles.row}>
-      {displayCase && (
-        <Text style={[styles.category, { width: categoryWidth }]}>
-          {item.category}
-        </Text>
-      )}
+      {/* <Text style={[styles.category, { width: categoryWidth }]}>
+        {item.category}
+      </Text> */}
+
       <View style={styles.imagesContainer}>
         {item.images.map((image, index) => (
           <Image key={index} source={image} style={styles.icon} />
@@ -74,6 +81,8 @@ const SetCard = ({
 
   return (
     <View style={[card(th).container, { flex: 1 }]}>
+      {displayCase && <Text>Set {setCardIndex}</Text>}
+
       <Pressable onPress={displaySetImages}>
         <FlatList
           data={data}
@@ -99,6 +108,26 @@ const SetCard = ({
         contentProps={{ setToShowElementsIds: setToShowClassIds }}
         closeButtonText="Close"
       />
+
+      {displayCase && (
+        <View>
+          <Pressable
+            style={[button_icon(th).container, shadow_3dp]}
+            onPress={() => {
+              handlePresentModalPressWithArg();
+            }}
+          >
+            <MaterialIcons name="edit" size={24} color={th.on_primary} />
+          </Pressable>
+
+          <Pressable
+            style={[button_icon(th).container, shadow_3dp]}
+            onPress={removeSet}
+          >
+            <Ionicons name="close" size={24} color={th.on_primary} />
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 };

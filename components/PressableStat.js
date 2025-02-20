@@ -14,14 +14,18 @@ import { useTheme } from "./styles/theme";
 import { translate } from "../i18n/translations";
 import { toggleCheck } from "../utils/toggleCheck";
 
-const PressableStat = ({ stat, setList, keepOneCondition }) => {
+const PressableStat = ({ stat, setStatList, keepOneCondition }) => {
   const th = useTheme();
   return (
     <Checkbox.Item
       label={translate(stat.name)}
       status={stat.checked ? "checked" : "unchecked"}
       onPress={() => {
-        toggleCheck(setList, stat.name, (keepOneCondition = keepOneCondition));
+        toggleCheck(
+          setStatList,
+          stat.name,
+          (keepOneCondition = keepOneCondition)
+        );
       }}
     />
   );

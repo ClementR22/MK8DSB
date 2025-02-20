@@ -80,12 +80,7 @@ export const PressableImagesProvider = ({
     // donc pressableImagesByCategory est mis à jour
   };
 
-  const handlePressImageByClass = (
-    classId,
-    category,
-    activeSetCardFound = null,
-    setSetsList
-  ) => {
+  const handlePressImageByClass = (classId, category) => {
     const categoryList = bodyTypeNames.includes(category)
       ? bodyTypeNames
       : [category];

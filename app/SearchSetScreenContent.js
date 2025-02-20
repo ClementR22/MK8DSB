@@ -16,7 +16,6 @@ import { useRef } from "react";
 import { useCallback } from "react";
 import Checkbox from "expo-checkbox";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { toggleCheck } from "../utils/toggleCheck";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   BottomSheetModalProvider,
@@ -37,7 +36,7 @@ import StatSlider from "../components/StatSlider";
 import SetCard from "../components/setCard/SetCard";
 import ResultsNumber from "../components/ResultsNumberSelector";
 import MyModal from "../components/MyModal";
-import FilterSelectorModal from "../components/filterSelector/FilterSelectorModal";
+import MyBottomSheetModal from "../components/MyBottomSheetModal";
 import StatSliderResultSelectorPressable from "../components/statSliderResult/StatSliderResultSelectorPressable";
 
 import {
@@ -59,6 +58,10 @@ import StatSelector from "../components/StatSelector";
 import { translate } from "../i18n/translations";
 import { elementsAllInfos } from "../data/data";
 import { usePressableImages } from "../utils/usePressableImages";
+import SetCardContainer from "../components/setCard/SetCardContainer";
+import FilterSelector from "../components/filterSelector/FilterSelector";
+import ElementsDeselector from "../components/elementsSelector/ElementsDeselector";
+import ElementsSelector from "../components/elementsSelector/ElementsSelector";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -403,16 +406,25 @@ const SearchSetScreenContent = () => {
               contentProps={{
                 statList: chosenStats, // Utilisation correcte des paires clé-valeur
                 setStatList: setChosenStats,
-                toggleCheck: toggleCheck,
                 keepOneCondition: true,
               }}
             />
 
-            <FilterSelectorModal
+            <MyBottomSheetModal
               modalTitle={translate("Filter")}
-              chosenBodyType={chosenBodyType}
-              setChosenBodyType={setChosenBodyType}
-              toggleCheck={toggleCheck}
+              ModalContentsList={[
+                FilterSelector,
+                ElementsDeselector,
+                ElementsSelector,
+              ]}
+              contentPropsList={[
+                {
+                  chosenBodyType: chosenBodyType,
+                  setChosenBodyType: setChosenBodyType,
+                },
+                {},
+                { displayCase: false },
+              ]}
               bottomSheetModalRef={bottomSheetModalRef}
             />
 
@@ -435,47 +447,16 @@ const SearchSetScreenContent = () => {
               contentProps={{
                 statList: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
                 setStatList: setIsFoundStatsVisible,
-                toggleCheck: toggleCheck,
                 keepOneCondition: false,
               }}
             />
           </View>
 
-          <View key="cardsContainer">
-            <ScrollView
-              contentContainerStyle={[
-                styles.setCardContainer,
-                { backgroundColor: th.surface_container_high },
-                setsToShow.length == 0
-                  ? {
-                      flex: 1,
-                      paddingBottom: 0.282 * vh,
-                      justifyContent: "center",
-                    }
-                  : {},
-              ]}
-              horizontal={true}
-            >
-              {setsToShow.length == 0 ? (
-                <MaterialCommunityIcons
-                  name="chat-question"
-                  size={72}
-                  color={th.on_surface}
-                />
-              ) : null}
-              {setsToShow.map(([setToShowClassIds, setToShowStats], index) => {
-                return (
-                  <SetCard
-                    key={"card" + index}
-                    setToShowClassIds={setToShowClassIds}
-                    setToShowStats={setToShowStats}
-                    isFoundStatsVisible={isFoundStatsVisible}
-                    chosenStats={chosenStats}
-                  />
-                );
-              })}
-            </ScrollView>
-          </View>
+          <SetCardContainer
+            setsToShow={setsToShow}
+            chosenStats={chosenStats}
+            isFoundStatsVisible={isFoundStatsVisible}
+          />
         </ScrollView>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
@@ -572,16 +553,6 @@ const styles = StyleSheet.create({
   SearchPressable: {
     fontSize: 20,
   },
-
-  setCardContainer: {
-    margin: 16,
-    padding: 20,
-    alignItems: "stretch",
-    //backgroundColor: th.surface_container_high,
-    borderRadius: 24,
-    columnGap: 16,
-  },
-
   ElementsDeselector: {
     width: "100%",
     alignItems: "flex-start",

@@ -1,7 +1,7 @@
 import showToast from "./toast";
 
-export const toggleCheck = (setList, name, keepOneCondition = true) => {
-  setList((prev) => {
+export const toggleCheck = (setStatList, name, keepOneCondition = true) => {
+  setStatList((prev) => {
     const newList = prev.map((item) =>
       item.name === name
         ? { ...item, value: item.checked ? null : 0, checked: !item.checked }

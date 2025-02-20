@@ -7,21 +7,21 @@ import {
   BottomSheetView,
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
-import { modal } from "../styles/modal"; // Vérifie si modal.background est bien défini ici
-import { button_icon } from "../styles/button";
-import { shadow_3dp } from "../styles/theme";
+import { modal } from "./styles/modal"; // Vérifie si modal.background est bien défini ici
+import { button_icon } from "./styles/button";
+import { shadow_3dp } from "./styles/theme";
 import { useRef } from "react";
 import { useCallback } from "react";
-import FilterSelector from "./FilterSelector";
-import { useTheme } from "../styles/theme";
-import MultiStateToggleButton from "../MultiStateToggleButton";
+import FilterSelector from "./filterSelector/FilterSelector";
+import { useTheme } from "./styles/theme";
+import MultiStateToggleButton from "./MultiStateToggleButton";
 
-const FilterSelectorModal = ({
+const MyBottomSheetModal = ({
   modalTitle,
-  chosenBodyType,
-  setChosenBodyType,
-  toggleCheck,
+  ModalContentsList,
+  contentPropsList,
   bottomSheetModalRef,
+  setCardActiveIndex = null,
 }) => {
   const th = useTheme();
 
@@ -64,12 +64,15 @@ const FilterSelectorModal = ({
           setNumber={setOrderNumber}
           iconsNames={imagesOrderIconsNames}
         />
-        <FilterSelector
-          chosenBodyType={chosenBodyType}
-          setChosenBodyType={setChosenBodyType}
-          toggleCheck={toggleCheck}
-          orderNumber={orderNumber}
-        />
+        <View style={{ flex: 1, marginBottom: 80 }}>
+          {ModalContentsList.map((ModalContent, index) => (
+            <ModalContent
+              key={index}
+              {...contentPropsList[index]}
+              orderNumber={orderNumber}
+            />
+          ))}
+        </View>
       </BottomSheetView>
     </BottomSheetModal>
   );
@@ -99,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FilterSelectorModal;
+export default MyBottomSheetModal;

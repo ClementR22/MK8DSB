@@ -12,6 +12,8 @@ import Checkbox from "expo-checkbox";
 import { Modal } from "react-native";
 import { Alert } from "react-native";
 
+import showToast from "../utils/toast";
+
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 import {
@@ -42,6 +44,13 @@ import { button_icon } from "../components/styles/button";
 import { shadow_3dp } from "../components/styles/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import SetCardContainer from "../components/setCard/SetCardContainer";
+import MyBottomSheetModal from "../components/MyBottomSheetModal";
+import { useCallback } from "react";
+
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import Toast from "react-native-toast-message";
 
 const DisplaySetScreenContent = () => {
   const th = useTheme();
@@ -54,6 +63,8 @@ const DisplaySetScreenContent = () => {
     setPressableImagesList,
     handlePressSetUpdatePressableImagesList,
   } = usePressableImages();
+
+  const bottomSheetModalRef = useRef(null);
 
   const [orderNumber, setOrderNumber] = useState(0);
 
@@ -99,66 +110,52 @@ const DisplaySetScreenContent = () => {
 
   const setClassIdsInit = [9, 16, 30, 39];
 
-  const [setsList, setSetsList] = useState([
-    { id: 0, isPressed: true, setClassIds: setClassIdsInit },
-  ]);
+  const [setsList, setSetsList] = useState([[setClassIdsInit]]);
 
-  const multipleSetToShowStatsLists = setsList.map((set) => {
-    const setToShowIdsList = set.setClassIds;
-    const setToShowStatsList = searchSetStatsFromElementsIds(setToShowIdsList);
+  const handlePresentModalPress = useCallback(
+    (setCardSelectedIndex) => {
+      bottomSheetModalRef.current?.present(); // on fait apparaitre le bottomSheetModal
+      setSetCardActiveIndex(setCardSelectedIndex); // on met à jour le state setCardActive
+    },
+    [setsList]
+  );
+
+  const multipleSetToShowStatsLists = setsList.map((setToShow) => {
+    const setToShowStatsList = searchSetStatsFromElementsIds(setToShow[0]);
     return setToShowStatsList;
   });
 
-  const [activeSetCardChosen, setActiveSetCardChosen] = useState(0); // Stocke l'ID de la `SetCardChosen` active
+  const [setCardActiveIndex, setSetCardActiveIndex] = useState(0); // Stocke l'ID de la `SetCardChosen` active
 
   const addSet = () => {
-    const newId = setsList.length;
-    setSetsList((prev) =>
-      prev.concat({
-        id: newId,
-        isPressed: false,
-        setClassIds: setClassIdsInit,
-      })
-    );
+    setSetsList((prev) => [...prev, [setClassIdsInit]]);
   };
 
-  const removeSet = (id) => {
+  const removeSet = (setCardSelectedIndex) => {
     if (setsList.length != 1) {
-      setSetsList((prev) => prev.filter((set) => set.id != id));
-    }
-  };
-
-  const handleSetCardChosenPress = (id) => {
-    if (activeSetCardChosen != id) {
-      setActiveSetCardChosen(id); // Définir cette `SetCardChosen` comme active
       setSetsList((prev) =>
-        prev.map((set) => ({
-          ...set,
-          isPressed: set.id === id,
-        }))
+        prev.filter((set, index) => index != setCardSelectedIndex)
       );
     }
-    handlePressSetUpdatePressableImagesList(setsList[id].setClassIds);
+    showToast("Erreur", "Vous devez garder au moins 1 set");
   };
 
   const updateSetsList = () => {
-    if (activeSetCardChosen !== null) {
-      const pressedClassIds = pressableImagesList
-        .filter((element) => element.pressed)
-        .map((element) => {
-          return element.classId;
-        });
+    const pressedClassIds = pressableImagesList
+      .filter((element) => element.pressed)
+      .map((element) => {
+        return element.classId;
+      });
 
-      const pressedClassIdsWithoutRepetition = [...new Set(pressedClassIds)];
+    const pressedClassIdsWithoutRepetition = [...new Set(pressedClassIds)];
 
-      setSetsList((prev) =>
-        prev.map((item) =>
-          item.id === activeSetCardChosen
-            ? { ...item, setClassIds: pressedClassIdsWithoutRepetition }
-            : item
-        )
-      );
-    }
+    setSetsList((prev) =>
+      prev.map((item, index) => {
+        return index === setCardActiveIndex
+          ? [pressedClassIdsWithoutRepetition]
+          : item;
+      })
+    );
   };
 
   const scrollViewRef = useRef(null);
@@ -167,64 +164,97 @@ const DisplaySetScreenContent = () => {
     updateSetsList();
   }, [pressableImagesList]);
 
+  useEffect(() => {
+    handlePressSetUpdatePressableImagesList(setsList[setCardActiveIndex][0]); // on met à jour le pressableImagesList
+  }, [setCardActiveIndex]);
+
   return (
-    <ScrollView ref={scrollViewRef}>
-      <View style={styles.container}>
-        <Text style={styles.text}>DisplaySetScreen</Text>
-        <MultiStateToggleButton
-          number={orderNumber}
-          setNumber={setOrderNumber}
-          iconsNames={imagesOrderIconsNames}
-        />
-        <StatSliderResultSelectorPressable
-          setFoundStatsModalVisible={setFoundStatsModalVisible}
-        />
+    <GestureHandlerRootView>
+      <BottomSheetModalProvider>
+        <ScrollView ref={scrollViewRef}>
+          <View style={styles.container}>
+            <Text style={styles.text}>DisplaySetScreen</Text>
 
-        <Pressable
-          style={[button_icon(th).container, shadow_3dp]}
-          onPress={addSet}
-        >
-          <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
-        </Pressable>
+            <StatSliderResultSelectorPressable
+              setFoundStatsModalVisible={setFoundStatsModalVisible}
+            />
 
-        <MyModal
-          modalTitle={translate("StatsToDisplay")}
-          isModalVisible={foundStatsModalVisible}
-          setIsModalVisible={setFoundStatsModalVisible}
-          ModalContent={StatSelector}
-          contentProps={{
-            statList: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
-            setStatList: setIsFoundStatsVisible,
-            keepOneCondition: false,
-          }}
-        />
+            <Pressable
+              style={[button_icon(th).container, shadow_3dp]}
+              onPress={addSet}
+            >
+              <MaterialCommunityIcons
+                name="plus"
+                size={24}
+                color={th.on_primary}
+              />
+            </Pressable>
 
-        <View style={{ padding: 20, backgroundColor: "yellow", width: "100%" }}>
-          <ElementsSelector
+            <MyModal
+              modalTitle={translate("StatsToDisplay")}
+              isModalVisible={foundStatsModalVisible}
+              setIsModalVisible={setFoundStatsModalVisible}
+              ModalContent={StatSelector}
+              contentProps={{
+                statList: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
+                setStatList: setIsFoundStatsVisible,
+                keepOneCondition: false,
+              }}
+            />
+          </View>
+
+          <SetCardContainer
+            setsToShow={setsList}
             displayCase={true}
-            orderNumber={orderNumber}
-            activeSetCardChosen={activeSetCardChosen}
-            setSetsList={setSetsList}
+            handlePresentModalPress={handlePresentModalPress}
             removeSet={removeSet}
-            scrollViewRef={scrollViewRef}
           />
-        </View>
 
-        <View style={styles.cardsContainer}>
-          <SetCard
-            setToShowClassIds={setsList[0].setClassIds}
+          <View
+            style={{ padding: 20, backgroundColor: "yellow", width: "100%" }}
+          >
+            <MultiStateToggleButton
+              number={orderNumber}
+              setNumber={setOrderNumber}
+              iconsNames={imagesOrderIconsNames}
+            />
+
+            {/* <ElementsSelector
+              displayCase={true}
+              orderNumber={orderNumber}
+              setCardActiveIndex={setCardActiveIndex}
+              setSetsList={setSetsList}
+              //removeSet={removeSet}
+              scrollViewRef={scrollViewRef}
+            /> */}
+          </View>
+
+          <StatSliderResultContainer
+            multipleSetToShowStatsLists={multipleSetToShowStatsLists}
+            isFoundStatsVisible={isFoundStatsVisible}
+            chosenStats={chosenStats}
             displayCase={true}
           />
-        </View>
 
-        <StatSliderResultContainer
-          multipleSetToShowStatsLists={multipleSetToShowStatsLists}
-          isFoundStatsVisible={isFoundStatsVisible}
-          chosenStats={chosenStats}
-          displayCase={true}
-        />
-      </View>
-    </ScrollView>
+          <MyBottomSheetModal
+            modalTitle={translate("Selectionner")}
+            ModalContentsList={[ElementsSelector]}
+            contentPropsList={[
+              {
+                displayCase: true,
+                orderNumber: orderNumber,
+              },
+            ]}
+            bottomSheetModalRef={bottomSheetModalRef}
+          />
+
+          <Pressable onPress={handlePresentModalPress}>
+            <Text>tooooooo</Text>
+          </Pressable>
+        </ScrollView>
+        <Toast />
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 };
 

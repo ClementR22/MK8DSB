@@ -19,13 +19,9 @@ import ElementChip from "../elementsSelector/ElementChip";
 import { elementsAllInfosList } from "@/data/data";
 import { useTheme } from "../styles/theme";
 import { translate } from "../../i18n/translations";
+import { toggleCheck } from "../../utils/toggleCheck";
 
-const FilterSelector = ({
-  chosenBodyType,
-  setChosenBodyType,
-  toggleCheck,
-  orderNumber,
-}) => {
+const FilterSelector = ({ chosenBodyType, setChosenBodyType, orderNumber }) => {
   const th = useTheme();
   const bodyTypeIcons = [
     elementsAllInfosList[52],
@@ -35,26 +31,20 @@ const FilterSelector = ({
   ];
 
   return (
-    <View style={{ flex: 1, marginBottom: 80 }}>
-      <View key="body type" style={styles.bodyTypeContainer}>
-        {chosenBodyType.map((bodyType, index) => {
-          return (
-            <ElementChip
-              key={index}
-              name={translate(bodyType.name)}
-              pressed={bodyType.checked}
-              onPress={() => {
-                toggleCheck(setChosenBodyType, bodyType.name);
-              }}
-              uri={bodyTypeIcons[index].image.uri}
-            />
-          );
-        })}
-      </View>
-
-      <ElementsDeselector />
-
-      <ElementsSelector displayCase={false} orderNumber={orderNumber} />
+    <View key="body type" style={styles.bodyTypeContainer}>
+      {chosenBodyType.map((bodyType, index) => {
+        return (
+          <ElementChip
+            key={index}
+            name={translate(bodyType.name)}
+            pressed={bodyType.checked}
+            onPress={() => {
+              toggleCheck(setChosenBodyType, bodyType.name);
+            }}
+            uri={bodyTypeIcons[index].image.uri}
+          />
+        );
+      })}
     </View>
   );
 };

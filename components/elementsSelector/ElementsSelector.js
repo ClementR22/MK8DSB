@@ -24,12 +24,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const iconSize = 38;
 
-const ElementsSelector = ({
-  displayCase,
-  orderNumber,
-  activeSetCardFound,
-  setSetsList,
-}) => {
+const ElementsSelector = ({ displayCase, orderNumber, updateSetsList }) => {
   const th = useTheme();
   const {
     pressableImagesList,
@@ -105,8 +100,7 @@ const ElementsSelector = ({
                       handlePressImageByClass(
                         classId,
                         category,
-                        activeSetCardFound,
-                        setSetsList
+                        updateSetsList
                       );
                     }
                   : () => {
@@ -220,7 +214,7 @@ const ElementsSelector = ({
                                 handlePressImageByClass(
                                   classId,
                                   category,
-                                  activeSetCardFound,
+                                  setCardActiveIndex,
                                   setSetsList
                                 );
                               }

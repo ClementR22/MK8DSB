@@ -24,7 +24,7 @@ const StatSelector = ({ statList, setStatList, keepOneCondition }) => {
             <PressableStat
               key={stat.name}
               stat={stat}
-              setList={setStatList}
+              setStatList={setStatList}
               keepOneCondition={keepOneCondition}
             />
           ))}
