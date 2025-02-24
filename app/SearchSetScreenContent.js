@@ -177,10 +177,10 @@ const SearchSetScreenContent = () => {
     }
 
     const gaps = setAllInfos.reduce((acc, setInfo, setIndex) => {
-      const [, set_i_ElementsIds, set_i_Stats, set_i_BodyCategories] = setInfo;
+      const { classIds, stats, bodyTypes } = setInfo;
 
       // Vérifier si au moins un type de corps est présent
-      const listIsSetElementAccepted = set_i_ElementsIds.map(
+      const listIsSetElementAccepted = classIds.map(
         (elementId, categoryIndex) => {
           const category_x_ElementIds = chosenElementsIds[categoryIndex];
           return (
@@ -190,9 +190,7 @@ const SearchSetScreenContent = () => {
         }
       );
       if (
-        !set_i_BodyCategories.some((item) =>
-          chosenBodyTypeList.includes(item)
-        ) ||
+        !bodyTypes.some((item) => chosenBodyTypeList.includes(item)) ||
         listIsSetElementAccepted.includes(false) // si (le set ne contient aucun type de vehicule choisi OU le set contient au moins un element non choisi)
       ) {
         return acc; // Ignorer si le type de corps ne correspond pas
@@ -203,7 +201,7 @@ const SearchSetScreenContent = () => {
 
       chosenStatsChecked.forEach((checked, statIndex) => {
         if (checked) {
-          const setValue = set_i_Stats[statIndex];
+          const setValue = stats[statIndex];
           const chosenValue = Number(chosenStatsValue[statIndex]);
           const statFilterNumber = chosenStatsFilterNumber[statIndex];
 
@@ -218,7 +216,7 @@ const SearchSetScreenContent = () => {
       });
 
       if (validSet) {
-        acc.push({ index: setIndex, gap });
+        acc.push({ setIndex, gap });
       }
 
       return acc;
@@ -231,10 +229,8 @@ const SearchSetScreenContent = () => {
     } else {
       const setsFound = gaps
         .slice(0, Math.min(resultsNumber, gaps.length))
-        .map(({ index }) => {
-          const [, setSeekedElementsIds, setSeekedStats] = setAllInfos[index];
-          return [setSeekedElementsIds, setSeekedStats];
-        });
+        .map(({ setIndex }) => ({ ...setAllInfos[setIndex] }));
+
       setSetsToShow(setsFound);
     }
   };

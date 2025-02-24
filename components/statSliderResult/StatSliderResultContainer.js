@@ -5,7 +5,7 @@ import { useTheme } from "../styles/theme";
 import { translate } from "../../i18n/translations";
 
 const StatSliderResultContainer = ({
-  multipleSetToShowStatsLists,
+  setsToShowMultipleStatsLists,
   isFoundStatsVisible,
   chosenStats,
   displayCase = false,
@@ -29,10 +29,10 @@ const StatSliderResultContainer = ({
                 {translated_name}
                 {!displayCase &&
                   ` : ${JSON.stringify(
-                    multipleSetToShowStatsLists[0][statIndex]
+                    setsToShowMultipleStatsLists[0][statIndex]
                   )}`}
               </Text>
-              {multipleSetToShowStatsLists.map((setToShowStats, setIndex) => (
+              {setsToShowMultipleStatsLists.map((setToShowStats, setIndex) => (
                 <View
                   key={setIndex}
                   style={{

@@ -37,12 +37,13 @@ const SetCardContainer = ({
           />
         ) : null}
 
-        {setsToShow.map((setToShow, index) => {
+        {setsToShow.map(({ name, classIds, stats }, index) => {
           return (
             <SetCard
               key={"card" + index}
-              setToShowClassIds={setToShow[0]}
-              setToShowStats={setToShow[1]}
+              setToShowName={name}
+              setToShowClassIds={classIds}
+              setToShowStats={stats}
               isFoundStatsVisible={isFoundStatsVisible}
               chosenStats={chosenStats}
               displayCase={displayCase}

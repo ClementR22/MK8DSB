@@ -37,6 +37,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
 
 const SetCard = ({
+  setToShowName = null,
   setToShowClassIds,
   setToShowStats = null,
   isFoundStatsVisible = null,
@@ -81,7 +82,13 @@ const SetCard = ({
 
   return (
     <View style={[card(th).container, { flex: 1 }]}>
-      {displayCase && <Text>Set {setCardIndex}</Text>}
+      {displayCase && (
+        <Pressable onPress={() => console.log("ok")}>
+          <Text>
+            {setToShowName == null ? `Set ${setCardIndex}` : setToShowName}
+          </Text>
+        </Pressable>
+      )}
 
       <Pressable onPress={displaySetImages}>
         <FlatList
@@ -94,7 +101,7 @@ const SetCard = ({
 
       {!displayCase ? (
         <StatSliderResultContainer
-          multipleSetToShowStatsLists={[setToShowStats]}
+          setsToShowMultipleStatsLists={[setToShowStats]}
           isFoundStatsVisible={isFoundStatsVisible}
           chosenStats={chosenStats}
         />

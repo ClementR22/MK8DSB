@@ -75,7 +75,7 @@ const DisplaySetScreenContent = () => {
     "graphql",
   ];
 
-  const pressedImagesIdsInit = pressableImagesList
+  const pressedImagesClassIdsInit = pressableImagesList
     .filter((element) => element.pressed)
     .map((element) => {
       return element.classId;
@@ -86,16 +86,12 @@ const DisplaySetScreenContent = () => {
     return a.every((value, index) => value === b[index]); // Comparer chaque élément
   };
 
-  const searchSetStatsFromElementsIds = (pressedImagesIds) => {
-    const result = setAllInfos.find(([, elementsIds]) => {
-      return arraysEqual(elementsIds, pressedImagesIds);
+  const searchSetStatsFromElementsIds = (pressedImagesClassIds) => {
+    const result = setAllInfos.find(({ classIds }) => {
+      return arraysEqual(classIds, pressedImagesClassIds);
     });
 
-    if (result) {
-      const [, , stats] = result; // Extraire directement `stats`
-      return stats;
-    }
-    return null; // Retourner `null` si aucune correspondance n'est trouvée
+    return result ? result.stats : [];
   };
 
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
@@ -104,13 +100,14 @@ const DisplaySetScreenContent = () => {
       checked: true,
     }))
   );
-  const chosenStats = [null] * 12;
 
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
 
-  const setClassIdsInit = [9, 16, 30, 39];
+  const setDefault = { name: null, classIds: [9, 16, 30, 39] };
 
-  const [setsList, setSetsList] = useState([[setClassIdsInit]]);
+  const [setsList, setSetsList] = useState([
+    { ...setDefault, classIds: [...setDefault.classIds] },
+  ]);
 
   const handlePresentModalPress = useCallback(
     (setCardSelectedIndex) => {
@@ -120,15 +117,22 @@ const DisplaySetScreenContent = () => {
     [setsList]
   );
 
-  const multipleSetToShowStatsLists = setsList.map((setToShow) => {
-    const setToShowStatsList = searchSetStatsFromElementsIds(setToShow[0]);
+  const setsToShowMultipleStatsLists = setsList.map((setToShow) => {
+    const setToShowStatsList = searchSetStatsFromElementsIds(
+      setToShow.classIds
+    );
     return setToShowStatsList;
   });
 
   const [setCardActiveIndex, setSetCardActiveIndex] = useState(0); // Stocke l'ID de la `SetCardChosen` active
 
+  const scrollViewRef = useRef(null);
+
   const addSet = () => {
-    setSetsList((prev) => [...prev, [setClassIdsInit]]);
+    setSetsList((prev) => [
+      ...prev,
+      { ...setDefault, classIds: [...setDefault.classIds] },
+    ]);
   };
 
   const removeSet = (setCardSelectedIndex) => {
@@ -150,22 +154,22 @@ const DisplaySetScreenContent = () => {
     const pressedClassIdsWithoutRepetition = [...new Set(pressedClassIds)];
 
     setSetsList((prev) =>
-      prev.map((item, index) => {
+      prev.map((set, index) => {
         return index === setCardActiveIndex
-          ? [pressedClassIdsWithoutRepetition]
-          : item;
+          ? { ...set, classIds: pressedClassIdsWithoutRepetition }
+          : set;
       })
     );
   };
-
-  const scrollViewRef = useRef(null);
 
   useEffect(() => {
     updateSetsList();
   }, [pressableImagesList]);
 
   useEffect(() => {
-    handlePressSetUpdatePressableImagesList(setsList[setCardActiveIndex][0]); // on met à jour le pressableImagesList
+    handlePressSetUpdatePressableImagesList(
+      setsList[setCardActiveIndex].classIds
+    ); // on met à jour le pressableImagesList
   }, [setCardActiveIndex]);
 
   return (
@@ -230,9 +234,9 @@ const DisplaySetScreenContent = () => {
           </View>
 
           <StatSliderResultContainer
-            multipleSetToShowStatsLists={multipleSetToShowStatsLists}
+            setsToShowMultipleStatsLists={setsToShowMultipleStatsLists}
             isFoundStatsVisible={isFoundStatsVisible}
-            chosenStats={chosenStats}
+            chosenStats={[null] * 12}
             displayCase={true}
           />
 
