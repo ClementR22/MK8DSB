@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   Modal,
   Platform,
   Alert,
+  TextInput,
 } from "react-native";
 import { elementsAllClassName, elementsAllInfosList } from "../../data/data";
 import { ScrollView } from "react-native";
@@ -43,12 +44,21 @@ const SetCard = ({
   isFoundStatsVisible = null,
   chosenStats = null,
   displayCase = false,
-  handlePresentModalPressWithArg = null,
   setCardIndex = null,
+  handlePresentModalPress = null,
   removeSet = null,
+  saveSet = null,
+  renameSet = null,
 }) => {
   const th = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const defaultName = `Set ${setCardIndex + 1}`;
+  const [localName, setLocalName] = useState(setToShowName ?? defaultName);
+
+  useEffect(() => {
+    setLocalName(setToShowName ?? defaultName);
+  }, [setToShowName]);
 
   const displaySetImages = () => {
     setIsModalVisible(true);
@@ -80,14 +90,27 @@ const SetCard = ({
     </View>
   );
 
+  const handleEndEditing = () => {
+    if (localName === "") {
+      renameSet(setCardIndex, null); // Met le nom sur null si vide
+      setLocalName(defaultName); // Réinitialise l'affichage
+    } else {
+      renameSet(setCardIndex, localName); // Sinon, enregistre le texte saisi
+    }
+  };
+
   return (
     <View style={[card(th).container, { flex: 1 }]}>
       {displayCase && (
-        <Pressable onPress={() => console.log("ok")}>
-          <Text>
-            {setToShowName == null ? `Set ${setCardIndex}` : setToShowName}
-          </Text>
-        </Pressable>
+        <TextInput
+          style={styles.textInput}
+          value={localName}
+          onChangeText={(text) => {
+            setLocalName();
+            renameSet(setCardIndex, text);
+          }}
+          onEndEditing={handleEndEditing}
+        />
       )}
 
       <Pressable onPress={displaySetImages}>
@@ -120,18 +143,23 @@ const SetCard = ({
         <View>
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
-            onPress={() => {
-              handlePresentModalPressWithArg();
-            }}
+            onPress={() => handlePresentModalPress(setCardIndex)}
           >
             <MaterialIcons name="edit" size={24} color={th.on_primary} />
           </Pressable>
 
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
-            onPress={removeSet}
+            onPress={() => removeSet(setCardIndex)}
           >
             <Ionicons name="close" size={24} color={th.on_primary} />
+          </Pressable>
+
+          <Pressable
+            style={[button_icon(th).container, shadow_3dp]}
+            onPress={() => saveSet(setCardIndex)}
+          >
+            <MaterialIcons name="save" size={24} color={th.on_primary} />
           </Pressable>
         </View>
       )}
@@ -187,5 +215,8 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     margin: 5,
+  },
+  textInput: {
+    backgroundColor: "grey",
   },
 });

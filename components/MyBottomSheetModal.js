@@ -35,11 +35,6 @@ const MyBottomSheetModal = ({
     "graphql",
   ];
 
-  /* 
-  const handleSheetChanges = useCallback((index) => {
-    console.log("handleSheetChanges", index);
-  }, []);
-  */
   const renderBackdrop = useCallback(
     (props) => (
       <BottomSheetBackdrop

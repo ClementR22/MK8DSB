@@ -10,8 +10,12 @@ const SetCardContainer = ({
   displayCase = false,
   handlePresentModalPress = null,
   removeSet = null,
+  saveSet = null,
+  renameSet = null,
 }) => {
   const th = useTheme();
+
+  console.log("setsToShow", setsToShow);
 
   return (
     <View key="cardsContainer">
@@ -47,11 +51,11 @@ const SetCardContainer = ({
               isFoundStatsVisible={isFoundStatsVisible}
               chosenStats={chosenStats}
               displayCase={displayCase}
-              handlePresentModalPressWithArg={() =>
-                handlePresentModalPress(index)
-              }
               setCardIndex={index}
-              removeSet={() => removeSet(index)}
+              handlePresentModalPress={handlePresentModalPress}
+              removeSet={removeSet}
+              saveSet={saveSet}
+              renameSet={renameSet}
             />
           );
         })}

@@ -52,6 +52,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import Toast from "react-native-toast-message";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const DisplaySetScreenContent = () => {
   const th = useTheme();
 
@@ -103,6 +105,8 @@ const DisplaySetScreenContent = () => {
 
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
 
+  const [loadSetModalVisible, setLoadSetModalVisible] = useState(false);
+
   const setDefault = { name: null, classIds: [9, 16, 30, 39] };
 
   const [setsList, setSetsList] = useState([
@@ -140,8 +144,42 @@ const DisplaySetScreenContent = () => {
       setSetsList((prev) =>
         prev.filter((set, index) => index != setCardSelectedIndex)
       );
+      if (setCardSelectedIndex == setCardActiveIndex) {
+        setSetCardActiveIndex(Math.max(0, setCardActiveIndex - 1));
+      }
+    } else {
+      showToast("Erreur", "Vous devez garder au moins 1 set");
     }
-    showToast("Erreur", "Vous devez garder au moins 1 set");
+  };
+
+  const saveSet = async (setCardSelectedIndex) => {
+    const setCardSelected = setsList[setCardSelectedIndex];
+    const setCardSelectedName = setCardSelected.name;
+    const setsSavedKeys = getSetsSavedKeysAndValues(true);
+    if (
+      setCardSelectedName == null ||
+      (await setsSavedKeys).includes(setCardSelectedName)
+    ) {
+      showToast("Erreur", "Changer le nom du set SVP");
+    } else {
+      try {
+        await AsyncStorage.setItem(
+          setCardSelectedName,
+          JSON.stringify(setCardSelected)
+        );
+        showToast("Succès", "Le set est enregistré");
+      } catch (err) {
+        alert(err);
+      }
+    }
+  };
+
+  const renameSet = (setCardSelectedIndex, newName) => {
+    setSetsList((prev) =>
+      prev.map((set, index) => {
+        return index === setCardActiveIndex ? { ...set, name: newName } : set;
+      })
+    );
   };
 
   const updateSetsList = () => {
@@ -172,12 +210,44 @@ const DisplaySetScreenContent = () => {
     ); // on met à jour le pressableImagesList
   }, [setCardActiveIndex]);
 
+  const getSetsSavedKeysAndValues = async (onlyKeys = false) => {
+    try {
+      console.log("dans getSetsSavedKeysAndValues");
+      const keys = await AsyncStorage.getAllKeys();
+      if (onlyKeys) {
+        console.log("keys", keys);
+        return keys;
+      } else {
+        const keyValuePairs = (await AsyncStorage.multiGet(keys)).map(
+          (keyValuePair) => {
+            const setSaved = JSON.parse(keyValuePair[1]);
+            return setSaved;
+          }
+        );
+        console.log("keyValuePairs", keyValuePairs);
+        return keyValuePairs;
+      }
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données :", error);
+      return [];
+    }
+  };
+
+  const [setsSavedList, setSetsSavedList] = useState([]);
+
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
         <ScrollView ref={scrollViewRef}>
           <View style={styles.container}>
             <Text style={styles.text}>DisplaySetScreen</Text>
+            <Pressable
+              onPress={() => {
+                console.log(setsSavedList);
+              }}
+            >
+              <Text>afficher setsList</Text>
+            </Pressable>
 
             <StatSliderResultSelectorPressable
               setFoundStatsModalVisible={setFoundStatsModalVisible}
@@ -194,17 +264,43 @@ const DisplaySetScreenContent = () => {
               />
             </Pressable>
 
+            <Pressable onPress={() => AsyncStorage.clear()}>
+              <Text style={styles.button}>remove</Text>
+            </Pressable>
+
+            <Pressable
+              style={[button_icon(th).container, shadow_3dp]}
+              onPress={() => setLoadSetModalVisible(true)}
+            >
+              <MaterialCommunityIcons
+                name="download"
+                size={24}
+                color={th.on_primary}
+              />
+            </Pressable>
+
             <MyModal
               modalTitle={translate("StatsToDisplay")}
               isModalVisible={foundStatsModalVisible}
               setIsModalVisible={setFoundStatsModalVisible}
               ModalContent={StatSelector}
               contentProps={{
-                statList: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
+                statList: isFoundStatsVisible,
                 setStatList: setIsFoundStatsVisible,
                 keepOneCondition: false,
               }}
             />
+
+            {/* <MyModal
+              modalTitle={translate("LoadASet")}
+              isModalVisible={loadSetModalVisible}
+              setIsModalVisible={setLoadSetModalVisible}
+              ModalContent={SetCardContainer}
+              contentProps={{
+                setsToShow: setsList,
+                displayCase: true,
+              }}
+            /> */}
           </View>
 
           <SetCardContainer
@@ -212,6 +308,8 @@ const DisplaySetScreenContent = () => {
             displayCase={true}
             handlePresentModalPress={handlePresentModalPress}
             removeSet={removeSet}
+            saveSet={saveSet}
+            renameSet={renameSet}
           />
 
           <View
@@ -222,15 +320,6 @@ const DisplaySetScreenContent = () => {
               setNumber={setOrderNumber}
               iconsNames={imagesOrderIconsNames}
             />
-
-            {/* <ElementsSelector
-              displayCase={true}
-              orderNumber={orderNumber}
-              setCardActiveIndex={setCardActiveIndex}
-              setSetsList={setSetsList}
-              //removeSet={removeSet}
-              scrollViewRef={scrollViewRef}
-            /> */}
           </View>
 
           <StatSliderResultContainer
