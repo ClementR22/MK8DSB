@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Dimensions, Pressable, Image } from "react-native";
 import { ScrollView } from "react-native";
-import { usePressableImages } from "../../utils/usePressableImages";
+import { usePressableImages } from "../../utils/PressableImagesContext";
 import showToast from "../../utils/toast";
 import { category4Names } from "../../data/data";
 

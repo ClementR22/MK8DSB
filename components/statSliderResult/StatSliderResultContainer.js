@@ -1,21 +1,25 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import StatSliderResult from "./StatSliderResult";
-import { useTheme } from "../styles/theme";
+import { useTheme } from "../../utils/ThemeContext";
 import { translate } from "../../i18n/translations";
 
 const StatSliderResultContainer = ({
   setsToShowMultipleStatsLists,
   isFoundStatsVisible,
   chosenStats,
-  displayCase = false,
+  situation,
 }) => {
   const th = useTheme();
+
+  console.log("dans StatSliderResultContainer, situation=", situation);
+
+  console.log(setsToShowMultipleStatsLists, isFoundStatsVisible, chosenStats);
 
   return (
     <View style={{ flex: 1, backgroundColor: "green" }}>
       {isFoundStatsVisible.map(({ name, checked }, statIndex) => {
-        translated_name = translate(name);
+        const translated_name = translate(name);
         if (checked) {
           return (
             <View
@@ -27,7 +31,7 @@ const StatSliderResultContainer = ({
             >
               <Text style={styles.text}>
                 {translated_name}
-                {!displayCase &&
+                {situation == "/SearchSetScreen" &&
                   ` : ${JSON.stringify(
                     setsToShowMultipleStatsLists[0][statIndex]
                   )}`}
@@ -47,7 +51,7 @@ const StatSliderResultContainer = ({
                     isWanted={chosenStats[statIndex]?.checked}
                     wantedValue={chosenStats[statIndex]?.value}
                   />
-                  {displayCase && (
+                  {situation != "/SearchSetScreen" && (
                     <Text style={{ flex: 0.2 }}>
                       {setToShowStats[statIndex]}
                     </Text>

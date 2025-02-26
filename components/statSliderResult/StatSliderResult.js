@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { useTheme } from "../styles/theme";
+import { useTheme } from "../../utils/ThemeContext";
 
 const StatSliderResult = ({ value, wantedValue = null }) => {
   const th = useTheme();

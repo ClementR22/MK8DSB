@@ -10,7 +10,7 @@ import {
 import { modal } from "./styles/modal";
 import { button } from "./styles/button";
 import { Checkbox } from "react-native-paper";
-import { useTheme } from "./styles/theme";
+import { useTheme } from "../utils/ThemeContext";
 import { translate } from "../i18n/translations";
 import { toggleCheck } from "../utils/toggleCheck";
 

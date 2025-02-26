@@ -1,7 +1,8 @@
 import { Pressable, StyleSheet, Text } from "react-native";
 
 import { button_icon } from "../styles/button";
-import { useTheme, shadow_3dp } from "../styles/theme";
+import { shadow_3dp } from "../styles/theme";
+import { useTheme } from "../../utils/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const StatSliderResultSelectorPressable = ({ setFoundStatsModalVisible }) => {

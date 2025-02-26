@@ -47,17 +47,17 @@ import {
 import th, {
   shadow_12dp,
   shadow_3dp,
-  useTheme,
   vh,
   vw,
 } from "../components/styles/theme";
+import { useTheme } from "../utils/ThemeContext";
 import { modal } from "../components/styles/modal";
 import checkbox from "../components/styles/checkbox";
 import PressableStat from "../components/PressableStat";
 import StatSelector from "../components/StatSelector";
 import { translate } from "../i18n/translations";
 import { elementsAllInfos } from "../data/data";
-import { usePressableImages } from "../utils/usePressableImages";
+import { usePressableImages } from "../utils/PressableImagesContext";
 import SetCardContainer from "../components/setCard/SetCardContainer";
 import FilterSelector from "../components/filterSelector/FilterSelector";
 import ElementsDeselector from "../components/elementsSelector/ElementsDeselector";
@@ -398,12 +398,14 @@ const SearchSetScreenContent = () => {
               modalTitle={translate("StatsToParameter")}
               isModalVisible={chosenStatsModalVisible}
               setIsModalVisible={setChosenStatsModalVisible}
-              ModalContent={StatSelector}
-              contentProps={{
-                statList: chosenStats, // Utilisation correcte des paires clé-valeur
-                setStatList: setChosenStats,
-                keepOneCondition: true,
-              }}
+              ModalContentsList={[StatSelector]}
+              contentPropsList={[
+                {
+                  statList: chosenStats, // Utilisation correcte des paires clé-valeur
+                  setStatList: setChosenStats,
+                  keepOneCondition: true,
+                },
+              ]}
             />
 
             <MyBottomSheetModal
@@ -419,7 +421,7 @@ const SearchSetScreenContent = () => {
                   setChosenBodyType: setChosenBodyType,
                 },
                 {},
-                { displayCase: false },
+                {},
               ]}
               bottomSheetModalRef={bottomSheetModalRef}
             />
@@ -428,23 +430,27 @@ const SearchSetScreenContent = () => {
               modalTitle={translate("NumberOfResults")}
               isModalVisible={resultsNumberModalVisible}
               setIsModalVisible={setResultsNumberModalVisible}
-              ModalContent={ResultsNumber}
-              contentProps={{
-                resultsNumber: resultsNumber, // Utilisation correcte des paires clé-valeur
-                setResultsNumber: setResultsNumber,
-              }}
+              ModalContentsList={[ResultsNumber]}
+              contentPropsList={[
+                {
+                  resultsNumber: resultsNumber, // Utilisation correcte des paires clé-valeur
+                  setResultsNumber: setResultsNumber,
+                },
+              ]}
             />
 
             <MyModal
               modalTitle={translate("StatsToDisplay")}
               isModalVisible={foundStatsModalVisible}
               setIsModalVisible={setFoundStatsModalVisible}
-              ModalContent={StatSelector}
-              contentProps={{
-                statList: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
-                setStatList: setIsFoundStatsVisible,
-                keepOneCondition: false,
-              }}
+              ModalContentsList={[StatSelector]}
+              contentPropsList={[
+                {
+                  statList: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
+                  setStatList: setIsFoundStatsVisible,
+                  keepOneCondition: false,
+                },
+              ]}
             />
           </View>
 

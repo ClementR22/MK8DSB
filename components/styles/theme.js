@@ -1,6 +1,4 @@
 import { Dimensions } from "react-native";
-import { useColorScheme } from "react-native";
-import React, { createContext, useContext, useState } from "react";
 
 export const vh = Dimensions.get("screen").height;
 export const vw = Dimensions.get("screen").width;
@@ -129,29 +127,3 @@ export const shadow_12dp = {
   boxShadow: "0px 6px 8px rgba(0, 0, 0, 0.37)",
   elevation: 12,
 };
-
-// Créer un contexte pour gérer le thème
-const ThemeContext = createContext();
-
-export const useTheme = () => {
-  return useContext(ThemeContext);
-};
-
-// Fournisseur de thème
-export const ThemeProvider = ({ children }) => {
-  const colorScheme = useColorScheme(); // Récupère la couleur du système (light ou dark)
-
-  const theme = colorScheme === "dark" ? dark_theme : light_theme;
-
-  return (
-    <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
-  );
-};
-
-/* const useAppTheme = () => {
-    const colorScheme = useColorScheme();
-    return colorScheme === "dark" ? dark_theme : light_theme;
-  };
-  
-  export default useAppTheme;
-  */

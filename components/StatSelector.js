@@ -12,7 +12,7 @@ import { modal } from "./styles/modal";
 import { button } from "./styles/button";
 import checkbox from "./styles/checkbox";
 import PressableStat from "./PressableStat";
-import { useTheme } from "./styles/theme";
+import { useTheme } from "../utils/ThemeContext";
 
 const StatSelector = ({ statList, setStatList, keepOneCondition }) => {
   const th = useTheme();

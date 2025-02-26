@@ -3,7 +3,8 @@ import { View, Text, StyleSheet } from "react-native";
 import { Slider } from "@miblanchard/react-native-slider";
 import MultiStateToggleButton from "./MultiStateToggleButton";
 
-import { useTheme, vw } from "./styles/theme";
+import { vw } from "./styles/theme";
+import { useTheme } from "../utils/ThemeContext";
 import { translate } from "../i18n/translations";
 
 const StatSlider = ({

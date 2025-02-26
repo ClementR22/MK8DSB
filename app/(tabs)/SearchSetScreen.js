@@ -1,10 +1,13 @@
 import SearchSetScreenContent from "../SearchSetScreenContent";
-import { PressableImagesProvider } from "../../utils/usePressableImages";
+import { PressableImagesProvider } from "../../utils/PressableImagesContext";
+import { SetsListProvider } from "../../utils/SetsListContext";
 
 const SearchSetScreen = () => {
   return (
     <PressableImagesProvider>
-      <SearchSetScreenContent />
+      <SetsListProvider>
+        <SearchSetScreenContent />
+      </SetsListProvider>
     </PressableImagesProvider>
   );
 };

@@ -16,15 +16,15 @@ import {
   elementsAllInfosList,
   bodyTypeNames,
 } from "../../data/data";
-import { usePressableImages } from "../../utils/usePressableImages";
+import { usePressableImages } from "../../utils/PressableImagesContext";
 import { translate } from "../../i18n/translations";
 import { button } from "../styles/button";
-import { useTheme } from "../styles/theme";
+import { useTheme } from "../../utils/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const iconSize = 38;
 
-const ElementsSelector = ({ displayCase, orderNumber, updateSetsList }) => {
+const ElementsSelector = ({ orderNumber }) => {
   const th = useTheme();
   const {
     pressableImagesList,
@@ -32,8 +32,6 @@ const ElementsSelector = ({ displayCase, orderNumber, updateSetsList }) => {
     handlePressImage,
     handlePressImageByClass,
   } = usePressableImages();
-
-  const category4NamesExtended = [...category4Names, "empty"];
 
   const elementIcons = [
     elementsAllInfosList[0].image.uri,
@@ -95,13 +93,9 @@ const ElementsSelector = ({ displayCase, orderNumber, updateSetsList }) => {
               name={name}
               pressed={pressed}
               onPress={
-                displayCase
+                situation != "/SearchSetScreen"
                   ? () => {
-                      handlePressImageByClass(
-                        classId,
-                        category,
-                        updateSetsList
-                      );
+                      handlePressImageByClass(classId, category);
                     }
                   : () => {
                       handlePressImage(id, category);
@@ -209,14 +203,9 @@ const ElementsSelector = ({ displayCase, orderNumber, updateSetsList }) => {
                         name={name}
                         pressed={pressed}
                         onPress={
-                          displayCase
+                          situation != "/SearchSetScreen"
                             ? () => {
-                                handlePressImageByClass(
-                                  classId,
-                                  category,
-                                  setCardActiveIndex,
-                                  setSetsList
-                                );
+                                handlePressImageByClass(classId, category);
                               }
                             : () => {
                                 handlePressImage(id, category);
@@ -243,27 +232,25 @@ const ElementsSelector = ({ displayCase, orderNumber, updateSetsList }) => {
     >
       {/* Navigation par onglets */}
       <View style={styles.tabContainer} key={"tabContainer"}>
-        {(displayCase ? category4NamesExtended : category4Names).map(
-          (elementName, index) => (
-            <Pressable
-              key={elementName} // Ajout de la key ici
-              style={[
-                styles.tab,
-                selectedTab === elementName && styles.activeTab,
-              ]}
-              onPress={() => {
-                setSelectedTab(elementName);
-                scrollToSection(sectionRefs[4], false);
-              }}
-            >
-              <Image
-                source={elementIcons[index]}
-                style={styles.image}
-                resizeMode="contain"
-              />
-            </Pressable>
-          )
-        )}
+        {category4Names.map((elementName, index) => (
+          <Pressable
+            key={elementName} // Ajout de la key ici
+            style={[
+              styles.tab,
+              selectedTab === elementName && styles.activeTab,
+            ]}
+            onPress={() => {
+              setSelectedTab(elementName);
+              scrollToSection(sectionRefs[4], false);
+            }}
+          >
+            <Image
+              source={elementIcons[index]}
+              style={styles.image}
+              resizeMode="contain"
+            />
+          </Pressable>
+        ))}
       </View>
 
       <ScrollView

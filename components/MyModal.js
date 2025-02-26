@@ -14,7 +14,7 @@ import checkbox from "./styles/checkbox";
 import th from "./styles/theme";
 import PressableStat from "./PressableStat";
 import { shadow_12dp } from "./styles/theme";
-import { useTheme } from "./styles/theme";
+import { useTheme } from "../utils/ThemeContext";
 import { translate } from "../i18n/translations";
 import Toast from "react-native-toast-message";
 
@@ -22,8 +22,8 @@ const MyModal = ({
   modalTitle,
   isModalVisible,
   setIsModalVisible,
-  ModalContent,
-  contentProps,
+  ModalContentsList,
+  contentPropsList,
   closeButtonText = "Close",
 }) => {
   const th = useTheme();
@@ -45,7 +45,9 @@ const MyModal = ({
           onStartShouldSetResponder={() => true}
         >
           <Text style={modal(th).title_center}>{modalTitle}</Text>
-          <ModalContent {...contentProps} />
+          {ModalContentsList.map((ModalContent, index) => (
+            <ModalContent key={index} {...contentPropsList[index]} />
+          ))}
           <Pressable
             style={[
               button(th).container,

@@ -13,7 +13,7 @@ import { shadow_3dp } from "./styles/theme";
 import { useRef } from "react";
 import { useCallback } from "react";
 import FilterSelector from "./filterSelector/FilterSelector";
-import { useTheme } from "./styles/theme";
+import { useTheme } from "../utils/ThemeContext";
 import MultiStateToggleButton from "./MultiStateToggleButton";
 
 const MyBottomSheetModal = ({

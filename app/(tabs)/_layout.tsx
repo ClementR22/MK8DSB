@@ -1,12 +1,11 @@
 import { Tabs } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { LanguageProvider } from "@/i18n/LanguageContext";
-import { ThemeProvider } from "../../components/styles/theme";
-import { PressableImagesProvider } from "../../utils/usePressableImages";
+import { ThemeProvider } from "../../utils/ThemeContext"
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();

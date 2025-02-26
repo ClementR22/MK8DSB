@@ -17,7 +17,7 @@ import StatSliderResult from "../statSliderResult/StatSliderResult";
 import { modal } from "../styles/modal";
 import { button } from "../styles/button";
 import { card } from "../styles/card";
-import { useTheme } from "../styles/theme";
+import { useTheme } from "../../utils/ThemeContext";
 import MyModal from "../MyModal";
 import SetImagesDisplayer from "./SetCardImagesDisplayer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
@@ -33,6 +33,10 @@ import SetCardElementChip from "./SetCardElementChip";
 import { category4Names } from "../../data/data";
 import { translate } from "../../i18n/translations";
 import { FlatList } from "react-native";
+import ElementsSelector from "../elementsSelector/ElementsSelector";
+import { usePressableImages } from "../../utils/PressableImagesContext";
+import { useSetsList } from "../../utils/SetsListContext";
+import MultiStateToggleButton from "../MultiStateToggleButton";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
@@ -43,15 +47,19 @@ const SetCard = ({
   setToShowStats = null,
   isFoundStatsVisible = null,
   chosenStats = null,
-  displayCase = false,
   setCardIndex = null,
-  handlePresentModalPress = null,
-  removeSet = null,
-  saveSet = null,
-  renameSet = null,
 }) => {
   const th = useTheme();
-  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const { renameSet, saveSet, removeSet } = useSetsList();
+
+  const [orderNumber, setOrderNumber] = useState(0);
+
+  const { setSetCardActiveIndex } = useSetsList();
+
+  const [isImagesModalVisible, setIsImagesModalVisible] = useState(false);
+  const [isElementsSelectorModalVisible, setIsElementsSelectorModalVisible] =
+    useState(false);
 
   const defaultName = `Set ${setCardIndex + 1}`;
   const [localName, setLocalName] = useState(setToShowName ?? defaultName);
@@ -61,7 +69,7 @@ const SetCard = ({
   }, [setToShowName]);
 
   const displaySetImages = () => {
-    setIsModalVisible(true);
+    setIsImagesModalVisible(true);
   };
 
   const data = category4Names.map((category, index) => {
@@ -92,27 +100,24 @@ const SetCard = ({
 
   const handleEndEditing = () => {
     if (localName === "") {
-      renameSet(setCardIndex, null); // Met le nom sur null si vide
+      renameSet(null); // Met le nom sur null si vide
       setLocalName(defaultName); // Réinitialise l'affichage
-    } else {
-      renameSet(setCardIndex, localName); // Sinon, enregistre le texte saisi
     }
   };
 
   return (
     <View style={[card(th).container, { flex: 1 }]}>
-      {displayCase && (
+      {situation != "/SearchSetScreen" && (
         <TextInput
           style={styles.textInput}
           value={localName}
           onChangeText={(text) => {
             setLocalName();
-            renameSet(setCardIndex, text);
+            renameSet(text); // a virer, seulement pour pc
           }}
           onEndEditing={handleEndEditing}
         />
       )}
-
       <Pressable onPress={displaySetImages}>
         <FlatList
           data={data}
@@ -122,35 +127,70 @@ const SetCard = ({
         />
       </Pressable>
 
-      {!displayCase ? (
+      {situation == "/SearchSetScreen"
+        ? console.log(
+            "setCardIndex",
+            setCardIndex,
+            "setToShowClassIds",
+            setToShowClassIds,
+            "setToShowStats",
+            setToShowStats,
+            "isFoundStatsVisible",
+            isFoundStatsVisible,
+            "chosenStats",
+            chosenStats
+          )
+        : null}
+
+      {situation == "/SearchetScreen" ? (
         <StatSliderResultContainer
           setsToShowMultipleStatsLists={[setToShowStats]}
           isFoundStatsVisible={isFoundStatsVisible}
           chosenStats={chosenStats}
+          situation={situation}
         />
       ) : null}
 
       <MyModal
         modalTitle={""}
-        isModalVisible={isModalVisible}
-        setIsModalVisible={setIsModalVisible}
-        ModalContent={SetImagesDisplayer}
-        contentProps={{ setToShowElementsIds: setToShowClassIds }}
+        isModalVisible={isImagesModalVisible}
+        setIsModalVisible={setIsImagesModalVisible}
+        ModalContentsList={[SetImagesDisplayer]}
+        contentPropsList={[{ setToShowElementsIds: setToShowClassIds }]}
         closeButtonText="Close"
       />
-
-      {displayCase && (
+      <MyModal
+        modalTitle={translate("Selectionner")}
+        isModalVisible={isElementsSelectorModalVisible}
+        setIsModalVisible={setIsElementsSelectorModalVisible}
+        ModalContentsList={[MultiStateToggleButton, ElementsSelector]}
+        contentPropsList={[
+          {
+            number: orderNumber,
+            setNumber: setOrderNumber,
+          },
+          {
+            orderNumber: orderNumber,
+          },
+        ]}
+      />
+      {situation != "/SearchSetScreen" && (
         <View>
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
-            onPress={() => handlePresentModalPress(setCardIndex)}
+            onPress={() => {
+              setSetCardActiveIndex(setCardIndex);
+              setIsElementsSelectorModalVisible(true);
+            }}
           >
             <MaterialIcons name="edit" size={24} color={th.on_primary} />
           </Pressable>
 
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
-            onPress={() => removeSet(setCardIndex)}
+            onPress={() => {
+              removeSet(setCardIndex);
+            }}
           >
             <Ionicons name="close" size={24} color={th.on_primary} />
           </Pressable>

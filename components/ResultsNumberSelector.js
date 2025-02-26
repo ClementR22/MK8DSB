@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { button_icon } from "./styles/button";
 import { shadow_12dp } from "./styles/theme";
-import { useTheme } from "./styles/theme";
+import { useTheme } from "../utils/ThemeContext";
 
 const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
   const th = useTheme();

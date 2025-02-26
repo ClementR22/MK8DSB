@@ -1,21 +1,33 @@
 import { View, ScrollView, StyleSheet } from "react-native";
-import { useTheme, vh } from "../styles/theme";
+import { vh } from "../styles/theme";
+import { useTheme } from "../../utils/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCard from "./SetCard";
+import { useState } from "react";
+import { useCallback } from "react";
+import { useSetsList } from "../../utils/SetsListContext";
+import { useRef } from "react";
 
 const SetCardContainer = ({
   setsToShow,
   chosenStats = null,
   isFoundStatsVisible = null,
-  displayCase = false,
-  handlePresentModalPress = null,
-  removeSet = null,
-  saveSet = null,
-  renameSet = null,
 }) => {
+  const { setsList, setSetCardActiveIndex } = useSetsList();
+
+  const handlePresentModalPress = useCallback(
+    (setCardSelectedIndex) => {
+      bottomSheetModalRef.current?.present(); // on fait apparaitre le bottomSheetModal
+      setSetCardActiveIndex(setCardSelectedIndex); // on met à jour le state setCardActive
+    },
+    [setsList]
+  );
+
   const th = useTheme();
 
-  console.log("setsToShow", setsToShow);
+  const [orderNumber, setOrderNumber] = useState(0);
+
+  const bottomSheetModalRef = useRef(null);
 
   return (
     <View key="cardsContainer">
@@ -50,16 +62,23 @@ const SetCardContainer = ({
               setToShowStats={stats}
               isFoundStatsVisible={isFoundStatsVisible}
               chosenStats={chosenStats}
-              displayCase={displayCase}
               setCardIndex={index}
-              handlePresentModalPress={handlePresentModalPress}
-              removeSet={removeSet}
-              saveSet={saveSet}
-              renameSet={renameSet}
             />
           );
         })}
       </ScrollView>
+
+      {/* <MyBottomSheetModal
+        modalTitle={translate("Selectionner")}
+        ModalContentsList={[ElementsSelector]}
+        contentPropsList={[
+          {
+            displayCase: true,
+            orderNumber: orderNumber,
+          },
+        ]}
+        bottomSheetModalRef={bottomSheetModalRef}
+      /> */}
     </View>
   );
 };

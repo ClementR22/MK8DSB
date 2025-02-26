@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import { LanguageContext } from "../i18n/LanguageContext";
+import { useLanguage } from "./LanguageContext";
 
 export const translate = (key) => {
-  const { language } = useContext(LanguageContext); // Accès direct à la langue depuis le contexte
+  const { language } = useLanguage();
   return translations[language]?.[key] || key;
 };
 
@@ -16,7 +15,6 @@ const translations = {
     ATV: "ATV",
     wheels: "Wheels",
     glider: "Glider",
-    empty: "Empty",
 
     speedGround: "Ground speed",
     speedAntiGravity: "Anti-gravity speed",
@@ -183,7 +181,6 @@ const translations = {
     ATV: "Quad",
     wheels: "Roues",
     glider: "Aile",
-    empty: "Vide",
 
     speedGround: "Vitesse sol",
     speedAntiGravity: "Vitesse anti-gravité",

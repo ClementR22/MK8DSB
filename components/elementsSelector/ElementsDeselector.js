@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { usePressableImages } from "../../utils/usePressableImages";
+import { usePressableImages } from "../../utils/PressableImagesContext";
 import ElementChip from "./ElementChip";
 
 const ElementsDeselector = () => {
