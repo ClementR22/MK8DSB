@@ -7,13 +7,25 @@ import { useState } from "react";
 import { useCallback } from "react";
 import { useSetsList } from "../../utils/SetsListContext";
 import { useRef } from "react";
+import { usePressableImages } from "../../utils/PressableImagesContext";
+import { useEffect } from "react";
 
 const SetCardContainer = ({
   setsToShow,
   chosenStats = null,
   isFoundStatsVisible = null,
+  situation,
 }) => {
-  const { setsList, setSetCardActiveIndex } = useSetsList();
+  console.log("je render SetCardContainer");
+
+  const {
+    setsList,
+    setCardActiveIndex,
+    setSetCardActiveIndex,
+    updateSetsList,
+  } = useSetsList();
+  const { pressableImagesList, handlePressSetUpdatePressableImagesList } =
+    usePressableImages();
 
   const handlePresentModalPress = useCallback(
     (setCardSelectedIndex) => {
@@ -22,6 +34,12 @@ const SetCardContainer = ({
     },
     [setsList]
   );
+
+  useEffect(() => {
+    handlePressSetUpdatePressableImagesList(
+      setsList[setCardActiveIndex].classIds
+    ); // on met à jour le pressableImagesList
+  }, [setCardActiveIndex]);
 
   const th = useTheme();
 
@@ -63,6 +81,7 @@ const SetCardContainer = ({
               isFoundStatsVisible={isFoundStatsVisible}
               chosenStats={chosenStats}
               setCardIndex={index}
+              situation={situation}
             />
           );
         })}

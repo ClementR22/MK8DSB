@@ -48,7 +48,9 @@ const SetCard = ({
   isFoundStatsVisible = null,
   chosenStats = null,
   setCardIndex = null,
+  situation,
 }) => {
+  console.log("je render SetCard", situation);
   const th = useTheme();
 
   const { renameSet, saveSet, removeSet } = useSetsList();
@@ -107,7 +109,7 @@ const SetCard = ({
 
   return (
     <View style={[card(th).container, { flex: 1 }]}>
-      {situation != "/SearchSetScreen" && (
+      {situation != "search" && (
         <TextInput
           style={styles.textInput}
           value={localName}
@@ -127,22 +129,7 @@ const SetCard = ({
         />
       </Pressable>
 
-      {situation == "/SearchSetScreen"
-        ? console.log(
-            "setCardIndex",
-            setCardIndex,
-            "setToShowClassIds",
-            setToShowClassIds,
-            "setToShowStats",
-            setToShowStats,
-            "isFoundStatsVisible",
-            isFoundStatsVisible,
-            "chosenStats",
-            chosenStats
-          )
-        : null}
-
-      {situation == "/SearchetScreen" ? (
+      {situation == "search" ? (
         <StatSliderResultContainer
           setsToShowMultipleStatsLists={[setToShowStats]}
           isFoundStatsVisible={isFoundStatsVisible}
@@ -171,10 +158,11 @@ const SetCard = ({
           },
           {
             orderNumber: orderNumber,
+            situation: situation,
           },
         ]}
       />
-      {situation != "/SearchSetScreen" && (
+      {situation != "search" && (
         <View>
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}

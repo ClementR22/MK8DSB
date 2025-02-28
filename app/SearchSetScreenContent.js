@@ -421,7 +421,7 @@ const SearchSetScreenContent = () => {
                   setChosenBodyType: setChosenBodyType,
                 },
                 {},
-                {},
+                { situation: "search" },
               ]}
               bottomSheetModalRef={bottomSheetModalRef}
             />
@@ -458,6 +458,7 @@ const SearchSetScreenContent = () => {
             setsToShow={setsToShow}
             chosenStats={chosenStats}
             isFoundStatsVisible={isFoundStatsVisible}
+            situation="search"
           />
         </ScrollView>
       </BottomSheetModalProvider>

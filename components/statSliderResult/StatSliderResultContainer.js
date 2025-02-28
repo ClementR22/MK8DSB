@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import StatSliderResult from "./StatSliderResult";
 import { useTheme } from "../../utils/ThemeContext";
 import { translate } from "../../i18n/translations";
+import { usePathname } from "expo-router";
 
 const StatSliderResultContainer = ({
   setsToShowMultipleStatsLists,
@@ -11,10 +12,6 @@ const StatSliderResultContainer = ({
   situation,
 }) => {
   const th = useTheme();
-
-  console.log("dans StatSliderResultContainer, situation=", situation);
-
-  console.log(setsToShowMultipleStatsLists, isFoundStatsVisible, chosenStats);
 
   return (
     <View style={{ flex: 1, backgroundColor: "green" }}>
@@ -31,7 +28,7 @@ const StatSliderResultContainer = ({
             >
               <Text style={styles.text}>
                 {translated_name}
-                {situation == "/SearchSetScreen" &&
+                {situation == "search" &&
                   ` : ${JSON.stringify(
                     setsToShowMultipleStatsLists[0][statIndex]
                   )}`}
@@ -51,7 +48,7 @@ const StatSliderResultContainer = ({
                     isWanted={chosenStats[statIndex]?.checked}
                     wantedValue={chosenStats[statIndex]?.value}
                   />
-                  {situation != "/SearchSetScreen" && (
+                  {situation != "search" && (
                     <Text style={{ flex: 0.2 }}>
                       {setToShowStats[statIndex]}
                     </Text>

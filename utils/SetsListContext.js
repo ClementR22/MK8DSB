@@ -10,6 +10,7 @@ const SetsListContext = createContext();
 
 // Fournisseur du contexte
 export const SetsListProvider = ({ children }) => {
+  console.log("on render setsList ");
   const setDefault = { name: null, classIds: [9, 16, 30, 39] };
 
   const [setsList, setSetsList] = useState([

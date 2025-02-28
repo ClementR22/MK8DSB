@@ -11,8 +11,5 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "components/FilterModalContent.js",
-    "components/AddablePressables.js"
-  ]
+    "expo-env.d.ts"  ]
 }

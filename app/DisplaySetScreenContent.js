@@ -62,7 +62,9 @@ const DisplaySetScreenContent = () => {
     setCardActiveIndex,
   } = useSetsList();
 
-  const situation = "cestmasituation";
+  useEffect(() => {
+    updateSetsList(pressableImagesList);
+  }, [pressableImagesList]);
 
   const [orderNumber, setOrderNumber] = useState(0);
 
@@ -104,16 +106,6 @@ const DisplaySetScreenContent = () => {
   });
 
   const scrollViewRef = useRef(null);
-
-  useEffect(() => {
-    updateSetsList(pressableImagesList);
-  }, [pressableImagesList]);
-
-  useEffect(() => {
-    handlePressSetUpdatePressableImagesList(
-      setsList[setCardActiveIndex].classIds
-    ); // on met à jour le pressableImagesList
-  }, [setCardActiveIndex]);
 
   return (
     <GestureHandlerRootView>
@@ -183,6 +175,7 @@ const DisplaySetScreenContent = () => {
               contentPropsList={[
                 {
                   setsToShow: setsSavedList,
+                  situation: "save",
                 },
               ]}
             />
@@ -191,13 +184,14 @@ const DisplaySetScreenContent = () => {
           <SetCardContainer
             setsToShow={setsList}
             isFoundStatsVisible={isFoundStatsVisible}
+            situation="display"
           />
 
           <StatSliderResultContainer
             setsToShowMultipleStatsLists={setsToShowMultipleStatsLists}
             isFoundStatsVisible={isFoundStatsVisible}
             chosenStats={[null] * 12}
-            situation={situation}
+            situation="display"
           />
         </ScrollView>
         <Toast />

@@ -21,11 +21,15 @@ import { translate } from "../../i18n/translations";
 import { button } from "../styles/button";
 import { useTheme } from "../../utils/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { usePathname } from "expo-router";
 
 const iconSize = 38;
 
-const ElementsSelector = ({ orderNumber }) => {
+const ElementsSelector = ({ orderNumber, situation }) => {
   const th = useTheme();
+
+  console.log("je render elemet", situation);
+
   const {
     pressableImagesList,
     pressableImagesByCategory,
@@ -93,7 +97,7 @@ const ElementsSelector = ({ orderNumber }) => {
               name={name}
               pressed={pressed}
               onPress={
-                situation != "/SearchSetScreen"
+                situation != "search"
                   ? () => {
                       handlePressImageByClass(classId, category);
                     }
@@ -203,7 +207,7 @@ const ElementsSelector = ({ orderNumber }) => {
                         name={name}
                         pressed={pressed}
                         onPress={
-                          situation != "/SearchSetScreen"
+                          situation != "search"
                             ? () => {
                                 handlePressImageByClass(classId, category);
                               }
