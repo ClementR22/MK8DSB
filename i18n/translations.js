@@ -37,6 +37,7 @@ const translations = {
     SearchedStats: "Searched stats",
     Close: "Close",
     StatsToParameter: "Stats to parameter",
+    LoadASavedSet: "Load a saved Set",
 
     BabyPeach: "Baby Peach",
     BabyDaisy: "Baby Daisy",
@@ -203,6 +204,7 @@ const translations = {
     SearchedStats: "Statistiques recherchées",
     Close: "Fermer",
     StatsToParameter: "Stats à paramétrer",
+    LoadASavedSet: "Charger un set enregistré",
 
     BabyPeach: "Bébé Peach",
     BabyDaisy: "Bébé Daisy",

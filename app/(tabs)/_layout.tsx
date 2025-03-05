@@ -6,6 +6,7 @@ import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { ThemeProvider } from "../../utils/ThemeContext"
+import Toast from "react-native-toast-message";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -80,6 +81,7 @@ export default function TabLayout() {
             }}
           />
         </Tabs>
+        <Toast/>
       </LanguageProvider>
     </ThemeProvider>
   );

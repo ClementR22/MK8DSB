@@ -40,8 +40,8 @@ const MyModal = ({
         style={modal(th).background}
         onPress={() => setIsModalVisible(false)}
       >
-        <View
-          style={modal(th).container} //modal(th).container}
+        <Pressable
+          style={modal(th).container}
           onStartShouldSetResponder={() => true}
         >
           <Text style={modal(th).title_center}>{modalTitle}</Text>
@@ -60,9 +60,8 @@ const MyModal = ({
           >
             <Text style={button(th).text}>{translate(closeButtonText)}</Text>
           </Pressable>
-        </View>
+        </Pressable>
       </Pressable>
-
       <Toast />
     </Modal>
   );

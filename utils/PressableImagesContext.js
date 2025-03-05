@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { bodyTypeNames, elementsAllInfosList } from "../data/data";
 import { translate } from "../i18n/translations";
+import { useSetsList } from "./SetsListContext";
 
 // Fonction pour initialiser l'état pressableImagesList
 const initializePressableImagesList = (isDefaultSelectedImages) => {
@@ -80,7 +81,14 @@ export const PressableImagesProvider = ({
     // donc pressableImagesByCategory est mis à jour
   };
 
-  const handlePressImageByClass = (classId, category) => {
+  const [pressedClassIds, setPressedClassIds] = useState({
+    character: 9,
+    body: 16,
+    wheels: 30,
+    glider: 39,
+  });
+
+  const handlePressImageByClass = (classId, category, situation) => {
     const categoryList = bodyTypeNames.includes(category)
       ? bodyTypeNames
       : [category];
@@ -94,9 +102,10 @@ export const PressableImagesProvider = ({
           : item
       )
     );
+    setPressedClassIds((prev) => ({ ...prev, [category]: classId }));
   };
 
-  const handlePressSetUpdatePressableImagesList = (setClassIds) => {
+  const updatePressableImagesList = (setClassIds) => {
     setPressableImagesList((prev) =>
       prev.map((item) => ({
         ...item,
@@ -113,7 +122,8 @@ export const PressableImagesProvider = ({
         handlePressImage,
         handlePressImageByClass,
         setPressableImagesList,
-        handlePressSetUpdatePressableImagesList,
+        pressedClassIds,
+        updatePressableImagesList,
       }}
     >
       {children}

@@ -35,12 +35,14 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import SetCardContainer from "../components/setCard/SetCardContainer";
 
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+// import { GestureHandlerRootView } from "react-native-gesture-handler";
+// import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import Toast from "react-native-toast-message";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSetsList } from "../utils/SetsListContext";
+import { useMemo } from "react";
+import { Portal, Provider } from "react-native-paper";
 
 const DisplaySetScreenContent = () => {
   const th = useTheme();
@@ -51,7 +53,7 @@ const DisplaySetScreenContent = () => {
     handlePressImage,
     handlePressImageUnique,
     setPressableImagesList,
-    handlePressSetUpdatePressableImagesList,
+    pressedClassIds,
   } = usePressableImages();
 
   const {
@@ -63,8 +65,17 @@ const DisplaySetScreenContent = () => {
   } = useSetsList();
 
   useEffect(() => {
-    updateSetsList(pressableImagesList);
-  }, [pressableImagesList]);
+    updateSetsList(pressedClassIds, situation); // Met à jour après le rendu
+  }, [pressedClassIds]); // Déclenché uniquement quand pressedClassIds change
+
+  const [savedSetModalVisible, setSavedSetModalVisible] = useState(false);
+
+  const toggleSavedSetModal = (visible) => {
+    setSavedSetModalVisible(visible);
+    setSituation(visible ? "save" : "display");
+  };
+
+  const [situation, setSituation] = useState("display");
 
   const [orderNumber, setOrderNumber] = useState(0);
 
@@ -96,8 +107,6 @@ const DisplaySetScreenContent = () => {
 
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
 
-  const [savedSetModalVisible, setSavedSetModalVisible] = useState(false);
-
   const setsToShowMultipleStatsLists = setsList.map((setToShow) => {
     const setToShowStatsList = searchSetStatsFromElementsIds(
       setToShow.classIds
@@ -105,98 +114,98 @@ const DisplaySetScreenContent = () => {
     return setToShowStatsList;
   });
 
-  const scrollViewRef = useRef(null);
+  const displayedSets = useMemo(() => {
+    return setsList;
+  }, [setsList]);
+  const savedSets = useMemo(() => {
+    return setsSavedList;
+  }, [setsSavedList]);
 
   return (
-    <GestureHandlerRootView>
-      <BottomSheetModalProvider>
-        <ScrollView ref={scrollViewRef}>
-          <View style={styles.container}>
-            <Text style={styles.text}>DisplaySetScreen</Text>
+    <ScrollView scrollEnabled={!savedSetModalVisible}>
+      <View style={styles.container}>
+        <Text style={styles.text}>DisplaySetScreen</Text>
 
-            <Pressable
-              onPress={() => {
-                console.log("setsSavedList", setsSavedList);
-                console.log("setsList", setsList);
-              }}
-            >
-              <Text>afficher setsList</Text>
-            </Pressable>
+        <Pressable
+          onPress={() => {
+            console.log("---------------");
+            console.log("setsSavedList", setsSavedList);
+            console.log("setsList", setsList);
+            console.log("situation", situation);
+          }}
+        >
+          <Text>afficher setsList</Text>
+        </Pressable>
 
-            <StatSliderResultSelectorPressable
-              setFoundStatsModalVisible={setFoundStatsModalVisible}
-            />
+        <StatSliderResultSelectorPressable
+          setFoundStatsModalVisible={setFoundStatsModalVisible}
+        />
 
-            <Pressable
-              style={[button_icon(th).container, shadow_3dp]}
-              onPress={addSet}
-            >
-              <MaterialCommunityIcons
-                name="plus"
-                size={24}
-                color={th.on_primary}
-              />
-            </Pressable>
+        <Pressable
+          style={[button_icon(th).container, shadow_3dp]}
+          onPress={() => addSet()}
+        >
+          <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
+        </Pressable>
 
-            <Pressable onPress={() => AsyncStorage.clear()}>
-              <Text style={styles.button}>remove</Text>
-            </Pressable>
+        <Pressable onPress={() => AsyncStorage.clear()}>
+          <Text style={styles.button}>remove</Text>
+        </Pressable>
 
-            <Pressable
-              style={[button_icon(th).container, shadow_3dp]}
-              onPress={() => setSavedSetModalVisible(true)}
-            >
-              <MaterialCommunityIcons
-                name="download"
-                size={24}
-                color={th.on_primary}
-              />
-            </Pressable>
-
-            <MyModal
-              modalTitle={translate("StatsToDisplay")}
-              isModalVisible={foundStatsModalVisible}
-              setIsModalVisible={setFoundStatsModalVisible}
-              ModalContentsList={[StatSelector]}
-              contentPropsList={[
-                {
-                  statList: isFoundStatsVisible,
-                  setStatList: setIsFoundStatsVisible,
-                  keepOneCondition: false,
-                },
-              ]}
-            />
-
-            <MyModal
-              modalTitle={translate("LoadASet")}
-              isModalVisible={savedSetModalVisible}
-              setIsModalVisible={setSavedSetModalVisible}
-              ModalContentsList={[SetCardContainer]}
-              contentPropsList={[
-                {
-                  setsToShow: setsSavedList,
-                  situation: "save",
-                },
-              ]}
-            />
-          </View>
-
-          <SetCardContainer
-            setsToShow={setsList}
-            isFoundStatsVisible={isFoundStatsVisible}
-            situation="display"
+        <Pressable
+          style={[button_icon(th).container, shadow_3dp]}
+          onPress={() => {
+            toggleSavedSetModal(true);
+          }}
+        >
+          <MaterialCommunityIcons
+            name="download"
+            size={24}
+            color={th.on_primary}
           />
+        </Pressable>
 
-          <StatSliderResultContainer
-            setsToShowMultipleStatsLists={setsToShowMultipleStatsLists}
-            isFoundStatsVisible={isFoundStatsVisible}
-            chosenStats={[null] * 12}
-            situation="display"
-          />
-        </ScrollView>
-        <Toast />
-      </BottomSheetModalProvider>
-    </GestureHandlerRootView>
+        <MyModal
+          modalTitle={translate("StatsToDisplay")}
+          isModalVisible={foundStatsModalVisible}
+          setIsModalVisible={setFoundStatsModalVisible}
+          ModalContentsList={[StatSelector]}
+          contentPropsList={[
+            {
+              statList: isFoundStatsVisible,
+              setStatList: setIsFoundStatsVisible,
+              keepOneCondition: false,
+            },
+          ]}
+        />
+
+        <MyModal
+          modalTitle={translate("LoadASavedSet")}
+          isModalVisible={savedSetModalVisible}
+          setIsModalVisible={(visible) => toggleSavedSetModal(visible)}
+          ModalContentsList={[SetCardContainer]}
+          contentPropsList={[
+            {
+              setsToShow: savedSets,
+              situation: situation,
+            },
+          ]}
+        />
+      </View>
+
+      <SetCardContainer
+        setsToShow={displayedSets}
+        isFoundStatsVisible={isFoundStatsVisible}
+        situation={situation}
+      />
+
+      <StatSliderResultContainer
+        setsToShowMultipleStatsLists={setsToShowMultipleStatsLists}
+        isFoundStatsVisible={isFoundStatsVisible}
+        chosenStats={[null] * 12}
+        situation={situation}
+      />
+    </ScrollView>
   );
 };
 

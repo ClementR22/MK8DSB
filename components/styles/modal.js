@@ -20,7 +20,6 @@ export const modal = (th) =>
       zIndex: 10,
       cursor: "auto",
       //alignSelf: "center",
-      minWidth: 280,
       maxWidth: 0.9 * vw,
       borderRadius: 28,
       paddingVertical: 24,

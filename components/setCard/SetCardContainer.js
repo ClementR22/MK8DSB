@@ -16,16 +16,8 @@ const SetCardContainer = ({
   isFoundStatsVisible = null,
   situation,
 }) => {
-  console.log("je render SetCardContainer");
-
-  const {
-    setsList,
-    setCardActiveIndex,
-    setSetCardActiveIndex,
-    updateSetsList,
-  } = useSetsList();
-  const { pressableImagesList, handlePressSetUpdatePressableImagesList } =
-    usePressableImages();
+  const { setsList, setsSavedList, setCardActiveIndex, setSetCardActiveIndex } =
+    useSetsList();
 
   const handlePresentModalPress = useCallback(
     (setCardSelectedIndex) => {
@@ -35,12 +27,6 @@ const SetCardContainer = ({
     [setsList]
   );
 
-  useEffect(() => {
-    handlePressSetUpdatePressableImagesList(
-      setsList[setCardActiveIndex].classIds
-    ); // on met à jour le pressableImagesList
-  }, [setCardActiveIndex]);
-
   const th = useTheme();
 
   const [orderNumber, setOrderNumber] = useState(0);
@@ -48,7 +34,7 @@ const SetCardContainer = ({
   const bottomSheetModalRef = useRef(null);
 
   return (
-    <View key="cardsContainer">
+    <View key="cardsContainer" style={{ backgroundColor: "blue", padding: 20 }}>
       <ScrollView
         contentContainerStyle={[
           styles.setCardContainer,

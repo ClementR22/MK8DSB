@@ -50,10 +50,11 @@ const SetCard = ({
   setCardIndex = null,
   situation,
 }) => {
-  console.log("je render SetCard", situation);
   const th = useTheme();
 
-  const { renameSet, saveSet, removeSet } = useSetsList();
+  const { renameSet, saveSet, loadSet, removeSet } = useSetsList();
+
+  const { updatePressableImagesList } = usePressableImages();
 
   const [orderNumber, setOrderNumber] = useState(0);
 
@@ -163,12 +164,13 @@ const SetCard = ({
         ]}
       />
       {situation != "search" && (
-        <View>
+        <View key="pressables container">
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => {
               setSetCardActiveIndex(setCardIndex);
               setIsElementsSelectorModalVisible(true);
+              updatePressableImagesList(setToShowClassIds);
             }}
           >
             <MaterialIcons name="edit" size={24} color={th.on_primary} />
@@ -177,18 +179,33 @@ const SetCard = ({
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => {
-              removeSet(setCardIndex);
+              removeSet(setCardIndex, situation);
             }}
           >
             <Ionicons name="close" size={24} color={th.on_primary} />
           </Pressable>
 
-          <Pressable
-            style={[button_icon(th).container, shadow_3dp]}
-            onPress={() => saveSet(setCardIndex)}
-          >
-            <MaterialIcons name="save" size={24} color={th.on_primary} />
-          </Pressable>
+          {situation == "display" && (
+            <Pressable
+              style={[button_icon(th).container, shadow_3dp]}
+              onPress={() => saveSet(setCardIndex)}
+            >
+              <MaterialIcons name="save" size={24} color={th.on_primary} />
+            </Pressable>
+          )}
+
+          {situation == "save" && (
+            <Pressable
+              style={[button_icon(th).container, shadow_3dp]}
+              onPress={() => loadSet(setCardIndex)}
+            >
+              <MaterialCommunityIcons
+                name="download"
+                size={24}
+                color={th.on_primary}
+              />
+            </Pressable>
+          )}
         </View>
       )}
     </View>

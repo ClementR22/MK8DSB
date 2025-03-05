@@ -22,13 +22,12 @@ import { button } from "../styles/button";
 import { useTheme } from "../../utils/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { usePathname } from "expo-router";
+import { useSetsList } from "../../utils/SetsListContext";
 
 const iconSize = 38;
 
 const ElementsSelector = ({ orderNumber, situation }) => {
   const th = useTheme();
-
-  console.log("je render elemet", situation);
 
   const {
     pressableImagesList,
@@ -99,7 +98,7 @@ const ElementsSelector = ({ orderNumber, situation }) => {
               onPress={
                 situation != "search"
                   ? () => {
-                      handlePressImageByClass(classId, category);
+                      handlePressImageByClass(classId, category, situation);
                     }
                   : () => {
                       handlePressImage(id, category);
