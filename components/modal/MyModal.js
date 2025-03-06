@@ -8,14 +8,14 @@ import {
   StyleSheet,
 } from "react-native";
 import Checkbox from "expo-checkbox";
-import { modal } from "./styles/modal";
-import { button } from "./styles/button";
-import checkbox from "./styles/checkbox";
-import th from "./styles/theme";
-import PressableStat from "./PressableStat";
-import { shadow_12dp } from "./styles/theme";
-import { useTheme } from "../utils/ThemeContext";
-import { translate } from "../i18n/translations";
+import { modal } from "../styles/modal";
+import { button } from "../styles/button";
+import checkbox from "../styles/checkbox";
+import th from "../styles/theme";
+import PressableStat from "../PressableStat";
+import { shadow_12dp } from "../styles/theme";
+import { useTheme } from "../../utils/ThemeContext";
+import { translate } from "../../i18n/translations";
 import Toast from "react-native-toast-message";
 
 const MyModal = ({

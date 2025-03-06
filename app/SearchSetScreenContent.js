@@ -35,7 +35,7 @@ import {
 import StatSlider from "../components/StatSlider";
 import SetCard from "../components/setCard/SetCard";
 import ResultsNumber from "../components/ResultsNumberSelector";
-import MyModal from "../components/MyModal";
+import MyModal from "../components/modal/MyModal";
 import MyBottomSheetModal from "../components/MyBottomSheetModal";
 import StatSliderResultSelectorPressable from "../components/statSliderResult/StatSliderResultSelectorPressable";
 
@@ -62,6 +62,8 @@ import SetCardContainer from "../components/setCard/SetCardContainer";
 import FilterSelector from "../components/filterSelector/FilterSelector";
 import ElementsDeselector from "../components/elementsSelector/ElementsDeselector";
 import ElementsSelector from "../components/elementsSelector/ElementsSelector";
+import SavedSetModal from "../components/modal/SavedSetModal";
+import { useSavedSetModal } from "../utils/SavedSetModalContext";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -123,6 +125,9 @@ const SearchSetScreenContent = () => {
   const [resultsNumberModalVisible, setResultsNumberModalVisible] =
     useState(false);
   const [menuModalVisible, setMenuModalVisible] = useState(false);
+
+  const { savedSetModalVisible, toggleSavedSetModal, situation } =
+    useSavedSetModal();
 
   const elementsFilterObjectToList = (pressableImagesByCategory) => {
     const selectedClassIds4categories = [];
@@ -238,7 +243,7 @@ const SearchSetScreenContent = () => {
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
-        <ScrollView>
+        <ScrollView scrollEnabled={!savedSetModalVisible}>
           <View style={[styles.container, { backgroundColor: th.surface }]}>
             <View
               id="Title_bar"
@@ -323,6 +328,20 @@ const SearchSetScreenContent = () => {
               >
                 {translate("SearchedStats")}
               </Text>
+
+              <Pressable
+                style={[button_icon(th).container, shadow_3dp]}
+                onPress={() => {
+                  toggleSavedSetModal(true);
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="download"
+                  size={24}
+                  color={th.on_primary}
+                />
+              </Pressable>
+
               {/* Afficher le slider uniquement si la case est cochée */}
               {chosenStats.map(
                 (stat) =>
@@ -453,6 +472,8 @@ const SearchSetScreenContent = () => {
               ]}
             />
           </View>
+
+          <SavedSetModal screenSituation={"search"} />
 
           <SetCardContainer
             setsToShow={setsToShow}

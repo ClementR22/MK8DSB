@@ -27,7 +27,7 @@ import { useTheme } from "../utils/ThemeContext";
 import { translate } from "../i18n/translations";
 import StatSliderResultContainer from "../components/statSliderResult/StatSliderResultContainer";
 import StatSliderResultSelectorPressable from "../components/statSliderResult/StatSliderResultSelectorPressable";
-import MyModal from "../components/MyModal";
+import MyModal from "../components/modal/MyModal";
 import StatSelector from "../components/StatSelector";
 import { button_icon } from "../components/styles/button";
 import { shadow_3dp } from "../components/styles/theme";
@@ -43,6 +43,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSetsList } from "../utils/SetsListContext";
 import { useMemo } from "react";
 import { Portal, Provider } from "react-native-paper";
+import { useSavedSetModal } from "../utils/SavedSetModalContext";
+import SavedSetModal from "../components/modal/SavedSetModal";
 
 const DisplaySetScreenContent = () => {
   const th = useTheme();
@@ -64,18 +66,17 @@ const DisplaySetScreenContent = () => {
     setCardActiveIndex,
   } = useSetsList();
 
+  const {
+    savedSetModalVisible,
+    toggleSavedSetModal,
+    situation,
+    screenSituation,
+    setScreenSituation,
+  } = useSavedSetModal();
+
   useEffect(() => {
     updateSetsList(pressedClassIds, situation); // Met à jour après le rendu
   }, [pressedClassIds]); // Déclenché uniquement quand pressedClassIds change
-
-  const [savedSetModalVisible, setSavedSetModalVisible] = useState(false);
-
-  const toggleSavedSetModal = (visible) => {
-    setSavedSetModalVisible(visible);
-    setSituation(visible ? "save" : "display");
-  };
-
-  const [situation, setSituation] = useState("display");
 
   const [orderNumber, setOrderNumber] = useState(0);
 
@@ -117,15 +118,13 @@ const DisplaySetScreenContent = () => {
   const displayedSets = useMemo(() => {
     return setsList;
   }, [setsList]);
-  const savedSets = useMemo(() => {
-    return setsSavedList;
-  }, [setsSavedList]);
+
+  // A CHECKER
 
   return (
     <ScrollView scrollEnabled={!savedSetModalVisible}>
       <View style={styles.container}>
         <Text style={styles.text}>DisplaySetScreen</Text>
-
         <Pressable
           onPress={() => {
             console.log("---------------");
@@ -136,26 +135,22 @@ const DisplaySetScreenContent = () => {
         >
           <Text>afficher setsList</Text>
         </Pressable>
-
         <StatSliderResultSelectorPressable
           setFoundStatsModalVisible={setFoundStatsModalVisible}
         />
-
         <Pressable
           style={[button_icon(th).container, shadow_3dp]}
           onPress={() => addSet()}
         >
           <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
         </Pressable>
-
         <Pressable onPress={() => AsyncStorage.clear()}>
           <Text style={styles.button}>remove</Text>
         </Pressable>
-
         <Pressable
           style={[button_icon(th).container, shadow_3dp]}
           onPress={() => {
-            toggleSavedSetModal(true);
+            toggleSavedSetModal(true, "display");
           }}
         >
           <MaterialCommunityIcons
@@ -164,7 +159,6 @@ const DisplaySetScreenContent = () => {
             color={th.on_primary}
           />
         </Pressable>
-
         <MyModal
           modalTitle={translate("StatsToDisplay")}
           isModalVisible={foundStatsModalVisible}
@@ -178,20 +172,9 @@ const DisplaySetScreenContent = () => {
             },
           ]}
         />
-
-        <MyModal
-          modalTitle={translate("LoadASavedSet")}
-          isModalVisible={savedSetModalVisible}
-          setIsModalVisible={(visible) => toggleSavedSetModal(visible)}
-          ModalContentsList={[SetCardContainer]}
-          contentPropsList={[
-            {
-              setsToShow: savedSets,
-              situation: situation,
-            },
-          ]}
-        />
       </View>
+
+      <SavedSetModal screenSituation={"display"} />
 
       <SetCardContainer
         setsToShow={displayedSets}

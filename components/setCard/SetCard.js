@@ -18,7 +18,7 @@ import { modal } from "../styles/modal";
 import { button } from "../styles/button";
 import { card } from "../styles/card";
 import { useTheme } from "../../utils/ThemeContext";
-import MyModal from "../MyModal";
+import MyModal from "../modal/MyModal";
 import SetImagesDisplayer from "./SetCardImagesDisplayer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
 import { button_icon } from "../styles/button";
