@@ -88,7 +88,7 @@ export const PressableImagesProvider = ({
     glider: 39,
   });
 
-  const handlePressImageByClass = (classId, category, situation) => {
+  const handlePressImageByClass = (classId, category) => {
     const categoryList = bodyTypeNames.includes(category)
       ? bodyTypeNames
       : [category];

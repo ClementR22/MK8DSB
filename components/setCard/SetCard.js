@@ -103,7 +103,7 @@ const SetCard = ({
 
   const handleEndEditing = () => {
     if (localName === "") {
-      renameSet(null); // Met le nom sur null si vide
+      renameSet(null, situation, setCardIndex); // Met le nom sur null si vide
       setLocalName(defaultName); // Réinitialise l'affichage
     }
   };
@@ -116,7 +116,7 @@ const SetCard = ({
           value={localName}
           onChangeText={(text) => {
             setLocalName();
-            renameSet(text); // a virer, seulement pour pc
+            renameSet(text, situation, setCardIndex); // a virer, seulement pour pc
           }}
           onEndEditing={handleEndEditing}
         />

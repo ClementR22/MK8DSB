@@ -66,16 +66,10 @@ const DisplaySetScreenContent = () => {
     setCardActiveIndex,
   } = useSetsList();
 
-  const {
-    savedSetModalVisible,
-    toggleSavedSetModal,
-    situation,
-    screenSituation,
-    setScreenSituation,
-  } = useSavedSetModal();
+  const { savedSetModalVisible, toggleSavedSetModal } = useSavedSetModal();
 
   useEffect(() => {
-    updateSetsList(pressedClassIds, situation); // Met à jour après le rendu
+    updateSetsList(pressedClassIds, savedSetModalVisible ? "save" : "display"); // Met à jour après le rendu
   }, [pressedClassIds]); // Déclenché uniquement quand pressedClassIds change
 
   const [orderNumber, setOrderNumber] = useState(0);
@@ -130,7 +124,6 @@ const DisplaySetScreenContent = () => {
             console.log("---------------");
             console.log("setsSavedList", setsSavedList);
             console.log("setsList", setsList);
-            console.log("situation", situation);
           }}
         >
           <Text>afficher setsList</Text>
@@ -174,19 +167,19 @@ const DisplaySetScreenContent = () => {
         />
       </View>
 
-      <SavedSetModal screenSituation={"display"} />
+      <SavedSetModal />
 
       <SetCardContainer
         setsToShow={displayedSets}
         isFoundStatsVisible={isFoundStatsVisible}
-        situation={situation}
+        situation="display"
       />
 
       <StatSliderResultContainer
         setsToShowMultipleStatsLists={setsToShowMultipleStatsLists}
         isFoundStatsVisible={isFoundStatsVisible}
         chosenStats={[null] * 12}
-        situation={situation}
+        situation="display"
       />
     </ScrollView>
   );

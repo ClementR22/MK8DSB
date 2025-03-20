@@ -5,7 +5,7 @@ import SetCardContainer from "../setCard/SetCardContainer";
 import { useSetsList } from "../../utils/SetsListContext";
 import { translate } from "../../i18n/translations";
 
-const SavedSetModal = ({ screenSituation }) => {
+const SavedSetModal = ({}) => {
   const { setsSavedList } = useSetsList();
   const { savedSetModalVisible, toggleSavedSetModal } = useSavedSetModal();
 
@@ -17,9 +17,7 @@ const SavedSetModal = ({ screenSituation }) => {
     <MyModal
       modalTitle={translate("LoadASavedSet")}
       isModalVisible={savedSetModalVisible}
-      setIsModalVisible={(visible) =>
-        toggleSavedSetModal(visible, screenSituation)
-      }
+      setIsModalVisible={(visible) => toggleSavedSetModal(visible)}
       ModalContentsList={[SetCardContainer]}
       contentPropsList={[
         {

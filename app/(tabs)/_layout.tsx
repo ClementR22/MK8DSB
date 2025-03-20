@@ -6,7 +6,6 @@ import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { ThemeProvider } from "../../utils/ThemeContext"
-import {SavedSetModalProvider}  from "../../utils/SavedSetModalContext"
 import Toast from "react-native-toast-message";
 
 export default function TabLayout() {
@@ -15,7 +14,6 @@ export default function TabLayout() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <SavedSetModalProvider >
         <Tabs
           screenOptions={{
             tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
@@ -84,7 +82,6 @@ export default function TabLayout() {
           />
         </Tabs>
         <Toast/>
-        </SavedSetModalProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

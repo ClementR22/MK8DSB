@@ -126,8 +126,7 @@ const SearchSetScreenContent = () => {
     useState(false);
   const [menuModalVisible, setMenuModalVisible] = useState(false);
 
-  const { savedSetModalVisible, toggleSavedSetModal, situation } =
-    useSavedSetModal();
+  const { savedSetModalVisible, toggleSavedSetModal } = useSavedSetModal();
 
   const elementsFilterObjectToList = (pressableImagesByCategory) => {
     const selectedClassIds4categories = [];
@@ -473,7 +472,7 @@ const SearchSetScreenContent = () => {
             />
           </View>
 
-          <SavedSetModal screenSituation={"search"} />
+          <SavedSetModal />
 
           <SetCardContainer
             setsToShow={setsToShow}

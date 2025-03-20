@@ -114,10 +114,11 @@ export const SetsListProvider = ({ children }) => {
     }
   };
 
-  const renameSet = (newName) => {
-    setSetsList((prev) =>
+  const renameSet = (newName, situation, setCardIndex) => {
+    const updateList = situation === "display" ? setSetsList : setSetsSavedList;
+    updateList((prev) =>
       prev.map((set, index) => {
-        return index === setCardActiveIndex ? { ...set, name: newName } : set;
+        return index === setCardIndex ? { ...set, name: newName } : set;
       })
     );
   };
@@ -135,6 +136,20 @@ export const SetsListProvider = ({ children }) => {
     });
   };
 
+  const updateMemory = async () => {
+    try {
+      await AsyncStorage.clear();
+
+      const savePromises = setsSavedList.map((setSaved) =>
+        AsyncStorage.setItem(setSaved.name, JSON.stringify(setSaved))
+      );
+
+      await Promise.all(savePromises); // Attendre que tous les `setItem` soient complétés
+    } catch (err) {
+      alert(err);
+    }
+  };
+
   return (
     <SetsListContext.Provider
       value={{
@@ -149,6 +164,7 @@ export const SetsListProvider = ({ children }) => {
         updateSetsList,
         setCardActiveIndex,
         setSetCardActiveIndex,
+        updateMemory,
       }}
     >
       {children}
