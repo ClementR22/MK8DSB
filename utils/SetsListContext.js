@@ -4,6 +4,7 @@ import { translate } from "../i18n/translations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import showToast from "./toast";
 import { usePressableImages } from "./PressableImagesContext";
+import { useOrderNumber } from "./OrderNumberContext";
 
 // Créer le contexte
 const SetsListContext = createContext();
@@ -18,6 +19,8 @@ export const SetsListProvider = ({ children }) => {
   const [setsListSaved, setSetsListSaved] = useState([]);
 
   const [setsListFound, setSetsListFound] = useState([]);
+
+  const { setChosenStats, searchSetStatsFromElementsIds } = useOrderNumber();
 
   const getSetsSavedNamesAndClassIds = async (onlyNames = false) => {
     try {
@@ -77,7 +80,22 @@ export const SetsListProvider = ({ children }) => {
     }
   };
 
-  const loadSet = (setCardSelectedIndex) => {
+  const loadSetToSearch = (setCardSelectedIndex) => {
+    const setCardSelected = setsListSaved[setCardSelectedIndex];
+    const setCardSelectedClassIds = setCardSelected.classIds;
+    const setCardSelectedStatList = searchSetStatsFromElementsIds(
+      setCardSelectedClassIds
+    );
+    setChosenStats((prev) =>
+      prev.map((chosenStat, index) => {
+        chosenStat.value = setCardSelectedStatList[index];
+        return chosenStat;
+      })
+    );
+    showToast("Succès", "Les stats du set ont été chargéés");
+  };
+
+  const loadSetToDisplay = (setCardSelectedIndex) => {
     const setCardSelected = setsListSaved[setCardSelectedIndex];
     const setCardSelectedName = setCardSelected.name;
     const setsDisplayedNames = setsListDisplayed.map((set) => set.name);
@@ -88,6 +106,7 @@ export const SetsListProvider = ({ children }) => {
       showToast("Erreur", "Changer le nom du set SVP");
     } else {
       addSet(setCardSelected);
+      showToast("Succès", "Le set a été chargé");
     }
   };
 
@@ -204,7 +223,8 @@ export const SetsListProvider = ({ children }) => {
         setsListFound,
         updateAllSetsListFound,
         addSet,
-        loadSet,
+        loadSetToSearch,
+        loadSetToDisplay,
         removeSet,
         saveSet,
         saveSetFromFound,

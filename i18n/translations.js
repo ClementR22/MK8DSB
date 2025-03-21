@@ -38,7 +38,7 @@ const translations = {
     Close: "Close",
     OK: "OK",
     StatsToParameter: "Stats to parameter",
-    LoadASavedSet: "Load a saved Set",
+    LoadASavedSet: "Load a saved set",
     NameTheSet: "Name the set",
 
     BabyPeach: "Baby Peach",

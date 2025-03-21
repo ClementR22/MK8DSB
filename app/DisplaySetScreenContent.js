@@ -20,8 +20,6 @@ import {
   images,
 } from "../data/data";
 
-import { setAllInfos } from "../data/data";
-
 import { usePressableImages } from "../utils/PressableImagesContext";
 import { useTheme } from "../utils/ThemeContext";
 import { translate } from "../i18n/translations";
@@ -45,6 +43,7 @@ import { useMemo } from "react";
 import { Portal, Provider } from "react-native-paper";
 import { useSavedSetModal } from "../utils/SavedSetModalContext";
 import SavedSetModal from "../components/modal/SavedSetModal";
+import { useOrderNumber } from "../utils/OrderNumberContext";
 
 const DisplaySetScreenContent = () => {
   const th = useTheme();
@@ -78,18 +77,7 @@ const DisplaySetScreenContent = () => {
       return element.classId;
     }); // - firstElementIdOfCategory[index]
 
-  const arraysEqual = (a, b) => {
-    if (a.length !== b.length) return false; // Si les longueurs sont différentes, ils ne sont pas égaux
-    return a.every((value, index) => value === b[index]); // Comparer chaque élément
-  };
-
-  const searchSetStatsFromElementsIds = (pressedImagesClassIds) => {
-    const result = setAllInfos.find(({ classIds }) => {
-      return arraysEqual(classIds, pressedImagesClassIds);
-    });
-
-    return result ? result.stats : [];
-  };
+  const { searchSetStatsFromElementsIds } = useOrderNumber();
 
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
     statNames.map((statName, index) => ({
@@ -132,7 +120,7 @@ const DisplaySetScreenContent = () => {
         <Pressable
           style={[button_icon(th).container, shadow_3dp]}
           onPress={() => {
-            toggleSavedSetModal(true, "display");
+            toggleSavedSetModal(true);
           }}
         >
           <MaterialCommunityIcons
@@ -158,11 +146,7 @@ const DisplaySetScreenContent = () => {
 
       <SavedSetModal />
 
-      <SetCardContainer
-        setsToShow={displayedSets}
-        isFoundStatsVisible={isFoundStatsVisible}
-        situation="display"
-      />
+      <SetCardContainer setsToShow={displayedSets} situation="display" />
 
       <StatSliderResultContainer
         setsToShowMultipleStatsLists={setsToShowMultipleStatsLists}

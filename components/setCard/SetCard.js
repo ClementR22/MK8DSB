@@ -37,6 +37,8 @@ import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "../../utils/PressableImagesContext";
 import { useSetsList } from "../../utils/SetsListContext";
 import MyTextInput from "../MyTextInput";
+import { useSavedSetModal } from "../../utils/SavedSetModalContext";
+import { useOrderNumber } from "../../utils/OrderNumberContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
@@ -52,7 +54,14 @@ const SetCard = ({
 }) => {
   const th = useTheme();
 
-  const { saveSet, loadSet, removeSet, setSetCardActiveIndex } = useSetsList();
+  const {
+    saveSet,
+    loadSetToSearch,
+    loadSetToDisplay,
+    removeSet,
+    setSetCardActiveIndex,
+  } = useSetsList();
+  const { screenSituation } = useOrderNumber();
 
   const { updatePressableImagesList } = usePressableImages();
 
@@ -190,7 +199,9 @@ const SetCard = ({
               ? saveSetFromFound(setCardIndex)
               : situation == "display"
               ? saveSet(setCardIndex)
-              : loadSet(setCardIndex)
+              : (situation == "save") & (screenSituation == "search")
+              ? loadSetToSearch(setCardIndex)
+              : loadSetToDisplay(setCardIndex)
           }
         >
           {situation != "save" ? (

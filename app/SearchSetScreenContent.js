@@ -11,24 +11,14 @@ import {
   Alert,
   StatusBar,
 } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { useRef } from "react";
-import { useCallback } from "react";
-import Checkbox from "expo-checkbox";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Utils
-import {
-  setAllInfos,
-  statNames,
-  bodyTypeNames,
-  bodyTypeNamesDisplay,
-} from "../data/data";
+import { setAllInfos, statNames, bodyTypeNames } from "../data/data";
 
 // Components import
 import StatSlider from "../components/StatSlider";
-import SetCard from "../components/setCard/SetCard";
 import ResultsNumber from "../components/ResultsNumberSelector";
 import MyModal from "../components/modal/MyModal";
 import StatSliderResultSelectorPressable from "../components/statSliderResult/StatSliderResultSelectorPressable";
@@ -59,6 +49,7 @@ import ElementsSelector from "../components/elementsSelector/ElementsSelector";
 import SavedSetModal from "../components/modal/SavedSetModal";
 import { useSavedSetModal } from "../utils/SavedSetModalContext";
 import { useSetsList } from "../utils/SetsListContext";
+import { useOrderNumber } from "../utils/OrderNumberContext";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -71,25 +62,7 @@ const SearchSetScreenContent = () => {
     handlePressImageUnique,
   } = usePressableImages();
 
-  const [chosenStats, setChosenStats] = useState(
-    statNames.map((statName, index) => {
-      return {
-        name: statName,
-        checked: index === 0,
-        value: index === 0 ? 0 : null,
-        statFilterNumber: 0,
-        setStatFilterNumber: (newState) => {
-          setChosenStats((prevStats) =>
-            prevStats.map((stat) =>
-              stat.name === statName
-                ? { ...stat, statFilterNumber: newState }
-                : stat
-            )
-          );
-        },
-      };
-    })
-  );
+  const { chosenStats, setChosenStats } = useOrderNumber();
 
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
     statNames.map((statName, index) => ({
@@ -109,7 +82,7 @@ const SearchSetScreenContent = () => {
 
   const [resultsNumber, setResultsNumber] = useState(5);
 
-  const { setsListFound, updateAllSetsListFound } = useSetsList();
+  const { setsListSaved, updateAllSetsListFound } = useSetsList();
 
   const [setsToShow, setSetsToShow] = useState([]);
   const updateSetsToShow = (setsFoundClassIds) => {

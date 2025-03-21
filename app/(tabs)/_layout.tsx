@@ -17,9 +17,9 @@ export default function TabLayout() {
   return (
     <ThemeProvider>
       <LanguageProvider>
+      <OrderNumberProvider>
       <SetsListProvider>
         <SavedSetModalProvider>
-          <OrderNumberProvider>
         <Tabs
           screenOptions={{
             tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
@@ -88,9 +88,9 @@ export default function TabLayout() {
           />
         </Tabs>
         <Toast/>
-        </OrderNumberProvider>
         </SavedSetModalProvider>
       </SetsListProvider>
+      </OrderNumberProvider>
       </LanguageProvider>
     </ThemeProvider>
   );
