@@ -16,20 +16,22 @@ const SetCardContainer = ({
   isFoundStatsVisible = null,
   situation,
 }) => {
-  const { setsList, setsSavedList, setCardActiveIndex, setSetCardActiveIndex } =
-    useSetsList();
+  const {
+    setsListDisplayed,
+    setsListSaved,
+    setCardActiveIndex,
+    setSetCardActiveIndex,
+  } = useSetsList();
 
   const handlePresentModalPress = useCallback(
     (setCardSelectedIndex) => {
       bottomSheetModalRef.current?.present(); // on fait apparaitre le bottomSheetModal
       setSetCardActiveIndex(setCardSelectedIndex); // on met à jour le state setCardActive
     },
-    [setsList]
+    [setsListDisplayed]
   );
 
   const th = useTheme();
-
-  const [orderNumber, setOrderNumber] = useState(0);
 
   const bottomSheetModalRef = useRef(null);
 

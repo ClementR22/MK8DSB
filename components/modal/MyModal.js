@@ -25,6 +25,10 @@ const MyModal = ({
   ModalContentsList,
   contentPropsList,
   closeButtonText = "Close",
+  checkBeforeClose = () => {
+    return true;
+  },
+  isWithClosePressable = true,
 }) => {
   const th = useTheme();
 
@@ -48,18 +52,25 @@ const MyModal = ({
           {ModalContentsList.map((ModalContent, index) => (
             <ModalContent key={index} {...contentPropsList[index]} />
           ))}
-          <Pressable
-            style={[
-              button(th).container,
-              modal(th).close_button_center,
-              filterModalButtonHover && shadow_12dp,
-            ]}
-            onHoverIn={() => setFilterModalButtonHover(true)}
-            onHoverOut={() => setFilterModalButtonHover(false)}
-            onPress={() => setIsModalVisible(false)}
-          >
-            <Text style={button(th).text}>{translate(closeButtonText)}</Text>
-          </Pressable>
+          {isWithClosePressable && (
+            <Pressable
+              style={[
+                button(th).container,
+                modal(th).close_button_center,
+                filterModalButtonHover && shadow_12dp,
+              ]}
+              onHoverIn={() => setFilterModalButtonHover(true)}
+              onHoverOut={() => setFilterModalButtonHover(false)}
+              onPress={async () => {
+                const test = await checkBeforeClose();
+                if (test) {
+                  setIsModalVisible(false);
+                }
+              }}
+            >
+              <Text style={button(th).text}>{translate(closeButtonText)}</Text>
+            </Pressable>
+          )}
         </Pressable>
       </Pressable>
       <Toast />

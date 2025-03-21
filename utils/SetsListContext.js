@@ -12,10 +12,12 @@ const SetsListContext = createContext();
 export const SetsListProvider = ({ children }) => {
   const setDefault = { name: null, classIds: [9, 16, 30, 39] };
 
-  const [setsList, setSetsList] = useState([
+  const [setsListDisplayed, setSetsListDisplayed] = useState([
     { ...setDefault, classIds: [...setDefault.classIds] },
   ]);
-  const [setsSavedList, setSetsSavedList] = useState([]);
+  const [setsListSaved, setSetsListSaved] = useState([]);
+
+  const [setsListFound, setSetsListFound] = useState([]);
 
   const getSetsSavedNamesAndClassIds = async (onlyNames = false) => {
     try {
@@ -40,7 +42,7 @@ export const SetsListProvider = ({ children }) => {
   useEffect(() => {
     const fetchSavedSets = async () => {
       const savedSets = await getSetsSavedNamesAndClassIds();
-      setSetsSavedList(savedSets);
+      setSetsListSaved(savedSets);
     };
 
     fetchSavedSets();
@@ -51,15 +53,16 @@ export const SetsListProvider = ({ children }) => {
   const addSet = (
     newSet = { ...setDefault, classIds: [...setDefault.classIds] }
   ) => {
-    setSetsList((prev) => [...prev, newSet]);
+    setSetsListDisplayed((prev) => [...prev, newSet]);
   };
 
   const removeSet = (setCardSelectedIndex, situation) => {
-    const listToModify = situation == "display" ? setsList : setsSavedList;
+    const setsListConcerned =
+      situation == "display" ? setsListDisplayed : setsListSaved;
     const setListUpdater =
-      situation == "display" ? setSetsList : setSetsSavedList;
+      situation == "display" ? setSetsListDisplayed : setSetsListSaved;
 
-    if (situation == "display" && listToModify.length === 1) {
+    if (situation == "display" && setsListConcerned.length === 1) {
       showToast("Erreur", "Vous devez garder au moins 1 set");
     } else {
       setListUpdater((prev) =>
@@ -75,9 +78,9 @@ export const SetsListProvider = ({ children }) => {
   };
 
   const loadSet = (setCardSelectedIndex) => {
-    const setCardSelected = setsSavedList[setCardSelectedIndex];
+    const setCardSelected = setsListSaved[setCardSelectedIndex];
     const setCardSelectedName = setCardSelected.name;
-    const setsDisplayedNames = setsList.map((set) => set.name);
+    const setsDisplayedNames = setsListDisplayed.map((set) => set.name);
     if (
       setCardSelectedName == null ||
       setsDisplayedNames.includes(setCardSelectedName)
@@ -88,11 +91,40 @@ export const SetsListProvider = ({ children }) => {
     }
   };
 
-  const saveSet = async (setCardSelectedIndex) => {
-    const setCardSelected = setsList[setCardSelectedIndex];
+  const saveSet = async (setCardSelectedIndex, situation) => {
+    const setsListConcerned =
+      situation == "search" ? setsListFound : setsListDisplayed;
+    const setCardSelected = setsListConcerned[setCardSelectedIndex];
     const setCardSelectedName = setCardSelected.name;
     const setsSavedNames = await getSetsSavedNamesAndClassIds(true);
+    if (
+      !setCardSelectedName?.trim() ||
+      setsSavedNames.includes(setCardSelectedName)
+    ) {
+      showToast("Erreur", "Changer le nom du set SVP");
+      return false;
+    } else {
+      try {
+        await AsyncStorage.setItem(
+          setCardSelectedName,
+          JSON.stringify(setCardSelected)
+        );
 
+        setSetsListSaved((prev) => [...prev, setCardSelected]);
+
+        showToast("Succès", "Le set est enregistré");
+        return true;
+      } catch (err) {
+        alert(err);
+        return false;
+      }
+    }
+  };
+
+  const saveSetFromFound = async (setCardSelectedIndex) => {
+    const setCardSelected = setsListFound[setCardSelectedIndex];
+    const setCardSelectedName = setCardSelected.name;
+    const setsSavedNames = await getSetsSavedNamesAndClassIds(true);
     if (
       setCardSelectedName == null ||
       setsSavedNames.includes(setCardSelectedName)
@@ -105,7 +137,7 @@ export const SetsListProvider = ({ children }) => {
           JSON.stringify(setCardSelected)
         );
 
-        setSetsSavedList((prev) => [...prev, setCardSelected]);
+        setSetsListSaved((prev) => [...prev, setCardSelected]);
 
         showToast("Succès", "Le set est enregistré");
       } catch (err) {
@@ -115,8 +147,13 @@ export const SetsListProvider = ({ children }) => {
   };
 
   const renameSet = (newName, situation, setCardIndex) => {
-    const updateList = situation === "display" ? setSetsList : setSetsSavedList;
-    updateList((prev) =>
+    const setsListConcerned =
+      situation === "search"
+        ? setSetsListFound
+        : situation === "display"
+        ? setSetsListDisplayed
+        : setSetsListSaved;
+    setsListConcerned((prev) =>
       prev.map((set, index) => {
         return index === setCardIndex ? { ...set, name: newName } : set;
       })
@@ -125,9 +162,10 @@ export const SetsListProvider = ({ children }) => {
 
   const updateSetsList = (pressedClassIds, situation) => {
     const pressedClassIdsList = Object.values(pressedClassIds);
-    const updateList = situation === "display" ? setSetsList : setSetsSavedList;
+    const setsListConcerned =
+      situation === "display" ? setSetsListDisplayed : setSetsListSaved;
 
-    updateList((prev) => {
+    setsListConcerned((prev) => {
       return prev.map((set, index) =>
         index === setCardActiveIndex
           ? { ...set, classIds: pressedClassIdsList }
@@ -136,11 +174,19 @@ export const SetsListProvider = ({ children }) => {
     });
   };
 
+  const updateAllSetsListFound = (setsFoundClassIds) => {
+    setsFoundWithName = setsFoundClassIds.map((setsFoundClassIds) => ({
+      name: null,
+      classIds: setsFoundClassIds.classIds,
+    }));
+    setSetsListFound(setsFoundWithName);
+  };
+
   const updateMemory = async () => {
     try {
       await AsyncStorage.clear();
 
-      const savePromises = setsSavedList.map((setSaved) =>
+      const savePromises = setsListSaved.map((setSaved) =>
         AsyncStorage.setItem(setSaved.name, JSON.stringify(setSaved))
       );
 
@@ -153,13 +199,15 @@ export const SetsListProvider = ({ children }) => {
   return (
     <SetsListContext.Provider
       value={{
-        setsList,
-        setsSavedList,
-        setSetsSavedList,
+        setsListDisplayed,
+        setsListSaved,
+        setsListFound,
+        updateAllSetsListFound,
         addSet,
         loadSet,
         removeSet,
         saveSet,
+        saveSetFromFound,
         renameSet,
         updateSetsList,
         setCardActiveIndex,

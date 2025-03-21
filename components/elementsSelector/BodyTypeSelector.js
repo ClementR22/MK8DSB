@@ -7,13 +7,13 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
-import ElementChip from "../elementsSelector/ElementChip";
+import ElementChip from "./ElementChip";
 import { elementsAllInfosList } from "@/data/data";
 import { useTheme } from "../../utils/ThemeContext";
 import { translate } from "../../i18n/translations";
 import { toggleCheck } from "../../utils/toggleCheck";
 
-const FilterSelector = ({ chosenBodyType, setChosenBodyType, orderNumber }) => {
+const BodyTypeSelector = ({ chosenBodyType, setChosenBodyType }) => {
   const th = useTheme();
   const bodyTypeIcons = [
     elementsAllInfosList[52],
@@ -41,7 +41,7 @@ const FilterSelector = ({ chosenBodyType, setChosenBodyType, orderNumber }) => {
   );
 };
 
-export default FilterSelector;
+export default BodyTypeSelector;
 
 const styles = StyleSheet.create({
   bodyTypeContainer: {

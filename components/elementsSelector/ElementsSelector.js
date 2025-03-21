@@ -23,10 +23,12 @@ import { useTheme } from "../../utils/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { usePathname } from "expo-router";
 import { useSetsList } from "../../utils/SetsListContext";
+import { useOrderNumber } from "../../utils/OrderNumberContext";
+import MultiStateToggleButton from "../MultiStateToggleButton";
 
 const iconSize = 38;
 
-const ElementsSelector = ({ orderNumber, situation }) => {
+const ElementsSelector = ({ situation }) => {
   const th = useTheme();
 
   const {
@@ -35,6 +37,8 @@ const ElementsSelector = ({ orderNumber, situation }) => {
     handlePressImage,
     handlePressImageByClass,
   } = usePressableImages();
+
+  const { orderNumber, setOrderNumber } = useOrderNumber();
 
   const elementIcons = [
     elementsAllInfosList[0].image.uri,
@@ -233,6 +237,7 @@ const ElementsSelector = ({ orderNumber, situation }) => {
       key={"outerContainer"}
       ref={sectionRefs[4]}
     >
+      <MultiStateToggleButton number={orderNumber} setNumber={setOrderNumber} />
       {/* Navigation par onglets */}
       <View style={styles.tabContainer} key={"tabContainer"}>
         {category4Names.map((elementName, index) => (

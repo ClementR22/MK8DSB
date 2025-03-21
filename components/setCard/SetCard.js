@@ -36,7 +36,7 @@ import { FlatList } from "react-native";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "../../utils/PressableImagesContext";
 import { useSetsList } from "../../utils/SetsListContext";
-import MultiStateToggleButton from "../MultiStateToggleButton";
+import MyTextInput from "../MyTextInput";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
@@ -52,24 +52,15 @@ const SetCard = ({
 }) => {
   const th = useTheme();
 
-  const { renameSet, saveSet, loadSet, removeSet } = useSetsList();
+  const { saveSet, loadSet, removeSet, setSetCardActiveIndex } = useSetsList();
 
   const { updatePressableImagesList } = usePressableImages();
-
-  const [orderNumber, setOrderNumber] = useState(0);
-
-  const { setSetCardActiveIndex } = useSetsList();
 
   const [isImagesModalVisible, setIsImagesModalVisible] = useState(false);
   const [isElementsSelectorModalVisible, setIsElementsSelectorModalVisible] =
     useState(false);
 
-  const defaultName = `Set ${setCardIndex + 1}`;
-  const [localName, setLocalName] = useState(setToShowName ?? defaultName);
-
-  useEffect(() => {
-    setLocalName(setToShowName ?? defaultName);
-  }, [setToShowName]);
+  const [isTextInputModalVisible, setIsTextInputModalVisible] = useState(false);
 
   const displaySetImages = () => {
     setIsImagesModalVisible(true);
@@ -101,24 +92,18 @@ const SetCard = ({
     </View>
   );
 
-  const handleEndEditing = () => {
-    if (localName === "") {
-      renameSet(null, situation, setCardIndex); // Met le nom sur null si vide
-      setLocalName(defaultName); // Réinitialise l'affichage
-    }
+  const saveSetFromFound = () => {
+    setIsTextInputModalVisible(true);
   };
 
   return (
     <View style={[card(th).container, { flex: 1 }]}>
       {situation != "search" && (
-        <TextInput
-          style={styles.textInput}
-          value={localName}
-          onChangeText={(text) => {
-            setLocalName();
-            renameSet(text, situation, setCardIndex); // a virer, seulement pour pc
-          }}
-          onEndEditing={handleEndEditing}
+        <MyTextInput
+          setToShowName={setToShowName}
+          setCardIndex={setCardIndex}
+          situation={situation}
+          isWithConfimation={true}
         />
       )}
       <Pressable onPress={displaySetImages}>
@@ -151,20 +136,32 @@ const SetCard = ({
         modalTitle={translate("Selectionner")}
         isModalVisible={isElementsSelectorModalVisible}
         setIsModalVisible={setIsElementsSelectorModalVisible}
-        ModalContentsList={[MultiStateToggleButton, ElementsSelector]}
+        ModalContentsList={[ElementsSelector]}
         contentPropsList={[
           {
-            number: orderNumber,
-            setNumber: setOrderNumber,
-          },
-          {
-            orderNumber: orderNumber,
             situation: situation,
           },
         ]}
       />
-      {situation != "search" && (
-        <View key="pressables container">
+      <MyModal
+        modalTitle={translate("NameTheSet")}
+        isModalVisible={isTextInputModalVisible}
+        setIsModalVisible={setIsTextInputModalVisible}
+        ModalContentsList={[MyTextInput]}
+        contentPropsList={[
+          {
+            setToShowName: setToShowName,
+            setCardIndex: setCardIndex,
+            situation: situation,
+          },
+        ]}
+        closeButtonText={translate("Confirm")}
+        checkBeforeClose={async () => {
+          return await saveSet(setCardIndex, situation);
+        }}
+      />
+      <View key="pressables container">
+        {situation != "search" && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => {
@@ -175,7 +172,8 @@ const SetCard = ({
           >
             <MaterialIcons name="edit" size={24} color={th.on_primary} />
           </Pressable>
-
+        )}
+        {situation != "search" && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => {
@@ -184,30 +182,28 @@ const SetCard = ({
           >
             <Ionicons name="close" size={24} color={th.on_primary} />
           </Pressable>
-
-          {situation == "display" && (
-            <Pressable
-              style={[button_icon(th).container, shadow_3dp]}
-              onPress={() => saveSet(setCardIndex)}
-            >
-              <MaterialIcons name="save" size={24} color={th.on_primary} />
-            </Pressable>
+        )}
+        <Pressable
+          style={[button_icon(th).container, shadow_3dp]}
+          onPress={() =>
+            situation == "search"
+              ? saveSetFromFound(setCardIndex)
+              : situation == "display"
+              ? saveSet(setCardIndex)
+              : loadSet(setCardIndex)
+          }
+        >
+          {situation != "save" ? (
+            <MaterialIcons name="save" size={24} color={th.on_primary} />
+          ) : (
+            <MaterialCommunityIcons
+              name="download"
+              size={24}
+              color={th.on_primary}
+            />
           )}
-
-          {situation == "save" && (
-            <Pressable
-              style={[button_icon(th).container, shadow_3dp]}
-              onPress={() => loadSet(setCardIndex)}
-            >
-              <MaterialCommunityIcons
-                name="download"
-                size={24}
-                color={th.on_primary}
-              />
-            </Pressable>
-          )}
-        </View>
-      )}
+        </Pressable>
+      </View>
     </View>
   );
 };

@@ -12,7 +12,7 @@ import { button_icon } from "./styles/button";
 import { shadow_3dp } from "./styles/theme";
 import { useRef } from "react";
 import { useCallback } from "react";
-import FilterSelector from "./filterSelector/FilterSelector";
+import BodyTypeSelector from "./elementsSelector/BodyTypeSelector";
 import { useTheme } from "../utils/ThemeContext";
 import MultiStateToggleButton from "./MultiStateToggleButton";
 

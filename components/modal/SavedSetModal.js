@@ -6,12 +6,12 @@ import { useSetsList } from "../../utils/SetsListContext";
 import { translate } from "../../i18n/translations";
 
 const SavedSetModal = ({}) => {
-  const { setsSavedList } = useSetsList();
+  const { setsListSaved } = useSetsList();
   const { savedSetModalVisible, toggleSavedSetModal } = useSavedSetModal();
 
   const savedSets = useMemo(() => {
-    return setsSavedList;
-  }, [setsSavedList]);
+    return setsListSaved;
+  }, [setsListSaved]);
 
   return (
     <MyModal

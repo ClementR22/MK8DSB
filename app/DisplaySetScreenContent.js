@@ -59,8 +59,8 @@ const DisplaySetScreenContent = () => {
   } = usePressableImages();
 
   const {
-    setsList,
-    setsSavedList,
+    setsListDisplayed,
+    setsListSaved,
     addSet,
     updateSetsList,
     setCardActiveIndex,
@@ -71,8 +71,6 @@ const DisplaySetScreenContent = () => {
   useEffect(() => {
     updateSetsList(pressedClassIds, savedSetModalVisible ? "save" : "display"); // Met à jour après le rendu
   }, [pressedClassIds]); // Déclenché uniquement quand pressedClassIds change
-
-  const [orderNumber, setOrderNumber] = useState(0);
 
   const pressedImagesClassIdsInit = pressableImagesList
     .filter((element) => element.pressed)
@@ -102,7 +100,7 @@ const DisplaySetScreenContent = () => {
 
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
 
-  const setsToShowMultipleStatsLists = setsList.map((setToShow) => {
+  const setsToShowMultipleStatsLists = setsListDisplayed.map((setToShow) => {
     const setToShowStatsList = searchSetStatsFromElementsIds(
       setToShow.classIds
     );
@@ -110,8 +108,8 @@ const DisplaySetScreenContent = () => {
   });
 
   const displayedSets = useMemo(() => {
-    return setsList;
-  }, [setsList]);
+    return setsListDisplayed;
+  }, [setsListDisplayed]);
 
   // A CHECKER
 
@@ -119,15 +117,6 @@ const DisplaySetScreenContent = () => {
     <ScrollView scrollEnabled={!savedSetModalVisible}>
       <View style={styles.container}>
         <Text style={styles.text}>DisplaySetScreen</Text>
-        <Pressable
-          onPress={() => {
-            console.log("---------------");
-            console.log("setsSavedList", setsSavedList);
-            console.log("setsList", setsList);
-          }}
-        >
-          <Text>afficher setsList</Text>
-        </Pressable>
         <StatSliderResultSelectorPressable
           setFoundStatsModalVisible={setFoundStatsModalVisible}
         />

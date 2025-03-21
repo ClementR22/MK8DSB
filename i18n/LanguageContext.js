@@ -9,7 +9,7 @@ export const useLanguage = () => {
 
 // Fournisseur de contexte
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState("fr"); // Langue par défaut
+  const [language, setLanguage] = useState("en"); // Langue par défaut
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
