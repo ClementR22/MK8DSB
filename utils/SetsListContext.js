@@ -80,7 +80,7 @@ export const SetsListProvider = ({ children }) => {
     }
   };
 
-  const loadSetToSearch = (setCardSelectedIndex) => {
+  const loadSetSaveToSearch = (setCardSelectedIndex) => {
     const setCardSelected = setsListSaved[setCardSelectedIndex];
     const setCardSelectedClassIds = setCardSelected.classIds;
     const setCardSelectedStatList = searchSetStatsFromElementsIds(
@@ -95,7 +95,7 @@ export const SetsListProvider = ({ children }) => {
     showToast("Succès", "Les stats du set ont été chargéés");
   };
 
-  const loadSetToDisplay = (setCardSelectedIndex) => {
+  const loadSetSaveToDisplay = (setCardSelectedIndex) => {
     const setCardSelected = setsListSaved[setCardSelectedIndex];
     const setCardSelectedName = setCardSelected.name;
     const setsDisplayedNames = setsListDisplayed.map((set) => set.name);
@@ -108,6 +108,11 @@ export const SetsListProvider = ({ children }) => {
       addSet(setCardSelected);
       showToast("Succès", "Le set a été chargé");
     }
+  };
+
+  const loadSetSearchToDisplay = (setCardSelectedIndex) => {
+    const setCardSelected = setsListFound[setCardSelectedIndex];
+    addSet(setCardSelected);
   };
 
   const saveSet = async (setCardSelectedIndex, situation) => {
@@ -223,8 +228,9 @@ export const SetsListProvider = ({ children }) => {
         setsListFound,
         updateAllSetsListFound,
         addSet,
-        loadSetToSearch,
-        loadSetToDisplay,
+        loadSetSaveToSearch,
+        loadSetSaveToDisplay,
+        loadSetSearchToDisplay,
         removeSet,
         saveSet,
         saveSetFromFound,

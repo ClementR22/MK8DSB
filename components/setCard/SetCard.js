@@ -56,8 +56,9 @@ const SetCard = ({
 
   const {
     saveSet,
-    loadSetToSearch,
-    loadSetToDisplay,
+    loadSetSaveToSearch,
+    loadSetSaveToDisplay,
+    loadSetSearchToDisplay,
     removeSet,
     setSetCardActiveIndex,
   } = useSetsList();
@@ -182,6 +183,7 @@ const SetCard = ({
             <MaterialIcons name="edit" size={24} color={th.on_primary} />
           </Pressable>
         )}
+
         {situation != "search" && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
@@ -192,28 +194,49 @@ const SetCard = ({
             <Ionicons name="close" size={24} color={th.on_primary} />
           </Pressable>
         )}
-        <Pressable
-          style={[button_icon(th).container, shadow_3dp]}
-          onPress={() =>
-            situation == "search"
-              ? saveSetFromFound(setCardIndex)
-              : situation == "display"
-              ? saveSet(setCardIndex)
-              : (situation == "save") & (screenSituation == "search")
-              ? loadSetToSearch(setCardIndex)
-              : loadSetToDisplay(setCardIndex)
-          }
-        >
-          {situation != "save" ? (
+
+        {situation != "save" && (
+          <Pressable
+            style={[button_icon(th).container, shadow_3dp]}
+            onPress={() =>
+              situation == "search"
+                ? saveSetFromFound(setCardIndex)
+                : saveSet(setCardIndex)
+            }
+          >
             <MaterialIcons name="save" size={24} color={th.on_primary} />
-          ) : (
+          </Pressable>
+        )}
+
+        {situation == "save" && (
+          <Pressable
+            style={[button_icon(th).container, shadow_3dp]}
+            onPress={() =>
+              screenSituation == "search"
+                ? loadSetSaveToSearch(setCardIndex)
+                : loadSetSaveToDisplay(setCardIndex)
+            }
+          >
             <MaterialCommunityIcons
               name="download"
               size={24}
               color={th.on_primary}
             />
-          )}
-        </Pressable>
+          </Pressable>
+        )}
+
+        {situation == "search" && (
+          <Pressable
+            style={[button_icon(th).container, shadow_3dp]}
+            onPress={() => loadSetSearchToDisplay(setCardIndex)}
+          >
+            <MaterialCommunityIcons
+              name="compare"
+              size={24}
+              color={th.on_primary}
+            />
+          </Pressable>
+        )}
       </View>
     </View>
   );
