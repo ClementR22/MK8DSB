@@ -15,11 +15,6 @@ const StatSlider = ({
   setStatFilterNumber,
 }) => {
   const th = useTheme();
-  const statFilterIconsNames = [
-    "approximately-equal",
-    "greater-than-or-equal",
-    "equal",
-  ];
 
   return (
     <View
@@ -46,7 +41,7 @@ const StatSlider = ({
         <MultiStateToggleButton
           number={statFilterNumber}
           setNumber={setStatFilterNumber}
-          iconsNames={statFilterIconsNames}
+          filterCase={true}
         />
       </View>
 

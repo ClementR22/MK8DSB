@@ -2,16 +2,23 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
-const MultiStateToggleButton = ({ number, setNumber }) => {
-  const imagesOrderIconsNames = [
+const MultiStateToggleButton = ({ number, setNumber, filterCase = false }) => {
+  const statFilterIconsNames = [
+    "approximately-equal",
+    "greater-than-or-equal",
+    "equal",
+  ];
+  const elementOrderIconsNames = [
     "sort-numeric-ascending",
     "sort-alphabetical-ascending",
     "sort-alphabetical-descending",
     "graphql",
   ];
 
+  const iconsNames = filterCase ? statFilterIconsNames : elementOrderIconsNames;
+
   const handlePress = () => {
-    const newNumber = (number + 1) % imagesOrderIconsNames.length;
+    const newNumber = (number + 1) % iconsNames.length;
     setNumber(newNumber);
   };
 
@@ -24,10 +31,10 @@ const MultiStateToggleButton = ({ number, setNumber }) => {
       ]}
     >
       <MaterialCommunityIcons
-        name={imagesOrderIconsNames[number]}
+        name={iconsNames[number]}
         size={24}
         style={styles.selectedText}
-      ></MaterialCommunityIcons>
+      />
     </Pressable>
   );
 };
