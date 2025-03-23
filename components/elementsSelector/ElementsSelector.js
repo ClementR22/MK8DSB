@@ -25,14 +25,13 @@ import { usePathname } from "expo-router";
 import { useSetsList } from "../../utils/SetsListContext";
 import { useOrderNumber } from "../../utils/OrderNumberContext";
 import MultiStateToggleButton from "../MultiStateToggleButton";
+import CategorySelector from "./CategorySelector";
+import ElementImage from "./ElementImage";
 
-const iconSize = 38;
-
-const ElementsSelector = ({ situation }) => {
+const ElementsSelector = ({ situation, galeryCase = false }) => {
   const th = useTheme();
 
   const {
-    pressableImagesList,
     pressableImagesByCategory,
     handlePressImage,
     handlePressImageByClass,
@@ -40,61 +39,71 @@ const ElementsSelector = ({ situation }) => {
 
   const { orderNumber, setOrderNumber } = useOrderNumber();
 
-  const elementIcons = [
-    elementsAllInfosList[0].image.uri,
-    elementsAllInfosList[52].image.uri,
-    elementsAllInfosList[93].image.uri,
-    elementsAllInfosList[115].image.uri,
-    require("../../assets/images/close.png"),
-  ];
-
-  const scrollViewRef = useRef(null);
-  const [showScrollTopButton, setShowScrollTopButton] = useState(false);
-
   // État pour suivre l'onglet sélectionné
   const [selectedTab, setSelectedTab] = useState("character");
 
-  const sortElements = (selectedCategoryImages, orderNumber) => {
+  const sortElements = (selectedCategoryElements, orderNumber) => {
     switch (orderNumber) {
       case 0:
-        selectedCategoryImages.sort((a, b) => {
+        selectedCategoryElements.sort((a, b) => {
           return a.id - b.id;
         });
         break;
       case 1:
-        selectedCategoryImages.sort((a, b) => a.name.localeCompare(b.name));
+        selectedCategoryElements.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case 2:
-        selectedCategoryImages.sort((a, b) => b.name.localeCompare(a.name));
+        selectedCategoryElements.sort((a, b) => b.name.localeCompare(a.name));
         break;
     }
-    return selectedCategoryImages;
+    return selectedCategoryElements;
   };
+
+  const scrollViewRef = useRef(null);
+  const [showScrollTopButton, setShowScrollTopButton] = useState(false);
 
   const handleScroll = (event) => {
     const scrollY = event.nativeEvent.contentOffset.y;
     setShowScrollTopButton(scrollY > 0); // Affiche le bouton après 100px de scroll
   };
 
-  const scrollToSection = (sectionRef, animated = true) => {
-    sectionRef.current?.measureLayout(
-      scrollViewRef.current, // Mesurer par rapport à la ScrollView
-      (x, y) => {
-        scrollViewRef.current?.scrollTo({ y, animated: animated });
-      },
-      (error) => {
-        console.error("Erreur de mesure :", error);
-      }
-    );
-  };
+  const { scrollToSection } = useOrderNumber();
 
   const sectionRefs = Array.from({ length: 5 }, () => useRef(null));
 
-  const content = (selectedCategoryImages) => {
+  const fusionClassLists = (classLists) => {
+    return Object.values(classLists).flat();
+  };
+
+  const getSelectedCategoryElements = () => {
+    return fusionClassLists(pressableImagesByCategory[selectedTab]);
+  };
+
+  const getSelectedCategoryElementsSorted = () => {
+    const selectedCategoryElements = getSelectedCategoryElements();
+    const selectedCategoryElementsSorted = sortElements(
+      selectedCategoryElements,
+      orderNumber
+    );
+
+    return selectedCategoryElementsSorted;
+  };
+
+  const groupByBodyType = (list) => {
+    return list.reduce((acc, item) => {
+      if (!acc[item.category]) {
+        acc[item.category] = [];
+      }
+      acc[item.category].push(item);
+      return acc;
+    }, {});
+  };
+
+  const ElementsView = ({ elements }) => {
     return (
       <View style={[styles.categoryContainer, { flexDirection: "row" }]}>
-        {selectedCategoryImages.map(
-          ({ id, name, category, classId, image, pressed }) => (
+        {elements.map(({ id, name, category, classId, image, pressed }) =>
+          !galeryCase ? (
             <ElementChip
               key={id}
               name={name}
@@ -105,38 +114,40 @@ const ElementsSelector = ({ situation }) => {
                       handlePressImageByClass(classId, category, situation);
                     }
                   : () => {
-                      handlePressImage(id, category);
+                      handlePressImage(id);
                     }
               }
               uri={image.uri}
             />
+          ) : (
+            <ElementImage key={id} name={name} uri={image.uri} />
           )
         )}
       </View>
     );
   };
 
-  const BodyContent = ({ selectedCategoryImages }) => (
+  const BodyTabContent = ({ bodyElementsByBodyType }) => (
     <View>
       <View style={styles.bodyTypeBookmarksContainer}>
         {bodyTypeNames.map((bodyTypeName, index) => (
           <Pressable
             style={button(th).container}
-            onPress={() => scrollToSection(sectionRefs[index])}
+            onPress={() => scrollToSection(scrollViewRef, sectionRefs[index])}
             key={bodyTypeName}
           >
             <Text style={button(th).text}>{translate(bodyTypeName)}</Text>
           </Pressable>
         ))}
       </View>
-      <View style={styles.bodyCategoriesContainer}>
-        {Object.entries(selectedCategoryImages).map(
-          ([subCategoryKey, subCategoryImages], index) => (
+      <View style={styles.bodiesContainer}>
+        {Object.entries(bodyElementsByBodyType).map(
+          ([subCategoryKey, subCategoryElements], index) => (
             <View key={subCategoryKey} ref={sectionRefs[index]}>
               <Text style={{ flex: 1, backgroundColor: "white" }}>
                 {translate(subCategoryKey)}
               </Text>
-              {content(subCategoryImages)}
+              <ElementsView elements={subCategoryElements} />
             </View>
           )
         )}
@@ -145,85 +156,28 @@ const ElementsSelector = ({ situation }) => {
   );
 
   // Fonction pour rendre le contenu de l'onglet sélectionné
-  const renderContent = () => {
+  const SelectedCategoryElementsView = () => {
     if (orderNumber != 3) {
-      // Filtre les catégories en fonction de l'onglet sélectionné
-      let selectedCategoryImages = null;
-
-      if (selectedTab == "body") {
-        selectedCategoryImages = {};
-
-        let currentSubCategoryName = "kart";
-        let currentSubCategoryList = [];
-        pressableImagesList.forEach((element) => {
-          const elementCategory = element.category;
-          if (bodyTypeNames.includes(elementCategory)) {
-            if (elementCategory != currentSubCategoryName) {
-              currentSubCategoryList = sortElements(
-                currentSubCategoryList,
-                orderNumber
-              );
-              selectedCategoryImages[currentSubCategoryName] =
-                currentSubCategoryList;
-              currentSubCategoryName = elementCategory;
-              currentSubCategoryList = [];
-            }
-            currentSubCategoryList.push(element);
-          }
-        });
-        currentSubCategoryList = sortElements(
-          currentSubCategoryList,
-          orderNumber
-        );
-        selectedCategoryImages[currentSubCategoryName] = currentSubCategoryList;
-      } else {
-        selectedCategoryImages = pressableImagesList.filter(
-          (element) => element.category === selectedTab
-        );
-        selectedCategoryImages = sortElements(
-          selectedCategoryImages,
-          orderNumber
-        );
-      }
-
+      const selectedCategoryElementsSorted =
+        getSelectedCategoryElementsSorted();
       if (selectedTab != "body") {
-        return content(selectedCategoryImages);
+        return <ElementsView elements={selectedCategoryElementsSorted} />;
       } else {
-        return <BodyContent selectedCategoryImages={selectedCategoryImages} />;
+        const bodyElementsByBodyType = groupByBodyType(
+          selectedCategoryElementsSorted
+        );
+        return (
+          <BodyTabContent bodyElementsByBodyType={bodyElementsByBodyType} />
+        );
       }
     } else {
       // OU BIEN RANGEMENT PAR CLASSE
-      const selectedCategoryImages = pressableImagesByCategory[selectedTab];
+      const selectedCategoryElements = pressableImagesByCategory[selectedTab]; // deja trié par classe dans pressableImagesByCategory
       return (
-        <View style={styles.categoryContainer}>
-          {Object.entries(selectedCategoryImages).map(
+        <View style={styles.bodyTypesContainer}>
+          {Object.entries(selectedCategoryElements).map(
             ([classKey, classElements]) => (
-              <View key={classKey} style={[styles.classContainer]}>
-                {Object.entries(classElements).map(
-                  ([
-                    elementKey,
-                    { id, name, category, classId, image, pressed },
-                  ]) => {
-                    return (
-                      <ElementChip
-                        key={id}
-                        name={name}
-                        pressed={pressed}
-                        onPress={
-                          situation != "search"
-                            ? () => {
-                                handlePressImageByClass(classId, category);
-                              }
-                            : () => {
-                                handlePressImage(id, category);
-                              }
-                        }
-                        uri={image.uri}
-                      />
-                    );
-                  }
-                )}
-              </View>
+              <ElementsView key={classKey} elements={classElements} />
             )
           )}
         </View>
@@ -239,41 +193,28 @@ const ElementsSelector = ({ situation }) => {
     >
       <MultiStateToggleButton number={orderNumber} setNumber={setOrderNumber} />
       {/* Navigation par onglets */}
-      <View style={styles.tabContainer} key={"tabContainer"}>
-        {category4Names.map((elementName, index) => (
-          <Pressable
-            key={elementName} // Ajout de la key ici
-            style={[
-              styles.tab,
-              selectedTab === elementName && styles.activeTab,
-            ]}
-            onPress={() => {
-              setSelectedTab(elementName);
-              scrollToSection(sectionRefs[4], false);
-            }}
-          >
-            <Image
-              source={elementIcons[index]}
-              style={styles.image}
-              resizeMode="contain"
-            />
-          </Pressable>
-        ))}
-      </View>
+
+      <CategorySelector
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+        scrollViewRef={scrollViewRef}
+        sectionRefs={sectionRefs}
+      />
 
       <ScrollView
         onScroll={handleScroll}
         scrollEventThrottle={64}
         ref={scrollViewRef}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1 }}
       >
-        {renderContent()}
+        <SelectedCategoryElementsView />
       </ScrollView>
 
       {showScrollTopButton && (
         <Pressable
           style={styles.floatingButton}
-          onPress={() => scrollToSection(sectionRefs[4])}
+          onPress={() => scrollToSection(scrollViewRef, sectionRefs[4])}
         >
           <MaterialCommunityIcons
             name="chevron-up"
@@ -293,21 +234,6 @@ const styles = StyleSheet.create({
     backgroundColor: "blue",
     padding: 20,
   },
-  tabContainer: {
-    flexDirection: "row",
-    backgroundColor: "lightgray",
-    paddingVertical: 10,
-    justifyContent: "space-between", // Espacement entre les éléments
-  },
-  tab: {
-    flex: 1,
-    padding: 10,
-    alignItems: "center",
-  },
-  activeTab: {
-    borderBottomWidth: 2,
-    borderColor: "black",
-  },
   tabText: {
     fontSize: 16,
     fontWeight: "bold",
@@ -317,11 +243,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 16,
   },
-  image: {
-    width: iconSize,
-    height: iconSize,
-  },
-  bodyCategoriesContainer: {
+  bodiesContainer: {
     backgroundColor: "purple",
     padding: 20,
   },
@@ -332,12 +254,10 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     padding: 20,
   },
-  classContainer: {
+  bodyTypesContainer: {
     marginVertical: 5,
-    backgroundColor: "white",
-    flexDirection: "row ",
-    flexWrap: "wrap",
-    rowGap: 2,
+    backgroundColor: "yellow",
+    padding: 10,
   },
   bodyTypeBookmarksContainer: {
     flexDirection: "row",

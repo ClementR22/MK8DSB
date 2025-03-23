@@ -33,10 +33,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import SetCardContainer from "../components/setCard/SetCardContainer";
 
-// import { GestureHandlerRootView } from "react-native-gesture-handler";
-// import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import Toast from "react-native-toast-message";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSetsList } from "../utils/SetsListContext";
 import { useMemo } from "react";

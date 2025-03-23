@@ -14,76 +14,45 @@ import { Image } from "react-native";
 import { useOrderNumber } from "../utils/OrderNumberContext";
 import showToast from "../utils/toast";
 import { translate } from "../i18n/translations";
+import ElementImage from "../components/elementsSelector/ElementImage";
+import ElementsSelector from "../components/elementsSelector/ElementsSelector";
 
 const GaleryScreenContent = () => {
   const { pressableImagesByCategory } = usePressableImages();
-  const { imageWidth } = useOrderNumber();
-  const scrollViewRef = useRef(null);
-
-  const scrollToSection = (sectionRef, animated = true) => {
-    sectionRef.current?.measureLayout(
-      scrollViewRef.current, // Mesurer par rapport à la ScrollView
-      (x, y) => {
-        scrollViewRef.current?.scrollTo({ y, animated: animated });
-      },
-      (error) => {
-        console.error("Erreur de mesure :", error);
-      }
-    );
-  };
-
-  const sectionRefs = Array.from({ length: 5 }, () => useRef(null));
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.title}>Galerie</Text>
-        <View>
-          {Object.entries(pressableImagesByCategory).map(
-            ([categoryKey, categoryClasses]) => (
-              <View key={categoryKey} style={styles.categoryContainer}>
-                <Text>{translate(categoryKey)}</Text>
-                {Object.entries(categoryClasses).map(
-                  ([classKey, classElements]) => (
-                    <View key={classKey} style={styles.classContainer}>
-                      {Object.entries(classElements).map(
-                        ([
-                          elementKey,
-                          { id, name, category, classId, image, pressed },
-                        ]) => {
-                          return (
-                            <View key={name} style={styles.elementContainer}>
-                              <Pressable
-                                onPress={() => {
-                                  showToast("yo", name);
-                                }}
-                              >
-                                <Image
-                                  source={image.uri}
-                                  style={{
-                                    width: imageWidth,
-                                    height: imageWidth,
-                                    marginBottom: 0,
-                                  }}
-                                  resizeMode="contain"
-                                />
-                              </Pressable>
-                              <Text>{name}</Text>
-                            </View>
-                          );
-                        }
-                      )}
-                    </View>
-                  )
-                )}
-              </View>
-            )
-          )}
-        </View>
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      <Text style={styles.title}>Galerie</Text>
+      <ElementsSelector situation={"display"} galeryCase={true} />
+    </View>
   );
 };
+
+/* 
+ANCIENNE VERSION
+<View>
+{Object.entries(pressableImagesByCategory).map(
+  ([categoryKey, categoryClasses]) => (
+    <View key={categoryKey} style={styles.categoryContainer}>
+      <Text>{translate(categoryKey)}</Text>
+      {Object.entries(categoryClasses).map(
+        ([classKey, classElements]) => (
+          <View key={classKey} style={styles.classContainer}>
+            {Object.entries(classElements).map(
+              ([
+                elementKey,
+                { id, name, category, classId, image, pressed },
+              ]) => {
+                return <ElementImage name={name} image={image} />;
+              }
+            )}
+          </View>
+        )
+      )}
+    </View>
+  )
+)}
+</View> */
 
 export default GaleryScreenContent;
 

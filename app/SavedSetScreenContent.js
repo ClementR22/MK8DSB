@@ -1,15 +1,15 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import th, { vw } from "../components/styles/theme";
 import ElementsSelector from "../components/elementsSelector/ElementsSelector";
-import { ScrollView } from "react-native-web";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const SavedSetScreenContent = () => {
+  [isModalVisible, setIsModalVisible] = useState(true);
   return (
-    <ScrollView>
-      <Text>Galery</Text>
-      <ElementsSelector situation={"sa"} />
-    </ScrollView>
+    <GestureHandlerRootView>
+      <Text>Saved sets</Text>
+    </GestureHandlerRootView>
   );
 };
 

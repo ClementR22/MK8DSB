@@ -11,11 +11,7 @@ import {
   Alert,
   TextInput,
 } from "react-native";
-import { elementsAllClassName, elementsAllInfosList } from "../../data/data";
-import { ScrollView } from "react-native";
-import StatSliderResult from "../statSliderResult/StatSliderResult";
-import { modal } from "../styles/modal";
-import { button } from "../styles/button";
+import { elementsAllInfosList } from "../../data/data";
 import { card } from "../styles/card";
 import { useTheme } from "../../utils/ThemeContext";
 import MyModal from "../modal/MyModal";

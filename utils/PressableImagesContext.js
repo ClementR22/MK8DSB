@@ -71,7 +71,7 @@ export const PressableImagesProvider = ({
     initializePressableImagesByCategory(pressableImagesList);
 
   // Fonction pour gérer l'état d'une image pressée
-  const handlePressImage = (id, category) => {
+  const handlePressImage = (id) => {
     setPressableImagesList((prev) =>
       prev.map((item, index) =>
         index === id ? { ...item, pressed: !item.pressed } : item
@@ -88,21 +88,25 @@ export const PressableImagesProvider = ({
     glider: 39,
   });
 
-  const handlePressImageByClass = (classId, category) => {
-    const categoryList = bodyTypeNames.includes(category)
-      ? bodyTypeNames
-      : [category];
-    // categoryList = ["kart", "bike", "sportBike", "ATV"] ou bien ["character"] ou bien ["wheels"] ou bien ["glider"]
-    // on met tous les chip de la category sur false
-    // puis on selectionne le chip
+  const handlePressImageByClass = (classId, category7) => {
+    let category4 = category7;
+    let category4ElementList = [category7];
+
+    if (bodyTypeNames.includes(category7)) {
+      // si category7 est en fait un des bodyType
+      category4 = "body";
+      category4ElementList = bodyTypeNames;
+    }
+
+    // category4SelectedElementList = ["kart", "bike", "sportBike", "ATV"] ou bien ["character"] ou bien ["wheels"] ou bien ["glider"]
     setPressableImagesList((prev) =>
       prev.map((item) =>
-        categoryList.includes(item.category)
+        category4ElementList.includes(item.category)
           ? { ...item, pressed: item.classId === classId }
           : item
       )
     );
-    setPressedClassIds((prev) => ({ ...prev, [category]: classId }));
+    setPressedClassIds((prev) => ({ ...prev, [category4]: classId }));
   };
 
   const updatePressableImagesList = (setClassIds) => {
