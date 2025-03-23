@@ -4,12 +4,11 @@ import { ScrollView } from "react-native";
 import { usePressableImages } from "../../utils/PressableImagesContext";
 import showToast from "../../utils/toast";
 import { category4Names } from "../../data/data";
-
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
-const imageWidth = Math.min(screenWidth / 5, 120);
+import { useOrderNumber } from "../../utils/OrderNumberContext";
 
 const SetCardImagesDisplayer = ({ setToShowElementsIds }) => {
   const { pressableImagesByCategory } = usePressableImages();
+  const { imageWidth } = useOrderNumber();
 
   return (
     <ScrollView>
@@ -31,7 +30,11 @@ const SetCardImagesDisplayer = ({ setToShowElementsIds }) => {
                   >
                     <Image
                       source={element.image.uri}
-                      style={styles.image}
+                      style={{
+                        width: imageWidth,
+                        height: imageWidth,
+                        marginBottom: 0,
+                      }}
                       resizeMode="contain"
                     />
                   </Pressable>
@@ -76,11 +79,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     flexDirection: "row",
     paddingHorizontal: 16, // TODO: Fix 5 character width
-  },
-  image: {
-    width: imageWidth,
-    height: imageWidth,
-    marginBottom: 0,
   },
   closePressable: {
     padding: 10,

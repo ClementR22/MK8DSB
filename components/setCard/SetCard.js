@@ -19,7 +19,7 @@ import { button } from "../styles/button";
 import { card } from "../styles/card";
 import { useTheme } from "../../utils/ThemeContext";
 import MyModal from "../modal/MyModal";
-import SetImagesDisplayer from "./SetCardImagesDisplayer";
+import SetCardImagesDisplayer from "./SetCardImagesDisplayer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
 import { button_icon } from "../styles/button";
 import { shadow_3dp } from "../styles/theme";
@@ -138,7 +138,7 @@ const SetCard = ({
         modalTitle={""}
         isModalVisible={isImagesModalVisible}
         setIsModalVisible={setIsImagesModalVisible}
-        ModalContentsList={[SetImagesDisplayer]}
+        ModalContentsList={[SetCardImagesDisplayer]}
         contentPropsList={[{ setToShowElementsIds: setToShowClassIds }]}
         closeButtonText="Close"
       />
@@ -230,8 +230,8 @@ const SetCard = ({
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => loadSetSearchToDisplay(setCardIndex)}
           >
-            <MaterialCommunityIcons
-              name="compare"
+            <MaterialIcons
+              name="display-settings"
               size={24}
               color={th.on_primary}
             />

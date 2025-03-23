@@ -113,6 +113,7 @@ export const SetsListProvider = ({ children }) => {
   const loadSetSearchToDisplay = (setCardSelectedIndex) => {
     const setCardSelected = setsListFound[setCardSelectedIndex];
     addSet(setCardSelected);
+    showToast("Succès", "Le set a été ajouté à l'écran de comparaison");
   };
 
   const saveSet = async (setCardSelectedIndex, situation) => {

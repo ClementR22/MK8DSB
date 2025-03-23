@@ -8,10 +8,14 @@ import React, {
 } from "react";
 
 import { setAllInfos, statNames } from "../data/data";
+import { Dimensions } from "react-native";
 
 const OrderNumberContext = createContext();
 
 export const OrderNumberProvider = ({ children }) => {
+  const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+  const imageWidth = Math.min(screenWidth / 5, 120);
+
   const [orderNumber, setOrderNumber] = useState(0);
 
   const pathName = usePathname();
@@ -62,6 +66,7 @@ export const OrderNumberProvider = ({ children }) => {
         chosenStats,
         setChosenStats,
         searchSetStatsFromElementsIds,
+        imageWidth,
       }}
     >
       {children}

@@ -7,7 +7,7 @@ import {
   TextInput,
   Dimensions,
 } from "react-native";
-import { useState, useEffect, useContext, createContext, useRef } from "react";
+import { useState, useEffect } from "react";
 
 import showToast from "../utils/toast";
 
