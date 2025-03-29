@@ -152,6 +152,6 @@ export const ThemeProvider = ({ children }) => {
     const colorScheme = useColorScheme();
     return colorScheme === "dark" ? dark_theme : light_theme;
   };
-  
+
   export default useAppTheme;
   */

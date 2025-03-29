@@ -81,61 +81,61 @@ const SetCard = ({
   );
 
   return (
-    <View style={[card(th).container, { flex: 1 }]}>
-      {displayCase && (
-        <Pressable onPress={() => console.log("ok")}>
-          <Text>
-            {setToShowName == null ? `Set ${setCardIndex}` : setToShowName}
-          </Text>
-        </Pressable>
-      )}
-
-      <Pressable onPress={displaySetImages}>
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.category}
-          contentContainerStyle={{ flexGrow: 0 }} // Empêche la FlatList d'occuper plus d'espace que nécessaire
-        />
-      </Pressable>
-
-      {!displayCase ? (
-        <StatSliderResultContainer
-          setsToShowMultipleStatsLists={[setToShowStats]}
-          isFoundStatsVisible={isFoundStatsVisible}
-          chosenStats={chosenStats}
-        />
-      ) : null}
-
-      <MyModal
-        modalTitle={""}
-        isModalVisible={isModalVisible}
-        setIsModalVisible={setIsModalVisible}
-        ModalContent={SetImagesDisplayer}
-        contentProps={{ setToShowElementsIds: setToShowClassIds }}
-        closeButtonText="Close"
+    <Pressable onPress={displaySetImages}>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.category}
+        contentContainerStyle={{ flexGrow: 0 }} // Empêche la FlatList d'occuper plus d'espace que nécessaire
       />
-
-      {displayCase && (
-        <View>
-          <Pressable
-            style={[button_icon(th).container, shadow_3dp]}
-            onPress={() => {
-              handlePresentModalPressWithArg();
-            }}
-          >
-            <MaterialIcons name="edit" size={24} color={th.on_primary} />
+      <View style={[card(th).container, { flex: 1 }]}>
+        {displayCase && (
+          <Pressable onPress={() => console.log("ok")}>
+            <Text>
+              {setToShowName == null ? `Set ${setCardIndex}` : setToShowName}
+            </Text>
           </Pressable>
+        )}
 
-          <Pressable
-            style={[button_icon(th).container, shadow_3dp]}
-            onPress={removeSet}
-          >
-            <Ionicons name="close" size={24} color={th.on_primary} />
-          </Pressable>
-        </View>
-      )}
-    </View>
+
+        {!displayCase ? (
+          <StatSliderResultContainer
+            setsToShowMultipleStatsLists={[setToShowStats]}
+            isFoundStatsVisible={isFoundStatsVisible}
+            chosenStats={chosenStats}
+          />
+        ) : null}
+
+        <MyModal
+          modalTitle={""}
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          ModalContent={SetImagesDisplayer}
+          contentProps={{ setToShowElementsIds: setToShowClassIds }}
+          closeButtonText="Close"
+        />
+
+        {displayCase && (
+          <View key="debugme" >
+            <Pressable
+              style={[button_icon(th).container, shadow_3dp]}
+              onPress={() => {
+                handlePresentModalPressWithArg();
+              }}
+            >
+              <MaterialIcons name="edit" size={24} color={th.on_primary} />
+            </Pressable>
+
+            <Pressable
+              style={[button_icon(th).container, shadow_3dp]}
+              onPress={removeSet}
+            >
+              <Ionicons name="close" size={24} color={th.on_primary} />
+            </Pressable>
+          </View>
+        )}
+      </View>
+    </Pressable>
   );
 };
 

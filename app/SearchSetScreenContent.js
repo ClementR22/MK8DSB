@@ -1,16 +1,5 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-  TextInput,
-  Dimensions,
-  Modal,
-  Alert,
-  StatusBar,
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView, Pressable, TextInput, Dimensions, Modal, Alert, StatusBar, } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useRef } from "react";
 import { useCallback } from "react";
@@ -24,12 +13,7 @@ import {
 } from "@gorhom/bottom-sheet";
 
 // Utils
-import {
-  setAllInfos,
-  statNames,
-  bodyTypeNames,
-  bodyTypeNamesDisplay,
-} from "../data/data";
+import { setAllInfos, statNames, bodyTypeNames, bodyTypeNamesDisplay, } from "../data/data";
 
 // Components import
 import StatSlider from "../components/StatSlider";
@@ -39,18 +23,8 @@ import MyModal from "../components/MyModal";
 import MyBottomSheetModal from "../components/MyBottomSheetModal";
 import StatSliderResultSelectorPressable from "../components/statSliderResult/StatSliderResultSelectorPressable";
 
-import {
-  button_icon,
-  button,
-  button_outline,
-} from "../components/styles/button";
-import th, {
-  shadow_12dp,
-  shadow_3dp,
-  useTheme,
-  vh,
-  vw,
-} from "../components/styles/theme";
+import { button_icon, button, button_outline } from "../components/styles/button";
+import { shadow_12dp, shadow_3dp, useTheme, vh, vw, } from "../components/styles/theme";
 import { modal } from "../components/styles/modal";
 import checkbox from "../components/styles/checkbox";
 import PressableStat from "../components/PressableStat";
@@ -108,21 +82,17 @@ const SearchSetScreenContent = () => {
     }))
   );
 
-  const [resultsNumber, setResultsNumber] = useState(5);
-
   const [setsToShow, setSetsToShow] = useState([]);
-
+  const [resultsNumber, setResultsNumber] = useState(5);
   const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
+  const [resultsNumberModalVisible, setResultsNumberModalVisible] = useState(false);
 
   const bottomSheetModalRef = useRef(null);
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
 
-  const [resultsNumberModalVisible, setResultsNumberModalVisible] =
-    useState(false);
-  const [menuModalVisible, setMenuModalVisible] = useState(false);
 
   const elementsFilterObjectToList = (pressableImagesByCategory) => {
     const selectedClassIds4categories = [];
@@ -239,76 +209,16 @@ const SearchSetScreenContent = () => {
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
         <ScrollView>
-          <View style={[styles.container, { backgroundColor: th.surface }]}>
-            <View
-              id="Title_bar"
-              style={[
-                styles.text,
-                {
-                  width: vw,
-                  height: 64,
-                  backgroundColor: "white",
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: 10,
-                  backgroundColor: th.surface_container_highest,
-                  // marginTop: 24,
-                },
-              ]}
-            >
-              <Text style={{ margin: 16 }}>
-                <MaterialIcons
-                  name="home"
-                  size={24}
-                  color={th.on_surface}
-                ></MaterialIcons>
-              </Text>
-
-              <Text
-                style={{
-                  fontSize: 22,
-                  color: th.on_surface,
-                }}
-              >
-                Coucou
-              </Text>
-
-              <Pressable
-                style={styles.button_icon}
-                onPress={() => setMenuModalVisible(true)}
-              >
-                <MaterialIcons
-                  name="more-vert"
-                  size={24}
-                  color={th.on_surface}
-                ></MaterialIcons>
-              </Pressable>
-              <Modal
-                animationType="none" // Utilise slide, fade, none pour les animations
-                transparent={true} // Définit si le fond est transparent
-                visible={menuModalVisible}
-                onRequestClose={() => setMenuModalVisible(false)} // Fonction pour fermer le modal
-              >
-                <Text
-                  style={{
-                    position: "absolute",
-                    right: 50,
-                    top: 50,
-                    backgroundColor: "red",
-                  }}
-                >
-                  Coucou
-                </Text>
-              </Modal>
-            </View>
-
+          <View
+            style={[styles.container, { backgroundColor: th.surface }]}
+            key="boxContainer"
+          >
             <View
               style={[
                 styles.statSlidersContainer,
                 { backgroundColor: th.surface_container_high },
               ]}
+              key="sliderContainer"
             >
               <Text
                 style={[
@@ -506,7 +416,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     //backgroundColor: th.surface_container_high,
     marginBottom: 8,
-    maxWidth: 0.95 * vw,
+    maxWidth: Math.max(600, 0.98 * vw),
     minWidth: 0.8 * vw,
     minHeight: 100,
     display: "flex",
