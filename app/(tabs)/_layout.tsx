@@ -11,8 +11,10 @@ import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 
+import { BlurView } from "expo-blur"
+
 export default function TabLayout() {
-  let th = useTheme();
+  const th = useTheme();
   const colorScheme = useColorScheme();
 
   const [menuModalVisible, setMenuModalVisible] = useState(false);
@@ -86,15 +88,27 @@ export default function TabLayout() {
           screenOptions={{
             tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
             headerShown: false,
+            tabBarStyle: {position: "absolute"},
+            tabBarBackground: () => (
+              <BlurView tint="light" intensity={100} style={StyleSheet.absoluteFill} />
+            ),
           }}
         >
           <Tabs.Screen
             name="index"
             options={{
               title: "Home",
+              tabBarLabelPosition: "below-icon",
+              tabBarLabelStyle: {
+                fontFamily: "Roboto"
+              },
+              tabBarItemStyle: {
+                backgroundColor: "ff0000",
+                borderColor: "red"
+              },
               tabBarIcon: ({ color, focused }) => (
                 <TabBarIcon
-                  name={focused ? "home" : "home-outline"}
+                  name={"home"}
                   color={color}
                 />
               ),
@@ -118,7 +132,7 @@ export default function TabLayout() {
               title: "Trouver un set",
               tabBarIcon: ({ color, focused }) => (
                 <TabBarIcon
-                  name={focused ? "search" : "search-outline"}
+                  name={"search"}
                   color={color}
                 />
               ),
