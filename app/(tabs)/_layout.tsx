@@ -93,9 +93,9 @@ export default function TabLayout() {
             }}
           />
           <Tabs.Screen
-            name="SettingsScreen"
+            name="SavedSetScreen"
             options={{
-              title: "SettingsScreen",
+              title: "Saved Set",
               tabBarIcon: ({ color, focused }) => (
                 <TabBarIcon
                   name={focused ? "code-slash" : "code-slash-outline"}

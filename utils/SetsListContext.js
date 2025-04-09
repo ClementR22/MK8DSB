@@ -116,7 +116,7 @@ export const SetsListProvider = ({ children }) => {
     showToast("Succès", "Le set a été ajouté à l'écran de comparaison");
   };
 
-  const saveSet = async (setCardSelectedIndex, situation) => {
+  const saveSetFromDisplay = async (setCardSelectedIndex, situation) => {
     const setsListConcerned =
       situation == "search" ? setsListFound : setsListDisplayed;
     const setCardSelected = setsListConcerned[setCardSelectedIndex];
@@ -199,10 +199,10 @@ export const SetsListProvider = ({ children }) => {
     });
   };
 
-  const updateAllSetsListFound = (setsFoundClassIds) => {
+  const updateEntireSetsListFound = (setsFoundClassIds) => {
     setsFoundWithName = setsFoundClassIds.map((setsFoundClassIds) => ({
       name: null,
-      classIds: setsFoundClassIds.classIds,
+      ...setsFoundClassIds,
     }));
     setSetsListFound(setsFoundWithName);
   };
@@ -227,13 +227,13 @@ export const SetsListProvider = ({ children }) => {
         setsListDisplayed,
         setsListSaved,
         setsListFound,
-        updateAllSetsListFound,
+        updateEntireSetsListFound,
         addSet,
         loadSetSaveToSearch,
         loadSetSaveToDisplay,
         loadSetSearchToDisplay,
         removeSet,
-        saveSet,
+        saveSetFromDisplay,
         saveSetFromFound,
         renameSet,
         updateSetsList,

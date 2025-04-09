@@ -64,7 +64,7 @@ const DisplaySetScreenContent = () => {
   const { savedSetModalVisible, toggleSavedSetModal } = useSavedSetModal();
 
   useEffect(() => {
-    updateSetsList(pressedClassIds, savedSetModalVisible ? "save" : "display"); // Met à jour après le rendu
+    updateSetsList(pressedClassIds, savedSetModalVisible ? "load" : "display"); // Met à jour après le rendu
   }, [pressedClassIds]); // Déclenché uniquement quand pressedClassIds change
 
   const pressedImagesClassIdsInit = pressableImagesList
@@ -90,12 +90,6 @@ const DisplaySetScreenContent = () => {
     );
     return setToShowStatsList;
   });
-
-  const displayedSets = useMemo(() => {
-    return setsListDisplayed;
-  }, [setsListDisplayed]);
-
-  // A CHECKER
 
   return (
     <ScrollView scrollEnabled={!savedSetModalVisible}>
@@ -142,7 +136,7 @@ const DisplaySetScreenContent = () => {
 
       <SavedSetModal />
 
-      <SetCardContainer setsToShow={displayedSets} situation="display" />
+      <SetCardContainer setsToShow={setsListDisplayed} situation="display" />
 
       <StatSliderResultContainer
         setsToShowMultipleStatsLists={setsToShowMultipleStatsLists}

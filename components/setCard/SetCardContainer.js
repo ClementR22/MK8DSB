@@ -16,12 +16,7 @@ const SetCardContainer = ({
   isFoundStatsVisible = null,
   situation,
 }) => {
-  const {
-    setsListDisplayed,
-    setsListSaved,
-    setCardActiveIndex,
-    setSetCardActiveIndex,
-  } = useSetsList();
+  const { setsListDisplayed, setSetCardActiveIndex } = useSetsList();
 
   const handlePresentModalPress = useCallback(
     (setCardSelectedIndex) => {

@@ -22,7 +22,7 @@ const SavedSetModal = ({}) => {
       contentPropsList={[
         {
           setsToShow: savedSets,
-          situation: "save",
+          situation: "load",
         },
       ]}
     />

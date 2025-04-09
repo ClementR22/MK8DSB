@@ -51,7 +51,7 @@ const SetCard = ({
   const th = useTheme();
 
   const {
-    saveSet,
+    saveSetFromDisplay,
     loadSetSaveToSearch,
     loadSetSaveToDisplay,
     loadSetSearchToDisplay,
@@ -121,14 +121,14 @@ const SetCard = ({
         />
       </Pressable>
 
-      {situation == "search" ? (
+      {situation == "search" && ( // || situation == "save"
         <StatSliderResultContainer
           setsToShowMultipleStatsLists={[setToShowStats]}
           isFoundStatsVisible={isFoundStatsVisible}
           chosenStats={chosenStats}
           situation={situation}
         />
-      ) : null}
+      )}
 
       <MyModal
         modalTitle={""}
@@ -163,7 +163,7 @@ const SetCard = ({
         ]}
         closeButtonText={translate("Confirm")}
         checkBeforeClose={async () => {
-          return await saveSet(setCardIndex, situation);
+          return await saveSetFromDisplay(setCardIndex, situation);
         }}
       />
       <View key="pressables container">
@@ -191,20 +191,20 @@ const SetCard = ({
           </Pressable>
         )}
 
-        {situation != "save" && (
+        {(situation == "search" || situation == "display") && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() =>
               situation == "search"
                 ? saveSetFromFound(setCardIndex)
-                : saveSet(setCardIndex)
+                : saveSetFromDisplay(setCardIndex)
             }
           >
             <MaterialIcons name="save" size={24} color={th.on_primary} />
           </Pressable>
         )}
 
-        {situation == "save" && (
+        {situation == "load" && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() =>
@@ -213,15 +213,11 @@ const SetCard = ({
                 : loadSetSaveToDisplay(setCardIndex)
             }
           >
-            <MaterialCommunityIcons
-              name="download"
-              size={24}
-              color={th.on_primary}
-            />
+            <Text>Import</Text>
           </Pressable>
         )}
 
-        {situation == "search" && (
+        {(situation == "search" || situation == "save") && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => loadSetSearchToDisplay(setCardIndex)}

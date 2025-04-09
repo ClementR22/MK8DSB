@@ -35,9 +35,6 @@ import th, {
   vw,
 } from "../components/styles/theme";
 import { useTheme } from "../utils/ThemeContext";
-import { modal } from "../components/styles/modal";
-import checkbox from "../components/styles/checkbox";
-import PressableStat from "../components/PressableStat";
 import StatSelector from "../components/StatSelector";
 import { translate } from "../i18n/translations";
 import { elementsAllInfos } from "../data/data";
@@ -82,12 +79,13 @@ const SearchSetScreenContent = () => {
 
   const [resultsNumber, setResultsNumber] = useState(5);
 
-  const { setsListSaved, updateAllSetsListFound } = useSetsList();
+  const { updateEntireSetsListFound } = useSetsList();
 
   const [setsToShow, setSetsToShow] = useState([]);
-  const updateSetsToShow = (setsFoundClassIds) => {
-    setSetsToShow(setsFoundClassIds);
-    updateAllSetsListFound(setsFoundClassIds);
+  const updateSetsToShow = (setsFound) => {
+    const setsFoundLight = setsFound.map(({ id, bodyTypes, ...rest }) => rest);
+    setSetsToShow(setsFoundLight);
+    updateEntireSetsListFound(setsFoundLight);
   };
 
   const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);
@@ -205,7 +203,6 @@ const SearchSetScreenContent = () => {
       const setsFound = gaps
         .slice(0, Math.min(resultsNumber, gaps.length))
         .map(({ setIndex }) => ({ ...setAllInfos[setIndex] }));
-
       updateSetsToShow(setsFound);
     }
   };
@@ -392,6 +389,7 @@ const SearchSetScreenContent = () => {
                 statList: chosenStats, // Utilisation correcte des paires clé-valeur
                 setStatList: setChosenStats,
                 keepOneCondition: true,
+                chosenCase: true,
               },
             ]}
           />

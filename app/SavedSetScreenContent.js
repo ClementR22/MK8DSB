@@ -3,12 +3,17 @@ import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import th, { vw } from "../components/styles/theme";
 import ElementsSelector from "../components/elementsSelector/ElementsSelector";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import SetCardContainer from "../components/setCard/SetCardContainer";
+import { useSetsList } from "../utils/SetsListContext";
 
 const SavedSetScreenContent = () => {
   [isModalVisible, setIsModalVisible] = useState(true);
+  const { setsListSaved } = useSetsList();
+
   return (
     <GestureHandlerRootView>
       <Text>Saved sets</Text>
+      <SetCardContainer setsToShow={setsListSaved} situation="save" />
     </GestureHandlerRootView>
   );
 };
