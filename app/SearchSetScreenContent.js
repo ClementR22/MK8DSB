@@ -60,7 +60,7 @@ const SearchSetScreenContent = () => {
     handlePressImageUnique,
   } = usePressableImages();
 
-  const { chosenStats, setChosenStats } = useOrderNumber();
+  const { chosenStats, setChosenStats } = useSetsList();
 
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
     statNames.map((statName, index) => ({
@@ -387,7 +387,7 @@ const SearchSetScreenContent = () => {
             ModalContentsList={[StatSelector]}
             contentPropsList={[
               {
-                statList: chosenStats, // Utilisation correcte des paires clé-valeur
+                statList: chosenStats,
                 toggleCheck: (name) => {
                   toggleCheckChosenStats(
                     setChosenStats,

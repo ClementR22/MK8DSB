@@ -8,7 +8,7 @@ import {
   elementsAllInfosList,
   bodyTypeNames,
 } from "../../data/data";
-import { useOrderNumber } from "../../utils/OrderNumberContext";
+import { scrollToSection } from "../../utils/scrollToSection";
 
 const iconSize = 38;
 
@@ -25,8 +25,6 @@ const CategorySelector = ({
     elementsAllInfosList[115].image.uri,
     require("../../assets/images/close.png"),
   ];
-
-  const { scrollToSection } = useOrderNumber();
 
   return (
     <View style={styles.tabContainer} key={"tabContainer"}>

@@ -3,7 +3,11 @@ import { PressableImagesProvider } from "../../utils/PressableImagesContext";
 import { Text } from "react-native";
 
 const SavedSetScreen = () => {
-  return <SavedSetScreenContent />;
+  return (
+    <PressableImagesProvider>
+      <SavedSetScreenContent />
+    </PressableImagesProvider>
+  );
 };
 
 export default SavedSetScreen;

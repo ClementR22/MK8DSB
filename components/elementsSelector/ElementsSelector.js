@@ -27,6 +27,7 @@ import { useOrderNumber } from "../../utils/OrderNumberContext";
 import MultiStateToggleButton from "../MultiStateToggleButton";
 import CategorySelector from "./CategorySelector";
 import ElementImage from "./ElementImage";
+import { scrollToSection } from "../../utils/scrollToSection";
 
 const ElementsSelector = ({ situation, galeryCase = false }) => {
   const th = useTheme();
@@ -66,8 +67,6 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
     const scrollY = event.nativeEvent.contentOffset.y;
     setShowScrollTopButton(scrollY > 0); // Affiche le bouton après 100px de scroll
   };
-
-  const { scrollToSection } = useOrderNumber();
 
   const sectionRefs = Array.from({ length: 5 }, () => useRef(null));
 

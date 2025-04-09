@@ -34,7 +34,7 @@ import { usePressableImages } from "../../utils/PressableImagesContext";
 import { useSetsList } from "../../utils/SetsListContext";
 import MyTextInput from "../MyTextInput";
 import { useSavedSetModal } from "../../utils/SavedSetModalContext";
-import { useOrderNumber } from "../../utils/OrderNumberContext";
+import { useScreenSituation } from "../../utils/ScreenSituationContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const imageWidth = Math.min(screenWidth / 5, 120);
@@ -58,7 +58,7 @@ const SetCard = ({
     removeSet,
     setSetCardActiveIndex,
   } = useSetsList();
-  const { screenSituation } = useOrderNumber();
+  const { screenSituation } = useScreenSituation();
 
   const { updatePressableImagesList } = usePressableImages();
 

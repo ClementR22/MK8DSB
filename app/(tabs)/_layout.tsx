@@ -9,6 +9,7 @@ import { ThemeProvider } from "../../utils/ThemeContext"
 import Toast from "react-native-toast-message";
 import { SetsListProvider } from "../../utils/SetsListContext";
 import { SavedSetModalProvider } from "../../utils/SavedSetModalContext";
+import {ScreenSituationProvider} from "../../utils/ScreenSituationContext";
 import {OrderNumberProvider} from "../../utils/OrderNumberContext"
 import {
   FontAwesome,
@@ -23,6 +24,7 @@ export default function TabLayout() {
   return (
     <ThemeProvider>
       <LanguageProvider>
+        <ScreenSituationProvider>
       <OrderNumberProvider>
       <SetsListProvider>
         <SavedSetModalProvider>
@@ -109,6 +111,7 @@ export default function TabLayout() {
         </SavedSetModalProvider>
       </SetsListProvider>
       </OrderNumberProvider>
+      </ScreenSituationProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

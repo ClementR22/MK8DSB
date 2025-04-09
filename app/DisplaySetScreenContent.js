@@ -41,6 +41,7 @@ import { useSavedSetModal } from "../utils/SavedSetModalContext";
 import SavedSetModal from "../components/modal/SavedSetModal";
 import { useOrderNumber } from "../utils/OrderNumberContext";
 import { toggleCheckList } from "../utils/toggleCheck";
+import { searchSetStatsFromElementsIds } from "../utils/searchSetStatsFromElementsIds";
 
 const DisplaySetScreenContent = () => {
   const th = useTheme();
@@ -73,8 +74,6 @@ const DisplaySetScreenContent = () => {
     .map((element) => {
       return element.classId;
     }); // - firstElementIdOfCategory[index]
-
-  const { searchSetStatsFromElementsIds } = useOrderNumber();
 
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
     statNames.map((statName, index) => ({

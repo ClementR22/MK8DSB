@@ -16,7 +16,6 @@ import { useTheme } from "../utils/ThemeContext";
 
 const StatSelector = ({ statList, toggleCheck }) => {
   const th = useTheme();
-  console.log("statList", statList);
   return (
     <View style={styles.listContainer}>
       <View style={modal(th).content}>

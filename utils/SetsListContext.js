@@ -5,6 +5,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import showToast from "./toast";
 import { usePressableImages } from "./PressableImagesContext";
 import { useOrderNumber } from "./OrderNumberContext";
+import { statNames } from "../data/data";
+import searchSetStatsFromElementsIds from "./searchSetStatsFromElementsIds";
 
 // Créer le contexte
 const SetsListContext = createContext();
@@ -13,14 +15,32 @@ const SetsListContext = createContext();
 export const SetsListProvider = ({ children }) => {
   const setDefault = { name: null, classIds: [9, 16, 30, 39] };
 
+  const [chosenStats, setChosenStats] = useState(
+    statNames.map((statName, index) => {
+      return {
+        name: statName,
+        checked: index === 0,
+        value: index === 0 ? 0 : null,
+        statFilterNumber: 0,
+        setStatFilterNumber: (newState) => {
+          setChosenStats((prevStats) =>
+            prevStats.map((stat) =>
+              stat.name === statName
+                ? { ...stat, statFilterNumber: newState }
+                : stat
+            )
+          );
+        },
+      };
+    })
+  );
+
   const [setsListDisplayed, setSetsListDisplayed] = useState([
     { ...setDefault, classIds: [...setDefault.classIds] },
   ]);
   const [setsListSaved, setSetsListSaved] = useState([]);
 
   const [setsListFound, setSetsListFound] = useState([]);
-
-  const { setChosenStats, searchSetStatsFromElementsIds } = useOrderNumber();
 
   const getSetsSavedNamesAndClassIds = async (onlyNames = false) => {
     try {
@@ -224,6 +244,8 @@ export const SetsListProvider = ({ children }) => {
   return (
     <SetsListContext.Provider
       value={{
+        chosenStats,
+        setChosenStats,
         setsListDisplayed,
         setsListSaved,
         setsListFound,
