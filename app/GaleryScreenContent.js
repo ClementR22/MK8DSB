@@ -18,8 +18,6 @@ import ElementImage from "../components/elementsSelector/ElementImage";
 import ElementsSelector from "../components/elementsSelector/ElementsSelector";
 
 const GaleryScreenContent = () => {
-  const { pressableImagesByCategory } = usePressableImages();
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Galerie</Text>
