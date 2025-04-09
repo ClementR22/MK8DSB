@@ -40,6 +40,7 @@ import { Portal, Provider } from "react-native-paper";
 import { useSavedSetModal } from "../utils/SavedSetModalContext";
 import SavedSetModal from "../components/modal/SavedSetModal";
 import { useOrderNumber } from "../utils/OrderNumberContext";
+import { toggleCheckList } from "../utils/toggleCheck";
 
 const DisplaySetScreenContent = () => {
   const th = useTheme();
@@ -127,8 +128,9 @@ const DisplaySetScreenContent = () => {
           contentPropsList={[
             {
               statList: isFoundStatsVisible,
-              setStatList: setIsFoundStatsVisible,
-              keepOneCondition: false,
+              toggleCheck: (name) => {
+                toggleCheckList(setIsFoundStatsVisible, name);
+              },
             },
           ]}
         />

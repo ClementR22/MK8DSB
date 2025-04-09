@@ -11,7 +11,7 @@ import ElementChip from "./ElementChip";
 import { elementsAllInfosList } from "@/data/data";
 import { useTheme } from "../../utils/ThemeContext";
 import { translate } from "../../i18n/translations";
-import { toggleCheck } from "../../utils/toggleCheck";
+import { toggleCheckList } from "../../utils/toggleCheck";
 
 const BodyTypeSelector = ({ chosenBodyType, setChosenBodyType }) => {
   const th = useTheme();
@@ -31,7 +31,7 @@ const BodyTypeSelector = ({ chosenBodyType, setChosenBodyType }) => {
             name={translate(bodyType.name)}
             pressed={bodyType.checked}
             onPress={() => {
-              toggleCheck(setChosenBodyType, bodyType.name);
+              toggleCheckList(setChosenBodyType, bodyType.name);
             }}
             uri={bodyTypeIcons[index].image.uri}
           />

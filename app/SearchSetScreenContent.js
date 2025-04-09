@@ -47,6 +47,7 @@ import SavedSetModal from "../components/modal/SavedSetModal";
 import { useSavedSetModal } from "../utils/SavedSetModalContext";
 import { useSetsList } from "../utils/SetsListContext";
 import { useOrderNumber } from "../utils/OrderNumberContext";
+import { toggleCheckChosenStats, toggleCheckList } from "../utils/toggleCheck";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -387,9 +388,13 @@ const SearchSetScreenContent = () => {
             contentPropsList={[
               {
                 statList: chosenStats, // Utilisation correcte des paires clé-valeur
-                setStatList: setChosenStats,
-                keepOneCondition: true,
-                chosenCase: true,
+                toggleCheck: (name) => {
+                  toggleCheckChosenStats(
+                    setChosenStats,
+                    name,
+                    setIsFoundStatsVisible
+                  );
+                },
               },
             ]}
           />
@@ -433,9 +438,10 @@ const SearchSetScreenContent = () => {
             ModalContentsList={[StatSelector]}
             contentPropsList={[
               {
-                statList: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
-                setStatList: setIsFoundStatsVisible,
-                keepOneCondition: false,
+                statList: isFoundStatsVisible,
+                toggleCheck: (name) => {
+                  toggleCheckList(setIsFoundStatsVisible, name);
+                },
               },
             ]}
           />
