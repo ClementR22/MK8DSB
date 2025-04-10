@@ -33,7 +33,7 @@ const BodyTypeSelector = ({ chosenBodyType, setChosenBodyType }) => {
             onPress={() => {
               toggleCheckList(setChosenBodyType, bodyType.name);
             }}
-            uri={bodyTypeIcons[index].image.uri}
+            source={bodyTypeIcons[index].image}
           />
         );
       })}

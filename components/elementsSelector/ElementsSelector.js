@@ -116,10 +116,10 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
                       handlePressImage(id);
                     }
               }
-              uri={image.uri}
+              source={image}
             />
           ) : (
-            <ElementImage key={id} name={name} uri={image.uri} />
+            <ElementImage key={id} name={name} source={image} />
           )
         )}
       </View>

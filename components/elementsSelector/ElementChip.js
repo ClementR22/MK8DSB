@@ -2,14 +2,14 @@ import React from "react";
 import { Chip } from "react-native-paper";
 import { View, Image } from "react-native";
 
-const ElementChip = ({ name, pressed, onPress, uri }) => {
+const ElementChip = ({ name, pressed, onPress, source }) => {
   return (
     <Chip
       selected={pressed}
       onPress={onPress}
       style={[styles.chip, pressed && styles.chipSelected]}
       textStyle={styles.chipText}
-      avatar={<Image source={uri} style={styles.image} />}
+      avatar={<Image source={source} style={styles.image} />}
     >
       {name}
     </Chip>

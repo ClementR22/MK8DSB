@@ -29,7 +29,7 @@ const SetCardImagesDisplayer = ({ setToShowElementsIds }) => {
                     }}
                   >
                     <Image
-                      source={element.image.uri}
+                      source={element.image}
                       style={{
                         width: imageWidth,
                         height: imageWidth,

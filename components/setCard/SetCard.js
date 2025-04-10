@@ -220,7 +220,11 @@ const SetCard = ({
         {(situation == "search" || situation == "save") && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
-            onPress={() => loadSetSearchToDisplay(setCardIndex)}
+            onPress={() =>
+              situation == "search"
+                ? loadSetSearchToDisplay(setCardIndex)
+                : loadSetSaveToDisplay(setCardIndex)
+            }
           >
             <MaterialIcons
               name="display-settings"

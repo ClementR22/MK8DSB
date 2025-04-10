@@ -19,10 +19,10 @@ const CategorySelector = ({
   sectionRefs,
 }) => {
   const elementIcons = [
-    elementsAllInfosList[0].image.uri,
-    elementsAllInfosList[52].image.uri,
-    elementsAllInfosList[93].image.uri,
-    elementsAllInfosList[115].image.uri,
+    elementsAllInfosList[0].image,
+    elementsAllInfosList[52].image,
+    elementsAllInfosList[93].image,
+    elementsAllInfosList[115].image,
     require("../../assets/images/close.png"),
   ];
 

@@ -2,12 +2,12 @@ import React from "react";
 import { Chip } from "react-native-paper";
 import { View, Image } from "react-native";
 
-const SetCardElementChip = ({ name, uri }) => {
+const SetCardElementChip = ({ name, source }) => {
   return (
     <Chip
       style={styles.chip}
       textStyle={styles.chipText}
-      avatar={<Image source={uri} style={styles.image} />}
+      avatar={<Image source={source} style={styles.image} />}
     >
       {name}
     </Chip>
