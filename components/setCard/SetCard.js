@@ -15,7 +15,7 @@ import { elementsAllInfosList } from "../../data/data";
 import { card } from "../styles/card";
 import { useTheme } from "../../utils/ThemeContext";
 import MyModal from "../modal/MyModal";
-import SetCardImagesDisplayer from "./SetCardImagesDisplayer";
+import SetImagesContainer from "./SetImagesContainer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
 import { button_icon } from "../styles/button";
 import { shadow_3dp } from "../styles/theme";
@@ -25,10 +25,8 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-import SetCardElementChip from "./SetCardElementChip";
 import { category4Names } from "../../data/data";
 import { translate } from "../../i18n/translations";
-import { FlatList } from "react-native";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "../../utils/PressableImagesContext";
 import { useSetsList } from "../../utils/SetsListContext";
@@ -72,32 +70,6 @@ const SetCard = ({
     setIsImagesModalVisible(true);
   };
 
-  const data = category4Names.map((category, index) => {
-    return {
-      category: translate(category),
-      images: elementsAllInfosList
-        .filter(({ classId }) => classId === setToShowClassIds[index]) // Filtrer selon classId correspondant
-        .map((element) => element.image), // Extraire l'URI de l'image
-    };
-  });
-
-  const categoryWidth =
-    Math.max(...data.map((item) => item.category.length)) * 7;
-
-  const renderItem = ({ item }) => (
-    <View style={styles.row}>
-      {/* <Text style={[styles.category, { width: categoryWidth }]}>
-        {item.category}
-      </Text> */}
-
-      <View style={styles.imagesContainer}>
-        {item.images.map((image, index) => (
-          <Image key={index} source={image} style={styles.icon} />
-        ))}
-      </View>
-    </View>
-  );
-
   const saveSetFromFound = () => {
     setIsTextInputModalVisible(true);
   };
@@ -113,11 +85,9 @@ const SetCard = ({
         />
       )}
       <Pressable onPress={displaySetImages}>
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.category}
-          contentContainerStyle={{ flexGrow: 0 }} // Empêche la FlatList d'occuper plus d'espace que nécessaire
+        <SetImagesContainer
+          setToShowClassIds={setToShowClassIds}
+          imageSize={40}
         />
       </Pressable>
 
@@ -134,8 +104,10 @@ const SetCard = ({
         modalTitle={""}
         isModalVisible={isImagesModalVisible}
         setIsModalVisible={setIsImagesModalVisible}
-        ModalContentsList={[SetCardImagesDisplayer]}
-        contentPropsList={[{ setToShowElementsIds: setToShowClassIds }]}
+        ModalContentsList={[SetImagesContainer]}
+        contentPropsList={[
+          { setToShowClassIds: setToShowClassIds, imageSize: 80 },
+        ]}
         closeButtonText="Close"
       />
       <MyModal
@@ -262,25 +234,9 @@ const styles = StyleSheet.create({
     overflow: "hidden", // Cache l'excédent du texte
     marginRight: 30,
   },
-  icon: {
-    width: 40, // Taille fixe pour toutes les icônes
-    height: 40, // Même taille en hauteur
-    resizeMode: "contain", // Garde les proportions sans déformation
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-  },
   category: {
     textAlign: "left", // Aligner à gauche
     marginRight: 16, // Un petit espacement entre la colonne 1 et la colonne 2
-  },
-  imagesContainer: {
-    flex: 1,
-    justifyContent: "center", // Centrer le contenu de la colonne 2
-    alignItems: "center",
-    flexDirection: "row",
   },
   image: {
     width: 50,
