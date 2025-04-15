@@ -7,18 +7,26 @@ import { button } from "../styles/button";
 import { useTheme } from "../../utils/ThemeContext";
 import { translate } from "../../i18n/translations";
 import ElementChip from "./ElementChip";
+import { usePressableImages } from "../../utils/PressableImagesContext";
+import { useOrderNumber } from "../../utils/OrderNumberContext";
 
 const SelectedCategoryElementsView = React.memo(
   ({
-    orderNumber,
     selectedTab,
-    pressableImagesByCategory,
     situation,
     galeryCase,
     scrollToSectionWithScrollViewRef,
     sectionRefs,
   }) => {
     const th = useTheme();
+
+    const { orderNumber } = useOrderNumber();
+
+    const {
+      pressableImagesByCategory,
+      handlePressImage,
+      handlePressImageByClass,
+    } = usePressableImages();
 
     const ElementsView = ({ elements }) => {
       return (

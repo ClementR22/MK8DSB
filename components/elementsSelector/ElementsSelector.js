@@ -37,12 +37,6 @@ import SelectedCategoryElementsView from "./SelectedCategoryElementsView";
 const ElementsSelector = ({ situation, galeryCase = false }) => {
   const th = useTheme();
 
-  const {
-    pressableImagesByCategory,
-    handlePressImage,
-    handlePressImageByClass,
-  } = usePressableImages();
-
   const { orderNumber, setOrderNumber } = useOrderNumber();
 
   // État pour suivre l'onglet sélectionné
@@ -100,9 +94,7 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
         contentContainerStyle={{ flexGrow: 1 }}
       >
         <SelectedCategoryElementsView
-          orderNumber={orderNumber}
           selectedTab={selectedTab}
-          pressableImagesByCategory={pressableImagesByCategory}
           situation={situation}
           galeryCase={galeryCase}
           scrollToSectionWithScrollViewRef={scrollToSectionWithScrollViewRef}
