@@ -13,7 +13,6 @@ import {
   Pressable,
   Image,
 } from "react-native";
-import ElementChip from "./ElementChip";
 import {
   elementsImages,
   closeImage,

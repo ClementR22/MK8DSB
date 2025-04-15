@@ -6,6 +6,7 @@ import { bodyTypeNames } from "../../data/data";
 import { button } from "../styles/button";
 import { useTheme } from "../../utils/ThemeContext";
 import { translate } from "../../i18n/translations";
+import ElementChip from "./ElementChip";
 
 const SelectedCategoryElementsView = React.memo(
   ({
