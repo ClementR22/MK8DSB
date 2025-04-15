@@ -1,4 +1,4 @@
-export const scrollToSection = (scrollViewRef, sectionRef, animated = true) => {
+export const scrollToSection = (scrollViewRef, sectionRef, animated) => {
   sectionRef.current?.measureLayout(
     scrollViewRef.current, // Mesurer par rapport à la ScrollView
     (x, y) => {

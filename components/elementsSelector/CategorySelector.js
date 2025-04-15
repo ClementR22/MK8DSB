@@ -8,15 +8,13 @@ import {
   elementsAllInfosList,
   bodyTypeNames,
 } from "../../data/data";
-import { scrollToSection } from "../../utils/scrollToSection";
 
 const iconSize = 38;
 
 const CategorySelector = ({
   selectedTab,
   setSelectedTab,
-  scrollViewRef,
-  sectionRefs,
+  scrollToTopWithScrollViewRef,
 }) => {
   const elementIcons = [
     elementsAllInfosList[0].image,
@@ -34,7 +32,7 @@ const CategorySelector = ({
           style={[styles.tab, selectedTab === elementName && styles.activeTab]}
           onPress={() => {
             setSelectedTab(elementName);
-            scrollToSection(scrollViewRef, sectionRefs[4], false);
+            scrollToTopWithScrollViewRef();
           }}
         >
           <Image
