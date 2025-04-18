@@ -48,6 +48,7 @@ import { useSavedSetModal } from "../utils/SavedSetModalContext";
 import { useSetsList } from "../utils/SetsListContext";
 import { useOrderNumber } from "../utils/OrderNumberContext";
 import { toggleCheckChosenStats, toggleCheckList } from "../utils/toggleCheck";
+import { useSearchSetScreen } from "../utils/SearchSetScreenContext";
 
 const screenWidth = Dimensions.get("window").width;
 

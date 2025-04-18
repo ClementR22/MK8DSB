@@ -1,11 +1,14 @@
 import DisplaySetScreenContent from "../DisplaySetScreenContent";
 import { PressableImagesProvider } from "../../utils/PressableImagesContext";
+import { DisplaySetScreenProvider } from "../../utils/DisplaySetScreenContext";
 
 const DisplaySetScreen = () => {
   return (
-    <PressableImagesProvider isDefaultSelectedImages={true}>
-      <DisplaySetScreenContent />
-    </PressableImagesProvider>
+    <DisplaySetScreenProvider>
+      <PressableImagesProvider isDefaultSelectedImages={true}>
+        <DisplaySetScreenContent />
+      </PressableImagesProvider>
+    </DisplaySetScreenProvider>
   );
 };
 
