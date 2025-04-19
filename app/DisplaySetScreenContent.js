@@ -104,7 +104,13 @@ const DisplaySetScreenContent = () => {
         >
           <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
         </Pressable>
-        <Pressable onPress={() => AsyncStorage.clear()}>
+        <Pressable
+          onPress={() => {
+            console.log("remove");
+            AsyncStorage.clear();
+            console.log("fin remove");
+          }}
+        >
           <Text style={styles.button}>remove</Text>
         </Pressable>
         <Pressable

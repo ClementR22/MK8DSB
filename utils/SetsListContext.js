@@ -6,14 +6,18 @@ import showToast from "./toast";
 import { usePressableImages } from "./PressableImagesContext";
 import { useOrderNumber } from "./OrderNumberContext";
 import { statNames } from "../data/data";
-import searchSetStatsFromElementsIds from "./searchSetStatsFromElementsIds";
+import { searchSetStatsFromElementsIds } from "./searchSetStatsFromElementsIds";
 
 // Créer le contexte
 const SetsListContext = createContext();
 
 // Fournisseur du contexte
 export const SetsListProvider = ({ children }) => {
-  const setDefault = { name: null, classIds: [9, 16, 30, 39] };
+  const setDefault = {
+    name: null,
+    classIds: [9, 16, 30, 39],
+    stats: [4, 3.75, 4.25, 4.5, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 4],
+  };
 
   const [chosenStats, setChosenStats] = useState(
     statNames.map((statName, index) => {
@@ -36,13 +40,14 @@ export const SetsListProvider = ({ children }) => {
   );
 
   const [setsListDisplayed, setSetsListDisplayed] = useState([
-    { ...setDefault, classIds: [...setDefault.classIds] },
+    { ...setDefault },
   ]);
+
   const [setsListSaved, setSetsListSaved] = useState([]);
 
   const [setsListFound, setSetsListFound] = useState([]);
 
-  const getSetsSavedNamesAndClassIds = async (onlyNames = false) => {
+  const getSetsSaved = async (onlyNames = false) => {
     try {
       const names = await AsyncStorage.getAllKeys();
       if (onlyNames) {
@@ -64,7 +69,7 @@ export const SetsListProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchSavedSets = async () => {
-      const savedSets = await getSetsSavedNamesAndClassIds();
+      const savedSets = await getSetsSaved();
       setSetsListSaved(savedSets);
     };
 
@@ -73,9 +78,7 @@ export const SetsListProvider = ({ children }) => {
 
   const [setCardActiveIndex, setSetCardActiveIndex] = useState(0); // Stocke l'ID de la `SetCardChosen` active
 
-  const addSet = (
-    newSet = { ...setDefault, classIds: [...setDefault.classIds] }
-  ) => {
+  const addSet = (newSet = setDefault) => {
     setSetsListDisplayed((prev) => [...prev, newSet]);
   };
 
@@ -141,7 +144,7 @@ export const SetsListProvider = ({ children }) => {
       situation == "search" ? setsListFound : setsListDisplayed;
     const setCardSelected = setsListConcerned[setCardSelectedIndex];
     const setCardSelectedName = setCardSelected.name;
-    const setsSavedNames = await getSetsSavedNamesAndClassIds(true);
+    const setsSavedNames = await getSetsSaved(true);
     if (
       !setCardSelectedName?.trim() ||
       setsSavedNames.includes(setCardSelectedName)
@@ -154,7 +157,8 @@ export const SetsListProvider = ({ children }) => {
           setCardSelectedName,
           JSON.stringify(setCardSelected)
         );
-
+        console.log("setCardSelected", setCardSelected);
+        console.log();
         setSetsListSaved((prev) => [...prev, setCardSelected]);
 
         showToast("Succès", "Le set est enregistré");
@@ -169,7 +173,7 @@ export const SetsListProvider = ({ children }) => {
   const saveSetFromFound = async (setCardSelectedIndex) => {
     const setCardSelected = setsListFound[setCardSelectedIndex];
     const setCardSelectedName = setCardSelected.name;
-    const setsSavedNames = await getSetsSavedNamesAndClassIds(true);
+    const setsSavedNames = await getSetsSaved(true);
     if (
       setCardSelectedName == null ||
       setsSavedNames.includes(setCardSelectedName)
@@ -209,11 +213,16 @@ export const SetsListProvider = ({ children }) => {
     const pressedClassIdsList = Object.values(pressedClassIds);
     const setsListConcerned =
       situation === "display" ? setSetsListDisplayed : setSetsListSaved;
-
+    console.log("update");
     setsListConcerned((prev) => {
+      console.log("prev", prev);
       return prev.map((set, index) =>
         index === setCardActiveIndex
-          ? { ...set, classIds: pressedClassIdsList }
+          ? {
+              ...set,
+              classIds: pressedClassIdsList,
+              stats: searchSetStatsFromElementsIds(pressedClassIdsList),
+            }
           : set
       );
     });

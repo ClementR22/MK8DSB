@@ -11,6 +11,13 @@ const StatSliderResultContainer = ({
   chosenStats,
   situation,
 }) => {
+  console.log("dans StatSliderResultContainer");
+  console.log(
+    setsToShowMultipleStatsLists,
+    isFoundStatsVisible,
+    chosenStats,
+    situation
+  );
   const th = useTheme();
 
   return (
@@ -28,10 +35,11 @@ const StatSliderResultContainer = ({
             >
               <Text style={styles.text}>
                 {translated_name}
-                {situation == "search" &&
-                  ` : ${JSON.stringify(
-                    setsToShowMultipleStatsLists[0][statIndex]
-                  )}`}
+                {situation != "search" ||
+                  (situation == "save" &&
+                    ` : ${JSON.stringify(
+                      setsToShowMultipleStatsLists[0][statIndex]
+                    )}`)}
               </Text>
               {setsToShowMultipleStatsLists.map((setToShowStats, setIndex) => (
                 <View

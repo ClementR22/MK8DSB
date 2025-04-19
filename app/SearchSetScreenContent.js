@@ -53,6 +53,7 @@ import { useSearchSetScreen } from "../utils/SearchSetScreenContext";
 const screenWidth = Dimensions.get("window").width;
 
 const SearchSetScreenContent = () => {
+  const { isFoundStatsVisible, setIsFoundStatsVisible } = useSearchSetScreen();
   const th = useTheme();
 
   const {
@@ -62,13 +63,6 @@ const SearchSetScreenContent = () => {
   } = usePressableImages();
 
   const { chosenStats, setChosenStats } = useSetsList();
-
-  const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
-    statNames.map((statName, index) => ({
-      name: statName,
-      checked: index === 0,
-    }))
-  );
 
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
 
@@ -453,7 +447,6 @@ const SearchSetScreenContent = () => {
         <SetCardContainer
           setsToShow={setsToShow}
           chosenStats={chosenStats}
-          isFoundStatsVisible={isFoundStatsVisible}
           situation="search"
         />
       </ScrollView>

@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { statNames } from "../data/data";
 
-const SearchSetScreenContext = createContext();
+const SavedSetScreenContext = createContext();
 
-export const SearchSetScreenProvider = ({ children }) => {
+export const SavedSetScreenProvider = ({ children }) => {
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
     statNames.map((statName, index) => ({
       name: statName,
@@ -12,15 +12,15 @@ export const SearchSetScreenProvider = ({ children }) => {
   );
 
   return (
-    <SearchSetScreenContext.Provider
+    <SavedSetScreenContext.Provider
       value={{ isFoundStatsVisible, setIsFoundStatsVisible }}
     >
       {children}
-    </SearchSetScreenContext.Provider>
+    </SavedSetScreenContext.Provider>
   );
 };
 
 // Hook pour utiliser le contexte
-export const useSearchSetScreen = () => {
-  return useContext(SearchSetScreenContext);
+export const useSavedSetScreen = () => {
+  return useContext(SavedSetScreenContext);
 };

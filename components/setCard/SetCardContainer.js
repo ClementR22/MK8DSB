@@ -10,14 +10,17 @@ import { useRef } from "react";
 import { usePressableImages } from "../../utils/PressableImagesContext";
 import { useEffect } from "react";
 
-const SetCardContainer = ({
-  setsToShow,
-  chosenStats = null,
-  isFoundStatsVisible = null,
-  situation,
-}) => {
+const SetCardContainer = ({ setsToShow, chosenStats = null, situation }) => {
   const { setsListDisplayed, setSetCardActiveIndex } = useSetsList();
-
+  console.log("dans setcardcontainer");
+  console.log(
+    "setsToShow",
+    setsToShow,
+    "chosenStats",
+    chosenStats,
+    "situation",
+    situation
+  );
   const handlePresentModalPress = useCallback(
     (setCardSelectedIndex) => {
       bottomSheetModalRef.current?.present(); // on fait apparaitre le bottomSheetModal
@@ -61,7 +64,6 @@ const SetCardContainer = ({
               setToShowName={name}
               setToShowClassIds={classIds}
               setToShowStats={stats}
-              isFoundStatsVisible={isFoundStatsVisible}
               chosenStats={chosenStats}
               setCardIndex={index}
               situation={situation}
