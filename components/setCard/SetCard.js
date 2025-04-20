@@ -39,7 +39,7 @@ const SetCard = ({
   setToShowName = null,
   setToShowClassIds,
   setToShowStats = null,
-  chosenStats = [0] * 12,
+  chosenStats,
   setCardIndex = null,
   situation,
 }) => {
@@ -153,7 +153,7 @@ const SetCard = ({
         <StatSliderResultContainer
           setsToShowMultipleStatsLists={[setToShowStats]}
           isFoundStatsVisible={isFoundStatsVisible}
-          chosenStats={setToShowStats}
+          chosenStats={chosenStats}
           situation={situation}
         />
       )}

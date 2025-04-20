@@ -53,7 +53,7 @@ const StatSliderResultContainer = ({
                   <StatSliderResult
                     key={setIndex}
                     value={setToShowStats[statIndex]}
-                    chosenValue={chosenStats[statIndex]?.value}
+                    chosenValue={chosenStats?.[statIndex]?.value}
                   />
                   {situation != "search" && (
                     <Text style={{ flex: 0.2 }}>

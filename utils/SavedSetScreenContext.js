@@ -7,7 +7,7 @@ export const SavedSetScreenProvider = ({ children }) => {
   const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
     statNames.map((statName, index) => ({
       name: statName,
-      checked: index === 0,
+      checked: true,
     }))
   );
 

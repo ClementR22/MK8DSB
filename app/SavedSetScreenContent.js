@@ -14,7 +14,9 @@ const SavedSetScreenContent = () => {
   return (
     <GestureHandlerRootView>
       <Text>Saved sets</Text>
-      <SetCardContainer setsToShow={setsListSaved} situation="save" />
+      <ScrollView>
+        <SetCardContainer setsToShow={setsListSaved} situation="save" />
+      </ScrollView>
     </GestureHandlerRootView>
   );
 };
