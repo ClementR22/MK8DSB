@@ -1,15 +1,284 @@
-import SearchSetScreenContent from "../SearchSetScreenContent";
-import { PressableImagesProvider } from "../../utils/PressableImagesContext";
+import { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  TextInput,
+  Dimensions,
+  Modal,
+} from "react-native";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
+// Components import
+import StatSlider from "../../components/StatSlider";
+import { button_icon } from "../../components/styles/button";
+import { shadow_3dp, vw } from "../../components/styles/theme";
+import { useTheme } from "../../utils/ThemeContext";
+import { translate } from "../../i18n/translations";
+import SetCardContainer from "../../components/setCard/SetCardContainer";
+import SavedSetModal from "../../components/modal/SavedSetModal";
+import { useSavedSetModal } from "../../utils/SavedSetModalContext";
+import { useSetsList } from "../../utils/SetsListContext";
+import SearchSetScreenPressablesContainer from "../../components/SearchSetScreenPressablesContainer";
 import { SearchSetScreenProvider } from "../../utils/SearchSetScreenContext";
+import { PressableImagesProvider } from "../../utils/PressableImagesContext";
+
+const screenWidth = Dimensions.get("window").width;
 
 const SearchSetScreen = () => {
+  const th = useTheme();
+
+  const { chosenStats, setChosenStats } = useSetsList();
+
+  const [setsToShow, setSetsToShow] = useState([]);
+
+  const [menuModalVisible, setMenuModalVisible] = useState(false);
+
+  const { savedSetModalVisible, toggleSavedSetModal } = useSavedSetModal();
+
+  // Mettre à jour la valeur du slider
+  const updateSliderValue = (name, newValue) => {
+    setChosenStats(
+      chosenStats.map((stat) =>
+        stat.name === name ? { ...stat, value: newValue } : stat
+      )
+    );
+  };
+
   return (
-    <SearchSetScreenProvider>
-      <PressableImagesProvider>
-        <SearchSetScreenContent />
-      </PressableImagesProvider>
-    </SearchSetScreenProvider>
+    <GestureHandlerRootView>
+      <SearchSetScreenProvider>
+        <PressableImagesProvider>
+          <ScrollView scrollEnabled={!savedSetModalVisible}>
+            <View style={[styles.container, { backgroundColor: th.surface }]}>
+              <View
+                id="Title_bar"
+                style={[
+                  styles.text,
+                  {
+                    width: vw,
+                    height: 64,
+                    backgroundColor: "white",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginBottom: 10,
+                    backgroundColor: th.surface_container_highest,
+                    // marginTop: 24,
+                  },
+                ]}
+              >
+                <Text style={{ margin: 16 }}>
+                  <MaterialIcons
+                    name="home"
+                    size={24}
+                    color={th.on_surface}
+                  ></MaterialIcons>
+                </Text>
+
+                <Text
+                  style={{
+                    fontSize: 22,
+                    color: th.on_surface,
+                  }}
+                >
+                  Coucou
+                </Text>
+
+                <Pressable
+                  style={styles.button_icon}
+                  onPress={() => setMenuModalVisible(true)}
+                >
+                  <MaterialIcons
+                    name="more-vert"
+                    size={24}
+                    color={th.on_surface}
+                  ></MaterialIcons>
+                </Pressable>
+                <Modal
+                  animationType="none" // Utilise slide, fade, none pour les animations
+                  transparent={true} // Définit si le fond est transparent
+                  visible={menuModalVisible}
+                  onRequestClose={() => setMenuModalVisible(false)} // Fonction pour fermer le modal
+                >
+                  <Text
+                    style={{
+                      position: "absolute",
+                      right: 50,
+                      top: 50,
+                      backgroundColor: "red",
+                    }}
+                  >
+                    Coucou
+                  </Text>
+                </Modal>
+              </View>
+
+              <View
+                style={[
+                  styles.statSlidersContainer,
+                  { backgroundColor: th.surface_container_high },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.text,
+                    {
+                      paddingHorizontal: 10,
+                      borderRadius: 5,
+                      marginBottom: 16,
+                      color: th.on_surface,
+                    },
+                  ]}
+                >
+                  {translate("SearchedStats")}
+                </Text>
+
+                <Pressable
+                  style={[button_icon(th).container, shadow_3dp]}
+                  onPress={() => {
+                    toggleSavedSetModal(true);
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name="download"
+                    size={24}
+                    color={th.on_primary}
+                  />
+                </Pressable>
+
+                {/* Afficher le slider uniquement si la case est cochée */}
+                {chosenStats.map(
+                  (stat) =>
+                    stat.checked && (
+                      <StatSlider
+                        key={stat.name}
+                        name={stat.name}
+                        sliderValue={stat.value}
+                        setSliderValue={(newValue) =>
+                          updateSliderValue(stat.name, newValue)
+                        }
+                        statFilterNumber={stat.statFilterNumber}
+                        setStatFilterNumber={stat.setStatFilterNumber}
+                      />
+                    )
+                )}
+              </View>
+
+              <SearchSetScreenPressablesContainer
+                chosenStats={chosenStats}
+                setSetsToShow={setSetsToShow}
+              />
+            </View>
+
+            <SavedSetModal />
+
+            <SetCardContainer
+              setsToShow={setsToShow}
+              chosenStats={chosenStats}
+              situation="search"
+            />
+          </ScrollView>
+        </PressableImagesProvider>
+      </SearchSetScreenProvider>
+    </GestureHandlerRootView>
   );
 };
 
 export default SearchSetScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  img: {
+    height: 30,
+    width: 30,
+  },
+
+  text: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+
+  checkbox: {
+    width: 30,
+    height: 30,
+  },
+
+  checkBoxItemLabel: {
+    fontSize: 18,
+    marginVertical: 10,
+  },
+
+  checkBoxesContainer: {
+    marginBottom: 20,
+    maxHeight: 300,
+    overflow: "scroll",
+    alignItems: "flex-start",
+    // backgroundColor: "none",
+    borderTopColor: "#000",
+    borderTopWidth: 1,
+    borderBottomColor: "#000",
+    borderBottomWidth: 1,
+  },
+
+  statSlidersContainer: {
+    padding: 24,
+    borderRadius: 24,
+    alignItems: "center",
+    //backgroundColor: th.surface_container_high,
+    marginBottom: 8,
+    maxWidth: 0.95 * vw,
+    minWidth: 0.8 * vw,
+    minHeight: 100,
+    display: "flex",
+    flexDirection: "column",
+  },
+
+  modalBackground: {
+    cursor: "auto",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+
+  pressable: {
+    padding: 10,
+    backgroundColor: "#007BFF",
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  pressableText: {
+    color: "white",
+    fontSize: 16,
+  },
+
+  SearchPressable: {
+    fontSize: 20,
+  },
+  ElementsDeselector: {
+    width: "100%",
+    alignItems: "flex-start",
+    backgroundColor: "red",
+  },
+
+  button_icon: {
+    margin: 16,
+  },
+});
