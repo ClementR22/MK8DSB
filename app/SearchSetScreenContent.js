@@ -48,10 +48,12 @@ import { useSavedSetModal } from "../utils/SavedSetModalContext";
 import { useSetsList } from "../utils/SetsListContext";
 import { useOrderNumber } from "../utils/OrderNumberContext";
 import { toggleCheckChosenStats, toggleCheckList } from "../utils/toggleCheck";
+import { useSearchSetScreen } from "../utils/SearchSetScreenContext";
 
 const screenWidth = Dimensions.get("window").width;
 
 const SearchSetScreenContent = () => {
+  const { isStatsVisible, setIsStatsVisible } = useSearchSetScreen();
   const th = useTheme();
 
   const {
@@ -61,13 +63,6 @@ const SearchSetScreenContent = () => {
   } = usePressableImages();
 
   const { chosenStats, setChosenStats } = useSetsList();
-
-  const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
-    statNames.map((statName, index) => ({
-      name: statName,
-      checked: index === 0,
-    }))
-  );
 
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
 
@@ -392,7 +387,7 @@ const SearchSetScreenContent = () => {
                   toggleCheckChosenStats(
                     setChosenStats,
                     name,
-                    setIsFoundStatsVisible
+                    setIsStatsVisible
                   );
                 },
               },
@@ -438,9 +433,9 @@ const SearchSetScreenContent = () => {
             ModalContentsList={[StatSelector]}
             contentPropsList={[
               {
-                statList: isFoundStatsVisible,
+                statList: isStatsVisible,
                 toggleCheck: (name) => {
-                  toggleCheckList(setIsFoundStatsVisible, name);
+                  toggleCheckList(setIsStatsVisible, name);
                 },
               },
             ]}
@@ -452,7 +447,6 @@ const SearchSetScreenContent = () => {
         <SetCardContainer
           setsToShow={setsToShow}
           chosenStats={chosenStats}
-          isFoundStatsVisible={isFoundStatsVisible}
           situation="search"
         />
       </ScrollView>

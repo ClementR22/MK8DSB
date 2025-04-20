@@ -19,7 +19,7 @@ export const toggleCheckList = (setStatsList, name) => {
 export const toggleCheckChosenStats = (
   setChosenStats,
   name,
-  setIsFoundStatsVisible
+  setIsStatsVisible
 ) => {
   setChosenStats((prev) => {
     const newList = updateChecks(prev, name);
@@ -35,7 +35,7 @@ export const toggleCheckChosenStats = (
       );
     }
 
-    toggleCheckList(setIsFoundStatsVisible, name);
+    toggleCheckList(setIsStatsVisible, name);
 
     return newList;
   });

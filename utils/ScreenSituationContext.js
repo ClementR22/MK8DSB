@@ -1,5 +1,5 @@
 import { usePathname } from "expo-router";
-import React, { createContext, useContext, useMemo } from "react";
+import React, { createContext, useContext, useMemo, useRef } from "react";
 
 import { Dimensions } from "react-native";
 
@@ -11,7 +11,14 @@ export const ScreenSituationProvider = ({ children }) => {
 
   const pathName = usePathname();
   const screenSituation = useMemo(
-    () => (pathName === "/SearchSetScreen" ? "search" : "display"),
+    () =>
+      pathName === "/SearchSetScreen"
+        ? "search"
+        : pathName === "/DisplaySetScreen"
+        ? "display"
+        : pathName === "/SavedSetScreen"
+        ? "save"
+        : "other",
     [pathName]
   );
 

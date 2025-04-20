@@ -31,18 +31,16 @@ import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "../../utils/PressableImagesContext";
 import { useSetsList } from "../../utils/SetsListContext";
 import MyTextInput from "../MyTextInput";
-import { useSavedSetModal } from "../../utils/SavedSetModalContext";
 import { useScreenSituation } from "../../utils/ScreenSituationContext";
-
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
-const imageWidth = Math.min(screenWidth / 5, 120);
+import { useSearchSetScreen } from "../../utils/SearchSetScreenContext";
+import { useSavedSetScreen } from "../../utils/SavedSetScreenContext";
+import { getIsStatsVisible } from "../../utils/getIsStatsVisible";
 
 const SetCard = ({
   setToShowName = null,
   setToShowClassIds,
   setToShowStats = null,
-  isFoundStatsVisible = null,
-  chosenStats = null,
+  chosenStats,
   setCardIndex = null,
   situation,
 }) => {
@@ -56,7 +54,6 @@ const SetCard = ({
     removeSet,
     setSetCardActiveIndex,
   } = useSetsList();
-  const { screenSituation } = useScreenSituation();
 
   const { updatePressableImagesList } = usePressableImages();
 
@@ -74,9 +71,52 @@ const SetCard = ({
     setIsTextInputModalVisible(true);
   };
 
+  const situationConfig = {
+    search: {
+      showTextInput: false,
+      showStatSliderResult: true,
+      showEdit: false,
+      showRemove: false,
+      showSave: true,
+      showImport: false,
+      showLoadToDisplay: true,
+    },
+    display: {
+      showTextInput: true,
+      showStatSliderResult: false,
+      showEdit: true,
+      showRemove: true,
+      showSave: true,
+      showImport: false,
+      showLoadToDisplay: false,
+    },
+    save: {
+      showTextInput: true,
+      showStatSliderResult: true,
+      showEdit: true,
+      showRemove: true,
+      showSave: false,
+      showImport: false,
+      showLoadToDisplay: true,
+    },
+    load: {
+      showTextInput: true,
+      showStatSliderResult: false,
+      showEdit: false,
+      showRemove: true,
+      showSave: false,
+      showImport: true,
+      showLoadToDisplay: false,
+    },
+  };
+
+  const isStatsVisible = getIsStatsVisible(situation);
+
+  const config = situationConfig[situation] ?? {};
+
   return (
     <View style={[card(th).container, { flex: 1 }]}>
-      {situation != "search" && (
+      {config.showTextInput && (
         <MyTextInput
           setToShowName={setToShowName}
           setCardIndex={setCardIndex}
@@ -91,10 +131,9 @@ const SetCard = ({
         />
       </Pressable>
 
-      {situation == "search" && ( // || situation == "save"
+      {config.showStatSliderResult && (
         <StatSliderResultContainer
           setsToShowMultipleStatsLists={[setToShowStats]}
-          isFoundStatsVisible={isFoundStatsVisible}
           chosenStats={chosenStats}
           situation={situation}
         />
@@ -139,7 +178,7 @@ const SetCard = ({
         }}
       />
       <View key="pressables container">
-        {situation != "search" && (
+        {config.showEdit && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => {
@@ -152,7 +191,7 @@ const SetCard = ({
           </Pressable>
         )}
 
-        {situation != "search" && (
+        {config.showRemove && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => {
@@ -163,7 +202,7 @@ const SetCard = ({
           </Pressable>
         )}
 
-        {(situation == "search" || situation == "display") && (
+        {config.showSave && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() =>
@@ -176,11 +215,11 @@ const SetCard = ({
           </Pressable>
         )}
 
-        {situation == "load" && (
+        {config.showImport && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() =>
-              screenSituation == "search"
+              situation == "search"
                 ? loadSetSaveToSearch(setCardIndex)
                 : loadSetSaveToDisplay(setCardIndex)
             }
@@ -189,7 +228,7 @@ const SetCard = ({
           </Pressable>
         )}
 
-        {(situation == "search" || situation == "save") && (
+        {config.showLoadToDisplay && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() =>

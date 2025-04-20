@@ -10,12 +10,7 @@ import { useRef } from "react";
 import { usePressableImages } from "../../utils/PressableImagesContext";
 import { useEffect } from "react";
 
-const SetCardContainer = ({
-  setsToShow,
-  chosenStats = null,
-  isFoundStatsVisible = null,
-  situation,
-}) => {
+const SetCardContainer = ({ setsToShow, chosenStats = null, situation }) => {
   const { setsListDisplayed, setSetCardActiveIndex } = useSetsList();
 
   const handlePresentModalPress = useCallback(
@@ -61,7 +56,6 @@ const SetCardContainer = ({
               setToShowName={name}
               setToShowClassIds={classIds}
               setToShowStats={stats}
-              isFoundStatsVisible={isFoundStatsVisible}
               chosenStats={chosenStats}
               setCardIndex={index}
               situation={situation}
