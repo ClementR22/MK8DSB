@@ -55,11 +55,6 @@ const SetCard = ({
     setSetCardActiveIndex,
   } = useSetsList();
 
-  console.log("dans SetCard");
-
-  console.log("setToShowStats", setToShowStats);
-  console.log("");
-
   const { updatePressableImagesList } = usePressableImages();
 
   const [isImagesModalVisible, setIsImagesModalVisible] = useState(false);

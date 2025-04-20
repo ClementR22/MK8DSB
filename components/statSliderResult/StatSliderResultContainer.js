@@ -11,8 +11,6 @@ const StatSliderResultContainer = ({
   chosenStats,
   situation,
 }) => {
-  console.log("dans StatSliderResultContainer");
-  console.log(setsToShowMultipleStatsLists, chosenStats, situation);
   const th = useTheme();
 
   const isStatsVisible = getIsStatsVisible(situation);

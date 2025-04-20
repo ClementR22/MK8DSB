@@ -157,8 +157,6 @@ export const SetsListProvider = ({ children }) => {
           setCardSelectedName,
           JSON.stringify(setCardSelected)
         );
-        console.log("setCardSelected", setCardSelected);
-        console.log();
         setSetsListSaved((prev) => [...prev, setCardSelected]);
 
         showToast("Succès", "Le set est enregistré");
@@ -213,9 +211,8 @@ export const SetsListProvider = ({ children }) => {
     const pressedClassIdsList = Object.values(pressedClassIds);
     const setsListConcerned =
       situation === "display" ? setSetsListDisplayed : setSetsListSaved;
-    console.log("update");
+
     setsListConcerned((prev) => {
-      console.log("prev", prev);
       return prev.map((set, index) =>
         index === setCardActiveIndex
           ? {

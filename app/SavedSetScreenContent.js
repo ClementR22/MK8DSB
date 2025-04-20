@@ -7,9 +7,7 @@ import { useSetsList } from "../utils/SetsListContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SavedSetScreenContent = () => {
-  [isModalVisible, setIsModalVisible] = useState(true);
   const { setsListSaved } = useSetsList();
-  console.log("setsListSaved", setsListSaved);
 
   return (
     <GestureHandlerRootView>

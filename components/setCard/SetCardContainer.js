@@ -12,15 +12,7 @@ import { useEffect } from "react";
 
 const SetCardContainer = ({ setsToShow, chosenStats = null, situation }) => {
   const { setsListDisplayed, setSetCardActiveIndex } = useSetsList();
-  console.log("dans setcardcontainer");
-  console.log(
-    "setsToShow",
-    setsToShow,
-    "chosenStats",
-    chosenStats,
-    "situation",
-    situation
-  );
+
   const handlePresentModalPress = useCallback(
     (setCardSelectedIndex) => {
       bottomSheetModalRef.current?.present(); // on fait apparaitre le bottomSheetModal
