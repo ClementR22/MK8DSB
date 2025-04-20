@@ -42,6 +42,7 @@ import SavedSetModal from "../components/modal/SavedSetModal";
 import { useOrderNumber } from "../utils/OrderNumberContext";
 import { toggleCheckList } from "../utils/toggleCheck";
 import { searchSetStatsFromElementsIds } from "../utils/searchSetStatsFromElementsIds";
+import { useDisplaySetScreen } from "../utils/DisplaySetScreenContext";
 
 const DisplaySetScreenContent = () => {
   const th = useTheme();
@@ -75,12 +76,7 @@ const DisplaySetScreenContent = () => {
       return element.classId;
     }); // - firstElementIdOfCategory[index]
 
-  const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
-    statNames.map((statName, index) => ({
-      name: translate(statName),
-      checked: true,
-    }))
-  );
+  const { isStatsVisible, setIsStatsVisible } = useDisplaySetScreen();
 
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
 
@@ -132,9 +128,9 @@ const DisplaySetScreenContent = () => {
           ModalContentsList={[StatSelector]}
           contentPropsList={[
             {
-              statList: isFoundStatsVisible,
+              statList: isStatsVisible,
               toggleCheck: (name) => {
-                toggleCheckList(setIsFoundStatsVisible, name);
+                toggleCheckList(setIsStatsVisible, name);
               },
             },
           ]}
@@ -147,7 +143,6 @@ const DisplaySetScreenContent = () => {
 
       <StatSliderResultContainer
         setsToShowMultipleStatsLists={setsToShowMultipleStatsLists}
-        isFoundStatsVisible={isFoundStatsVisible}
         chosenStats={[null] * 12}
         situation="display"
       />

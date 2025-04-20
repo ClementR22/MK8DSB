@@ -4,7 +4,7 @@ import { statNames } from "../data/data";
 const SearchSetScreenContext = createContext();
 
 export const SearchSetScreenProvider = ({ children }) => {
-  const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
+  const [isStatsVisible, setIsStatsVisible] = useState(
     statNames.map((statName, index) => ({
       name: statName,
       checked: index === 0,
@@ -13,7 +13,7 @@ export const SearchSetScreenProvider = ({ children }) => {
 
   return (
     <SearchSetScreenContext.Provider
-      value={{ isFoundStatsVisible, setIsFoundStatsVisible }}
+      value={{ isStatsVisible, setIsStatsVisible }}
     >
       {children}
     </SearchSetScreenContext.Provider>

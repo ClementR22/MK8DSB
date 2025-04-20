@@ -53,7 +53,7 @@ import { useSearchSetScreen } from "../utils/SearchSetScreenContext";
 const screenWidth = Dimensions.get("window").width;
 
 const SearchSetScreenContent = () => {
-  const { isFoundStatsVisible, setIsFoundStatsVisible } = useSearchSetScreen();
+  const { isStatsVisible, setIsStatsVisible } = useSearchSetScreen();
   const th = useTheme();
 
   const {
@@ -387,7 +387,7 @@ const SearchSetScreenContent = () => {
                   toggleCheckChosenStats(
                     setChosenStats,
                     name,
-                    setIsFoundStatsVisible
+                    setIsStatsVisible
                   );
                 },
               },
@@ -433,9 +433,9 @@ const SearchSetScreenContent = () => {
             ModalContentsList={[StatSelector]}
             contentPropsList={[
               {
-                statList: isFoundStatsVisible,
+                statList: isStatsVisible,
                 toggleCheck: (name) => {
-                  toggleCheckList(setIsFoundStatsVisible, name);
+                  toggleCheckList(setIsStatsVisible, name);
                 },
               },
             ]}

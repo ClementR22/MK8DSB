@@ -4,25 +4,22 @@ import StatSliderResult from "./StatSliderResult";
 import { useTheme } from "../../utils/ThemeContext";
 import { translate } from "../../i18n/translations";
 import { usePathname } from "expo-router";
+import { getIsStatsVisible } from "../../utils/getIsStatsVisible";
 
 const StatSliderResultContainer = ({
   setsToShowMultipleStatsLists,
-  isFoundStatsVisible,
   chosenStats,
   situation,
 }) => {
   console.log("dans StatSliderResultContainer");
-  console.log(
-    setsToShowMultipleStatsLists,
-    isFoundStatsVisible,
-    chosenStats,
-    situation
-  );
+  console.log(setsToShowMultipleStatsLists, chosenStats, situation);
   const th = useTheme();
+
+  const isStatsVisible = getIsStatsVisible(situation);
 
   return (
     <View style={{ flex: 1, backgroundColor: "green" }}>
-      {isFoundStatsVisible.map(({ name, checked }, statIndex) => {
+      {isStatsVisible.map(({ name, checked }, statIndex) => {
         const translated_name = translate(name);
         if (checked) {
           return (

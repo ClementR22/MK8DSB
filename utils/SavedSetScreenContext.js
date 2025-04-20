@@ -4,7 +4,7 @@ import { statNames } from "../data/data";
 const SavedSetScreenContext = createContext();
 
 export const SavedSetScreenProvider = ({ children }) => {
-  const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
+  const [isStatsVisible, setIsStatsVisible] = useState(
     statNames.map((statName, index) => ({
       name: statName,
       checked: true,
@@ -13,7 +13,7 @@ export const SavedSetScreenProvider = ({ children }) => {
 
   return (
     <SavedSetScreenContext.Provider
-      value={{ isFoundStatsVisible, setIsFoundStatsVisible }}
+      value={{ isStatsVisible, setIsStatsVisible }}
     >
       {children}
     </SavedSetScreenContext.Provider>

@@ -34,6 +34,7 @@ import MyTextInput from "../MyTextInput";
 import { useScreenSituation } from "../../utils/ScreenSituationContext";
 import { useSearchSetScreen } from "../../utils/SearchSetScreenContext";
 import { useSavedSetScreen } from "../../utils/SavedSetScreenContext";
+import { getIsStatsVisible } from "../../utils/getIsStatsVisible";
 
 const SetCard = ({
   setToShowName = null,
@@ -114,21 +115,7 @@ const SetCard = ({
     },
   };
 
-  let isFoundStatsVisible = null;
-  console.log("situation", situation);
-  switch (situation) {
-    case "search":
-      isFoundStatsVisible = useSearchSetScreen().isFoundStatsVisible;
-      break;
-    case "save":
-      console.log("case save");
-      isFoundStatsVisible = useSavedSetScreen().isFoundStatsVisible;
-      break;
-    default:
-      isFoundStatsVisible = null; // ou autre valeur par défaut
-  }
-
-  console.log("isFoundStatsVisible", isFoundStatsVisible);
+  const isStatsVisible = getIsStatsVisible(situation);
 
   const config = situationConfig[situation] ?? {};
 
@@ -152,7 +139,6 @@ const SetCard = ({
       {config.showStatSliderResult && (
         <StatSliderResultContainer
           setsToShowMultipleStatsLists={[setToShowStats]}
-          isFoundStatsVisible={isFoundStatsVisible}
           chosenStats={chosenStats}
           situation={situation}
         />
