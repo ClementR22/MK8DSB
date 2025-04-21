@@ -35,13 +35,11 @@ const SetImagesContainer = ({ setToShowClassIds, imageSize }) => {
             <Image
               key={index}
               source={image}
-              style={[
-                styles.icon,
-                {
-                  width: imageSize, // Taille fixe pour toutes les icônes
-                  height: imageSize, // Même taille en hauteur]
-                },
-              ]}
+              style={{
+                width: imageSize, // Taille fixe pour toutes les icônes
+                height: imageSize, // Même taille en hauteur]
+              }}
+              resizeMode="contain" // Garde les proportions sans déformation
             />
           ))}
         </View>
@@ -107,8 +105,5 @@ const styles = StyleSheet.create({
     justifyContent: "center", // Centrer le contenu de la colonne 2
     alignItems: "center",
     flexDirection: "row",
-  },
-  icon: {
-    resizeMode: "contain", // Garde les proportions sans déformation
   },
 });

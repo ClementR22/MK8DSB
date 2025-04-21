@@ -9,7 +9,9 @@ const ElementChip = ({ name, pressed, onPress, source }) => {
       onPress={onPress}
       style={[styles.chip, pressed && styles.chipSelected]}
       textStyle={styles.chipText}
-      avatar={<Image source={source} style={styles.image} />}
+      avatar={
+        <Image source={source} style={styles.image} resizeMode="contain" />
+      }
     >
       {name}
     </Chip>
@@ -35,7 +37,6 @@ const styles = {
     width: 24, // Largeur de l'image
     height: 24, // Hauteur de l'image
     borderRadius: 0, // Pour éviter les coins arrondis
-    resizeMode: "contain",
   },
 };
 

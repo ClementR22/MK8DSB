@@ -3,7 +3,6 @@ import { bodyTypeNames, elementsAllInfosList } from "../data/data";
 import { translate } from "../i18n/translations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import showToast from "./toast";
-import { usePressableImages } from "./PressableImagesContext";
 import { useOrderNumber } from "./OrderNumberContext";
 import { statNames } from "../data/data";
 import { searchSetStatsFromElementsIds } from "./searchSetStatsFromElementsIds";

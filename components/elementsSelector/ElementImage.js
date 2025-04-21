@@ -19,7 +19,6 @@ const ElementImage = ({ name, source }) => {
           style={{
             width: imageWidth,
             height: imageWidth,
-            marginBottom: 0,
           }}
           resizeMode="contain"
         />
