@@ -10,7 +10,6 @@ import {
   Modal,
 } from "react-native";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Components import
 import StatSlider from "../../components/StatSlider";
