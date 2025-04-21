@@ -34,8 +34,6 @@ const SearchSetScreen = () => {
 
   const [setsToShow, setSetsToShow] = useState([]);
 
-  const [menuModalVisible, setMenuModalVisible] = useState(false);
-
   const { savedSetModalVisible, toggleSavedSetModal } = useSavedSetModal();
 
   // Mettre à jour la valeur du slider
@@ -52,70 +50,6 @@ const SearchSetScreen = () => {
       <PressableImagesProvider situation="search">
         <ScrollView scrollEnabled={!savedSetModalVisible}>
           <View style={[styles.container, { backgroundColor: th.surface }]}>
-            <View
-              id="Title_bar"
-              style={[
-                styles.text,
-                {
-                  width: vw,
-                  height: 64,
-                  backgroundColor: "white",
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: 10,
-                  backgroundColor: th.surface_container_highest,
-                  // marginTop: 24,
-                },
-              ]}
-            >
-              <Text style={{ margin: 16 }}>
-                <MaterialIcons
-                  name="home"
-                  size={24}
-                  color={th.on_surface}
-                ></MaterialIcons>
-              </Text>
-
-              <Text
-                style={{
-                  fontSize: 22,
-                  color: th.on_surface,
-                }}
-              >
-                Coucou
-              </Text>
-
-              <Pressable
-                style={styles.button_icon}
-                onPress={() => setMenuModalVisible(true)}
-              >
-                <MaterialIcons
-                  name="more-vert"
-                  size={24}
-                  color={th.on_surface}
-                ></MaterialIcons>
-              </Pressable>
-              <Modal
-                animationType="none" // Utilise slide, fade, none pour les animations
-                transparent={true} // Définit si le fond est transparent
-                visible={menuModalVisible}
-                onRequestClose={() => setMenuModalVisible(false)} // Fonction pour fermer le modal
-              >
-                <Text
-                  style={{
-                    position: "absolute",
-                    right: 50,
-                    top: 50,
-                    backgroundColor: "red",
-                  }}
-                >
-                  Coucou
-                </Text>
-              </Modal>
-            </View>
-
             <View
               style={[
                 styles.statSlidersContainer,
