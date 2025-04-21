@@ -139,58 +139,47 @@ export const SetsListProvider = ({ children }) => {
     showToast("Succès", "Le set a été ajouté à l'écran de comparaison");
   };
 
-  const saveSetFromDisplay = async (setCardSelectedIndex, situation) => {
-    const setsListConcerned =
-      situation == "search" ? setsListFound : setsListDisplayed;
-    const setCardSelected = setsListConcerned[setCardSelectedIndex];
-    const setCardSelectedName = setCardSelected.name;
+  const saveSet = async (setCardSelectedName, setCardSelected) => {
     const setsSavedNames = await getSetsSaved(true);
+
     if (
       !setCardSelectedName?.trim() ||
       setsSavedNames.includes(setCardSelectedName)
     ) {
       showToast("Erreur", "Changer le nom du set SVP");
       return false;
-    } else {
-      try {
-        await AsyncStorage.setItem(
-          setCardSelectedName,
-          JSON.stringify(setCardSelected)
-        );
-        setSetsListSaved((prev) => [...prev, setCardSelected]);
+    }
 
-        showToast("Succès", "Le set est enregistré");
-        return true;
-      } catch (err) {
-        alert(err);
-        return false;
-      }
+    try {
+      await AsyncStorage.setItem(
+        setCardSelectedName,
+        JSON.stringify(setCardSelected)
+      );
+      setSetsListSaved((prev) => [...prev, setCardSelected]);
+
+      showToast("Succès", "Le set est enregistré");
+      return true;
+    } catch (err) {
+      alert(err);
+      return false;
     }
   };
 
+  const saveSetFromDisplay = async (setCardSelectedIndex) => {
+    console.log("from display");
+    const setCardSelected = setsListDisplayed[setCardSelectedIndex];
+    const setCardSelectedName = setCardSelected.name;
+
+    await saveSet(setCardSelectedName, setCardSelected);
+  };
+
   const saveSetFromFound = async (setCardSelectedIndex) => {
+    console.log("from found");
+
     const setCardSelected = setsListFound[setCardSelectedIndex];
     const setCardSelectedName = setCardSelected.name;
-    const setsSavedNames = await getSetsSaved(true);
-    if (
-      setCardSelectedName == null ||
-      setsSavedNames.includes(setCardSelectedName)
-    ) {
-      showToast("Erreur", "Changer le nom du set SVP");
-    } else {
-      try {
-        await AsyncStorage.setItem(
-          setCardSelectedName,
-          JSON.stringify(setCardSelected)
-        );
 
-        setSetsListSaved((prev) => [...prev, setCardSelected]);
-
-        showToast("Succès", "Le set est enregistré");
-      } catch (err) {
-        alert(err);
-      }
-    }
+    await saveSet(setCardSelectedName, setCardSelected);
   };
 
   const renameSet = (newName, situation, setCardIndex) => {
@@ -208,12 +197,14 @@ export const SetsListProvider = ({ children }) => {
   };
 
   const updateSetsList = (pressedClassIds, situation) => {
+    console.log("dans updateSetsList");
+    console.log("situation", situation);
     const pressedClassIdsList = Object.values(pressedClassIds);
     const setsListConcerned =
       situation === "display" ? setSetsListDisplayed : setSetsListSaved;
 
     setsListConcerned((prev) => {
-      return prev.map((set, index) =>
+      const ok = prev.map((set, index) =>
         index === setCardActiveIndex
           ? {
               ...set,
@@ -222,6 +213,8 @@ export const SetsListProvider = ({ children }) => {
             }
           : set
       );
+      console.log("ok", ok);
+      return ok;
     });
   };
 

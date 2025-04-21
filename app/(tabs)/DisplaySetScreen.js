@@ -66,7 +66,10 @@ const DisplaySetScreenContent = () => {
 
   return (
     <DisplaySetScreenProvider>
-      <PressableImagesProvider isDefaultSelectedImages={true}>
+      <PressableImagesProvider
+        isDefaultSelectedImages={true}
+        situation="display"
+      >
         <ScrollView scrollEnabled={!savedSetModalVisible}>
           <View style={styles.container}>
             <Text style={styles.text}>DisplaySetScreen</Text>

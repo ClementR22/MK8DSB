@@ -48,6 +48,7 @@ const SetCard = ({
 
   const {
     saveSetFromDisplay,
+    saveSetFromFound,
     loadSetSaveToSearch,
     loadSetSaveToDisplay,
     loadSetSearchToDisplay,
@@ -65,10 +66,6 @@ const SetCard = ({
 
   const displaySetImages = () => {
     setIsImagesModalVisible(true);
-  };
-
-  const saveSetFromFound = () => {
-    setIsTextInputModalVisible(true);
   };
 
   const situationConfig = {
@@ -174,7 +171,7 @@ const SetCard = ({
         ]}
         closeButtonText={translate("Confirm")}
         checkBeforeClose={async () => {
-          return await saveSetFromDisplay(setCardIndex, situation);
+          return await saveSetFromFound(setCardIndex);
         }}
       />
       <View key="pressables container">
@@ -207,7 +204,7 @@ const SetCard = ({
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() =>
               situation == "search"
-                ? saveSetFromFound(setCardIndex)
+                ? setIsTextInputModalVisible(true)
                 : saveSetFromDisplay(setCardIndex)
             }
           >

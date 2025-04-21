@@ -12,12 +12,12 @@ const SavedSetScreenContent = () => {
 
   return (
     <SavedSetScreenProvider>
-      <PressableImagesProvider>
+      <PressableImagesProvider situation="save">
         <Text>Saved sets</Text>
         <ScrollView>
           <SetCardContainer setsToShow={setsListSaved} situation="save" />
         </ScrollView>
-      </PressableImagesProvider>{" "}
+      </PressableImagesProvider>
     </SavedSetScreenProvider>
   );
 };

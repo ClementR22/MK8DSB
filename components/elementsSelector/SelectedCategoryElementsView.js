@@ -40,7 +40,7 @@ const SelectedCategoryElementsView = React.memo(
                 onPress={
                   situation != "search"
                     ? () => {
-                        handlePressImageByClass(classId, category, situation);
+                        handlePressImageByClass(classId, category);
                       }
                     : () => {
                         handlePressImage(id);

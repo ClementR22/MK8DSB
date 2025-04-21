@@ -49,7 +49,7 @@ const SearchSetScreen = () => {
 
   return (
     <SearchSetScreenProvider>
-      <PressableImagesProvider>
+      <PressableImagesProvider situation="search">
         <ScrollView scrollEnabled={!savedSetModalVisible}>
           <View style={[styles.container, { backgroundColor: th.surface }]}>
             <View

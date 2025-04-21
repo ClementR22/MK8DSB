@@ -16,9 +16,9 @@ import SavedSetModal from "./modal/SavedSetModal";
 import { shadow_3dp } from "./styles/theme";
 import { toggleCheckList } from "../utils/toggleCheck";
 
-const DisplaySetScreenPressablesContainer = (savedSetModalVisible) => {
+const DisplaySetScreenPressablesContainer = () => {
   const th = useTheme();
-  const { updateSetsList, addSet } = useSetsList();
+  const { addSet } = useSetsList();
 
   const { pressedClassIds } = usePressableImages();
 
@@ -27,10 +27,6 @@ const DisplaySetScreenPressablesContainer = (savedSetModalVisible) => {
   const { toggleSavedSetModal } = useSavedSetModal();
 
   const { isStatsVisible, setIsStatsVisible } = useDisplaySetScreen();
-
-  useEffect(() => {
-    updateSetsList(pressedClassIds, savedSetModalVisible ? "load" : "display"); // Met à jour après le rendu
-  }, [pressedClassIds]); // Déclenché uniquement quand pressedClassIds change
 
   return (
     <View>

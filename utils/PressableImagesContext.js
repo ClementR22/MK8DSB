@@ -62,6 +62,7 @@ const PressableImagesContext = createContext();
 export const PressableImagesProvider = ({
   children,
   isDefaultSelectedImages = false,
+  situation,
 }) => {
   const [pressableImagesList, setPressableImagesList] = useState(
     initializePressableImagesList(isDefaultSelectedImages)
@@ -89,6 +90,8 @@ export const PressableImagesProvider = ({
   });
 
   const handlePressImageByClass = (classId, category7) => {
+    console.log("handlePressImageByClass");
+    console.log("classId", classId);
     let category4 = category7;
     let category4ElementList = [category7];
 
@@ -117,6 +120,12 @@ export const PressableImagesProvider = ({
       }))
     );
   };
+
+  const { updateSetsList } = useSetsList();
+
+  useEffect(() => {
+    updateSetsList(pressedClassIds, situation); // Met à jour après le rendu
+  }, [pressedClassIds]); // Déclenché uniquement quand pressedClassIds change
 
   return (
     <PressableImagesContext.Provider
