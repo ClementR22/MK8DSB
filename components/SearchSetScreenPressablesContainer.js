@@ -17,8 +17,13 @@ import BodyTypeSelector from "./elementsSelector/BodyTypeSelector";
 import ElementsDeselector from "./elementsSelector/ElementsDeselector";
 import ElementsSelector from "./elementsSelector/ElementsSelector";
 import ResultsNumber from "./ResultsNumberSelector";
+import { toggleCheckChosenStats, toggleCheckList } from "../utils/toggleCheck";
 
-const SearchSetScreenPressablesContainer = ({ chosenStats, setSetsToShow }) => {
+const SearchSetScreenPressablesContainer = ({
+  chosenStats,
+  setChosenStats,
+  setSetsToShow,
+}) => {
   const th = useTheme();
 
   const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);

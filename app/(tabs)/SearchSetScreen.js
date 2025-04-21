@@ -49,143 +49,142 @@ const SearchSetScreen = () => {
   };
 
   return (
-    <GestureHandlerRootView>
-      <SearchSetScreenProvider>
-        <PressableImagesProvider>
-          <ScrollView scrollEnabled={!savedSetModalVisible}>
-            <View style={[styles.container, { backgroundColor: th.surface }]}>
-              <View
-                id="Title_bar"
-                style={[
-                  styles.text,
-                  {
-                    width: vw,
-                    height: 64,
-                    backgroundColor: "white",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    marginBottom: 10,
-                    backgroundColor: th.surface_container_highest,
-                    // marginTop: 24,
-                  },
-                ]}
-              >
-                <Text style={{ margin: 16 }}>
-                  <MaterialIcons
-                    name="home"
-                    size={24}
-                    color={th.on_surface}
-                  ></MaterialIcons>
-                </Text>
+    <SearchSetScreenProvider>
+      <PressableImagesProvider>
+        <ScrollView scrollEnabled={!savedSetModalVisible}>
+          <View style={[styles.container, { backgroundColor: th.surface }]}>
+            <View
+              id="Title_bar"
+              style={[
+                styles.text,
+                {
+                  width: vw,
+                  height: 64,
+                  backgroundColor: "white",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginBottom: 10,
+                  backgroundColor: th.surface_container_highest,
+                  // marginTop: 24,
+                },
+              ]}
+            >
+              <Text style={{ margin: 16 }}>
+                <MaterialIcons
+                  name="home"
+                  size={24}
+                  color={th.on_surface}
+                ></MaterialIcons>
+              </Text>
 
+              <Text
+                style={{
+                  fontSize: 22,
+                  color: th.on_surface,
+                }}
+              >
+                Coucou
+              </Text>
+
+              <Pressable
+                style={styles.button_icon}
+                onPress={() => setMenuModalVisible(true)}
+              >
+                <MaterialIcons
+                  name="more-vert"
+                  size={24}
+                  color={th.on_surface}
+                ></MaterialIcons>
+              </Pressable>
+              <Modal
+                animationType="none" // Utilise slide, fade, none pour les animations
+                transparent={true} // Définit si le fond est transparent
+                visible={menuModalVisible}
+                onRequestClose={() => setMenuModalVisible(false)} // Fonction pour fermer le modal
+              >
                 <Text
                   style={{
-                    fontSize: 22,
-                    color: th.on_surface,
+                    position: "absolute",
+                    right: 50,
+                    top: 50,
+                    backgroundColor: "red",
                   }}
                 >
                   Coucou
                 </Text>
-
-                <Pressable
-                  style={styles.button_icon}
-                  onPress={() => setMenuModalVisible(true)}
-                >
-                  <MaterialIcons
-                    name="more-vert"
-                    size={24}
-                    color={th.on_surface}
-                  ></MaterialIcons>
-                </Pressable>
-                <Modal
-                  animationType="none" // Utilise slide, fade, none pour les animations
-                  transparent={true} // Définit si le fond est transparent
-                  visible={menuModalVisible}
-                  onRequestClose={() => setMenuModalVisible(false)} // Fonction pour fermer le modal
-                >
-                  <Text
-                    style={{
-                      position: "absolute",
-                      right: 50,
-                      top: 50,
-                      backgroundColor: "red",
-                    }}
-                  >
-                    Coucou
-                  </Text>
-                </Modal>
-              </View>
-
-              <View
-                style={[
-                  styles.statSlidersContainer,
-                  { backgroundColor: th.surface_container_high },
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.text,
-                    {
-                      paddingHorizontal: 10,
-                      borderRadius: 5,
-                      marginBottom: 16,
-                      color: th.on_surface,
-                    },
-                  ]}
-                >
-                  {translate("SearchedStats")}
-                </Text>
-
-                <Pressable
-                  style={[button_icon(th).container, shadow_3dp]}
-                  onPress={() => {
-                    toggleSavedSetModal(true);
-                  }}
-                >
-                  <MaterialCommunityIcons
-                    name="download"
-                    size={24}
-                    color={th.on_primary}
-                  />
-                </Pressable>
-
-                {/* Afficher le slider uniquement si la case est cochée */}
-                {chosenStats.map(
-                  (stat) =>
-                    stat.checked && (
-                      <StatSlider
-                        key={stat.name}
-                        name={stat.name}
-                        sliderValue={stat.value}
-                        setSliderValue={(newValue) =>
-                          updateSliderValue(stat.name, newValue)
-                        }
-                        statFilterNumber={stat.statFilterNumber}
-                        setStatFilterNumber={stat.setStatFilterNumber}
-                      />
-                    )
-                )}
-              </View>
-
-              <SearchSetScreenPressablesContainer
-                chosenStats={chosenStats}
-                setSetsToShow={setSetsToShow}
-              />
+              </Modal>
             </View>
 
-            <SavedSetModal />
+            <View
+              style={[
+                styles.statSlidersContainer,
+                { backgroundColor: th.surface_container_high },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.text,
+                  {
+                    paddingHorizontal: 10,
+                    borderRadius: 5,
+                    marginBottom: 16,
+                    color: th.on_surface,
+                  },
+                ]}
+              >
+                {translate("SearchedStats")}
+              </Text>
 
-            <SetCardContainer
-              setsToShow={setsToShow}
+              <Pressable
+                style={[button_icon(th).container, shadow_3dp]}
+                onPress={() => {
+                  toggleSavedSetModal(true);
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="download"
+                  size={24}
+                  color={th.on_primary}
+                />
+              </Pressable>
+
+              {/* Afficher le slider uniquement si la case est cochée */}
+              {chosenStats.map(
+                (stat) =>
+                  stat.checked && (
+                    <StatSlider
+                      key={stat.name}
+                      name={stat.name}
+                      sliderValue={stat.value}
+                      setSliderValue={(newValue) =>
+                        updateSliderValue(stat.name, newValue)
+                      }
+                      statFilterNumber={stat.statFilterNumber}
+                      setStatFilterNumber={stat.setStatFilterNumber}
+                    />
+                  )
+              )}
+            </View>
+
+            <SearchSetScreenPressablesContainer
               chosenStats={chosenStats}
-              situation="search"
+              setChosenStats={setChosenStats}
+              setSetsToShow={setSetsToShow}
             />
-          </ScrollView>
-        </PressableImagesProvider>
-      </SearchSetScreenProvider>
-    </GestureHandlerRootView>
+          </View>
+
+          <SavedSetModal />
+
+          <SetCardContainer
+            setsToShow={setsToShow}
+            chosenStats={chosenStats}
+            situation="search"
+          />
+        </ScrollView>
+      </PressableImagesProvider>
+    </SearchSetScreenProvider>
   );
 };
 
