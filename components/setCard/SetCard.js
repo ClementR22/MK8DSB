@@ -31,10 +31,6 @@ import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "../../utils/PressableImagesContext";
 import { useSetsList } from "../../utils/SetsListContext";
 import MyTextInput from "../MyTextInput";
-import { useScreenSituation } from "../../utils/ScreenSituationContext";
-import { useSearchSetScreen } from "../../utils/SearchSetScreenContext";
-import { useSavedSetScreen } from "../../utils/SavedSetScreenContext";
-import { getIsStatsVisible } from "../../utils/getIsStatsVisible";
 
 const SetCard = ({
   setToShowName = null,
@@ -106,8 +102,6 @@ const SetCard = ({
       showLoadToDisplay: false,
     },
   };
-
-  const isStatsVisible = getIsStatsVisible(situation);
 
   const config = situationConfig[situation] ?? {};
 

@@ -31,7 +31,8 @@ const DisplaySetScreenPressablesContainer = () => {
   return (
     <View>
       <StatSliderResultSelectorPressable
-        setFoundStatsModalVisible={setFoundStatsModalVisible}
+        isStatsVisible={isStatsVisible}
+        setIsStatsVisible={setIsStatsVisible}
       />
       <Pressable
         style={[button_icon(th).container, shadow_3dp]}
@@ -60,20 +61,6 @@ const DisplaySetScreenPressablesContainer = () => {
           color={th.on_primary}
         />
       </Pressable>
-      <MyModal
-        modalTitle={translate("StatsToDisplay")}
-        isModalVisible={foundStatsModalVisible}
-        setIsModalVisible={setFoundStatsModalVisible}
-        ModalContentsList={[StatSelector]}
-        contentPropsList={[
-          {
-            statList: isStatsVisible,
-            toggleCheck: (name) => {
-              toggleCheckList(setIsStatsVisible, name);
-            },
-          },
-        ]}
-      />
 
       <SavedSetModal />
     </View>

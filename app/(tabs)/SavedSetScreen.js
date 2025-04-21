@@ -4,8 +4,13 @@ import th, { vw } from "../../components/styles/theme";
 import SetCardContainer from "../../components/setCard/SetCardContainer";
 import { useSetsList } from "../../utils/SetsListContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { SavedSetScreenProvider } from "../../utils/SavedSetScreenContext";
+import {
+  SavedSetScreenProvider,
+  useSavedSetScreen,
+} from "../../utils/SavedSetScreenContext";
 import { PressableImagesProvider } from "../../utils/PressableImagesContext";
+import StatSliderResultSelectorPressable from "../../components/statSliderResult/StatSliderResultSelectorPressable";
+import SavedSetScreenPressablesContainer from "../../components/SavedSetScreenPressablesContainer";
 
 const SavedSetScreenContent = () => {
   const { setsListSaved } = useSetsList();
@@ -14,6 +19,7 @@ const SavedSetScreenContent = () => {
     <SavedSetScreenProvider>
       <PressableImagesProvider situation="save">
         <ScrollView>
+          <SavedSetScreenPressablesContainer />
           <SetCardContainer setsToShow={setsListSaved} situation="save" />
         </ScrollView>
       </PressableImagesProvider>

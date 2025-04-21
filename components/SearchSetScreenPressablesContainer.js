@@ -27,7 +27,6 @@ const SearchSetScreenPressablesContainer = ({
   const th = useTheme();
 
   const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);
-  const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
 
   const [resultsNumberModalVisible, setResultsNumberModalVisible] =
     useState(false);
@@ -198,7 +197,8 @@ const SearchSetScreenPressablesContainer = ({
       </Pressable>
 
       <StatSliderResultSelectorPressable
-        setFoundStatsModalVisible={setFoundStatsModalVisible}
+        isStatsVisible={isStatsVisible}
+        setIsStatsVisible={setIsStatsVisible}
       />
 
       <MyModal
@@ -244,21 +244,6 @@ const SearchSetScreenPressablesContainer = ({
           {
             resultsNumber: resultsNumber, // Utilisation correcte des paires clé-valeur
             setResultsNumber: setResultsNumber,
-          },
-        ]}
-      />
-
-      <MyModal
-        modalTitle={translate("StatsToDisplay")}
-        isModalVisible={foundStatsModalVisible}
-        setIsModalVisible={setFoundStatsModalVisible}
-        ModalContentsList={[StatSelector]}
-        contentPropsList={[
-          {
-            statList: isStatsVisible,
-            toggleCheck: (name) => {
-              toggleCheckList(setIsStatsVisible, name);
-            },
           },
         ]}
       />

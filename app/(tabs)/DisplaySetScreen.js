@@ -7,42 +7,19 @@ import {
   TextInput,
   Dimensions,
 } from "react-native";
-import { useState, useEffect } from "react";
-
-import showToast from "../../utils/toast";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
-
-import {
-  statNames,
-  bodyTypeNames,
-  bodyTypeNamesDisplay,
-  images,
-} from "../../data/data";
 
 import {
   PressableImagesProvider,
   usePressableImages,
 } from "../../utils/PressableImagesContext";
 import { useTheme } from "../../utils/ThemeContext";
-import { translate } from "../../i18n/translations";
 import StatSliderResultContainer from "../../components/statSliderResult/StatSliderResultContainer";
-import StatSliderResultSelectorPressable from "../../components/statSliderResult/StatSliderResultSelectorPressable";
-import MyModal from "../../components/modal/MyModal";
-import StatSelector from "../../components/StatSelector";
-import { button_icon } from "../../components/styles/button";
-import { shadow_3dp } from "../../components/styles/theme";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
 import SetCardContainer from "../../components/setCard/SetCardContainer";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSetsList } from "../../utils/SetsListContext";
-import { useMemo } from "react";
-import { Portal, Provider } from "react-native-paper";
 import { useSavedSetModal } from "../../utils/SavedSetModalContext";
-import SavedSetModal from "../../components/modal/SavedSetModal";
-import { useOrderNumber } from "../../utils/OrderNumberContext";
 import { searchSetStatsFromElementsIds } from "../../utils/searchSetStatsFromElementsIds";
 import {
   DisplaySetScreenProvider,
