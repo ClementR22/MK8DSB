@@ -71,10 +71,6 @@ const DisplaySetScreenContent = () => {
         situation="display"
       >
         <ScrollView scrollEnabled={!savedSetModalVisible}>
-          <View style={styles.container}>
-            <Text style={styles.text}>DisplaySetScreen</Text>
-          </View>
-
           <DisplaySetScreenPressablesContainer />
 
           <SetCardContainer

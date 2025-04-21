@@ -22,7 +22,6 @@ const GaleryScreenContent = () => {
   return (
     <PressableImagesProvider>
       <View style={styles.container}>
-        <Text style={styles.title}>Galerie</Text>
         <ElementsSelector situation="galery" galeryCase={true} />
       </View>
     </PressableImagesProvider>
