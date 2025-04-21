@@ -166,7 +166,6 @@ export const SetsListProvider = ({ children }) => {
   };
 
   const saveSetFromDisplay = async (setCardSelectedIndex) => {
-    console.log("from display");
     const setCardSelected = setsListDisplayed[setCardSelectedIndex];
     const setCardSelectedName = setCardSelected.name;
 
@@ -174,8 +173,6 @@ export const SetsListProvider = ({ children }) => {
   };
 
   const saveSetFromFound = async (setCardSelectedIndex) => {
-    console.log("from found");
-
     const setCardSelected = setsListFound[setCardSelectedIndex];
     const setCardSelectedName = setCardSelected.name;
 
@@ -197,14 +194,12 @@ export const SetsListProvider = ({ children }) => {
   };
 
   const updateSetsList = (pressedClassIds, situation) => {
-    console.log("dans updateSetsList");
-    console.log("situation", situation);
     const pressedClassIdsList = Object.values(pressedClassIds);
     const setsListConcerned =
       situation === "display" ? setSetsListDisplayed : setSetsListSaved;
 
     setsListConcerned((prev) => {
-      const ok = prev.map((set, index) =>
+      return prev.map((set, index) =>
         index === setCardActiveIndex
           ? {
               ...set,
@@ -213,8 +208,6 @@ export const SetsListProvider = ({ children }) => {
             }
           : set
       );
-      console.log("ok", ok);
-      return ok;
     });
   };
 

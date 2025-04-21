@@ -90,8 +90,6 @@ export const PressableImagesProvider = ({
   });
 
   const handlePressImageByClass = (classId, category7) => {
-    console.log("handlePressImageByClass");
-    console.log("classId", classId);
     let category4 = category7;
     let category4ElementList = [category7];
 
