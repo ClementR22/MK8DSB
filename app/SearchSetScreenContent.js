@@ -1,15 +1,6 @@
 import { useState, useEffect, useContext, createContext } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-  TextInput,
-  Dimensions,
-  Modal,
-  Alert,
-  StatusBar,
+  View, Text, StyleSheet, ScrollView, Pressable, TextInput, Dimensions, Modal, Alert, StatusBar,
 } from "react-native";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -24,15 +15,10 @@ import MyModal from "../components/modal/MyModal";
 import StatSliderResultSelectorPressable from "../components/statSliderResult/StatSliderResultSelectorPressable";
 
 import {
-  button_icon,
-  button,
-  button_outline,
+  button_icon, button, button_outline,
 } from "../components/styles/button";
 import th, {
-  shadow_12dp,
-  shadow_3dp,
-  vh,
-  vw,
+  shadow_12dp, shadow_3dp, vh, vw,
 } from "../components/styles/theme";
 import { useTheme } from "../utils/ThemeContext";
 import { modal } from "../components/styles/modal";
@@ -57,32 +43,24 @@ const SearchSetScreenContent = () => {
   const th = useTheme();
 
   const {
-    pressableImagesByCategory,
-    handlePressImage,
-    handlePressImageUnique,
+    pressableImagesByCategory, handlePressImage, handlePressImageUnique,
   } = usePressableImages();
 
-  const { chosenStats, setChosenStats } = useOrderNumber();
+  const {chosenStats, setChosenStats} = useOrderNumber();
 
-  const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(
-    statNames.map((statName, index) => ({
-      name: statName,
-      checked: index === 0,
-    }))
-  );
+  const [isFoundStatsVisible, setIsFoundStatsVisible] = useState(statNames.map((statName, index) => ({
+    name: statName, checked: index === 0,
+  })));
 
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
 
-  const [chosenBodyType, setChosenBodyType] = useState(
-    bodyTypeNames.map((bodyTypeName, index) => ({
-      name: bodyTypeName,
-      checked: true,
-    }))
-  );
+  const [chosenBodyType, setChosenBodyType] = useState(bodyTypeNames.map((bodyTypeName, index) => ({
+    name: bodyTypeName, checked: true,
+  })));
 
   const [resultsNumber, setResultsNumber] = useState(5);
 
-  const { setsListSaved, updateAllSetsListFound } = useSetsList();
+  const {setsListSaved, updateAllSetsListFound} = useSetsList();
 
   const [setsToShow, setSetsToShow] = useState([]);
   const updateSetsToShow = (setsFoundClassIds) => {
@@ -93,11 +71,10 @@ const SearchSetScreenContent = () => {
   const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
 
-  const [resultsNumberModalVisible, setResultsNumberModalVisible] =
-    useState(false);
+  const [resultsNumberModalVisible, setResultsNumberModalVisible] = useState(false);
   const [menuModalVisible, setMenuModalVisible] = useState(false);
 
-  const { savedSetModalVisible, toggleSavedSetModal } = useSavedSetModal();
+  const {savedSetModalVisible, toggleSavedSetModal} = useSavedSetModal();
 
   const elementsFilterObjectToList = (pressableImagesByCategory) => {
     const selectedClassIds4categories = [];
@@ -108,9 +85,7 @@ const SearchSetScreenContent = () => {
       // Parcourir chaque classe dans la catégorie
       Object.entries(category).forEach(([classKey, classElements]) => {
         // Si au moins une image est pressée (true), ajouter la classe à pressedClasses
-        const isAnyImagePressed = Object.values(classElements).some(
-          ({ pressed }) => pressed
-        );
+        const isAnyImagePressed = Object.values(classElements).some(({pressed}) => pressed);
         if (isAnyImagePressed) {
           pressedClassesInCategory.push(+classKey); // +str pour convertir en entier
         }
@@ -124,27 +99,19 @@ const SearchSetScreenContent = () => {
 
   // Mettre à jour la valeur du slider
   const updateSliderValue = (name, newValue) => {
-    setChosenStats(
-      chosenStats.map((stat) =>
-        stat.name === name ? { ...stat, value: newValue } : stat
-      )
-    );
+    setChosenStats(chosenStats.map((stat) => stat.name === name ? {...stat, value: newValue} : stat));
   };
 
   const search = () => {
     const chosenStatsChecked = chosenStats.map((stat) => stat.checked);
     const chosenStatsValue = chosenStats.map((stat) => stat.value);
-    const chosenStatsFilterNumber = chosenStats.map(
-      (stat) => stat.statFilterNumber
-    );
+    const chosenStatsFilterNumber = chosenStats.map((stat) => stat.statFilterNumber);
 
     const chosenBodyTypeList = chosenBodyType
       .filter((bodyType) => bodyType.checked)
       .map((bodyType) => bodyType.name);
 
-    const chosenElementsIds = elementsFilterObjectToList(
-      pressableImagesByCategory
-    );
+    const chosenElementsIds = elementsFilterObjectToList(pressableImagesByCategory);
 
     if (!chosenStatsChecked.includes(true) || chosenBodyTypeList.length === 0) {
       updateSetsToShow([]); // Ou gérer l'état de "rien trouvé"
@@ -152,21 +119,14 @@ const SearchSetScreenContent = () => {
     }
 
     const gaps = setAllInfos.reduce((acc, setInfo, setIndex) => {
-      const { classIds, stats, bodyTypes } = setInfo;
+      const {classIds, stats, bodyTypes} = setInfo;
 
       // Vérifier si au moins un type de corps est présent
-      const listIsSetElementAccepted = classIds.map(
-        (elementId, categoryIndex) => {
-          const category_x_ElementIds = chosenElementsIds[categoryIndex];
-          return (
-            category_x_ElementIds.includes(elementId) ||
-            category_x_ElementIds.length === 0
-          );
-        }
-      );
-      if (
-        !bodyTypes.some((item) => chosenBodyTypeList.includes(item)) ||
-        listIsSetElementAccepted.includes(false) // si (le set ne contient aucun type de vehicule choisi OU le set contient au moins un element non choisi)
+      const listIsSetElementAccepted = classIds.map((elementId, categoryIndex) => {
+        const category_x_ElementIds = chosenElementsIds[categoryIndex];
+        return (category_x_ElementIds.includes(elementId) || category_x_ElementIds.length === 0);
+      });
+      if (!bodyTypes.some((item) => chosenBodyTypeList.includes(item)) || listIsSetElementAccepted.includes(false) // si (le set ne contient aucun type de vehicule choisi OU le set contient au moins un element non choisi)
       ) {
         return acc; // Ignorer si le type de corps ne correspond pas
       }
@@ -191,7 +151,7 @@ const SearchSetScreenContent = () => {
       });
 
       if (validSet) {
-        acc.push({ setIndex, gap });
+        acc.push({setIndex, gap});
       }
 
       return acc;
@@ -204,352 +164,213 @@ const SearchSetScreenContent = () => {
     } else {
       const setsFound = gaps
         .slice(0, Math.min(resultsNumber, gaps.length))
-        .map(({ setIndex }) => ({ ...setAllInfos[setIndex] }));
+        .map(({setIndex}) => ({...setAllInfos[setIndex]}));
 
       updateSetsToShow(setsFound);
     }
   };
 
-  return (
-    <GestureHandlerRootView>
-      <ScrollView scrollEnabled={!savedSetModalVisible}>
-        <View style={[styles.container, { backgroundColor: th.surface }]}>
-          <View
-            id="Title_bar"
-            style={[
-              styles.text,
-              {
-                width: vw,
-                height: 64,
-                backgroundColor: "white",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: 10,
-                backgroundColor: th.surface_container_highest,
-                // marginTop: 24,
-              },
-            ]}
+  return (<GestureHandlerRootView>
+    <ScrollView scrollEnabled={ !savedSetModalVisible }>
+      <View style={ [styles.container, {backgroundColor: th.surface}] }>
+        <View
+          style={ [styles.statSlidersContainer, {backgroundColor: th.surface_container_high},] }
+        >
+          <Text
+            style={ [styles.text, {
+              paddingHorizontal: 10, borderRadius: 5, marginBottom: 16, color: th.on_surface,
+            },] }
           >
-            <Text style={{ margin: 16 }}>
-              <MaterialIcons
-                name="home"
-                size={24}
-                color={th.on_surface}
-              ></MaterialIcons>
-            </Text>
+            { translate("SearchedStats") }
+          </Text>
 
-            <Text
-              style={{
-                fontSize: 22,
-                color: th.on_surface,
-              }}
-            >
-              Coucou
-            </Text>
-
-            <Pressable
-              style={styles.button_icon}
-              onPress={() => setMenuModalVisible(true)}
-            >
-              <MaterialIcons
-                name="more-vert"
-                size={24}
-                color={th.on_surface}
-              ></MaterialIcons>
-            </Pressable>
-            <Modal
-              animationType="none" // Utilise slide, fade, none pour les animations
-              transparent={true} // Définit si le fond est transparent
-              visible={menuModalVisible}
-              onRequestClose={() => setMenuModalVisible(false)} // Fonction pour fermer le modal
-            >
-              <Text
-                style={{
-                  position: "absolute",
-                  right: 50,
-                  top: 50,
-                  backgroundColor: "red",
-                }}
-              >
-                Coucou
-              </Text>
-            </Modal>
-          </View>
-
-          <View
-            style={[
-              styles.statSlidersContainer,
-              { backgroundColor: th.surface_container_high },
-            ]}
+          <Pressable
+            style={ [button_icon(th).container, shadow_3dp] }
+            onPress={ () => {
+              toggleSavedSetModal(true);
+            } }
           >
-            <Text
-              style={[
-                styles.text,
-                {
-                  paddingHorizontal: 10,
-                  borderRadius: 5,
-                  marginBottom: 16,
-                  color: th.on_surface,
-                },
-              ]}
-            >
-              {translate("SearchedStats")}
-            </Text>
-
-            <Pressable
-              style={[button_icon(th).container, shadow_3dp]}
-              onPress={() => {
-                toggleSavedSetModal(true);
-              }}
-            >
-              <MaterialCommunityIcons
-                name="download"
-                size={24}
-                color={th.on_primary}
-              />
-            </Pressable>
-
-            {/* Afficher le slider uniquement si la case est cochée */}
-            {chosenStats.map(
-              (stat) =>
-                stat.checked && (
-                  <StatSlider
-                    key={stat.name}
-                    name={stat.name}
-                    sliderValue={stat.value}
-                    setSliderValue={(newValue) =>
-                      updateSliderValue(stat.name, newValue)
-                    }
-                    statFilterNumber={stat.statFilterNumber}
-                    setStatFilterNumber={stat.setStatFilterNumber}
-                  />
-                )
-            )}
-          </View>
-
-          <View style={styles.pressablesContainer}>
-            <Pressable
-              style={[button_icon(th).container, shadow_3dp]}
-              onPress={() => setChosenStatsModalVisible(true)}
-            >
-              <MaterialCommunityIcons
-                name="plus"
-                size={24}
-                color={th.on_primary}
-              />
-            </Pressable>
-
-            <Pressable
-              style={[button_icon(th).container, shadow_3dp]}
-              onPress={() => setIsFilterModalVisible(true)}
-            >
-              <MaterialCommunityIcons
-                name="pin"
-                size={24}
-                color={th.on_primary}
-              />
-            </Pressable>
-
-            <Pressable
-              style={[
-                button(th).container,
-                { flexDirection: "row", paddingRight: 24, paddingLeft: 16 },
-                shadow_3dp,
-              ]}
-              onPress={() => search()}
-            >
-              <MaterialCommunityIcons
-                name="magnify"
-                size={24}
-                color={th.on_primary}
-              />
-              <Text style={[button(th).text, { marginLeft: 8 }]}>
-                {translate("Search")}
-              </Text>
-            </Pressable>
-
-            <Pressable
-              style={[button_icon(th).container, shadow_3dp]}
-              onPress={() => setResultsNumberModalVisible(true)}
-            >
-              <MaterialIcons name="numbers" size={24} color={th.on_primary} />
-            </Pressable>
-
-            <StatSliderResultSelectorPressable
-              setFoundStatsModalVisible={setFoundStatsModalVisible}
+            <MaterialCommunityIcons
+              name="download"
+              size={ 24 }
+              color={ th.on_primary }
             />
-          </View>
+          </Pressable>
 
-          <MyModal
-            modalTitle={translate("StatsToParameter")}
-            isModalVisible={chosenStatsModalVisible}
-            setIsModalVisible={setChosenStatsModalVisible}
-            ModalContentsList={[StatSelector]}
-            contentPropsList={[
-              {
-                statList: chosenStats, // Utilisation correcte des paires clé-valeur
-                setStatList: setChosenStats,
-                keepOneCondition: true,
-              },
-            ]}
-          />
+          {/* Afficher le slider uniquement si la case est cochée */ }
+          { chosenStats.map((stat) => stat.checked && (<StatSlider
+            key={ stat.name }
+            name={ stat.name }
+            sliderValue={ stat.value }
+            setSliderValue={ (newValue) => updateSliderValue(stat.name, newValue) }
+            statFilterNumber={ stat.statFilterNumber }
+            setStatFilterNumber={ stat.setStatFilterNumber }
+          />)) }
+        </View>
 
-          <MyModal
-            modalTitle={translate("Filter")}
-            isModalVisible={isFilterModalVisible}
-            setIsModalVisible={setIsFilterModalVisible}
-            ModalContentsList={[
-              BodyTypeSelector,
-              ElementsDeselector,
-              ElementsSelector,
-            ]}
-            contentPropsList={[
-              {
-                chosenBodyType: chosenBodyType,
-                setChosenBodyType: setChosenBodyType,
-              },
-              {},
-              { situation: "search" },
-            ]}
-          />
+        <View style={ styles.pressablesContainer }>
+          <Pressable
+            style={ [button_icon(th).container, shadow_3dp] }
+            onPress={ () => setChosenStatsModalVisible(true) }
+          >
+            <MaterialCommunityIcons
+              name="plus"
+              size={ 24 }
+              color={ th.on_primary }
+            />
+          </Pressable>
 
-          <MyModal
-            modalTitle={translate("NumberOfResults")}
-            isModalVisible={resultsNumberModalVisible}
-            setIsModalVisible={setResultsNumberModalVisible}
-            ModalContentsList={[ResultsNumber]}
-            contentPropsList={[
-              {
-                resultsNumber: resultsNumber, // Utilisation correcte des paires clé-valeur
-                setResultsNumber: setResultsNumber,
-              },
-            ]}
-          />
+          <Pressable
+            style={ [button_icon(th).container, shadow_3dp] }
+            onPress={ () => setIsFilterModalVisible(true) }
+          >
+            <MaterialCommunityIcons
+              name="pin"
+              size={ 24 }
+              color={ th.on_primary }
+            />
+          </Pressable>
 
-          <MyModal
-            modalTitle={translate("StatsToDisplay")}
-            isModalVisible={foundStatsModalVisible}
-            setIsModalVisible={setFoundStatsModalVisible}
-            ModalContentsList={[StatSelector]}
-            contentPropsList={[
-              {
-                statList: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
-                setStatList: setIsFoundStatsVisible,
-                keepOneCondition: false,
-              },
-            ]}
+          <Pressable
+            style={ [button(th).container, {flexDirection: "row", paddingRight: 24, paddingLeft: 16}, shadow_3dp,] }
+            onPress={ () => search() }
+          >
+            <MaterialCommunityIcons
+              name="magnify"
+              size={ 24 }
+              color={ th.on_primary }
+            />
+            <Text style={ [button(th).text, {marginLeft: 8}] }>
+              { translate("Search") }
+            </Text>
+          </Pressable>
+
+          <Pressable
+            style={ [button_icon(th).container, shadow_3dp] }
+            onPress={ () => setResultsNumberModalVisible(true) }
+          >
+            <MaterialIcons name="numbers" size={ 24 } color={ th.on_primary }/>
+          </Pressable>
+
+          <StatSliderResultSelectorPressable
+            setFoundStatsModalVisible={ setFoundStatsModalVisible }
           />
         </View>
 
-        <SavedSetModal />
-
-        <SetCardContainer
-          setsToShow={setsToShow}
-          chosenStats={chosenStats}
-          isFoundStatsVisible={isFoundStatsVisible}
-          situation="search"
+        <MyModal
+          modalTitle={ translate("StatsToParameter") }
+          isModalVisible={ chosenStatsModalVisible }
+          setIsModalVisible={ setChosenStatsModalVisible }
+          ModalContentsList={ [StatSelector] }
+          contentPropsList={ [{
+            statList: chosenStats, // Utilisation correcte des paires clé-valeur
+            setStatList: setChosenStats, keepOneCondition: true,
+          },] }
         />
-      </ScrollView>
-    </GestureHandlerRootView>
-  );
+
+        <MyModal
+          modalTitle={ translate("Filter") }
+          isModalVisible={ isFilterModalVisible }
+          setIsModalVisible={ setIsFilterModalVisible }
+          ModalContentsList={ [BodyTypeSelector, ElementsDeselector, ElementsSelector,] }
+          contentPropsList={ [{
+            chosenBodyType: chosenBodyType, setChosenBodyType: setChosenBodyType,
+          }, {}, {situation: "search"},] }
+        />
+
+        <MyModal
+          modalTitle={ translate("NumberOfResults") }
+          isModalVisible={ resultsNumberModalVisible }
+          setIsModalVisible={ setResultsNumberModalVisible }
+          ModalContentsList={ [ResultsNumber] }
+          contentPropsList={ [{
+            resultsNumber: resultsNumber, // Utilisation correcte des paires clé-valeur
+            setResultsNumber: setResultsNumber,
+          },] }
+        />
+
+        <MyModal
+          modalTitle={ translate("StatsToDisplay") }
+          isModalVisible={ foundStatsModalVisible }
+          setIsModalVisible={ setFoundStatsModalVisible }
+          ModalContentsList={ [StatSelector] }
+          contentPropsList={ [{
+            statList: isFoundStatsVisible, // Utilisation correcte des paires clé-valeur
+            setStatList: setIsFoundStatsVisible, keepOneCondition: false,
+          },] }
+        />
+      </View>
+
+      <SavedSetModal/>
+
+      <SetCardContainer
+        setsToShow={ setsToShow }
+        chosenStats={ chosenStats }
+        isFoundStatsVisible={ isFoundStatsVisible }
+        situation="search"
+      />
+    </ScrollView>
+  </GestureHandlerRootView>);
 };
 
 export default SearchSetScreenContent;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    flex: 1, alignItems: "center", justifyContent: "center",
   },
 
   img: {
-    height: 30,
-    width: 30,
+    height: 30, width: 30,
   },
 
   text: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 24, fontWeight: "bold",
   },
 
   checkbox: {
-    width: 30,
-    height: 30,
+    width: 30, height: 30,
   },
 
   checkBoxItemLabel: {
-    fontSize: 18,
-    marginVertical: 10,
+    fontSize: 18, marginVertical: 10,
   },
 
   checkBoxesContainer: {
-    marginBottom: 20,
-    maxHeight: 300,
-    overflow: "scroll",
-    alignItems: "flex-start",
-    // backgroundColor: "none",
-    borderTopColor: "#000",
-    borderTopWidth: 1,
-    borderBottomColor: "#000",
-    borderBottomWidth: 1,
+    marginBottom: 20, maxHeight: 300, overflow: "scroll", alignItems: "flex-start", // backgroundColor: "none",
+    borderTopColor: "#000", borderTopWidth: 1, borderBottomColor: "#000", borderBottomWidth: 1,
   },
 
   statSlidersContainer: {
-    padding: 24,
-    borderRadius: 24,
-    alignItems: "center",
-    //backgroundColor: th.surface_container_high,
-    marginBottom: 8,
-    maxWidth: 0.95 * vw,
-    minWidth: 0.8 * vw,
-    minHeight: 100,
-    display: "flex",
-    flexDirection: "column",
+    padding: 24, borderRadius: 24, alignItems: "center", //backgroundColor: th.surface_container_high,
+    marginBottom: 8, maxWidth: 0.95 * vw, minWidth: 0.8 * vw, minHeight: 100, display: "flex", flexDirection: "column",
   },
 
   modalBackground: {
-    cursor: "auto",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    cursor: "auto", flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 
   modalText: {
-    fontSize: 18,
-    marginBottom: 20,
+    fontSize: 18, marginBottom: 20,
   },
 
   pressable: {
-    padding: 10,
-    backgroundColor: "#007BFF",
-    borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
+    padding: 10, backgroundColor: "#007BFF", borderRadius: 5, alignItems: "center", justifyContent: "center",
   },
 
   pressableText: {
-    color: "white",
-    fontSize: 16,
+    color: "white", fontSize: 16,
   },
 
   pressablesContainer: {
     // width: screenWidth * 0.87 + 20,
-    flexDirection: "row",
-    gap: 10,
-    marginBottom: 10,
+    flexDirection: "row", gap: 10, marginBottom: 10,
   },
 
   SearchPressable: {
     fontSize: 20,
-  },
-  ElementsDeselector: {
-    width: "100%",
-    alignItems: "flex-start",
-    backgroundColor: "red",
+  }, ElementsDeselector: {
+    width: "100%", alignItems: "flex-start", backgroundColor: "red",
   },
 
   button_icon: {

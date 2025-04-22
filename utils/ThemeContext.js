@@ -1,6 +1,6 @@
 import { useColorScheme } from "react-native";
 import React, { createContext, useContext, useState } from "react";
-import { light_theme, dark_theme } from "../components/styles/theme";
+import { light_theme, dark_theme } from "@/components/styles/theme";
 
 // Créer un contexte pour gérer le thème
 export const ThemeContext = createContext();
@@ -10,7 +10,7 @@ export const useTheme = () => {
 };
 
 // Fournisseur de thème
-export const ThemeProvider = ({ children }) => {
+export const CustomThemeProvider = ({ children }) => {
   const colorScheme = useColorScheme(); // Récupère la couleur du système (light ou dark)
 
   const theme = colorScheme === "dark" ? dark_theme : light_theme;
