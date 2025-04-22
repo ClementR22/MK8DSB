@@ -1,26 +1,20 @@
-import { useState, useEffect, useContext, createContext } from "react";
-import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
-import th, { vw } from "../../components/styles/theme";
-import SetCardContainer from "../../components/setCard/SetCardContainer";
-import { useSetsList } from "../../utils/SetsListContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  SavedSetScreenProvider,
-  useSavedSetScreen,
-} from "../../utils/SavedSetScreenContext";
-import { PressableImagesProvider } from "../../utils/PressableImagesContext";
-import StatSliderResultSelectorPressable from "../../components/statSliderResult/StatSliderResultSelectorPressable";
-import SavedSetScreenPressablesContainer from "../../components/SavedSetScreenPressablesContainer";
+import { ScrollView, StyleSheet } from 'react-native';
+import { vw } from '../../components/styles/theme';
+import SetCardContainer from '../../components/setCard/SetCardContainer';
+import { useSetsList } from '../../utils/SetsListContext';
+import { SavedSetScreenProvider } from '../../utils/SavedSetScreenContext';
+import { PressableImagesProvider } from '../../utils/PressableImagesContext';
+import SavedSetScreenPressablesContainer from '../../components/SavedSetScreenPressablesContainer';
 
 const SavedSetScreenContent = () => {
-  const { setsListSaved } = useSetsList();
+  const {setsListSaved} = useSetsList();
 
   return (
     <SavedSetScreenProvider>
       <PressableImagesProvider situation="save">
         <ScrollView>
-          <SavedSetScreenPressablesContainer />
-          <SetCardContainer setsToShow={setsListSaved} situation="save" />
+          <SavedSetScreenPressablesContainer/>
+          <SetCardContainer setsToShow={setsListSaved} situation="save"/>
         </ScrollView>
       </PressableImagesProvider>
     </SavedSetScreenProvider>
@@ -32,98 +26,98 @@ export default SavedSetScreenContent;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
   img: {
     height: 30,
-    width: 30,
+    width: 30
   },
 
   text: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold'
   },
 
   checkbox: {
     width: 30,
-    height: 30,
+    height: 30
   },
 
   checkBoxItemLabel: {
     fontSize: 18,
-    marginVertical: 10,
+    marginVertical: 10
   },
 
   checkBoxesContainer: {
     marginBottom: 20,
     maxHeight: 300,
-    overflow: "scroll",
-    alignItems: "flex-start",
+    overflow: 'scroll',
+    alignItems: 'flex-start',
     // backgroundColor: "none",
-    borderTopColor: "#000",
+    borderTopColor: '#000',
     borderTopWidth: 1,
-    borderBottomColor: "#000",
-    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    borderBottomWidth: 1
   },
 
   statSlidersContainer: {
     padding: 24,
     borderRadius: 24,
-    alignItems: "center",
+    alignItems: 'center',
     //backgroundColor: th.surface_container_high,
     marginBottom: 8,
     maxWidth: 0.95 * vw,
     minWidth: 0.8 * vw,
     minHeight: 100,
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column'
   },
 
   modalBackground: {
-    cursor: "auto",
+    cursor: 'auto',
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
 
   modalText: {
     fontSize: 18,
-    marginBottom: 20,
+    marginBottom: 20
   },
 
   pressable: {
     padding: 10,
-    backgroundColor: "#007BFF",
+    backgroundColor: '#007BFF',
     borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
   pressableText: {
-    color: "white",
-    fontSize: 16,
+    color: 'white',
+    fontSize: 16
   },
 
   pressablesContainer: {
     // width: screenWidth * 0.87 + 20,
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 10,
-    marginBottom: 10,
+    marginBottom: 10
   },
 
   SearchPressable: {
-    fontSize: 20,
+    fontSize: 20
   },
   ElementsDeselector: {
-    width: "100%",
-    alignItems: "flex-start",
-    backgroundColor: "red",
+    width: '100%',
+    alignItems: 'flex-start',
+    backgroundColor: 'red'
   },
 
   button_icon: {
-    margin: 16,
-  },
+    margin: 16
+  }
 });
