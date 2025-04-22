@@ -2,14 +2,14 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { useTheme } from "../../utils/ThemeContext";
 
-const StatSliderResult = ({ value, wantedValue = null }) => {
+const StatSliderResult = ({ value, chosenValue = null }) => {
   const th = useTheme();
 
-  if (wantedValue == null) {
-    wantedValue = value;
+  if (chosenValue == null) {
+    chosenValue = value;
   }
 
-  const bonusFound = value - wantedValue;
+  const bonusFound = value - chosenValue;
 
   const getFlexForSegment = (baseValue, bonus) => {
     const flexValue = bonus >= 0 ? baseValue : baseValue + bonus;
@@ -29,7 +29,7 @@ const StatSliderResult = ({ value, wantedValue = null }) => {
             styles.trackSegment,
             {
               backgroundColor: th.primary,
-              flex: getFlexForSegment(wantedValue, bonusFound),
+              flex: getFlexForSegment(chosenValue, bonusFound),
             },
           ]}
         />

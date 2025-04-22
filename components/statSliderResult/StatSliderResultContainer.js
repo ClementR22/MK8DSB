@@ -4,18 +4,20 @@ import StatSliderResult from "./StatSliderResult";
 import { useTheme } from "../../utils/ThemeContext";
 import { translate } from "../../i18n/translations";
 import { usePathname } from "expo-router";
+import { getIsStatsVisible } from "../../utils/getIsStatsVisible";
 
 const StatSliderResultContainer = ({
   setsToShowMultipleStatsLists,
-  isFoundStatsVisible,
   chosenStats,
   situation,
 }) => {
   const th = useTheme();
 
+  const isStatsVisible = getIsStatsVisible(situation);
+
   return (
     <View style={{ flex: 1, backgroundColor: "green" }}>
-      {isFoundStatsVisible.map(({ name, checked }, statIndex) => {
+      {isStatsVisible.map(({ name, checked }, statIndex) => {
         const translated_name = translate(name);
         if (checked) {
           return (
@@ -28,10 +30,11 @@ const StatSliderResultContainer = ({
             >
               <Text style={styles.text}>
                 {translated_name}
-                {situation == "search" &&
-                  ` : ${JSON.stringify(
-                    setsToShowMultipleStatsLists[0][statIndex]
-                  )}`}
+                {situation != "search" ||
+                  (situation == "save" &&
+                    ` : ${JSON.stringify(
+                      setsToShowMultipleStatsLists[0][statIndex]
+                    )}`)}
               </Text>
               {setsToShowMultipleStatsLists.map((setToShowStats, setIndex) => (
                 <View
@@ -45,8 +48,7 @@ const StatSliderResultContainer = ({
                   <StatSliderResult
                     key={setIndex}
                     value={setToShowStats[statIndex]}
-                    isWanted={chosenStats[statIndex]?.checked}
-                    wantedValue={chosenStats[statIndex]?.value}
+                    chosenValue={chosenStats?.[statIndex]?.value}
                   />
                   {situation != "search" && (
                     <Text style={{ flex: 0.2 }}>

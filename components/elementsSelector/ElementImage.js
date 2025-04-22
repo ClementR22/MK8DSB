@@ -4,7 +4,7 @@ import { Image } from "react-native";
 import { useOrderNumber } from "../../utils/OrderNumberContext";
 import showToast from "../../utils/toast";
 
-const ElementImage = ({ name, uri }) => {
+const ElementImage = ({ name, source }) => {
   const { imageWidth } = useOrderNumber();
 
   return (
@@ -15,11 +15,10 @@ const ElementImage = ({ name, uri }) => {
         }}
       >
         <Image
-          source={uri}
+          source={source}
           style={{
             width: imageWidth,
             height: imageWidth,
-            marginBottom: 0,
           }}
           resizeMode="contain"
         />

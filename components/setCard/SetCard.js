@@ -15,7 +15,7 @@ import { elementsAllInfosList } from "../../data/data";
 import { card } from "../styles/card";
 import { useTheme } from "../../utils/ThemeContext";
 import MyModal from "../modal/MyModal";
-import SetCardImagesDisplayer from "./SetCardImagesDisplayer";
+import SetImagesContainer from "./SetImagesContainer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
 import { button_icon } from "../styles/button";
 import { shadow_3dp } from "../styles/theme";
@@ -25,40 +25,32 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-import SetCardElementChip from "./SetCardElementChip";
 import { category4Names } from "../../data/data";
 import { translate } from "../../i18n/translations";
-import { FlatList } from "react-native";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "../../utils/PressableImagesContext";
 import { useSetsList } from "../../utils/SetsListContext";
 import MyTextInput from "../MyTextInput";
-import { useSavedSetModal } from "../../utils/SavedSetModalContext";
-import { useOrderNumber } from "../../utils/OrderNumberContext";
-
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
-const imageWidth = Math.min(screenWidth / 5, 120);
 
 const SetCard = ({
   setToShowName = null,
   setToShowClassIds,
   setToShowStats = null,
-  isFoundStatsVisible = null,
-  chosenStats = null,
+  chosenStats,
   setCardIndex = null,
   situation,
 }) => {
   const th = useTheme();
 
   const {
-    saveSet,
+    saveSetFromDisplay,
+    saveSetFromFound,
     loadSetSaveToSearch,
     loadSetSaveToDisplay,
     loadSetSearchToDisplay,
     removeSet,
     setSetCardActiveIndex,
   } = useSetsList();
-  const { screenSituation } = useOrderNumber();
 
   const { updatePressableImagesList } = usePressableImages();
 
@@ -72,39 +64,50 @@ const SetCard = ({
     setIsImagesModalVisible(true);
   };
 
-  const data = category4Names.map((category, index) => {
-    return {
-      category: translate(category),
-      images: elementsAllInfosList
-        .filter(({ classId }) => classId === setToShowClassIds[index]) // Filtrer selon classId correspondant
-        .map((element) => element.image), // Extraire l'URI de l'image
-    };
-  });
-
-  const categoryWidth =
-    Math.max(...data.map((item) => item.category.length)) * 7;
-
-  const renderItem = ({ item }) => (
-    <View style={styles.row}>
-      {/* <Text style={[styles.category, { width: categoryWidth }]}>
-        {item.category}
-      </Text> */}
-
-      <View style={styles.imagesContainer}>
-        {item.images.map((image, index) => (
-          <Image key={index} source={image} style={styles.icon} />
-        ))}
-      </View>
-    </View>
-  );
-
-  const saveSetFromFound = () => {
-    setIsTextInputModalVisible(true);
+  const situationConfig = {
+    search: {
+      showTextInput: false,
+      showStatSliderResult: true,
+      showEdit: false,
+      showRemove: false,
+      showSave: true,
+      showImport: false,
+      showLoadToDisplay: true,
+    },
+    display: {
+      showTextInput: true,
+      showStatSliderResult: false,
+      showEdit: true,
+      showRemove: true,
+      showSave: true,
+      showImport: false,
+      showLoadToDisplay: false,
+    },
+    save: {
+      showTextInput: true,
+      showStatSliderResult: true,
+      showEdit: true,
+      showRemove: true,
+      showSave: false,
+      showImport: false,
+      showLoadToDisplay: true,
+    },
+    load: {
+      showTextInput: true,
+      showStatSliderResult: false,
+      showEdit: false,
+      showRemove: true,
+      showSave: false,
+      showImport: true,
+      showLoadToDisplay: false,
+    },
   };
+
+  const config = situationConfig[situation] ?? {};
 
   return (
     <View style={[card(th).container, { flex: 1 }]}>
-      {situation != "search" && (
+      {config.showTextInput && (
         <MyTextInput
           setToShowName={setToShowName}
           setCardIndex={setCardIndex}
@@ -113,29 +116,28 @@ const SetCard = ({
         />
       )}
       <Pressable onPress={displaySetImages}>
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.category}
-          contentContainerStyle={{ flexGrow: 0 }} // Empêche la FlatList d'occuper plus d'espace que nécessaire
+        <SetImagesContainer
+          setToShowClassIds={setToShowClassIds}
+          imageSize={40}
         />
       </Pressable>
 
-      {situation == "search" ? (
+      {config.showStatSliderResult && (
         <StatSliderResultContainer
           setsToShowMultipleStatsLists={[setToShowStats]}
-          isFoundStatsVisible={isFoundStatsVisible}
           chosenStats={chosenStats}
           situation={situation}
         />
-      ) : null}
+      )}
 
       <MyModal
         modalTitle={""}
         isModalVisible={isImagesModalVisible}
         setIsModalVisible={setIsImagesModalVisible}
-        ModalContentsList={[SetCardImagesDisplayer]}
-        contentPropsList={[{ setToShowElementsIds: setToShowClassIds }]}
+        ModalContentsList={[SetImagesContainer]}
+        contentPropsList={[
+          { setToShowClassIds: setToShowClassIds, imageSize: 80 },
+        ]}
         closeButtonText="Close"
       />
       <MyModal
@@ -163,11 +165,11 @@ const SetCard = ({
         ]}
         closeButtonText={translate("Confirm")}
         checkBeforeClose={async () => {
-          return await saveSet(setCardIndex, situation);
+          return await saveSetFromFound(setCardIndex);
         }}
       />
       <View key="pressables container">
-        {situation != "search" && (
+        {config.showEdit && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => {
@@ -180,7 +182,7 @@ const SetCard = ({
           </Pressable>
         )}
 
-        {situation != "search" && (
+        {config.showRemove && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => {
@@ -191,40 +193,40 @@ const SetCard = ({
           </Pressable>
         )}
 
-        {situation != "save" && (
+        {config.showSave && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() =>
               situation == "search"
-                ? saveSetFromFound(setCardIndex)
-                : saveSet(setCardIndex)
+                ? setIsTextInputModalVisible(true)
+                : saveSetFromDisplay(setCardIndex)
             }
           >
             <MaterialIcons name="save" size={24} color={th.on_primary} />
           </Pressable>
         )}
 
-        {situation == "save" && (
+        {config.showImport && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() =>
-              screenSituation == "search"
+              situation == "search"
                 ? loadSetSaveToSearch(setCardIndex)
                 : loadSetSaveToDisplay(setCardIndex)
             }
           >
-            <MaterialCommunityIcons
-              name="download"
-              size={24}
-              color={th.on_primary}
-            />
+            <Text>Import</Text>
           </Pressable>
         )}
 
-        {situation == "search" && (
+        {config.showLoadToDisplay && (
           <Pressable
             style={[button_icon(th).container, shadow_3dp]}
-            onPress={() => loadSetSearchToDisplay(setCardIndex)}
+            onPress={() =>
+              situation == "search"
+                ? loadSetSearchToDisplay(setCardIndex)
+                : loadSetSaveToDisplay(setCardIndex)
+            }
           >
             <MaterialIcons
               name="display-settings"
@@ -262,25 +264,9 @@ const styles = StyleSheet.create({
     overflow: "hidden", // Cache l'excédent du texte
     marginRight: 30,
   },
-  icon: {
-    width: 40, // Taille fixe pour toutes les icônes
-    height: 40, // Même taille en hauteur
-    resizeMode: "contain", // Garde les proportions sans déformation
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-  },
   category: {
     textAlign: "left", // Aligner à gauche
     marginRight: 16, // Un petit espacement entre la colonne 1 et la colonne 2
-  },
-  imagesContainer: {
-    flex: 1,
-    justifyContent: "center", // Centrer le contenu de la colonne 2
-    alignItems: "center",
-    flexDirection: "row",
   },
   image: {
     width: 50,

@@ -8,25 +8,21 @@ import {
   elementsAllInfosList,
   bodyTypeNames,
 } from "../../data/data";
-import { useOrderNumber } from "../../utils/OrderNumberContext";
 
 const iconSize = 38;
 
 const CategorySelector = ({
   selectedTab,
   setSelectedTab,
-  scrollViewRef,
-  sectionRefs,
+  scrollToTopWithScrollViewRef,
 }) => {
   const elementIcons = [
-    elementsAllInfosList[0].image.uri,
-    elementsAllInfosList[52].image.uri,
-    elementsAllInfosList[93].image.uri,
-    elementsAllInfosList[115].image.uri,
+    elementsAllInfosList[0].image,
+    elementsAllInfosList[52].image,
+    elementsAllInfosList[93].image,
+    elementsAllInfosList[115].image,
     require("../../assets/images/close.png"),
   ];
-
-  const { scrollToSection } = useOrderNumber();
 
   return (
     <View style={styles.tabContainer} key={"tabContainer"}>
@@ -36,7 +32,7 @@ const CategorySelector = ({
           style={[styles.tab, selectedTab === elementName && styles.activeTab]}
           onPress={() => {
             setSelectedTab(elementName);
-            scrollToSection(scrollViewRef, sectionRefs[4], false);
+            scrollToTopWithScrollViewRef();
           }}
         >
           <Image

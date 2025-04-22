@@ -2,14 +2,16 @@ import React from "react";
 import { Chip } from "react-native-paper";
 import { View, Image } from "react-native";
 
-const ElementChip = ({ name, pressed, onPress, uri }) => {
+const ElementChip = ({ name, pressed, onPress, source }) => {
   return (
     <Chip
       selected={pressed}
       onPress={onPress}
       style={[styles.chip, pressed && styles.chipSelected]}
       textStyle={styles.chipText}
-      avatar={<Image source={uri} style={styles.image} />}
+      avatar={
+        <Image source={source} style={styles.image} resizeMode="contain" />
+      }
     >
       {name}
     </Chip>
@@ -35,7 +37,6 @@ const styles = {
     width: 24, // Largeur de l'image
     height: 24, // Hauteur de l'image
     borderRadius: 0, // Pour éviter les coins arrondis
-    resizeMode: "contain",
   },
 };
 

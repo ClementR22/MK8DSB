@@ -22,7 +22,7 @@ const ElementsDeselector = () => {
             name={name}
             pressed={pressed}
             onPress={() => handlePressImage(id)}
-            uri={image.uri}
+            source={image}
           />
         ))}
     </View>

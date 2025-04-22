@@ -14,7 +14,7 @@ import checkbox from "./styles/checkbox";
 import PressableStat from "./PressableStat";
 import { useTheme } from "../utils/ThemeContext";
 
-const StatSelector = ({ statList, setStatList, keepOneCondition }) => {
+const StatSelector = ({ statList, toggleCheck }) => {
   const th = useTheme();
   return (
     <View style={styles.listContainer}>
@@ -24,8 +24,7 @@ const StatSelector = ({ statList, setStatList, keepOneCondition }) => {
             <PressableStat
               key={stat.name}
               stat={stat}
-              setStatList={setStatList}
-              keepOneCondition={keepOneCondition}
+              toggleCheck={() => toggleCheck(stat.name)}
             />
           ))}
         </ScrollView>

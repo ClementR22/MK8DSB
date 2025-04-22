@@ -3,26 +3,50 @@ import { bodyTypeNames, elementsAllInfosList } from "../data/data";
 import { translate } from "../i18n/translations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import showToast from "./toast";
-import { usePressableImages } from "./PressableImagesContext";
 import { useOrderNumber } from "./OrderNumberContext";
+import { statNames } from "../data/data";
+import { searchSetStatsFromElementsIds } from "./searchSetStatsFromElementsIds";
 
 // Créer le contexte
 const SetsListContext = createContext();
 
 // Fournisseur du contexte
 export const SetsListProvider = ({ children }) => {
-  const setDefault = { name: null, classIds: [9, 16, 30, 39] };
+  const setDefault = {
+    name: null,
+    classIds: [9, 16, 30, 39],
+    stats: [4, 3.75, 4.25, 4.5, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 4],
+  };
+
+  const [chosenStats, setChosenStats] = useState(
+    statNames.map((statName, index) => {
+      return {
+        name: statName,
+        checked: index === 0,
+        value: index === 0 ? 0 : null,
+        statFilterNumber: 0,
+        setStatFilterNumber: (newState) => {
+          setChosenStats((prevStats) =>
+            prevStats.map((stat) =>
+              stat.name === statName
+                ? { ...stat, statFilterNumber: newState }
+                : stat
+            )
+          );
+        },
+      };
+    })
+  );
 
   const [setsListDisplayed, setSetsListDisplayed] = useState([
-    { ...setDefault, classIds: [...setDefault.classIds] },
+    { ...setDefault },
   ]);
+
   const [setsListSaved, setSetsListSaved] = useState([]);
 
   const [setsListFound, setSetsListFound] = useState([]);
 
-  const { setChosenStats, searchSetStatsFromElementsIds } = useOrderNumber();
-
-  const getSetsSavedNamesAndClassIds = async (onlyNames = false) => {
+  const getSetsSaved = async (onlyNames = false) => {
     try {
       const names = await AsyncStorage.getAllKeys();
       if (onlyNames) {
@@ -44,7 +68,7 @@ export const SetsListProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchSavedSets = async () => {
-      const savedSets = await getSetsSavedNamesAndClassIds();
+      const savedSets = await getSetsSaved();
       setSetsListSaved(savedSets);
     };
 
@@ -53,9 +77,7 @@ export const SetsListProvider = ({ children }) => {
 
   const [setCardActiveIndex, setSetCardActiveIndex] = useState(0); // Stocke l'ID de la `SetCardChosen` active
 
-  const addSet = (
-    newSet = { ...setDefault, classIds: [...setDefault.classIds] }
-  ) => {
+  const addSet = (newSet = setDefault) => {
     setSetsListDisplayed((prev) => [...prev, newSet]);
   };
 
@@ -116,59 +138,44 @@ export const SetsListProvider = ({ children }) => {
     showToast("Succès", "Le set a été ajouté à l'écran de comparaison");
   };
 
-  const saveSet = async (setCardSelectedIndex, situation) => {
-    const setsListConcerned =
-      situation == "search" ? setsListFound : setsListDisplayed;
-    const setCardSelected = setsListConcerned[setCardSelectedIndex];
-    const setCardSelectedName = setCardSelected.name;
-    const setsSavedNames = await getSetsSavedNamesAndClassIds(true);
+  const saveSet = async (setCardSelectedName, setCardSelected) => {
+    const setsSavedNames = await getSetsSaved(true);
+
     if (
       !setCardSelectedName?.trim() ||
       setsSavedNames.includes(setCardSelectedName)
     ) {
       showToast("Erreur", "Changer le nom du set SVP");
       return false;
-    } else {
-      try {
-        await AsyncStorage.setItem(
-          setCardSelectedName,
-          JSON.stringify(setCardSelected)
-        );
-
-        setSetsListSaved((prev) => [...prev, setCardSelected]);
-
-        showToast("Succès", "Le set est enregistré");
-        return true;
-      } catch (err) {
-        alert(err);
-        return false;
-      }
     }
+
+    try {
+      await AsyncStorage.setItem(
+        setCardSelectedName,
+        JSON.stringify(setCardSelected)
+      );
+      setSetsListSaved((prev) => [...prev, setCardSelected]);
+
+      showToast("Succès", "Le set est enregistré");
+      return true;
+    } catch (err) {
+      alert(err);
+      return false;
+    }
+  };
+
+  const saveSetFromDisplay = async (setCardSelectedIndex) => {
+    const setCardSelected = setsListDisplayed[setCardSelectedIndex];
+    const setCardSelectedName = setCardSelected.name;
+
+    await saveSet(setCardSelectedName, setCardSelected);
   };
 
   const saveSetFromFound = async (setCardSelectedIndex) => {
     const setCardSelected = setsListFound[setCardSelectedIndex];
     const setCardSelectedName = setCardSelected.name;
-    const setsSavedNames = await getSetsSavedNamesAndClassIds(true);
-    if (
-      setCardSelectedName == null ||
-      setsSavedNames.includes(setCardSelectedName)
-    ) {
-      showToast("Erreur", "Changer le nom du set SVP");
-    } else {
-      try {
-        await AsyncStorage.setItem(
-          setCardSelectedName,
-          JSON.stringify(setCardSelected)
-        );
 
-        setSetsListSaved((prev) => [...prev, setCardSelected]);
-
-        showToast("Succès", "Le set est enregistré");
-      } catch (err) {
-        alert(err);
-      }
-    }
+    await saveSet(setCardSelectedName, setCardSelected);
   };
 
   const renameSet = (newName, situation, setCardIndex) => {
@@ -193,16 +200,20 @@ export const SetsListProvider = ({ children }) => {
     setsListConcerned((prev) => {
       return prev.map((set, index) =>
         index === setCardActiveIndex
-          ? { ...set, classIds: pressedClassIdsList }
+          ? {
+              ...set,
+              classIds: pressedClassIdsList,
+              stats: searchSetStatsFromElementsIds(pressedClassIdsList),
+            }
           : set
       );
     });
   };
 
-  const updateAllSetsListFound = (setsFoundClassIds) => {
+  const updateEntireSetsListFound = (setsFoundClassIds) => {
     setsFoundWithName = setsFoundClassIds.map((setsFoundClassIds) => ({
       name: null,
-      classIds: setsFoundClassIds.classIds,
+      ...setsFoundClassIds,
     }));
     setSetsListFound(setsFoundWithName);
   };
@@ -224,16 +235,18 @@ export const SetsListProvider = ({ children }) => {
   return (
     <SetsListContext.Provider
       value={{
+        chosenStats,
+        setChosenStats,
         setsListDisplayed,
         setsListSaved,
         setsListFound,
-        updateAllSetsListFound,
+        updateEntireSetsListFound,
         addSet,
         loadSetSaveToSearch,
         loadSetSaveToDisplay,
         loadSetSearchToDisplay,
         removeSet,
-        saveSet,
+        saveSetFromDisplay,
         saveSetFromFound,
         renameSet,
         updateSetsList,

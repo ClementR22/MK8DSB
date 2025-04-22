@@ -1,4 +1,4 @@
-import React, { type ComponentProps }  from "react";
+import React, { type ComponentProps } from 'react';
 import { Link } from 'expo-router';
 import { openBrowserAsync } from 'expo-web-browser';
 import { Platform } from 'react-native';

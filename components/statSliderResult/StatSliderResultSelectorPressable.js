@@ -1,23 +1,51 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { button_icon } from "../styles/button";
 import { shadow_3dp } from "../styles/theme";
 import { useTheme } from "../../utils/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MyModal from "../modal/MyModal";
+import { translate } from "../../i18n/translations";
+import { useState } from "react";
+import StatSelector from "../StatSelector";
+import { toggleCheckList } from "../../utils/toggleCheck";
 
-const StatSliderResultSelectorPressable = ({ setFoundStatsModalVisible }) => {
+const StatSliderResultSelectorPressable = ({
+  isStatsVisible,
+  setIsStatsVisible,
+}) => {
   const th = useTheme();
+
+  const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
+
   return (
-    <Pressable
-      style={[button_icon(th).container, shadow_3dp]}
-      onPress={() => setFoundStatsModalVisible(true)}
-    >
-      <MaterialCommunityIcons
-        name="checkbox-multiple-marked"
-        size={24}
-        color={th.on_primary}
+    <View>
+      <Pressable
+        style={[button_icon(th).container, shadow_3dp]}
+        onPress={() => setFoundStatsModalVisible(true)}
+      >
+        <MaterialCommunityIcons
+          name="checkbox-multiple-marked"
+          size={24}
+          color={th.on_primary}
+        />
+      </Pressable>
+
+      <MyModal
+        modalTitle={translate("StatsToDisplay")}
+        isModalVisible={foundStatsModalVisible}
+        setIsModalVisible={setFoundStatsModalVisible}
+        ModalContentsList={[StatSelector]}
+        contentPropsList={[
+          {
+            statList: isStatsVisible,
+            toggleCheck: (name) => {
+              toggleCheckList(setIsStatsVisible, name);
+            },
+          },
+        ]}
       />
-    </Pressable>
+    </View>
   );
 };
 
