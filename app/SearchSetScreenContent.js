@@ -1,7 +1,5 @@
-import { useState, useEffect, useContext, createContext } from "react";
-import {
-  View, Text, StyleSheet, ScrollView, Pressable, TextInput, Dimensions, Modal, Alert, StatusBar,
-} from "react-native";
+import { useState } from "react";
+import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -14,19 +12,11 @@ import ResultsNumber from "../components/ResultsNumberSelector";
 import MyModal from "../components/modal/MyModal";
 import StatSliderResultSelectorPressable from "../components/statSliderResult/StatSliderResultSelectorPressable";
 
-import {
-  button_icon, button, button_outline,
-} from "../components/styles/button";
-import th, {
-  shadow_12dp, shadow_3dp, vh, vw,
-} from "../components/styles/theme";
+import { button_icon, button } from "../components/styles/button";
+import { shadow_3dp, vw } from "../components/styles/theme";
 import { useTheme } from "../utils/ThemeContext";
-import { modal } from "../components/styles/modal";
-import checkbox from "../components/styles/checkbox";
-import PressableStat from "../components/PressableStat";
 import StatSelector from "../components/StatSelector";
 import { translate } from "../i18n/translations";
-import { elementsAllInfos } from "../data/data";
 import { usePressableImages } from "../utils/PressableImagesContext";
 import SetCardContainer from "../components/setCard/SetCardContainer";
 import BodyTypeSelector from "../components/elementsSelector/BodyTypeSelector";
@@ -36,8 +26,6 @@ import SavedSetModal from "../components/modal/SavedSetModal";
 import { useSavedSetModal } from "../utils/SavedSetModalContext";
 import { useSetsList } from "../utils/SetsListContext";
 import { useOrderNumber } from "../utils/OrderNumberContext";
-
-const screenWidth = Dimensions.get("window").width;
 
 const SearchSetScreenContent = () => {
   const th = useTheme();
@@ -72,7 +60,6 @@ const SearchSetScreenContent = () => {
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
 
   const [resultsNumberModalVisible, setResultsNumberModalVisible] = useState(false);
-  const [menuModalVisible, setMenuModalVisible] = useState(false);
 
   const {savedSetModalVisible, toggleSavedSetModal} = useSavedSetModal();
 

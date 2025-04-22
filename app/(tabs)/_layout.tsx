@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
@@ -11,7 +11,6 @@ import { SetsListProvider } from "@/utils/SetsListContext";
 import { SavedSetModalProvider } from "@/utils/SavedSetModalContext";
 import { OrderNumberProvider } from "@/utils/OrderNumberContext"
 import {
-  FontAwesome,
   Ionicons,
   MaterialCommunityIcons,
   MaterialIcons,
@@ -126,7 +125,7 @@ export default function TabLayout() {
                 name="SearchSetScreen"
                 options={ {
                   title: "Trouver un set",
-                  tabBarIcon: ({color, focused}) => (
+                  tabBarIcon: ({color}) => (
                     <MaterialCommunityIcons
                       name="magnify"
                       size={ 24 }
@@ -138,7 +137,7 @@ export default function TabLayout() {
                 name="DisplaySetScreen"
                 options={ {
                   title: "Afficher un set",
-                  tabBarIcon: ({color, focused}) => (
+                  tabBarIcon: ({color}) => (
                     <MaterialIcons
                       name="display-settings"
                       size={ 24 }
@@ -150,7 +149,7 @@ export default function TabLayout() {
                 name="GaleryScreen"
                 options={ {
                   title: "Galerie",
-                  tabBarIcon: ({color, focused}) => (
+                  tabBarIcon: ({color}) => (
                     <Ionicons
                       name="image-outline"
                       size={ 24 }
