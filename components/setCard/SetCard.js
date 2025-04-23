@@ -1,16 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  Pressable,
-  Image,
-  Modal,
-  Platform,
-  Alert,
-  TextInput,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { elementsAllInfosList } from "../../data/data";
 import { card } from "../styles/card";
 import { useTheme } from "../../utils/ThemeContext";
@@ -25,7 +14,6 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-import { category4Names } from "../../data/data";
 import { translate } from "../../i18n/translations";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "../../utils/PressableImagesContext";
