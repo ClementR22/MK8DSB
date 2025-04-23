@@ -19,9 +19,6 @@ const SavedSetScreen = () => {
           <SetCardContainer setsToShow={setsListSaved} situation="save" />
         </ScrollView>
       </PressableImagesProvider>
-      <TooltipWrapper tooltipText="Dicter">
-        <Ionicons name="car" size={24} color="black" />
-      </TooltipWrapper>
     </SavedSetScreenProvider>
   );
 };

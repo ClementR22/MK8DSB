@@ -96,10 +96,7 @@ export default function TabLayout() {
                   options={{
                     title: 'Saved Set',
                     tabBarIcon: ({color, focused}) => (
-                      <TabBarIcon
-                        name={focused ? 'code-slash' : 'code-slash-outline'}
-                        color={color}
-                      />
+                      <MaterialIcons name="save" size={24} color={color} />
                     ), //isDefaultSelectedImages
                     header: () => <CustomHeader title="🏁 saved set screen"/>
                   }}
