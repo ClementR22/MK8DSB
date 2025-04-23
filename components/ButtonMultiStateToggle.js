@@ -1,8 +1,14 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import TooltipWrapper from "./TooltipWrapper";
 
-const ButtonMultiStateToggle = ({ number, setNumber, filterCase = false }) => {
+const ButtonMultiStateToggle = ({
+  number,
+  setNumber,
+  filterCase = false,
+  text,
+}) => {
   const statFilterIconsNames = [
     "approximately-equal",
     "greater-than-or-equal",
@@ -23,19 +29,21 @@ const ButtonMultiStateToggle = ({ number, setNumber, filterCase = false }) => {
   };
 
   return (
-    <Pressable
-      onPress={handlePress}
-      style={[
-        styles.pressable,
-        styles.selectedFilter, // le style reste actif car un seul bouton
-      ]}
-    >
-      <MaterialCommunityIcons
-        name={iconsNames[number]}
-        size={24}
-        style={styles.selectedText}
-      />
-    </Pressable>
+    <TooltipWrapper tooltipText={text}>
+      <Pressable
+        onPress={handlePress}
+        style={[
+          styles.pressable,
+          styles.selectedFilter, // le style reste actif car un seul bouton
+        ]}
+      >
+        <MaterialCommunityIcons
+          name={iconsNames[number]}
+          size={24}
+          style={styles.selectedText}
+        />
+      </Pressable>
+    </TooltipWrapper>
   );
 };
 

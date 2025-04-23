@@ -9,6 +9,7 @@ import { translate } from "../../i18n/translations";
 import { useState } from "react";
 import StatSelector from "../StatSelector";
 import { toggleCheckList } from "../../utils/toggleCheck";
+import TooltipWrapper from "../TooltipWrapper";
 
 const StatSliderResultSelectorPressable = ({
   isStatsVisible,
@@ -20,16 +21,18 @@ const StatSliderResultSelectorPressable = ({
 
   return (
     <View>
-      <Pressable
-        style={[button_icon(th).container, shadow_3dp]}
-        onPress={() => setFoundStatsModalVisible(true)}
-      >
-        <MaterialCommunityIcons
-          name="checkbox-multiple-marked"
-          size={24}
-          color={th.on_primary}
-        />
-      </Pressable>
+      <TooltipWrapper tooltipText={translate("DisplayedStats")}>
+        <Pressable
+          style={[button_icon(th).container, shadow_3dp]}
+          onPress={() => setFoundStatsModalVisible(true)}
+        >
+          <MaterialCommunityIcons
+            name="checkbox-multiple-marked"
+            size={24}
+            color={th.on_primary}
+          />
+        </Pressable>
+      </TooltipWrapper>
 
       <MyModal
         modalTitle={translate("StatsToDisplay")}

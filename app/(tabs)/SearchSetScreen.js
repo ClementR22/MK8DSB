@@ -62,7 +62,7 @@ const SearchSetScreen = () => {
                 {translate("SearchedStats")}
               </Text>
 
-              <ButtonLoad />
+              <ButtonLoad text={translate("LoadStatsOfASet")} />
 
               {/* Afficher le slider uniquement si la case est cochée */}
               {chosenStats.map(

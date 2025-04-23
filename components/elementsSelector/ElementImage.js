@@ -2,27 +2,20 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import { Image } from "react-native";
 import { useOrderNumber } from "../../utils/OrderNumberContext";
-import showToast from "../../utils/toast";
 
 const ElementImage = ({ name, source }) => {
   const { imageWidth } = useOrderNumber();
 
   return (
     <View key={name} style={styles.elementContainer}>
-      <Pressable
-        onPress={() => {
-          showToast("yo", name);
+      <Image
+        source={source}
+        style={{
+          width: imageWidth,
+          height: imageWidth,
         }}
-      >
-        <Image
-          source={source}
-          style={{
-            width: imageWidth,
-            height: imageWidth,
-          }}
-          resizeMode="contain"
-        />
-      </Pressable>
+        resizeMode="contain"
+      />
       <Text>{name}</Text>
     </View>
   );

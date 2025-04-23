@@ -1,3 +1,4 @@
+import { View } from "react-native";
 import StatSliderResultSelectorPressable from "./statSliderResult/StatSliderResultSelectorPressable";
 import { useSavedSetScreen } from "../utils/SavedSetScreenContext";
 
