@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import { useSetsList } from "../utils/SetsListContext";
 
 const MyTextInput = ({ setToShowName, setCardIndex, situation }) => {

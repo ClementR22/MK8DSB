@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Modal,
-  Text,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { View, StyleSheet } from "react-native";
 import ElementChip from "./ElementChip";
 import { elementsAllInfosList } from "@/data/data";
 import { useTheme } from "../../utils/ThemeContext";

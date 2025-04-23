@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
-const MultiStateToggleButton = ({ number, setNumber, filterCase = false }) => {
+const ButtonMultiStateToggle = ({ number, setNumber, filterCase = false }) => {
   const statFilterIconsNames = [
     "approximately-equal",
     "greater-than-or-equal",
@@ -54,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MultiStateToggleButton;
+export default ButtonMultiStateToggle;

@@ -1,23 +1,23 @@
-import { Dimensions, ScrollView, StyleSheet } from 'react-native';
-import { PressableImagesProvider } from '../../utils/PressableImagesContext';
-import { useTheme } from '../../utils/ThemeContext';
-import StatSliderResultContainer from '../../components/statSliderResult/StatSliderResultContainer';
-import SetCardContainer from '../../components/setCard/SetCardContainer';
+import { Dimensions, ScrollView, StyleSheet } from "react-native";
+import { PressableImagesProvider } from "../../utils/PressableImagesContext";
+import { useTheme } from "../../utils/ThemeContext";
+import StatSliderResultContainer from "../../components/statSliderResult/StatSliderResultContainer";
+import SetCardContainer from "../../components/setCard/SetCardContainer";
 
-import { useSetsList } from '../../utils/SetsListContext';
-import { useSavedSetModal } from '../../utils/SavedSetModalContext';
-import { searchSetStatsFromElementsIds } from '../../utils/searchSetStatsFromElementsIds';
-import { DisplaySetScreenProvider } from '../../utils/DisplaySetScreenContext';
-import DisplaySetScreenPressablesContainer from '../../components/DisplaySetScreenPressablesContainer';
+import { useSetsList } from "../../utils/SetsListContext";
+import { useSavedSetModal } from "../../utils/SavedSetModalContext";
+import { searchSetStatsFromElementsIds } from "../../utils/searchSetStatsFromElementsIds";
+import { DisplaySetScreenProvider } from "../../utils/DisplaySetScreenContext";
+import DisplaySetScreenPressablesContainer from "../../components/DisplaySetScreenPressablesContainer";
 
-const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-const DisplaySetScreenContent = () => {
+const DisplaySetScreen = () => {
   const th = useTheme();
 
-  const {setsListDisplayed} = useSetsList();
+  const { setsListDisplayed } = useSetsList();
 
-  const {savedSetModalVisible} = useSavedSetModal();
+  const { savedSetModalVisible } = useSavedSetModal();
 
   const setsToShowMultipleStatsLists = setsListDisplayed.map((setToShow) => {
     const setToShowStatsList = searchSetStatsFromElementsIds(
@@ -33,7 +33,7 @@ const DisplaySetScreenContent = () => {
         situation="display"
       >
         <ScrollView scrollEnabled={!savedSetModalVisible}>
-          <DisplaySetScreenPressablesContainer/>
+          <DisplaySetScreenPressablesContainer />
 
           <SetCardContainer
             setsToShow={setsListDisplayed}
@@ -51,55 +51,55 @@ const DisplaySetScreenContent = () => {
   );
 };
 
-export default DisplaySetScreenContent;
+export default DisplaySetScreen;
 
 const styles = StyleSheet.create({
   container: {
     //flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   cardsContainer: {
-    width: '100%',
+    width: "100%",
     padding: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    backgroundColor: 'pink'
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: "pink",
   },
   statContainer: {
     width: screenWidth * 0.9,
     marginVertical: 4,
-    alignItems: 'flex-start',
-    backgroundColor: 'gray',
+    alignItems: "flex-start",
+    backgroundColor: "gray",
     paddingHorizontal: 0,
-    borderColor: 'green',
-    borderWidth: 3
+    borderColor: "green",
+    borderWidth: 3,
   },
   sliderContainer: {
-    width: '100%',
-    backgroundColor: 'green'
+    width: "100%",
+    backgroundColor: "green",
   },
   addButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: "#4CAF50",
     borderRadius: 25,
     padding: 12,
-    marginBottom: 20
+    marginBottom: 20,
   },
   addButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   pressable: {
-    backgroundColor: '#2196F3',
+    backgroundColor: "#2196F3",
     padding: 12,
     marginVertical: 8,
     borderRadius: 8,
-    alignItems: 'center'
+    alignItems: "center",
   },
   pressableText: {
-    color: '#fff',
-    fontSize: 16
-  }
+    color: "#fff",
+    fontSize: 16,
+  },
 });

@@ -15,6 +15,8 @@ import { useDisplaySetScreen } from "../utils/DisplaySetScreenContext";
 import SavedSetModal from "./modal/SavedSetModal";
 import { shadow_3dp } from "./styles/theme";
 import { toggleCheckList } from "../utils/toggleCheck";
+import ButtonLoad from "./ButtonLoad";
+import ButtonAddSet from "./ButtonAddSet";
 
 const DisplaySetScreenPressablesContainer = () => {
   const th = useTheme();
@@ -34,12 +36,9 @@ const DisplaySetScreenPressablesContainer = () => {
         isStatsVisible={isStatsVisible}
         setIsStatsVisible={setIsStatsVisible}
       />
-      <Pressable
-        style={[button_icon(th).container, shadow_3dp]}
-        onPress={() => addSet()}
-      >
-        <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
-      </Pressable>
+
+      <ButtonAddSet />
+
       <Pressable
         onPress={() => {
           console.log("remove");
@@ -49,18 +48,8 @@ const DisplaySetScreenPressablesContainer = () => {
       >
         <Text>remove</Text>
       </Pressable>
-      <Pressable
-        style={[button_icon(th).container, shadow_3dp]}
-        onPress={() => {
-          toggleSavedSetModal(true);
-        }}
-      >
-        <MaterialCommunityIcons
-          name="download"
-          size={24}
-          color={th.on_primary}
-        />
-      </Pressable>
+
+      <ButtonLoad />
 
       <SavedSetModal />
     </View>

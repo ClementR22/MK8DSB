@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Modal,
-  Text,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import Checkbox from "expo-checkbox";
 import { modal } from "./styles/modal";
 import { button } from "./styles/button";

@@ -14,7 +14,7 @@ import { useRef } from "react";
 import { useCallback } from "react";
 import BodyTypeSelector from "./elementsSelector/BodyTypeSelector";
 import { useTheme } from "../utils/ThemeContext";
-import MultiStateToggleButton from "./MultiStateToggleButton";
+import ButtonMultiStateToggle from "./ButtonMultiStateToggle";
 
 const MyBottomSheetModal = ({
   modalTitle,
@@ -54,7 +54,7 @@ const MyBottomSheetModal = ({
     >
       <BottomSheetView style={styles.contentContainer}>
         <Text style={modal(th).title_center}>{modalTitle}</Text>
-        <MultiStateToggleButton
+        <ButtonMultiStateToggle
           number={orderNumber}
           setNumber={setOrderNumber}
           iconsNames={imagesOrderIconsNames}

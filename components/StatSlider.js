@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Slider } from "@miblanchard/react-native-slider";
-import MultiStateToggleButton from "./MultiStateToggleButton";
+import ButtonMultiStateToggle from "./ButtonMultiStateToggle";
 
 import { vw } from "./styles/theme";
 import { useTheme } from "../utils/ThemeContext";
@@ -38,7 +38,7 @@ const StatSlider = ({
             {sliderValue}
           </Text>
         </View>
-        <MultiStateToggleButton
+        <ButtonMultiStateToggle
           number={statFilterNumber}
           setNumber={setStatFilterNumber}
           filterCase={true}
