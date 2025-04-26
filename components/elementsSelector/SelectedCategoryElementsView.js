@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { View } from "react-native";
 import ElementImage from "./ElementImage";
@@ -110,16 +110,6 @@ const SelectedCategoryElementsView = React.memo(
       return selectedCategoryElements;
     };
 
-    const getSelectedCategoryElementsSorted = () => {
-      const selectedCategoryElements = getSelectedCategoryElements();
-      const selectedCategoryElementsSorted = sortElements(
-        selectedCategoryElements,
-        orderNumber
-      );
-
-      return selectedCategoryElementsSorted;
-    };
-
     const groupByBodyType = (list) => {
       return list.reduce((acc, item) => {
         if (!acc[item.category]) {
@@ -131,8 +121,11 @@ const SelectedCategoryElementsView = React.memo(
     };
 
     if (orderNumber != 3) {
-      const selectedCategoryElementsSorted =
-        getSelectedCategoryElementsSorted();
+      const selectedCategoryElementsSorted = useMemo(() => {
+        const selectedCategoryElements = getSelectedCategoryElements();
+        return sortElements(selectedCategoryElements, orderNumber);
+      }, [selectedTab, orderNumber]); // Utiliser les dépendances appropriées
+
       if (selectedTab != "body") {
         return <ElementsView elements={selectedCategoryElementsSorted} />;
       } else {

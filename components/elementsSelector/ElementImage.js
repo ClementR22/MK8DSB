@@ -1,10 +1,9 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import { Image } from "react-native";
-import { useOrderNumber } from "../../utils/OrderNumberContext";
 
-const ElementImage = ({ name, source }) => {
-  const { imageWidth } = useOrderNumber();
+const ElementImage = React.memo(({ name, source }) => {
+  const imageWidth = 80;
 
   return (
     <View key={name} style={styles.elementContainer}>
@@ -19,7 +18,7 @@ const ElementImage = ({ name, source }) => {
       <Text>{name}</Text>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   elementContainer: {

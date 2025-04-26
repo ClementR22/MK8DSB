@@ -39,9 +39,6 @@ const GaleryScreen = () => {
       <View style={styles.container}>
         <ElementsSelector situation="galery" galeryCase={true} />
       </View>
-      <MyPopover popoverText={"Salut"}>
-        <Text>Appuie ici</Text>
-      </MyPopover>
     </PressableImagesProvider>
   );
 };
