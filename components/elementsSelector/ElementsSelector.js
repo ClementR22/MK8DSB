@@ -28,7 +28,7 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
   );
 
   const scrollToTopWithScrollViewRef = useCallback(() => {
-    scrollToSection(scrollViewRef, sectionRefs.current[4], false);
+    scrollToSection(scrollViewRef, sectionRefs.current[4], true);
   }, []);
 
   const [showScrollTopButton, setShowScrollTopButton] = useState(false);

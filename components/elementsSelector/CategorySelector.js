@@ -31,8 +31,8 @@ const CategorySelector = ({
           key={elementName}
           style={[styles.tab, selectedTab === elementName && styles.activeTab]}
           onPress={() => {
-            setSelectedTab(elementName);
             scrollToTopWithScrollViewRef();
+            setSelectedTab(elementName);
           }}
         >
           <Image
