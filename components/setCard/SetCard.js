@@ -105,12 +105,12 @@ const SetCard = ({
           isWithConfimation={true}
         />
       )}
-      <Pressable onPress={displaySetImages}>
-        <SetImagesContainer
-          setToShowClassIds={setToShowClassIds}
-          imageSize={40}
-        />
-      </Pressable>
+
+      <SetImagesContainer
+        setToShowClassIds={setToShowClassIds}
+        mode="icon"
+        displaySetImages={displaySetImages}
+      />
 
       {config.showStatSliderResult && (
         <StatSliderResultContainer
@@ -126,7 +126,7 @@ const SetCard = ({
         setIsModalVisible={setIsImagesModalVisible}
         ModalContentsList={[SetImagesContainer]}
         contentPropsList={[
-          { setToShowClassIds: setToShowClassIds, imageSize: 80 },
+          { setToShowClassIds: setToShowClassIds, mode: "image" },
         ]}
         closeButtonText="Close"
       />

@@ -1,10 +1,12 @@
 import React from "react";
-import { View, StyleSheet, Image, FlatList } from "react-native";
+import { View, StyleSheet, Image, FlatList, Pressable } from "react-native";
 import { category4Names, elementsAllInfosList } from "../../data/data";
 import { translate } from "../../i18n/translations";
 import TooltipWrapper from "../TooltipWrapper";
+import MyPopover from "../MyPopover";
+import { Portal, Provider } from "react-native-paper";
 
-const SetImagesContainer = ({ setToShowClassIds, imageSize }) => {
+const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
   const data = category4Names.map((category, index) => {
     return {
       category: translate(category),
@@ -13,6 +15,8 @@ const SetImagesContainer = ({ setToShowClassIds, imageSize }) => {
         .map((element) => ({ name: element.name, image: element.image })), // Extraire l'URI de l'image
     };
   });
+
+  const imageSize = mode === "icon" ? 40 : 80;
 
   const categoryWidth =
     Math.max(...data.map((item) => item.category.length)) * 7;
@@ -23,18 +27,33 @@ const SetImagesContainer = ({ setToShowClassIds, imageSize }) => {
     return (
       <View style={styles.row}>
         <View style={styles.imagesContainer}>
-          {item.elements.map(({ name, image }, index) => (
-            <TooltipWrapper key={index} tooltipText={name}>
-              <Image
-                source={image}
-                style={{
-                  width: imageSize,
-                  height: imageSize,
-                }}
-                resizeMode="contain" // Garde les proportions sans déformation
-              />
-            </TooltipWrapper>
-          ))}
+          {item.elements.map(({ name, image }, index) => {
+            return mode == "icon" ? (
+              <Pressable onPress={() => displaySetImages()}>
+                <Image
+                  source={image}
+                  style={{
+                    width: imageSize,
+                    height: imageSize,
+                  }}
+                  resizeMode="contain" // Garde les proportions sans déformation
+                />
+              </Pressable>
+            ) : (
+              <MyPopover popoverText="Saluuuuuuuuuuuuuut">
+                <View>
+                  <Image
+                    source={image}
+                    style={{
+                      width: imageSize,
+                      height: imageSize,
+                    }}
+                    resizeMode="contain" // Garde les proportions sans déformation
+                  />
+                </View>
+              </MyPopover>
+            );
+          })}
         </View>
       </View>
     );
@@ -54,7 +73,6 @@ export default SetImagesContainer;
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: "row",
     alignItems: "center",
     padding: 10,
   },
