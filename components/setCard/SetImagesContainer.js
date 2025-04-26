@@ -41,16 +41,14 @@ const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
               </Pressable>
             ) : (
               <MyPopover popoverText="Saluuuuuuuuuuuuuut">
-                <View>
-                  <Image
-                    source={image}
-                    style={{
-                      width: imageSize,
-                      height: imageSize,
-                    }}
-                    resizeMode="contain" // Garde les proportions sans déformation
-                  />
-                </View>
+                <Image
+                  source={image}
+                  style={{
+                    width: imageSize,
+                    height: imageSize,
+                  }}
+                  resizeMode="contain" // Garde les proportions sans déformation
+                />
               </MyPopover>
             );
           })}

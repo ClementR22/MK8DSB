@@ -28,25 +28,54 @@ const MyPopover = ({ children, popoverText }) => {
     }
   };
 
+  const windowDimensions = Dimensions.get("window");
+
   return (
     <Portal.Host>
-      <Pressable ref={touchableRef} onLongPress={() => openPopover()}>
+      <Pressable
+        ref={touchableRef}
+        onPress={() => {
+          console.log("onPResse");
+          openPopover();
+        }}
+        style={{
+          paddingBottom: 80,
+          backgroundColor: "green",
+        }}
+      >
         {children}
       </Pressable>
-      <Portal>
-        <Popover
-          isVisible={showPopover}
-          from={touchableRef}
-          mode="tooltip"
-          //placement="top"
-          popoverShift={{ x: -1, y: -1 }}
-          popoverStyle={{ zIndex: 20 }}
+
+      <Popover
+        isVisible={showPopover}
+        from={touchableRef}
+        mode="tooltip"
+        useReactNativeModal={true}
+        placement="right" // 👈 TRÈS important : pour apparaître à droite de l'image
+        //placement="top"
+        // popoverShift={{ x: -1, y: -1 }}
+        popoverStyle={{
+          position: "absolute",
+          top: 0, // Positionnement relatif à l'image
+          left: 0, // Ajuster si nécessaire
+          zIndex: 1000, // Toujours au-dessus
+        }}
+        displayArea={{
+          x: 0,
+          y: 0,
+          width: windowDimensions.width * 2, // DOUBLE largeur écran
+          height: windowDimensions.height,
+        }}
+        popoverStyle={{ zIndex: 9999 }}
+        //
+      >
+        <Text
+          style={{ backgroundColor: "red", height: 30 }}
+          popoverStyle={{ zIndex: 9999 }}
         >
-          <Text style={{ backgroundColor: "red", zIndex: 10 }}>
-            {popoverText}
-          </Text>
-        </Popover>
-      </Portal>
+          {popoverText}
+        </Text>
+      </Popover>
     </Portal.Host>
   );
 };
