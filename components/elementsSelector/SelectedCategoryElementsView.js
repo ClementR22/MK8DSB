@@ -121,10 +121,15 @@ const SelectedCategoryElementsView = React.memo(
     };
 
     if (orderNumber != 3) {
-      const selectedCategoryElementsSorted = useMemo(() => {
-        const selectedCategoryElements = getSelectedCategoryElements();
+      const selectedCategoryElements = getSelectedCategoryElements();
+
+      const memoizedSortedElements = useMemo(() => {
         return sortElements(selectedCategoryElements, orderNumber);
-      }, [selectedTab, orderNumber]); // Utiliser les dépendances appropriées
+      }, [orderNumber, selectedTab]);
+
+      const selectedCategoryElementsSorted = galeryCase
+        ? memoizedSortedElements
+        : sortElements(selectedCategoryElements, orderNumber);
 
       if (selectedTab != "body") {
         return <ElementsView elements={selectedCategoryElementsSorted} />;
