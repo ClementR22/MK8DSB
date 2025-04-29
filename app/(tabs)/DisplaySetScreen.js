@@ -5,8 +5,10 @@ import StatSliderResultContainer from "../../components/statSliderResult/StatSli
 import SetCardContainer from "../../components/setCard/SetCardContainer";
 
 import { useSetsList } from "../../utils/SetsListContext";
-import { useSavedSetModal } from "../../utils/SavedSetModalContext";
-import { searchSetStatsFromElementsIds } from "../../utils/searchSetStatsFromElementsIds";
+import {
+  SavedSetModalProvider,
+  useSavedSetModal,
+} from "../../utils/SavedSetModalContext";
 import { DisplaySetScreenProvider } from "../../utils/DisplaySetScreenContext";
 import DisplaySetScreenPressablesContainer from "../../components/DisplaySetScreenPressablesContainer";
 
@@ -17,12 +19,8 @@ const DisplaySetScreen = () => {
 
   const { setsListDisplayed } = useSetsList();
 
-  const { savedSetModalVisible } = useSavedSetModal();
-
   const setsToShowMultipleStatsLists = setsListDisplayed.map((setToShow) => {
-    const setToShowStatsList = searchSetStatsFromElementsIds(
-      setToShow.classIds
-    );
+    const setToShowStatsList = setToShow.stats;
     return setToShowStatsList;
   });
 
@@ -32,20 +30,22 @@ const DisplaySetScreen = () => {
         isDefaultSelectedImages={true}
         situation="display"
       >
-        <ScrollView scrollEnabled={!savedSetModalVisible}>
-          <DisplaySetScreenPressablesContainer />
+        <SavedSetModalProvider>
+          <ScrollView>
+            <DisplaySetScreenPressablesContainer />
 
-          <SetCardContainer
-            setsToShow={setsListDisplayed}
-            situation="display"
-          />
+            <SetCardContainer
+              setsToShow={setsListDisplayed}
+              situation="display"
+            />
 
-          <StatSliderResultContainer
-            setsToShowMultipleStatsLists={setsToShowMultipleStatsLists}
-            chosenStats={[null] * 12}
-            situation="display"
-          />
-        </ScrollView>
+            <StatSliderResultContainer
+              setsToShowMultipleStatsLists={setsToShowMultipleStatsLists}
+              chosenStats={[null] * 12}
+              situation="display"
+            />
+          </ScrollView>
+        </SavedSetModalProvider>
       </PressableImagesProvider>
     </DisplaySetScreenProvider>
   );

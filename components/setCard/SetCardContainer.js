@@ -1,13 +1,18 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { vh } from '../styles/theme';
-import { useTheme } from '../../utils/ThemeContext';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import SetCard from './SetCard';
-import { useCallback, useRef } from 'react';
-import { useSetsList } from '../../utils/SetsListContext';
+import { ScrollView, StyleSheet, View } from "react-native";
+import { vh } from "../styles/theme";
+import { useTheme } from "../../utils/ThemeContext";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import SetCard from "./SetCard";
+import { useCallback, useRef } from "react";
+import { useSetsList } from "../../utils/SetsListContext";
 
-const SetCardContainer = ({setsToShow, chosenStats = null, situation}) => {
-  const {setsListDisplayed, setSetCardActiveIndex} = useSetsList();
+const SetCardContainer = ({
+  setsToShow,
+  chosenStats = null,
+  situation,
+  screenSituation,
+}) => {
+  const { setsListDisplayed, setSetCardActiveIndex } = useSetsList();
 
   const handlePresentModalPress = useCallback(
     (setCardSelectedIndex) => {
@@ -22,18 +27,18 @@ const SetCardContainer = ({setsToShow, chosenStats = null, situation}) => {
   const bottomSheetModalRef = useRef(null);
 
   return (
-    <View key="cardsContainer" style={{backgroundColor: 'blue', padding: 20}}>
+    <View key="cardsContainer" style={{ backgroundColor: "blue", padding: 20 }}>
       <ScrollView
         contentContainerStyle={[
           styles.setCardContainer,
-          {backgroundColor: th.surface_container_high},
+          { backgroundColor: th.surface_container_high },
           setsToShow.length == 0
             ? {
-              flex: 1,
-              paddingBottom: 0.282 * vh,
-              justifyContent: 'center'
-            }
-            : {}
+                flex: 1,
+                paddingBottom: 0.282 * vh,
+                justifyContent: "center",
+              }
+            : {},
         ]}
         horizontal={true}
       >
@@ -45,16 +50,17 @@ const SetCardContainer = ({setsToShow, chosenStats = null, situation}) => {
           />
         ) : null}
 
-        {setsToShow.map(({name, classIds, stats}, index) => {
+        {setsToShow.map(({ name, classIds, stats }, index) => {
           return (
             <SetCard
-              key={'card' + index}
+              key={"card" + index}
               setToShowName={name}
               setToShowClassIds={classIds}
               setToShowStats={stats}
               chosenStats={chosenStats}
               setCardIndex={index}
               situation={situation}
+              screenSituation={screenSituation}
             />
           );
         })}
@@ -81,9 +87,9 @@ const styles = StyleSheet.create({
   setCardContainer: {
     margin: 16,
     padding: 20,
-    alignItems: 'stretch',
+    alignItems: "stretch",
     //backgroundColor: th.surface_container_high,
     borderRadius: 24,
-    columnGap: 16
-  }
+    columnGap: 16,
+  },
 });

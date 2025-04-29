@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { bodyTypeNames, elementsAllInfosList } from "../data/data";
 import { translate } from "../i18n/translations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -12,12 +18,6 @@ const SetsListContext = createContext();
 
 // Fournisseur du contexte
 export const SetsListProvider = ({ children }) => {
-  const setDefault = {
-    name: null,
-    classIds: [9, 16, 30, 39],
-    stats: [4, 3.75, 4.25, 4.5, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 4],
-  };
-
   const [chosenStats, setChosenStats] = useState(
     statNames.map((statName, index) => {
       return {
@@ -38,6 +38,12 @@ export const SetsListProvider = ({ children }) => {
     })
   );
 
+  const setDefault = {
+    name: "Set 0",
+    classIds: [9, 16, 30, 39],
+    stats: [4, 3.75, 4.25, 4.5, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 4],
+  };
+
   const [setsListDisplayed, setSetsListDisplayed] = useState([
     { ...setDefault },
   ]);
@@ -46,46 +52,73 @@ export const SetsListProvider = ({ children }) => {
 
   const [setsListFound, setSetsListFound] = useState([]);
 
-  const getSetsSaved = async (onlyNames = false) => {
+  const [setCardActiveIndex, setSetCardActiveIndex] = useState(0); // Stocke l'ID de la `SetCardChosen` active
+
+  const [setsSavedKeys, setSetsSavedKeys] = useState([]);
+
+  const sortKeys = (keys) => {
+    const sortedKeys = keys.sort((a, b) => a.localeCompare(b));
+    return sortedKeys;
+  };
+
+  const getSetsSavedKeys = async () => {
     try {
-      const names = await AsyncStorage.getAllKeys();
-      if (onlyNames) {
-        return names;
-      } else {
-        const keyValuePairs = (await AsyncStorage.multiGet(names)).map(
-          (keyValuePair) => {
-            const setSaved = JSON.parse(keyValuePair[1]);
-            return setSaved;
-          }
-        );
-        return keyValuePairs;
-      }
+      const keys = await AsyncStorage.getAllKeys();
+      const sortedKeys = sortKeys(keys);
+      return sortedKeys;
     } catch (error) {
       console.error("Erreur lors de la récupération des données :", error);
       return [];
     }
   };
 
-  useEffect(() => {
-    const fetchSavedSets = async () => {
-      const savedSets = await getSetsSaved();
-      setSetsListSaved(savedSets);
-    };
+  const getSetsSavedValues = async (setsSavedKeys) => {
+    try {
+      const setsSavedKeysAndValues = await AsyncStorage.multiGet(setsSavedKeys);
+      const setsSavedValues = setsSavedKeysAndValues.map(([key, value]) =>
+        JSON.parse(value)
+      );
+      return setsSavedValues;
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données :", error);
+      return [];
+    }
+  };
 
+  const updateSetsSavedKeys = async () => {
+    const newSetsSavedKeys = await getSetsSavedKeys();
+    setSetsSavedKeys(newSetsSavedKeys);
+    return newSetsSavedKeys;
+  };
+
+  // Au démarrage, charger les Savedsets depuis la mémoire
+  const fetchSavedSets = async () => {
+    const newSetsSavedKeys = await updateSetsSavedKeys();
+    const savedSets = await getSetsSavedValues(newSetsSavedKeys);
+    setSetsListSaved(savedSets);
+  };
+
+  useEffect(() => {
     fetchSavedSets();
   }, []);
 
-  const [setCardActiveIndex, setSetCardActiveIndex] = useState(0); // Stocke l'ID de la `SetCardChosen` active
+  const addSet = () => {
+    const setsListDisplayedNames = setsListDisplayed.map((set) => set.name);
 
-  const addSet = (newSet = setDefault) => {
+    let newSetNumber = 0;
+    while (setsListDisplayedNames.includes(`Set ${newSetNumber}`)) {
+      newSetNumber += 1;
+    }
+    const newSet = { ...setDefault, name: `Set ${newSetNumber}` };
+
     setSetsListDisplayed((prev) => [...prev, newSet]);
   };
 
   const removeSet = (setCardSelectedIndex, situation) => {
     const setsListConcerned =
-      situation == "display" ? setsListDisplayed : setsListSaved;
+      situation === "display" ? setsListDisplayed : setsListSaved;
     const setListUpdater =
-      situation == "display" ? setSetsListDisplayed : setSetsListSaved;
+      situation === "display" ? setSetsListDisplayed : setSetsListSaved;
 
     if (situation == "display" && setsListConcerned.length === 1) {
       showToast("Erreur", "Vous devez garder au moins 1 set");
@@ -93,6 +126,10 @@ export const SetsListProvider = ({ children }) => {
       setListUpdater((prev) =>
         prev.filter((set, index) => index !== setCardSelectedIndex)
       );
+
+      if (situation === "save") {
+        removeSetInMemory(setCardSelectedIndex);
+      }
 
       if (setCardSelectedIndex < setCardActiveIndex) {
         setSetCardActiveIndex(setCardActiveIndex - 1);
@@ -102,12 +139,20 @@ export const SetsListProvider = ({ children }) => {
     }
   };
 
+  const removeSetInMemory = async (setCardSelectedIndex) => {
+    const keyToRemove = setsSavedKeys[setCardSelectedIndex];
+
+    await AsyncStorage.removeItem(keyToRemove);
+
+    setSetsSavedKeys((prevKeys) =>
+      prevKeys.filter((key) => key !== keyToRemove)
+    );
+  };
+
   const loadSetSaveToSearch = (setCardSelectedIndex) => {
     const setCardSelected = setsListSaved[setCardSelectedIndex];
-    const setCardSelectedClassIds = setCardSelected.classIds;
-    const setCardSelectedStatList = searchSetStatsFromElementsIds(
-      setCardSelectedClassIds
-    );
+    const setCardSelectedStatList = setCardSelected.stats;
+
     setChosenStats((prev) =>
       prev.map((chosenStat, index) => {
         chosenStat.value = setCardSelectedStatList[index];
@@ -119,17 +164,8 @@ export const SetsListProvider = ({ children }) => {
 
   const loadSetSaveToDisplay = (setCardSelectedIndex) => {
     const setCardSelected = setsListSaved[setCardSelectedIndex];
-    const setCardSelectedName = setCardSelected.name;
-    const setsDisplayedNames = setsListDisplayed.map((set) => set.name);
-    if (
-      setCardSelectedName == null ||
-      setsDisplayedNames.includes(setCardSelectedName)
-    ) {
-      showToast("Erreur", "Changer le nom du set SVP");
-    } else {
-      addSet(setCardSelected);
-      showToast("Succès", "Le set a été chargé");
-    }
+    addSet(setCardSelected);
+    showToast("Succès", "Le set a été chargé");
   };
 
   const loadSetSearchToDisplay = (setCardSelectedIndex) => {
@@ -138,23 +174,10 @@ export const SetsListProvider = ({ children }) => {
     showToast("Succès", "Le set a été ajouté à l'écran de comparaison");
   };
 
-  const saveSet = async (setCardSelectedName, setCardSelected) => {
-    const setsSavedNames = await getSetsSaved(true);
-
-    if (
-      !setCardSelectedName?.trim() ||
-      setsSavedNames.includes(setCardSelectedName)
-    ) {
-      showToast("Erreur", "Changer le nom du set SVP");
-      return false;
-    }
-
+  const saveSet = async (setCardSelected) => {
     try {
-      await AsyncStorage.setItem(
-        setCardSelectedName,
-        JSON.stringify(setCardSelected)
-      );
       setSetsListSaved((prev) => [...prev, setCardSelected]);
+      saveSetInMemory(setCardSelected);
 
       showToast("Succès", "Le set est enregistré");
       return true;
@@ -164,18 +187,24 @@ export const SetsListProvider = ({ children }) => {
     }
   };
 
+  const saveSetInMemory = async (set) => {
+    let key = 0;
+    while (setsSavedKeys.includes(String(key))) {
+      key += 1;
+    }
+
+    setSetsSavedKeys((prev) => [...prev, key]);
+    setItemInMemory(key, set);
+  };
+
   const saveSetFromDisplay = async (setCardSelectedIndex) => {
     const setCardSelected = setsListDisplayed[setCardSelectedIndex];
-    const setCardSelectedName = setCardSelected.name;
-
-    await saveSet(setCardSelectedName, setCardSelected);
+    await saveSet(setCardSelected);
   };
 
   const saveSetFromFound = async (setCardSelectedIndex) => {
     const setCardSelected = setsListFound[setCardSelectedIndex];
-    const setCardSelectedName = setCardSelected.name;
-
-    await saveSet(setCardSelectedName, setCardSelected);
+    await saveSet(setCardSelected);
   };
 
   const renameSet = (newName, situation, setCardIndex) => {
@@ -187,26 +216,45 @@ export const SetsListProvider = ({ children }) => {
         : setSetsListSaved;
     setsListConcerned((prev) =>
       prev.map((set, index) => {
-        return index === setCardIndex ? { ...set, name: newName } : set;
+        if (index === setCardIndex) {
+          const setWithNewName = { ...set, name: newName };
+
+          if (situation == "save" || situation == "load") {
+            setItemInMemory(setCardIndex, setWithNewName);
+          }
+
+          return setWithNewName;
+        } else {
+          return set;
+        }
       })
     );
   };
 
-  const updateSetsList = (pressedClassIds, situation) => {
+  const updateSetsList = async (pressedClassIds, situation) => {
     const pressedClassIdsList = Object.values(pressedClassIds);
-    const setsListConcerned =
+    const setSetsListConcerned =
       situation === "display" ? setSetsListDisplayed : setSetsListSaved;
+    setSetsListConcerned((prev) => {
+      const updatedSets = prev.map((set, index) => {
+        if (index === setCardActiveIndex) {
+          const newSet = {
+            ...set,
+            classIds: pressedClassIdsList,
+            stats: searchSetStatsFromElementsIds(pressedClassIdsList),
+          };
+          if (situation === "save") {
+            const key = setsSavedKeys[index];
+            setItemInMemory(key, newSet);
+          }
+          return newSet;
+        } else {
+          return set;
+        }
+      });
 
-    setsListConcerned((prev) => {
-      return prev.map((set, index) =>
-        index === setCardActiveIndex
-          ? {
-              ...set,
-              classIds: pressedClassIdsList,
-              stats: searchSetStatsFromElementsIds(pressedClassIdsList),
-            }
-          : set
-      );
+      // Une fois que tout est prêt, tu mets à jour
+      return updatedSets;
     });
   };
 
@@ -218,15 +266,9 @@ export const SetsListProvider = ({ children }) => {
     setSetsListFound(setsFoundWithName);
   };
 
-  const updateMemory = async () => {
+  const setItemInMemory = async (key, set) => {
     try {
-      await AsyncStorage.clear();
-
-      const savePromises = setsListSaved.map((setSaved) =>
-        AsyncStorage.setItem(setSaved.name, JSON.stringify(setSaved))
-      );
-
-      await Promise.all(savePromises); // Attendre que tous les `setItem` soient complétés
+      await AsyncStorage.setItem(key, JSON.stringify(set));
     } catch (err) {
       alert(err);
     }
@@ -252,7 +294,6 @@ export const SetsListProvider = ({ children }) => {
         updateSetsList,
         setCardActiveIndex,
         setSetCardActiveIndex,
-        updateMemory,
       }}
     >
       {children}

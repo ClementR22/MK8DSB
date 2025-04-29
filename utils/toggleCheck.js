@@ -3,9 +3,7 @@ import showToast from "./toast";
 
 const updateChecks = (prev, name) => {
   const updatedChecks = prev.map((item) =>
-    item.name === name
-      ? { ...item, value: item.checked ? null : 0, checked: !item.checked }
-      : item
+    item.name === name ? { ...item, checked: !item.checked } : item
   );
   return updatedChecks;
 };
@@ -23,7 +21,6 @@ export const toggleCheckChosenStats = (
 ) => {
   setChosenStats((prev) => {
     const newList = updateChecks(prev, name);
-
     // Vérifiez s'il reste au moins un checked
     const hasChecked = newList.some((item) => item.checked);
 

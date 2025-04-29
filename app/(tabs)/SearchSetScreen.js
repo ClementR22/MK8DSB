@@ -9,8 +9,10 @@ import { shadow_3dp, vw } from "../../components/styles/theme";
 import { useTheme } from "../../utils/ThemeContext";
 import { translate } from "../../i18n/translations";
 import SetCardContainer from "../../components/setCard/SetCardContainer";
-import SavedSetModal from "../../components/modal/SavedSetModal";
-import { useSavedSetModal } from "../../utils/SavedSetModalContext";
+import {
+  SavedSetModalProvider,
+  useSavedSetModal,
+} from "../../utils/SavedSetModalContext";
 import { useSetsList } from "../../utils/SetsListContext";
 import SearchSetScreenPressablesContainer from "../../components/SearchSetScreenPressablesContainer";
 import { SearchSetScreenProvider } from "../../utils/SearchSetScreenContext";
@@ -26,8 +28,6 @@ const SearchSetScreen = () => {
 
   const [setsToShow, setSetsToShow] = useState([]);
 
-  const { savedSetModalVisible, toggleSavedSetModal } = useSavedSetModal();
-
   // Mettre à jour la valeur du slider
   const updateSliderValue = (name, newValue) => {
     setChosenStats(
@@ -40,63 +40,67 @@ const SearchSetScreen = () => {
   return (
     <SearchSetScreenProvider>
       <PressableImagesProvider situation="search">
-        <ScrollView scrollEnabled={!savedSetModalVisible}>
-          <View style={[styles.container, { backgroundColor: th.surface }]}>
-            <View
-              style={[
-                styles.statSlidersContainer,
-                { backgroundColor: th.surface_container_high },
-              ]}
-            >
-              <Text
+        <SavedSetModalProvider>
+          <ScrollView>
+            <View style={[styles.container, { backgroundColor: th.surface }]}>
+              <View
                 style={[
-                  styles.text,
-                  {
-                    paddingHorizontal: 10,
-                    borderRadius: 5,
-                    marginBottom: 16,
-                    color: th.on_surface,
-                  },
+                  styles.statSlidersContainer,
+                  { backgroundColor: th.surface_container_high },
                 ]}
               >
-                {translate("SearchedStats")}
-              </Text>
+                <Text
+                  style={[
+                    styles.text,
+                    {
+                      paddingHorizontal: 10,
+                      borderRadius: 5,
+                      marginBottom: 16,
+                      color: th.on_surface,
+                    },
+                  ]}
+                >
+                  {translate("SearchedStats")}
+                </Text>
 
-              <ButtonLoad text={translate("LoadStatsOfASet")} />
+                <ButtonLoad
+                  text={translate("LoadStatsOfASet")}
+                  screenSituation="search"
+                />
 
-              {/* Afficher le slider uniquement si la case est cochée */}
-              {chosenStats.map(
-                (stat) =>
-                  stat.checked && (
-                    <StatSlider
-                      key={stat.name}
-                      name={stat.name}
-                      sliderValue={stat.value}
-                      setSliderValue={(newValue) =>
-                        updateSliderValue(stat.name, newValue)
-                      }
-                      statFilterNumber={stat.statFilterNumber}
-                      setStatFilterNumber={stat.setStatFilterNumber}
-                    />
-                  )
-              )}
+                {/* Afficher le slider uniquement si la case est cochée */}
+                {chosenStats.map((stat) => {
+                  return (
+                    stat.checked && (
+                      <StatSlider
+                        key={stat.name}
+                        name={stat.name}
+                        sliderValue={stat.value}
+                        setSliderValue={(newValue) =>
+                          updateSliderValue(stat.name, newValue)
+                        }
+                        statFilterNumber={stat.statFilterNumber}
+                        setStatFilterNumber={stat.setStatFilterNumber}
+                      />
+                    )
+                  );
+                })}
+              </View>
+
+              <SearchSetScreenPressablesContainer
+                chosenStats={chosenStats}
+                setChosenStats={setChosenStats}
+                setSetsToShow={setSetsToShow}
+              />
             </View>
 
-            <SearchSetScreenPressablesContainer
+            <SetCardContainer
+              setsToShow={setsToShow}
               chosenStats={chosenStats}
-              setChosenStats={setChosenStats}
-              setSetsToShow={setSetsToShow}
+              situation="search"
             />
-          </View>
-
-          <SavedSetModal />
-
-          <SetCardContainer
-            setsToShow={setsToShow}
-            chosenStats={chosenStats}
-            situation="search"
-          />
-        </ScrollView>
+          </ScrollView>
+        </SavedSetModalProvider>
       </PressableImagesProvider>
     </SearchSetScreenProvider>
   );

@@ -5,7 +5,7 @@ import SetCardContainer from "../setCard/SetCardContainer";
 import { useSetsList } from "../../utils/SetsListContext";
 import { translate } from "../../i18n/translations";
 
-const SavedSetModal = ({}) => {
+const LoadSetModal = ({ screenSituation }) => {
   const { setsListSaved } = useSetsList();
   const { savedSetModalVisible, toggleSavedSetModal } = useSavedSetModal();
 
@@ -23,10 +23,11 @@ const SavedSetModal = ({}) => {
         {
           setsToShow: savedSets,
           situation: "load",
+          screenSituation: screenSituation,
         },
       ]}
     />
   );
 };
 
-export default SavedSetModal;
+export default LoadSetModal;

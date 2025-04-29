@@ -61,7 +61,7 @@ const SetCard = ({
       showEdit: false,
       showRemove: false,
       showSave: true,
-      showImport: false,
+      showLoadToSearch: false,
       showLoadToDisplay: true,
     },
     display: {
@@ -70,7 +70,7 @@ const SetCard = ({
       showEdit: true,
       showRemove: true,
       showSave: true,
-      showImport: false,
+      showLoadToSearch: false,
       showLoadToDisplay: false,
     },
     save: {
@@ -79,7 +79,7 @@ const SetCard = ({
       showEdit: true,
       showRemove: true,
       showSave: false,
-      showImport: false,
+      showLoadToSearch: false,
       showLoadToDisplay: true,
     },
     load: {
@@ -88,7 +88,7 @@ const SetCard = ({
       showEdit: false,
       showRemove: true,
       showSave: false,
-      showImport: true,
+      showLoadToSearch: true,
       showLoadToDisplay: false,
     },
   };
@@ -202,10 +202,10 @@ const SetCard = ({
           </TooltipWrapper>
         )}
 
-        {config.showImport && (
+        {config.showLoadToSearch && (
           <TooltipWrapper
             tooltipText={
-              situation == "search"
+              screenSituation == "search"
                 ? translate("LoadTheStats")
                 : translate("LoadTheSet")
             }
@@ -213,12 +213,12 @@ const SetCard = ({
             <Pressable
               style={[button_icon(th).container, shadow_3dp]}
               onPress={() =>
-                situation == "search"
+                screenSituation == "search"
                   ? loadSetSaveToSearch(setCardIndex)
                   : loadSetSaveToDisplay(setCardIndex)
               }
             >
-              <Text>Import</Text>
+              <Text>{screenSituation == "display" ? "Load" : null}</Text>
             </Pressable>
           </TooltipWrapper>
         )}
