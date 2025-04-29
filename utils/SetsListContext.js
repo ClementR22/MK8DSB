@@ -57,7 +57,7 @@ export const SetsListProvider = ({ children }) => {
   const [setsSavedKeys, setSetsSavedKeys] = useState([]);
 
   const sortKeys = (keys) => {
-    const sortedKeys = keys.sort((a, b) => a.localeCompare(b));
+    const sortedKeys = keys.sort((a, b) => b.localeCompare(a));
     return sortedKeys;
   };
 
@@ -274,6 +274,35 @@ export const SetsListProvider = ({ children }) => {
     }
   };
 
+  const sortSetsSavedKeys = () => {
+    setSetsSavedKeys((prevKeys) => {
+      const keyToName = {};
+      prevKeys.forEach((key, i) => {
+        keyToName[key] = setsListSaved[i].name;
+      });
+
+      const keysSorted = [...prevKeys].sort((a, b) => {
+        return keyToName[a].localeCompare(keyToName[b]);
+      });
+
+      const setsListSavedSorted = keysSorted.map((key) => {
+        const index = prevKeys.indexOf(key);
+        return setsListSaved[index];
+      });
+      setSetsListSaved(setsListSavedSorted);
+
+      sortSetsInMemory(keysSorted);
+      return keysSorted;
+    });
+  };
+
+  const sortSetsInMemory = (setsSavedKeysSorted) => {
+    setsSavedKeysSorted.forEach((key, index) => {
+      const set = setsListSaved[index];
+      setItemInMemory(key, set);
+    });
+  };
+
   return (
     <SetsListContext.Provider
       value={{
@@ -294,6 +323,7 @@ export const SetsListProvider = ({ children }) => {
         updateSetsList,
         setCardActiveIndex,
         setSetCardActiveIndex,
+        sortSetsSavedKeys,
       }}
     >
       {children}

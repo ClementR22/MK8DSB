@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text } from "react-native";
 import { vw } from "../../components/styles/theme";
 import SetCardContainer from "../../components/setCard/SetCardContainer";
 import { useSetsList } from "../../utils/SetsListContext";
