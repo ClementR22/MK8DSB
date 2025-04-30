@@ -7,14 +7,14 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import TooltipWrapper from "./TooltipWrapper3";
 import LoadSetModal from "./modal/LoadSetModal";
 
-const ButtonLoad = ({ text, screenSituation }) => {
+const ButtonLoad = ({ tooltip_text, screenSituation }) => {
   const th = useTheme();
 
   const { toggleSavedSetModal } = useSavedSetModal();
 
   return (
     <TooltipWrapper
-      tooltipText={text}
+      tooltipText={tooltip_text}
       style={[button_icon(th).container, shadow_3dp]}
       onPress={() => {
         toggleSavedSetModal(true);

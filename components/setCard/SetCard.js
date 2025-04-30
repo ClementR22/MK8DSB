@@ -1,35 +1,30 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import { elementsAllInfosList } from "../../data/data";
-import { card } from "../styles/card";
-import { useTheme } from "../../utils/ThemeContext";
-import MyModal from "../modal/MyModal";
-import SetImagesContainer from "./SetImagesContainer";
-import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
-import { button_icon } from "../styles/button";
-import { shadow_3dp } from "../styles/theme";
-import {
-  FontAwesome,
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
-import { translate } from "../../i18n/translations";
-import ElementsSelector from "../elementsSelector/ElementsSelector";
-import { usePressableImages } from "../../utils/PressableImagesContext";
-import { useSetsList } from "../../utils/SetsListContext";
-import MyTextInput from "../MyTextInput";
-import TooltipWrapper from "../TooltipWrapper3";
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { card } from '../styles/card';
+import { useTheme } from '../../utils/ThemeContext';
+import MyModal from '../modal/MyModal';
+import SetImagesContainer from './SetImagesContainer';
+import StatSliderResultContainer from '../statSliderResult/StatSliderResultContainer';
+import { button_icon } from '../styles/button';
+import { shadow_3dp } from '../styles/theme';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { translate } from '../../i18n/translations';
+import ElementsSelector from '../elementsSelector/ElementsSelector';
+import { usePressableImages } from '../../utils/PressableImagesContext';
+import { useSetsList } from '../../utils/SetsListContext';
+import MyTextInput from '../MyTextInput';
+import TooltipWrapper from '../TooltipWrapper3';
+import Container from '../Container';
 
 const SetCard = ({
-  setToShowName = null,
-  setToShowClassIds,
-  setToShowStats = null,
-  chosenStats,
-  setCardIndex = null,
-  situation,
-  screenSituation = null,
-}) => {
+                   setToShowName = null,
+                   setToShowClassIds,
+                   setToShowStats = null,
+                   chosenStats,
+                   setCardIndex = null,
+                   situation,
+                   screenSituation = null
+                 }) => {
   const th = useTheme();
 
   const {
@@ -39,10 +34,10 @@ const SetCard = ({
     loadSetSaveToDisplay,
     loadSetSearchToDisplay,
     removeSet,
-    setSetCardActiveIndex,
+    setSetCardActiveIndex
   } = useSetsList();
 
-  const { updatePressableImagesList } = usePressableImages();
+  const {updatePressableImagesList} = usePressableImages();
 
   const [isImagesModalVisible, setIsImagesModalVisible] = useState(false);
   const [isElementsSelectorModalVisible, setIsElementsSelectorModalVisible] =
@@ -62,7 +57,7 @@ const SetCard = ({
       showRemove: false,
       showSave: true,
       showLoadToSearch: false,
-      showLoadToDisplay: true,
+      showLoadToDisplay: true
     },
     display: {
       showTextInput: true,
@@ -71,7 +66,7 @@ const SetCard = ({
       showRemove: true,
       showSave: true,
       showLoadToSearch: false,
-      showLoadToDisplay: false,
+      showLoadToDisplay: false
     },
     save: {
       showTextInput: true,
@@ -80,7 +75,7 @@ const SetCard = ({
       showRemove: true,
       showSave: false,
       showLoadToSearch: false,
-      showLoadToDisplay: true,
+      showLoadToDisplay: true
     },
     load: {
       showTextInput: true,
@@ -88,15 +83,15 @@ const SetCard = ({
       showEdit: false,
       showRemove: true,
       showSave: false,
-      showLoadToSearch: screenSituation === "search",
-      showLoadToDisplay: screenSituation === "display",
-    },
+      showLoadToSearch: screenSituation === 'search',
+      showLoadToDisplay: screenSituation === 'display'
+    }
   };
 
   const config = situationConfig[situation] ?? {};
 
   return (
-    <View style={[card(th).container, { flex: 1 }]}>
+    <View style={[card(th).container, {flex: 1}]}>
       {config.showTextInput && (
         <MyTextInput
           setToShowName={setToShowName}
@@ -121,28 +116,28 @@ const SetCard = ({
       )}
 
       <MyModal
-        modalTitle={""}
+        modalTitle={''}
         isModalVisible={isImagesModalVisible}
         setIsModalVisible={setIsImagesModalVisible}
         ModalContentsList={[SetImagesContainer]}
         contentPropsList={[
-          { setToShowClassIds: setToShowClassIds, mode: "image" },
+          {setToShowClassIds: setToShowClassIds, mode: 'image'}
         ]}
         closeButtonText="Close"
       />
       <MyModal
-        modalTitle={translate("Selectionner")}
+        modalTitle={translate('Selectionner')}
         isModalVisible={isElementsSelectorModalVisible}
         setIsModalVisible={setIsElementsSelectorModalVisible}
         ModalContentsList={[ElementsSelector]}
         contentPropsList={[
           {
-            situation: situation,
-          },
+            situation: situation
+          }
         ]}
       />
       <MyModal
-        modalTitle={translate("NameTheSet")}
+        modalTitle={translate('NameTheSet')}
         isModalVisible={isTextInputModalVisible}
         setIsModalVisible={setIsTextInputModalVisible}
         ModalContentsList={[MyTextInput]}
@@ -150,18 +145,21 @@ const SetCard = ({
           {
             setToShowName: setToShowName,
             setCardIndex: setCardIndex,
-            situation: situation,
-          },
+            situation: situation
+          }
         ]}
-        closeButtonText={translate("Confirm")}
+        closeButtonText={translate('Confirm')}
         checkBeforeClose={async () => {
           return await saveSetFromFound(setCardIndex);
         }}
       />
-      <View key="pressables container">
+      <Container
+        theme={th}
+        flexDirection={'row'}
+        key="displaySetActionButtonContainer">
         {config.showEdit && (
           <TooltipWrapper
-            tooltipText={translate("Edit")}
+            tooltipText={translate('Edit')}
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => {
               setSetCardActiveIndex(setCardIndex);
@@ -169,49 +167,49 @@ const SetCard = ({
               updatePressableImagesList(setToShowClassIds);
             }}
           >
-            <MaterialIcons name="edit" size={24} color={th.on_primary} />
+            <MaterialIcons name="edit" size={24} color={th.on_primary}/>
           </TooltipWrapper>
         )}
 
         {config.showRemove && (
           <TooltipWrapper
-            tooltipText={translate("Remove")}
+            tooltipText={translate('Remove')}
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => {
               removeSet(setCardIndex, situation);
             }}
           >
-            <Ionicons name="close" size={24} color={th.on_primary} />
+            <Ionicons name="close" size={24} color={th.on_primary}/>
           </TooltipWrapper>
         )}
 
         {config.showSave && (
           <TooltipWrapper
-            tooltipText={translate("Save")}
+            tooltipText={translate('Save')}
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() =>
-              situation == "search"
+              situation == 'search'
                 ? setIsTextInputModalVisible(true)
                 : saveSetFromDisplay(setCardIndex)
             }
           >
-            <MaterialIcons name="save" size={24} color={th.on_primary} />
+            <MaterialIcons name="save" size={24} color={th.on_primary}/>
           </TooltipWrapper>
         )}
 
         {config.showLoadToSearch && (
           <TooltipWrapper
-            tooltipText={translate("LoadTheStats")}
+            tooltipText={translate('LoadTheStats')}
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => loadSetSaveToSearch(setCardIndex)}
           >
-            <Text>{"LoadTheStats"}</Text>
+            <Text>{'LoadTheStats'}</Text>
           </TooltipWrapper>
         )}
 
         {config.showLoadToDisplay && (
           <TooltipWrapper
-            tooltipText={translate("LoadToDisplayScreen")}
+            tooltipText={translate('LoadToDisplayScreen')}
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => loadSetSaveToDisplay(setCardIndex)}
           >
@@ -222,7 +220,7 @@ const SetCard = ({
             />
           </TooltipWrapper>
         )}
-      </View>
+      </Container>
     </View>
   );
 };
@@ -232,35 +230,35 @@ export default SetCard;
 const styles = StyleSheet.create({
   text: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 3,
-    width: 300,
+    width: 300
   },
   closePressable: {
     padding: 10,
-    backgroundColor: "#007BFF",
+    backgroundColor: '#007BFF',
     borderRadius: 5,
-    marginTop: 20,
+    marginTop: 20
   },
   textLeft: {
     //color: th.on_surface,
     fontSize: 20,
     marginLeft: 6,
     flexShrink: 1, // Permet de réduire la largeur du texte si nécessaire
-    maxWidth: "70%", // Largeur maximale pour le texte de gauche
-    overflow: "hidden", // Cache l'excédent du texte
-    marginRight: 30,
+    maxWidth: '70%', // Largeur maximale pour le texte de gauche
+    overflow: 'hidden', // Cache l'excédent du texte
+    marginRight: 30
   },
   category: {
-    textAlign: "left", // Aligner à gauche
-    marginRight: 16, // Un petit espacement entre la colonne 1 et la colonne 2
+    textAlign: 'left', // Aligner à gauche
+    marginRight: 16 // Un petit espacement entre la colonne 1 et la colonne 2
   },
   image: {
     width: 50,
     height: 50,
-    margin: 5,
+    margin: 5
   },
   textInput: {
-    backgroundColor: "grey",
-  },
+    backgroundColor: 'grey'
+  }
 });

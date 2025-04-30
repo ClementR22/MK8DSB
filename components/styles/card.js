@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import th from "./theme";
 
 export const card = (th) =>
   StyleSheet.create({
