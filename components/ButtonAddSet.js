@@ -4,7 +4,7 @@ import { useTheme } from "../utils/ThemeContext";
 import { shadow_3dp } from "./styles/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSetsList } from "../utils/SetsListContext";
-import TooltipWrapper from "./TooltipWrapper3";
+import TooltipWrapper from "./TooltipWrapper";
 
 const ButtonAddSet = () => {
   const th = useTheme();

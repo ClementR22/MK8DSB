@@ -2,8 +2,7 @@ import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { category4Names, elementsAllInfosList } from "../../data/data";
 import { translate } from "../../i18n/translations";
-import TooltipWrapper from "../TooltipWrapper3";
-import MyPopover from "../MyPopover";
+import TooltipWrapper from "../TooltipWrapper";
 
 const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
   const data = category4Names.map((category, index) => {
@@ -22,29 +21,19 @@ const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
       {data.map((item) => (
         <View key={item.category} style={styles.row}>
           <View style={styles.imagesContainer}>
-            {item.elements.map(({ name, image }, index) =>
-              mode === "icon" ? (
-                <TooltipWrapper
-                  key={index}
-                  tooltipText={name}
-                  onPress={() => displaySetImages()}
-                >
-                  <Image
-                    source={image}
-                    style={{ width: imageSize, height: imageSize }}
-                    resizeMode="contain"
-                  />
-                </TooltipWrapper>
-              ) : (
-                <MyPopover key={index} popoverText="Saluuuuuuuuuuuuuut">
-                  <Image
-                    source={image}
-                    style={{ width: imageSize, height: imageSize }}
-                    resizeMode="contain"
-                  />
-                </MyPopover>
-              )
-            )}
+            {item.elements.map(({ name, image }, index) => (
+              <TooltipWrapper
+                key={index}
+                tooltipText={name}
+                onPress={mode === "icon" ? () => displaySetImages() : undefined}
+              >
+                <Image
+                  source={image}
+                  style={{ width: imageSize, height: imageSize }}
+                  resizeMode="contain"
+                />
+              </TooltipWrapper>
+            ))}
           </View>
         </View>
       ))}

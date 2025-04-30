@@ -13,7 +13,7 @@ import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "../../utils/PressableImagesContext";
 import { useSetsList } from "../../utils/SetsListContext";
 import MyTextInput from "../MyTextInput";
-import TooltipWrapper from "../TooltipWrapper3";
+import TooltipWrapper from "../TooltipWrapper";
 import Container from "../Container";
 
 const SetCard = ({

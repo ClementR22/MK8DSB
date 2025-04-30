@@ -9,7 +9,7 @@ import { translate } from "../../i18n/translations";
 import { useState } from "react";
 import StatSelector from "../StatSelector";
 import { toggleCheckList } from "../../utils/toggleCheck";
-import TooltipWrapper from "../TooltipWrapper3";
+import TooltipWrapper from "../TooltipWrapper";
 
 const StatSliderResultSelectorPressable = ({
   isStatsVisible,

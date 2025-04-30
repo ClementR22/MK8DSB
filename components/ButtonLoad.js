@@ -5,7 +5,7 @@ import { useTheme } from "../utils/ThemeContext";
 import { shadow_3dp } from "./styles/theme";
 import { useSavedSetModal } from "../utils/SavedSetModalContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import TooltipWrapper from "./TooltipWrapper3";
+import TooltipWrapper from "./TooltipWrapper";
 import LoadSetModal from "./modal/LoadSetModal";
 
 const ButtonLoad = ({ tooltip_text, screenSituation }) => {

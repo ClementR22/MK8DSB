@@ -18,7 +18,7 @@ import ElementsDeselector from "./elementsSelector/ElementsDeselector";
 import ElementsSelector from "./elementsSelector/ElementsSelector";
 import ResultsNumber from "./ResultsNumberSelector";
 import { toggleCheckChosenStats } from "../utils/toggleCheck";
-import TooltipWrapper from "./TooltipWrapper3";
+import TooltipWrapper from "./TooltipWrapper";
 
 const SearchSetScreenPressablesContainer = ({
   chosenStats,
