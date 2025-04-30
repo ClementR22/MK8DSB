@@ -18,7 +18,7 @@ import ElementsDeselector from "./elementsSelector/ElementsDeselector";
 import ElementsSelector from "./elementsSelector/ElementsSelector";
 import ResultsNumber from "./ResultsNumberSelector";
 import { toggleCheckChosenStats } from "../utils/toggleCheck";
-import TooltipWrapper from "./TooltipWrapper";
+import TooltipWrapper from "./TooltipWrapper3";
 
 const SearchSetScreenPressablesContainer = ({
   chosenStats,
@@ -158,22 +158,20 @@ const SearchSetScreenPressablesContainer = ({
 
   return (
     <View style={styles.pressablesContainer}>
-      <TooltipWrapper tooltipText={translate("ChooseStats")}>
-        <Pressable
-          style={[button_icon(th).container, shadow_3dp]}
-          onPress={() => setChosenStatsModalVisible(true)}
-        >
-          <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
-        </Pressable>
+      <TooltipWrapper
+        tooltipText={translate("ChooseStats")}
+        style={[button_icon(th).container, shadow_3dp]}
+        onPress={() => setChosenStatsModalVisible(true)}
+      >
+        <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
       </TooltipWrapper>
 
-      <TooltipWrapper tooltipText={translate("Filters")}>
-        <Pressable
-          style={[button_icon(th).container, shadow_3dp]}
-          onPress={() => setIsFilterModalVisible(true)}
-        >
-          <MaterialCommunityIcons name="pin" size={24} color={th.on_primary} />
-        </Pressable>
+      <TooltipWrapper
+        tooltipText={translate("Filters")}
+        style={[button_icon(th).container, shadow_3dp]}
+        onPress={() => setIsFilterModalVisible(true)}
+      >
+        <MaterialCommunityIcons name="pin" size={24} color={th.on_primary} />
       </TooltipWrapper>
 
       <Pressable
@@ -194,13 +192,12 @@ const SearchSetScreenPressablesContainer = ({
         </Text>
       </Pressable>
 
-      <TooltipWrapper tooltipText={translate("NumberOfResults")}>
-        <Pressable
-          style={[button_icon(th).container, shadow_3dp]}
-          onPress={() => setResultsNumberModalVisible(true)}
-        >
-          <MaterialIcons name="numbers" size={24} color={th.on_primary} />
-        </Pressable>
+      <TooltipWrapper
+        tooltipText={translate("NumberOfResults")}
+        style={[button_icon(th).container, shadow_3dp]}
+        onPress={() => setResultsNumberModalVisible(true)}
+      >
+        <MaterialIcons name="numbers" size={24} color={th.on_primary} />
       </TooltipWrapper>
 
       <StatSliderResultSelectorPressable

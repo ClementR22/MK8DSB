@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import TooltipWrapper from "./TooltipWrapper";
+import TooltipWrapper from "./TooltipWrapper3";
 
 const ButtonMultiStateToggle = ({
   number,
@@ -29,20 +29,19 @@ const ButtonMultiStateToggle = ({
   };
 
   return (
-    <TooltipWrapper tooltipText={text}>
-      <Pressable
-        onPress={handlePress}
-        style={[
-          styles.pressable,
-          styles.selectedFilter, // le style reste actif car un seul bouton
-        ]}
-      >
-        <MaterialCommunityIcons
-          name={iconsNames[number]}
-          size={24}
-          style={styles.selectedText}
-        />
-      </Pressable>
+    <TooltipWrapper
+      tooltipText={text}
+      style={[
+        styles.pressable,
+        styles.selectedFilter, // le style reste actif car un seul bouton
+      ]}
+      onPress={handlePress}
+    >
+      <MaterialCommunityIcons
+        name={iconsNames[number]}
+        size={24}
+        style={styles.selectedText}
+      />
     </TooltipWrapper>
   );
 };

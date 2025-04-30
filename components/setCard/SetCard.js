@@ -19,7 +19,7 @@ import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "../../utils/PressableImagesContext";
 import { useSetsList } from "../../utils/SetsListContext";
 import MyTextInput from "../MyTextInput";
-import TooltipWrapper from "../TooltipWrapper";
+import TooltipWrapper from "../TooltipWrapper3";
 
 const SetCard = ({
   setToShowName = null,
@@ -88,8 +88,8 @@ const SetCard = ({
       showEdit: false,
       showRemove: true,
       showSave: false,
-      showLoadToSearch: true,
-      showLoadToDisplay: false,
+      showLoadToSearch: screenSituation === "search",
+      showLoadToDisplay: screenSituation === "display",
     },
   };
 
@@ -160,85 +160,66 @@ const SetCard = ({
       />
       <View key="pressables container">
         {config.showEdit && (
-          <TooltipWrapper tooltipText={translate("Edit")}>
-            <Pressable
-              style={[button_icon(th).container, shadow_3dp]}
-              onPress={() => {
-                setSetCardActiveIndex(setCardIndex);
-                setIsElementsSelectorModalVisible(true);
-                updatePressableImagesList(setToShowClassIds);
-              }}
-            >
-              <MaterialIcons name="edit" size={24} color={th.on_primary} />
-            </Pressable>
+          <TooltipWrapper
+            tooltipText={translate("Edit")}
+            style={[button_icon(th).container, shadow_3dp]}
+            onPress={() => {
+              setSetCardActiveIndex(setCardIndex);
+              setIsElementsSelectorModalVisible(true);
+              updatePressableImagesList(setToShowClassIds);
+            }}
+          >
+            <MaterialIcons name="edit" size={24} color={th.on_primary} />
           </TooltipWrapper>
         )}
 
         {config.showRemove && (
-          <TooltipWrapper tooltipText={translate("Remove")}>
-            <Pressable
-              style={[button_icon(th).container, shadow_3dp]}
-              onPress={() => {
-                removeSet(setCardIndex, situation);
-              }}
-            >
-              <Ionicons name="close" size={24} color={th.on_primary} />
-            </Pressable>
+          <TooltipWrapper
+            tooltipText={translate("Remove")}
+            style={[button_icon(th).container, shadow_3dp]}
+            onPress={() => {
+              removeSet(setCardIndex, situation);
+            }}
+          >
+            <Ionicons name="close" size={24} color={th.on_primary} />
           </TooltipWrapper>
         )}
 
         {config.showSave && (
-          <TooltipWrapper tooltipText={translate("Save")}>
-            <Pressable
-              style={[button_icon(th).container, shadow_3dp]}
-              onPress={() =>
-                situation == "search"
-                  ? setIsTextInputModalVisible(true)
-                  : saveSetFromDisplay(setCardIndex)
-              }
-            >
-              <MaterialIcons name="save" size={24} color={th.on_primary} />
-            </Pressable>
+          <TooltipWrapper
+            tooltipText={translate("Save")}
+            style={[button_icon(th).container, shadow_3dp]}
+            onPress={() =>
+              situation == "search"
+                ? setIsTextInputModalVisible(true)
+                : saveSetFromDisplay(setCardIndex)
+            }
+          >
+            <MaterialIcons name="save" size={24} color={th.on_primary} />
           </TooltipWrapper>
         )}
 
         {config.showLoadToSearch && (
           <TooltipWrapper
-            tooltipText={
-              screenSituation == "search"
-                ? translate("LoadTheStats")
-                : translate("LoadTheSet")
-            }
+            tooltipText={translate("LoadTheStats")}
+            style={[button_icon(th).container, shadow_3dp]}
+            onPress={() => loadSetSaveToSearch(setCardIndex)}
           >
-            <Pressable
-              style={[button_icon(th).container, shadow_3dp]}
-              onPress={() =>
-                screenSituation == "search"
-                  ? loadSetSaveToSearch(setCardIndex)
-                  : loadSetSaveToDisplay(setCardIndex)
-              }
-            >
-              <Text>{screenSituation == "display" ? "Load" : null}</Text>
-            </Pressable>
+            <Text>{"LoadTheStats"}</Text>
           </TooltipWrapper>
         )}
 
         {config.showLoadToDisplay && (
-          <TooltipWrapper tooltipText={translate("LoadToDisplayScreen")}>
-            <Pressable
-              style={[button_icon(th).container, shadow_3dp]}
-              onPress={() =>
-                situation == "search"
-                  ? loadSetSearchToDisplay(setCardIndex)
-                  : loadSetSaveToDisplay(setCardIndex)
-              }
-            >
-              <MaterialIcons
-                name="display-settings"
-                size={24}
-                color={th.on_primary}
-              />
-            </Pressable>
+          <TooltipWrapper
+            tooltipText={translate("LoadToDisplayScreen")}
+            style={[button_icon(th).container, shadow_3dp]}
+            onPress={() => loadSetSaveToDisplay(setCardIndex)}
+          >
+            <MaterialIcons
+              name="display-settings"
+              size={24}
+              color={th.on_primary}
+            />
           </TooltipWrapper>
         )}
       </View>

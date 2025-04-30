@@ -66,7 +66,6 @@ const MyPopover = ({ children, popoverText }) => {
           width: windowDimensions.width * 2, // DOUBLE largeur écran
           height: windowDimensions.height,
         }}
-        popoverStyle={{ zIndex: 9999 }}
         //
       >
         <Text

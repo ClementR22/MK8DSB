@@ -4,7 +4,7 @@ import { useTheme } from "../utils/ThemeContext";
 import { shadow_3dp } from "./styles/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSetsList } from "../utils/SetsListContext";
-import TooltipWrapper from "./TooltipWrapper";
+import TooltipWrapper from "./TooltipWrapper3";
 import { translate } from "../i18n/translations";
 
 const ButtonAddSet = () => {
@@ -13,13 +13,12 @@ const ButtonAddSet = () => {
   const { addSet } = useSetsList();
 
   return (
-    <TooltipWrapper tooltipText="Ajouter un set">
-      <Pressable
-        style={[button_icon(th).container, shadow_3dp]}
-        onPress={() => addSet()}
-      >
-        <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
-      </Pressable>
+    <TooltipWrapper
+      tooltipText="Ajouter un set"
+      style={[button_icon(th).container, shadow_3dp]}
+      onPress={() => addSet()}
+    >
+      <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
     </TooltipWrapper>
   );
 };

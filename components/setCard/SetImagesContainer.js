@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Image, Pressable, ScrollView } from "react-native";
 import { category4Names, elementsAllInfosList } from "../../data/data";
 import { translate } from "../../i18n/translations";
-import TooltipWrapper from "../TooltipWrapper";
+import TooltipWrapper from "../TooltipWrapper3";
 import MyPopover from "../MyPopover";
 
 const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
@@ -24,13 +24,17 @@ const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
           <View style={styles.imagesContainer}>
             {item.elements.map(({ name, image }, index) =>
               mode === "icon" ? (
-                <Pressable key={index} onPress={() => displaySetImages()}>
+                <TooltipWrapper
+                  key={index}
+                  tooltipText={name}
+                  onPress={() => displaySetImages()}
+                >
                   <Image
                     source={image}
                     style={{ width: imageSize, height: imageSize }}
                     resizeMode="contain"
                   />
-                </Pressable>
+                </TooltipWrapper>
               ) : (
                 <MyPopover key={index} popoverText="Saluuuuuuuuuuuuuut">
                   <Image

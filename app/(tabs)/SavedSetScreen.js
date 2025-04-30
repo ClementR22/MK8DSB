@@ -5,8 +5,6 @@ import { useSetsList } from "../../utils/SetsListContext";
 import { SavedSetScreenProvider } from "../../utils/SavedSetScreenContext";
 import { PressableImagesProvider } from "../../utils/PressableImagesContext";
 import SavedSetScreenPressablesContainer from "../../components/SavedSetScreenPressablesContainer";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import TooltipWrapper from "../../components/TooltipWrapper";
 
 const SavedSetScreen = () => {
   const { setsListSaved } = useSetsList();
