@@ -1,11 +1,11 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { button_icon } from './styles/button';
-import { shadow_12dp } from './styles/theme';
-import { useTheme } from '../utils/ThemeContext';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { button_icon } from "./styles/button";
+import { shadow_12dp } from "./styles/theme";
+import { useTheme } from "../utils/ThemeContext";
 
-const ResultsNumberSelector = ({resultsNumber, setResultsNumber}) => {
+const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
   const th = useTheme();
   const [hovered_1, setHover_1] = useState(false);
   const [hovered_2, setHover_2] = useState(false);
@@ -32,7 +32,7 @@ const ResultsNumberSelector = ({resultsNumber, setResultsNumber}) => {
       >
         <MaterialCommunityIcons
           name="minus"
-          color={'white'}
+          color={"white"}
         ></MaterialCommunityIcons>
       </Pressable>
       <Text style={styles.resultsNumberText}>{resultsNumber}</Text>
@@ -44,7 +44,7 @@ const ResultsNumberSelector = ({resultsNumber, setResultsNumber}) => {
       >
         <MaterialCommunityIcons
           name="plus"
-          color={'white'}
+          color={"white"}
         ></MaterialCommunityIcons>
       </Pressable>
     </View>
@@ -53,17 +53,17 @@ const ResultsNumberSelector = ({resultsNumber, setResultsNumber}) => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'none',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "none",
     margin: 10,
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingHorizontal: 14,
   },
   resultsNumberText: {
     fontSize: 48,
-    textAlign: 'center',
-    width: 'auto',
+    textAlign: "center",
+    width: "auto",
     flexGrow: 1,
   },
 });

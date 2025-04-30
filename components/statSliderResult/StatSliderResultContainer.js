@@ -1,22 +1,19 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import StatSliderResult from './StatSliderResult';
-import { useTheme } from '../../utils/ThemeContext';
-import { translate } from '../../i18n/translations';
-import { getIsStatsVisible } from '../../utils/getIsStatsVisible';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import StatSliderResult from "./StatSliderResult";
+import { translate } from "../../i18n/translations";
+import { getIsStatsVisible } from "../../utils/getIsStatsVisible";
 
 const StatSliderResultContainer = ({
-                                     setsToShowMultipleStatsLists,
-                                     chosenStats,
-                                     situation,
-                                   }) => {
-  const th = useTheme();
-
+  setsToShowMultipleStatsLists,
+  chosenStats,
+  situation,
+}) => {
   const isStatsVisible = getIsStatsVisible(situation);
 
   return (
-    <View style={{flex: 1, backgroundColor: 'green'}}>
-      {isStatsVisible.map(({name, checked}, statIndex) => {
+    <View style={{ flex: 1, backgroundColor: "green" }}>
+      {isStatsVisible.map(({ name, checked }, statIndex) => {
         const translated_name = translate(name);
         if (checked) {
           return (
@@ -24,24 +21,24 @@ const StatSliderResultContainer = ({
               key={statIndex}
               style={[
                 styles.sliderContainer,
-                {backgroundColor: 'red'}, //th.surface_container },
+                { backgroundColor: "red" }, //th.surface_container },
               ]}
             >
               <Text style={styles.text}>
                 {translated_name}
-                {situation != 'search' ||
-                  (situation == 'save' &&
+                {situation != "search" ||
+                  (situation == "save" &&
                     ` : ${JSON.stringify(
-                      setsToShowMultipleStatsLists[0][statIndex],
+                      setsToShowMultipleStatsLists[0][statIndex]
                     )}`)}
               </Text>
               {setsToShowMultipleStatsLists.map((setToShowStats, setIndex) => (
                 <View
                   key={setIndex}
                   style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    backgroundColor: 'yellow',
+                    flexDirection: "row",
+                    alignItems: "center",
+                    backgroundColor: "yellow",
                   }}
                 >
                   <StatSliderResult
@@ -49,8 +46,8 @@ const StatSliderResultContainer = ({
                     value={setToShowStats[statIndex]}
                     chosenValue={chosenStats?.[statIndex]?.value}
                   />
-                  {situation != 'search' && (
-                    <Text style={{flex: 0.2}}>
+                  {situation != "search" && (
+                    <Text style={{ flex: 0.2 }}>
                       {setToShowStats[statIndex]}
                     </Text>
                   )}
@@ -75,7 +72,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
   },
 });

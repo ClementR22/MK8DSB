@@ -1,8 +1,8 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useTheme } from '../../utils/ThemeContext';
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { useTheme } from "../../utils/ThemeContext";
 
-const StatSliderResult = ({value, chosenValue = null}) => {
+const StatSliderResult = ({ value, chosenValue = null }) => {
   const th = useTheme();
 
   if (chosenValue == null) {
@@ -17,7 +17,7 @@ const StatSliderResult = ({value, chosenValue = null}) => {
   };
 
   const getBackgroundColor = () => {
-    return bonusFound > 0 ? '#34be4d' : bonusFound < 0 ? '#ff6240' : 'black';
+    return bonusFound > 0 ? "#34be4d" : bonusFound < 0 ? "#ff6240" : "black";
   };
 
   return (
@@ -99,13 +99,13 @@ const styles = StyleSheet.create({
     // backgroundColor: "purple",
   },
   sliderTrack: {
-    flexDirection: 'row',
+    flexDirection: "row",
     height: 10,
     borderRadius: 5,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   trackSegment: {
-    height: '100%',
+    height: "100%",
   },
 });
 

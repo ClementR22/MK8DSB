@@ -1,7 +1,7 @@
-import React, { cloneElement, isValidElement, useRef, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { cloneElement, isValidElement, useRef, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-const TooltipWrapper = ({tooltipText, children, style}) => {
+const TooltipWrapper = ({ tooltipText, children, style }) => {
   const [visible, setVisible] = useState(false);
   const tooltipTimeout = useRef(null);
   const tooltipShown = useRef(false);
@@ -29,10 +29,10 @@ const TooltipWrapper = ({tooltipText, children, style}) => {
 
   const wrappedChild = isValidElement(children)
     ? cloneElement(children, {
-      onPress: children.props?.onPress
-        ? () => handlePress(children.props.onPress)
-        : undefined,
-    })
+        onPress: children.props?.onPress
+          ? () => handlePress(children.props.onPress)
+          : undefined,
+      })
     : null;
 
   return (
@@ -54,15 +54,15 @@ const TooltipWrapper = ({tooltipText, children, style}) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    position: 'relative',
-    alignItems: 'center',
-    justifyContent: 'center',
+    position: "relative",
+    alignItems: "center",
+    justifyContent: "center",
   },
   tooltip: {
-    position: 'absolute',
-    bottom: '100%',
+    position: "absolute",
+    bottom: "100%",
     marginBottom: 8,
-    backgroundColor: '#333',
+    backgroundColor: "#333",
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 6,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     elevation: 10, // pour Android
   },
   tooltipText: {
-    color: 'white',
+    color: "white",
     fontSize: 12,
   },
 });

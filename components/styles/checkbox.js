@@ -1,11 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 const checkbox = (th) =>
   StyleSheet.create({
     container: {
       marginBottom: 2,
-      alignItems: 'center',
-      flexDirection: 'row',
+      alignItems: "center",
+      flexDirection: "row",
       borderRadius: 24,
     },
     square: {
@@ -22,4 +22,4 @@ const checkbox = (th) =>
     },
   });
 
-export default checkbox
+export default checkbox;

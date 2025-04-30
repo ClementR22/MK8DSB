@@ -1,13 +1,13 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { bodyTypeNames, elementsAllInfosList } from '../data/data';
-import { translate } from '../i18n/translations';
-import { useSetsList } from './SetsListContext';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { bodyTypeNames, elementsAllInfosList } from "../data/data";
+import { translate } from "../i18n/translations";
+import { useSetsList } from "./SetsListContext";
 
 // Fonction pour initialiser l'état pressableImagesList
 const initializePressableImagesList = (isDefaultSelectedImages) => {
   // Crée une copie avec les propriétés supplémentaires
   const pressableImagesList = elementsAllInfosList.map(
-    ({id, name, category, classId, image}) => {
+    ({ id, name, category, classId, image }) => {
       return {
         id: id,
         name: translate(name),
@@ -35,10 +35,10 @@ const initializePressableImagesByCategory = (pressableImagesList) => {
   const pressableImagesByCategory = {};
 
   pressableImagesList.forEach((element) => {
-    const {category, classId} = element;
+    const { category, classId } = element;
 
     const changedCategory = bodyTypeNames.includes(category)
-      ? 'body'
+      ? "body"
       : category;
 
     if (!pressableImagesByCategory[changedCategory]) {
@@ -60,10 +60,10 @@ const PressableImagesContext = createContext();
 
 // Fournisseur du contexte
 export const PressableImagesProvider = ({
-                                          children,
-                                          isDefaultSelectedImages = false,
-                                          situation,
-                                        }) => {
+  children,
+  isDefaultSelectedImages = false,
+  situation,
+}) => {
   const [pressableImagesList, setPressableImagesList] = useState(
     initializePressableImagesList(isDefaultSelectedImages),
   );
@@ -75,7 +75,7 @@ export const PressableImagesProvider = ({
   const handlePressImage = (id) => {
     setPressableImagesList((prev) =>
       prev.map((item, index) =>
-        index === id ? {...item, pressed: !item.pressed} : item,
+        index === id ? { ...item, pressed: !item.pressed } : item,
       ),
     );
     // initializePressableImagesByCategory est executé automatiquement
@@ -95,7 +95,7 @@ export const PressableImagesProvider = ({
 
     if (bodyTypeNames.includes(category7)) {
       // si category7 est en fait un des bodyType
-      category4 = 'body';
+      category4 = "body";
       category4ElementList = bodyTypeNames;
     }
 
@@ -103,11 +103,11 @@ export const PressableImagesProvider = ({
     setPressableImagesList((prev) =>
       prev.map((item) =>
         category4ElementList.includes(item.category)
-          ? {...item, pressed: item.classId === classId}
+          ? { ...item, pressed: item.classId === classId }
           : item,
       ),
     );
-    setPressedClassIds((prev) => ({...prev, [category4]: classId}));
+    setPressedClassIds((prev) => ({ ...prev, [category4]: classId }));
   };
 
   const updatePressableImagesList = (setClassIds) => {
@@ -119,7 +119,7 @@ export const PressableImagesProvider = ({
     );
   };
 
-  const {updateSetsList} = useSetsList();
+  const { updateSetsList } = useSetsList();
 
   useEffect(() => {
     updateSetsList(pressedClassIds, situation); // Met à jour après le rendu

@@ -1,10 +1,10 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { modal } from './styles/modal';
-import PressableStat from './PressableStat';
-import { useTheme } from '../utils/ThemeContext';
+import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { modal } from "./styles/modal";
+import PressableStat from "./PressableStat";
+import { useTheme } from "../utils/ThemeContext";
 
-const StatSelector = ({statList, toggleCheck}) => {
+const StatSelector = ({ statList, toggleCheck }) => {
   const th = useTheme();
   return (
     <View style={styles.listContainer}>

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
-import { useSetsList } from '../utils/SetsListContext';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, TextInput, View } from "react-native";
+import { useSetsList } from "../utils/SetsListContext";
 
-const MyTextInput = ({setToShowName, setCardIndex, situation}) => {
+const MyTextInput = ({ setToShowName, setCardIndex, situation }) => {
   const defaultName = `Set ${setCardIndex + 1}`;
   const [localName, setLocalName] = useState(setToShowName ?? defaultName);
 
-  const {renameSet} = useSetsList();
+  const { renameSet } = useSetsList();
 
   useEffect(() => {
     setLocalName(setToShowName ?? defaultName);
@@ -37,7 +37,7 @@ const MyTextInput = ({setToShowName, setCardIndex, situation}) => {
 
 const styles = StyleSheet.create({
   textInput: {
-    backgroundColor: 'grey',
+    backgroundColor: "grey",
   },
 });
 

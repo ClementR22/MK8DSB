@@ -1,8 +1,8 @@
-import showToast from './toast';
+import showToast from "./toast";
 
 const updateChecks = (prev, name) => {
   return prev.map((item) =>
-    item.name === name ? {...item, checked: !item.checked} : item,
+    item.name === name ? { ...item, checked: !item.checked } : item,
   );
 };
 
@@ -26,7 +26,7 @@ export const toggleCheckChosenStats = (
     if (!hasChecked) {
       showToast();
       return newList.map((item) =>
-        item.name === name ? {...item, checked: true} : item,
+        item.name === name ? { ...item, checked: true } : item,
       );
     }
 

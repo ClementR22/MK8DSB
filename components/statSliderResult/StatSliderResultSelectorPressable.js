@@ -1,20 +1,20 @@
-import { View } from 'react-native';
-
-import { button_icon } from '../styles/button';
-import { shadow_3dp } from '../styles/theme';
-import { useTheme } from '../../utils/ThemeContext';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import MyModal from '../modal/MyModal';
-import { translate } from '../../i18n/translations';
-import { useState } from 'react';
-import StatSelector from '../StatSelector';
-import { toggleCheckList } from '../../utils/toggleCheck';
-import TooltipWrapper from '../TooltipWrapper3';
+import React from "react";
+import { View } from "react-native";
+import { button_icon } from "../styles/button";
+import { shadow_3dp } from "../styles/theme";
+import { useTheme } from "../../utils/ThemeContext";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MyModal from "../modal/MyModal";
+import { translate } from "../../i18n/translations";
+import { useState } from "react";
+import StatSelector from "../StatSelector";
+import { toggleCheckList } from "../../utils/toggleCheck";
+import TooltipWrapper from "../TooltipWrapper3";
 
 const StatSliderResultSelectorPressable = ({
-                                             isStatsVisible,
-                                             setIsStatsVisible,
-                                           }) => {
+  isStatsVisible,
+  setIsStatsVisible,
+}) => {
   const th = useTheme();
 
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
@@ -22,7 +22,7 @@ const StatSliderResultSelectorPressable = ({
   return (
     <View>
       <TooltipWrapper
-        tooltipText={translate('DisplayedStats')}
+        tooltipText={translate("DisplayedStats")}
         style={[button_icon(th).container, shadow_3dp]}
         onPress={() => setFoundStatsModalVisible(true)}
       >
@@ -34,7 +34,7 @@ const StatSliderResultSelectorPressable = ({
       </TooltipWrapper>
 
       <MyModal
-        modalTitle={translate('StatsToDisplay')}
+        modalTitle={translate("StatsToDisplay")}
         isModalVisible={foundStatsModalVisible}
         setIsModalVisible={setFoundStatsModalVisible}
         ModalContentsList={[StatSelector]}

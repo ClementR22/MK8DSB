@@ -1,25 +1,24 @@
-import { useState } from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 // Components import
-import StatSlider from '../../components/StatSlider';
-import { vw } from '../../components/styles/theme';
-import { useTheme } from '../../utils/ThemeContext';
-import { translate } from '../../i18n/translations';
-import SetCardContainer from '../../components/setCard/SetCardContainer';
-import { SavedSetModalProvider } from '../../utils/SavedSetModalContext';
-import { useSetsList } from '../../utils/SetsListContext';
-import SearchSetScreenPressablesContainer from '../../components/SearchSetScreenPressablesContainer';
-import { SearchSetScreenProvider } from '../../utils/SearchSetScreenContext';
-import { PressableImagesProvider } from '../../utils/PressableImagesContext';
-import ButtonLoad from '../../components/ButtonLoad';
-
-const screenWidth = Dimensions.get('window').width;
+import StatSlider from "../../components/StatSlider";
+import { vw } from "../../components/styles/theme";
+import { useTheme } from "../../utils/ThemeContext";
+import { translate } from "../../i18n/translations";
+import SetCardContainer from "../../components/setCard/SetCardContainer";
+import { SavedSetModalProvider } from "../../utils/SavedSetModalContext";
+import { useSetsList } from "../../utils/SetsListContext";
+import SearchSetScreenPressablesContainer from "../../components/SearchSetScreenPressablesContainer";
+import { SearchSetScreenProvider } from "../../utils/SearchSetScreenContext";
+import { PressableImagesProvider } from "../../utils/PressableImagesContext";
+import ButtonLoad from "../../components/ButtonLoad";
 
 const SearchSetScreen = () => {
   const th = useTheme();
 
-  const {chosenStats, setChosenStats} = useSetsList();
+  const { chosenStats, setChosenStats } = useSetsList();
 
   const [setsToShow, setSetsToShow] = useState([]);
 
@@ -27,8 +26,8 @@ const SearchSetScreen = () => {
   const updateSliderValue = (name, newValue) => {
     setChosenStats(
       chosenStats.map((stat) =>
-        stat.name === name ? {...stat, value: newValue} : stat,
-      ),
+        stat.name === name ? { ...stat, value: newValue } : stat
+      )
     );
   };
 
@@ -37,11 +36,11 @@ const SearchSetScreen = () => {
       <PressableImagesProvider situation="search">
         <SavedSetModalProvider>
           <ScrollView>
-            <View style={[styles.container, {backgroundColor: th.surface}]}>
+            <View style={[styles.container, { backgroundColor: th.surface }]}>
               <View
                 style={[
                   styles.statSlidersContainer,
-                  {backgroundColor: th.surface_container_high},
+                  { backgroundColor: th.surface_container_high },
                 ]}
               >
                 <Text
@@ -55,11 +54,11 @@ const SearchSetScreen = () => {
                     },
                   ]}
                 >
-                  {translate('SearchedStats')}
+                  {translate("SearchedStats")}
                 </Text>
 
                 <ButtonLoad
-                  text={translate('LoadStatsOfASet')}
+                  text={translate("LoadStatsOfASet")}
                   screenSituation="search"
                 />
 
@@ -106,8 +105,8 @@ export default SearchSetScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   img: {
@@ -117,7 +116,7 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 
   checkbox: {
@@ -133,34 +132,34 @@ const styles = StyleSheet.create({
   checkBoxesContainer: {
     marginBottom: 20,
     maxHeight: 300,
-    overflow: 'scroll',
-    alignItems: 'flex-start',
+    overflow: "scroll",
+    alignItems: "flex-start",
     // backgroundColor: "none",
-    borderTopColor: '#000',
+    borderTopColor: "#000",
     borderTopWidth: 1,
-    borderBottomColor: '#000',
+    borderBottomColor: "#000",
     borderBottomWidth: 1,
   },
 
   statSlidersContainer: {
     padding: 24,
     borderRadius: 24,
-    alignItems: 'center',
+    alignItems: "center",
     //backgroundColor: th.surface_container_high,
     marginBottom: 8,
     maxWidth: 0.95 * vw,
     minWidth: 0.8 * vw,
     minHeight: 100,
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
   },
 
   modalBackground: {
-    cursor: 'auto',
+    cursor: "auto",
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 
   modalText: {
@@ -170,14 +169,14 @@ const styles = StyleSheet.create({
 
   pressable: {
     padding: 10,
-    backgroundColor: '#007BFF',
+    backgroundColor: "#007BFF",
     borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   pressableText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
 
@@ -185,9 +184,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   ElementsDeselector: {
-    width: '100%',
-    alignItems: 'flex-start',
-    backgroundColor: 'red',
+    width: "100%",
+    alignItems: "flex-start",
+    backgroundColor: "red",
   },
 
   button_icon: {

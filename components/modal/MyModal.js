@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { Modal, Pressable, StyleSheet, Text } from 'react-native';
-import { modal } from '../styles/modal';
-import { button } from '../styles/button';
-import { shadow_12dp } from '../styles/theme';
-import { useTheme } from '../../utils/ThemeContext';
-import { translate } from '../../i18n/translations';
-import Toast from 'react-native-toast-message';
+import React, { useState } from "react";
+import { Modal, Pressable, Text } from "react-native";
+import { modal } from "../styles/modal";
+import { button } from "../styles/button";
+import { shadow_12dp } from "../styles/theme";
+import { useTheme } from "../../utils/ThemeContext";
+import { translate } from "../../i18n/translations";
+import Toast from "react-native-toast-message";
 
 const MyModal = ({
-                   modalTitle,
-                   isModalVisible,
-                   setIsModalVisible,
-                   ModalContentsList,
-                   contentPropsList,
-                   closeButtonText = 'Close',
-                   checkBeforeClose = () => {
-                     return true;
-                   },
-                   isWithClosePressable = true,
-                 }) => {
+  modalTitle,
+  isModalVisible,
+  setIsModalVisible,
+  ModalContentsList,
+  contentPropsList,
+  closeButtonText = "Close",
+  checkBeforeClose = () => {
+    return true;
+  },
+  isWithClosePressable = true,
+}) => {
   const th = useTheme();
 
   const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
@@ -62,45 +62,9 @@ const MyModal = ({
           )}
         </Pressable>
       </Pressable>
-      <Toast/>
+      <Toast />
     </Modal>
   );
 };
 
 export default MyModal;
-
-const styles = StyleSheet.create({
-  checkBoxItemLabel: {
-    fontSize: 18,
-    marginVertical: 10,
-  },
-  checkBoxesContainer: {
-    marginBottom: 20,
-    alignItems: 'flex-start',
-    backgroundColor: 'blue',
-  },
-  modalBackground: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContainer: {
-    backgroundColor: 'purple',
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  modalText: {
-    fontSize: 18,
-    marginBottom: 20,
-  },
-  pressable: {
-    padding: 10,
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
-  },
-  pressableText: {
-    color: 'white',
-    fontSize: 16,
-  },
-});

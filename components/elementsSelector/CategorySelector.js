@@ -1,24 +1,25 @@
-import React from 'react';
-import { Image, Pressable, StyleSheet, View } from 'react-native';
-import { category4Names, elementsAllInfosList } from '../../data/data';
+import React from "react";
+import { Image, Pressable, StyleSheet, View } from "react-native";
+import { category4Names, elementsAllInfosList } from "../../data/data";
+import closeImage from "../assets/images/close.png";
 
 const iconSize = 38;
 
 const CategorySelector = ({
-                            selectedTab,
-                            setSelectedTab,
-                            scrollToTopWithScrollViewRef,
-                          }) => {
+  selectedTab,
+  setSelectedTab,
+  scrollToTopWithScrollViewRef,
+}) => {
   const elementIcons = [
     elementsAllInfosList[0].image,
     elementsAllInfosList[52].image,
     elementsAllInfosList[93].image,
     elementsAllInfosList[115].image,
-    require('../../assets/images/close.png'),
+    closeImage,
   ];
 
   return (
-    <View style={styles.tabContainer} key={'tabContainer'}>
+    <View style={styles.tabContainer} key={"tabContainer"}>
       {category4Names.map((elementName, index) => (
         <Pressable
           key={elementName}
@@ -41,19 +42,19 @@ const CategorySelector = ({
 
 const styles = StyleSheet.create({
   tabContainer: {
-    flexDirection: 'row',
-    backgroundColor: 'lightgray',
+    flexDirection: "row",
+    backgroundColor: "lightgray",
     paddingVertical: 10,
-    justifyContent: 'space-between', // Espacement entre les éléments
+    justifyContent: "space-between", // Espacement entre les éléments
   },
   tab: {
     flex: 1,
     padding: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   activeTab: {
     borderBottomWidth: 2,
-    borderColor: 'black',
+    borderColor: "black",
   },
   image: {
     width: iconSize,

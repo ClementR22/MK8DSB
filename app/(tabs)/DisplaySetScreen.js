@@ -1,20 +1,16 @@
-import { Dimensions, ScrollView, StyleSheet } from 'react-native';
-import { PressableImagesProvider } from '../../utils/PressableImagesContext';
-import { useTheme } from '../../utils/ThemeContext';
-import StatSliderResultContainer from '../../components/statSliderResult/StatSliderResultContainer';
-import SetCardContainer from '../../components/setCard/SetCardContainer';
+import React from "react";
+import { ScrollView } from "react-native";
+import { PressableImagesProvider } from "../../utils/PressableImagesContext";
+import StatSliderResultContainer from "../../components/statSliderResult/StatSliderResultContainer";
+import SetCardContainer from "../../components/setCard/SetCardContainer";
 
-import { useSetsList } from '../../utils/SetsListContext';
-import { SavedSetModalProvider } from '../../utils/SavedSetModalContext';
-import { DisplaySetScreenProvider } from '../../utils/DisplaySetScreenContext';
-import DisplaySetScreenPressablesContainer from '../../components/DisplaySetScreenPressablesContainer';
-
-const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
+import { useSetsList } from "../../utils/SetsListContext";
+import { SavedSetModalProvider } from "../../utils/SavedSetModalContext";
+import { DisplaySetScreenProvider } from "../../utils/DisplaySetScreenContext";
+import DisplaySetScreenPressablesContainer from "../../components/DisplaySetScreenPressablesContainer";
 
 const DisplaySetScreen = () => {
-  const th = useTheme();
-
-  const {setsListDisplayed} = useSetsList();
+  const { setsListDisplayed } = useSetsList();
 
   const setsToShowMultipleStatsLists = setsListDisplayed.map((setToShow) => {
     const setToShowStatsList = setToShow.stats;
@@ -29,7 +25,7 @@ const DisplaySetScreen = () => {
       >
         <SavedSetModalProvider>
           <ScrollView>
-            <DisplaySetScreenPressablesContainer/>
+            <DisplaySetScreenPressablesContainer />
 
             <SetCardContainer
               setsToShow={setsListDisplayed}
@@ -49,54 +45,3 @@ const DisplaySetScreen = () => {
 };
 
 export default DisplaySetScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    //flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  cardsContainer: {
-    width: '100%',
-    padding: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    backgroundColor: 'pink',
-  },
-  statContainer: {
-    width: screenWidth * 0.9,
-    marginVertical: 4,
-    alignItems: 'flex-start',
-    backgroundColor: 'gray',
-    paddingHorizontal: 0,
-    borderColor: 'green',
-    borderWidth: 3,
-  },
-  sliderContainer: {
-    width: '100%',
-    backgroundColor: 'green',
-  },
-  addButton: {
-    backgroundColor: '#4CAF50',
-    borderRadius: 25,
-    padding: 12,
-    marginBottom: 20,
-  },
-  addButtonText: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  pressable: {
-    backgroundColor: '#2196F3',
-    padding: 12,
-    marginVertical: 8,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  pressableText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-});

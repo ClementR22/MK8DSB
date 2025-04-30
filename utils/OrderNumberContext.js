@@ -1,8 +1,8 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 const OrderNumberContext = createContext();
 
-export const OrderNumberProvider = ({children}) => {
+export const OrderNumberProvider = ({ children }) => {
   const [orderNumber, setOrderNumber] = useState(0);
 
   return (
