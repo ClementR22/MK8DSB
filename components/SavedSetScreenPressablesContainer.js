@@ -1,13 +1,13 @@
-import { Pressable, Text, View } from "react-native";
-import StatSliderResultSelectorPressable from "./statSliderResult/StatSliderResultSelectorPressable";
-import { useSavedSetScreen } from "../utils/SavedSetScreenContext";
-import { useSetsList } from "../utils/SetsListContext";
-import { button_icon } from "./styles/button";
-import { useTheme } from "../utils/ThemeContext";
+import { Pressable, Text, View } from 'react-native';
+import StatSliderResultSelectorPressable from './statSliderResult/StatSliderResultSelectorPressable';
+import { useSavedSetScreen } from '../utils/SavedSetScreenContext';
+import { useSetsList } from '../utils/SetsListContext';
+import { button_icon } from './styles/button';
+import { useTheme } from '../utils/ThemeContext';
 
 const SavedSetScreenPressablesContainer = () => {
-  const { isStatsVisible, setIsStatsVisible } = useSavedSetScreen();
-  const { sortSetsSavedKeys } = useSetsList();
+  const {isStatsVisible, setIsStatsVisible} = useSavedSetScreen();
+  const {sortSetsSavedKeys} = useSetsList();
   const th = useTheme();
 
   return (

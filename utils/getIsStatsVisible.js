@@ -1,17 +1,17 @@
-import { useDisplaySetScreen } from "./DisplaySetScreenContext";
-import { useSavedSetScreen } from "./SavedSetScreenContext";
-import { useSearchSetScreen } from "./SearchSetScreenContext";
+import { useDisplaySetScreen } from './DisplaySetScreenContext';
+import { useSavedSetScreen } from './SavedSetScreenContext';
+import { useSearchSetScreen } from './SearchSetScreenContext';
 
 export const getIsStatsVisible = (situation) => {
-  let isStatsVisible = null;
+  let isStatsVisible;
   switch (situation) {
-    case "search":
+    case 'search':
       isStatsVisible = useSearchSetScreen().isStatsVisible;
       break;
-    case "display":
+    case 'display':
       isStatsVisible = useDisplaySetScreen().isStatsVisible;
       break;
-    case "save":
+    case 'save':
       isStatsVisible = useSavedSetScreen().isStatsVisible;
       break;
     default:

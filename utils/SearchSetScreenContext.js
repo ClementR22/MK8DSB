@@ -1,19 +1,19 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
-import { statNames } from "../data/data";
+import React, { createContext, useContext, useState } from 'react';
+import { statNames } from '../data/data';
 
 const SearchSetScreenContext = createContext();
 
-export const SearchSetScreenProvider = ({ children }) => {
+export const SearchSetScreenProvider = ({children}) => {
   const [isStatsVisible, setIsStatsVisible] = useState(
     statNames.map((statName, index) => ({
       name: statName,
       checked: index === 0,
-    }))
+    })),
   );
 
   return (
     <SearchSetScreenContext.Provider
-      value={{ isStatsVisible, setIsStatsVisible }}
+      value={{isStatsVisible, setIsStatsVisible}}
     >
       {children}
     </SearchSetScreenContext.Provider>

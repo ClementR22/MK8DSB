@@ -1,8 +1,7 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import React from "react";
-import { Image } from "react-native";
+import { Image, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 
-const ElementImage = React.memo(({ name, source }) => {
+const ElementImage = React.memo(({name, source}) => {
   const imageWidth = 80;
 
   return (
@@ -22,8 +21,8 @@ const ElementImage = React.memo(({ name, source }) => {
 
 const styles = StyleSheet.create({
   elementContainer: {
-    backgroundColor: "blue",
-    alignItems: "center",
+    backgroundColor: 'blue',
+    alignItems: 'center',
   },
 });
 

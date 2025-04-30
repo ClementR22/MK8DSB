@@ -1,16 +1,16 @@
-import { Pressable, View } from "react-native";
-import { button_icon } from "./styles/button";
-import { useTheme } from "../utils/ThemeContext";
-import { shadow_3dp } from "./styles/theme";
-import { useSavedSetModal } from "../utils/SavedSetModalContext";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import TooltipWrapper from "./TooltipWrapper3";
-import LoadSetModal from "./modal/LoadSetModal";
+import { View } from 'react-native';
+import { button_icon } from './styles/button';
+import { useTheme } from '../utils/ThemeContext';
+import { shadow_3dp } from './styles/theme';
+import { useSavedSetModal } from '../utils/SavedSetModalContext';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import TooltipWrapper from './TooltipWrapper3';
+import LoadSetModal from './modal/LoadSetModal';
 
-const ButtonLoad = ({ tooltip_text, screenSituation }) => {
+const ButtonLoad = ({tooltip_text, screenSituation}) => {
   const th = useTheme();
 
-  const { toggleSavedSetModal } = useSavedSetModal();
+  const {toggleSavedSetModal} = useSavedSetModal();
 
   return (
     <TooltipWrapper
@@ -26,7 +26,7 @@ const ButtonLoad = ({ tooltip_text, screenSituation }) => {
           size={24}
           color={th.on_primary}
         />
-        <LoadSetModal screenSituation={screenSituation} />
+        <LoadSetModal screenSituation={screenSituation}/>
       </View>
     </TooltipWrapper>
   );

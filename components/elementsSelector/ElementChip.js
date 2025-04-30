@@ -1,8 +1,8 @@
-import React from "react";
-import { Chip } from "react-native-paper";
-import { View, Image } from "react-native";
+import React from 'react';
+import { Chip } from 'react-native-paper';
+import { Image } from 'react-native';
 
-const ElementChip = ({ name, pressed, onPress, source }) => {
+const ElementChip = ({name, pressed, onPress, source}) => {
   return (
     <Chip
       selected={pressed}
@@ -10,7 +10,7 @@ const ElementChip = ({ name, pressed, onPress, source }) => {
       style={[styles.chip, pressed && styles.chipSelected]}
       textStyle={styles.chipText}
       avatar={
-        <Image source={source} style={styles.image} resizeMode="contain" />
+        <Image source={source} style={styles.image} resizeMode="contain"/>
       }
     >
       {name}
@@ -21,17 +21,17 @@ const ElementChip = ({ name, pressed, onPress, source }) => {
 const styles = {
   chip: {
     marginHorizontal: 4, // Pour espacer les chips
-    backgroundColor: "red",
+    backgroundColor: 'red',
   },
   chipSelected: {
-    backgroundColor: "blue", // Couleur de fond pour un chip sélectionné
+    backgroundColor: 'blue', // Couleur de fond pour un chip sélectionné
   },
   chipDisabled: {
-    backgroundColor: "#ccc", // Couleur pour un chip désactivé
+    backgroundColor: '#ccc', // Couleur pour un chip désactivé
   },
   chipText: {
     fontSize: 14,
-    color: "white", // Texte visible pour les chips sélectionnés
+    color: 'white', // Texte visible pour les chips sélectionnés
   },
   image: {
     width: 24, // Largeur de l'image

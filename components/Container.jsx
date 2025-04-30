@@ -21,7 +21,7 @@ class Container extends React.Component {
       width: '100%',
       margin: 'auto',
       display: 'flex',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     content: {
       backgroundColor: this.contentBackgroundColor,
@@ -35,8 +35,8 @@ class Container extends React.Component {
       gap: 10,
       flexDirection: this.flexDirection,
       alignItems: this.alignItems,
-      ...this.inputStyles
-    }
+      ...this.inputStyles,
+    },
   });
 
 

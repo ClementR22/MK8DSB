@@ -1,20 +1,20 @@
-import { Pressable, ScrollView, StyleSheet, Text } from "react-native";
-import { vw } from "../../components/styles/theme";
-import SetCardContainer from "../../components/setCard/SetCardContainer";
-import { useSetsList } from "../../utils/SetsListContext";
-import { SavedSetScreenProvider } from "../../utils/SavedSetScreenContext";
-import { PressableImagesProvider } from "../../utils/PressableImagesContext";
-import SavedSetScreenPressablesContainer from "../../components/SavedSetScreenPressablesContainer";
+import { ScrollView, StyleSheet } from 'react-native';
+import { vw } from '../../components/styles/theme';
+import SetCardContainer from '../../components/setCard/SetCardContainer';
+import { useSetsList } from '../../utils/SetsListContext';
+import { SavedSetScreenProvider } from '../../utils/SavedSetScreenContext';
+import { PressableImagesProvider } from '../../utils/PressableImagesContext';
+import SavedSetScreenPressablesContainer from '../../components/SavedSetScreenPressablesContainer';
 
 const SavedSetScreen = () => {
-  const { setsListSaved } = useSetsList();
+  const {setsListSaved} = useSetsList();
 
   return (
     <SavedSetScreenProvider>
       <PressableImagesProvider situation="save">
         <ScrollView>
-          <SavedSetScreenPressablesContainer />
-          <SetCardContainer setsToShow={setsListSaved} situation="save" />
+          <SavedSetScreenPressablesContainer/>
+          <SetCardContainer setsToShow={setsListSaved} situation="save"/>
         </ScrollView>
       </PressableImagesProvider>
     </SavedSetScreenProvider>
@@ -26,8 +26,8 @@ export default SavedSetScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   img: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 
   checkbox: {
@@ -53,34 +53,34 @@ const styles = StyleSheet.create({
   checkBoxesContainer: {
     marginBottom: 20,
     maxHeight: 300,
-    overflow: "scroll",
-    alignItems: "flex-start",
+    overflow: 'scroll',
+    alignItems: 'flex-start',
     // backgroundColor: "none",
-    borderTopColor: "#000",
+    borderTopColor: '#000',
     borderTopWidth: 1,
-    borderBottomColor: "#000",
+    borderBottomColor: '#000',
     borderBottomWidth: 1,
   },
 
   statSlidersContainer: {
     padding: 24,
     borderRadius: 24,
-    alignItems: "center",
+    alignItems: 'center',
     //backgroundColor: th.surface_container_high,
     marginBottom: 8,
     maxWidth: 0.95 * vw,
     minWidth: 0.8 * vw,
     minHeight: 100,
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
   },
 
   modalBackground: {
-    cursor: "auto",
+    cursor: 'auto',
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 
   modalText: {
@@ -90,20 +90,20 @@ const styles = StyleSheet.create({
 
   pressable: {
     padding: 10,
-    backgroundColor: "#007BFF",
+    backgroundColor: '#007BFF',
     borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   pressableText: {
-    color: "white",
+    color: 'white',
     fontSize: 16,
   },
 
   pressablesContainer: {
     // width: screenWidth * 0.87 + 20,
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 10,
     marginBottom: 10,
   },
@@ -112,9 +112,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   ElementsDeselector: {
-    width: "100%",
-    alignItems: "flex-start",
-    backgroundColor: "red",
+    width: '100%',
+    alignItems: 'flex-start',
+    backgroundColor: 'red',
   },
 
   button_icon: {

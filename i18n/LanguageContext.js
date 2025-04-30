@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useContext, useState } from 'react';
 
 // Création du contexte
 export const LanguageContext = createContext();
@@ -8,11 +8,11 @@ export const useLanguage = () => {
 };
 
 // Fournisseur de contexte
-export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState("en"); // Langue par défaut
+export const LanguageProvider = ({children}) => {
+  const [language, setLanguage] = useState('en'); // Langue par défaut
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage }}>
+    <LanguageContext.Provider value={{language, setLanguage}}>
       {children}
     </LanguageContext.Provider>
   );

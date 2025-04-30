@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   container: {
     //flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   cardsContainer: {
     width: '100%',
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: 'pink'
+    backgroundColor: 'pink',
   },
   statContainer: {
     width: screenWidth * 0.9,
@@ -71,32 +71,32 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray',
     paddingHorizontal: 0,
     borderColor: 'green',
-    borderWidth: 3
+    borderWidth: 3,
   },
   sliderContainer: {
     width: '100%',
-    backgroundColor: 'green'
+    backgroundColor: 'green',
   },
   addButton: {
     backgroundColor: '#4CAF50',
     borderRadius: 25,
     padding: 12,
-    marginBottom: 20
+    marginBottom: 20,
   },
   addButtonText: {
     color: '#fff',
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   pressable: {
     backgroundColor: '#2196F3',
     padding: 12,
     marginVertical: 8,
     borderRadius: 8,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   pressableText: {
     color: '#fff',
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 });

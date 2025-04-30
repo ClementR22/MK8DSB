@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
-import ElementChip from "./ElementChip";
-import { elementsAllInfosList } from "@/data/data";
-import { useTheme } from "../../utils/ThemeContext";
-import { translate } from "../../i18n/translations";
-import { toggleCheckList } from "../../utils/toggleCheck";
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import ElementChip from './ElementChip';
+import { elementsAllInfosList } from '@/data/data';
+import { useTheme } from '../../utils/ThemeContext';
+import { translate } from '../../i18n/translations';
+import { toggleCheckList } from '../../utils/toggleCheck';
 
-const BodyTypeSelector = ({ chosenBodyType, setChosenBodyType }) => {
+const BodyTypeSelector = ({chosenBodyType, setChosenBodyType}) => {
   const th = useTheme();
   const bodyTypeIcons = [
     elementsAllInfosList[52],
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
   bodyTypeContainer: {
     paddingVertical: 20,
     paddingHorizontal: 6,
-    backgroundColor: "purple",
-    flexDirection: "row",
-    flexWrap: "wrap",
+    backgroundColor: 'purple',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 });

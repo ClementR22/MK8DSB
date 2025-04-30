@@ -1,23 +1,14 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import { bodyTypeNames, elementsAllInfosList } from "../data/data";
-import { translate } from "../i18n/translations";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import showToast from "./toast";
-import { useOrderNumber } from "./OrderNumberContext";
-import { statNames } from "../data/data";
-import { searchSetStatsFromElementsIds } from "./searchSetStatsFromElementsIds";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { statNames } from '@/data/data';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import showToast from './toast';
+import { searchSetStatsFromElementsIds } from './searchSetStatsFromElementsIds';
 
 // Créer le contexte
 const SetsListContext = createContext();
 
 // Fournisseur du contexte
-export const SetsListProvider = ({ children }) => {
+export const SetsListProvider = ({children}) => {
   const [chosenStats, setChosenStats] = useState(
     statNames.map((statName, index) => {
       return {
@@ -29,23 +20,23 @@ export const SetsListProvider = ({ children }) => {
           setChosenStats((prevStats) =>
             prevStats.map((stat) =>
               stat.name === statName
-                ? { ...stat, statFilterNumber: newState }
-                : stat
-            )
+                ? {...stat, statFilterNumber: newState}
+                : stat,
+            ),
           );
         },
       };
-    })
+    }),
   );
 
   const setDefault = {
-    name: "Set 0",
+    name: 'Set 0',
     classIds: [9, 16, 30, 39],
     stats: [4, 3.75, 4.25, 4.5, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 4],
   };
 
   const [setsListDisplayed, setSetsListDisplayed] = useState([
-    { ...setDefault },
+    {...setDefault},
   ]);
 
   const [setsListSaved, setSetsListSaved] = useState([]);
@@ -57,17 +48,15 @@ export const SetsListProvider = ({ children }) => {
   const [setsSavedKeys, setSetsSavedKeys] = useState([]);
 
   const sortKeys = (keys) => {
-    const sortedKeys = keys.sort((a, b) => b.localeCompare(a));
-    return sortedKeys;
+    return keys.sort((a, b) => b.localeCompare(a));
   };
 
   const getSetsSavedKeys = async () => {
     try {
       const keys = await AsyncStorage.getAllKeys();
-      const sortedKeys = sortKeys(keys);
-      return sortedKeys;
+      return sortKeys(keys);
     } catch (error) {
-      console.error("Erreur lors de la récupération des données :", error);
+      console.error('Erreur lors de la récupération des données :', error);
       return [];
     }
   };
@@ -75,12 +64,11 @@ export const SetsListProvider = ({ children }) => {
   const getSetsSavedValues = async (setsSavedKeys) => {
     try {
       const setsSavedKeysAndValues = await AsyncStorage.multiGet(setsSavedKeys);
-      const setsSavedValues = setsSavedKeysAndValues.map(([key, value]) =>
-        JSON.parse(value)
+      return setsSavedKeysAndValues.map(([key, value]) =>
+        JSON.parse(value),
       );
-      return setsSavedValues;
     } catch (error) {
-      console.error("Erreur lors de la récupération des données :", error);
+      console.error('Erreur lors de la récupération des données :', error);
       return [];
     }
   };
@@ -109,25 +97,25 @@ export const SetsListProvider = ({ children }) => {
     while (setsListDisplayedNames.includes(`Set ${newSetNumber}`)) {
       newSetNumber += 1;
     }
-    const newSet = { ...setDefault, name: `Set ${newSetNumber}` };
+    const newSet = {...setDefault, name: `Set ${newSetNumber}`};
 
     setSetsListDisplayed((prev) => [...prev, newSet]);
   };
 
   const removeSet = (setCardSelectedIndex, situation) => {
     const setsListConcerned =
-      situation === "display" ? setsListDisplayed : setsListSaved;
+      situation === 'display' ? setsListDisplayed : setsListSaved;
     const setListUpdater =
-      situation === "display" ? setSetsListDisplayed : setSetsListSaved;
+      situation === 'display' ? setSetsListDisplayed : setSetsListSaved;
 
-    if (situation == "display" && setsListConcerned.length === 1) {
-      showToast("Erreur", "Vous devez garder au moins 1 set");
+    if (situation == 'display' && setsListConcerned.length === 1) {
+      showToast('Erreur', 'Vous devez garder au moins 1 set');
     } else {
       setListUpdater((prev) =>
-        prev.filter((set, index) => index !== setCardSelectedIndex)
+        prev.filter((set, index) => index !== setCardSelectedIndex),
       );
 
-      if (situation === "save") {
+      if (situation === 'save') {
         removeSetInMemory(setCardSelectedIndex);
       }
 
@@ -145,7 +133,7 @@ export const SetsListProvider = ({ children }) => {
     await AsyncStorage.removeItem(keyToRemove);
 
     setSetsSavedKeys((prevKeys) =>
-      prevKeys.filter((key) => key !== keyToRemove)
+      prevKeys.filter((key) => key !== keyToRemove),
     );
   };
 
@@ -157,21 +145,21 @@ export const SetsListProvider = ({ children }) => {
       prev.map((chosenStat, index) => {
         chosenStat.value = setCardSelectedStatList[index];
         return chosenStat;
-      })
+      }),
     );
-    showToast("Succès", "Les stats du set ont été chargéés");
+    showToast('Succès', 'Les stats du set ont été chargéés');
   };
 
   const loadSetSaveToDisplay = (setCardSelectedIndex) => {
     const setCardSelected = setsListSaved[setCardSelectedIndex];
     addSet(setCardSelected);
-    showToast("Succès", "Le set a été chargé");
+    showToast('Succès', 'Le set a été chargé');
   };
 
   const loadSetSearchToDisplay = (setCardSelectedIndex) => {
     const setCardSelected = setsListFound[setCardSelectedIndex];
     addSet(setCardSelected);
-    showToast("Succès", "Le set a été ajouté à l'écran de comparaison");
+    showToast('Succès', 'Le set a été ajouté à l\'écran de comparaison');
   };
 
   const saveSet = async (setCardSelected) => {
@@ -179,7 +167,7 @@ export const SetsListProvider = ({ children }) => {
       setSetsListSaved((prev) => [...prev, setCardSelected]);
       saveSetInMemory(setCardSelected);
 
-      showToast("Succès", "Le set est enregistré");
+      showToast('Succès', 'Le set est enregistré');
       return true;
     } catch (err) {
       alert(err);
@@ -209,17 +197,17 @@ export const SetsListProvider = ({ children }) => {
 
   const renameSet = (newName, situation, setCardIndex) => {
     const setsListConcerned =
-      situation === "search"
+      situation === 'search'
         ? setSetsListFound
-        : situation === "display"
-        ? setSetsListDisplayed
-        : setSetsListSaved;
+        : situation === 'display'
+          ? setSetsListDisplayed
+          : setSetsListSaved;
     setsListConcerned((prev) =>
       prev.map((set, index) => {
         if (index === setCardIndex) {
-          const setWithNewName = { ...set, name: newName };
+          const setWithNewName = {...set, name: newName};
 
-          if (situation == "save" || situation == "load") {
+          if (situation == 'save' || situation == 'load') {
             setItemInMemory(setCardIndex, setWithNewName);
           }
 
@@ -227,23 +215,23 @@ export const SetsListProvider = ({ children }) => {
         } else {
           return set;
         }
-      })
+      }),
     );
   };
 
   const updateSetsList = async (pressedClassIds, situation) => {
     const pressedClassIdsList = Object.values(pressedClassIds);
     const setSetsListConcerned =
-      situation === "display" ? setSetsListDisplayed : setSetsListSaved;
+      situation === 'display' ? setSetsListDisplayed : setSetsListSaved;
     setSetsListConcerned((prev) => {
-      const updatedSets = prev.map((set, index) => {
+      return prev.map((set, index) => {
         if (index === setCardActiveIndex) {
           const newSet = {
             ...set,
             classIds: pressedClassIdsList,
             stats: searchSetStatsFromElementsIds(pressedClassIdsList),
           };
-          if (situation === "save") {
+          if (situation === 'save') {
             const key = setsSavedKeys[index];
             setItemInMemory(key, newSet);
           }
@@ -254,12 +242,11 @@ export const SetsListProvider = ({ children }) => {
       });
 
       // Une fois que tout est prêt, tu mets à jour
-      return updatedSets;
     });
   };
 
   const updateEntireSetsListFound = (setsFoundClassIds) => {
-    setsFoundWithName = setsFoundClassIds.map((setsFoundClassIds) => ({
+    let setsFoundWithName = setsFoundClassIds.map((setsFoundClassIds) => ({
       name: null,
       ...setsFoundClassIds,
     }));

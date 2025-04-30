@@ -1,11 +1,9 @@
-import { useSetsList } from "./SetsListContext";
-import showToast from "./toast";
+import showToast from './toast';
 
 const updateChecks = (prev, name) => {
-  const updatedChecks = prev.map((item) =>
-    item.name === name ? { ...item, checked: !item.checked } : item
+  return prev.map((item) =>
+    item.name === name ? {...item, checked: !item.checked} : item,
   );
-  return updatedChecks;
 };
 
 export const toggleCheckList = (setStatsList, name) => {
@@ -17,7 +15,7 @@ export const toggleCheckList = (setStatsList, name) => {
 export const toggleCheckChosenStats = (
   setChosenStats,
   name,
-  setIsStatsVisible
+  setIsStatsVisible,
 ) => {
   setChosenStats((prev) => {
     const newList = updateChecks(prev, name);
@@ -28,7 +26,7 @@ export const toggleCheckChosenStats = (
     if (!hasChecked) {
       showToast();
       return newList.map((item) =>
-        item.name === name ? { ...item, checked: true } : item
+        item.name === name ? {...item, checked: true} : item,
       );
     }
 

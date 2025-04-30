@@ -1,22 +1,21 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
-import { useTheme } from "../../utils/ThemeContext";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useOrderNumber } from "../../utils/OrderNumberContext";
-import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
-import CategorySelector from "./CategorySelector";
-import { scrollToSection } from "../../utils/scrollToSection";
-import SelectedCategoryElementsView from "./SelectedCategoryElementsView";
-import ButtonScrollToTop from "../ButtonScrollToTop";
-import { translate } from "../../i18n/translations";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useTheme } from '../../utils/ThemeContext';
+import { useOrderNumber } from '../../utils/OrderNumberContext';
+import ButtonMultiStateToggle from '../ButtonMultiStateToggle';
+import CategorySelector from './CategorySelector';
+import { scrollToSection } from '../../utils/scrollToSection';
+import SelectedCategoryElementsView from './SelectedCategoryElementsView';
+import ButtonScrollToTop from '../ButtonScrollToTop';
+import { translate } from '../../i18n/translations';
 
-const ElementsSelector = ({ situation, galeryCase = false }) => {
+const ElementsSelector = ({situation, galeryCase = false}) => {
   const th = useTheme();
 
-  const { orderNumber, setOrderNumber } = useOrderNumber();
+  const {orderNumber, setOrderNumber} = useOrderNumber();
 
   // État pour suivre l'onglet sélectionné
-  const [selectedTab, setSelectedTab] = useState("character");
+  const [selectedTab, setSelectedTab] = useState('character');
 
   const scrollViewRef = useRef(null);
 
@@ -24,7 +23,7 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
     (sectionRef, animated = true) => {
       scrollToSection(scrollViewRef, sectionRef, animated);
     },
-    []
+    [],
   );
 
   const scrollToTopWithScrollViewRef = useCallback(() => {
@@ -43,20 +42,20 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
   useEffect(() => {
     // Initialise les refs s'ils n'existent pas encore
     if (sectionRefs.current.length === 0) {
-      sectionRefs.current = Array.from({ length: 5 }, () => React.createRef());
+      sectionRefs.current = Array.from({length: 5}, () => React.createRef());
     }
   }, []);
 
   return (
     <View
       style={styles.outerContainer}
-      key={"outerContainer"}
+      key={'outerContainer'}
       ref={sectionRefs.current[4]}
     >
       <ButtonMultiStateToggle
         number={orderNumber}
         setNumber={setOrderNumber}
-        text={translate("Sort")}
+        text={translate('Sort')}
       />
       {/* Navigation par onglets */}
 
@@ -71,7 +70,7 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
         scrollEventThrottle={64}
         ref={scrollViewRef}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={{flexGrow: 1}}
       >
         <SelectedCategoryElementsView
           selectedTab={selectedTab}
@@ -94,17 +93,17 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    width: "100%",
-    backgroundColor: "blue",
+    width: '100%',
+    backgroundColor: 'blue',
     padding: 20,
   },
   tabText: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   text: {
     fontSize: 25,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 16,
   },
 });

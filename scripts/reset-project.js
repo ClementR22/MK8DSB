@@ -14,15 +14,15 @@ const oldDirPath = path.join(root, 'app');
 const newDirPath = path.join(root, 'app-example');
 const newAppDirPath = path.join(root, 'app');
 
-const indexContent = `import { Text, View } from "react-native";
+const indexContent = `import { Text, View } from 'react-native';
 
 export default function Index() {
   return (
     <View
       style={{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
       <Text>Edit app/index.tsx to edit this screen.</Text>
@@ -48,7 +48,7 @@ fs.rename(oldDirPath, newDirPath, (error) => {
   }
   console.log('/app moved to /app-example.');
 
-  fs.mkdir(newAppDirPath, { recursive: true }, (error) => {
+  fs.mkdir(newAppDirPath, {recursive: true}, (error) => {
     if (error) {
       return console.error(`Error creating new app directory: ${error}`);
     }

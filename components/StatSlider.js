@@ -1,26 +1,26 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Slider } from "@miblanchard/react-native-slider";
-import ButtonMultiStateToggle from "./ButtonMultiStateToggle";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Slider } from '@miblanchard/react-native-slider';
+import ButtonMultiStateToggle from './ButtonMultiStateToggle';
 
-import { vw } from "./styles/theme";
-import { useTheme } from "../utils/ThemeContext";
-import { translate } from "../i18n/translations";
+import { vw } from './styles/theme';
+import { useTheme } from '../utils/ThemeContext';
+import { translate } from '../i18n/translations';
 
 const StatSlider = ({
-  name,
-  sliderValue,
-  setSliderValue,
-  statFilterNumber,
-  setStatFilterNumber,
-}) => {
+                      name,
+                      sliderValue,
+                      setSliderValue,
+                      statFilterNumber,
+                      setStatFilterNumber,
+                    }) => {
   const th = useTheme();
 
   return (
     <View
       style={[
         styles.container,
-        { backgroundColor: th.surface, borderColor: th.outline_variant },
+        {backgroundColor: th.surface, borderColor: th.outline_variant},
       ]}
     >
       <View style={styles.containerTop}>
@@ -28,13 +28,13 @@ const StatSlider = ({
           <Text
             numberOfLines={1}
             ellipsizeMode="middle"
-            style={[styles.textLeft, { color: th.on_surface }]}
+            style={[styles.textLeft, {color: th.on_surface}]}
           >
             {translate(name)}
           </Text>
 
-          <Text style={[styles.textRight, { color: th.on_surface }]}>
-            {translate(":")}
+          <Text style={[styles.textRight, {color: th.on_surface}]}>
+            {translate(':')}
             {sliderValue}
           </Text>
         </View>
@@ -42,7 +42,7 @@ const StatSlider = ({
           number={statFilterNumber}
           setNumber={setStatFilterNumber}
           filterCase={true}
-          text={translate("ChangeCondition")}
+          text={translate('ChangeCondition')}
         />
       </View>
 
@@ -57,9 +57,9 @@ const StatSlider = ({
             //thumbStyle={[styles.thumb, { backgroundColor: th.primary }]}
             trackStyle={[
               styles.track,
-              { backgroundColor: th.secondary_container },
+              {backgroundColor: th.secondary_container},
             ]}
-            thumbTouchSize={{ width: 10, height: 10 }}
+            thumbTouchSize={{width: 10, height: 10}}
           />
         </View>
       </View>
@@ -79,13 +79,13 @@ const styles = StyleSheet.create({
     width: 0.9 * vw, // Largeur maximale de 90% de la largeur de l'écran
   },
   containerTop: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 3,
   },
   textContainer: {
-    flexDirection: "row", // Aligne les deux textes sur une ligne
+    flexDirection: 'row', // Aligne les deux textes sur une ligne
     flex: 1, // Prend toute la largeur disponible
   },
   textLeft: {
@@ -93,8 +93,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginLeft: 6,
     flexShrink: 1, // Permet de réduire la largeur du texte si nécessaire
-    maxWidth: "70%", // Largeur maximale pour le texte de gauche
-    overflow: "hidden", // Cache l'excédent du texte
+    maxWidth: '70%', // Largeur maximale pour le texte de gauche
+    overflow: 'hidden', // Cache l'excédent du texte
   },
   textRight: {
     //color: th.on_surface,
@@ -102,14 +102,14 @@ const styles = StyleSheet.create({
     flexShrink: 0, // Le texte de droite ne rétrécit pas
   },
   containerBottom: {
-    width: "100%",
+    width: '100%',
     paddingHorizontal: 10,
     paddingVertical: 5,
   },
   sliderContainer: {
     height: 20,
-    alignItems: "stretch",
-    justifyContent: "center",
+    alignItems: 'stretch',
+    justifyContent: 'center',
   },
   thumb: {
     width: 4,

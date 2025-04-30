@@ -27,8 +27,8 @@ const SearchSetScreen = () => {
   const updateSliderValue = (name, newValue) => {
     setChosenStats(
       chosenStats.map((stat) =>
-        stat.name === name ? {...stat, value: newValue} : stat
-      )
+        stat.name === name ? {...stat, value: newValue} : stat,
+      ),
     );
   };
 
@@ -41,7 +41,7 @@ const SearchSetScreen = () => {
               <View
                 style={[
                   styles.statSlidersContainer,
-                  {backgroundColor: th.surface_container_high}
+                  {backgroundColor: th.surface_container_high},
                 ]}
               >
                 <Text
@@ -51,8 +51,8 @@ const SearchSetScreen = () => {
                       paddingHorizontal: 10,
                       borderRadius: 5,
                       marginBottom: 16,
-                      color: th.on_surface
-                    }
+                      color: th.on_surface,
+                    },
                   ]}
                 >
                   {translate('SearchedStats')}
@@ -107,27 +107,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 
   img: {
     height: 30,
-    width: 30
+    width: 30,
   },
 
   text: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
 
   checkbox: {
     width: 30,
-    height: 30
+    height: 30,
   },
 
   checkBoxItemLabel: {
     fontSize: 18,
-    marginVertical: 10
+    marginVertical: 10,
   },
 
   checkBoxesContainer: {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     borderTopColor: '#000',
     borderTopWidth: 1,
     borderBottomColor: '#000',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
 
   statSlidersContainer: {
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     minWidth: 0.8 * vw,
     minHeight: 100,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
 
   modalBackground: {
@@ -160,12 +160,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 
   modalText: {
     fontSize: 18,
-    marginBottom: 20
+    marginBottom: 20,
   },
 
   pressable: {
@@ -173,24 +173,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#007BFF',
     borderRadius: 5,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 
   pressableText: {
     color: 'white',
-    fontSize: 16
+    fontSize: 16,
   },
 
   SearchPressable: {
-    fontSize: 20
+    fontSize: 20,
   },
   ElementsDeselector: {
     width: '100%',
     alignItems: 'flex-start',
-    backgroundColor: 'red'
+    backgroundColor: 'red',
   },
 
   button_icon: {
-    margin: 16
-  }
+    margin: 16,
+  },
 });

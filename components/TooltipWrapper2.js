@@ -1,8 +1,8 @@
-import React, { useRef, useState, cloneElement, isValidElement } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import Tooltip from "react-native-walkthrough-tooltip";
+import React, { useState } from 'react';
+import { Pressable, StyleSheet, Text } from 'react-native';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
-const TooltipWrapper = ({ tooltipText, onPress, children }) => {
+const TooltipWrapper = ({tooltipText, onPress, children}) => {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -28,15 +28,15 @@ const TooltipWrapper = ({ tooltipText, onPress, children }) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    position: "relative",
-    alignItems: "center",
-    justifyContent: "center",
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   tooltip: {
-    position: "absolute",
-    bottom: "100%",
+    position: 'absolute',
+    bottom: '100%',
     marginBottom: 8,
-    backgroundColor: "#333",
+    backgroundColor: '#333',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 6,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     elevation: 10, // pour Android
   },
   tooltipText: {
-    color: "white",
+    color: 'white',
     fontSize: 12,
   },
 });

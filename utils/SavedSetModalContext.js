@@ -1,8 +1,8 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useContext, useState } from 'react';
 
 const SavedSetModalContext = createContext();
 
-export const SavedSetModalProvider = ({ children }) => {
+export const SavedSetModalProvider = ({children}) => {
   const [savedSetModalVisible, setSavedSetModalVisible] = useState(false);
 
   const toggleSavedSetModal = (visible) => {

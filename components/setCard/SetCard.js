@@ -23,7 +23,7 @@ const SetCard = ({
                    chosenStats,
                    setCardIndex = null,
                    situation,
-                   screenSituation = null
+                   screenSituation = null,
                  }) => {
   const th = useTheme();
 
@@ -34,7 +34,7 @@ const SetCard = ({
     loadSetSaveToDisplay,
     loadSetSearchToDisplay,
     removeSet,
-    setSetCardActiveIndex
+    setSetCardActiveIndex,
   } = useSetsList();
 
   const {updatePressableImagesList} = usePressableImages();
@@ -57,7 +57,7 @@ const SetCard = ({
       showRemove: false,
       showSave: true,
       showLoadToSearch: false,
-      showLoadToDisplay: true
+      showLoadToDisplay: true,
     },
     display: {
       showTextInput: true,
@@ -66,7 +66,7 @@ const SetCard = ({
       showRemove: true,
       showSave: true,
       showLoadToSearch: false,
-      showLoadToDisplay: false
+      showLoadToDisplay: false,
     },
     save: {
       showTextInput: true,
@@ -75,7 +75,7 @@ const SetCard = ({
       showRemove: true,
       showSave: false,
       showLoadToSearch: false,
-      showLoadToDisplay: true
+      showLoadToDisplay: true,
     },
     load: {
       showTextInput: true,
@@ -84,8 +84,8 @@ const SetCard = ({
       showRemove: true,
       showSave: false,
       showLoadToSearch: screenSituation === 'search',
-      showLoadToDisplay: screenSituation === 'display'
-    }
+      showLoadToDisplay: screenSituation === 'display',
+    },
   };
 
   const config = situationConfig[situation] ?? {};
@@ -121,7 +121,7 @@ const SetCard = ({
         setIsModalVisible={setIsImagesModalVisible}
         ModalContentsList={[SetImagesContainer]}
         contentPropsList={[
-          {setToShowClassIds: setToShowClassIds, mode: 'image'}
+          {setToShowClassIds: setToShowClassIds, mode: 'image'},
         ]}
         closeButtonText="Close"
       />
@@ -132,8 +132,8 @@ const SetCard = ({
         ModalContentsList={[ElementsSelector]}
         contentPropsList={[
           {
-            situation: situation
-          }
+            situation: situation,
+          },
         ]}
       />
       <MyModal
@@ -145,8 +145,8 @@ const SetCard = ({
           {
             setToShowName: setToShowName,
             setCardIndex: setCardIndex,
-            situation: situation
-          }
+            situation: situation,
+          },
         ]}
         closeButtonText={translate('Confirm')}
         checkBeforeClose={async () => {
@@ -232,13 +232,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 3,
-    width: 300
+    width: 300,
   },
   closePressable: {
     padding: 10,
     backgroundColor: '#007BFF',
     borderRadius: 5,
-    marginTop: 20
+    marginTop: 20,
   },
   textLeft: {
     //color: th.on_surface,
@@ -247,18 +247,18 @@ const styles = StyleSheet.create({
     flexShrink: 1, // Permet de réduire la largeur du texte si nécessaire
     maxWidth: '70%', // Largeur maximale pour le texte de gauche
     overflow: 'hidden', // Cache l'excédent du texte
-    marginRight: 30
+    marginRight: 30,
   },
   category: {
     textAlign: 'left', // Aligner à gauche
-    marginRight: 16 // Un petit espacement entre la colonne 1 et la colonne 2
+    marginRight: 16, // Un petit espacement entre la colonne 1 et la colonne 2
   },
   image: {
     width: 50,
     height: 50,
-    margin: 5
+    margin: 5,
   },
   textInput: {
-    backgroundColor: 'grey'
-  }
+    backgroundColor: 'grey',
+  },
 });

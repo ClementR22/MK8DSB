@@ -1,30 +1,29 @@
-import { Pressable, StyleSheet, Text } from "react-native";
-import { useTheme } from "../utils/ThemeContext";
-import { button, button_icon } from "./styles/button";
-import { View } from "react-native";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { bodyTypeNames, setAllInfos } from "../data/data";
-import StatSliderResultSelectorPressable from "./statSliderResult/StatSliderResultSelectorPressable";
-import MyModal from "./modal/MyModal";
-import { translate } from "../i18n/translations";
-import { useState } from "react";
-import { useSetsList } from "../utils/SetsListContext";
-import { useSearchSetScreen } from "../utils/SearchSetScreenContext";
-import { usePressableImages } from "../utils/PressableImagesContext";
-import { shadow_3dp } from "./styles/theme";
-import StatSelector from "./StatSelector";
-import BodyTypeSelector from "./elementsSelector/BodyTypeSelector";
-import ElementsDeselector from "./elementsSelector/ElementsDeselector";
-import ElementsSelector from "./elementsSelector/ElementsSelector";
-import ResultsNumber from "./ResultsNumberSelector";
-import { toggleCheckChosenStats } from "../utils/toggleCheck";
-import TooltipWrapper from "./TooltipWrapper3";
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTheme } from '../utils/ThemeContext';
+import { button, button_icon } from './styles/button';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { bodyTypeNames, setAllInfos } from '../data/data';
+import StatSliderResultSelectorPressable from './statSliderResult/StatSliderResultSelectorPressable';
+import MyModal from './modal/MyModal';
+import { translate } from '../i18n/translations';
+import { useState } from 'react';
+import { useSetsList } from '../utils/SetsListContext';
+import { useSearchSetScreen } from '../utils/SearchSetScreenContext';
+import { usePressableImages } from '../utils/PressableImagesContext';
+import { shadow_3dp } from './styles/theme';
+import StatSelector from './StatSelector';
+import BodyTypeSelector from './elementsSelector/BodyTypeSelector';
+import ElementsDeselector from './elementsSelector/ElementsDeselector';
+import ElementsSelector from './elementsSelector/ElementsSelector';
+import ResultsNumber from './ResultsNumberSelector';
+import { toggleCheckChosenStats } from '../utils/toggleCheck';
+import TooltipWrapper from './TooltipWrapper3';
 
 const SearchSetScreenPressablesContainer = ({
-  chosenStats,
-  setChosenStats,
-  setSetsToShow,
-}) => {
+                                              chosenStats,
+                                              setChosenStats,
+                                              setSetsToShow,
+                                            }) => {
   const th = useTheme();
 
   const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);
@@ -36,21 +35,21 @@ const SearchSetScreenPressablesContainer = ({
 
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
 
-  const { updateEntireSetsListFound } = useSetsList();
+  const {updateEntireSetsListFound} = useSetsList();
 
-  const { isStatsVisible, setIsStatsVisible } = useSearchSetScreen();
+  const {isStatsVisible, setIsStatsVisible} = useSearchSetScreen();
 
-  const { pressableImagesByCategory } = usePressableImages();
+  const {pressableImagesByCategory} = usePressableImages();
 
   const [chosenBodyType, setChosenBodyType] = useState(
     bodyTypeNames.map((bodyTypeName, index) => ({
       name: bodyTypeName,
       checked: true,
-    }))
+    })),
   );
 
   const updateSetsToShow = (setsFound) => {
-    const setsFoundLight = setsFound.map(({ id, bodyTypes, ...rest }) => rest);
+    const setsFoundLight = setsFound.map(({id, bodyTypes, ...rest}) => rest);
     setSetsToShow(setsFoundLight);
     updateEntireSetsListFound(setsFoundLight);
   };
@@ -65,7 +64,7 @@ const SearchSetScreenPressablesContainer = ({
       Object.entries(category).forEach(([classKey, classElements]) => {
         // Si au moins une image est pressée (true), ajouter la classe à pressedClasses
         const isAnyImagePressed = Object.values(classElements).some(
-          ({ pressed }) => pressed
+          ({pressed}) => pressed,
         );
         if (isAnyImagePressed) {
           pressedClassesInCategory.push(+classKey); // +str pour convertir en entier
@@ -82,7 +81,7 @@ const SearchSetScreenPressablesContainer = ({
     const chosenStatsChecked = chosenStats.map((stat) => stat.checked);
     const chosenStatsValue = chosenStats.map((stat) => stat.value);
     const chosenStatsFilterNumber = chosenStats.map(
-      (stat) => stat.statFilterNumber
+      (stat) => stat.statFilterNumber,
     );
 
     const chosenBodyTypeList = chosenBodyType
@@ -90,7 +89,7 @@ const SearchSetScreenPressablesContainer = ({
       .map((bodyType) => bodyType.name);
 
     const chosenElementsIds = elementsFilterObjectToList(
-      pressableImagesByCategory
+      pressableImagesByCategory,
     );
 
     if (!chosenStatsChecked.includes(true) || chosenBodyTypeList.length === 0) {
@@ -99,7 +98,7 @@ const SearchSetScreenPressablesContainer = ({
     }
 
     const gaps = setAllInfos.reduce((acc, setInfo, setIndex) => {
-      const { classIds, stats, bodyTypes } = setInfo;
+      const {classIds, stats, bodyTypes} = setInfo;
 
       // Vérifier si au moins un type de corps est présent
       const listIsSetElementAccepted = classIds.map(
@@ -109,7 +108,7 @@ const SearchSetScreenPressablesContainer = ({
             category_x_ElementIds.includes(elementId) ||
             category_x_ElementIds.length === 0
           );
-        }
+        },
       );
       if (
         !bodyTypes.some((item) => chosenBodyTypeList.includes(item)) ||
@@ -138,7 +137,7 @@ const SearchSetScreenPressablesContainer = ({
       });
 
       if (validSet) {
-        acc.push({ setIndex, gap });
+        acc.push({setIndex, gap});
       }
 
       return acc;
@@ -151,7 +150,7 @@ const SearchSetScreenPressablesContainer = ({
     } else {
       const setsFound = gaps
         .slice(0, Math.min(resultsNumber, gaps.length))
-        .map(({ setIndex }) => ({ ...setAllInfos[setIndex] }));
+        .map(({setIndex}) => ({...setAllInfos[setIndex]}));
       updateSetsToShow(setsFound);
     }
   };
@@ -159,25 +158,25 @@ const SearchSetScreenPressablesContainer = ({
   return (
     <View style={styles.pressablesContainer}>
       <TooltipWrapper
-        tooltipText={translate("ChooseStats")}
+        tooltipText={translate('ChooseStats')}
         style={[button_icon(th).container, shadow_3dp]}
         onPress={() => setChosenStatsModalVisible(true)}
       >
-        <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
+        <MaterialCommunityIcons name="plus" size={24} color={th.on_primary}/>
       </TooltipWrapper>
 
       <TooltipWrapper
-        tooltipText={translate("Filters")}
+        tooltipText={translate('Filters')}
         style={[button_icon(th).container, shadow_3dp]}
         onPress={() => setIsFilterModalVisible(true)}
       >
-        <MaterialCommunityIcons name="pin" size={24} color={th.on_primary} />
+        <MaterialCommunityIcons name="pin" size={24} color={th.on_primary}/>
       </TooltipWrapper>
 
       <Pressable
         style={[
           button(th).container,
-          { flexDirection: "row", paddingRight: 24, paddingLeft: 16 },
+          {flexDirection: 'row', paddingRight: 24, paddingLeft: 16},
           shadow_3dp,
         ]}
         onPress={() => search()}
@@ -187,17 +186,17 @@ const SearchSetScreenPressablesContainer = ({
           size={24}
           color={th.on_primary}
         />
-        <Text style={[button(th).text, { marginLeft: 8 }]}>
-          {translate("Search")}
+        <Text style={[button(th).text, {marginLeft: 8}]}>
+          {translate('Search')}
         </Text>
       </Pressable>
 
       <TooltipWrapper
-        tooltipText={translate("NumberOfResults")}
+        tooltipText={translate('NumberOfResults')}
         style={[button_icon(th).container, shadow_3dp]}
         onPress={() => setResultsNumberModalVisible(true)}
       >
-        <MaterialIcons name="numbers" size={24} color={th.on_primary} />
+        <MaterialIcons name="numbers" size={24} color={th.on_primary}/>
       </TooltipWrapper>
 
       <StatSliderResultSelectorPressable
@@ -206,7 +205,7 @@ const SearchSetScreenPressablesContainer = ({
       />
 
       <MyModal
-        modalTitle={translate("StatsToParameter")}
+        modalTitle={translate('StatsToParameter')}
         isModalVisible={chosenStatsModalVisible}
         setIsModalVisible={setChosenStatsModalVisible}
         ModalContentsList={[StatSelector]}
@@ -221,7 +220,7 @@ const SearchSetScreenPressablesContainer = ({
       />
 
       <MyModal
-        modalTitle={translate("Filter")}
+        modalTitle={translate('Filter')}
         isModalVisible={isFilterModalVisible}
         setIsModalVisible={setIsFilterModalVisible}
         ModalContentsList={[
@@ -235,12 +234,12 @@ const SearchSetScreenPressablesContainer = ({
             setChosenBodyType: setChosenBodyType,
           },
           {},
-          { situation: "search" },
+          {situation: 'search'},
         ]}
       />
 
       <MyModal
-        modalTitle={translate("NumberOfResults")}
+        modalTitle={translate('NumberOfResults')}
         isModalVisible={resultsNumberModalVisible}
         setIsModalVisible={setResultsNumberModalVisible}
         ModalContentsList={[ResultsNumber]}
@@ -258,7 +257,7 @@ const SearchSetScreenPressablesContainer = ({
 const styles = StyleSheet.create({
   pressablesContainer: {
     // width: screenWidth * 0.87 + 20,
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 10,
     marginBottom: 10,
   },

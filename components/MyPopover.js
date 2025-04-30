@@ -1,22 +1,11 @@
-import {
-  Dimensions,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import { Dimensions, Pressable, Text } from 'react-native';
+import React, { useRef, useState } from 'react';
 
-import Popover, {
-  PopoverMode,
-  PopoverPlacement,
-} from "react-native-popover-view";
+import Popover from 'react-native-popover-view';
 
-import { Portal } from "react-native-paper";
+import { Portal } from 'react-native-paper';
 
-const MyPopover = ({ children, popoverText }) => {
+const MyPopover = ({children, popoverText}) => {
   const [showPopover, setShowPopover] = useState(false);
 
   const touchableRef = useRef();
@@ -28,19 +17,19 @@ const MyPopover = ({ children, popoverText }) => {
     }
   };
 
-  const windowDimensions = Dimensions.get("window");
+  const windowDimensions = Dimensions.get('window');
 
   return (
     <Portal.Host>
       <Pressable
         ref={touchableRef}
         onPress={() => {
-          console.log("onPResse");
+          console.log('onPResse');
           openPopover();
         }}
         style={{
           paddingBottom: 80,
-          backgroundColor: "green",
+          backgroundColor: 'green',
         }}
       >
         {children}
@@ -55,7 +44,7 @@ const MyPopover = ({ children, popoverText }) => {
         //placement="top"
         // popoverShift={{ x: -1, y: -1 }}
         popoverStyle={{
-          position: "absolute",
+          position: 'absolute',
           top: 0, // Positionnement relatif à l'image
           left: 0, // Ajuster si nécessaire
           zIndex: 1000, // Toujours au-dessus
@@ -69,8 +58,8 @@ const MyPopover = ({ children, popoverText }) => {
         //
       >
         <Text
-          style={{ backgroundColor: "red", height: 30 }}
-          popoverStyle={{ zIndex: 9999 }}
+          style={{backgroundColor: 'red', height: 30}}
+          popoverStyle={{zIndex: 9999}}
         >
           {popoverText}
         </Text>

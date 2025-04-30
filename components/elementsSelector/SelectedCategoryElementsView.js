@@ -1,26 +1,25 @@
-import React, { useMemo } from "react";
-import { Pressable, StyleSheet, Text } from "react-native";
-import { View } from "react-native";
-import ElementImage from "./ElementImage";
-import { bodyTypeNames } from "../../data/data";
-import { button } from "../styles/button";
-import { useTheme } from "../../utils/ThemeContext";
-import { translate } from "../../i18n/translations";
-import ElementChip from "./ElementChip";
-import { usePressableImages } from "../../utils/PressableImagesContext";
-import { useOrderNumber } from "../../utils/OrderNumberContext";
+import React, { useMemo } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import ElementImage from './ElementImage';
+import { bodyTypeNames } from '../../data/data';
+import { button } from '../styles/button';
+import { useTheme } from '../../utils/ThemeContext';
+import { translate } from '../../i18n/translations';
+import ElementChip from './ElementChip';
+import { usePressableImages } from '../../utils/PressableImagesContext';
+import { useOrderNumber } from '../../utils/OrderNumberContext';
 
 const SelectedCategoryElementsView = React.memo(
   ({
-    selectedTab,
-    situation,
-    galeryCase,
-    scrollToSectionWithScrollViewRef,
-    sectionRefs,
-  }) => {
+     selectedTab,
+     situation,
+     galeryCase,
+     scrollToSectionWithScrollViewRef,
+     sectionRefs,
+   }) => {
     const th = useTheme();
 
-    const { orderNumber } = useOrderNumber();
+    const {orderNumber} = useOrderNumber();
 
     const {
       pressableImagesByCategory,
@@ -28,35 +27,35 @@ const SelectedCategoryElementsView = React.memo(
       handlePressImageByClass,
     } = usePressableImages();
 
-    const ElementsView = ({ elements }) => {
+    const ElementsView = ({elements}) => {
       return (
-        <View style={[styles.categoryContainer, { flexDirection: "row" }]}>
-          {elements.map(({ id, name, category, classId, image, pressed }) =>
+        <View style={[styles.categoryContainer, {flexDirection: 'row'}]}>
+          {elements.map(({id, name, category, classId, image, pressed}) =>
             !galeryCase ? (
               <ElementChip
                 key={id}
                 name={name}
                 pressed={pressed}
                 onPress={
-                  situation != "search"
+                  situation != 'search'
                     ? () => {
-                        handlePressImageByClass(classId, category);
-                      }
+                      handlePressImageByClass(classId, category);
+                    }
                     : () => {
-                        handlePressImage(id);
-                      }
+                      handlePressImage(id);
+                    }
                 }
                 source={image}
               />
             ) : (
-              <ElementImage key={id} name={name} source={image} />
-            )
+              <ElementImage key={id} name={name} source={image}/>
+            ),
           )}
         </View>
       );
     };
 
-    const BodyTabContent = ({ bodyElementsByBodyType }) => (
+    const BodyTabContent = ({bodyElementsByBodyType}) => (
       <View>
         <View style={styles.bodyTypeBookmarksContainer}>
           {bodyTypeNames.map((bodyTypeName, index) => (
@@ -75,12 +74,12 @@ const SelectedCategoryElementsView = React.memo(
           {Object.entries(bodyElementsByBodyType).map(
             ([subCategoryKey, subCategoryElements], index) => (
               <View key={subCategoryKey} ref={sectionRefs.current[index]}>
-                <Text style={{ flex: 1, backgroundColor: "white" }}>
+                <Text style={{flex: 1, backgroundColor: 'white'}}>
                   {translate(subCategoryKey)}
                 </Text>
-                <ElementsView elements={subCategoryElements} />
+                <ElementsView elements={subCategoryElements}/>
               </View>
-            )
+            ),
           )}
         </View>
       </View>
@@ -131,14 +130,14 @@ const SelectedCategoryElementsView = React.memo(
         ? memoizedSortedElements
         : sortElements(selectedCategoryElements, orderNumber);
 
-      if (selectedTab != "body") {
-        return <ElementsView elements={selectedCategoryElementsSorted} />;
+      if (selectedTab != 'body') {
+        return <ElementsView elements={selectedCategoryElementsSorted}/>;
       } else {
         const bodyElementsByBodyType = groupByBodyType(
-          selectedCategoryElementsSorted
+          selectedCategoryElementsSorted,
         );
         return (
-          <BodyTabContent bodyElementsByBodyType={bodyElementsByBodyType} />
+          <BodyTabContent bodyElementsByBodyType={bodyElementsByBodyType}/>
         );
       }
     } else {
@@ -148,33 +147,33 @@ const SelectedCategoryElementsView = React.memo(
         <View style={styles.bodyTypesContainer}>
           {Object.entries(selectedCategoryElements).map(
             ([classKey, classElements]) => (
-              <ElementsView key={classKey} elements={classElements} />
-            )
+              <ElementsView key={classKey} elements={classElements}/>
+            ),
           )}
         </View>
       );
     }
-  }
+  },
 );
 
 const styles = StyleSheet.create({
   categoryContainer: {
-    backgroundColor: "green",
+    backgroundColor: 'green',
     rowGap: 8,
-    flexWrap: "wrap",
+    flexWrap: 'wrap',
     padding: 20,
   },
   bodyTypeBookmarksContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 10,
   },
   bodiesContainer: {
-    backgroundColor: "purple",
+    backgroundColor: 'purple',
     padding: 20,
   },
   bodyTypesContainer: {
     marginVertical: 5,
-    backgroundColor: "yellow",
+    backgroundColor: 'yellow',
     padding: 10,
   },
 });

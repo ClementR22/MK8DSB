@@ -1,22 +1,22 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
-import { usePressableImages } from "../../utils/PressableImagesContext";
-import ElementChip from "./ElementChip";
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { usePressableImages } from '../../utils/PressableImagesContext';
+import ElementChip from './ElementChip';
 
 const ElementsDeselector = () => {
-  const { pressableImagesList, handlePressImage } = usePressableImages();
+  const {pressableImagesList, handlePressImage} = usePressableImages();
   return (
     <View
       style={{
-        backgroundColor: "green",
+        backgroundColor: 'green',
         rowGap: 8,
-        flexDirection: "row",
-        flexWrap: "wrap",
+        flexDirection: 'row',
+        flexWrap: 'wrap',
       }}
     >
       {pressableImagesList
         .filter((element) => element.pressed)
-        .map(({ id, name, category, classId, image, pressed }) => (
+        .map(({id, name, category, classId, image, pressed}) => (
           <ElementChip
             key={id}
             name={name}
@@ -31,9 +31,9 @@ const ElementsDeselector = () => {
 
 const styles = StyleSheet.create({
   categoryContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap", // Permet le retour à la ligne
-    backgroundColor: "blue",
+    flexDirection: 'row',
+    flexWrap: 'wrap', // Permet le retour à la ligne
+    backgroundColor: 'blue',
   },
   pressableImages: {
     marginVertical: 10,
