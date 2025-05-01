@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { category4Names, elementsAllInfosList } from "../../data/data";
-import closeImage from "../assets/images/close.png";
+import closeImage from "../../assets/images/close.png";
 
 const iconSize = 38;
 
