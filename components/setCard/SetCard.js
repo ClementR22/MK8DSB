@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { card } from "../styles/card";
 import { useTheme } from "../../utils/ThemeContext";
 import MyModal from "../modal/MyModal";
@@ -7,7 +7,11 @@ import SetImagesContainer from "./SetImagesContainer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
 import { button_icon } from "../styles/button";
 import { shadow_3dp } from "../styles/theme";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import { translate } from "../../i18n/translations";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "../../utils/PressableImagesContext";
@@ -34,6 +38,7 @@ const SetCard = ({
     loadSetSaveToDisplay,
     loadSetSearchToDisplay,
     removeSet,
+    removeSetInMemory,
     setSetCardActiveIndex,
   } = useSetsList();
 
@@ -59,6 +64,7 @@ const SetCard = ({
       showLoadSaveToSearch: false,
       showLoadSaveToDisplay: false,
       showLoadSearchToDisplay: true,
+      showRemoveInMemory: false,
     },
     display: {
       showTextInput: true,
@@ -69,26 +75,29 @@ const SetCard = ({
       showLoadSaveToSearch: false,
       showLoadSaveToDisplay: false,
       showLoadSearchToDisplay: false,
+      showRemoveInMemory: false,
     },
     save: {
       showTextInput: true,
       showStatSliderResult: true,
       showEdit: true,
-      showRemove: true,
+      showRemove: false,
       showSave: false,
       showLoadSaveToSearch: false,
       showLoadSaveToDisplay: true,
       showLoadSearchToDisplay: false,
+      showRemoveInMemory: true,
     },
     load: {
       showTextInput: true,
       showStatSliderResult: false,
       showEdit: false,
-      showRemove: true,
+      showRemove: false,
       showSave: false,
       showLoadSaveToSearch: screenSituation === "search",
       showLoadSaveToDisplay: screenSituation === "display",
       showLoadSearchToDisplay: false,
+      showRemoveInMemory: false,
     },
   };
 
@@ -238,6 +247,19 @@ const SetCard = ({
               color={th.on_primary}
             />
           </TooltipWrapper>
+        )}
+
+        {config.showRemoveInMemory && (
+          <Pressable
+            style={[button_icon(th).container, shadow_3dp]}
+            onPress={() => removeSetInMemory(setCardIndex)}
+          >
+            <MaterialCommunityIcons
+              name="trash-can"
+              size={24}
+              color={th.on_primary}
+            />
+          </Pressable>
         )}
       </Container>
     </View>

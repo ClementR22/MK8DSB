@@ -115,10 +115,6 @@ export const SetsListProvider = ({ children }) => {
         prev.filter((set, index) => index !== setCardSelectedIndex)
       );
 
-      if (situation === "save") {
-        removeSetInMemory(setCardSelectedIndex);
-      }
-
       if (setCardSelectedIndex < setCardActiveIndex) {
         setSetCardActiveIndex(setCardActiveIndex - 1);
       } else if (setCardSelectedIndex === setCardActiveIndex) {
@@ -135,6 +131,8 @@ export const SetsListProvider = ({ children }) => {
     setSetsSavedKeys((prevKeys) =>
       prevKeys.filter((key) => key !== keyToRemove)
     );
+
+    removeSet(setCardSelectedIndex, "save");
   };
 
   const loadSetSaveToSearch = (setCardSelectedIndex) => {
@@ -304,6 +302,7 @@ export const SetsListProvider = ({ children }) => {
         loadSetSaveToDisplay,
         loadSetSearchToDisplay,
         removeSet,
+        removeSetInMemory,
         saveSetFromDisplay,
         saveSetFromFound,
         renameSet,
