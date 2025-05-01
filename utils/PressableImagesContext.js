@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { bodyTypeNames, elementsAllInfosList } from "../data/data";
 import { translate } from "../i18n/translations";
 import { useSetsList } from "./SetsListContext";
@@ -16,7 +22,7 @@ const initializePressableImagesList = (isDefaultSelectedImages) => {
         image: image,
         pressed: false, // Initialise toutes les images comme non pressées
       };
-    },
+    }
   );
 
   if (isDefaultSelectedImages) {
@@ -65,7 +71,7 @@ export const PressableImagesProvider = ({
   situation,
 }) => {
   const [pressableImagesList, setPressableImagesList] = useState(
-    initializePressableImagesList(isDefaultSelectedImages),
+    initializePressableImagesList(isDefaultSelectedImages)
   );
 
   const pressableImagesByCategory =
@@ -75,8 +81,8 @@ export const PressableImagesProvider = ({
   const handlePressImage = (id) => {
     setPressableImagesList((prev) =>
       prev.map((item, index) =>
-        index === id ? { ...item, pressed: !item.pressed } : item,
-      ),
+        index === id ? { ...item, pressed: !item.pressed } : item
+      )
     );
     // initializePressableImagesByCategory est executé automatiquement
     // donc pressableImagesByCategory est mis à jour
@@ -104,8 +110,8 @@ export const PressableImagesProvider = ({
       prev.map((item) =>
         category4ElementList.includes(item.category)
           ? { ...item, pressed: item.classId === classId }
-          : item,
-      ),
+          : item
+      )
     );
     setPressedClassIds((prev) => ({ ...prev, [category4]: classId }));
   };
@@ -115,13 +121,21 @@ export const PressableImagesProvider = ({
       prev.map((item) => ({
         ...item,
         pressed: setClassIds.includes(item.classId),
-      })),
+      }))
     );
   };
 
   const { updateSetsList } = useSetsList();
 
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
+    // permet de ne pas executer updateSetsList au 1er render
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
     updateSetsList(pressedClassIds, situation); // Met à jour après le rendu
   }, [pressedClassIds]); // Déclenché uniquement quand pressedClassIds change
 

@@ -43,12 +43,12 @@ export const SetsListProvider = ({ children }) => {
 
   const [setsListFound, setSetsListFound] = useState([]);
 
-  const [setCardActiveIndex, setSetCardActiveIndex] = useState(0); // Stocke l'ID de la `SetCardChosen` active
+  const [setCardEdittedIndex, setSetCardEdittedIndex] = useState(0); // Stocke l'ID de la `SetCardChosen` active
 
   const [setsSavedKeys, setSetsSavedKeys] = useState([]);
 
   const sortKeys = (keys) => {
-    return keys.sort((a, b) => b.localeCompare(a));
+    return keys.sort((a, b) => a.localeCompare(b));
   };
 
   const getSetsSavedKeys = async () => {
@@ -90,7 +90,7 @@ export const SetsListProvider = ({ children }) => {
     fetchSavedSets();
   }, []);
 
-  const addSet = () => {
+  const addNewSetInDisplay = () => {
     const setsListDisplayedNames = setsListDisplayed.map((set) => set.name);
 
     let newSetNumber = 0;
@@ -102,23 +102,27 @@ export const SetsListProvider = ({ children }) => {
     setSetsListDisplayed((prev) => [...prev, newSet]);
   };
 
+  const addSelectedSetInDisplay = (setCardSelected) => {
+    setSetsListDisplayed((prev) => [...prev, setCardSelected]);
+  };
+
   const removeSet = (setCardSelectedIndex, situation) => {
     const setsListConcerned =
       situation === "display" ? setsListDisplayed : setsListSaved;
-    const setListUpdater =
+    const setSetsListConcerned =
       situation === "display" ? setSetsListDisplayed : setSetsListSaved;
 
     if (situation == "display" && setsListConcerned.length === 1) {
       showToast("Erreur", "Vous devez garder au moins 1 set");
     } else {
-      setListUpdater((prev) =>
+      setSetsListConcerned((prev) =>
         prev.filter((set, index) => index !== setCardSelectedIndex)
       );
 
-      if (setCardSelectedIndex < setCardActiveIndex) {
-        setSetCardActiveIndex(setCardActiveIndex - 1);
-      } else if (setCardSelectedIndex === setCardActiveIndex) {
-        setSetCardActiveIndex(Math.max(0, setCardActiveIndex - 1));
+      if (setCardSelectedIndex < setCardEdittedIndex) {
+        setSetCardEdittedIndex(setCardEdittedIndex - 1);
+      } else if (setCardSelectedIndex === setCardEdittedIndex) {
+        setSetCardEdittedIndex(Math.max(0, setCardEdittedIndex - 1));
       }
     }
   };
@@ -150,13 +154,13 @@ export const SetsListProvider = ({ children }) => {
 
   const loadSetSaveToDisplay = (setCardSelectedIndex) => {
     const setCardSelected = setsListSaved[setCardSelectedIndex];
-    addSet(setCardSelected);
+    addSelectedSetInDisplay(setCardSelected);
     showToast("Succès", "Le set a été chargé");
   };
 
   const loadSetSearchToDisplay = (setCardSelectedIndex) => {
     const setCardSelected = setsListFound[setCardSelectedIndex];
-    addSet(setCardSelected);
+    addSelectedSetInDisplay(setCardSelected);
     showToast("Succès", "Le set a été ajouté à l'écran de comparaison");
   };
 
@@ -206,7 +210,8 @@ export const SetsListProvider = ({ children }) => {
           const setWithNewName = { ...set, name: newName };
 
           if (situation == "save" || situation == "load") {
-            setItemInMemory(setCardIndex, setWithNewName);
+            const key = setsSavedKeys[index];
+            setItemInMemory(key, setWithNewName);
           }
 
           return setWithNewName;
@@ -223,7 +228,7 @@ export const SetsListProvider = ({ children }) => {
       situation === "display" ? setSetsListDisplayed : setSetsListSaved;
     setSetsListConcerned((prev) => {
       return prev.map((set, index) => {
-        if (index === setCardActiveIndex) {
+        if (index === setCardEdittedIndex) {
           const newSet = {
             ...set,
             classIds: pressedClassIdsList,
@@ -276,15 +281,14 @@ export const SetsListProvider = ({ children }) => {
       });
       setSetsListSaved(setsListSavedSorted);
 
-      sortSetsInMemory(keysSorted);
+      sortSetsInMemory(setsListSavedSorted);
       return keysSorted;
     });
   };
 
-  const sortSetsInMemory = (setsSavedKeysSorted) => {
-    setsSavedKeysSorted.forEach((key, index) => {
-      const set = setsListSaved[index];
-      setItemInMemory(key, set);
+  const sortSetsInMemory = (setsListSavedSorted) => {
+    setsListSavedSorted.forEach((set, index) => {
+      setItemInMemory(index, set);
     });
   };
 
@@ -297,7 +301,7 @@ export const SetsListProvider = ({ children }) => {
         setsListSaved,
         setsListFound,
         updateEntireSetsListFound,
-        addSet,
+        addNewSetInDisplay,
         loadSetSaveToSearch,
         loadSetSaveToDisplay,
         loadSetSearchToDisplay,
@@ -307,8 +311,8 @@ export const SetsListProvider = ({ children }) => {
         saveSetFromFound,
         renameSet,
         updateSetsList,
-        setCardActiveIndex,
-        setSetCardActiveIndex,
+        setCardEdittedIndex,
+        setSetCardEdittedIndex,
         sortSetsSavedKeys,
       }}
     >

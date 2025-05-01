@@ -9,13 +9,13 @@ import TooltipWrapper from "./TooltipWrapper";
 const ButtonAddSet = () => {
   const th = useTheme();
 
-  const { addSet } = useSetsList();
+  const { addNewSetInDisplay } = useSetsList();
 
   return (
     <TooltipWrapper
       tooltipText="Ajouter un set"
       style={[button_icon(th).container, shadow_3dp]}
-      onPress={() => addSet()}
+      onPress={() => addNewSetInDisplay()}
     >
       <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
     </TooltipWrapper>

@@ -39,7 +39,7 @@ const SetCard = ({
     loadSetSearchToDisplay,
     removeSet,
     removeSetInMemory,
-    setSetCardActiveIndex,
+    setSetCardEdittedIndex,
   } = useSetsList();
 
   const { updatePressableImagesList } = usePressableImages();
@@ -176,7 +176,7 @@ const SetCard = ({
             tooltipText={translate("Edit")}
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => {
-              setSetCardActiveIndex(setCardIndex);
+              setSetCardEdittedIndex(setCardIndex);
               setIsElementsSelectorModalVisible(true);
               updatePressableImagesList(setToShowClassIds);
             }}
