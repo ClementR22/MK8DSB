@@ -7,7 +7,7 @@ const ButtonMultiStateToggle = ({
   number,
   setNumber,
   filterCase = false,
-  text,
+  tooltipText,
 }) => {
   const statFilterIconsNames = [
     "approximately-equal",
@@ -30,7 +30,7 @@ const ButtonMultiStateToggle = ({
 
   return (
     <TooltipWrapper
-      tooltipText={text}
+      tooltipText={tooltipText}
       style={[
         styles.pressable,
         styles.selectedFilter, // le style reste actif car un seul bouton

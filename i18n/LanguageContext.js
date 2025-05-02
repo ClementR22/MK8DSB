@@ -17,16 +17,3 @@ export const LanguageProvider = ({ children }) => {
     </LanguageContext.Provider>
   );
 };
-
-// Hook pour accéder au contexte facilement
-//export const useLanguage = () => useContext(LanguageContext);
-
-/* AJOUTER QUELQUE PART
-<View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-  <Pressable onPress={() => setLanguage("en")}>
-    <Text>English</Text>
-  </Pressable>
-  <Pressable onPress={() => setLanguage("fr")}>
-    <Text>Français</Text>
-  </Pressable>
-</View> */

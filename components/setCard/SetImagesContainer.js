@@ -1,13 +1,12 @@
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { category4Names, elementsAllInfosList } from "../../data/data";
-import { translate } from "../../i18n/translations";
 import TooltipWrapper from "../TooltipWrapper";
 
 const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
   const data = category4Names.map((category, index) => {
     return {
-      category: translate(category),
+      category: category,
       elements: elementsAllInfosList
         .filter(({ classId }) => classId === setToShowClassIds[index])
         .map((element) => ({ name: element.name, image: element.image })),

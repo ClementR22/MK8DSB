@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import ElementChip from "./ElementChip";
 import { elementsAllInfosList } from "@/data/data";
-import { translate } from "../../i18n/translations";
 import { toggleCheckList } from "../../utils/toggleCheck";
 
 const BodyTypeSelector = ({ chosenBodyType, setChosenBodyType }) => {
@@ -19,7 +18,7 @@ const BodyTypeSelector = ({ chosenBodyType, setChosenBodyType }) => {
         return (
           <ElementChip
             key={index}
-            name={translate(bodyType.name)}
+            name={bodyType.name}
             pressed={bodyType.checked}
             onPress={() => {
               toggleCheckList(setChosenBodyType, bodyType.name);

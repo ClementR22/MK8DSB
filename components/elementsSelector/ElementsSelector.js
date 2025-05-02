@@ -6,7 +6,6 @@ import CategorySelector from "./CategorySelector";
 import { scrollToSection } from "../../utils/scrollToSection";
 import SelectedCategoryElementsView from "./SelectedCategoryElementsView";
 import ButtonScrollToTop from "../ButtonScrollToTop";
-import { translate } from "../../i18n/translations";
 
 const ElementsSelector = ({ situation, galeryCase = false }) => {
   const { orderNumber, setOrderNumber } = useOrderNumber();
@@ -46,13 +45,13 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
   return (
     <View
       style={styles.outerContainer}
-      key={"outerContainer"}
+      key="outerContainer"
       ref={sectionRefs.current[4]}
     >
       <ButtonMultiStateToggle
         number={orderNumber}
         setNumber={setOrderNumber}
-        text={translate("Sort")}
+        tooltipText="Sort"
       />
       {/* Navigation par onglets */}
 

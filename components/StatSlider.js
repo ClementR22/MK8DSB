@@ -42,7 +42,7 @@ const StatSlider = ({
           number={statFilterNumber}
           setNumber={setStatFilterNumber}
           filterCase={true}
-          text={translate("ChangeCondition")}
+          tooltipText="ChangeCondition"
         />
       </View>
 

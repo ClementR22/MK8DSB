@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import Tooltip from "react-native-walkthrough-tooltip";
+import { translate } from "../i18n/translations";
 
 const TooltipWrapper = ({
   tooltipText,
@@ -18,7 +19,7 @@ const TooltipWrapper = ({
         content={
           <View style={{ flexDirection: "row" }}>
             <View>
-              <Text numberOfLines={1}>{tooltipText}</Text>
+              <Text numberOfLines={1}>{translate(tooltipText)}</Text>
             </View>
           </View>
         }

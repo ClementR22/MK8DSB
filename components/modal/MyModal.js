@@ -37,7 +37,9 @@ const MyModal = ({
           style={modal(th).container}
           onStartShouldSetResponder={() => true}
         >
-          <Text style={modal(th).title_center}>{modalTitle}</Text>
+          {modalTitle && (
+            <Text style={modal(th).title_center}>{translate(modalTitle)}</Text>
+          )}
           {ModalContentsList.map((ModalContent, index) => (
             <ModalContent key={index} {...contentPropsList[index]} />
           ))}

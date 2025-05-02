@@ -18,7 +18,7 @@ const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
   // Fonction pour décrémenter
   const decrement = () => {
     setResultsNumber((prevResultsNumber) =>
-      prevResultsNumber > 0 ? prevResultsNumber - 1 : 0,
+      prevResultsNumber > 0 ? prevResultsNumber - 1 : 0
     ); // Évite d'aller en dessous de 0
   };
 
@@ -32,7 +32,7 @@ const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
       >
         <MaterialCommunityIcons
           name="minus"
-          color={"white"}
+          color="white"
         ></MaterialCommunityIcons>
       </Pressable>
       <Text style={styles.resultsNumberText}>{resultsNumber}</Text>
@@ -44,7 +44,7 @@ const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
       >
         <MaterialCommunityIcons
           name="plus"
-          color={"white"}
+          color="white"
         ></MaterialCommunityIcons>
       </Pressable>
     </View>

@@ -19,7 +19,7 @@ const CategorySelector = ({
   ];
 
   return (
-    <View style={styles.tabContainer} key={"tabContainer"}>
+    <View style={styles.tabContainer} key="tabContainer">
       {category4Names.map((elementName, index) => (
         <Pressable
           key={elementName}

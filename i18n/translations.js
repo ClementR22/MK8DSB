@@ -2,20 +2,54 @@ import { useLanguage } from "./LanguageContext";
 
 export const translate = (key) => {
   const { language } = useLanguage();
+  if (!translations[language][key]) {
+    console.log("translation error");
+    console.log("key", key, "is missing");
+  }
   return translations[language]?.[key] || key;
 };
 
 const translations = {
   en: {
-    character: "Character",
-    body: "Body",
-    kart: "Kart",
-    bike: "Bike",
-    sportBike: "Sport bike",
-    ATV: "ATV",
-    wheels: "Wheels",
-    glider: "Glider",
+    // screen title
 
+    // other title
+    SearchedStats: "Searched stats",
+
+    // modal title
+    StatsToParameter: "Stats to parameter",
+    Filters: "Filters",
+    NumberOfResults: "Number of results",
+    StatsToDisplay: "Stats to display",
+    LoadASavedSet: "Load a saved set",
+    NameTheSet: "Name the set",
+    SelectASet: "Select a set",
+
+    // button label
+    Search: "Search",
+
+    // modal button label
+    Close: "Close",
+    OK: "OK",
+
+    // tooltip text
+    ChooseStats: "Choose some stats",
+    ChooseFilters: "Choose some filters",
+    DisplayedStats: "Displayed stats",
+    ChangeCondition: "Fix a condition",
+    Sort: "Sort",
+    LoadStatsOfASet: "Load a set's stats",
+    LoadASet: "Load a set",
+    Edit: "Edit",
+    Remove: "Remove",
+    Save: "Save",
+    LoadTheStats: "Load the stats",
+    LoadToDisplayScreen: "Load to display screen",
+
+    // other
+    ":": ": ",
+
+    // stat
     speedGround: "Ground speed",
     speedAntiGravity: "Anti-gravity speed",
     speedWater: "Water speed",
@@ -29,18 +63,18 @@ const translations = {
     traction: "Traction",
     miniTurbo: "Mini-Turbo",
 
-    Display: "Display",
-    NumberOfResults: "Number of results",
-    StatsToDisplay: "Stats to display",
-    Filter: "Filter",
-    Search: "Search",
-    SearchedStats: "Searched stats",
-    Close: "Close",
-    OK: "OK",
-    StatsToParameter: "Stats to parameter",
-    LoadASavedSet: "Load a saved set",
-    NameTheSet: "Name the set",
+    // category
+    character: "Character",
+    body: "Body",
+    kart: "Kart",
+    bike: "Bike",
+    sportBike: "Sport bike",
+    ATV: "ATV",
+    wheels: "Wheels",
+    glider: "Glider",
 
+    // element
+    //  character
     BabyPeach: "Baby Peach",
     BabyDaisy: "Baby Daisy",
     BabyRosalina: "Baby Rosalina",
@@ -93,6 +127,7 @@ const translations = {
     FunkyKong: "Funky Kong",
     Bowser: "Bowser",
     Morton: "Morton",
+    //  body
     StandardKart: "Standard Kart",
     "300SLRoadster": "300 SL Roadster",
     PipeFrame: "Pipe Frame",
@@ -134,6 +169,7 @@ const translations = {
     StandardATV: "Standard ATV",
     WildWiggler: "Wild Wiggler",
     SplatBuggy: "Splat Buggy",
+    //  wheels
     Standard: "Standard",
     BlueStandard: "Blue Standard",
     GLATires: "GLA Tires",
@@ -156,6 +192,7 @@ const translations = {
     TriforceTires: "Triforce Tires",
     Cushion: "Cushion",
     Sponge: "Sponge",
+    //  glider
     SuperGlider: "Super Glider",
     WaddleWing: "Waddle Wing",
     HylianKite: "Hylian Kite",
@@ -171,20 +208,48 @@ const translations = {
     BowserKite: "Bowser Kite",
     ParafoilGlider: "Parafoil Glider",
     MKTVParafoilGlider: "MKTV Parafoil Glider",
-
-    ":": ": ",
   },
 
   fr: {
-    character: "Personnage",
-    body: "Carrosserie",
-    kart: "Kart",
-    bike: "Moto",
-    sportBike: "Moto de sport",
-    ATV: "Quad",
-    wheels: "Roues",
-    glider: "Aile",
+    // screen title
 
+    // other title
+    SearchedStats: "Statistiques recherchées",
+
+    // modal title
+    StatsToParameter: "Stats à paramétrer",
+    Filters: "Filtres",
+    NumberOfResults: "Nombre de résultats",
+    StatsToDisplay: "Stats à afficher",
+    LoadASavedSet: "Charger un set enregistré",
+    NameTheSet: "Nommer le set",
+    SelectASet: "Selectionner un set",
+
+    // button label
+    Search: "Chercher",
+
+    // modal button label
+    Close: "Fermer",
+    OK: "OK",
+
+    // tooltip text
+    ChooseStats: "Choisissez des stats",
+    ChooseFilters: "Choisissez des filtres",
+    DisplayedStats: "Stats affichées",
+    ChangeCondition: "Fixer une condition",
+    Sort: "Trier",
+    LoadStatsOfASet: "Charger les stats d'un set",
+    LoadASet: "Charger un set",
+    Edit: "Editer",
+    Remove: "Supprimer",
+    Save: "Enregistrer",
+    LoadTheStats: "Charger les stats",
+    LoadToDisplayScreen: "Charger dans l'écran d'affichage",
+
+    // other
+    ":": " : ",
+
+    // stat
     speedGround: "Vitesse sol",
     speedAntiGravity: "Vitesse anti-gravité",
     speedWater: "Vitesse eau",
@@ -198,18 +263,18 @@ const translations = {
     traction: "Adhérence",
     miniTurbo: "Mini-turbo",
 
-    Display: "Affichage",
-    NumberOfResults: "Nombre de résultats",
-    StatsToDisplay: "Stats à afficher",
-    Filter: "Filtrer",
-    Search: "Chercher",
-    SearchedStats: "Statistiques recherchées",
-    Close: "Fermer",
-    OK: "OK",
-    StatsToParameter: "Stats à paramétrer",
-    LoadASavedSet: "Charger un set enregistré",
-    NameTheSet: "Nomme le set",
+    // category
+    character: "Personnage",
+    body: "Carrosserie",
+    kart: "Kart",
+    bike: "Moto",
+    sportBike: "Moto de sport",
+    ATV: "Quad",
+    wheels: "Roues",
+    glider: "Aile",
 
+    // element
+    //  character
     BabyPeach: "Bébé Peach",
     BabyDaisy: "Bébé Daisy",
     BabyRosalina: "Bébé Harmonie",
@@ -262,6 +327,7 @@ const translations = {
     FunkyKong: "Funky Kong",
     Bowser: "Bowser",
     Morton: "Morton",
+    //  body
     StandardKart: "Kart Standard",
     "300SLRoadster": "300 SL Roadster",
     PipeFrame: "Kart rétro",
@@ -303,6 +369,7 @@ const translations = {
     StandardATV: "Quad Standard",
     WildWiggler: "Quad Wiggler",
     SplatBuggy: "Kartoon",
+    //  wheels
     Standard: "Standard",
     BlueStandard: "Standard bleu",
     GLATires: "GLA",
@@ -325,6 +392,7 @@ const translations = {
     TriforceTires: "Triforce",
     Cushion: "Coussin",
     Sponge: "Eponge",
+    //  glider
     SuperGlider: "Standard",
     WaddleWing: "Dendinaile",
     HylianKite: "Aile hylienne",
@@ -340,7 +408,5 @@ const translations = {
     BowserKite: "Bowser-volant",
     ParafoilGlider: "Parapente",
     MKTVParafoilGlider: "Parapente MKTV",
-
-    ":": " : ",
   },
 };

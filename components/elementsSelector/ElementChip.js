@@ -1,6 +1,7 @@
 import React from "react";
 import { Chip } from "react-native-paper";
 import { Image } from "react-native";
+import { translate } from "../../i18n/translations";
 
 const ElementChip = ({ name, pressed, onPress, source }) => {
   return (
@@ -13,7 +14,7 @@ const ElementChip = ({ name, pressed, onPress, source }) => {
         <Image source={source} style={styles.image} resizeMode="contain" />
       }
     >
-      {name}
+      {translate(name)}
     </Chip>
   );
 };

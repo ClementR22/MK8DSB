@@ -162,7 +162,7 @@ const SearchSetScreenPressablesContainer = ({
   return (
     <View style={styles.pressablesContainer}>
       <TooltipWrapper
-        tooltipText={translate("ChooseStats")}
+        tooltipText="ChooseStats"
         style={[button_icon(th).container, shadow_3dp]}
         onPress={() => setChosenStatsModalVisible(true)}
       >
@@ -170,7 +170,7 @@ const SearchSetScreenPressablesContainer = ({
       </TooltipWrapper>
 
       <TooltipWrapper
-        tooltipText={translate("Filters")}
+        tooltipText="ChooseFilters"
         style={[button_icon(th).container, shadow_3dp]}
         onPress={() => setIsFilterModalVisible(true)}
       >
@@ -196,7 +196,7 @@ const SearchSetScreenPressablesContainer = ({
       </Pressable>
 
       <TooltipWrapper
-        tooltipText={translate("NumberOfResults")}
+        tooltipText="NumberOfResults"
         style={[button_icon(th).container, shadow_3dp]}
         onPress={() => setResultsNumberModalVisible(true)}
       >
@@ -209,7 +209,7 @@ const SearchSetScreenPressablesContainer = ({
       />
 
       <MyModal
-        modalTitle={translate("StatsToParameter")}
+        modalTitle="StatsToParameter"
         isModalVisible={chosenStatsModalVisible}
         setIsModalVisible={setChosenStatsModalVisible}
         ModalContentsList={[StatSelector]}
@@ -224,7 +224,7 @@ const SearchSetScreenPressablesContainer = ({
       />
 
       <MyModal
-        modalTitle={translate("Filter")}
+        modalTitle="Filters"
         isModalVisible={isFilterModalVisible}
         setIsModalVisible={setIsFilterModalVisible}
         ModalContentsList={[
@@ -243,7 +243,7 @@ const SearchSetScreenPressablesContainer = ({
       />
 
       <MyModal
-        modalTitle={translate("NumberOfResults")}
+        modalTitle="NumberOfResults"
         isModalVisible={resultsNumberModalVisible}
         setIsModalVisible={setResultsNumberModalVisible}
         ModalContentsList={[ResultsNumber]}

@@ -14,7 +14,6 @@ const StatSliderResultContainer = ({
   return (
     <View style={{ flex: 1, backgroundColor: "green" }}>
       {isStatsVisible.map(({ name, checked }, statIndex) => {
-        const translated_name = translate(name);
         if (checked) {
           return (
             <View
@@ -25,7 +24,7 @@ const StatSliderResultContainer = ({
               ]}
             >
               <Text style={styles.text}>
-                {translated_name}
+                {translate(name)}
                 {situation != "search" ||
                   (situation == "save" &&
                     ` : ${JSON.stringify(

@@ -4,7 +4,6 @@ import { useTheme } from "../utils/ThemeContext";
 import { useDisplaySetScreen } from "../utils/DisplaySetScreenContext";
 import ButtonLoad from "./ButtonLoad";
 import ButtonAddSet from "./ButtonAddSet";
-import { translate } from "../i18n/translations";
 import Container from "./Container";
 
 const DisplaySetScreenPressablesContainer = () => {
@@ -13,7 +12,7 @@ const DisplaySetScreenPressablesContainer = () => {
   const { isStatsVisible, setIsStatsVisible } = useDisplaySetScreen();
 
   return (
-    <Container theme={th} flexDirection={"row"} justifyContent={"space-evenly"}>
+    <Container theme={th} flexDirection="row" justifyContent="space-evenly">
       <StatSliderResultSelectorPressable
         isStatsVisible={isStatsVisible}
         setIsStatsVisible={setIsStatsVisible}
@@ -21,7 +20,7 @@ const DisplaySetScreenPressablesContainer = () => {
 
       <ButtonAddSet />
 
-      <ButtonLoad text={translate("LoadASet")} screenSituation="display" />
+      <ButtonLoad tooltip_text="LoadASet" screenSituation="display" />
     </Container>
   );
 };

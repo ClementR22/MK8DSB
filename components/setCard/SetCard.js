@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { card } from "../styles/card";
 import { useTheme } from "../../utils/ThemeContext";
 import MyModal from "../modal/MyModal";
@@ -12,7 +12,6 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-import { translate } from "../../i18n/translations";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "../../utils/PressableImagesContext";
 import { useSetsList } from "../../utils/SetsListContext";
@@ -129,7 +128,6 @@ const SetCard = ({
       )}
 
       <MyModal
-        modalTitle={""}
         isModalVisible={isImagesModalVisible}
         setIsModalVisible={setIsImagesModalVisible}
         ModalContentsList={[SetImagesContainer]}
@@ -139,7 +137,7 @@ const SetCard = ({
         closeButtonText="Close"
       />
       <MyModal
-        modalTitle={translate("Selectionner")}
+        modalTitle="SelectASet"
         isModalVisible={isElementsSelectorModalVisible}
         setIsModalVisible={setIsElementsSelectorModalVisible}
         ModalContentsList={[ElementsSelector]}
@@ -150,7 +148,7 @@ const SetCard = ({
         ]}
       />
       <MyModal
-        modalTitle={translate("NameTheSet")}
+        modalTitle="NameTheSet"
         isModalVisible={isTextInputModalVisible}
         setIsModalVisible={setIsTextInputModalVisible}
         ModalContentsList={[MyTextInput]}
@@ -161,19 +159,19 @@ const SetCard = ({
             situation: situation,
           },
         ]}
-        closeButtonText={translate("Confirm")}
+        closeButtonText="OK"
         checkBeforeClose={async () => {
           return await saveSetFromFound(setCardIndex);
         }}
       />
       <Container
         theme={th}
-        flexDirection={"row"}
+        flexDirection="row"
         key="displaySetActionButtonContainer"
       >
         {config.showEdit && (
           <TooltipWrapper
-            tooltipText={translate("Edit")}
+            tooltipText="Edit"
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => {
               setSetCardEdittedIndex(setCardIndex);
@@ -187,7 +185,7 @@ const SetCard = ({
 
         {config.showRemove && (
           <TooltipWrapper
-            tooltipText={translate("Remove")}
+            tooltipText="Remove"
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => {
               removeSet(setCardIndex, situation);
@@ -199,7 +197,7 @@ const SetCard = ({
 
         {config.showSave && (
           <TooltipWrapper
-            tooltipText={translate("Save")}
+            tooltipText="Save"
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() =>
               situation == "search"
@@ -213,7 +211,7 @@ const SetCard = ({
 
         {config.showLoadSaveToSearch && (
           <TooltipWrapper
-            tooltipText={translate("LoadTheStats")}
+            tooltipText="LoadTheStats"
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => loadSetSaveToSearch(setCardIndex)}
           >
@@ -223,7 +221,7 @@ const SetCard = ({
 
         {config.showLoadSaveToDisplay && (
           <TooltipWrapper
-            tooltipText={translate("LoadToDisplayScreen")}
+            tooltipText="LoadToDisplayScreen"
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => loadSetSaveToDisplay(setCardIndex)}
           >
@@ -237,7 +235,7 @@ const SetCard = ({
 
         {config.showLoadSearchToDisplay && (
           <TooltipWrapper
-            tooltipText={translate("LoadToDisplayScreen")}
+            tooltipText="LoadToDisplayScreen"
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => loadSetSearchToDisplay(setCardIndex)}
           >
@@ -250,7 +248,8 @@ const SetCard = ({
         )}
 
         {config.showRemoveInMemory && (
-          <Pressable
+          <TooltipWrapper
+            tooltipText="Remove"
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => removeSetInMemory(setCardIndex)}
           >
@@ -259,7 +258,7 @@ const SetCard = ({
               size={24}
               color={th.on_primary}
             />
-          </Pressable>
+          </TooltipWrapper>
         )}
       </Container>
     </View>

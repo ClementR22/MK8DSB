@@ -58,13 +58,13 @@ const SearchSetScreen = () => {
                 </Text>
 
                 <ButtonLoad
-                  text={translate("LoadStatsOfASet")}
+                  tooltip_text="LoadStatsOfASet"
                   screenSituation="search"
                 />
 
                 {/* Afficher le slider uniquement si la case est cochée */}
-                {chosenStats.map((stat) => {
-                  return (
+                {chosenStats.map(
+                  (stat) =>
                     stat.checked && (
                       <StatSlider
                         key={stat.name}
@@ -77,8 +77,7 @@ const SearchSetScreen = () => {
                         setStatFilterNumber={stat.setStatFilterNumber}
                       />
                     )
-                  );
-                })}
+                )}
               </View>
 
               <SearchSetScreenPressablesContainer
