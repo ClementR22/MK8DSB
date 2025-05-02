@@ -6,7 +6,6 @@ import React, {
   useState,
 } from "react";
 import { bodyTypeNames, elementsAllInfosList } from "../data/data";
-import { translate } from "../i18n/translations";
 import { useSetsList } from "./SetsListContext";
 
 // Fonction pour initialiser l'état pressableImagesList
@@ -16,7 +15,7 @@ const initializePressableImagesList = (isDefaultSelectedImages) => {
     ({ id, name, category, classId, image }) => {
       return {
         id: id,
-        name: translate(name),
+        name: name,
         category: category,
         classId: classId,
         image: image,

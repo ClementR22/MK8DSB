@@ -139,10 +139,7 @@ export const SetsListProvider = ({ children }) => {
     removeSet(setCardSelectedIndex, "save");
   };
 
-  const loadSetSaveToSearch = (setCardSelectedIndex) => {
-    const setCardSelected = setsListSaved[setCardSelectedIndex];
-    const setCardSelectedStatList = setCardSelected.stats;
-
+  const loadSetToSearch = (setCardSelectedStatList) => {
     setChosenStats((prev) =>
       prev.map((chosenStat, index) => {
         chosenStat.value = setCardSelectedStatList[index];
@@ -150,6 +147,18 @@ export const SetsListProvider = ({ children }) => {
       })
     );
     showToast("Succès", "Les stats du set ont été chargéés");
+  };
+
+  const loadSetSaveToSearch = (setCardSelectedIndex) => {
+    const setCardSelected = setsListSaved[setCardSelectedIndex];
+    const setCardSelectedStatList = setCardSelected.stats;
+    loadSetToSearch(setCardSelectedStatList);
+  };
+
+  const loadSetDisplayToSearch = (setCardSelectedIndex) => {
+    const setCardSelected = setsListDisplayed[setCardSelectedIndex];
+    const setCardSelectedStatList = setCardSelected.stats;
+    loadSetToSearch(setCardSelectedStatList);
   };
 
   const loadSetSaveToDisplay = (setCardSelectedIndex) => {
@@ -305,6 +314,7 @@ export const SetsListProvider = ({ children }) => {
         loadSetSaveToSearch,
         loadSetSaveToDisplay,
         loadSetSearchToDisplay,
+        loadSetDisplayToSearch,
         removeSet,
         removeSetInMemory,
         saveSetFromDisplay,

@@ -3,6 +3,9 @@ import { useLanguage } from "./LanguageContext";
 export const translate = (key) => {
   const { language } = useLanguage();
   if (!translations[language][key]) {
+    {
+      /* DEBUG */
+    }
     console.log("translation error");
     console.log("key", key, "is missing");
   }
@@ -38,13 +41,16 @@ const translations = {
     DisplayedStats: "Displayed stats",
     ChangeCondition: "Fix a condition",
     Sort: "Sort",
+    AddASet: "Add a set",
     LoadStatsOfASet: "Load a set's stats",
     LoadASet: "Load a set",
     Edit: "Edit",
     Remove: "Remove",
     Save: "Save",
     LoadTheStats: "Load the stats",
-    LoadToDisplayScreen: "Load to display screen",
+    LoadTheSet: "Load the set",
+    LoadTheStatsToSearchScreen: "Load the stats to search screen",
+    LoadTheSetToDisplayScreen: "Load the set to display screen",
 
     // other
     ":": ": ",
@@ -238,13 +244,16 @@ const translations = {
     DisplayedStats: "Stats affichées",
     ChangeCondition: "Fixer une condition",
     Sort: "Trier",
+    AddASet: "Ajouter un set",
     LoadStatsOfASet: "Charger les stats d'un set",
     LoadASet: "Charger un set",
     Edit: "Editer",
     Remove: "Supprimer",
     Save: "Enregistrer",
     LoadTheStats: "Charger les stats",
-    LoadToDisplayScreen: "Charger dans l'écran d'affichage",
+    LoadTheSet: "Charger le set",
+    LoadTheStatsToSearchScreen: "Charger les stats dans l'écran de recherche",
+    LoadTheSetToDisplayScreen: "Charger le set dans l'écran d'affichage",
 
     // other
     ":": " : ",

@@ -13,7 +13,7 @@ const ButtonAddSet = () => {
 
   return (
     <TooltipWrapper
-      tooltipText="Ajouter un set"
+      tooltipText="AddASet"
       style={[button_icon(th).container, shadow_3dp]}
       onPress={() => addNewSetInDisplay()}
     >

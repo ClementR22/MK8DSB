@@ -1,5 +1,6 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { translate } from "../../i18n/translations";
 
 const ElementImage_ = ({ name, source }) => {
   const imageWidth = 80;
@@ -14,7 +15,7 @@ const ElementImage_ = ({ name, source }) => {
         }}
         resizeMode="contain"
       />
-      <Text>{name}</Text>
+      <Text>{translate(name)}</Text>
     </View>
   );
 };

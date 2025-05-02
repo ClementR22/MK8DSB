@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { card } from "../styles/card";
 import { useTheme } from "../../utils/ThemeContext";
 import MyModal from "../modal/MyModal";
@@ -36,6 +36,7 @@ const SetCard = ({
     loadSetSaveToSearch,
     loadSetSaveToDisplay,
     loadSetSearchToDisplay,
+    loadSetDisplayToSearch,
     removeSet,
     removeSetInMemory,
     setSetCardEdittedIndex,
@@ -63,6 +64,7 @@ const SetCard = ({
       showLoadSaveToSearch: false,
       showLoadSaveToDisplay: false,
       showLoadSearchToDisplay: true,
+      showLoadDisplayToSearch: false,
       showRemoveInMemory: false,
     },
     display: {
@@ -74,6 +76,7 @@ const SetCard = ({
       showLoadSaveToSearch: false,
       showLoadSaveToDisplay: false,
       showLoadSearchToDisplay: false,
+      showLoadDisplayToSearch: true,
       showRemoveInMemory: false,
     },
     save: {
@@ -82,9 +85,10 @@ const SetCard = ({
       showEdit: true,
       showRemove: false,
       showSave: false,
-      showLoadSaveToSearch: false,
+      showLoadSaveToSearch: true,
       showLoadSaveToDisplay: true,
       showLoadSearchToDisplay: false,
+      showLoadDisplayToSearch: false,
       showRemoveInMemory: true,
     },
     load: {
@@ -96,6 +100,7 @@ const SetCard = ({
       showLoadSaveToSearch: screenSituation === "search",
       showLoadSaveToDisplay: screenSituation === "display",
       showLoadSearchToDisplay: false,
+      showLoadDisplayToSearch: false,
       showRemoveInMemory: false,
     },
   };
@@ -211,17 +216,27 @@ const SetCard = ({
 
         {config.showLoadSaveToSearch && (
           <TooltipWrapper
-            tooltipText="LoadTheStats"
+            tooltipText={
+              situation === "load"
+                ? "LoadTheStats"
+                : "LoadTheStatsToSearchScreen"
+            }
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => loadSetSaveToSearch(setCardIndex)}
           >
-            <Text>{"LoadTheStats"}</Text>
+            <MaterialCommunityIcons
+              name="magnify"
+              size={24}
+              color={th.on_primary}
+            />
           </TooltipWrapper>
         )}
 
         {config.showLoadSaveToDisplay && (
           <TooltipWrapper
-            tooltipText="LoadToDisplayScreen"
+            tooltipText={
+              situation === "load" ? "LoadTheSet" : "LoadTheSetToDisplayScreen"
+            }
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => loadSetSaveToDisplay(setCardIndex)}
           >
@@ -235,12 +250,26 @@ const SetCard = ({
 
         {config.showLoadSearchToDisplay && (
           <TooltipWrapper
-            tooltipText="LoadToDisplayScreen"
+            tooltipText="LoadTheSetToDisplayScreen"
             style={[button_icon(th).container, shadow_3dp]}
             onPress={() => loadSetSearchToDisplay(setCardIndex)}
           >
             <MaterialIcons
               name="display-settings"
+              size={24}
+              color={th.on_primary}
+            />
+          </TooltipWrapper>
+        )}
+
+        {config.showLoadDisplayToSearch && (
+          <TooltipWrapper
+            tooltipText="LoadTheStatsToSearchScreen"
+            style={[button_icon(th).container, shadow_3dp]}
+            onPress={() => loadSetDisplayToSearch(setCardIndex)}
+          >
+            <MaterialCommunityIcons
+              name="magnify"
               size={24}
               color={th.on_primary}
             />
