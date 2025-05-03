@@ -28,7 +28,7 @@ const SetCard = ({
   situation,
   screenSituation = null,
 }) => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   const {
     saveSetFromDisplay,
@@ -108,7 +108,7 @@ const SetCard = ({
   const config = situationConfig[situation] ?? {};
 
   return (
-    <View style={[card(th).container, { flex: 1 }]}>
+    <View style={[card(theme).container, { flex: 1 }]}>
       {config.showTextInput && (
         <MyTextInput
           setToShowName={setToShowName}
@@ -170,47 +170,47 @@ const SetCard = ({
         }}
       />
       <Container
-        theme={th}
+        theme={theme}
         flexDirection="row"
         key="displaySetActionButtonContainer"
       >
         {config.showEdit && (
           <TooltipWrapper
             tooltipText="Edit"
-            style={[button_icon(th).container, shadow_3dp]}
+            style={[button_icon(theme).container, shadow_3dp]}
             onPress={() => {
               setSetCardEdittedIndex(setCardIndex);
               setIsElementsSelectorModalVisible(true);
               updatePressableImagesList(setToShowClassIds);
             }}
           >
-            <MaterialIcons name="edit" size={24} color={th.on_primary} />
+            <MaterialIcons name="edit" size={24} color={theme.on_primary} />
           </TooltipWrapper>
         )}
 
         {config.showRemove && (
           <TooltipWrapper
             tooltipText="Remove"
-            style={[button_icon(th).container, shadow_3dp]}
+            style={[button_icon(theme).container, shadow_3dp]}
             onPress={() => {
               removeSet(setCardIndex, situation);
             }}
           >
-            <Ionicons name="close" size={24} color={th.on_primary} />
+            <Ionicons name="close" size={24} color={theme.on_primary} />
           </TooltipWrapper>
         )}
 
         {config.showSave && (
           <TooltipWrapper
             tooltipText="Save"
-            style={[button_icon(th).container, shadow_3dp]}
+            style={[button_icon(theme).container, shadow_3dp]}
             onPress={() =>
               situation == "search"
                 ? setIsTextInputModalVisible(true)
                 : saveSetFromDisplay(setCardIndex)
             }
           >
-            <MaterialIcons name="save" size={24} color={th.on_primary} />
+            <MaterialIcons name="save" size={24} color={theme.on_primary} />
           </TooltipWrapper>
         )}
 
@@ -221,13 +221,13 @@ const SetCard = ({
                 ? "LoadTheStats"
                 : "LoadTheStatsToSearchScreen"
             }
-            style={[button_icon(th).container, shadow_3dp]}
+            style={[button_icon(theme).container, shadow_3dp]}
             onPress={() => loadSetSaveToSearch(setCardIndex)}
           >
             <MaterialCommunityIcons
               name="magnify"
               size={24}
-              color={th.on_primary}
+              color={theme.on_primary}
             />
           </TooltipWrapper>
         )}
@@ -237,13 +237,13 @@ const SetCard = ({
             tooltipText={
               situation === "load" ? "LoadTheSet" : "LoadTheSetToDisplayScreen"
             }
-            style={[button_icon(th).container, shadow_3dp]}
+            style={[button_icon(theme).container, shadow_3dp]}
             onPress={() => loadSetSaveToDisplay(setCardIndex)}
           >
             <MaterialIcons
               name="display-settings"
               size={24}
-              color={th.on_primary}
+              color={theme.on_primary}
             />
           </TooltipWrapper>
         )}
@@ -251,13 +251,13 @@ const SetCard = ({
         {config.showLoadSearchToDisplay && (
           <TooltipWrapper
             tooltipText="LoadTheSetToDisplayScreen"
-            style={[button_icon(th).container, shadow_3dp]}
+            style={[button_icon(theme).container, shadow_3dp]}
             onPress={() => loadSetSearchToDisplay(setCardIndex)}
           >
             <MaterialIcons
               name="display-settings"
               size={24}
-              color={th.on_primary}
+              color={theme.on_primary}
             />
           </TooltipWrapper>
         )}
@@ -265,13 +265,13 @@ const SetCard = ({
         {config.showLoadDisplayToSearch && (
           <TooltipWrapper
             tooltipText="LoadTheStatsToSearchScreen"
-            style={[button_icon(th).container, shadow_3dp]}
+            style={[button_icon(theme).container, shadow_3dp]}
             onPress={() => loadSetDisplayToSearch(setCardIndex)}
           >
             <MaterialCommunityIcons
               name="magnify"
               size={24}
-              color={th.on_primary}
+              color={theme.on_primary}
             />
           </TooltipWrapper>
         )}
@@ -279,13 +279,13 @@ const SetCard = ({
         {config.showRemoveInMemory && (
           <TooltipWrapper
             tooltipText="Remove"
-            style={[button_icon(th).container, shadow_3dp]}
+            style={[button_icon(theme).container, shadow_3dp]}
             onPress={() => removeSetInMemory(setCardIndex)}
           >
             <MaterialCommunityIcons
               name="trash-can"
               size={24}
-              color={th.on_primary}
+              color={theme.on_primary}
             />
           </TooltipWrapper>
         )}

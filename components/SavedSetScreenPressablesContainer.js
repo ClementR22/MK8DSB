@@ -9,12 +9,12 @@ import { useTheme } from "../utils/ThemeContext";
 const SavedSetScreenPressablesContainer = () => {
   const { isStatsVisible, setIsStatsVisible } = useSavedSetScreen();
   const { sortSetsSavedKeys } = useSetsList();
-  const th = useTheme();
+  const { theme } = useTheme();
 
   return (
     <View>
       <Pressable
-        style={button_icon(th).container}
+        style={button_icon(theme).container}
         onPress={() => sortSetsSavedKeys()}
       >
         <Text>Sort</Text>

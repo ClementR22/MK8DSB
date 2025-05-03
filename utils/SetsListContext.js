@@ -56,8 +56,10 @@ export const SetsListProvider = ({ children }) => {
 
   const getSetsSavedKeys = async () => {
     try {
+      const excludedKeys = ["language", "theme"];
       const keys = await AsyncStorage.getAllKeys();
-      return sortKeys(keys);
+      const onlySetsKeys = keys.filter((key) => !excludedKeys.includes(key));
+      return sortKeys(onlySetsKeys);
     } catch (error) {
       console.error("Erreur lors de la récupération des données :", error);
       return [];

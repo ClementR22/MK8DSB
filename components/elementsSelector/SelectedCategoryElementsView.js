@@ -16,7 +16,7 @@ const SelectedCategoryElementsView_ = ({
   scrollToSectionWithScrollViewRef,
   sectionRefs,
 }) => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   const { orderNumber } = useOrderNumber();
 
@@ -59,13 +59,13 @@ const SelectedCategoryElementsView_ = ({
       <View style={styles.bodyTypeBookmarksContainer}>
         {bodyTypeNames.map((bodyTypeName, index) => (
           <Pressable
-            style={button(th).container}
+            style={button(theme).container}
             onPress={() =>
               scrollToSectionWithScrollViewRef(sectionRefs.current[index])
             }
             key={bodyTypeName}
           >
-            <Text style={button(th).text}>{translate(bodyTypeName)}</Text>
+            <Text style={button(theme).text}>{translate(bodyTypeName)}</Text>
           </Pressable>
         ))}
       </View>

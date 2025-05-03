@@ -14,13 +14,13 @@ const StatSlider = ({
   statFilterNumber,
   setStatFilterNumber,
 }) => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   return (
     <View
       style={[
         styles.container,
-        { backgroundColor: th.surface, borderColor: th.outline_variant },
+        { backgroundColor: theme.surface, borderColor: theme.outline_variant },
       ]}
     >
       <View style={styles.containerTop}>
@@ -28,12 +28,12 @@ const StatSlider = ({
           <Text
             numberOfLines={1}
             ellipsizeMode="middle"
-            style={[styles.textLeft, { color: th.on_surface }]}
+            style={[styles.textLeft, { color: theme.on_surface }]}
           >
             {translate(name)}
           </Text>
 
-          <Text style={[styles.textRight, { color: th.on_surface }]}>
+          <Text style={[styles.textRight, { color: theme.on_surface }]}>
             {translate(":")}
             {sliderValue}
           </Text>
@@ -54,10 +54,10 @@ const StatSlider = ({
             minimumValue={0}
             maximumValue={6}
             step={0.25}
-            //thumbStyle={[styles.thumb, { backgroundColor: th.primary }]}
+            //thumbStyle={[styles.thumb, { backgroundColor: theme.primary }]}
             trackStyle={[
               styles.track,
-              { backgroundColor: th.secondary_container },
+              { backgroundColor: theme.secondary_container },
             ]}
             thumbTouchSize={{ width: 10, height: 10 }}
           />
@@ -71,10 +71,10 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 12,
     paddingVertical: 8,
-    //backgroundColor: th.surface,
+    //backgroundColor: theme.surface,
     borderWidth: 2,
     borderRadius: 12,
-    //borderColor: th.outline_variant,
+    //borderColor: theme.outline_variant,
     marginBottom: 6,
     width: 0.9 * vw, // Largeur maximale de 90% de la largeur de l'écran
   },
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     flex: 1, // Prend toute la largeur disponible
   },
   textLeft: {
-    //color: th.on_surface,
+    //color: theme.on_surface,
     fontSize: 22,
     marginLeft: 6,
     flexShrink: 1, // Permet de réduire la largeur du texte si nécessaire
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     overflow: "hidden", // Cache l'excédent du texte
   },
   textRight: {
-    //color: th.on_surface,
+    //color: theme.on_surface,
     fontSize: 22,
     flexShrink: 0, // Le texte de droite ne rétrécit pas
   },
@@ -115,12 +115,12 @@ const styles = StyleSheet.create({
     width: 4,
     height: 30,
     borderRadius: 10,
-    //backgroundColor: th.primary,
+    //backgroundColor: theme.primary,
   },
   track: {
     height: 8,
     borderRadius: 4,
-    //backgroundColor: th.secondary_container,
+    //backgroundColor: theme.secondary_container,
   },
 });
 

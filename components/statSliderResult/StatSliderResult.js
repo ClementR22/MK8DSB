@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { useTheme } from "../../utils/ThemeContext";
 
 const StatSliderResult = ({ value, chosenValue = null }) => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   if (chosenValue == null) {
     chosenValue = value;
@@ -28,7 +28,7 @@ const StatSliderResult = ({ value, chosenValue = null }) => {
           style={[
             styles.trackSegment,
             {
-              backgroundColor: th.primary,
+              backgroundColor: theme.primary,
               flex: getFlexForSegment(chosenValue, bonusFound),
             },
           ]}
@@ -44,8 +44,8 @@ const StatSliderResult = ({ value, chosenValue = null }) => {
                 borderWidth: 3,
                 borderTopRightRadius: 100,
                 borderBottomRightRadius: 100,
-                backgroundColor: th.primary,
-                borderColor: th.primary,
+                backgroundColor: theme.primary,
+                borderColor: theme.primary,
               },
             ]}
           />
@@ -71,7 +71,7 @@ const StatSliderResult = ({ value, chosenValue = null }) => {
                 width: 10,
                 borderWidth: 3,
                 backgroundColor: getBackgroundColor(),
-                borderColor: th.primary,
+                borderColor: theme.primary,
               },
             ]}
           />
@@ -82,7 +82,7 @@ const StatSliderResult = ({ value, chosenValue = null }) => {
           style={[
             styles.trackSegment,
             {
-              backgroundColor: th.secondary_container,
+              backgroundColor: theme.secondary_container,
               flex: getFlexForSegment(6 - value, bonusFound),
             },
           ]}

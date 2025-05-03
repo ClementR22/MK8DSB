@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const checkbox = (th) =>
+const checkbox = (theme) =>
   StyleSheet.create({
     container: {
       marginBottom: 2,
@@ -11,12 +11,12 @@ const checkbox = (th) =>
     square: {
       width: 18,
       height: 18,
-      backgroundColor: th.primary,
+      backgroundColor: theme.primary,
       margin: 15,
-      borderColor: th.on_surface_variant,
+      borderColor: theme.on_surface_variant,
     },
     text: {
-      color: th.on_surface,
+      color: theme.on_surface,
       fontSize: 18,
       marginVertical: 10,
     },

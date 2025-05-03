@@ -7,12 +7,14 @@ import ButtonAddSet from "./ButtonAddSet";
 import Container from "./Container";
 
 const DisplaySetScreenPressablesContainer = () => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   const { isStatsVisible, setIsStatsVisible } = useDisplaySetScreen();
 
+  console.log("dans press", theme);
+
   return (
-    <Container theme={th} flexDirection="row" justifyContent="space-evenly">
+    <Container theme={theme} flexDirection="row" justifyContent="space-evenly">
       <StatSliderResultSelectorPressable
         isStatsVisible={isStatsVisible}
         setIsStatsVisible={setIsStatsVisible}

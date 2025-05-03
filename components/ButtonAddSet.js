@@ -7,17 +7,17 @@ import { useSetsList } from "../utils/SetsListContext";
 import TooltipWrapper from "./TooltipWrapper";
 
 const ButtonAddSet = () => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   const { addNewSetInDisplay } = useSetsList();
 
   return (
     <TooltipWrapper
       tooltipText="AddASet"
-      style={[button_icon(th).container, shadow_3dp]}
+      style={[button_icon(theme).container, shadow_3dp]}
       onPress={() => addNewSetInDisplay()}
     >
-      <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
+      <MaterialCommunityIcons name="plus" size={24} color={theme.on_primary} />
     </TooltipWrapper>
   );
 };

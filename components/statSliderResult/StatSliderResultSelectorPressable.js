@@ -15,7 +15,7 @@ const StatSliderResultSelectorPressable = ({
   setIsStatsVisible,
   isSyncWithChosenStatsPressable = false,
 }) => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
 
@@ -23,13 +23,13 @@ const StatSliderResultSelectorPressable = ({
     <View>
       <TooltipWrapper
         tooltipText="DisplayedStats"
-        style={[button_icon(th).container, shadow_3dp]}
+        style={[button_icon(theme).container, shadow_3dp]}
         onPress={() => setFoundStatsModalVisible(true)}
       >
         <MaterialCommunityIcons
           name="checkbox-multiple-marked"
           size={24}
-          color={th.on_primary}
+          color={theme.on_primary}
         />
       </TooltipWrapper>
 

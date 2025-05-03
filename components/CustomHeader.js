@@ -4,12 +4,12 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "@/utils/ThemeContext";
 
 const CustomHeader = ({ title }) => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   return (
     <View
       style={{
-        backgroundColor: th.surface_container,
+        backgroundColor: theme.surface_container,
         height: 64,
         // paddingBottom: 12,
         // paddingHorizontal: 20,

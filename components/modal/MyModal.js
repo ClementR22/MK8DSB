@@ -19,7 +19,7 @@ const MyModal = ({
   },
   isWithClosePressable = true,
 }) => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
   return (
@@ -30,15 +30,17 @@ const MyModal = ({
       onRequestClose={() => setIsModalVisible(false)} // Ferme le modal
     >
       <Pressable
-        style={modal(th).background}
+        style={modal(theme).background}
         onPress={() => setIsModalVisible(false)}
       >
         <Pressable
-          style={modal(th).container}
+          style={modal(theme).container}
           onStartShouldSetResponder={() => true}
         >
           {modalTitle && (
-            <Text style={modal(th).title_center}>{translate(modalTitle)}</Text>
+            <Text style={modal(theme).title_center}>
+              {translate(modalTitle)}
+            </Text>
           )}
           {ModalContentsList.map((ModalContent, index) => (
             <ModalContent key={index} {...contentPropsList[index]} />
@@ -46,8 +48,8 @@ const MyModal = ({
           {isWithClosePressable && (
             <Pressable
               style={[
-                button(th).container,
-                modal(th).close_button_center,
+                button(theme).container,
+                modal(theme).close_button_center,
                 filterModalButtonHover && shadow_12dp,
               ]}
               onHoverIn={() => setFilterModalButtonHover(true)}
@@ -59,7 +61,9 @@ const MyModal = ({
                 }
               }}
             >
-              <Text style={button(th).text}>{translate(closeButtonText)}</Text>
+              <Text style={button(theme).text}>
+                {translate(closeButtonText)}
+              </Text>
             </Pressable>
           )}
         </Pressable>

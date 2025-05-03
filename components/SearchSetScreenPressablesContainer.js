@@ -25,7 +25,7 @@ const SearchSetScreenPressablesContainer = ({
   setChosenStats,
   setSetsToShow,
 }) => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);
 
@@ -163,23 +163,27 @@ const SearchSetScreenPressablesContainer = ({
     <View style={styles.pressablesContainer}>
       <TooltipWrapper
         tooltipText="ChooseStats"
-        style={[button_icon(th).container, shadow_3dp]}
+        style={[button_icon(theme).container, shadow_3dp]}
         onPress={() => setChosenStatsModalVisible(true)}
       >
-        <MaterialCommunityIcons name="plus" size={24} color={th.on_primary} />
+        <MaterialCommunityIcons
+          name="plus"
+          size={24}
+          color={theme.on_primary}
+        />
       </TooltipWrapper>
 
       <TooltipWrapper
         tooltipText="ChooseFilters"
-        style={[button_icon(th).container, shadow_3dp]}
+        style={[button_icon(theme).container, shadow_3dp]}
         onPress={() => setIsFilterModalVisible(true)}
       >
-        <MaterialCommunityIcons name="pin" size={24} color={th.on_primary} />
+        <MaterialCommunityIcons name="pin" size={24} color={theme.on_primary} />
       </TooltipWrapper>
 
       <Pressable
         style={[
-          button(th).container,
+          button(theme).container,
           { flexDirection: "row", paddingRight: 24, paddingLeft: 16 },
           shadow_3dp,
         ]}
@@ -188,19 +192,19 @@ const SearchSetScreenPressablesContainer = ({
         <MaterialCommunityIcons
           name="magnify"
           size={24}
-          color={th.on_primary}
+          color={theme.on_primary}
         />
-        <Text style={[button(th).text, { marginLeft: 8 }]}>
+        <Text style={[button(theme).text, { marginLeft: 8 }]}>
           {translate("Search")}
         </Text>
       </Pressable>
 
       <TooltipWrapper
         tooltipText="NumberOfResults"
-        style={[button_icon(th).container, shadow_3dp]}
+        style={[button_icon(theme).container, shadow_3dp]}
         onPress={() => setResultsNumberModalVisible(true)}
       >
-        <MaterialIcons name="numbers" size={24} color={th.on_primary} />
+        <MaterialIcons name="numbers" size={24} color={theme.on_primary} />
       </TooltipWrapper>
 
       <StatSliderResultSelectorPressable

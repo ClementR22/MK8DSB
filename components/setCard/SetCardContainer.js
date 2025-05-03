@@ -11,14 +11,14 @@ const SetCardContainer = ({
   situation,
   screenSituation,
 }) => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   return (
     <View key="cardsContainer" style={{ backgroundColor: "blue", padding: 20 }}>
       <ScrollView
         contentContainerStyle={[
           styles.setCardContainer,
-          { backgroundColor: th.surface_container_high },
+          { backgroundColor: theme.surface_container_high },
           setsToShow.length == 0
             ? {
                 flex: 1,
@@ -33,7 +33,7 @@ const SetCardContainer = ({
           <MaterialCommunityIcons
             name="chat-question"
             size={72}
-            color={th.on_surface}
+            color={theme.on_surface}
           />
         ) : null}
 
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     margin: 16,
     padding: 20,
     alignItems: "stretch",
-    //backgroundColor: th.surface_container_high,
+    //backgroundColor: theme.surface_container_high,
     borderRadius: 24,
     columnGap: 16,
   },

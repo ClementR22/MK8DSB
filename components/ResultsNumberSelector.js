@@ -6,7 +6,7 @@ import { shadow_12dp } from "./styles/theme";
 import { useTheme } from "../utils/ThemeContext";
 
 const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
-  const th = useTheme();
+  const { theme } = useTheme();
   const [hovered_1, setHover_1] = useState(false);
   const [hovered_2, setHover_2] = useState(false);
 
@@ -25,7 +25,7 @@ const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
   return (
     <View style={styles.container}>
       <Pressable
-        style={[button_icon(th).container, hovered_1 && shadow_12dp]}
+        style={[button_icon(theme).container, hovered_1 && shadow_12dp]}
         onPress={decrement}
         onHoverIn={() => setHover_1(true)}
         onHoverOut={() => setHover_1(false)}
@@ -37,7 +37,7 @@ const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
       </Pressable>
       <Text style={styles.resultsNumberText}>{resultsNumber}</Text>
       <Pressable
-        style={[button_icon(th).container, hovered_2 && shadow_12dp]}
+        style={[button_icon(theme).container, hovered_2 && shadow_12dp]}
         onPress={increment}
         onHoverIn={() => setHover_2(true)}
         onHoverOut={() => setHover_2(false)}

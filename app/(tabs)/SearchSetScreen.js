@@ -16,7 +16,7 @@ import { PressableImagesProvider } from "../../utils/PressableImagesContext";
 import ButtonLoad from "../../components/ButtonLoad";
 
 const SearchSetScreen = () => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   const { chosenStats, setChosenStats } = useSetsList();
 
@@ -36,11 +36,13 @@ const SearchSetScreen = () => {
       <PressableImagesProvider situation="search">
         <SavedSetModalProvider>
           <ScrollView>
-            <View style={[styles.container, { backgroundColor: th.surface }]}>
+            <View
+              style={[styles.container, { backgroundColor: theme.surface }]}
+            >
               <View
                 style={[
                   styles.statSlidersContainer,
-                  { backgroundColor: th.surface_container_high },
+                  { backgroundColor: theme.surface_container_high },
                 ]}
               >
                 <Text
@@ -50,7 +52,7 @@ const SearchSetScreen = () => {
                       paddingHorizontal: 10,
                       borderRadius: 5,
                       marginBottom: 16,
-                      color: th.on_surface,
+                      color: theme.on_surface,
                     },
                   ]}
                 >
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
     padding: 24,
     borderRadius: 24,
     alignItems: "center",
-    //backgroundColor: th.surface_container_high,
+    //backgroundColor: theme.surface_container_high,
     marginBottom: 8,
     maxWidth: 0.95 * vw,
     minWidth: 0.8 * vw,

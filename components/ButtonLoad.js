@@ -9,14 +9,14 @@ import TooltipWrapper from "./TooltipWrapper";
 import LoadSetModal from "./modal/LoadSetModal";
 
 const ButtonLoad = ({ tooltip_text, screenSituation }) => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   const { toggleSavedSetModal } = useSavedSetModal();
 
   return (
     <TooltipWrapper
       tooltipText={tooltip_text}
-      style={[button_icon(th).container, shadow_3dp]}
+      style={[button_icon(theme).container, shadow_3dp]}
       onPress={() => {
         toggleSavedSetModal(true);
       }}
@@ -25,7 +25,7 @@ const ButtonLoad = ({ tooltip_text, screenSituation }) => {
         <MaterialCommunityIcons
           name="download"
           size={24}
-          color={th.on_primary}
+          color={theme.on_primary}
         />
         <LoadSetModal screenSituation={screenSituation} />
       </View>

@@ -1,39 +1,39 @@
 import { StyleSheet } from "react-native";
 
-export const button = (th) =>
+export const button = (theme) =>
   StyleSheet.create({
     container: {
       display: "flex",
       height: 40,
       borderRadius: 100,
-      backgroundColor: th.primary,
+      backgroundColor: theme.primary,
       justifyContent: "center",
       alignItems: "center",
     },
     text: {
       fontWeight: "500",
       fontSize: 14,
-      color: th.on_primary,
+      color: theme.on_primary,
     },
   });
 
-export const button_icon = (th) =>
+export const button_icon = (theme) =>
   StyleSheet.create({
     container: {
       display: "flex",
       height: 40,
       width: 40,
       borderRadius: 100,
-      backgroundColor: th.primary,
+      backgroundColor: theme.primary,
       justifyContent: "center",
       alignItems: "center",
     },
     icon: {
-      color: th.on_primary,
+      color: theme.on_primary,
     },
   });
 
-export const button_outline = (th) =>
+export const button_outline = (theme) =>
   StyleSheet.create({
     container: {
       borderRadius: 24,
@@ -43,10 +43,10 @@ export const button_outline = (th) =>
       alignItems: "center",
     },
     hover: {
-      backgroundColor: th.primary_hover,
+      backgroundColor: theme.primary_hover,
     },
     text: {
-      color: th.primary,
+      color: theme.primary,
       fontWeight: "500",
       fontSize: 14,
     },

@@ -20,7 +20,7 @@ const StatSliderResultContainer = ({
               key={statIndex}
               style={[
                 styles.sliderContainer,
-                { backgroundColor: "red" }, //th.surface_container },
+                { backgroundColor: "red" }, //theme.surface_container },
               ]}
             >
               <Text style={styles.text}>

@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { vh, vw } from "./theme";
 
-export const modal = (th) =>
+export const modal = (theme) =>
   StyleSheet.create({
     background: {
       ...StyleSheet.absoluteFillObject,
@@ -22,26 +22,26 @@ export const modal = (th) =>
       maxWidth: 0.9 * vw,
       borderRadius: 28,
       paddingVertical: 24,
-      backgroundColor: th.surface_container_high,
+      backgroundColor: theme.surface_container_high,
     },
     content: {
       flex: 1,
       marginBottom: 0,
       maxHeight: vh * 0.5,
       paddingVertical: 10,
-      borderTopColor: th.outline,
+      borderTopColor: theme.outline,
       borderTopWidth: 1,
-      borderBottomColor: th.outline,
+      borderBottomColor: theme.outline,
       borderBottomWidth: 1,
     },
     title: {
-      color: th.on_surface,
+      color: theme.on_surface,
       paddingHorizontal: 24,
       fontSize: 24,
       marginBottom: 16,
     },
     title_center: {
-      color: th.on_surface,
+      color: theme.on_surface,
       alignSelf: "center",
       paddingHorizontal: 24,
       fontSize: 24,

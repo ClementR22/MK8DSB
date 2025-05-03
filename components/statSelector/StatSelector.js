@@ -13,13 +13,13 @@ const StatSelector = ({
   toggleCheck,
   isSyncWithChosenStatsPressable = false,
 }) => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   const { syncWithChosenStats } = useSetsList();
 
   return (
     <View style={styles.listContainer}>
-      <View style={modal(th).content}>
+      <View style={modal(theme).content}>
         <View style={styles.row}>
           <SelectedAllStatsSwitch
             statList={statList}

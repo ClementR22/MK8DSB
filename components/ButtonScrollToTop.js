@@ -4,7 +4,7 @@ import { useTheme } from "../utils/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const ButtonScrollToTop = ({ scrollToTopWithScrollViewRef }) => {
-  const th = useTheme();
+  const { theme } = useTheme();
 
   return (
     <Pressable
@@ -14,7 +14,7 @@ const ButtonScrollToTop = ({ scrollToTopWithScrollViewRef }) => {
       <MaterialCommunityIcons
         name="chevron-up"
         size={24}
-        color={th.on_primary}
+        color={theme.on_primary}
       />
     </Pressable>
   );
