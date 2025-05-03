@@ -32,6 +32,9 @@ const translations = {
     Search: "Search",
     All: "All",
     Sync: "Sync with chosen stats",
+    Dark: "Dark",
+    Light: "Light",
+    System: "System",
 
     // modal button label
     Close: "Close",
@@ -237,6 +240,9 @@ const translations = {
     Search: "Chercher",
     All: "Toutes",
     Sync: "Sync avec les stats choisies",
+    Dark: "Sombre",
+    Light: "Clair",
+    System: "Appareil",
 
     // modal button label
     Close: "Fermer",
