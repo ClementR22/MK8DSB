@@ -6,13 +6,14 @@ import { useTheme } from "../../utils/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import MyModal from "../modal/MyModal";
 import { useState } from "react";
-import StatSelector from "../StatSelector";
+import StatSelector from "../statSelector/StatSelector";
 import { toggleCheckList } from "../../utils/toggleCheck";
 import TooltipWrapper from "../TooltipWrapper";
 
 const StatSliderResultSelectorPressable = ({
   isStatsVisible,
   setIsStatsVisible,
+  isSyncWithChosenStatsPressable = false,
 }) => {
   const th = useTheme();
 
@@ -40,9 +41,11 @@ const StatSliderResultSelectorPressable = ({
         contentPropsList={[
           {
             statList: isStatsVisible,
+            setStatList: setIsStatsVisible,
             toggleCheck: (name) => {
               toggleCheckList(setIsStatsVisible, name);
             },
+            isSyncWithChosenStatsPressable: isSyncWithChosenStatsPressable,
           },
         ]}
       />

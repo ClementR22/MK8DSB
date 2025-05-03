@@ -30,6 +30,8 @@ const translations = {
 
     // button label
     Search: "Search",
+    All: "All",
+    Sync: "Sync with chosen stats",
 
     // modal button label
     Close: "Close",
@@ -233,6 +235,8 @@ const translations = {
 
     // button label
     Search: "Chercher",
+    All: "Toutes",
+    Sync: "Sync avec les stats choisies",
 
     // modal button label
     Close: "Fermer",

@@ -12,7 +12,7 @@ import { useSetsList } from "../utils/SetsListContext";
 import { useSearchSetScreen } from "../utils/SearchSetScreenContext";
 import { usePressableImages } from "../utils/PressableImagesContext";
 import { shadow_3dp } from "./styles/theme";
-import StatSelector from "./StatSelector";
+import StatSelector from "./statSelector/StatSelector";
 import BodyTypeSelector from "./elementsSelector/BodyTypeSelector";
 import ElementsDeselector from "./elementsSelector/ElementsDeselector";
 import ElementsSelector from "./elementsSelector/ElementsSelector";
@@ -206,6 +206,7 @@ const SearchSetScreenPressablesContainer = ({
       <StatSliderResultSelectorPressable
         isStatsVisible={isStatsVisible}
         setIsStatsVisible={setIsStatsVisible}
+        isSyncWithChosenStatsPressable={true}
       />
 
       <MyModal
@@ -216,8 +217,9 @@ const SearchSetScreenPressablesContainer = ({
         contentPropsList={[
           {
             statList: chosenStats,
+            setStatList: setChosenStats,
             toggleCheck: (name) => {
-              toggleCheckChosenStats(setChosenStats, name, setIsStatsVisible);
+              toggleCheckChosenStats(setChosenStats, name);
             },
           },
         ]}

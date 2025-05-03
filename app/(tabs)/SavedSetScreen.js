@@ -20,6 +20,7 @@ const SavedSetScreen = () => {
       </PressableImagesProvider>
 
       {/* DEBUG */}
+      <Text>DEBUG</Text>
       <Pressable onPress={() => console.log("setsListSaved", setsListSaved)}>
         <Text>show saveds sets</Text>
       </Pressable>

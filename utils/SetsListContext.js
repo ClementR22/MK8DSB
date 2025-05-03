@@ -29,6 +29,9 @@ export const SetsListProvider = ({ children }) => {
     })
   );
 
+  const syncWithChosenStats = (setIsStatsVisible) =>
+    setIsStatsVisible(chosenStats);
+
   const setDefault = {
     name: "Set 0",
     classIds: [9, 16, 30, 39],
@@ -306,6 +309,7 @@ export const SetsListProvider = ({ children }) => {
       value={{
         chosenStats,
         setChosenStats,
+        syncWithChosenStats,
         setsListDisplayed,
         setsListSaved,
         setsListFound,
