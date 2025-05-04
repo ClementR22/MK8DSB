@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import StatSliderResult from "./StatSliderResult";
-import { translate } from "../../i18n/translations";
+import { translate } from "@/translations/translations";
 import { getIsStatsVisible } from "../../utils/getIsStatsVisible";
 
 const StatSliderResultContainer = ({

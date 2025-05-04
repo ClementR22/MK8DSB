@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 
-import { PressableImagesProvider } from "../../utils/PressableImagesContext";
+import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
 import ElementsSelector from "../../components/elementsSelector/ElementsSelector";
 
 const GaleryScreen = () => {

@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { bodyTypeNames, elementsAllInfosList } from "../data/data";
+import { bodyTypeNames, elementsAllInfosList } from "@/data/data";
 import { useSetsList } from "./SetsListContext";
 
 // Fonction pour initialiser l'état pressableImagesList

@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { useOrderNumber } from "../../utils/OrderNumberContext";
+import { useOrderNumber } from "@/contexts/OrderNumberContext";
 import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import CategorySelector from "./CategorySelector";
-import { scrollToSection } from "../../utils/scrollToSection";
+import { scrollToSection } from "@/utils/scrollToSection";
 import SelectedCategoryElementsView from "./SelectedCategoryElementsView";
 import ButtonScrollToTop from "../ButtonScrollToTop";
 

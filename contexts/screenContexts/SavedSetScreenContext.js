@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState } from "react";
-import { statNames } from "../data/data";
+import { statNames } from "@/data/data";
 
-const DisplaySetScreenContext = createContext();
+const SavedSetScreenContext = createContext();
 
-export const DisplaySetScreenProvider = ({ children }) => {
+export const SavedSetScreenProvider = ({ children }) => {
   const [isStatsVisible, setIsStatsVisible] = useState(
     statNames.map((statName) => ({
       name: statName,
@@ -12,15 +12,15 @@ export const DisplaySetScreenProvider = ({ children }) => {
   );
 
   return (
-    <DisplaySetScreenContext.Provider
+    <SavedSetScreenContext.Provider
       value={{ isStatsVisible, setIsStatsVisible }}
     >
       {children}
-    </DisplaySetScreenContext.Provider>
+    </SavedSetScreenContext.Provider>
   );
 };
 
 // Hook pour utiliser le contexte
-export const useDisplaySetScreen = () => {
-  return useContext(DisplaySetScreenContext);
+export const useSavedSetScreen = () => {
+  return useContext(SavedSetScreenContext);
 };

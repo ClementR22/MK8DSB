@@ -2,10 +2,10 @@ import React from "react";
 import { Pressable, ScrollView, StyleSheet, View, Text } from "react-native";
 import { modal } from "../styles/modal";
 import PressableStat from "./PressableStat";
-import { useTheme } from "../../utils/ThemeContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import SelectedAllStatsSwitch from "./SelectedAllStatsSwitch";
-import { useSetsList } from "../../utils/SetsListContext";
-import { translate } from "../../i18n/translations";
+import { useSetsList } from "@/contexts/SetsListContext";
+import { translate } from "@/translations/translations";
 
 const StatSelector = ({
   statList,

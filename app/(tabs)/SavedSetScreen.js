@@ -1,10 +1,10 @@
 import React from "react";
 import { Pressable, ScrollView, Text } from "react-native";
 import SetCardContainer from "../../components/setCard/SetCardContainer";
-import { useSetsList } from "../../utils/SetsListContext";
-import { SavedSetScreenProvider } from "../../utils/SavedSetScreenContext";
-import { PressableImagesProvider } from "../../utils/PressableImagesContext";
-import SavedSetScreenPressablesContainer from "../../components/SavedSetScreenPressablesContainer";
+import { useSetsList } from "@/contexts/SetsListContext";
+import { SavedSetScreenProvider } from "@/contexts/screenContexts/SavedSetScreenContext";
+import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
+import SavedSetScreenPressablesContainer from "@/components/screenPressablesContainer/SavedSetScreenPressablesContainer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SavedSetScreen = () => {

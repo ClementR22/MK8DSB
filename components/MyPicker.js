@@ -1,6 +1,6 @@
 import React from "react";
 import { Picker } from "@react-native-picker/picker";
-import { translate } from "../i18n/translations";
+import { translate } from "@/translations/translations";
 
 const MyPicker = ({ value, setValue, itemList, isTranslateLabel }) => {
   return (

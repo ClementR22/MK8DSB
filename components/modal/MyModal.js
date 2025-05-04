@@ -3,8 +3,8 @@ import { Modal, Pressable, Text } from "react-native";
 import { modal } from "../styles/modal";
 import { button } from "../styles/button";
 import { shadow_12dp } from "../styles/theme";
-import { useTheme } from "../../utils/ThemeContext";
-import { translate } from "../../i18n/translations";
+import { useTheme } from "@/contexts/ThemeContext";
+import { translate } from "@/translations/translations";
 import Toast from "react-native-toast-message";
 
 const MyModal = ({

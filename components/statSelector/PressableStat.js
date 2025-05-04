@@ -1,6 +1,6 @@
 import React from "react";
 import { Checkbox } from "react-native-paper";
-import { translate } from "../../i18n/translations";
+import { translate } from "@/translations/translations";
 
 const PressableStat = ({ stat, toggleCheck }) => {
   return (

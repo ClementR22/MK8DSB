@@ -5,15 +5,15 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 // Components import
 import StatSlider from "../../components/StatSlider";
 import { vw } from "../../components/styles/theme";
-import { useTheme } from "../../utils/ThemeContext";
-import { translate } from "../../i18n/translations";
+import { useTheme } from "@/contexts/ThemeContext";
+import { translate } from "@/translations/translations";
 import SetCardContainer from "../../components/setCard/SetCardContainer";
-import { SavedSetModalProvider } from "../../utils/SavedSetModalContext";
-import { useSetsList } from "../../utils/SetsListContext";
-import SearchSetScreenPressablesContainer from "../../components/SearchSetScreenPressablesContainer";
-import { SearchSetScreenProvider } from "../../utils/SearchSetScreenContext";
-import { PressableImagesProvider } from "../../utils/PressableImagesContext";
-import ButtonLoad from "../../components/ButtonLoad";
+import { SavedSetModalProvider } from "@/contexts/SavedSetModalContext";
+import { useSetsList } from "@/contexts/SetsListContext";
+import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
+import { SearchSetScreenProvider } from "@/contexts/screenContexts/SearchSetScreenContext";
+import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
+import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
 
 const SearchSetScreen = () => {
   const { theme } = useTheme();
@@ -59,7 +59,7 @@ const SearchSetScreen = () => {
                   {translate("SearchedStats")}
                 </Text>
 
-                <ButtonLoad
+                <ButtonLoadSet
                   tooltip_text="LoadStatsOfASet"
                   screenSituation="search"
                 />

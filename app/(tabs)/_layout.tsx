@@ -4,11 +4,11 @@ import { Tabs } from "expo-router";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { LanguageProvider } from "@/i18n/LanguageContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import Toast from "react-native-toast-message";
-import { SetsListProvider } from "@/utils/SetsListContext";
-import { ScreenSituationProvider } from "@/utils/ScreenSituationContext";
-import { OrderNumberProvider } from "@/utils/OrderNumberContext";
+import { SetsListProvider } from "@/contexts/SetsListContext";
+import { ScreenSituationProvider } from "@/contexts/ScreenSituationContext";
+import { OrderNumberProvider } from "@/contexts/OrderNumberContext";
 import {
   Ionicons,
   MaterialCommunityIcons,

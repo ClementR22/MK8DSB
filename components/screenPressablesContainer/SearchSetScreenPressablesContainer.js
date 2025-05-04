@@ -1,24 +1,24 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useTheme } from "../utils/ThemeContext";
-import { button, button_icon } from "./styles/button";
+import { useTheme } from "@/contexts/ThemeContext";
+import { button, button_icon } from "../styles/button";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { bodyTypeNames, setAllInfos } from "../data/data";
-import StatSliderResultSelectorPressable from "./statSliderResult/StatSliderResultSelectorPressable";
-import MyModal from "./modal/MyModal";
-import { translate } from "../i18n/translations";
+import { bodyTypeNames, setAllInfos } from "../../data/data";
+import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderResultSelectorPressable";
+import MyModal from "../modal/MyModal";
+import { translate } from "@/translations/translations";
 import { useState } from "react";
-import { useSetsList } from "../utils/SetsListContext";
-import { useSearchSetScreen } from "../utils/SearchSetScreenContext";
-import { usePressableImages } from "../utils/PressableImagesContext";
-import { shadow_3dp } from "./styles/theme";
-import StatSelector from "./statSelector/StatSelector";
-import BodyTypeSelector from "./elementsSelector/BodyTypeSelector";
-import ElementsDeselector from "./elementsSelector/ElementsDeselector";
-import ElementsSelector from "./elementsSelector/ElementsSelector";
-import ResultsNumber from "./ResultsNumberSelector";
-import { toggleCheckChosenStats } from "../utils/toggleCheck";
-import TooltipWrapper from "./TooltipWrapper";
+import { useSetsList } from "@/contexts/SetsListContext";
+import { useSearchSetScreen } from "@/contexts/screenContexts/SearchSetScreenContext";
+import { usePressableImages } from "@/contexts/PressableImagesContext";
+import { shadow_3dp } from "../styles/theme";
+import StatSelector from "../statSelector/StatSelector";
+import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
+import ElementsDeselector from "../elementsSelector/ElementsDeselector";
+import ElementsSelector from "../elementsSelector/ElementsSelector";
+import ResultsNumber from "../ResultsNumberSelector";
+import { toggleCheckChosenStats } from "../../utils/toggleCheck";
+import TooltipWrapper from "../TooltipWrapper";
 
 const SearchSetScreenPressablesContainer = ({
   chosenStats,

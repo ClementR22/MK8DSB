@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import Tooltip from "react-native-walkthrough-tooltip";
-import { translate } from "../i18n/translations";
+import { translate } from "@/translations/translations";
 
 const TooltipWrapper = ({
   tooltipText,

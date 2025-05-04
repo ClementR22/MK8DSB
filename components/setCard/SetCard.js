@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { card } from "../styles/card";
-import { useTheme } from "../../utils/ThemeContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import MyModal from "../modal/MyModal";
 import SetImagesContainer from "./SetImagesContainer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
@@ -13,8 +13,8 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
-import { usePressableImages } from "../../utils/PressableImagesContext";
-import { useSetsList } from "../../utils/SetsListContext";
+import { usePressableImages } from "@/contexts/PressableImagesContext";
+import { useSetsList } from "@/contexts/SetsListContext";
 import MyTextInput from "../MyTextInput";
 import TooltipWrapper from "../TooltipWrapper";
 import Container from "../Container";

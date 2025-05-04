@@ -1,7 +1,7 @@
 import React from "react";
 import { Chip } from "react-native-paper";
 import { Image } from "react-native";
-import { translate } from "../../i18n/translations";
+import { translate } from "@/translations/translations";
 
 const ElementChip = ({ name, pressed, onPress, source }) => {
   return (

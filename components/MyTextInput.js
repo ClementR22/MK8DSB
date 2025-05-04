@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
-import { useSetsList } from "../utils/SetsListContext";
+import { useSetsList } from "@/contexts/SetsListContext";
 
 const MyTextInput = ({ setToShowName, setCardIndex, situation }) => {
   const defaultName = `Set ${setCardIndex + 1}`;

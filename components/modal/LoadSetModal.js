@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import MyModal from "./MyModal";
-import { useSavedSetModal } from "../../utils/SavedSetModalContext";
+import { useSavedSetModal } from "@/contexts/SavedSetModalContext";
 import SetCardContainer from "../setCard/SetCardContainer";
-import { useSetsList } from "../../utils/SetsListContext";
+import { useSetsList } from "@/contexts/SetsListContext";
 
 const LoadSetModal = ({ screenSituation }) => {
   const { setsListSaved } = useSetsList();

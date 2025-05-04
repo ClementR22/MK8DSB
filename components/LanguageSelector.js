@@ -1,5 +1,5 @@
 import React from "react";
-import { useLanguage, languageList } from "../i18n/LanguageContext";
+import { useLanguage, languageList } from "@/contexts/LanguageContext";
 import MyPicker from "./MyPicker";
 
 const LanguageSelector = () => {

@@ -1,6 +1,6 @@
-import { useDisplaySetScreen } from "./DisplaySetScreenContext";
-import { useSavedSetScreen } from "./SavedSetScreenContext";
-import { useSearchSetScreen } from "./SearchSetScreenContext";
+import { useDisplaySetScreen } from "@/contexts/screenContexts/DisplaySetScreenContext";
+import { useSavedSetScreen } from "@/contexts/screenContexts/SavedSetScreenContext";
+import { useSearchSetScreen } from "@/contexts/screenContexts/SearchSetScreenContext";
 
 export const getIsStatsVisible = (situation) => {
   let isStatsVisible;

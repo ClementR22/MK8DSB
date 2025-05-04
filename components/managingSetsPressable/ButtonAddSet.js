@@ -1,10 +1,10 @@
 import React from "react";
-import { button_icon } from "./styles/button";
-import { useTheme } from "../utils/ThemeContext";
-import { shadow_3dp } from "./styles/theme";
+import { button_icon } from "../styles/button";
+import { useTheme } from "@/contexts/ThemeContext";
+import { shadow_3dp } from "../styles/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useSetsList } from "../utils/SetsListContext";
-import TooltipWrapper from "./TooltipWrapper";
+import { useSetsList } from "@/contexts/SetsListContext";
+import TooltipWrapper from "../TooltipWrapper";
 
 const ButtonAddSet = () => {
   const { theme } = useTheme();

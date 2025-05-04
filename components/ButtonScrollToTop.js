@@ -1,6 +1,6 @@
 import React from "react";
 import { Pressable, StyleSheet } from "react-native";
-import { useTheme } from "../utils/ThemeContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const ButtonScrollToTop = ({ scrollToTopWithScrollViewRef }) => {

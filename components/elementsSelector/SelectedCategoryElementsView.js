@@ -1,13 +1,13 @@
 import React, { useMemo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import ElementImage from "./ElementImage";
-import { bodyTypeNames } from "../../data/data";
+import { bodyTypeNames } from "@/data/data";
 import { button } from "../styles/button";
-import { useTheme } from "../../utils/ThemeContext";
-import { translate } from "../../i18n/translations";
+import { useTheme } from "@/contexts/ThemeContext";
+import { translate } from "@/translations/translations";
 import ElementChip from "./ElementChip";
-import { usePressableImages } from "../../utils/PressableImagesContext";
-import { useOrderNumber } from "../../utils/OrderNumberContext";
+import { usePressableImages } from "@/contexts/PressableImagesContext";
+import { useOrderNumber } from "@/contexts/OrderNumberContext";
 
 const SelectedCategoryElementsView_ = ({
   selectedTab,

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import { statNames } from "../data/data";
+import { statNames } from "@/data/data";
 
 const SearchSetScreenContext = createContext();
 
@@ -8,7 +8,7 @@ export const SearchSetScreenProvider = ({ children }) => {
     statNames.map((statName, index) => ({
       name: statName,
       checked: index === 0,
-    })),
+    }))
   );
 
   return (

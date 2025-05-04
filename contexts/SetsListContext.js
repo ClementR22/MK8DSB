@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { statNames } from "@/data/data";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import showToast from "./toast";
-import { searchSetStatsFromElementsIds } from "./searchSetStatsFromElementsIds";
+import showToast from "@/utils/toast";
+import { searchSetStatsFromElementsIds } from "@/utils/searchSetStatsFromElementsIds";
 
 // Créer le contexte
 const SetsListContext = createContext();

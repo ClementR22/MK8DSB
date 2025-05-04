@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useTheme } from "@/utils/ThemeContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const CustomHeader = ({ title }) => {
   const { theme } = useTheme();

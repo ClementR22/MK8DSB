@@ -1,14 +1,14 @@
 import React from "react";
 import { View } from "react-native";
-import { button_icon } from "./styles/button";
-import { useTheme } from "../utils/ThemeContext";
-import { shadow_3dp } from "./styles/theme";
-import { useSavedSetModal } from "../utils/SavedSetModalContext";
+import { button_icon } from "../styles/button";
+import { useTheme } from "@/contexts/ThemeContext";
+import { shadow_3dp } from "../styles/theme";
+import { useSavedSetModal } from "@/contexts/SavedSetModalContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import TooltipWrapper from "./TooltipWrapper";
-import LoadSetModal from "./modal/LoadSetModal";
+import TooltipWrapper from "../TooltipWrapper";
+import LoadSetModal from "../modal/LoadSetModal";
 
-const ButtonLoad = ({ tooltip_text, screenSituation }) => {
+const ButtonLoadSet = ({ tooltip_text, screenSituation }) => {
   const { theme } = useTheme();
 
   const { toggleSavedSetModal } = useSavedSetModal();
@@ -33,4 +33,4 @@ const ButtonLoad = ({ tooltip_text, screenSituation }) => {
   );
 };
 
-export default ButtonLoad;
+export default ButtonLoadSet;

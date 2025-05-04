@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { button_icon } from "../styles/button";
 import { shadow_3dp } from "../styles/theme";
-import { useTheme } from "../../utils/ThemeContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import MyModal from "../modal/MyModal";
 import { useState } from "react";

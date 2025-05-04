@@ -1,4 +1,4 @@
-import { useLanguage } from "./LanguageContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const translate = (key) => {
   const { language } = useLanguage();

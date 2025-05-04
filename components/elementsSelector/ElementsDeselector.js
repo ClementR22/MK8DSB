@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { usePressableImages } from "../../utils/PressableImagesContext";
+import { usePressableImages } from "@/contexts/PressableImagesContext";
 import ElementChip from "./ElementChip";
 
 const ElementsDeselector = () => {

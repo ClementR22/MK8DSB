@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Switch } from "react-native-paper";
-import { translate } from "../../i18n/translations";
+import { translate } from "@/translations/translations";
 
 const SelectedAllStatsSwitch = ({ statList, setStatList }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);

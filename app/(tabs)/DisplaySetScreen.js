@@ -1,13 +1,13 @@
 import React from "react";
 import { ScrollView } from "react-native";
-import { PressableImagesProvider } from "../../utils/PressableImagesContext";
-import StatSliderResultContainer from "../../components/statSliderResult/StatSliderResultContainer";
-import SetCardContainer from "../../components/setCard/SetCardContainer";
+import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
+import StatSliderResultContainer from "@/components/statSliderResult/StatSliderResultContainer";
+import SetCardContainer from "@/components/setCard/SetCardContainer";
 
-import { useSetsList } from "../../utils/SetsListContext";
-import { SavedSetModalProvider } from "../../utils/SavedSetModalContext";
-import { DisplaySetScreenProvider } from "../../utils/DisplaySetScreenContext";
-import DisplaySetScreenPressablesContainer from "../../components/DisplaySetScreenPressablesContainer";
+import { useSetsList } from "@/contexts/SetsListContext";
+import { SavedSetModalProvider } from "@/contexts/SavedSetModalContext";
+import { DisplaySetScreenProvider } from "@/contexts/screenContexts/DisplaySetScreenContext";
+import DisplaySetScreenPressablesContainer from "@/components/screenPressablesContainer/DisplaySetScreenPressablesContainer";
 
 const DisplaySetScreen = () => {
   const { setsListDisplayed } = useSetsList();
