@@ -1,10 +1,9 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 class Container extends React.Component {
   th = this.props.theme;
 
-  // Custom properties
   containerBackgroundColor =
     this.props?.containerBackgroundColor ?? "transparent";
   contentBackgroundColor =
@@ -21,19 +20,16 @@ class Container extends React.Component {
       backgroundColor: this.containerBackgroundColor,
       width: "100%",
       margin: "auto",
-      display: "flex",
       justifyContent: "center",
     },
     content: {
       backgroundColor: this.contentBackgroundColor,
-      display: "flex",
       justifyContent: this.justifyContent,
       width: "100%",
       maxWidth: 400,
       margin: 16,
       padding: 10,
       borderRadius: 12,
-      gap: 10,
       flexDirection: this.flexDirection,
       alignItems: this.alignItems,
       ...this.inputStyles,
@@ -42,9 +38,9 @@ class Container extends React.Component {
 
   render() {
     return (
-      <div style={this.styles.container}>
-        <div style={this.styles.content}>{this.props.children}</div>
-      </div>
+      <View style={this.styles.container}>
+        <View style={this.styles.content}>{this.props.children}</View>
+      </View>
     );
   }
 }
