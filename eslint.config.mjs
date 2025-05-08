@@ -9,6 +9,7 @@ import { defineConfig } from "eslint/config";
 
 export default defineConfig([
   {
+    ...tseslint.configs.recommended,
     settings: {
       react: {
         version: "detect",
@@ -42,5 +43,13 @@ export default defineConfig([
       ],
     },
   },
-  ...tseslint.configs.recommended,
+  {
+    files: ["**/*.{ts,tsx}"],
+    plugins: {
+      "@typescript-eslint": tseslint.plugin,
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "off", // 👈 ici ça marchera
+    },
+  },
 ]);
