@@ -3,7 +3,6 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { useOrderNumber } from "@/contexts/OrderNumberContext";
 import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import CategorySelector from "./CategorySelector";
-import { scrollToSection } from "@/utils/scrollToSection";
 import SelectedCategoryElementsView from "./SelectedCategoryElementsView";
 import ButtonScrollToTop from "../ButtonScrollToTop";
 
@@ -15,15 +14,27 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
 
   const scrollViewRef = useRef(null);
 
+  const scrollToSection = (sectionRef, animated) => {
+    sectionRef.current?.measureLayout(
+      scrollViewRef.current, // Mesurer par rapport à la ScrollView
+      (x, y) => {
+        scrollViewRef.current?.scrollTo({ y, animated: animated });
+      },
+      (error) => {
+        console.error("Erreur de mesure :", error);
+      }
+    );
+  };
+
   const scrollToSectionWithScrollViewRef = useCallback(
     (sectionRef, animated = true) => {
-      scrollToSection(scrollViewRef, sectionRef, animated);
+      scrollToSection(sectionRef, animated);
     },
     []
   );
 
   const scrollToTopWithScrollViewRef = useCallback(() => {
-    scrollToSection(scrollViewRef, sectionRefs.current[4], true);
+    scrollViewRef.current?.scrollTo({ y: 0, animated: true });
   }, []);
 
   const [showScrollTopButton, setShowScrollTopButton] = useState(false);
@@ -43,11 +54,7 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
   }, []);
 
   return (
-    <View
-      style={styles.outerContainer}
-      key="outerContainer"
-      ref={sectionRefs.current[4]}
-    >
+    <View style={styles.outerContainer} key="outerContainer">
       <ButtonMultiStateToggle
         number={orderNumber}
         setNumber={setOrderNumber}
