@@ -20,32 +20,23 @@ const SelectedCategoryElementsView_ = ({
 
   const { orderNumber } = useOrderNumber();
 
-  const {
-    pressableImagesByCategory,
-    handlePressImage,
-    handlePressImageByClass,
-  } = usePressableImages();
+  const { pressableImagesByCategory, handlePressImage, handlePressImageByClass } = usePressableImages();
+
+  const handlePress =
+    situation != "search"
+      ? () => {
+          handlePressImageByClass(classId, category);
+        }
+      : () => {
+          handlePressImage(id);
+        };
 
   const ElementsView = ({ elements }) => {
     return (
       <View style={[styles.categoryContainer, { flexDirection: "row" }]}>
         {elements.map(({ id, name, category, classId, image, pressed }) =>
           !galeryCase ? (
-            <ElementChip
-              key={id}
-              name={name}
-              pressed={pressed}
-              onPress={
-                situation != "search"
-                  ? () => {
-                      handlePressImageByClass(classId, category);
-                    }
-                  : () => {
-                      handlePressImage(id);
-                    }
-              }
-              source={image}
-            />
+            <ElementChip key={id} name={name} pressed={pressed} onPress={handlePress} source={image} />
           ) : (
             <ElementImage key={id} name={name} source={image} />
           )
@@ -60,9 +51,7 @@ const SelectedCategoryElementsView_ = ({
         {bodyTypeNames.map((bodyTypeName, index) => (
           <Pressable
             style={button(theme).container}
-            onPress={() =>
-              scrollToSectionWithScrollViewRef(sectionRefs.current[index])
-            }
+            onPress={() => scrollToSectionWithScrollViewRef(sectionRefs.current[index])}
             key={bodyTypeName}
           >
             <Text style={button(theme).text}>{translate(bodyTypeName)}</Text>
@@ -70,16 +59,12 @@ const SelectedCategoryElementsView_ = ({
         ))}
       </View>
       <View style={styles.bodiesContainer}>
-        {Object.entries(bodyElementsByBodyType).map(
-          ([subCategoryKey, subCategoryElements], index) => (
-            <View key={subCategoryKey} ref={sectionRefs.current[index]}>
-              <Text style={{ flex: 1, backgroundColor: "white" }}>
-                {translate(subCategoryKey)}
-              </Text>
-              <ElementsView elements={subCategoryElements} />
-            </View>
-          )
-        )}
+        {Object.entries(bodyElementsByBodyType).map(([subCategoryKey, subCategoryElements], index) => (
+          <View key={subCategoryKey} ref={sectionRefs.current[index]}>
+            <Text style={{ flex: 1, backgroundColor: "white" }}>{translate(subCategoryKey)}</Text>
+            <ElementsView elements={subCategoryElements} />
+          </View>
+        ))}
       </View>
     </View>
   );
@@ -132,9 +117,7 @@ const SelectedCategoryElementsView_ = ({
     if (selectedTab != "body") {
       return <ElementsView elements={selectedCategoryElementsSorted} />;
     } else {
-      const bodyElementsByBodyType = groupByBodyType(
-        selectedCategoryElementsSorted
-      );
+      const bodyElementsByBodyType = groupByBodyType(selectedCategoryElementsSorted);
       return <BodyTabContent bodyElementsByBodyType={bodyElementsByBodyType} />;
     }
   } else {
@@ -142,11 +125,9 @@ const SelectedCategoryElementsView_ = ({
     const selectedCategoryElements = pressableImagesByCategory[selectedTab]; // deja trié par classe dans pressableImagesByCategory
     return (
       <View style={styles.bodyTypesContainer}>
-        {Object.entries(selectedCategoryElements).map(
-          ([classKey, classElements]) => (
-            <ElementsView key={classKey} elements={classElements} />
-          )
-        )}
+        {Object.entries(selectedCategoryElements).map(([classKey, classElements]) => (
+          <ElementsView key={classKey} elements={classElements} />
+        ))}
       </View>
     );
   }
