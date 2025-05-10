@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 // Components import
@@ -10,7 +9,8 @@ import { translate } from "@/translations/translations";
 import SetCardContainer from "../../components/setCard/SetCardContainer";
 import { SavedSetModalProvider } from "@/contexts/SavedSetModalContext";
 import { useSetsList } from "@/contexts/SetsListContext";
-import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
+import SearchSetScreenPressablesContainer
+  from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
 import { SearchSetScreenProvider } from "@/contexts/screenContexts/SearchSetScreenContext";
 import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
 import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
@@ -26,8 +26,8 @@ const SearchSetScreen = () => {
   const updateSliderValue = (name, newValue) => {
     setChosenStats(
       chosenStats.map((stat) =>
-        stat.name === name ? { ...stat, value: newValue } : stat
-      )
+        stat.name === name ? { ...stat, value: newValue } : stat,
+      ),
     );
   };
 
@@ -35,9 +35,19 @@ const SearchSetScreen = () => {
     <SearchSetScreenProvider>
       <PressableImagesProvider situation="search">
         <SavedSetModalProvider>
-          <ScrollView>
+          <ScrollView
+            key={"toto"}
+            style={{
+              height: 100,
+            }}
+          >
             <View
-              style={[styles.container, { backgroundColor: theme.surface }]}
+              style={[
+                styles.container,
+                {
+                  backgroundColor: theme.surface,
+                },
+              ]}
             >
               <View
                 style={[
@@ -78,7 +88,7 @@ const SearchSetScreen = () => {
                         statFilterNumber={stat.statFilterNumber}
                         setStatFilterNumber={stat.setStatFilterNumber}
                       />
-                    )
+                    ),
                 )}
               </View>
 

@@ -1,10 +1,14 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { vh } from "../styles/theme";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useTheme } from "../../contexts/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCard from "./SetCard";
 
+const getSetsLength = (sets) => {
+  return sets.length === 0;
+}
+
+//@formatter:off
 const SetCardContainer = ({
   setsToShow,
   chosenStats = null,
@@ -14,22 +18,29 @@ const SetCardContainer = ({
   const { theme } = useTheme();
 
   return (
-    <View key="cardsContainer" style={{ backgroundColor: "blue", padding: 20 }}>
+    <View
+      theme={theme}
+      key="cardsContainer"
+      style={{
+        display: "flex",
+        // padding: 10,
+        backgroundColor: theme.surface,
+        flexDirection: "column",
+      }}
+    >
       <ScrollView
         contentContainerStyle={[
           styles.setCardContainer,
-          { backgroundColor: theme.surface_container_high },
-          setsToShow.length == 0
-            ? {
-                flex: 1,
-                paddingBottom: 0.282 * vh,
-                justifyContent: "center",
-              }
-            : {},
+          {
+            flexGrow: 1,
+            backgroundColor: theme.surface_container_high,
+            justifyContent: "center",
+          },
+          (getSetsLength(setsToShow) ? {flex: 1,} : {}),
         ]}
         horizontal={true}
       >
-        {setsToShow.length == 0 ? (
+        {setsToShow.length === 0 ? (
           <MaterialCommunityIcons
             name="chat-question"
             size={72}
@@ -61,6 +72,7 @@ export default SetCardContainer;
 const styles = StyleSheet.create({
   setCardContainer: {
     margin: 16,
+    marginTop: 0,
     padding: 20,
     alignItems: "stretch",
     //backgroundColor: theme.surface_container_high,
