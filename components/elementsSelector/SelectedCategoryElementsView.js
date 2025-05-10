@@ -24,7 +24,7 @@ const SelectedCategoryElementsView_ = ({
 
   const handlePress =
     situation != "search"
-      ? () => {
+      ? (classId, category) => {
           handlePressImageByClass(classId, category);
         }
       : () => {
@@ -36,7 +36,13 @@ const SelectedCategoryElementsView_ = ({
       <View style={[styles.categoryContainer, { flexDirection: "row" }]}>
         {elements.map(({ id, name, category, classId, image, pressed }) =>
           !galeryCase ? (
-            <ElementChip key={id} name={name} pressed={pressed} onPress={handlePress} source={image} />
+            <ElementChip
+              key={id}
+              name={name}
+              pressed={pressed}
+              onPress={() => handlePress(classId, category)}
+              source={image}
+            />
           ) : (
             <ElementImage key={id} name={name} source={image} />
           )
