@@ -11,6 +11,7 @@ class Container extends React.Component {
   justifyContent = this.props?.justifyContent ?? "center";
   flexDirection = this.props?.flexDirection ?? "column";
   alignItems = this.props?.alignItems ?? "center";
+  gap = this.props?.gap ?? 10;
 
   inputStyles = this.props?.styles;
 
@@ -25,11 +26,11 @@ class Container extends React.Component {
     content: {
       backgroundColor: this.contentBackgroundColor,
       justifyContent: this.justifyContent,
-      width: "100%",
       maxWidth: 400,
       margin: 16,
       padding: 10,
       borderRadius: 12,
+      gap: this.gap,
       flexDirection: this.flexDirection,
       alignItems: this.alignItems,
       ...this.inputStyles,
@@ -38,8 +39,8 @@ class Container extends React.Component {
 
   render() {
     return (
-      <View style={this.styles.container}>
-        <View style={this.styles.content}>{this.props.children}</View>
+      <View style={this.styles.container} id={"ContainerBox"}>
+        <View style={this.styles.content} id={"ContainerContent"}>{this.props.children}</View>
       </View>
     );
   }
