@@ -26,29 +26,23 @@ const StatSliderResultSelectorPressable = ({
         style={[button_icon(theme).container, shadow_3dp]}
         onPress={() => setFoundStatsModalVisible(true)}
       >
-        <MaterialCommunityIcons
-          name="checkbox-multiple-marked"
-          size={24}
-          color={theme.on_primary}
-        />
+        <MaterialCommunityIcons name="checkbox-multiple-marked" size={24} color={theme.on_primary} />
       </TooltipWrapper>
 
       <MyModal
         modalTitle="StatsToDisplay"
         isModalVisible={foundStatsModalVisible}
         setIsModalVisible={setFoundStatsModalVisible}
-        ModalContentsList={[StatSelector]}
-        contentPropsList={[
-          {
-            statList: isStatsVisible,
-            setStatList: setIsStatsVisible,
-            toggleCheck: (name) => {
-              toggleCheckList(setIsStatsVisible, name);
-            },
-            isSyncWithChosenStatsPressable: isSyncWithChosenStatsPressable,
-          },
-        ]}
-      />
+      >
+        <StatSelector
+          statList={isStatsVisible}
+          setStatList={setIsStatsVisible}
+          toggleCheck={(name) => {
+            toggleCheckList(setIsStatsVisible, name);
+          }}
+          isSyncWithChosenStatsPressable={isSyncWithChosenStatsPressable}
+        />
+      </MyModal>
     </View>
   );
 };

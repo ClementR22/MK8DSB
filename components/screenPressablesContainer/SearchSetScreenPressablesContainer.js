@@ -20,23 +20,18 @@ import ResultsNumber from "../ResultsNumberSelector";
 import { toggleCheckChosenStats } from "../../utils/toggleCheck";
 import TooltipWrapper from "../TooltipWrapper";
 
-const SearchSetScreenPressablesContainer = ({
-  chosenStats,
-  setChosenStats,
-  setSetsToShow,
-}) => {
+const SearchSetScreenPressablesContainer = ({ chosenStats, setChosenStats, setSetsToShow }) => {
   const { theme } = useTheme();
 
   const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);
 
-  const [resultsNumberModalVisible, setResultsNumberModalVisible] =
-    useState(false);
+  const [resultsNumberModalVisible, setResultsNumberModalVisible] = useState(false);
 
   const [resultsNumber, setResultsNumber] = useState(5);
 
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
 
-  const { updateEntireSetsListFound } = useSetsList();
+  const { setSetsListFound } = useSetsList();
 
   const { isStatsVisible, setIsStatsVisible } = useSearchSetScreen();
 
@@ -50,12 +45,13 @@ const SearchSetScreenPressablesContainer = ({
   );
 
   const updateSetsToShow = (setsFound) => {
-    const setsFoundLight = setsFound.map((set) => ({
+    const setsFoundWithName = setsFound.map((set, index) => ({
+      name: "SetFound " + String(index),
       classIds: set.classIds,
       stats: set.stats,
     }));
-    setSetsToShow(setsFoundLight);
-    updateEntireSetsListFound(setsFoundLight);
+    setSetsToShow(setsFoundWithName);
+    setSetsListFound(setsFoundWithName);
   };
 
   const elementsFilterObjectToList = (pressableImagesByCategory) => {
@@ -67,9 +63,7 @@ const SearchSetScreenPressablesContainer = ({
       // Parcourir chaque classe dans la catégorie
       Object.entries(category).forEach(([classKey, classElements]) => {
         // Si au moins une image est pressée (true), ajouter la classe à pressedClasses
-        const isAnyImagePressed = Object.values(classElements).some(
-          ({ pressed }) => pressed
-        );
+        const isAnyImagePressed = Object.values(classElements).some(({ pressed }) => pressed);
         if (isAnyImagePressed) {
           pressedClassesInCategory.push(+classKey); // +str pour convertir en entier
         }
@@ -84,17 +78,11 @@ const SearchSetScreenPressablesContainer = ({
   const search = () => {
     const chosenStatsChecked = chosenStats.map((stat) => stat.checked);
     const chosenStatsValue = chosenStats.map((stat) => stat.value);
-    const chosenStatsFilterNumber = chosenStats.map(
-      (stat) => stat.statFilterNumber
-    );
+    const chosenStatsFilterNumber = chosenStats.map((stat) => stat.statFilterNumber);
 
-    const chosenBodyTypeList = chosenBodyType
-      .filter((bodyType) => bodyType.checked)
-      .map((bodyType) => bodyType.name);
+    const chosenBodyTypeList = chosenBodyType.filter((bodyType) => bodyType.checked).map((bodyType) => bodyType.name);
 
-    const chosenElementsIds = elementsFilterObjectToList(
-      pressableImagesByCategory
-    );
+    const chosenElementsIds = elementsFilterObjectToList(pressableImagesByCategory);
 
     if (!chosenStatsChecked.includes(true) || chosenBodyTypeList.length === 0) {
       updateSetsToShow([]); // Ou gérer l'état de "rien trouvé"
@@ -105,15 +93,10 @@ const SearchSetScreenPressablesContainer = ({
       const { classIds, stats, bodyTypes } = setInfo;
 
       // Vérifier si au moins un type de corps est présent
-      const listIsSetElementAccepted = classIds.map(
-        (elementId, categoryIndex) => {
-          const category_x_ElementIds = chosenElementsIds[categoryIndex];
-          return (
-            category_x_ElementIds.includes(elementId) ||
-            category_x_ElementIds.length === 0
-          );
-        }
-      );
+      const listIsSetElementAccepted = classIds.map((elementId, categoryIndex) => {
+        const category_x_ElementIds = chosenElementsIds[categoryIndex];
+        return category_x_ElementIds.includes(elementId) || category_x_ElementIds.length === 0;
+      });
       if (
         !bodyTypes.some((item) => chosenBodyTypeList.includes(item)) ||
         listIsSetElementAccepted.includes(false) // si (le set ne contient aucun type de vehicule choisi OU le set contient au moins un element non choisi)
@@ -166,11 +149,7 @@ const SearchSetScreenPressablesContainer = ({
         style={[button_icon(theme).container, shadow_3dp]}
         onPress={() => setChosenStatsModalVisible(true)}
       >
-        <MaterialCommunityIcons
-          name="plus"
-          size={24}
-          color={theme.on_primary}
-        />
+        <MaterialCommunityIcons name="plus" size={24} color={theme.on_primary} />
       </TooltipWrapper>
 
       <TooltipWrapper
@@ -182,21 +161,11 @@ const SearchSetScreenPressablesContainer = ({
       </TooltipWrapper>
 
       <Pressable
-        style={[
-          button(theme).container,
-          { flexDirection: "row", paddingRight: 24, paddingLeft: 16 },
-          shadow_3dp,
-        ]}
+        style={[button(theme).container, { flexDirection: "row", paddingRight: 24, paddingLeft: 16 }, shadow_3dp]}
         onPress={() => search()}
       >
-        <MaterialCommunityIcons
-          name="magnify"
-          size={24}
-          color={theme.on_primary}
-        />
-        <Text style={[button(theme).text, { marginLeft: 8 }]}>
-          {translate("Search")}
-        </Text>
+        <MaterialCommunityIcons name="magnify" size={24} color={theme.on_primary} />
+        <Text style={[button(theme).text, { marginLeft: 8 }]}>{translate("Search")}</Text>
       </Pressable>
 
       <TooltipWrapper
@@ -217,49 +186,29 @@ const SearchSetScreenPressablesContainer = ({
         modalTitle="StatsToParameter"
         isModalVisible={chosenStatsModalVisible}
         setIsModalVisible={setChosenStatsModalVisible}
-        ModalContentsList={[StatSelector]}
-        contentPropsList={[
-          {
-            statList: chosenStats,
-            setStatList: setChosenStats,
-            toggleCheck: (name) => {
-              toggleCheckChosenStats(setChosenStats, name);
-            },
-          },
-        ]}
-      />
+      >
+        <StatSelector
+          statList={chosenStats}
+          setStatList={setChosenStats}
+          toggleCheck={(name) => {
+            toggleCheckChosenStats(setChosenStats, name);
+          }}
+        />
+      </MyModal>
 
-      <MyModal
-        modalTitle="Filters"
-        isModalVisible={isFilterModalVisible}
-        setIsModalVisible={setIsFilterModalVisible}
-        ModalContentsList={[
-          BodyTypeSelector,
-          ElementsDeselector,
-          ElementsSelector,
-        ]}
-        contentPropsList={[
-          {
-            chosenBodyType: chosenBodyType,
-            setChosenBodyType: setChosenBodyType,
-          },
-          {},
-          { situation: "search" },
-        ]}
-      />
+      <MyModal modalTitle="Filters" isModalVisible={isFilterModalVisible} setIsModalVisible={setIsFilterModalVisible}>
+        <BodyTypeSelector chosenBodyType={chosenBodyType} setChosenBodyType={setChosenBodyType} />
+        <ElementsDeselector />
+        <ElementsSelector situation="search" />
+      </MyModal>
 
       <MyModal
         modalTitle="NumberOfResults"
         isModalVisible={resultsNumberModalVisible}
         setIsModalVisible={setResultsNumberModalVisible}
-        ModalContentsList={[ResultsNumber]}
-        contentPropsList={[
-          {
-            resultsNumber: resultsNumber, // Utilisation correcte des paires clé-valeur
-            setResultsNumber: setResultsNumber,
-          },
-        ]}
-      />
+      >
+        <ResultsNumber resultsNumber={resultsNumber} setResultsNumber={setResultsNumber} />
+      </MyModal>
     </View>
   );
 };

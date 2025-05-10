@@ -16,7 +16,7 @@ import TooltipWrapper from "../TooltipWrapper";
 import Container from "../Container";
 
 const SetCard = ({
-  setToShowName = null,
+  setToShowName,
   setToShowClassIds,
   setToShowStats = null,
   chosenStats,
@@ -25,6 +25,11 @@ const SetCard = ({
   screenSituation = null,
 }) => {
   const { theme } = useTheme();
+
+  /// DEBUG
+  if (!setToShowName) {
+    console.log("setToShowName not defined in SetCard");
+  }
 
   const {
     saveSetFromDisplay,
@@ -48,6 +53,11 @@ const SetCard = ({
 
   const displaySetImages = () => {
     setIsImagesModalVisible(true);
+  };
+
+  const saveAndClose = () => {
+    saveSetFromFound(setCardIndex);
+    setIsTextInputModalVisible(false);
   };
 
   const situationConfig = {
@@ -128,41 +138,28 @@ const SetCard = ({
         />
       )}
 
-      <MyModal
-        isModalVisible={isImagesModalVisible}
-        setIsModalVisible={setIsImagesModalVisible}
-        ModalContentsList={[SetImagesContainer]}
-        contentPropsList={[{ setToShowClassIds: setToShowClassIds, mode: "image" }]}
-        closeButtonText="Close"
-      />
+      <MyModal isModalVisible={isImagesModalVisible} setIsModalVisible={setIsImagesModalVisible}>
+        <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="image" />
+      </MyModal>
+
       <MyModal
         modalTitle="SelectASet"
         isModalVisible={isElementsSelectorModalVisible}
         setIsModalVisible={setIsElementsSelectorModalVisible}
-        ModalContentsList={[ElementsSelector]}
-        contentPropsList={[
-          {
-            situation: situation,
-          },
-        ]}
-      />
+      >
+        <ElementsSelector situation={situation} />
+      </MyModal>
+
       <MyModal
         modalTitle="NameTheSet"
         isModalVisible={isTextInputModalVisible}
         setIsModalVisible={setIsTextInputModalVisible}
-        ModalContentsList={[SetNameInput]}
-        contentPropsList={[
-          {
-            setToShowName: setToShowName,
-            setCardIndex: setCardIndex,
-            situation: situation,
-          },
-        ]}
         closeButtonText="OK"
-        checkBeforeClose={async () => {
-          return await saveSetFromFound(setCardIndex);
-        }}
-      />
+        onClose={saveAndClose}
+      >
+        <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} situation={situation} />
+      </MyModal>
+
       <Container theme={theme} flexDirection="row" key="displaySetActionButtonContainer">
         {config.showEdit && (
           <TooltipWrapper

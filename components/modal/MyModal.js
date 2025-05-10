@@ -11,12 +11,9 @@ const MyModal = ({
   modalTitle,
   isModalVisible,
   setIsModalVisible,
-  ModalContentsList,
-  contentPropsList,
+  children,
+  onClose,
   closeButtonText = "Close",
-  checkBeforeClose = () => {
-    return true;
-  },
   isWithClosePressable = true,
 }) => {
   const { theme } = useTheme();
@@ -29,41 +26,20 @@ const MyModal = ({
       visible={isModalVisible}
       onRequestClose={() => setIsModalVisible(false)} // Ferme le modal
     >
-      <Pressable
-        style={modal(theme).background}
-        onPress={() => setIsModalVisible(false)}
-      >
-        <Pressable
-          style={modal(theme).container}
-          onStartShouldSetResponder={() => true}
-        >
-          {modalTitle && (
-            <Text style={modal(theme).title_center}>
-              {translate(modalTitle)}
-            </Text>
-          )}
-          {ModalContentsList.map((ModalContent, index) => (
-            <ModalContent key={index} {...contentPropsList[index]} />
-          ))}
+      <Pressable style={modal(theme).background} onPress={() => setIsModalVisible(false)}>
+        <Pressable style={modal(theme).container} onStartShouldSetResponder={() => true}>
+          {modalTitle && <Text style={modal(theme).title_center}>{translate(modalTitle)}</Text>}
+
+          {children}
+
           {isWithClosePressable && (
             <Pressable
-              style={[
-                button(theme).container,
-                modal(theme).close_button_center,
-                filterModalButtonHover && shadow_12dp,
-              ]}
+              style={[button(theme).container, modal(theme).close_button_center, filterModalButtonHover && shadow_12dp]}
               onHoverIn={() => setFilterModalButtonHover(true)}
               onHoverOut={() => setFilterModalButtonHover(false)}
-              onPress={async () => {
-                const test = await checkBeforeClose();
-                if (test) {
-                  setIsModalVisible(false);
-                }
-              }}
+              onPress={onClose ? onClose : () => setIsModalVisible(false)}
             >
-              <Text style={button(theme).text}>
-                {translate(closeButtonText)}
-              </Text>
+              <Text style={button(theme).text}>{translate(closeButtonText)}</Text>
             </Pressable>
           )}
         </Pressable>
