@@ -31,7 +31,7 @@ const SearchSetScreenPressablesContainer = ({ chosenStats, setChosenStats, setSe
 
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
 
-  const { updateEntireSetsListFound } = useSetsList();
+  const { setSetsListFound } = useSetsList();
 
   const { isStatsVisible, setIsStatsVisible } = useSearchSetScreen();
 
@@ -45,12 +45,13 @@ const SearchSetScreenPressablesContainer = ({ chosenStats, setChosenStats, setSe
   );
 
   const updateSetsToShow = (setsFound) => {
-    const setsFoundLight = setsFound.map((set) => ({
+    const setsFoundWithName = setsFound.map((set, index) => ({
+      name: "SetFound " + String(index),
       classIds: set.classIds,
       stats: set.stats,
     }));
-    setSetsToShow(setsFoundLight);
-    updateEntireSetsListFound(setsFoundLight);
+    setSetsToShow(setsFoundWithName);
+    setSetsListFound(setsFoundWithName);
   };
 
   const elementsFilterObjectToList = (pressableImagesByCategory) => {

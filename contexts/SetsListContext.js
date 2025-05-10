@@ -242,14 +242,6 @@ export const SetsListProvider = ({ children }) => {
     });
   };
 
-  const updateEntireSetsListFound = (setsFoundClassIds) => {
-    let setsFoundWithName = setsFoundClassIds.map((setsFoundClassIds, index) => ({
-      name: "Set " + String(index),
-      ...setsFoundClassIds,
-    }));
-    setSetsListFound(setsFoundWithName);
-  };
-
   const setItemInMemory = async (key, set) => {
     try {
       await AsyncStorage.setItem(String(key), JSON.stringify(set));
@@ -308,7 +300,7 @@ export const SetsListProvider = ({ children }) => {
         setsListDisplayed,
         setsListSaved,
         setsListFound,
-        updateEntireSetsListFound,
+        setSetsListFound,
         addNewSetInDisplay,
         loadSetSaveToSearch,
         loadSetSaveToDisplay,

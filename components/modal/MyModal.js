@@ -12,10 +12,8 @@ const MyModal = ({
   isModalVisible,
   setIsModalVisible,
   children,
+  onClose,
   closeButtonText = "Close",
-  checkBeforeClose = () => {
-    return true;
-  },
   isWithClosePressable = true,
 }) => {
   const { theme } = useTheme();
@@ -39,12 +37,7 @@ const MyModal = ({
               style={[button(theme).container, modal(theme).close_button_center, filterModalButtonHover && shadow_12dp]}
               onHoverIn={() => setFilterModalButtonHover(true)}
               onHoverOut={() => setFilterModalButtonHover(false)}
-              onPress={async () => {
-                const test = await checkBeforeClose();
-                if (test) {
-                  setIsModalVisible(false);
-                }
-              }}
+              onPress={onClose ? onClose : setIsModalVisible(false)}
             >
               <Text style={button(theme).text}>{translate(closeButtonText)}</Text>
             </Pressable>

@@ -16,7 +16,7 @@ import TooltipWrapper from "../TooltipWrapper";
 import Container from "../Container";
 
 const SetCard = ({
-  setToShowName = null,
+  setToShowName,
   setToShowClassIds,
   setToShowStats = null,
   chosenStats,
@@ -25,6 +25,11 @@ const SetCard = ({
   screenSituation = null,
 }) => {
   const { theme } = useTheme();
+
+  /// DEBUG
+  if (!setToShowName) {
+    console.log("setToShowName not defined in SetCard");
+  }
 
   const {
     saveSetFromDisplay,
@@ -48,6 +53,11 @@ const SetCard = ({
 
   const displaySetImages = () => {
     setIsImagesModalVisible(true);
+  };
+
+  const saveAndClose = () => {
+    saveSetFromFound(setCardIndex);
+    setIsTextInputModalVisible(false);
   };
 
   const situationConfig = {
@@ -145,9 +155,7 @@ const SetCard = ({
         isModalVisible={isTextInputModalVisible}
         setIsModalVisible={setIsTextInputModalVisible}
         closeButtonText="OK"
-        checkBeforeClose={async () => {
-          return await saveSetFromFound(setCardIndex);
-        }}
+        onClose={saveAndClose}
       >
         <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} situation={situation} />
       </MyModal>
