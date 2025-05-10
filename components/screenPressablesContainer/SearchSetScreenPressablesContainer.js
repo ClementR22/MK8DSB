@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 import { button, button_icon } from "../styles/button";
@@ -19,6 +19,7 @@ import ElementsSelector from "../elementsSelector/ElementsSelector";
 import ResultsNumber from "../ResultsNumberSelector";
 import { toggleCheckChosenStats } from "../../utils/toggleCheck";
 import TooltipWrapper from "../TooltipWrapper";
+import { useSettings } from "@/contexts/SettingsContext";
 
 const SearchSetScreenPressablesContainer = ({ chosenStats, setChosenStats, setSetsToShow }) => {
   const { theme } = useTheme();
@@ -31,9 +32,17 @@ const SearchSetScreenPressablesContainer = ({ chosenStats, setChosenStats, setSe
 
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
 
-  const { setSetsListFound } = useSetsList();
+  const { setSetsListFound, syncWithChosenStats } = useSetsList();
 
   const { isStatsVisible, setIsStatsVisible } = useSearchSetScreen();
+
+  const { isAllwaysSync } = useSettings();
+
+  useEffect(() => {
+    if (isAllwaysSync) {
+      syncWithChosenStats(setIsStatsVisible);
+    }
+  }, [isAllwaysSync, chosenStats]);
 
   const { pressableImagesByCategory } = usePressableImages();
 
@@ -179,7 +188,7 @@ const SearchSetScreenPressablesContainer = ({ chosenStats, setChosenStats, setSe
       <StatSliderResultSelectorPressable
         isStatsVisible={isStatsVisible}
         setIsStatsVisible={setIsStatsVisible}
-        isSyncWithChosenStatsPressable={true}
+        visibleStatsInSearchScreenCase={true}
       />
 
       <MyModal

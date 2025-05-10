@@ -13,7 +13,7 @@ import TooltipWrapper from "../TooltipWrapper";
 const StatSliderResultSelectorPressable = ({
   isStatsVisible,
   setIsStatsVisible,
-  isSyncWithChosenStatsPressable = false,
+  visibleStatsInSearchScreenCase = false,
 }) => {
   const { theme } = useTheme();
 
@@ -40,7 +40,7 @@ const StatSliderResultSelectorPressable = ({
           toggleCheck={(name) => {
             toggleCheckList(setIsStatsVisible, name);
           }}
-          isSyncWithChosenStatsPressable={isSyncWithChosenStatsPressable}
+          visibleStatsInSearchScreenCase={visibleStatsInSearchScreenCase}
         />
       </MyModal>
     </View>

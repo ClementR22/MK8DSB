@@ -35,6 +35,8 @@ const translations = {
     Dark: "Dark",
     Light: "Light",
     System: "System",
+    AllwaysSyncVisibilityOfFoundSetsStatsWithChosenStats:
+      "Allways synchronize the visibility of found sets stats with chosen stats",
 
     // modal button label
     Close: "Close",
@@ -245,6 +247,8 @@ const translations = {
     Dark: "Sombre",
     Light: "Clair",
     System: "Appareil",
+    AllwaysSyncVisibilityOfFoundSetsStatsWithChosenStats:
+      "Toujours synchroniser l'affichage des stats des sets trouvés par rapport aux stats choisies",
 
     // modal button label
     Close: "Fermer",

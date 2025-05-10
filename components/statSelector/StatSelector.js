@@ -6,29 +6,31 @@ import { useTheme } from "@/contexts/ThemeContext";
 import SelectedAllStatsSwitch from "./SelectedAllStatsSwitch";
 import { useSetsList } from "@/contexts/SetsListContext";
 import { translate } from "@/translations/translations";
+import { useSettings } from "@/contexts/SettingsContext";
 
-const StatSelector = ({
-  statList,
-  setStatList,
-  toggleCheck,
-  isSyncWithChosenStatsPressable = false,
-}) => {
+const StatSelector = ({ statList, setStatList, toggleCheck, visibleStatsInSearchScreenCase = false }) => {
   const { theme } = useTheme();
 
   const { syncWithChosenStats } = useSetsList();
+  const { isAllwaysSync } = useSettings();
+
+  const disablePressableStat = visibleStatsInSearchScreenCase & isAllwaysSync;
 
   return (
     <View style={styles.listContainer}>
       <View style={modal(theme).content}>
         <View style={styles.row}>
-          <SelectedAllStatsSwitch
-            statList={statList}
-            setStatList={setStatList}
-          />
-          {isSyncWithChosenStatsPressable && (
-            <Pressable onPress={() => syncWithChosenStats(setStatList)}>
-              <Text>{translate("Sync")}</Text>
-            </Pressable>
+          {!isAllwaysSync ? (
+            <>
+              <SelectedAllStatsSwitch statList={statList} setStatList={setStatList} />
+              {visibleStatsInSearchScreenCase && (
+                <Pressable onPress={() => syncWithChosenStats(setStatList)}>
+                  <Text>{translate("Sync")}</Text>
+                </Pressable>
+              )}
+            </>
+          ) : (
+            !visibleStatsInSearchScreenCase && <SelectedAllStatsSwitch statList={statList} setStatList={setStatList} />
           )}
         </View>
         <ScrollView>
@@ -39,6 +41,7 @@ const StatSelector = ({
               toggleCheck={() => {
                 toggleCheck(stat.name);
               }}
+              disabled={disablePressableStat}
             />
           ))}
         </ScrollView>

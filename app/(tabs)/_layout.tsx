@@ -10,76 +10,82 @@ import { ScreenSituationProvider } from "@/contexts/ScreenSituationContext";
 import { OrderNumberProvider } from "@/contexts/OrderNumberContext";
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import CustomHeader from "@/components/CustomHeader";
+import { CustomThemeProvider } from "@/contexts/ThemeContext";
+import { SettingsProvider } from "@/contexts/SettingsContext";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <LanguageProvider>
-      <ScreenSituationProvider>
-        <OrderNumberProvider>
-          <SetsListProvider>
-            <Tabs
-              screenOptions={{
-                tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-                headerShown: true,
-              }}
-            >
-              <Tabs.Screen
-                name="index"
-                options={{
-                  title: "Home",
-                  tabBarIcon: ({ color, focused }) => (
-                    <TabBarIcon name={focused ? "home" : "home-outline"} color={color} />
-                  ),
-                }}
-              />
-              <Tabs.Screen
-                name="explore"
-                options={{
-                  title: "Explore",
-                  tabBarIcon: ({ color, focused }) => (
-                    <TabBarIcon name={focused ? "code-slash" : "code-slash-outline"} color={color} />
-                  ),
-                }}
-              />
-              <Tabs.Screen
-                name="SearchSetScreen"
-                options={{
-                  title: "Trouver un set",
-                  tabBarIcon: ({ color }) => <MaterialCommunityIcons name="magnify" size={24} color={color} />,
-                  header: () => <CustomHeader title="🏁 header de search set screen" />,
-                }}
-              />
-              <Tabs.Screen
-                name="DisplaySetScreen"
-                options={{
-                  title: "Afficher un set",
-                  tabBarIcon: ({ color }) => <MaterialIcons name="display-settings" size={24} color={color} />,
-                  header: () => <CustomHeader title="🏁 ici c'est display set screen" />,
-                }}
-              />
-              <Tabs.Screen
-                name="GaleryScreen"
-                options={{
-                  title: "Galerie",
-                  tabBarIcon: ({ color }) => <Ionicons name="image-outline" size={24} color={color} />,
-                  header: () => <CustomHeader title="la galerie" />,
-                }}
-              />
-              <Tabs.Screen
-                name="SavedSetScreen"
-                options={{
-                  title: "Saved Set",
-                  tabBarIcon: ({ color }) => <MaterialIcons name="save" size={24} color={color} />, //isDefaultSelectedImages
-                  header: () => <CustomHeader title="🏁 saved set screen" />,
-                }}
-              />
-            </Tabs>
-            <Toast />
-          </SetsListProvider>
-        </OrderNumberProvider>
-      </ScreenSituationProvider>
-    </LanguageProvider>
+    <CustomThemeProvider>
+      <LanguageProvider>
+        <SettingsProvider>
+          <ScreenSituationProvider>
+            <OrderNumberProvider>
+              <SetsListProvider>
+                <Tabs
+                  screenOptions={{
+                    tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+                    headerShown: true,
+                  }}
+                >
+                  <Tabs.Screen
+                    name="index"
+                    options={{
+                      title: "Home",
+                      tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon name={focused ? "home" : "home-outline"} color={color} />
+                      ),
+                    }}
+                  />
+                  <Tabs.Screen
+                    name="explore"
+                    options={{
+                      title: "Explore",
+                      tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon name={focused ? "code-slash" : "code-slash-outline"} color={color} />
+                      ),
+                    }}
+                  />
+                  <Tabs.Screen
+                    name="SearchSetScreen"
+                    options={{
+                      title: "Trouver un set",
+                      tabBarIcon: ({ color }) => <MaterialCommunityIcons name="magnify" size={24} color={color} />,
+                      header: () => <CustomHeader title="🏁 header de search set screen" />,
+                    }}
+                  />
+                  <Tabs.Screen
+                    name="DisplaySetScreen"
+                    options={{
+                      title: "Afficher un set",
+                      tabBarIcon: ({ color }) => <MaterialIcons name="display-settings" size={24} color={color} />,
+                      header: () => <CustomHeader title="🏁 ici c'est display set screen" />,
+                    }}
+                  />
+                  <Tabs.Screen
+                    name="GaleryScreen"
+                    options={{
+                      title: "Galerie",
+                      tabBarIcon: ({ color }) => <Ionicons name="image-outline" size={24} color={color} />,
+                      header: () => <CustomHeader title="la galerie" />,
+                    }}
+                  />
+                  <Tabs.Screen
+                    name="SavedSetScreen"
+                    options={{
+                      title: "Saved Set",
+                      tabBarIcon: ({ color }) => <MaterialIcons name="save" size={24} color={color} />, //isDefaultSelectedImages
+                      header: () => <CustomHeader title="🏁 saved set screen" />,
+                    }}
+                  />
+                </Tabs>
+                <Toast />
+              </SetsListProvider>
+            </OrderNumberProvider>
+          </ScreenSituationProvider>
+        </SettingsProvider>
+      </LanguageProvider>
+    </CustomThemeProvider>
   );
 }
