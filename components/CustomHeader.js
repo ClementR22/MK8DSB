@@ -23,7 +23,7 @@ const CustomHeader = ({ title }) => {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 10,
+        // marginBottom: 10,
       }}
     >
       <MaterialCommunityIcons
