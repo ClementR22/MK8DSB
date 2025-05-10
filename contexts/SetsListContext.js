@@ -18,19 +18,14 @@ export const SetsListProvider = ({ children }) => {
         statFilterNumber: 0,
         setStatFilterNumber: (newState) => {
           setChosenStats((prevStats) =>
-            prevStats.map((stat) =>
-              stat.name === statName
-                ? { ...stat, statFilterNumber: newState }
-                : stat
-            )
+            prevStats.map((stat) => (stat.name === statName ? { ...stat, statFilterNumber: newState } : stat))
           );
         },
       };
     })
   );
 
-  const syncWithChosenStats = (setIsStatsVisible) =>
-    setIsStatsVisible(chosenStats);
+  const syncWithChosenStats = (setIsStatsVisible) => setIsStatsVisible(chosenStats);
 
   const setDefault = {
     name: "Set 0",
@@ -38,9 +33,7 @@ export const SetsListProvider = ({ children }) => {
     stats: [4, 3.75, 4.25, 4.5, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 4],
   };
 
-  const [setsListDisplayed, setSetsListDisplayed] = useState([
-    { ...setDefault },
-  ]);
+  const [setsListDisplayed, setSetsListDisplayed] = useState([{ ...setDefault }]);
 
   const [setsListSaved, setSetsListSaved] = useState([]);
 
@@ -69,9 +62,7 @@ export const SetsListProvider = ({ children }) => {
   const getSetsSavedValues = async (setsSavedKeys) => {
     try {
       const setsSavedKeysAndValues = await AsyncStorage.multiGet(setsSavedKeys);
-      return setsSavedKeysAndValues.map((keyAndValue) =>
-        JSON.parse(keyAndValue[1])
-      );
+      return setsSavedKeysAndValues.map((keyAndValue) => JSON.parse(keyAndValue[1]));
     } catch (error) {
       console.error("Erreur lors de la récupération des données :", error);
       return [];
@@ -112,17 +103,13 @@ export const SetsListProvider = ({ children }) => {
   };
 
   const removeSet = (setCardSelectedIndex, situation) => {
-    const setsListConcerned =
-      situation === "display" ? setsListDisplayed : setsListSaved;
-    const setSetsListConcerned =
-      situation === "display" ? setSetsListDisplayed : setSetsListSaved;
+    const setsListConcerned = situation === "display" ? setsListDisplayed : setsListSaved;
+    const setSetsListConcerned = situation === "display" ? setSetsListDisplayed : setSetsListSaved;
 
     if (situation == "display" && setsListConcerned.length === 1) {
       showToast("Erreur", "Vous devez garder au moins 1 set");
     } else {
-      setSetsListConcerned((prev) =>
-        prev.filter((set, index) => index !== setCardSelectedIndex)
-      );
+      setSetsListConcerned((prev) => prev.filter((set, index) => index !== setCardSelectedIndex));
 
       if (setCardSelectedIndex < setCardEdittedIndex) {
         setSetCardEdittedIndex(setCardEdittedIndex - 1);
@@ -137,9 +124,7 @@ export const SetsListProvider = ({ children }) => {
 
     await AsyncStorage.removeItem(keyToRemove);
 
-    setSetsSavedKeys((prevKeys) =>
-      prevKeys.filter((key) => key !== keyToRemove)
-    );
+    setSetsSavedKeys((prevKeys) => prevKeys.filter((key) => key !== keyToRemove));
 
     removeSet(setCardSelectedIndex, "save");
   };
@@ -213,11 +198,7 @@ export const SetsListProvider = ({ children }) => {
 
   const renameSet = (newName, situation, setCardIndex) => {
     const setsListConcerned =
-      situation === "search"
-        ? setSetsListFound
-        : situation === "display"
-        ? setSetsListDisplayed
-        : setSetsListSaved;
+      situation === "search" ? setSetsListFound : situation === "display" ? setSetsListDisplayed : setSetsListSaved;
     setsListConcerned((prev) =>
       prev.map((set, index) => {
         if (index === setCardIndex) {
@@ -238,8 +219,7 @@ export const SetsListProvider = ({ children }) => {
 
   const updateSetsList = async (pressedClassIds, situation) => {
     const pressedClassIdsList = Object.values(pressedClassIds);
-    const setSetsListConcerned =
-      situation === "display" ? setSetsListDisplayed : setSetsListSaved;
+    const setSetsListConcerned = situation === "display" ? setSetsListDisplayed : setSetsListSaved;
     setSetsListConcerned((prev) => {
       return prev.map((set, index) => {
         if (index === setCardEdittedIndex) {
@@ -263,8 +243,8 @@ export const SetsListProvider = ({ children }) => {
   };
 
   const updateEntireSetsListFound = (setsFoundClassIds) => {
-    let setsFoundWithName = setsFoundClassIds.map((setsFoundClassIds) => ({
-      name: null,
+    let setsFoundWithName = setsFoundClassIds.map((setsFoundClassIds, index) => ({
+      name: "Set " + String(index),
       ...setsFoundClassIds,
     }));
     setSetsListFound(setsFoundWithName);
@@ -272,7 +252,7 @@ export const SetsListProvider = ({ children }) => {
 
   const setItemInMemory = async (key, set) => {
     try {
-      await AsyncStorage.setItem(key, JSON.stringify(set));
+      await AsyncStorage.setItem(String(key), JSON.stringify(set));
     } catch (err) {
       alert(err);
     }
@@ -280,9 +260,9 @@ export const SetsListProvider = ({ children }) => {
 
   const sortSetsSavedKeys = () => {
     setSetsSavedKeys((prevKeys) => {
-      const keyToName = {};
-      prevKeys.forEach((key, i) => {
-        keyToName[key] = setsListSaved[i].name;
+      const keyToName = {}; // a dict you ask a key and it answers the name of this set
+      prevKeys.forEach((key, index) => {
+        keyToName[key] = setsListSaved[index].name;
       });
 
       const keysSorted = [...prevKeys].sort((a, b) => {
@@ -293,16 +273,14 @@ export const SetsListProvider = ({ children }) => {
         const index = prevKeys.indexOf(key);
         return setsListSaved[index];
       });
+
       setSetsListSaved(setsListSavedSorted);
 
-      sortSetsInMemory(setsListSavedSorted);
+      // dans la memoire
+      setsListSavedSorted.forEach((set, index) => {
+        setItemInMemory(index, set);
+      });
       return keysSorted;
-    });
-  };
-
-  const sortSetsInMemory = (setsListSavedSorted) => {
-    setsListSavedSorted.forEach((set, index) => {
-      setItemInMemory(index, set);
     });
   };
 

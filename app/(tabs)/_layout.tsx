@@ -1,6 +1,5 @@
 import React from "react";
 import { Tabs } from "expo-router";
-
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -9,11 +8,7 @@ import Toast from "react-native-toast-message";
 import { SetsListProvider } from "@/contexts/SetsListContext";
 import { ScreenSituationProvider } from "@/contexts/ScreenSituationContext";
 import { OrderNumberProvider } from "@/contexts/OrderNumberContext";
-import {
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import CustomHeader from "@/components/CustomHeader";
 
 export default function TabLayout() {
@@ -35,10 +30,7 @@ export default function TabLayout() {
                 options={{
                   title: "Home",
                   tabBarIcon: ({ color, focused }) => (
-                    <TabBarIcon
-                      name={focused ? "home" : "home-outline"}
-                      color={color}
-                    />
+                    <TabBarIcon name={focused ? "home" : "home-outline"} color={color} />
                   ),
                 }}
               />
@@ -47,10 +39,7 @@ export default function TabLayout() {
                 options={{
                   title: "Explore",
                   tabBarIcon: ({ color, focused }) => (
-                    <TabBarIcon
-                      name={focused ? "code-slash" : "code-slash-outline"}
-                      color={color}
-                    />
+                    <TabBarIcon name={focused ? "code-slash" : "code-slash-outline"} color={color} />
                   ),
                 }}
               />
@@ -58,41 +47,23 @@ export default function TabLayout() {
                 name="SearchSetScreen"
                 options={{
                   title: "Trouver un set",
-                  tabBarIcon: ({ color }) => (
-                    <MaterialCommunityIcons
-                      name="magnify"
-                      size={24}
-                      color={color}
-                    />
-                  ),
-                  header: () => (
-                    <CustomHeader title="🏁 header de search set screen" />
-                  ),
+                  tabBarIcon: ({ color }) => <MaterialCommunityIcons name="magnify" size={24} color={color} />,
+                  header: () => <CustomHeader title="🏁 header de search set screen" />,
                 }}
               />
               <Tabs.Screen
                 name="DisplaySetScreen"
                 options={{
                   title: "Afficher un set",
-                  tabBarIcon: ({ color }) => (
-                    <MaterialIcons
-                      name="display-settings"
-                      size={24}
-                      color={color}
-                    />
-                  ),
-                  header: () => (
-                    <CustomHeader title="🏁 ici c'est display set screen" />
-                  ),
+                  tabBarIcon: ({ color }) => <MaterialIcons name="display-settings" size={24} color={color} />,
+                  header: () => <CustomHeader title="🏁 ici c'est display set screen" />,
                 }}
               />
               <Tabs.Screen
                 name="GaleryScreen"
                 options={{
                   title: "Galerie",
-                  tabBarIcon: ({ color }) => (
-                    <Ionicons name="image-outline" size={24} color={color} />
-                  ),
+                  tabBarIcon: ({ color }) => <Ionicons name="image-outline" size={24} color={color} />,
                   header: () => <CustomHeader title="la galerie" />,
                 }}
               />
@@ -100,9 +71,7 @@ export default function TabLayout() {
                 name="SavedSetScreen"
                 options={{
                   title: "Saved Set",
-                  tabBarIcon: ({ color }) => (
-                    <MaterialIcons name="save" size={24} color={color} />
-                  ), //isDefaultSelectedImages
+                  tabBarIcon: ({ color }) => <MaterialIcons name="save" size={24} color={color} />, //isDefaultSelectedImages
                   header: () => <CustomHeader title="🏁 saved set screen" />,
                 }}
               />
