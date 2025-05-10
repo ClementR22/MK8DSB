@@ -7,15 +7,11 @@ import SetImagesContainer from "./SetImagesContainer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
 import { button_icon } from "../styles/button";
 import { shadow_3dp } from "../styles/theme";
-import {
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons, MaterialIcons, FontAwesome6 } from "@expo/vector-icons";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "@/contexts/PressableImagesContext";
 import { useSetsList } from "@/contexts/SetsListContext";
-import MyTextInput from "../MyTextInput";
+import SetNameInput from "../textInput/SetNameInput";
 import TooltipWrapper from "../TooltipWrapper";
 import Container from "../Container";
 
@@ -40,13 +36,13 @@ const SetCard = ({
     removeSet,
     removeSetInMemory,
     setSetCardEdittedIndex,
+    exportSet,
   } = useSetsList();
 
   const { updatePressableImagesList } = usePressableImages();
 
   const [isImagesModalVisible, setIsImagesModalVisible] = useState(false);
-  const [isElementsSelectorModalVisible, setIsElementsSelectorModalVisible] =
-    useState(false);
+  const [isElementsSelectorModalVisible, setIsElementsSelectorModalVisible] = useState(false);
 
   const [isTextInputModalVisible, setIsTextInputModalVisible] = useState(false);
 
@@ -66,6 +62,7 @@ const SetCard = ({
       showLoadSearchToDisplay: true,
       showLoadDisplayToSearch: false,
       showRemoveInMemory: false,
+      showExport: true,
     },
     display: {
       showTextInput: true,
@@ -78,6 +75,7 @@ const SetCard = ({
       showLoadSearchToDisplay: false,
       showLoadDisplayToSearch: true,
       showRemoveInMemory: false,
+      showExport: true,
     },
     save: {
       showTextInput: true,
@@ -90,6 +88,7 @@ const SetCard = ({
       showLoadSearchToDisplay: false,
       showLoadDisplayToSearch: false,
       showRemoveInMemory: true,
+      showExport: true,
     },
     load: {
       showTextInput: true,
@@ -102,6 +101,7 @@ const SetCard = ({
       showLoadSearchToDisplay: false,
       showLoadDisplayToSearch: false,
       showRemoveInMemory: false,
+      showExport: false,
     },
   };
 
@@ -110,7 +110,7 @@ const SetCard = ({
   return (
     <View style={[card(theme).container, { flex: 1 }]}>
       {config.showTextInput && (
-        <MyTextInput
+        <SetNameInput
           setToShowName={setToShowName}
           setCardIndex={setCardIndex}
           situation={situation}
@@ -118,11 +118,7 @@ const SetCard = ({
         />
       )}
 
-      <SetImagesContainer
-        setToShowClassIds={setToShowClassIds}
-        mode="icon"
-        displaySetImages={displaySetImages}
-      />
+      <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="icon" displaySetImages={displaySetImages} />
 
       {config.showStatSliderResult && (
         <StatSliderResultContainer
@@ -136,9 +132,7 @@ const SetCard = ({
         isModalVisible={isImagesModalVisible}
         setIsModalVisible={setIsImagesModalVisible}
         ModalContentsList={[SetImagesContainer]}
-        contentPropsList={[
-          { setToShowClassIds: setToShowClassIds, mode: "image" },
-        ]}
+        contentPropsList={[{ setToShowClassIds: setToShowClassIds, mode: "image" }]}
         closeButtonText="Close"
       />
       <MyModal
@@ -156,7 +150,7 @@ const SetCard = ({
         modalTitle="NameTheSet"
         isModalVisible={isTextInputModalVisible}
         setIsModalVisible={setIsTextInputModalVisible}
-        ModalContentsList={[MyTextInput]}
+        ModalContentsList={[SetNameInput]}
         contentPropsList={[
           {
             setToShowName: setToShowName,
@@ -169,11 +163,7 @@ const SetCard = ({
           return await saveSetFromFound(setCardIndex);
         }}
       />
-      <Container
-        theme={theme}
-        flexDirection="row"
-        key="displaySetActionButtonContainer"
-      >
+      <Container theme={theme} flexDirection="row" key="displaySetActionButtonContainer">
         {config.showEdit && (
           <TooltipWrapper
             tooltipText="Edit"
@@ -205,9 +195,7 @@ const SetCard = ({
             tooltipText="Save"
             style={[button_icon(theme).container, shadow_3dp]}
             onPress={() =>
-              situation == "search"
-                ? setIsTextInputModalVisible(true)
-                : saveSetFromDisplay(setCardIndex)
+              situation == "search" ? setIsTextInputModalVisible(true) : saveSetFromDisplay(setCardIndex)
             }
           >
             <MaterialIcons name="save" size={24} color={theme.on_primary} />
@@ -216,16 +204,12 @@ const SetCard = ({
 
         {config.showLoadSaveToSearch && (
           <TooltipWrapper
-            tooltipText={
-              situation === "load"
-                ? "LoadTheStats"
-                : "LoadTheStatsToSearchScreen"
-            }
+            tooltipText={situation === "load" ? "LoadTheStats" : "LoadTheStatsToSearchScreen"}
             style={[button_icon(theme).container, shadow_3dp]}
             onPress={() => loadSetSaveToSearch(setCardIndex)}
           >
             <MaterialCommunityIcons
-              name="magnify"
+              name={situation === "save" ? "magnify" : "download"}
               size={24}
               color={theme.on_primary}
             />
@@ -234,14 +218,12 @@ const SetCard = ({
 
         {config.showLoadSaveToDisplay && (
           <TooltipWrapper
-            tooltipText={
-              situation === "load" ? "LoadTheSet" : "LoadTheSetToDisplayScreen"
-            }
+            tooltipText={situation === "load" ? "LoadTheSet" : "LoadTheSetToDisplayScreen"}
             style={[button_icon(theme).container, shadow_3dp]}
             onPress={() => loadSetSaveToDisplay(setCardIndex)}
           >
             <MaterialIcons
-              name="display-settings"
+              name={situation === "save" ? "display-settings" : "download"}
               size={24}
               color={theme.on_primary}
             />
@@ -254,11 +236,7 @@ const SetCard = ({
             style={[button_icon(theme).container, shadow_3dp]}
             onPress={() => loadSetSearchToDisplay(setCardIndex)}
           >
-            <MaterialIcons
-              name="display-settings"
-              size={24}
-              color={theme.on_primary}
-            />
+            <MaterialIcons name="display-settings" size={24} color={theme.on_primary} />
           </TooltipWrapper>
         )}
 
@@ -268,11 +246,7 @@ const SetCard = ({
             style={[button_icon(theme).container, shadow_3dp]}
             onPress={() => loadSetDisplayToSearch(setCardIndex)}
           >
-            <MaterialCommunityIcons
-              name="magnify"
-              size={24}
-              color={theme.on_primary}
-            />
+            <MaterialCommunityIcons name="magnify" size={24} color={theme.on_primary} />
           </TooltipWrapper>
         )}
 
@@ -282,11 +256,17 @@ const SetCard = ({
             style={[button_icon(theme).container, shadow_3dp]}
             onPress={() => removeSetInMemory(setCardIndex)}
           >
-            <MaterialCommunityIcons
-              name="trash-can"
-              size={24}
-              color={theme.on_primary}
-            />
+            <MaterialCommunityIcons name="trash-can" size={24} color={theme.on_primary} />
+          </TooltipWrapper>
+        )}
+
+        {config.showExport && (
+          <TooltipWrapper
+            tooltipText="Export"
+            style={[button_icon(theme).container, shadow_3dp]}
+            onPress={() => exportSet(setCardIndex, situation)}
+          >
+            <FontAwesome6 name="share" size={24} color={theme.on_primary} />
           </TooltipWrapper>
         )}
       </Container>

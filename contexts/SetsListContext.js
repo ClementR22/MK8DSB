@@ -2,7 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { statNames } from "@/data/data";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import showToast from "@/utils/toast";
-import { searchSetStatsFromElementsIds } from "@/utils/searchSetStatsFromElementsIds";
+import { searchSetStatsFromElementsClassIds } from "@/utils/searchSetStatsFromElementsClassIds";
+import * as Clipboard from "expo-clipboard";
 
 // Créer le contexte
 const SetsListContext = createContext();
@@ -98,7 +99,7 @@ export const SetsListProvider = ({ children }) => {
     setSetsListDisplayed((prev) => [...prev, newSet]);
   };
 
-  const addSelectedSetInDisplay = (setCardSelected) => {
+  const loadSetToDisplay = (setCardSelected) => {
     setSetsListDisplayed((prev) => [...prev, setCardSelected]);
   };
 
@@ -129,7 +130,8 @@ export const SetsListProvider = ({ children }) => {
     removeSet(setCardSelectedIndex, "save");
   };
 
-  const loadSetToSearch = (setCardSelectedStatList) => {
+  const loadSetToSearch = (setCardSelected) => {
+    const setCardSelectedStatList = setCardSelected.stats;
     setChosenStats((prev) =>
       prev.map((chosenStat, index) => {
         chosenStat.value = setCardSelectedStatList[index];
@@ -141,25 +143,23 @@ export const SetsListProvider = ({ children }) => {
 
   const loadSetSaveToSearch = (setCardSelectedIndex) => {
     const setCardSelected = setsListSaved[setCardSelectedIndex];
-    const setCardSelectedStatList = setCardSelected.stats;
-    loadSetToSearch(setCardSelectedStatList);
+    loadSetToSearch(setCardSelected);
   };
 
   const loadSetDisplayToSearch = (setCardSelectedIndex) => {
     const setCardSelected = setsListDisplayed[setCardSelectedIndex];
-    const setCardSelectedStatList = setCardSelected.stats;
-    loadSetToSearch(setCardSelectedStatList);
+    loadSetToSearch(setCardSelected);
   };
 
   const loadSetSaveToDisplay = (setCardSelectedIndex) => {
     const setCardSelected = setsListSaved[setCardSelectedIndex];
-    addSelectedSetInDisplay(setCardSelected);
+    loadSetToDisplay(setCardSelected);
     showToast("Succès", "Le set a été chargé");
   };
 
   const loadSetSearchToDisplay = (setCardSelectedIndex) => {
     const setCardSelected = setsListFound[setCardSelectedIndex];
-    addSelectedSetInDisplay(setCardSelected);
+    loadSetToDisplay(setCardSelected);
     showToast("Succès", "Le set a été ajouté à l'écran de comparaison");
   };
 
@@ -226,7 +226,7 @@ export const SetsListProvider = ({ children }) => {
           const newSet = {
             ...set,
             classIds: pressedClassIdsList,
-            stats: searchSetStatsFromElementsIds(pressedClassIdsList),
+            stats: searchSetStatsFromElementsClassIds(pressedClassIdsList),
           };
           if (situation === "save") {
             const key = setsSavedKeys[index];
@@ -284,6 +284,21 @@ export const SetsListProvider = ({ children }) => {
     });
   };
 
+  const exportSet = (setCardIndex, situation) => {
+    const setsListConcerned =
+      situation === "search" ? setsListFound : situation === "display" ? setsListDisplayed : setsListSaved;
+    const { stats, ...setCardSelected } = setsListConcerned[setCardIndex];
+    const json = JSON.stringify(setCardSelected);
+    Clipboard.setStringAsync(json);
+    showToast("Succès", "Set copié dans le presse-papier !");
+  };
+
+  const importSet = (setCard, screenSituation) => {
+    const loadSet =
+      screenSituation === "search" ? loadSetToSearch : screenSituation === "display" ? loadSetToDisplay : saveSet;
+    loadSet(setCard);
+  };
+
   return (
     <SetsListContext.Provider
       value={{
@@ -308,6 +323,8 @@ export const SetsListProvider = ({ children }) => {
         setCardEdittedIndex,
         setSetCardEdittedIndex,
         sortSetsSavedKeys,
+        exportSet,
+        importSet,
       }}
     >
       {children}

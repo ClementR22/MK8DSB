@@ -3,6 +3,7 @@ import { View } from "react-native";
 import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderResultSelectorPressable";
 import { useSavedSetScreen } from "@/contexts/screenContexts/SavedSetScreenContext";
 import ButtonSortSet from "../managingSetsPressable/ButtonSortSet";
+import ButtonImportSet from "../managingSetsPressable/ButtonImportSet";
 
 const SavedSetScreenPressablesContainer = () => {
   const { isStatsVisible, setIsStatsVisible } = useSavedSetScreen();
@@ -10,10 +11,8 @@ const SavedSetScreenPressablesContainer = () => {
   return (
     <View>
       <ButtonSortSet />
-      <StatSliderResultSelectorPressable
-        isStatsVisible={isStatsVisible}
-        setIsStatsVisible={setIsStatsVisible}
-      />
+      <ButtonImportSet screenSituation="save" />
+      <StatSliderResultSelectorPressable isStatsVisible={isStatsVisible} setIsStatsVisible={setIsStatsVisible} />
     </View>
   );
 };

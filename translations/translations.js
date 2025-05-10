@@ -56,6 +56,8 @@ const translations = {
     LoadTheSet: "Load the set",
     LoadTheStatsToSearchScreen: "Load the stats to search screen",
     LoadTheSetToDisplayScreen: "Load the set to display screen",
+    Export: "Export",
+    ImportACopiedSet: "Import a copied set",
 
     // other
     ":": ": ",
@@ -264,6 +266,8 @@ const translations = {
     LoadTheSet: "Charger le set",
     LoadTheStatsToSearchScreen: "Charger les stats dans l'écran de recherche",
     LoadTheSetToDisplayScreen: "Charger le set dans l'écran d'affichage",
+    Export: "Exporter",
+    ImportACopiedSet: "Importer un set copié",
 
     // other
     ":": " : ",

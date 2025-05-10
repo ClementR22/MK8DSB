@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { View } from "react-native";
 import { useSetsList } from "@/contexts/SetsListContext";
+import MyTextInput from "./MyTextInput";
 
-const MyTextInput = ({ setToShowName, setCardIndex, situation }) => {
+const SetNameInput = ({ setToShowName, setCardIndex, situation }) => {
   const defaultName = `Set ${setCardIndex + 1}`;
   const [localName, setLocalName] = useState(setToShowName ?? defaultName);
 
@@ -22,23 +23,14 @@ const MyTextInput = ({ setToShowName, setCardIndex, situation }) => {
   };
 
   return (
-    <View>
-      <TextInput
-        style={styles.textInput}
-        value={localName}
-        onChangeText={(text) => {
-          setLocalName(text);
-        }}
-        onBlur={() => handleEndEditing()}
-      />
-    </View>
+    <MyTextInput
+      value={localName}
+      onChangeText={(text) => {
+        setLocalName(text);
+      }}
+      onBlur={() => handleEndEditing()}
+    />
   );
 };
 
-const styles = StyleSheet.create({
-  textInput: {
-    backgroundColor: "grey",
-  },
-});
-
-export default MyTextInput;
+export default SetNameInput;

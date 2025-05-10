@@ -22,11 +22,7 @@ const ButtonLoadSet = ({ tooltip_text, screenSituation }) => {
       }}
     >
       <View>
-        <MaterialCommunityIcons
-          name="download"
-          size={24}
-          color={theme.on_primary}
-        />
+        <MaterialCommunityIcons name="cards-outline" size={24} color={theme.on_primary} />
         <LoadSetModal screenSituation={screenSituation} />
       </View>
     </TooltipWrapper>

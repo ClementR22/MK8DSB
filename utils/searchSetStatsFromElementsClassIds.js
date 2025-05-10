@@ -5,9 +5,9 @@ const arraysEqual = (a, b) => {
   return a.every((value, index) => value === b[index]); // Comparer chaque élément
 };
 
-export const searchSetStatsFromElementsIds = (pressedImagesClassIds) => {
+export const searchSetStatsFromElementsClassIds = (classIdsSeeked) => {
   const result = setAllInfos.find(({ classIds }) => {
-    return arraysEqual(classIds, pressedImagesClassIds);
+    return arraysEqual(classIds, classIdsSeeked);
   });
 
   return result ? result.stats : [];
