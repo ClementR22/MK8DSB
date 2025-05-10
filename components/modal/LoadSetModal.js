@@ -18,16 +18,10 @@ const LoadSetModal = ({ screenSituation }) => {
       modalTitle="LoadASavedSet"
       isModalVisible={savedSetModalVisible}
       setIsModalVisible={(visible) => toggleSavedSetModal(visible)}
-      ModalContentsList={[ButtonImportSet, SetCardContainer]}
-      contentPropsList={[
-        { screenSituation: screenSituation },
-        {
-          setsToShow: savedSets,
-          situation: "load",
-          screenSituation: screenSituation,
-        },
-      ]}
-    />
+    >
+      <ButtonImportSet screenSituation={screenSituation} />
+      <SetCardContainer setsToShow={savedSets} situation="load" screenSituation={screenSituation} />
+    </MyModal>
   );
 };
 

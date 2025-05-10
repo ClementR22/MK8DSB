@@ -128,41 +128,30 @@ const SetCard = ({
         />
       )}
 
-      <MyModal
-        isModalVisible={isImagesModalVisible}
-        setIsModalVisible={setIsImagesModalVisible}
-        ModalContentsList={[SetImagesContainer]}
-        contentPropsList={[{ setToShowClassIds: setToShowClassIds, mode: "image" }]}
-        closeButtonText="Close"
-      />
+      <MyModal isModalVisible={isImagesModalVisible} setIsModalVisible={setIsImagesModalVisible}>
+        <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="image" />
+      </MyModal>
+
       <MyModal
         modalTitle="SelectASet"
         isModalVisible={isElementsSelectorModalVisible}
         setIsModalVisible={setIsElementsSelectorModalVisible}
-        ModalContentsList={[ElementsSelector]}
-        contentPropsList={[
-          {
-            situation: situation,
-          },
-        ]}
-      />
+      >
+        <ElementsSelector situation={situation} />
+      </MyModal>
+
       <MyModal
         modalTitle="NameTheSet"
         isModalVisible={isTextInputModalVisible}
         setIsModalVisible={setIsTextInputModalVisible}
-        ModalContentsList={[SetNameInput]}
-        contentPropsList={[
-          {
-            setToShowName: setToShowName,
-            setCardIndex: setCardIndex,
-            situation: situation,
-          },
-        ]}
         closeButtonText="OK"
         checkBeforeClose={async () => {
           return await saveSetFromFound(setCardIndex);
         }}
-      />
+      >
+        <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} situation={situation} />
+      </MyModal>
+
       <Container theme={theme} flexDirection="row" key="displaySetActionButtonContainer">
         {config.showEdit && (
           <TooltipWrapper
