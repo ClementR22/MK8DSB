@@ -1,4 +1,4 @@
-import { Image, Platform, StyleSheet } from "react-native";
+import { Image, Platform, Pressable, StyleSheet, Text } from "react-native";
 import React from "react";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
@@ -6,8 +6,16 @@ import { ThemedView } from "@/components/ThemedView";
 import LanguageSelector from "@/components/settingsComponent/LanguageSelector";
 import ThemeSelector from "@/components/settingsComponent/ThemeSelector";
 import AllwaysSyncSwitch from "@/components/settingsComponent/AllwaysSyncSwitch";
+import { IsStatsVisibleListProvider } from "@/contexts/IsStatsVisibleListContext";
+import IsStatsVisibleListDefaultSelector from "@/components/settingsComponent/IsStatsVisibleListDefaultSelector";
+import { ScreenProvider } from "@/contexts/ScreenContext";
+import IsStatsVisibleDefaultSwitch from "@/components/settingsComponent/IsStatsVisibleDefaultSwitch";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSettings } from "@/contexts/SettingsContext";
 
 export default function HomeScreen() {
+  const { isStatsVisibleDefault } = useSettings();
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
@@ -16,9 +24,15 @@ export default function HomeScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome!</ThemedText>
       </ThemedView>
-      <LanguageSelector />
-      <ThemeSelector />
-      <AllwaysSyncSwitch />
+      <ScreenProvider screenName="settings">
+        <IsStatsVisibleListProvider>
+          <LanguageSelector />
+          <ThemeSelector />
+          <AllwaysSyncSwitch />
+          <IsStatsVisibleDefaultSwitch />
+          {isStatsVisibleDefault && <IsStatsVisibleListDefaultSelector />}
+        </IsStatsVisibleListProvider>
+      </ScreenProvider>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText>

@@ -7,18 +7,15 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import MyModal from "../modal/MyModal";
 import { useState } from "react";
 import StatSelector from "../statSelector/StatSelector";
-import { toggleCheckList } from "../../utils/toggleCheck";
 import TooltipWrapper from "../TooltipWrapper";
 import { useIsStatsVisibleList } from "../../contexts/IsStatsVisibleListContext";
 
-const StatSliderResultSelectorPressable = ({ visibleStatsInSearchScreenCase = false }) => {
-  const { isStatsVisibleList, setIsStatsVisibleList } = useIsStatsVisibleList();
+const StatSliderResultSelectorPressable = () => {
+  const { isStatsVisibleList, setIsStatsVisibleList, toggleCheckListIsStatsVisibleList } = useIsStatsVisibleList();
 
   const { theme } = useTheme();
 
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
-
-  const toggleCheckListIsStatsVisibleList = (name) => toggleCheckList(setIsStatsVisibleList, name);
 
   return (
     <View>
@@ -41,7 +38,7 @@ const StatSliderResultSelectorPressable = ({ visibleStatsInSearchScreenCase = fa
           toggleCheck={(name) => {
             toggleCheckListIsStatsVisibleList(name);
           }}
-          visibleStatsInSearchScreenCase={visibleStatsInSearchScreenCase}
+          isVisibleStatsNotInSettingsScreen={true}
         />
       </MyModal>
     </View>

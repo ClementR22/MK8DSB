@@ -12,7 +12,7 @@ const SavedSetScreen = () => {
   const { setsListSaved } = useSetsList();
 
   return (
-    <ScreenProvider screenName="search">
+    <ScreenProvider screenName="save">
       <IsStatsVisibleListProvider>
         <PressableImagesProvider>
           <ScrollView>

@@ -50,7 +50,7 @@ export const SetsListProvider = ({ children }) => {
 
   const getSetsSavedKeys = async () => {
     try {
-      const excludedKeys = ["language", "theme", "isAllwaysSync"];
+      const excludedKeys = ["language", "theme", "isAllwaysSync", "isStatsVisibleDefault", "isStatsVisibleListDefault"];
       const keys = await AsyncStorage.getAllKeys();
       const onlySetsKeys = keys.filter((key) => !excludedKeys.includes(key));
       return sortKeys(onlySetsKeys);

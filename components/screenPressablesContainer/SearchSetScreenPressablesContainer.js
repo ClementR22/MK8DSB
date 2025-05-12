@@ -202,7 +202,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
         <MaterialIcons name="numbers" size={24} color={theme.on_primary} />
       </TooltipWrapper>
 
-      <StatSliderResultSelectorPressable visibleStatsInSearchScreenCase={true} />
+      <StatSliderResultSelectorPressable />
 
       <MyModal
         modalTitle="StatsToParameter"
@@ -215,6 +215,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
           toggleCheck={(name) => {
             toggleCheckChosenStats(name);
           }}
+          isVisibleStatsNotInSettingsScreen={false}
         />
       </MyModal>
 

@@ -37,6 +37,7 @@ const translations = {
     System: "System",
     AllwaysSyncVisibilityOfFoundSetsStatsWithChosenStats:
       "Allways synchronize the visibility of found sets stats with chosen stats",
+    SetVisibleStatsByDefault: "Set visible stats by default",
 
     // modal button label
     Close: "Close",
@@ -249,6 +250,7 @@ const translations = {
     System: "Appareil",
     AllwaysSyncVisibilityOfFoundSetsStatsWithChosenStats:
       "Toujours synchroniser l'affichage des stats des sets trouvés par rapport aux stats choisies",
+    SetVisibleStatsByDefault: "Configurer les stats visibles par defaut",
 
     // modal button label
     Close: "Fermer",
