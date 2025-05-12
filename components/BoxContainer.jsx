@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-class Container extends React.Component {
+class BoxContainer extends React.Component {
   th = this.props.theme;
 
   containerBackgroundColor =
@@ -46,4 +46,4 @@ class Container extends React.Component {
   }
 }
 
-export default Container;
+export default BoxContainer;

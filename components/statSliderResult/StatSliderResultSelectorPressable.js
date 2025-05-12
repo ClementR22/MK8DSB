@@ -8,7 +8,7 @@ import MyModal from "../modal/MyModal";
 import { useState } from "react";
 import StatSelector from "../statSelector/StatSelector";
 import TooltipWrapper from "../TooltipWrapper";
-import { useIsStatsVisibleList } from "../../contexts/IsStatsVisibleListContext";
+import { useIsStatsVisibleList } from "@/contexts/IsStatsVisibleListContext";
 
 const StatSliderResultSelectorPressable = () => {
   const { isStatsVisibleList, setIsStatsVisibleList, toggleCheckListIsStatsVisibleList } = useIsStatsVisibleList();

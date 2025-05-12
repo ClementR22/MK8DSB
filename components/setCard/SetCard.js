@@ -13,8 +13,8 @@ import { usePressableImages } from "@/contexts/PressableImagesContext";
 import { useSetsList } from "@/contexts/SetsListContext";
 import SetNameInput from "../textInput/SetNameInput";
 import TooltipWrapper from "../TooltipWrapper";
-import Container from "../Container";
-import { useScreen } from "../../contexts/ScreenContext";
+import BoxContainer from "../BoxContainer";
+import { useScreen } from "@/contexts/ScreenContext";
 
 const SetCard = ({
   setToShowName,
@@ -150,7 +150,7 @@ const SetCard = ({
         <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} />
       </MyModal>
 
-      <Container theme={theme} flexDirection="row" key="displaySetActionButtonContainer">
+      <BoxContainer theme={theme} flexDirection="row" key="displaySetActionButtonContainer">
         {config.showEdit && (
           <TooltipWrapper
             tooltipText="Edit"
@@ -256,7 +256,7 @@ const SetCard = ({
             <FontAwesome6 name="share" size={24} color={theme.on_primary} />
           </TooltipWrapper>
         )}
-      </Container>
+      </BoxContainer>
     </View>
   );
 };

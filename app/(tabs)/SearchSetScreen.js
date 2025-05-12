@@ -3,10 +3,10 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 // Components import
 import StatSlider from "../../components/StatSlider";
-import { vw } from "../../components/styles/theme";
+import { vw } from "@/components/styles/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { translate } from "@/translations/translations";
-import SetCardContainer from "../../components/setCard/SetCardContainer";
+import SetCardContainer from "@/components/setCard/SetCardContainer";
 import { LoadSetModalProvider } from "@/contexts/LoadSetModalContext";
 import { useSetsList } from "@/contexts/SetsListContext";
 import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
@@ -14,6 +14,7 @@ import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { IsStatsVisibleListProvider } from "@/contexts/IsStatsVisibleListContext";
 import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
+import BoxContainer from "@/components/BoxContainer";
 
 const SearchSetScreen = () => {
   const { theme } = useTheme();
@@ -40,13 +41,16 @@ const SearchSetScreen = () => {
             >
               <View
                 style={[
-                  styles.container,
+                  // styles.container,
                   {
                     backgroundColor: theme.surface,
                   },
                 ]}
               >
-                <View style={[styles.statSlidersContainer, { backgroundColor: theme.surface_container_high }]}>
+                <BoxContainer
+                  theme={theme}
+                  contentBackgroundColor={theme.surface_container_high}
+                >
                   <Text
                     style={[
                       styles.text,
@@ -77,7 +81,7 @@ const SearchSetScreen = () => {
                         />
                       )
                   )}
-                </View>
+                </BoxContainer>
 
                 <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} />
               </View>
@@ -95,7 +99,7 @@ export default SearchSetScreen;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 10,
+    // paddingTop: 10,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",

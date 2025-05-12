@@ -3,19 +3,19 @@ import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderRes
 import { useTheme } from "@/contexts/ThemeContext";
 import ButtonLoadSet from "../managingSetsPressable/ButtonLoadSet";
 import ButtonAddSet from "../managingSetsPressable/ButtonAddSet";
-import Container from "../Container";
+import BoxContainer from "components/BoxContainer";
 
 const DisplaySetScreenPressablesContainer = () => {
   const { theme } = useTheme();
 
   return (
-    <Container theme={theme} flexDirection="row" justifyContent="space-evenly">
+    <BoxContainer theme={theme} flexDirection="row" justifyContent="space-evenly">
       <StatSliderResultSelectorPressable />
 
       <ButtonAddSet />
 
       <ButtonLoadSet tooltip_text="LoadASet" />
-    </Container>
+    </BoxContainer>
   );
 };
 
