@@ -1,4 +1,4 @@
-import { Image, Platform, Pressable, StyleSheet, Text } from "react-native";
+import { Image, Platform, StyleSheet } from "react-native";
 import React from "react";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
@@ -10,7 +10,6 @@ import { IsStatsVisibleListProvider } from "@/contexts/IsStatsVisibleListContext
 import IsStatsVisibleListDefaultSelector from "@/components/settingsComponent/IsStatsVisibleListDefaultSelector";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import IsStatsVisibleDefaultSwitch from "@/components/settingsComponent/IsStatsVisibleDefaultSwitch";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSettings } from "@/contexts/SettingsContext";
 
 export default function HomeScreen() {

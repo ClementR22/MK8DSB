@@ -11,10 +11,33 @@ export const useSettings = () => {
 
 export const SettingsProvider = ({ children }) => {
   useEffect(() => {
-    loadIsAllwaysSync();
-    loadIsStatsVisibleDefault();
-    loadIsStatsVisibleListDefault();
+    loadSettingFromMemory("isAllwaysSync", setIsAllwaysSync_);
+    loadSettingFromMemory("isStatsVisibleDefault", setIsStatsVisibleDefault_);
+    loadSettingFromMemory("isStatsVisibleListDefault", setIsStatsVisibleListDefault_);
   }, []);
+
+  const loadSettingFromMemory = async (settingKey, setSetting_) => {
+    const savedSetting = await AsyncStorage.getItem(settingKey);
+    console.log("savedsetting", savedSetting);
+    if (savedSetting) {
+      let savedSettingParsed;
+      if (savedSetting === "true" || savedSetting === "false") {
+        // si savedSetting est un booleen
+        savedSettingParsed = savedSetting === "true";
+      } else {
+        savedSettingParsed = JSON.parse(savedSetting);
+      }
+      setSetting_(savedSettingParsed);
+    }
+  };
+
+  const saveSettingInMemory = async (settingKey, newIsAllwaysSync) => {
+    try {
+      await AsyncStorage.setItem(settingKey, JSON.stringify(newIsAllwaysSync));
+    } catch (e) {
+      console.error("Erreur lors de la sauvegarde de ", settingKey, e);
+    }
+  };
 
   // pour isAllwaysSync
 
@@ -22,22 +45,7 @@ export const SettingsProvider = ({ children }) => {
 
   const setIsAllwaysSync = async (newIsAllwaysSync) => {
     setIsAllwaysSync_(newIsAllwaysSync);
-    await saveIsAllwaysSyncInMemory(newIsAllwaysSync);
-  };
-
-  const saveIsAllwaysSyncInMemory = async (newIsAllwaysSync) => {
-    try {
-      await AsyncStorage.setItem("isAllwaysSync", newIsAllwaysSync);
-    } catch (e) {
-      console.error("Erreur lors de la sauvegarde de isAllwaysSync :", e);
-    }
-  };
-
-  const loadIsAllwaysSync = async () => {
-    const savedIsAllwaysSync = await AsyncStorage.getItem("isAllwaysSync");
-    if (savedIsAllwaysSync) {
-      setIsAllwaysSync_(savedIsAllwaysSync === "true");
-    }
+    await saveSettingInMemory("isAllwaysSync", newIsAllwaysSync);
   };
 
   // pour isStatsVisibleDefault
@@ -61,22 +69,7 @@ export const SettingsProvider = ({ children }) => {
 
   const setIsStatsVisibleDefault = async (newIsStatsVisibleDefault) => {
     setIsStatsVisibleDefault_(newIsStatsVisibleDefault);
-    await saveIsStatsVisibleDefaultInMemory(newIsStatsVisibleDefault);
-  };
-
-  const saveIsStatsVisibleDefaultInMemory = async (newIsStatsVisibleDefault) => {
-    try {
-      await AsyncStorage.setItem("isStatsVisibleDefault", newIsStatsVisibleDefault);
-    } catch (e) {
-      console.error("Erreur lors de la sauvegarde de isStatsVisibleDefault :", e);
-    }
-  };
-
-  const loadIsStatsVisibleDefault = async () => {
-    const savedIsStatsVisibleDefault = await AsyncStorage.getItem("isStatsVisibleDefault");
-    if (savedIsStatsVisibleDefault) {
-      setIsStatsVisibleDefault_(savedIsStatsVisibleDefault === "true");
-    }
+    await saveSettingInMemory("isStatsVisibleDefault", newIsStatsVisibleDefault);
   };
 
   // pour isStatsVisibleListDefault
@@ -93,24 +86,8 @@ export const SettingsProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    saveIsStatsVisibleListDefaultInMemory();
+    saveSettingInMemory("isStatsVisibleListDefault", isStatsVisibleListDefault);
   }, [isStatsVisibleListDefault]);
-
-  const saveIsStatsVisibleListDefaultInMemory = async () => {
-    try {
-      await AsyncStorage.setItem("isStatsVisibleListDefault", JSON.stringify(isStatsVisibleListDefault));
-    } catch (e) {
-      console.error("Erreur lors de la sauvegarde de isStatsVisibleListDefault :", e);
-    }
-  };
-
-  const loadIsStatsVisibleListDefault = async () => {
-    const savedIsStatsVisibleListDefault = await AsyncStorage.getItem("isStatsVisibleListDefault");
-    const savedIsStatsVisibleListDefaultParsed = JSON.parse(savedIsStatsVisibleListDefault);
-    if (savedIsStatsVisibleListDefaultParsed) {
-      setIsStatsVisibleListDefault_(savedIsStatsVisibleListDefaultParsed);
-    }
-  };
 
   const toggleCheckListIsStatsVisibleListDefault = (name) => toggleCheckList(setIsStatsVisibleListDefault, name);
 
