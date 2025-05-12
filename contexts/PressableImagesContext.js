@@ -1,36 +1,21 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { bodyTypeNames, elementsAllInfosList } from "@/data/data";
 import { useSetsList } from "./SetsListContext";
+import { useScreen } from "./ScreenContext";
 
 // Fonction pour initialiser l'état pressableImagesList
-const initializePressableImagesList = (isDefaultSelectedImages) => {
+const initializePressableImagesList = () => {
   // Crée une copie avec les propriétés supplémentaires
-  const pressableImagesList = elementsAllInfosList.map(
-    ({ id, name, category, classId, image }) => {
-      return {
-        id: id,
-        name: name,
-        category: category,
-        classId: classId,
-        image: image,
-        pressed: false, // Initialise toutes les images comme non pressées
-      };
-    }
-  );
-
-  if (isDefaultSelectedImages) {
-    // Exemple de configuration par défaut
-    pressableImagesList[0].pressed = true;
-    pressableImagesList[52].pressed = true;
-    pressableImagesList[93].pressed = true;
-    pressableImagesList[115].pressed = true;
-  }
+  const pressableImagesList = elementsAllInfosList.map(({ id, name, category, classId, image }) => {
+    return {
+      id: id,
+      name: name,
+      category: category,
+      classId: classId,
+      image: image,
+      pressed: false, // Initialise toutes les images comme non pressées
+    };
+  });
 
   return pressableImagesList;
 };
@@ -42,9 +27,7 @@ const initializePressableImagesByCategory = (pressableImagesList) => {
   pressableImagesList.forEach((element) => {
     const { category, classId } = element;
 
-    const changedCategory = bodyTypeNames.includes(category)
-      ? "body"
-      : category;
+    const changedCategory = bodyTypeNames.includes(category) ? "body" : category;
 
     if (!pressableImagesByCategory[changedCategory]) {
       pressableImagesByCategory[changedCategory] = {};
@@ -64,24 +47,17 @@ const initializePressableImagesByCategory = (pressableImagesList) => {
 const PressableImagesContext = createContext();
 
 // Fournisseur du contexte
-export const PressableImagesProvider = ({
-  children,
-  isDefaultSelectedImages = false,
-  situation,
-}) => {
-  const [pressableImagesList, setPressableImagesList] = useState(
-    initializePressableImagesList(isDefaultSelectedImages)
-  );
+export const PressableImagesProvider = ({ children }) => {
+  const { screenName } = useScreen();
 
-  const pressableImagesByCategory =
-    initializePressableImagesByCategory(pressableImagesList);
+  const [pressableImagesList, setPressableImagesList] = useState(initializePressableImagesList());
+
+  const pressableImagesByCategory = initializePressableImagesByCategory(pressableImagesList);
 
   // Fonction pour gérer l'état d'une image pressée
   const handlePressImage = (id) => {
     setPressableImagesList((prev) =>
-      prev.map((item, index) =>
-        index === id ? { ...item, pressed: !item.pressed } : item
-      )
+      prev.map((item, index) => (index === id ? { ...item, pressed: !item.pressed } : item))
     );
     // initializePressableImagesByCategory est executé automatiquement
     // donc pressableImagesByCategory est mis à jour
@@ -107,9 +83,7 @@ export const PressableImagesProvider = ({
     // category4SelectedElementList = ["kart", "bike", "sportBike", "ATV"] ou bien ["character"] ou bien ["wheels"] ou bien ["glider"]
     setPressableImagesList((prev) =>
       prev.map((item) =>
-        category4ElementList.includes(item.category)
-          ? { ...item, pressed: item.classId === classId }
-          : item
+        category4ElementList.includes(item.category) ? { ...item, pressed: item.classId === classId } : item
       )
     );
     setPressedClassIds((prev) => ({ ...prev, [category4]: classId }));
@@ -135,7 +109,7 @@ export const PressableImagesProvider = ({
       return;
     }
 
-    updateSetsList(pressedClassIds, situation); // Met à jour après le rendu
+    updateSetsList(pressedClassIds, screenName); // Met à jour après le rendu
   }, [pressedClassIds]); // Déclenché uniquement quand pressedClassIds change
 
   return (

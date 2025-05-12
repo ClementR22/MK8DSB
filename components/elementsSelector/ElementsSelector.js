@@ -6,7 +6,7 @@ import CategorySelector from "./CategorySelector";
 import SelectedCategoryElementsView from "./SelectedCategoryElementsView";
 import ButtonScrollToTop from "../ButtonScrollToTop";
 
-const ElementsSelector = ({ situation, galeryCase = false }) => {
+const ElementsSelector = () => {
   const { orderNumber, setOrderNumber } = useOrderNumber();
 
   // État pour suivre l'onglet sélectionné
@@ -26,12 +26,9 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
     );
   };
 
-  const scrollToSectionWithScrollViewRef = useCallback(
-    (sectionRef, animated = true) => {
-      scrollToSection(sectionRef, animated);
-    },
-    []
-  );
+  const scrollToSectionWithScrollViewRef = useCallback((sectionRef, animated = true) => {
+    scrollToSection(sectionRef, animated);
+  }, []);
 
   const scrollToTopWithScrollViewRef = useCallback(() => {
     scrollViewRef.current?.scrollTo({ y: 0, animated: true });
@@ -55,11 +52,7 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
 
   return (
     <View style={styles.outerContainer} key="outerContainer">
-      <ButtonMultiStateToggle
-        number={orderNumber}
-        setNumber={setOrderNumber}
-        tooltipText="Sort"
-      />
+      <ButtonMultiStateToggle number={orderNumber} setNumber={setOrderNumber} tooltipText="Sort" />
       {/* Navigation par onglets */}
 
       <CategorySelector
@@ -77,18 +70,12 @@ const ElementsSelector = ({ situation, galeryCase = false }) => {
       >
         <SelectedCategoryElementsView
           selectedTab={selectedTab}
-          situation={situation}
-          galeryCase={galeryCase}
           scrollToSectionWithScrollViewRef={scrollToSectionWithScrollViewRef}
           sectionRefs={sectionRefs}
         />
       </ScrollView>
 
-      {showScrollTopButton && (
-        <ButtonScrollToTop
-          scrollToTopWithScrollViewRef={scrollToTopWithScrollViewRef}
-        />
-      )}
+      {showScrollTopButton && <ButtonScrollToTop scrollToTopWithScrollViewRef={scrollToTopWithScrollViewRef} />}
     </View>
   );
 };

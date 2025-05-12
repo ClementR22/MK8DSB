@@ -7,8 +7,10 @@ import { useSetsList } from "@/contexts/SetsListContext";
 import TooltipWrapper from "../TooltipWrapper";
 import * as Clipboard from "expo-clipboard";
 import { searchSetStatsFromElementsClassIds } from "@/utils/searchSetStatsFromElementsClassIds";
+import { useScreen } from "../../contexts/ScreenContext";
 
-const ButtonImportSet = ({ screenSituation }) => {
+const ButtonImportSet = () => {
+  const { screenName } = useScreen();
   const { theme } = useTheme();
   const { importSet } = useSetsList();
 
@@ -28,7 +30,7 @@ const ButtonImportSet = ({ screenSituation }) => {
 
       const set = { ...parsedSet, stats: stats };
       // Importer le set
-      importSet(set, screenSituation);
+      importSet(set, screenName);
     } catch (e) {
       alert("Erreur d'import : " + e.message);
     }

@@ -26,7 +26,7 @@ export const SetsListProvider = ({ children }) => {
     })
   );
 
-  const syncWithChosenStats = (setIsStatsVisible) => setIsStatsVisible(chosenStats);
+  const syncWithChosenStats = (setIsStatsVisibleList) => setIsStatsVisibleList(chosenStats);
 
   const setDefault = {
     name: "Set 0",
@@ -103,11 +103,11 @@ export const SetsListProvider = ({ children }) => {
     setSetsListDisplayed((prev) => [...prev, setCardSelected]);
   };
 
-  const removeSet = (setCardSelectedIndex, situation) => {
-    const setsListConcerned = situation === "display" ? setsListDisplayed : setsListSaved;
-    const setSetsListConcerned = situation === "display" ? setSetsListDisplayed : setSetsListSaved;
+  const removeSet = (setCardSelectedIndex, screenName) => {
+    const setsListConcerned = screenName === "display" ? setsListDisplayed : setsListSaved;
+    const setSetsListConcerned = screenName === "display" ? setSetsListDisplayed : setSetsListSaved;
 
-    if (situation == "display" && setsListConcerned.length === 1) {
+    if (screenName == "display" && setsListConcerned.length === 1) {
       showToast("Erreur", "Vous devez garder au moins 1 set");
     } else {
       setSetsListConcerned((prev) => prev.filter((set, index) => index !== setCardSelectedIndex));
@@ -196,15 +196,15 @@ export const SetsListProvider = ({ children }) => {
     await saveSet(setCardSelected);
   };
 
-  const renameSet = (newName, situation, setCardIndex) => {
+  const renameSet = (newName, screenName, setCardIndex) => {
     const setsListConcerned =
-      situation === "search" ? setSetsListFound : situation === "display" ? setSetsListDisplayed : setSetsListSaved;
+      screenName === "search" ? setSetsListFound : screenName === "display" ? setSetsListDisplayed : setSetsListSaved;
     setsListConcerned((prev) =>
       prev.map((set, index) => {
         if (index === setCardIndex) {
           const setWithNewName = { ...set, name: newName };
 
-          if (situation == "save" || situation == "load") {
+          if (screenName == "save") {
             const key = setsSavedKeys[index];
             setItemInMemory(key, setWithNewName);
           }
@@ -217,9 +217,9 @@ export const SetsListProvider = ({ children }) => {
     );
   };
 
-  const updateSetsList = async (pressedClassIds, situation) => {
+  const updateSetsList = async (pressedClassIds, screenName) => {
     const pressedClassIdsList = Object.values(pressedClassIds);
-    const setSetsListConcerned = situation === "display" ? setSetsListDisplayed : setSetsListSaved;
+    const setSetsListConcerned = screenName === "display" ? setSetsListDisplayed : setSetsListSaved;
     setSetsListConcerned((prev) => {
       return prev.map((set, index) => {
         if (index === setCardEdittedIndex) {
@@ -228,7 +228,7 @@ export const SetsListProvider = ({ children }) => {
             classIds: pressedClassIdsList,
             stats: searchSetStatsFromElementsClassIds(pressedClassIdsList),
           };
-          if (situation === "save") {
+          if (screenName === "save") {
             const key = setsSavedKeys[index];
             setItemInMemory(key, newSet);
           }
@@ -276,18 +276,17 @@ export const SetsListProvider = ({ children }) => {
     });
   };
 
-  const exportSet = (setCardIndex, situation) => {
+  const exportSet = (setCardIndex, screenName) => {
     const setsListConcerned =
-      situation === "search" ? setsListFound : situation === "display" ? setsListDisplayed : setsListSaved;
-    const { stats, ...setCardSelected } = setsListConcerned[setCardIndex];
-    const json = JSON.stringify(setCardSelected);
+      screenName === "search" ? setsListFound : screenName === "display" ? setsListDisplayed : setsListSaved;
+    const { name, classIds } = setsListConcerned[setCardIndex];
+    const json = JSON.stringify({ name, classIds });
     Clipboard.setStringAsync(json);
     showToast("Succès", "Set copié dans le presse-papier !");
   };
 
-  const importSet = (setCard, screenSituation) => {
-    const loadSet =
-      screenSituation === "search" ? loadSetToSearch : screenSituation === "display" ? loadSetToDisplay : saveSet;
+  const importSet = (setCard, screenName) => {
+    const loadSet = screenName === "search" ? loadSetToSearch : screenName === "display" ? loadSetToDisplay : saveSet;
     loadSet(setCard);
   };
 

@@ -2,18 +2,16 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import StatSliderResult from "./StatSliderResult";
 import { translate } from "@/translations/translations";
-import { getIsStatsVisible } from "../../utils/getIsStatsVisible";
+import { useIsStatsVisibleList } from "@/contexts/IsStatsVisibleListContext";
+import { useScreen } from "../../contexts/ScreenContext";
 
-const StatSliderResultContainer = ({
-  setsToShowMultipleStatsLists,
-  chosenStats,
-  situation,
-}) => {
-  const isStatsVisible = getIsStatsVisible(situation);
+const StatSliderResultContainer = ({ setsToShowMultipleStatsLists, chosenStats }) => {
+  const { screenName } = useScreen();
+  const { isStatsVisibleList } = useIsStatsVisibleList();
 
   return (
     <View style={{ flex: 1, backgroundColor: "green" }}>
-      {isStatsVisible.map(({ name, checked }, statIndex) => {
+      {isStatsVisibleList.map(({ name, checked }, statIndex) => {
         if (checked) {
           return (
             <View
@@ -25,11 +23,7 @@ const StatSliderResultContainer = ({
             >
               <Text style={styles.text}>
                 {translate(name)}
-                {situation != "search" ||
-                  (situation == "save" &&
-                    ` : ${JSON.stringify(
-                      setsToShowMultipleStatsLists[0][statIndex]
-                    )}`)}
+                {screenName == "search" && ` : ${JSON.stringify(setsToShowMultipleStatsLists[0][statIndex])}`}
               </Text>
               {setsToShowMultipleStatsLists.map((setToShowStats, setIndex) => (
                 <View
@@ -45,11 +39,7 @@ const StatSliderResultContainer = ({
                     value={setToShowStats[statIndex]}
                     chosenValue={chosenStats?.[statIndex]?.value}
                   />
-                  {situation != "search" && (
-                    <Text style={{ flex: 0.2 }}>
-                      {setToShowStats[statIndex]}
-                    </Text>
-                  )}
+                  {screenName != "search" && <Text style={{ flex: 0.2 }}>{setToShowStats[statIndex]}</Text>}
                 </View>
               ))}
             </View>

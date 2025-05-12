@@ -8,14 +8,11 @@ import { translate } from "@/translations/translations";
 import ElementChip from "./ElementChip";
 import { usePressableImages } from "@/contexts/PressableImagesContext";
 import { useOrderNumber } from "@/contexts/OrderNumberContext";
+import { useScreen } from "../../contexts/ScreenContext";
 
-const SelectedCategoryElementsView_ = ({
-  selectedTab,
-  situation,
-  galeryCase,
-  scrollToSectionWithScrollViewRef,
-  sectionRefs,
-}) => {
+const SelectedCategoryElementsView_ = ({ selectedTab, scrollToSectionWithScrollViewRef, sectionRefs }) => {
+  const { screenName } = useScreen();
+  const galleryCase = screenName === "gallery";
   const { theme } = useTheme();
 
   const { orderNumber } = useOrderNumber();
@@ -23,30 +20,25 @@ const SelectedCategoryElementsView_ = ({
   const { pressableImagesByCategory, handlePressImage, handlePressImageByClass } = usePressableImages();
 
   const handlePress =
-    situation != "search"
-      ? (classId, category) => {
-          handlePressImageByClass(classId, category);
+    screenName != "search"
+      ? (element) => {
+          handlePressImageByClass(element.classId, element.category);
         }
-      : () => {
-          handlePressImage(id);
+      : (element) => {
+          handlePressImage(element.id);
         };
 
   const ElementsView = ({ elements }) => {
     return (
       <View style={[styles.categoryContainer, { flexDirection: "row" }]}>
-        {elements.map(({ id, name, category, classId, image, pressed }) =>
-          !galeryCase ? (
-            <ElementChip
-              key={id}
-              name={name}
-              pressed={pressed}
-              onPress={() => handlePress(classId, category)}
-              source={image}
-            />
+        {elements.map((element) => {
+          const { id, name, image, pressed } = element;
+          return !galleryCase ? (
+            <ElementChip key={id} name={name} pressed={pressed} onPress={() => handlePress(element)} source={image} />
           ) : (
             <ElementImage key={id} name={name} source={image} />
-          )
-        )}
+          );
+        })}
       </View>
     );
   };
@@ -116,7 +108,7 @@ const SelectedCategoryElementsView_ = ({
       return sortElements(selectedCategoryElements, orderNumber);
     }, [orderNumber, selectedTab]);
 
-    const selectedCategoryElementsSorted = galeryCase
+    const selectedCategoryElementsSorted = galleryCase
       ? memoizedSortedElements
       : sortElements(selectedCategoryElements, orderNumber);
 

@@ -4,7 +4,7 @@ import { Switch } from "react-native-paper";
 import { translate } from "@/translations/translations";
 import { useSettings } from "@/contexts/SettingsContext";
 
-const AllwaysSyncSwitch = ({}) => {
+const AllwaysSyncSwitch = () => {
   const { isAllwaysSync, setIsAllwaysSync } = useSettings();
 
   return (

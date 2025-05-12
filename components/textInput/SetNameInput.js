@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
 import { useSetsList } from "@/contexts/SetsListContext";
 import MyTextInput from "./MyTextInput";
+import { useScreen } from "../../contexts/ScreenContext";
 
-const SetNameInput = ({ setToShowName, setCardIndex, situation }) => {
+const SetNameInput = ({ setToShowName, setCardIndex }) => {
+  const { screenName } = useScreen();
+
   const defaultName = `Set ${setCardIndex + 1}`;
   const [localName, setLocalName] = useState(setToShowName ?? defaultName);
 
@@ -16,9 +18,9 @@ const SetNameInput = ({ setToShowName, setCardIndex, situation }) => {
   const handleEndEditing = () => {
     if (!localName.trim()) {
       setLocalName(defaultName); // Évite de mettre un nom vide
-      renameSet(null, situation, setCardIndex);
+      renameSet(null, screenName, setCardIndex);
     } else {
-      renameSet(localName, situation, setCardIndex);
+      renameSet(localName, screenName, setCardIndex);
     }
   };
 

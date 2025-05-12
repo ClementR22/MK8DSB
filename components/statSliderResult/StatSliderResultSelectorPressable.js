@@ -9,12 +9,11 @@ import { useState } from "react";
 import StatSelector from "../statSelector/StatSelector";
 import { toggleCheckList } from "../../utils/toggleCheck";
 import TooltipWrapper from "../TooltipWrapper";
+import { useIsStatsVisibleList } from "../../contexts/IsStatsVisibleListContext";
 
-const StatSliderResultSelectorPressable = ({
-  isStatsVisible,
-  setIsStatsVisible,
-  visibleStatsInSearchScreenCase = false,
-}) => {
+const StatSliderResultSelectorPressable = ({ visibleStatsInSearchScreenCase = false }) => {
+  const { isStatsVisibleList, setIsStatsVisibleList } = useIsStatsVisibleList();
+
   const { theme } = useTheme();
 
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
@@ -35,10 +34,10 @@ const StatSliderResultSelectorPressable = ({
         setIsModalVisible={setFoundStatsModalVisible}
       >
         <StatSelector
-          statList={isStatsVisible}
-          setStatList={setIsStatsVisible}
+          statList={isStatsVisibleList}
+          setStatList={setIsStatsVisibleList}
           toggleCheck={(name) => {
-            toggleCheckList(setIsStatsVisible, name);
+            toggleCheckList(setIsStatsVisibleList, name);
           }}
           visibleStatsInSearchScreenCase={visibleStatsInSearchScreenCase}
         />

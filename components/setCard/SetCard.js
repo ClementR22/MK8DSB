@@ -14,6 +14,7 @@ import { useSetsList } from "@/contexts/SetsListContext";
 import SetNameInput from "../textInput/SetNameInput";
 import TooltipWrapper from "../TooltipWrapper";
 import Container from "../Container";
+import { useScreen } from "../../contexts/ScreenContext";
 
 const SetCard = ({
   setToShowName,
@@ -21,9 +22,10 @@ const SetCard = ({
   setToShowStats = null,
   chosenStats,
   setCardIndex = null,
-  situation,
-  screenSituation = null,
+  isInLoadSetModal = false,
 }) => {
+  const { screenName } = useScreen();
+  const situation = isInLoadSetModal ? "load" : screenName;
   const { theme } = useTheme();
 
   /// DEBUG
@@ -101,13 +103,13 @@ const SetCard = ({
       showExport: true,
     },
     load: {
-      showTextInput: true,
+      showTextInput: false,
       showStatSliderResult: false,
       showEdit: false,
       showRemove: false,
       showSave: false,
-      showLoadSaveToSearch: screenSituation === "search",
-      showLoadSaveToDisplay: screenSituation === "display",
+      showLoadSaveToSearch: screenName === "search",
+      showLoadSaveToDisplay: screenName === "display",
       showLoadSearchToDisplay: false,
       showLoadDisplayToSearch: false,
       showRemoveInMemory: false,
@@ -120,22 +122,13 @@ const SetCard = ({
   return (
     <View style={[card(theme).container, { flex: 1 }]}>
       {config.showTextInput && (
-        <SetNameInput
-          setToShowName={setToShowName}
-          setCardIndex={setCardIndex}
-          situation={situation}
-          isWithConfimation={true}
-        />
+        <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} isWithConfimation={true} />
       )}
 
       <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="icon" displaySetImages={displaySetImages} />
 
       {config.showStatSliderResult && (
-        <StatSliderResultContainer
-          setsToShowMultipleStatsLists={[setToShowStats]}
-          chosenStats={chosenStats}
-          situation={situation}
-        />
+        <StatSliderResultContainer setsToShowMultipleStatsLists={[setToShowStats]} chosenStats={chosenStats} />
       )}
 
       <MyModal isModalVisible={isImagesModalVisible} setIsModalVisible={setIsImagesModalVisible}>
@@ -147,7 +140,7 @@ const SetCard = ({
         isModalVisible={isElementsSelectorModalVisible}
         setIsModalVisible={setIsElementsSelectorModalVisible}
       >
-        <ElementsSelector situation={situation} />
+        <ElementsSelector />
       </MyModal>
 
       <MyModal
@@ -157,7 +150,7 @@ const SetCard = ({
         closeButtonText="OK"
         onClose={saveAndClose}
       >
-        <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} situation={situation} />
+        <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} />
       </MyModal>
 
       <Container theme={theme} flexDirection="row" key="displaySetActionButtonContainer">

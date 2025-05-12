@@ -6,15 +6,10 @@ import SetCard from "./SetCard";
 
 const getSetsLength = (sets) => {
   return sets.length === 0;
-}
+};
 
 //@formatter:off
-const SetCardContainer = ({
-  setsToShow,
-  chosenStats = null,
-  situation,
-  screenSituation,
-}) => {
+const SetCardContainer = ({ setsToShow, chosenStats = null, isInLoadSetModal }) => {
   const { theme } = useTheme();
 
   return (
@@ -36,16 +31,12 @@ const SetCardContainer = ({
             backgroundColor: theme.surface_container_high,
             justifyContent: "center",
           },
-          (getSetsLength(setsToShow) ? {flex: 1,} : {}),
+          getSetsLength(setsToShow) ? { flex: 1 } : {},
         ]}
         horizontal={true}
       >
         {setsToShow.length === 0 ? (
-          <MaterialCommunityIcons
-            name="chat-question"
-            size={72}
-            color={theme.on_surface}
-          />
+          <MaterialCommunityIcons name="chat-question" size={72} color={theme.on_surface} />
         ) : null}
 
         {setsToShow.map(({ name, classIds, stats }, index) => {
@@ -57,8 +48,7 @@ const SetCardContainer = ({
               setToShowStats={stats}
               chosenStats={chosenStats}
               setCardIndex={index}
-              situation={situation}
-              screenSituation={screenSituation}
+              isInLoadSetModal={isInLoadSetModal}
             />
           );
         })}

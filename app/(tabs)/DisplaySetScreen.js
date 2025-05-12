@@ -1,13 +1,13 @@
 import React from "react";
 import { ScrollView } from "react-native";
-import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
 import StatSliderResultContainer from "@/components/statSliderResult/StatSliderResultContainer";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
-
+import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
 import { useSetsList } from "@/contexts/SetsListContext";
-import { SavedSetModalProvider } from "@/contexts/SavedSetModalContext";
-import { DisplaySetScreenProvider } from "@/contexts/screenContexts/DisplaySetScreenContext";
+import { ScreenProvider } from "@/contexts/ScreenContext";
+import { IsStatsVisibleListProvider } from "@/contexts/IsStatsVisibleListContext";
 import DisplaySetScreenPressablesContainer from "@/components/screenPressablesContainer/DisplaySetScreenPressablesContainer";
+import { LoadSetModalProvider } from "../../contexts/LoadSetModalContext";
 
 const DisplaySetScreen = () => {
   const { setsListDisplayed } = useSetsList();
@@ -18,29 +18,24 @@ const DisplaySetScreen = () => {
   });
 
   return (
-    <DisplaySetScreenProvider>
-      <PressableImagesProvider
-        isDefaultSelectedImages={true}
-        situation="display"
-      >
-        <SavedSetModalProvider>
-          <ScrollView>
-            <DisplaySetScreenPressablesContainer />
+    <ScreenProvider screenName="display">
+      <LoadSetModalProvider>
+        <IsStatsVisibleListProvider>
+          <PressableImagesProvider>
+            <ScrollView>
+              <DisplaySetScreenPressablesContainer />
 
-            <SetCardContainer
-              setsToShow={setsListDisplayed}
-              situation="display"
-            />
+              <SetCardContainer setsToShow={setsListDisplayed} />
 
-            <StatSliderResultContainer
-              setsToShowMultipleStatsLists={setsToShowMultipleStatsLists}
-              chosenStats={[null] * 12}
-              situation="display"
-            />
-          </ScrollView>
-        </SavedSetModalProvider>
-      </PressableImagesProvider>
-    </DisplaySetScreenProvider>
+              <StatSliderResultContainer
+                setsToShowMultipleStatsLists={setsToShowMultipleStatsLists}
+                chosenStats={[null] * 12}
+              />
+            </ScrollView>
+          </PressableImagesProvider>
+        </IsStatsVisibleListProvider>
+      </LoadSetModalProvider>
+    </ScreenProvider>
   );
 };
 

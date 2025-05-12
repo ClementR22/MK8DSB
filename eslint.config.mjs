@@ -9,27 +9,34 @@ import { defineConfig } from "eslint/config";
 
 export default defineConfig([
   {
-    ...tseslint.configs.recommended,
-    settings: {
-      react: {
-        version: "detect",
-      },
-    },
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
     languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: "module",
+        project: "./tsconfig.json", // <-- Chemin correct vers ton tsconfig.json
+      },
       globals: {
         ...globals.browser,
         ...globals.node,
+      },
+    },
+    settings: {
+      react: {
+        version: "detect",
       },
     },
     plugins: {
       js,
       react: pluginReact,
       "unused-imports": pluginUnusedImports,
+      "@typescript-eslint": tseslint.plugin,
     },
     rules: {
       ...js.configs.recommended.rules,
       ...pluginReact.configs.flat.recommended.rules,
+      ...tseslint.configs.recommended.rules,
       "react/prop-types": "off",
       "unused-imports/no-unused-imports": "error",
       "unused-imports/no-unused-vars": [
@@ -41,15 +48,7 @@ export default defineConfig([
           argsIgnorePattern: "^_",
         },
       ],
-    },
-  },
-  {
-    files: ["**/*.{ts,tsx}"],
-    plugins: {
-      "@typescript-eslint": tseslint.plugin,
-    },
-    rules: {
-      "@typescript-eslint/no-require-imports": "off", // 👈 ici ça marchera
+      "@typescript-eslint/no-require-imports": "off",
     },
   },
 ]);

@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, TextInput } from "react-native";
 
-const MyTextInput = ({ value, onChangeText, onBlur, bluron }) => {
+const MyTextInput = ({ value, onChangeText, onBlur }) => {
   return (
     <TextInput
       style={styles.textInput}

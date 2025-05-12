@@ -9,7 +9,7 @@ import MyModal from "../modal/MyModal";
 import { translate } from "@/translations/translations";
 import { useState } from "react";
 import { useSetsList } from "@/contexts/SetsListContext";
-import { useSearchSetScreen } from "@/contexts/screenContexts/SearchSetScreenContext";
+import { useIsStatsVisibleList } from "../../contexts/IsStatsVisibleListContext";
 import { usePressableImages } from "@/contexts/PressableImagesContext";
 import { shadow_3dp } from "../styles/theme";
 import StatSelector from "../statSelector/StatSelector";
@@ -34,13 +34,13 @@ const SearchSetScreenPressablesContainer = ({ chosenStats, setChosenStats, setSe
 
   const { setSetsListFound, syncWithChosenStats } = useSetsList();
 
-  const { isStatsVisible, setIsStatsVisible } = useSearchSetScreen();
+  const { setIsStatsVisibleList } = useIsStatsVisibleList();
 
   const { isAllwaysSync } = useSettings();
 
   useEffect(() => {
     if (isAllwaysSync) {
-      syncWithChosenStats(setIsStatsVisible);
+      syncWithChosenStats(setIsStatsVisibleList);
     }
   }, [isAllwaysSync, chosenStats]);
 
@@ -185,11 +185,7 @@ const SearchSetScreenPressablesContainer = ({ chosenStats, setChosenStats, setSe
         <MaterialIcons name="numbers" size={24} color={theme.on_primary} />
       </TooltipWrapper>
 
-      <StatSliderResultSelectorPressable
-        isStatsVisible={isStatsVisible}
-        setIsStatsVisible={setIsStatsVisible}
-        visibleStatsInSearchScreenCase={true}
-      />
+      <StatSliderResultSelectorPressable visibleStatsInSearchScreenCase={true} />
 
       <MyModal
         modalTitle="StatsToParameter"
@@ -208,7 +204,7 @@ const SearchSetScreenPressablesContainer = ({ chosenStats, setChosenStats, setSe
       <MyModal modalTitle="Filters" isModalVisible={isFilterModalVisible} setIsModalVisible={setIsFilterModalVisible}>
         <BodyTypeSelector chosenBodyType={chosenBodyType} setChosenBodyType={setChosenBodyType} />
         <ElementsDeselector />
-        <ElementsSelector situation="search" />
+        <ElementsSelector />
       </MyModal>
 
       <MyModal

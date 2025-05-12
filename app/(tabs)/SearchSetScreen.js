@@ -7,13 +7,13 @@ import { vw } from "../../components/styles/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { translate } from "@/translations/translations";
 import SetCardContainer from "../../components/setCard/SetCardContainer";
-import { SavedSetModalProvider } from "@/contexts/SavedSetModalContext";
+import { LoadSetModalProvider } from "@/contexts/LoadSetModalContext";
 import { useSetsList } from "@/contexts/SetsListContext";
-import SearchSetScreenPressablesContainer
-  from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
-import { SearchSetScreenProvider } from "@/contexts/screenContexts/SearchSetScreenContext";
-import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
+import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
 import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
+import { ScreenProvider } from "@/contexts/ScreenContext";
+import { IsStatsVisibleListProvider } from "@/contexts/IsStatsVisibleListContext";
+import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
 
 const SearchSetScreen = () => {
   const { theme } = useTheme();
@@ -24,90 +24,74 @@ const SearchSetScreen = () => {
 
   // Mettre à jour la valeur du slider
   const updateSliderValue = (name, newValue) => {
-    setChosenStats(
-      chosenStats.map((stat) =>
-        stat.name === name ? { ...stat, value: newValue } : stat,
-      ),
-    );
+    setChosenStats(chosenStats.map((stat) => (stat.name === name ? { ...stat, value: newValue } : stat)));
   };
 
   return (
-    <SearchSetScreenProvider>
-      <PressableImagesProvider situation="search">
-        <SavedSetModalProvider>
-          <ScrollView
-            key={"toto"}
-            style={{
-              height: 100,
-            }}
-          >
-            <View
-              style={[
-                styles.container,
-                {
-                  backgroundColor: theme.surface,
-                },
-              ]}
+    <ScreenProvider screenName="search">
+      <LoadSetModalProvider>
+        <IsStatsVisibleListProvider>
+          <PressableImagesProvider>
+            <ScrollView
+              key={"toto"}
+              style={{
+                height: 100,
+              }}
             >
               <View
                 style={[
-                  styles.statSlidersContainer,
-                  { backgroundColor: theme.surface_container_high },
+                  styles.container,
+                  {
+                    backgroundColor: theme.surface,
+                  },
                 ]}
               >
-                <Text
-                  style={[
-                    styles.text,
-                    {
-                      paddingHorizontal: 10,
-                      borderRadius: 5,
-                      marginBottom: 16,
-                      color: theme.on_surface,
-                    },
-                  ]}
-                >
-                  {translate("SearchedStats")}
-                </Text>
+                <View style={[styles.statSlidersContainer, { backgroundColor: theme.surface_container_high }]}>
+                  <Text
+                    style={[
+                      styles.text,
+                      {
+                        paddingHorizontal: 10,
+                        borderRadius: 5,
+                        marginBottom: 16,
+                        color: theme.on_surface,
+                      },
+                    ]}
+                  >
+                    {translate("SearchedStats")}
+                  </Text>
 
-                <ButtonLoadSet
-                  tooltip_text="LoadStatsOfASet"
-                  screenSituation="search"
+                  <ButtonLoadSet tooltip_text="LoadStatsOfASet" />
+
+                  {/* Afficher le slider uniquement si la case est cochée */}
+                  {chosenStats.map(
+                    (stat) =>
+                      stat.checked && (
+                        <StatSlider
+                          key={stat.name}
+                          name={stat.name}
+                          sliderValue={stat.value}
+                          setSliderValue={(newValue) => updateSliderValue(stat.name, newValue)}
+                          statFilterNumber={stat.statFilterNumber}
+                          setStatFilterNumber={stat.setStatFilterNumber}
+                        />
+                      )
+                  )}
+                </View>
+
+                <SearchSetScreenPressablesContainer
+                  chosenStats={chosenStats}
+                  setChosenStats={setChosenStats}
+                  setSetsToShow={setSetsToShow}
                 />
-
-                {/* Afficher le slider uniquement si la case est cochée */}
-                {chosenStats.map(
-                  (stat) =>
-                    stat.checked && (
-                      <StatSlider
-                        key={stat.name}
-                        name={stat.name}
-                        sliderValue={stat.value}
-                        setSliderValue={(newValue) =>
-                          updateSliderValue(stat.name, newValue)
-                        }
-                        statFilterNumber={stat.statFilterNumber}
-                        setStatFilterNumber={stat.setStatFilterNumber}
-                      />
-                    ),
-                )}
               </View>
 
-              <SearchSetScreenPressablesContainer
-                chosenStats={chosenStats}
-                setChosenStats={setChosenStats}
-                setSetsToShow={setSetsToShow}
-              />
-            </View>
-
-            <SetCardContainer
-              setsToShow={setsToShow}
-              chosenStats={chosenStats}
-              situation="search"
-            />
-          </ScrollView>
-        </SavedSetModalProvider>
-      </PressableImagesProvider>
-    </SearchSetScreenProvider>
+              <SetCardContainer setsToShow={setsToShow} chosenStats={chosenStats} />
+            </ScrollView>
+          </PressableImagesProvider>
+        </IsStatsVisibleListProvider>
+      </LoadSetModalProvider>
+    </ScreenProvider>
   );
 };
 

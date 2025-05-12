@@ -1,13 +1,13 @@
 import React, { useMemo } from "react";
 import MyModal from "./MyModal";
-import { useSavedSetModal } from "@/contexts/SavedSetModalContext";
+import { useLoadSetModal } from "@/contexts/LoadSetModalContext";
 import SetCardContainer from "../setCard/SetCardContainer";
 import { useSetsList } from "@/contexts/SetsListContext";
 import ButtonImportSet from "../managingSetsPressable/ButtonImportSet";
 
-const LoadSetModal = ({ screenSituation }) => {
+const LoadSetModal = () => {
   const { setsListSaved } = useSetsList();
-  const { savedSetModalVisible, toggleSavedSetModal } = useSavedSetModal();
+  const { isLoadSetModalVisible, toggleLoadSetModal } = useLoadSetModal();
 
   const savedSets = useMemo(() => {
     return setsListSaved;
@@ -16,11 +16,11 @@ const LoadSetModal = ({ screenSituation }) => {
   return (
     <MyModal
       modalTitle="LoadASavedSet"
-      isModalVisible={savedSetModalVisible}
-      setIsModalVisible={(visible) => toggleSavedSetModal(visible)}
+      isModalVisible={isLoadSetModalVisible}
+      setIsModalVisible={(visible) => toggleLoadSetModal(visible)}
     >
-      <ButtonImportSet screenSituation={screenSituation} />
-      <SetCardContainer setsToShow={savedSets} situation="load" screenSituation={screenSituation} />
+      <ButtonImportSet />
+      <SetCardContainer setsToShow={savedSets} isInLoadSetModal={true} />
     </MyModal>
   );
 };
