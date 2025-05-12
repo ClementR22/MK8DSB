@@ -6,19 +6,21 @@ import { translate } from "@/translations/translations";
 const SelectedAllStatsSwitch = ({ statList, setStatList }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [formerStatList, setFormerStatList] = useState(null);
-  const internalUpdate = useRef(false); // <- nouvelle référence
+  const internalUpdate = useRef(false); // Marqueur de mise à jour interne
 
   const onToggleSwitch = () => {
-    internalUpdate.current = true; // <- on marque que le changement est interne
+    internalUpdate.current = true;
 
     if (!isSwitchOn) {
-      setStatList((statList) => {
-        setFormerStatList(statList);
-        return statList.map((stat) => {
-          return { ...stat, checked: true };
-        });
-      });
-    } else {
+      // si l'utilisateur vient active le switch
+      // Sauvegarde l’état courant avant modification
+      setFormerStatList(statList);
+
+      // Coche tous les stat
+      setStatList((prevList) => prevList.map((stat) => ({ ...stat, checked: true })));
+    } else if (formerStatList) {
+      // si l'utilisateur ne veut pas tout activer et qu'il existe une liste précédente
+      // Restaure la liste précédente
       setStatList(formerStatList);
     }
 
@@ -50,5 +52,9 @@ const SelectedAllStatsSwitch = ({ statList, setStatList }) => {
 export default SelectedAllStatsSwitch;
 
 const styles = StyleSheet.create({
-  switchContainer: { flexDirection: "row" },
+  switchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
 });
