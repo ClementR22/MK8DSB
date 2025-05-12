@@ -79,14 +79,10 @@ const SearchSetScreen = () => {
                   )}
                 </View>
 
-                <SearchSetScreenPressablesContainer
-                  chosenStats={chosenStats}
-                  setChosenStats={setChosenStats}
-                  setSetsToShow={setSetsToShow}
-                />
+                <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} />
               </View>
 
-              <SetCardContainer setsToShow={setsToShow} chosenStats={chosenStats} />
+              <SetCardContainer setsToShow={setsToShow} />
             </ScrollView>
           </PressableImagesProvider>
         </IsStatsVisibleListProvider>

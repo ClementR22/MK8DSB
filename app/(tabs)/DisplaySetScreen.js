@@ -27,10 +27,7 @@ const DisplaySetScreen = () => {
 
               <SetCardContainer setsToShow={setsListDisplayed} />
 
-              <StatSliderResultContainer
-                setsToShowMultipleStatsLists={setsToShowMultipleStatsLists}
-                chosenStats={[null] * 12}
-              />
+              <StatSliderResultContainer setsToShowMultipleStatsLists={setsToShowMultipleStatsLists} />
             </ScrollView>
           </PressableImagesProvider>
         </IsStatsVisibleListProvider>

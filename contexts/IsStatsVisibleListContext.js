@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { statNames } from "@/data/data";
+import { useSetsList } from "./SetsListContext";
+import { useScreen } from "./ScreenContext";
 
 const IsStatsVisibleListContext = createContext();
 
@@ -26,8 +28,12 @@ export const IsStatsVisibleListProvider = ({ children }) => {
     }))
   );
 
+  const { screenName } = useScreen();
+  const { chosenStats } = useSetsList();
+  const chosenStatsInScreen = screenName === "search" ? chosenStats : Array(12).fill(null);
+
   return (
-    <IsStatsVisibleListContext.Provider value={{ isStatsVisibleList, setIsStatsVisibleList }}>
+    <IsStatsVisibleListContext.Provider value={{ isStatsVisibleList, setIsStatsVisibleList, chosenStatsInScreen }}>
       {children}
     </IsStatsVisibleListContext.Provider>
   );

@@ -20,7 +20,6 @@ const SetCard = ({
   setToShowName,
   setToShowClassIds,
   setToShowStats = null,
-  chosenStats,
   setCardIndex = null,
   isInLoadSetModal = false,
 }) => {
@@ -127,9 +126,7 @@ const SetCard = ({
 
       <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="icon" displaySetImages={displaySetImages} />
 
-      {config.showStatSliderResult && (
-        <StatSliderResultContainer setsToShowMultipleStatsLists={[setToShowStats]} chosenStats={chosenStats} />
-      )}
+      {config.showStatSliderResult && <StatSliderResultContainer setsToShowMultipleStatsLists={[setToShowStats]} />}
 
       <MyModal isModalVisible={isImagesModalVisible} setIsModalVisible={setIsImagesModalVisible}>
         <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="image" />

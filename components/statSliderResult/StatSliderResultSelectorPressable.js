@@ -18,6 +18,8 @@ const StatSliderResultSelectorPressable = ({ visibleStatsInSearchScreenCase = fa
 
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
 
+  const toggleCheckListIsStatsVisibleList = (name) => toggleCheckList(setIsStatsVisibleList, name);
+
   return (
     <View>
       <TooltipWrapper
@@ -37,7 +39,7 @@ const StatSliderResultSelectorPressable = ({ visibleStatsInSearchScreenCase = fa
           statList={isStatsVisibleList}
           setStatList={setIsStatsVisibleList}
           toggleCheck={(name) => {
-            toggleCheckList(setIsStatsVisibleList, name);
+            toggleCheckListIsStatsVisibleList(name);
           }}
           visibleStatsInSearchScreenCase={visibleStatsInSearchScreenCase}
         />

@@ -9,7 +9,7 @@ const getSetsLength = (sets) => {
 };
 
 //@formatter:off
-const SetCardContainer = ({ setsToShow, chosenStats = null, isInLoadSetModal }) => {
+const SetCardContainer = ({ setsToShow, isInLoadSetModal = false }) => {
   const { theme } = useTheme();
 
   return (
@@ -46,7 +46,6 @@ const SetCardContainer = ({ setsToShow, chosenStats = null, isInLoadSetModal }) 
               setToShowName={name}
               setToShowClassIds={classIds}
               setToShowStats={stats}
-              chosenStats={chosenStats}
               setCardIndex={index}
               isInLoadSetModal={isInLoadSetModal}
             />

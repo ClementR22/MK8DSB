@@ -17,12 +17,15 @@ import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
 import ElementsDeselector from "../elementsSelector/ElementsDeselector";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import ResultsNumber from "../ResultsNumberSelector";
-import { toggleCheckChosenStats } from "../../utils/toggleCheck";
 import TooltipWrapper from "../TooltipWrapper";
 import { useSettings } from "@/contexts/SettingsContext";
+import { toggleAndGetChecks } from "../../utils/toggleCheck";
+import showToast from "@/utils/toast";
 
-const SearchSetScreenPressablesContainer = ({ chosenStats, setChosenStats, setSetsToShow }) => {
+const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const { theme } = useTheme();
+
+  const { chosenStats, setChosenStats, setSetsListFound, syncWithChosenStats } = useSetsList();
 
   const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);
 
@@ -31,8 +34,6 @@ const SearchSetScreenPressablesContainer = ({ chosenStats, setChosenStats, setSe
   const [resultsNumber, setResultsNumber] = useState(5);
 
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
-
-  const { setSetsListFound, syncWithChosenStats } = useSetsList();
 
   const { setIsStatsVisibleList } = useIsStatsVisibleList();
 
@@ -52,6 +53,22 @@ const SearchSetScreenPressablesContainer = ({ chosenStats, setChosenStats, setSe
       checked: true,
     }))
   );
+
+  const toggleCheckChosenStats = (name) => {
+    setChosenStats(() => {
+      const newList = toggleAndGetChecks(chosenStats, name);
+      // Vérifiez s'il reste au moins un checked
+      const hasChecked = newList.some((item) => item.checked);
+
+      // Si tous les éléments sont décochés, rétablissez l'état de l'élément
+      if (!hasChecked) {
+        showToast("Erreur", "Il faut garder au moins une stat");
+        return newList.map((item) => (item.name === name ? { ...item, checked: true } : item));
+      }
+
+      return newList;
+    });
+  };
 
   const updateSetsToShow = (setsFound) => {
     const setsFoundWithName = setsFound.map((set, index) => ({
@@ -196,7 +213,7 @@ const SearchSetScreenPressablesContainer = ({ chosenStats, setChosenStats, setSe
           statList={chosenStats}
           setStatList={setChosenStats}
           toggleCheck={(name) => {
-            toggleCheckChosenStats(setChosenStats, name);
+            toggleCheckChosenStats(name);
           }}
         />
       </MyModal>

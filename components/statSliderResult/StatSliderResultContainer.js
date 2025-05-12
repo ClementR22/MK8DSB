@@ -5,9 +5,9 @@ import { translate } from "@/translations/translations";
 import { useIsStatsVisibleList } from "@/contexts/IsStatsVisibleListContext";
 import { useScreen } from "../../contexts/ScreenContext";
 
-const StatSliderResultContainer = ({ setsToShowMultipleStatsLists, chosenStats }) => {
+const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
   const { screenName } = useScreen();
-  const { isStatsVisibleList } = useIsStatsVisibleList();
+  const { isStatsVisibleList, chosenStatsInScreen } = useIsStatsVisibleList();
 
   return (
     <View style={{ flex: 1, backgroundColor: "green" }}>
@@ -37,7 +37,7 @@ const StatSliderResultContainer = ({ setsToShowMultipleStatsLists, chosenStats }
                   <StatSliderResult
                     key={setIndex}
                     value={setToShowStats[statIndex]}
-                    chosenValue={chosenStats?.[statIndex]?.value}
+                    chosenValue={chosenStatsInScreen?.[statIndex]?.value}
                   />
                   {screenName != "search" && <Text style={{ flex: 0.2 }}>{setToShowStats[statIndex]}</Text>}
                 </View>
