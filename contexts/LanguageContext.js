@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { loadThingFromMemory, saveThingInMemory } from "@/utils/asyncStorageOperations";
 
 export const languageList = [
   { label: "English", value: "en" },
@@ -18,31 +18,13 @@ export const LanguageProvider = ({ children }) => {
   const [language, setLanguage_] = useState("en"); // Langue par défaut
 
   const setLanguage = async (newLanguage) => {
+    await saveThingInMemory("language", newLanguage);
     setLanguage_(newLanguage);
-    await saveLanguageInMemory(newLanguage);
-  };
-
-  const saveLanguageInMemory = async (newLanguage) => {
-    try {
-      await AsyncStorage.setItem("language", newLanguage);
-    } catch (e) {
-      console.error("Erreur lors de la sauvegarde de la langue :", e);
-    }
   };
 
   useEffect(() => {
-    const loadLanguage = async () => {
-      const savedLanguage = await AsyncStorage.getItem("language");
-      if (savedLanguage) {
-        setLanguage_(savedLanguage);
-      }
-    };
-    loadLanguage();
+    loadThingFromMemory("language", setLanguage_);
   }, []);
 
-  return (
-    <LanguageContext.Provider value={{ language, setLanguage }}>
-      {children}
-    </LanguageContext.Provider>
-  );
+  return <LanguageContext.Provider value={{ language, setLanguage }}>{children}</LanguageContext.Provider>;
 };

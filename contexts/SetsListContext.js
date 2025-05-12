@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import showToast from "@/utils/toast";
 import { searchSetStatsFromElementsClassIds } from "@/utils/searchSetStatsFromElementsClassIds";
 import * as Clipboard from "expo-clipboard";
+import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 
 // Créer le contexte
 const SetsListContext = createContext();
@@ -183,7 +184,7 @@ export const SetsListProvider = ({ children }) => {
     }
 
     setSetsSavedKeys((prev) => [...prev, key]);
-    setItemInMemory(key, set);
+    setSetInMemory(key, set);
   };
 
   const saveSetFromDisplay = async (setCardSelectedIndex) => {
@@ -206,7 +207,7 @@ export const SetsListProvider = ({ children }) => {
 
           if (screenName == "save") {
             const key = setsSavedKeys[index];
-            setItemInMemory(key, setWithNewName);
+            setSetInMemory(key, setWithNewName);
           }
 
           return setWithNewName;
@@ -230,7 +231,7 @@ export const SetsListProvider = ({ children }) => {
           };
           if (screenName === "save") {
             const key = setsSavedKeys[index];
-            setItemInMemory(key, newSet);
+            setSetInMemory(key, newSet);
           }
           return newSet;
         } else {
@@ -242,12 +243,8 @@ export const SetsListProvider = ({ children }) => {
     });
   };
 
-  const setItemInMemory = async (key, set) => {
-    try {
-      await AsyncStorage.setItem(String(key), JSON.stringify(set));
-    } catch (err) {
-      alert(err);
-    }
+  const setSetInMemory = async (key, set) => {
+    await saveThingInMemory(key, set);
   };
 
   const sortSetsSavedKeys = () => {
@@ -270,7 +267,7 @@ export const SetsListProvider = ({ children }) => {
 
       // dans la memoire
       setsListSavedSorted.forEach((set, index) => {
-        setItemInMemory(index, set);
+        setSetInMemory(index, set);
       });
       return keysSorted;
     });

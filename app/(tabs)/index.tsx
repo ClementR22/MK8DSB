@@ -11,6 +11,7 @@ import IsStatsVisibleListDefaultSelector from "@/components/settingsComponent/Is
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import IsStatsVisibleDefaultSwitch from "@/components/settingsComponent/IsStatsVisibleDefaultSwitch";
 import { useSettings } from "@/contexts/SettingsContext";
+import ButtonRemoveMemory from "@/components/ButtonRemoveMemory";
 
 export default function HomeScreen() {
   const { isStatsVisibleDefault } = useSettings();
@@ -31,6 +32,7 @@ export default function HomeScreen() {
           <IsStatsVisibleDefaultSwitch />
           {isStatsVisibleDefault && <IsStatsVisibleListDefaultSelector />}
         </IsStatsVisibleListProvider>
+        <ButtonRemoveMemory />
       </ScreenProvider>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { statNames } from "@/data/data";
 import { toggleCheckList } from "@/utils/toggleCheck";
+import { loadThingFromMemory, saveThingInMemory } from "@/utils/asyncStorageOperations";
 
 export const SettingsContext = createContext();
 
@@ -11,32 +11,10 @@ export const useSettings = () => {
 
 export const SettingsProvider = ({ children }) => {
   useEffect(() => {
-    loadSettingFromMemory("isAllwaysSync", setIsAllwaysSync_);
-    loadSettingFromMemory("isStatsVisibleDefault", setIsStatsVisibleDefault_);
-    loadSettingFromMemory("isStatsVisibleListDefault", setIsStatsVisibleListDefault_);
+    loadThingFromMemory("isAllwaysSync", setIsAllwaysSync_);
+    loadThingFromMemory("isStatsVisibleDefault", setIsStatsVisibleDefault_);
+    loadThingFromMemory("isStatsVisibleListDefault", setIsStatsVisibleListDefault_);
   }, []);
-
-  const loadSettingFromMemory = async (settingKey, setSetting_) => {
-    const savedSetting = await AsyncStorage.getItem(settingKey);
-    if (savedSetting) {
-      let savedSettingParsed;
-      if (savedSetting === "true" || savedSetting === "false") {
-        // si savedSetting est un booleen
-        savedSettingParsed = savedSetting === "true";
-      } else {
-        savedSettingParsed = JSON.parse(savedSetting);
-      }
-      setSetting_(savedSettingParsed);
-    }
-  };
-
-  const saveSettingInMemory = async (settingKey, newIsAllwaysSync) => {
-    try {
-      await AsyncStorage.setItem(settingKey, JSON.stringify(newIsAllwaysSync));
-    } catch (e) {
-      console.error("Erreur lors de la sauvegarde de ", settingKey, e);
-    }
-  };
 
   // pour isAllwaysSync
 
@@ -44,7 +22,7 @@ export const SettingsProvider = ({ children }) => {
 
   const setIsAllwaysSync = async (newIsAllwaysSync) => {
     setIsAllwaysSync_(newIsAllwaysSync);
-    await saveSettingInMemory("isAllwaysSync", newIsAllwaysSync);
+    await saveThingInMemory("isAllwaysSync", newIsAllwaysSync);
   };
 
   // pour isStatsVisibleDefault
@@ -68,7 +46,7 @@ export const SettingsProvider = ({ children }) => {
 
   const setIsStatsVisibleDefault = async (newIsStatsVisibleDefault) => {
     setIsStatsVisibleDefault_(newIsStatsVisibleDefault);
-    await saveSettingInMemory("isStatsVisibleDefault", newIsStatsVisibleDefault);
+    await saveThingInMemory("isStatsVisibleDefault", newIsStatsVisibleDefault);
   };
 
   // pour isStatsVisibleListDefault
@@ -85,7 +63,7 @@ export const SettingsProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    saveSettingInMemory("isStatsVisibleListDefault", isStatsVisibleListDefault);
+    // saveThingInMemory("isStatsVisibleListDefault", isStatsVisibleListDefault);
   }, [isStatsVisibleListDefault]);
 
   const toggleCheckListIsStatsVisibleListDefault = (name) => toggleCheckList(setIsStatsVisibleListDefault, name);
