@@ -1,3 +1,4 @@
+import React from "react";
 import { Component } from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -13,11 +14,7 @@ class FlexContainer extends Component {
   });
 
   render() {
-    return (
-      <View style={this.styles.container}>
-        {this.props.children}
-      </View>
-    );
+    return <View style={this.styles.container}>{this.props.children}</View>;
   }
 }
 

@@ -7,7 +7,7 @@ export const languageList = [
 ];
 
 // Création du contexte
-export const LanguageContext = createContext();
+const LanguageContext = createContext();
 
 export const useLanguage = () => {
   return useContext(LanguageContext);

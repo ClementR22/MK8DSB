@@ -1,6 +1,5 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -28,24 +27,6 @@ export default function TabLayout() {
                 }}
               >
                 <Tabs.Screen
-                  name="index"
-                  options={{
-                    title: "Home",
-                    tabBarIcon: ({ color, focused }) => (
-                      <TabBarIcon name={focused ? "home" : "home-outline"} color={color} />
-                    ),
-                  }}
-                />
-                <Tabs.Screen
-                  name="explore"
-                  options={{
-                    title: "Explore",
-                    tabBarIcon: ({ color, focused }) => (
-                      <TabBarIcon name={focused ? "code-slash" : "code-slash-outline"} color={color} />
-                    ),
-                  }}
-                />
-                <Tabs.Screen
                   name="SearchSetScreen"
                   options={{
                     title: "Trouver un set",
@@ -62,19 +43,19 @@ export default function TabLayout() {
                   }}
                 />
                 <Tabs.Screen
-                  name="GalleryScreen"
-                  options={{
-                    title: "Galerie",
-                    tabBarIcon: ({ color }) => <Ionicons name="image-outline" size={24} color={color} />,
-                    header: () => <CustomHeader title="la galerie" />,
-                  }}
-                />
-                <Tabs.Screen
                   name="SavedSetScreen"
                   options={{
                     title: "Saved Set",
                     tabBarIcon: ({ color }) => <MaterialIcons name="save" size={24} color={color} />,
                     header: () => <CustomHeader title="🏁 saved set screen" />,
+                  }}
+                />
+                <Tabs.Screen
+                  name="GalleryScreen"
+                  options={{
+                    title: "Galerie",
+                    tabBarIcon: ({ color }) => <Ionicons name="image-outline" size={24} color={color} />,
+                    header: () => <CustomHeader title="la galerie" />,
                   }}
                 />
                 <Tabs.Screen
