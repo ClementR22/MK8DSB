@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text } from "react-native";
 
 // Components import
 import StatSlider from "../../components/StatSlider";
@@ -15,6 +15,7 @@ import { ScreenProvider } from "@/contexts/ScreenContext";
 import { IsStatsVisibleListProvider } from "@/contexts/IsStatsVisibleListContext";
 import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
 import BoxContainer from "@/components/BoxContainer";
+import FlexContainer from "@/components/FlexContainer";
 
 const SearchSetScreen = () => {
   const { theme } = useTheme();
@@ -33,20 +34,8 @@ const SearchSetScreen = () => {
       <LoadSetModalProvider>
         <IsStatsVisibleListProvider>
           <PressableImagesProvider>
-            <ScrollView
-              key={"toto"}
-              style={{
-                height: 100,
-              }}
-            >
-              <View
-                style={[
-                  // styles.container,
-                  {
-                    backgroundColor: theme.surface,
-                  },
-                ]}
-              >
+            <ScrollView>
+              <FlexContainer theme={theme}>
                 <BoxContainer
                   theme={theme}
                   contentBackgroundColor={theme.surface_container_high}
@@ -84,7 +73,7 @@ const SearchSetScreen = () => {
                 </BoxContainer>
 
                 <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} />
-              </View>
+              </FlexContainer>
 
               <SetCardContainer setsToShow={setsToShow} />
             </ScrollView>
