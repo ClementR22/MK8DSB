@@ -1,7 +1,5 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Toast from "react-native-toast-message";
 import { SetsListProvider } from "@/contexts/SetsListContext";
@@ -12,8 +10,6 @@ import { CustomThemeProvider } from "@/contexts/ThemeContext";
 import { SettingsProvider } from "@/contexts/SettingsContext";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <CustomThemeProvider>
       <LanguageProvider>
@@ -22,7 +18,7 @@ export default function TabLayout() {
             <SetsListProvider>
               <Tabs
                 screenOptions={{
-                  tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+                  tabBarActiveTintColor: "red",
                   headerShown: true,
                 }}
               >
