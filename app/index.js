@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text } from "react-native";
 
 // Components import
-import StatSlider from "../../components/StatSlider";
+import StatSlider from "../components/StatSlider";
 import { vw } from "@/components/styles/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { translate } from "@/translations/translations";
@@ -36,10 +36,7 @@ const SearchSetScreen = () => {
           <PressableImagesProvider>
             <ScrollView>
               <FlexContainer theme={theme}>
-                <BoxContainer
-                  theme={theme}
-                  contentBackgroundColor={theme.surface_container_high}
-                >
+                <BoxContainer theme={theme} contentBackgroundColor={theme.surface_container_high}>
                   <Text
                     style={[
                       styles.text,

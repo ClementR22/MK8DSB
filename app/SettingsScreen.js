@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { ScreenProvider } from "../../contexts/ScreenContext";
+import { ScreenProvider } from "../contexts/ScreenContext";
 import { IsStatsVisibleListProvider } from "@/contexts/IsStatsVisibleListContext";
 import LanguageSelector from "@/components/settingsComponent/LanguageSelector";
 import ThemeSelector from "@/components/settingsComponent/ThemeSelector";
