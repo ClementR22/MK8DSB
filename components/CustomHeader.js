@@ -11,19 +11,11 @@ const CustomHeader = ({ title }) => {
       style={{
         backgroundColor: theme.surface_container,
         height: 64,
-        // paddingBottom: 12,
-        // paddingHorizontal: 20,
-        // borderBottomLeftRadius: 20,
-        // borderBottomRightRadius: 20,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+        boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
         elevation: 5,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        // marginBottom: 10,
       }}
     >
       <MaterialCommunityIcons
