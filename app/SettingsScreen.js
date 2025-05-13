@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import { ScreenProvider } from "../contexts/ScreenContext";
+import { ScreenProvider } from "@/contexts/ScreenContext";
 import { IsStatsVisibleListProvider } from "@/contexts/IsStatsVisibleListContext";
 import LanguageSelector from "@/components/settingsComponent/LanguageSelector";
 import ThemeSelector from "@/components/settingsComponent/ThemeSelector";
@@ -9,50 +8,25 @@ import IsStatsVisibleDefaultSwitch from "@/components/settingsComponent/IsStatsV
 import { useSettings } from "@/contexts/SettingsContext";
 import IsStatsVisibleListDefaultSelector from "@/components/settingsComponent/IsStatsVisibleListDefaultSelector";
 import ButtonRemoveMemory from "@/components/ButtonRemoveMemory";
+import FlexContainer from "@/components/FlexContainer";
 
-const GalleryScreen = () => {
+const SettingsScreen = () => {
   const { isStatsVisibleDefault } = useSettings();
 
   return (
     <ScreenProvider screenName="settings">
-      <IsStatsVisibleListProvider>
-        <LanguageSelector />
-        <ThemeSelector />
-        <AllwaysSyncSwitch />
-        <IsStatsVisibleDefaultSwitch />
-        {isStatsVisibleDefault && <IsStatsVisibleListDefaultSelector />}
-      </IsStatsVisibleListProvider>
-      <ButtonRemoveMemory />
+      <FlexContainer alignItems={"space-between"}>
+        <IsStatsVisibleListProvider>
+          <LanguageSelector />
+          <ThemeSelector />
+          <AllwaysSyncSwitch />
+          <IsStatsVisibleDefaultSwitch />
+          {isStatsVisibleDefault && <IsStatsVisibleListDefaultSelector />}
+        </IsStatsVisibleListProvider>
+        <ButtonRemoveMemory />
+      </FlexContainer>
     </ScreenProvider>
   );
 };
 
-export default GalleryScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 16,
-    backgroundColor: "red",
-    padding: 8,
-    color: "white",
-  },
-  categoryContainer: {
-    backgroundColor: "green",
-  },
-  classContainer: {
-    flexDirection: "row",
-    backgroundColor: "red",
-    justifyContent: "center",
-  },
-  elementContainer: {
-    backgroundColor: "blue",
-    alignItems: "center",
-  },
-});
+export default SettingsScreen;

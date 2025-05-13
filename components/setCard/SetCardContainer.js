@@ -1,6 +1,6 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { useTheme } from "../../contexts/ThemeContext";
+import { ScrollView, StyleSheet } from "react-native";
+import { useTheme } from "@/contexts/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCard from "./SetCard";
 import FlexContainer from "@/components/FlexContainer";
