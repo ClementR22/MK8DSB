@@ -1,14 +1,16 @@
-import React from "react";
-import { View } from "react-native";
-import { button_icon } from "../styles/button";
-import { shadow_3dp } from "../styles/theme";
+import React, { useState } from "react";
+import { Pressable, Text, View } from "react-native";
+import { button, button_icon } from "../styles/button";
+import { shadow_12dp, shadow_3dp } from "../styles/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import MyModal from "../modal/MyModal";
-import { useState } from "react";
 import StatSelector from "../statSelector/StatSelector";
 import TooltipWrapper from "../TooltipWrapper";
 import { useIsStatsVisibleList } from "@/contexts/IsStatsVisibleListContext";
+import { translate } from "@/translations/translations";
+import { useSetsList } from "@/contexts/SetsListContext";
+import { modal } from "@/components/styles/modal";
 
 const StatSliderResultSelectorPressable = () => {
   const { isStatsVisibleList, setIsStatsVisibleList, toggleCheckListIsStatsVisibleList } = useIsStatsVisibleList();
@@ -16,6 +18,9 @@ const StatSliderResultSelectorPressable = () => {
   const { theme } = useTheme();
 
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
+  const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
+
+  const { syncWithChosenStats } = useSetsList();
 
   return (
     <View>
@@ -31,6 +36,15 @@ const StatSliderResultSelectorPressable = () => {
         modalTitle="StatsToDisplay"
         isModalVisible={foundStatsModalVisible}
         setIsModalVisible={setFoundStatsModalVisible}
+        leftButton={
+          <Pressable
+            style={[button(theme).container, modal(theme).close_button_center, filterModalButtonHover && shadow_12dp]}
+            onHoverIn={() => setFilterModalButtonHover(true)}
+            onHoverOut={() => setFilterModalButtonHover(false)}
+            onPress={() => syncWithChosenStats(setIsStatsVisibleList)}>
+            <Text>{translate("Sync")}</Text>
+          </Pressable>
+        }
       >
         <StatSelector
           statList={isStatsVisibleList}

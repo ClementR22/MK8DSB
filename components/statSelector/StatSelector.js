@@ -1,11 +1,10 @@
 import React from "react";
-import { Pressable, ScrollView, StyleSheet, View, Text } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { modal } from "../styles/modal";
 import PressableStat from "./PressableStat";
 import { useTheme } from "@/contexts/ThemeContext";
 import SelectedAllStatsSwitch from "./SelectedAllStatsSwitch";
 import { useSetsList } from "@/contexts/SetsListContext";
-import { translate } from "@/translations/translations";
 import { useSettings } from "@/contexts/SettingsContext";
 import { useScreen } from "@/contexts/ScreenContext";
 
@@ -27,15 +26,10 @@ const StatSelector = ({ statList, setStatList, toggleCheck, isVisibleStatsNotInS
           {!(isAllwaysSync || isStatsVisibleDefault) ? (
             <>
               <SelectedAllStatsSwitch statList={statList} setStatList={setStatList} />
-              {isVisibleStatsInSearchScreen ? (
-                <Pressable onPress={() => syncWithChosenStats(setStatList)}>
-                  <Text>{translate("Sync")}</Text>
-                </Pressable>
-              ) : null}
             </>
-          ) : (
-            !isVisibleStatsInSearchScreen && <SelectedAllStatsSwitch statList={statList} setStatList={setStatList} />
-          )}
+          ) : (!isVisibleStatsInSearchScreen &&
+            <SelectedAllStatsSwitch statList={statList} setStatList={setStatList} />)
+          }
         </View>
         <ScrollView>
           {statList.map((stat) => (
