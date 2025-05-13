@@ -150,7 +150,7 @@ const SetCard = ({
         <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} />
       </MyModal>
 
-      <BoxContainer theme={theme} flexDirection="row" key="displaySetActionButtonContainer">
+      <BoxContainer flexDirection="row" key="displaySetActionButtonContainer">
         {config.showEdit && (
           <TooltipWrapper
             tooltipText="Edit"
@@ -182,7 +182,7 @@ const SetCard = ({
             tooltipText="Save"
             style={[button_icon(theme).container, shadow_3dp]}
             onPress={() =>
-              situation == "search" ? setIsTextInputModalVisible(true) : saveSetFromDisplay(setCardIndex)
+              situation === "search" ? setIsTextInputModalVisible(true) : saveSetFromDisplay(setCardIndex)
             }
           >
             <MaterialIcons name="save" size={24} color={theme.on_primary} />

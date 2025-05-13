@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCard from "./SetCard";
+import FlexContainer from "@/components/FlexContainer";
 
 const getSetsLength = (sets) => {
   return sets.length === 0;
@@ -13,20 +14,12 @@ const SetCardContainer = ({ setsToShow, isInLoadSetModal = false }) => {
   const { theme } = useTheme();
 
   return (
-    <View
-      theme={theme}
-      key="cardsContainer"
-      style={{
-        display: "flex",
-        // padding: 10,
-        backgroundColor: theme.surface,
-        flexDirection: "column",
-      }}
-    >
+    <FlexContainer alignItems={"stretch"}>
       <ScrollView
         contentContainerStyle={[
           styles.setCardContainer,
           {
+            minWidth: 300,
             flexGrow: 1,
             backgroundColor: theme.surface_container_high,
             justifyContent: "center",
@@ -52,7 +45,7 @@ const SetCardContainer = ({ setsToShow, isInLoadSetModal = false }) => {
           );
         })}
       </ScrollView>
-    </View>
+    </FlexContainer>
   );
 };
 

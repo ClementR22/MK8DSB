@@ -1,49 +1,46 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { useTheme } from "@/contexts/ThemeContext";
 
-class BoxContainer extends React.Component {
-  th = this.props.theme;
+function BoxContainer ({
+  children,
+  containerBackgroundColor = "transparent",
+  contentBackgroundColor,
+  justifyContent = "center",
+  flexDirection = "column",
+  alignItems = "center",
+  gap = 10,
+  inputStyles,
+}) {
+  const { theme } = useTheme();
 
-  containerBackgroundColor =
-    this.props?.containerBackgroundColor ?? "transparent";
-  contentBackgroundColor =
-    this.props?.contentBackgroundColor ?? this.th.surface;
-  justifyContent = this.props?.justifyContent ?? "center";
-  flexDirection = this.props?.flexDirection ?? "column";
-  alignItems = this.props?.alignItems ?? "center";
-  gap = this.props?.gap ?? 10;
-
-  inputStyles = this.props?.styles;
-
-  styles = StyleSheet.create({
+  const styles = StyleSheet.create({
     container: {
       fontFamily: "inherit",
-      backgroundColor: this.containerBackgroundColor,
+      backgroundColor: containerBackgroundColor,
       width: "100%",
       margin: "auto",
       justifyContent: "center",
     },
     content: {
-      backgroundColor: this.contentBackgroundColor,
-      justifyContent: this.justifyContent,
+      backgroundColor: contentBackgroundColor || theme.surface,
+      justifyContent: justifyContent,
       maxWidth: 400,
       margin: 16,
       padding: 10,
       borderRadius: 12,
-      gap: this.gap,
-      flexDirection: this.flexDirection,
-      alignItems: this.alignItems,
-      ...this.inputStyles,
+      gap: gap,
+      flexDirection: flexDirection,
+      alignItems: alignItems,
+      ...inputStyles,
     },
   });
 
-  render() {
-    return (
-      <View style={this.styles.container} id={"ContainerBox"}>
-        <View style={this.styles.content} id={"ContainerContent"}>{this.props.children}</View>
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      <View style={styles.content}>{children}</View>
+    </View>
+  );
 }
 
 export default BoxContainer;
