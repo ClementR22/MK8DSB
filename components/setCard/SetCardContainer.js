@@ -9,12 +9,11 @@ const getSetsLength = (sets) => {
   return sets.length === 0;
 };
 
-//@formatter:off
 const SetCardContainer = ({ setsToShow, isInLoadSetModal = false }) => {
   const { theme } = useTheme();
 
   return (
-    <FlexContainer alignItems={"stretch"}>
+    <FlexContainer alignItems={"stretch"} justifyContent={"stretch"}>
       <ScrollView
         contentContainerStyle={[
           styles.setCardContainer,

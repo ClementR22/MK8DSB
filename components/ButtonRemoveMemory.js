@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
-import { Pressable, Text } from "react-native";
+import Button from "@/components/Button";
 
 const ButtonRemoveMemory = () => {
   const removeMemory = async () => {
@@ -9,9 +9,7 @@ const ButtonRemoveMemory = () => {
   };
 
   return (
-    <Pressable onPress={() => removeMemory()}>
-      <Text>Remove memory</Text>
-    </Pressable>
+    <Button onPress={() => removeMemory()}>Remove memory</Button>
   );
 };
 

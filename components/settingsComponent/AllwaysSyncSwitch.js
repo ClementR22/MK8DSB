@@ -1,22 +1,20 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text } from "react-native";
 import { Switch } from "react-native-paper";
 import { translate } from "@/translations/translations";
 import { useSettings } from "@/contexts/SettingsContext";
+import FlexContainer from "@/components/FlexContainer";
 
 const AllwaysSyncSwitch = () => {
   const { isAllwaysSync, setIsAllwaysSync } = useSettings();
 
   return (
-    <View style={styles.switchContainer}>
+    <FlexContainer flexDirection="row" justifyContent="space-between">
       <Switch value={isAllwaysSync} onValueChange={() => setIsAllwaysSync(!isAllwaysSync)} />
-      <Text>{translate("AllwaysSyncVisibilityOfFoundSetsStatsWithChosenStats")}</Text>
-    </View>
+      <Text style={{ textAlign: "right" }}>{translate("AllwaysSyncVisibilityOfFoundSetsStatsWithChosenStats")}</Text>
+    </FlexContainer>
   );
 };
 
 export default AllwaysSyncSwitch;
 
-const styles = StyleSheet.create({
-  switchContainer: { flexDirection: "row" },
-});

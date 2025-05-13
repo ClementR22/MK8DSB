@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { View } from "react-native";
-import { card } from "../styles/card";
 import { useTheme } from "@/contexts/ThemeContext";
 import MyModal from "../modal/MyModal";
 import SetImagesContainer from "./SetImagesContainer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
 import { button_icon } from "../styles/button";
 import { shadow_3dp } from "../styles/theme";
-import { Ionicons, MaterialCommunityIcons, MaterialIcons, FontAwesome6 } from "@expo/vector-icons";
+import { FontAwesome6, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "@/contexts/PressableImagesContext";
 import { useSetsList } from "@/contexts/SetsListContext";
@@ -119,7 +117,7 @@ const SetCard = ({
   const config = situationConfig[situation] ?? {};
 
   return (
-    <View style={[card(theme).container, { flex: 1 }]}>
+    <BoxContainer contentBackgroundColor={theme.surface} margin={0}>
       {config.showTextInput && (
         <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} isWithConfimation={true} />
       )}
@@ -150,7 +148,7 @@ const SetCard = ({
         <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} />
       </MyModal>
 
-      <BoxContainer flexDirection="row" key="displaySetActionButtonContainer">
+      <BoxContainer flexDirection="row" key="displaySetActionButtonContainer" margin={0}>
         {config.showEdit && (
           <TooltipWrapper
             tooltipText="Edit"
@@ -257,7 +255,7 @@ const SetCard = ({
           </TooltipWrapper>
         )}
       </BoxContainer>
-    </View>
+    </BoxContainer>
   );
 };
 

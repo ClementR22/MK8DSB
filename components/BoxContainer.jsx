@@ -10,6 +10,7 @@ function BoxContainer ({
   flexDirection = "column",
   alignItems = "center",
   gap = 10,
+  margin = 16,
   inputStyles,
 }) {
   const { theme } = useTheme();
@@ -19,14 +20,14 @@ function BoxContainer ({
       fontFamily: "inherit",
       backgroundColor: containerBackgroundColor,
       width: "100%",
-      margin: "auto",
-      justifyContent: "center",
+      marginHorizontal: "auto",
+      justifyContent: "flex-start",
     },
     content: {
-      backgroundColor: contentBackgroundColor || theme.surface,
+      backgroundColor: contentBackgroundColor || theme.surface_container_high,
       justifyContent: justifyContent,
       maxWidth: 400,
-      margin: 16,
+      margin: margin,
       padding: 10,
       borderRadius: 12,
       gap: gap,

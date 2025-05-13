@@ -8,7 +8,7 @@ function FlexContainer({ children, flexDirection, alignItems, justifyContent, ga
       flexDirection: flexDirection ? flexDirection : "column",
       alignItems: alignItems || "center",
       justifyContent: justifyContent || "center",
-      gap: gap ? gap : 0,
+      gap: gap ? gap : 10,
     },
   });
 

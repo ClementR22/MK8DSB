@@ -8,14 +8,14 @@ import IsStatsVisibleDefaultSwitch from "@/components/settingsComponent/IsStatsV
 import { useSettings } from "@/contexts/SettingsContext";
 import IsStatsVisibleListDefaultSelector from "@/components/settingsComponent/IsStatsVisibleListDefaultSelector";
 import ButtonRemoveMemory from "@/components/ButtonRemoveMemory";
-import FlexContainer from "@/components/FlexContainer";
+import BoxContainer from "@/components/BoxContainer";
 
 const SettingsScreen = () => {
   const { isStatsVisibleDefault } = useSettings();
 
   return (
     <ScreenProvider screenName="settings">
-      <FlexContainer alignItems={"space-between"}>
+      <BoxContainer alignItems={"space-between"}>
         <IsStatsVisibleListProvider>
           <LanguageSelector />
           <ThemeSelector />
@@ -24,7 +24,7 @@ const SettingsScreen = () => {
           {isStatsVisibleDefault && <IsStatsVisibleListDefaultSelector />}
         </IsStatsVisibleListProvider>
         <ButtonRemoveMemory />
-      </FlexContainer>
+      </BoxContainer>
     </ScreenProvider>
   );
 };

@@ -1,16 +1,16 @@
 import React from "react";
-import { View } from "react-native";
 import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderResultSelectorPressable";
 import ButtonSortSet from "../managingSetsPressable/ButtonSortSet";
 import ButtonImportSet from "../managingSetsPressable/ButtonImportSet";
+import BoxContainer from "@/components/BoxContainer";
 
 const SavedSetScreenPressablesContainer = () => {
   return (
-    <View>
+    <BoxContainer flexDirection="row" justifyContent="space-around">
       <ButtonSortSet />
       <ButtonImportSet />
       <StatSliderResultSelectorPressable />
-    </View>
+    </BoxContainer>
   );
 };
 
