@@ -25,13 +25,16 @@ export const CustomThemeProvider = ({ children }) => {
   const setTheme = async (newThemeValue) => {
     await saveThingInMemory("theme", newThemeValue);
     setThemeValue(newThemeValue);
-
-    if (newThemeValue === "dark") {
-      setTheme_(dark_theme);
-    } else if (newThemeValue === "light") {
-      setTheme_(light_theme);
-    } else if (newThemeValue === "system") {
-      setTheme_(colorScheme === "dark" ? dark_theme : light_theme);
+    switch (newThemeValue) {
+      case "dark":
+        setTheme_(dark_theme);
+        break;
+      case "light":
+        setTheme_(light_theme);
+        break;
+      case "system":
+        setTheme_(colorScheme === "dark" ? dark_theme : light_theme);
+        break;
     }
   };
 
