@@ -2,6 +2,10 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 export const translate = (key) => {
   const { language } = useLanguage();
+  return translateToLanguage(key, language);
+};
+
+export const translateToLanguage = (key, language) => {
   if (!translations[language][key]) {
     {
       /* DEBUG */
