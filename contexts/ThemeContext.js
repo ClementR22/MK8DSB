@@ -10,7 +10,7 @@ export const themeList = [
 ];
 
 // Créer un contexte pour gérer le thème
-export const ThemeContext = createContext();
+const ThemeContext = createContext();
 
 export const useTheme = () => {
   return useContext(ThemeContext);

@@ -4,16 +4,18 @@ import ElementImage from "./ElementImage";
 import { bodyTypeNames } from "@/data/data";
 import { button } from "../styles/button";
 import { useTheme } from "@/contexts/ThemeContext";
-import { translate } from "@/translations/translations";
+import { translate, translateToLanguage } from "@/translations/translations";
 import ElementChip from "./ElementChip";
 import { usePressableImages } from "@/contexts/PressableImagesContext";
 import { useOrderNumber } from "@/contexts/OrderNumberContext";
 import { useScreen } from "../../contexts/ScreenContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const SelectedCategoryElementsView_ = ({ selectedTab, scrollToSectionWithScrollViewRef, sectionRefs }) => {
   const { screenName } = useScreen();
   const galleryCase = screenName === "gallery";
   const { theme } = useTheme();
+  const { language } = useLanguage();
 
   const { orderNumber } = useOrderNumber();
 
@@ -82,10 +84,14 @@ const SelectedCategoryElementsView_ = ({ selectedTab, scrollToSectionWithScrollV
         });
         break;
       case 1:
-        selectedCategoryElements.sort((a, b) => a.name.localeCompare(b.name));
+        selectedCategoryElements.sort((a, b) =>
+          translateToLanguage(a.name, language).localeCompare(translateToLanguage(b.name, language))
+        );
         break;
       case 2:
-        selectedCategoryElements.sort((a, b) => b.name.localeCompare(a.name));
+        selectedCategoryElements.sort((a, b) =>
+          translateToLanguage(b.name, language).localeCompare(translateToLanguage(a.name, language))
+        );
         break;
     }
     return selectedCategoryElements;

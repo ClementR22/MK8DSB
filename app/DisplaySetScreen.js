@@ -7,7 +7,7 @@ import { useSetsList } from "@/contexts/SetsListContext";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { IsStatsVisibleListProvider } from "@/contexts/IsStatsVisibleListContext";
 import DisplaySetScreenPressablesContainer from "@/components/screenPressablesContainer/DisplaySetScreenPressablesContainer";
-import { LoadSetModalProvider } from "../../contexts/LoadSetModalContext";
+import { LoadSetModalProvider } from "../contexts/LoadSetModalContext";
 
 const DisplaySetScreen = () => {
   const { setsListDisplayed } = useSetsList();

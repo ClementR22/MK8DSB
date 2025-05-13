@@ -3,7 +3,7 @@ import { statNames } from "@/data/data";
 import { toggleCheckList } from "@/utils/toggleCheck";
 import { loadThingFromMemory, saveThingInMemory } from "@/utils/asyncStorageOperations";
 
-export const SettingsContext = createContext();
+const SettingsContext = createContext();
 
 export const useSettings = () => {
   return useContext(SettingsContext);

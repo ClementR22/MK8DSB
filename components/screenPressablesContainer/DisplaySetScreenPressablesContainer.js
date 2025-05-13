@@ -3,7 +3,7 @@ import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderRes
 import { useTheme } from "@/contexts/ThemeContext";
 import ButtonLoadSet from "../managingSetsPressable/ButtonLoadSet";
 import ButtonAddSet from "../managingSetsPressable/ButtonAddSet";
-import BoxContainer from "components/BoxContainer";
+import BoxContainer from "../BoxContainer";
 
 const DisplaySetScreenPressablesContainer = () => {
   const { theme } = useTheme();

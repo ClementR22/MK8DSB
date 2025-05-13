@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
-import ElementsSelector from "../../components/elementsSelector/ElementsSelector";
-import { ScreenProvider } from "../../contexts/ScreenContext";
+import ElementsSelector from "../components/elementsSelector/ElementsSelector";
+import { ScreenProvider } from "../contexts/ScreenContext";
 
 const GalleryScreen = () => {
   return (
