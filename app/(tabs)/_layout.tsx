@@ -77,6 +77,14 @@ export default function TabLayout() {
                     header: () => <CustomHeader title="🏁 saved set screen" />,
                   }}
                 />
+                <Tabs.Screen
+                  name="SettingsScreen"
+                  options={{
+                    title: "les reglages",
+                    tabBarIcon: ({ color }) => <Ionicons name="settings" size={24} color={color} />,
+                    header: () => <CustomHeader title="c'est pour les reglages" />,
+                  }}
+                />
               </Tabs>
               <Toast />
             </SetsListProvider>
