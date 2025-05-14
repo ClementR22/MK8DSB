@@ -2,18 +2,32 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { statNames } from "@/data/data";
 import { toggleCheckList } from "@/utils/toggleCheck";
 import { loadThingFromMemory, saveThingInMemory } from "@/utils/asyncStorageOperations";
+import { useLanguage } from "./LanguageContext";
+import { useTheme } from "./ThemeContext";
+
+const isStatsVisibleListConfig = {
+  speedGround: true,
+  speedAntiGravity: false,
+  speedWater: false,
+  speedAir: false,
+  acceleration: false,
+  weight: false,
+  handlingGround: false,
+  handlingAntiGravity: false,
+  handlingWater: false,
+  handlingAir: false,
+  traction: false,
+  miniTurbo: false,
+};
 
 const SettingsContext = createContext();
 
-export const useSettings = () => {
-  return useContext(SettingsContext);
-};
-
 export const SettingsProvider = ({ children }) => {
+  const { setLanguage_ } = useLanguage();
+  const { setTheme } = useTheme();
+
   useEffect(() => {
-    loadThingFromMemory("isAllwaysSync", setIsAllwaysSync_);
-    loadThingFromMemory("isStatsVisibleDefault", setIsStatsVisibleDefault_);
-    loadThingFromMemory("isStatsVisibleListDefault", setIsStatsVisibleListDefault_);
+    loadSettings();
   }, []);
 
   // pour isAllwaysSync
@@ -26,21 +40,6 @@ export const SettingsProvider = ({ children }) => {
   };
 
   // pour isStatsVisibleDefault
-
-  const isStatsVisibleListConfig = {
-    speedGround: true,
-    speedAntiGravity: false,
-    speedWater: false,
-    speedAir: false,
-    acceleration: false,
-    weight: false,
-    handlingGround: false,
-    handlingAntiGravity: false,
-    handlingWater: false,
-    handlingAir: false,
-    traction: false,
-    miniTurbo: false,
-  };
 
   const [isStatsVisibleDefault, setIsStatsVisibleDefault_] = useState(false);
 
@@ -63,10 +62,38 @@ export const SettingsProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // saveThingInMemory("isStatsVisibleListDefault", isStatsVisibleListDefault);
+    saveThingInMemory("isStatsVisibleListDefault", isStatsVisibleListDefault);
   }, [isStatsVisibleListDefault]);
 
   const toggleCheckListIsStatsVisibleListDefault = (name) => toggleCheckList(setIsStatsVisibleListDefault, name);
+
+  // pour gerer les settings enregistrés
+
+  const settingsByDefaultKeysAndValues = {
+    language: { setState: setLanguage_, value: "en" },
+    isAllwaysSync: { setState: setIsAllwaysSync_, value: false },
+    isStatsVisibleDefault: { setState: setIsStatsVisibleDefault_, value: false },
+    isStatsVisibleListDefault: {
+      setState: setIsStatsVisibleListDefault_,
+      value: statNames.map((statName) => ({
+        name: statName,
+        checked: isStatsVisibleListConfig[statName],
+      })),
+    },
+    theme: { setState: setTheme, value: "light" },
+  };
+
+  const loadSettings = () => {
+    Object.entries(settingsByDefaultKeysAndValues).map(([settingKey, { setState }]) => {
+      loadThingFromMemory(settingKey, setState);
+    });
+  };
+
+  const resetSettings = async () => {
+    Object.values(settingsByDefaultKeysAndValues).forEach(({ setState, value }) => {
+      setState(value);
+    });
+  };
 
   return (
     <SettingsContext.Provider
@@ -78,9 +105,14 @@ export const SettingsProvider = ({ children }) => {
         isStatsVisibleListDefault,
         setIsStatsVisibleListDefault,
         toggleCheckListIsStatsVisibleListDefault,
+        resetSettings,
       }}
     >
       {children}
     </SettingsContext.Provider>
   );
+};
+
+export const useSettings = () => {
+  return useContext(SettingsContext);
 };

@@ -45,6 +45,7 @@ const translations = {
     SetVisibleStatsByDefault: "Set visible stats by default",
     ContactUs: "Contact us",
     OpenSourceLicenses: "Open Source Licenses",
+    ResetSettings: "Reset settings",
 
     // modal button label
     Close: "Close",
@@ -261,6 +262,7 @@ const translations = {
     SetVisibleStatsByDefault: "Configurer les stats visibles par defaut",
     ContactUs: "Nous contacter",
     OpenSourceLicenses: "Licences Open Source",
+    ResetSettings: "Réinitialiser les paramètres",
 
     // modal button label
     Close: "Fermer",

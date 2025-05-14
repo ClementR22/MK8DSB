@@ -51,7 +51,6 @@ export const PressableImagesProvider = ({ children }) => {
   const { screenName } = useScreen();
 
   const [pressableImagesList, setPressableImagesList] = useState(initializePressableImagesList());
-
   const pressableImagesByCategory = initializePressableImagesByCategory(pressableImagesList);
 
   // Fonction pour gérer l'état d'une image pressée

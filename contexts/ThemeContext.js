@@ -1,7 +1,7 @@
 import { useColorScheme } from "react-native";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { dark_theme, light_theme } from "@/components/styles/theme";
-import { loadThingFromMemory, saveThingInMemory } from "@/utils/asyncStorageOperations";
+import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 
 export const themeList = [
   { label: "Dark", value: "dark" },
@@ -12,10 +12,6 @@ export const themeList = [
 // Créer un contexte pour gérer le thème
 const ThemeContext = createContext();
 
-export const useTheme = () => {
-  return useContext(ThemeContext);
-};
-
 // Fournisseur de thème
 export const CustomThemeProvider = ({ children }) => {
   const colorScheme = useColorScheme();
@@ -23,8 +19,8 @@ export const CustomThemeProvider = ({ children }) => {
   const [themeValue, setThemeValue] = useState("light"); // "light" | "dark" | "system"
 
   const setTheme = async (newThemeValue) => {
-    await saveThingInMemory("theme", newThemeValue);
     setThemeValue(newThemeValue);
+    await saveThingInMemory("theme", newThemeValue);
     switch (newThemeValue) {
       case "dark":
         setTheme_(dark_theme);
@@ -38,11 +34,6 @@ export const CustomThemeProvider = ({ children }) => {
     }
   };
 
-  // Charger le thème au démarrage
-  useEffect(() => {
-    loadThingFromMemory("theme", setTheme);
-  }, []);
-
   // Mettre à jour le thème si le thème système change
   useEffect(() => {
     if (themeValue === "system") {
@@ -51,4 +42,8 @@ export const CustomThemeProvider = ({ children }) => {
   }, [colorScheme]);
 
   return <ThemeContext.Provider value={{ theme, setTheme, themeValue }}>{children}</ThemeContext.Provider>;
+};
+
+export const useTheme = () => {
+  return useContext(ThemeContext);
 };
