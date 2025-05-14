@@ -1,3 +1,4 @@
+import React from "react";
 import { StyleSheet, View } from "react-native";
 
 function FlexContainer({ children, flexDirection, alignItems, justifyContent, gap, style }) {
@@ -12,11 +13,7 @@ function FlexContainer({ children, flexDirection, alignItems, justifyContent, ga
     },
   });
 
-  return (
-    <View style={[styles.container, style]}>
-      {children}
-    </View>
-  );
+  return <View style={[styles.container, style]}>{children}</View>;
 }
 
 export default FlexContainer;
