@@ -35,8 +35,8 @@ const SearchSetScreen = () => {
         <IsStatsVisibleListProvider>
           <PressableImagesProvider>
             <ScrollView>
-              <FlexContainer theme={theme}>
-                <BoxContainer theme={theme} contentBackgroundColor={theme.surface_container_high}>
+              <FlexContainer>
+                <BoxContainer contentBackgroundColor={theme.surface_container_high}>
                   <Text
                     style={[
                       styles.text,

@@ -1,21 +1,22 @@
-import React from "react";
-import { Component } from "react";
 import { StyleSheet, View } from "react-native";
 
-class FlexContainer extends Component {
-  theme = this.props.theme;
-  styles = StyleSheet.create({
+function FlexContainer({ children, flexDirection, alignItems, justifyContent, gap, style }) {
+  const styles = StyleSheet.create({
     container: {
-      flexDirection: "column",
+      backgroundColor: "transparent",
       display: "flex",
-      alignItems: "center",
-      backgroundColor: this.theme.surface,
+      flexDirection: flexDirection ? flexDirection : "column",
+      alignItems: alignItems || "center",
+      justifyContent: justifyContent || "center",
+      gap: gap ? gap : 10,
     },
   });
 
-  render() {
-    return <View style={this.styles.container}>{this.props.children}</View>;
-  }
+  return (
+    <View style={[styles.container, style]}>
+      {children}
+    </View>
+  );
 }
 
 export default FlexContainer;

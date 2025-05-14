@@ -1,9 +1,11 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import Text from "@/components/Text";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "@/contexts/ThemeContext";
 
-const CustomHeader = ({ title }) => {
+const CustomHeader = ({ children, icon = "car-sports" }) => {
   const { theme } = useTheme();
 
   return (
@@ -11,29 +13,35 @@ const CustomHeader = ({ title }) => {
       style={{
         backgroundColor: theme.surface_container,
         height: 64,
-        // paddingBottom: 12,
-        // paddingHorizontal: 20,
-        // borderBottomLeftRadius: 20,
-        // borderBottomRightRadius: 20,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+        boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
         elevation: 5,
+        display: "flex",
         flexDirection: "row",
-        justifyContent: "center",
         alignItems: "center",
-        // marginBottom: 10,
       }}
     >
-      <MaterialCommunityIcons
-        name="car-sports"
-        size={24}
-        color="#333"
-        style={{ marginRight: 10 }}
-      />
-      <Text style={{ fontSize: 22, fontWeight: "bold", color: "#333" }}>
-        {title}
+      {icon in MaterialCommunityIcons.glyphMap &&
+        <MaterialCommunityIcons
+          name={icon}
+          size={24}
+          color={theme.on_surface}
+          style={{ width: 48, height: 48, padding: 12, marginHorizontal: 4 }}
+        />
+      }
+      {icon in MaterialIcons.glyphMap &&
+        <MaterialIcons
+          name={icon}
+          size={24}
+          color={theme.on_surface}
+          style={{ width: 48, height: 48, padding: 12, marginHorizontal: 4 }}
+        />
+      }
+      <Text style={{
+        fontSize: 22,
+        fontWeight: "bold",
+        textAlign: "center",
+      }}>
+        {children}
       </Text>
     </View>
   );
