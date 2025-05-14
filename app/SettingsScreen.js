@@ -10,6 +10,7 @@ import { useSettings } from "@/contexts/SettingsContext";
 import IsStatsVisibleListDefaultSelector from "@/components/settingsComponent/IsStatsVisibleListDefaultSelector";
 import ButtonRemoveMemory from "@/components/ButtonRemoveMemory";
 import ContactUsButton from "@/components/settingsComponent/ContactUsButton";
+import LicensesButton from "@/components/settingsComponent/LicensesButton";
 
 const GalleryScreen = () => {
   const { isStatsVisibleDefault } = useSettings();
@@ -22,9 +23,10 @@ const GalleryScreen = () => {
         <AllwaysSyncSwitch />
         <IsStatsVisibleDefaultSwitch />
         {isStatsVisibleDefault && <IsStatsVisibleListDefaultSelector />}
+        <ContactUsButton />
+        <LicensesButton />
+        <ButtonRemoveMemory />
       </IsStatsVisibleListProvider>
-      <ContactUsButton />
-      <ButtonRemoveMemory />
     </ScreenProvider>
   );
 };

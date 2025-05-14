@@ -31,6 +31,7 @@ const translations = {
     LoadASavedSet: "Load a saved set",
     NameTheSet: "Name the set",
     SelectASet: "Select a set",
+    Licenses: "Licenses",
 
     // button label
     Search: "Search",
@@ -42,6 +43,8 @@ const translations = {
     AllwaysSyncVisibilityOfFoundSetsStatsWithChosenStats:
       "Allways synchronize the visibility of found sets stats with chosen stats",
     SetVisibleStatsByDefault: "Set visible stats by default",
+    ContactUs: "Contact us",
+    OpenSourceLicenses: "Open Source Licenses",
 
     // modal button label
     Close: "Close",
@@ -244,6 +247,7 @@ const translations = {
     LoadASavedSet: "Charger un set enregistré",
     NameTheSet: "Nommer le set",
     SelectASet: "Selectionner un set",
+    Licenses: "Licences",
 
     // button label
     Search: "Chercher",
@@ -255,6 +259,8 @@ const translations = {
     AllwaysSyncVisibilityOfFoundSetsStatsWithChosenStats:
       "Toujours synchroniser l'affichage des stats des sets trouvés par rapport aux stats choisies",
     SetVisibleStatsByDefault: "Configurer les stats visibles par defaut",
+    ContactUs: "Nous contacter",
+    OpenSourceLicenses: "Licences Open Source",
 
     // modal button label
     Close: "Fermer",

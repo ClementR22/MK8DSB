@@ -12,7 +12,7 @@ const MyModal = ({
   isModalVisible,
   setIsModalVisible,
   children,
-  onClose,
+  onClose, // option
   closeButtonText = "Close",
   isWithClosePressable = true,
 }) => {
