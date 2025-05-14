@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme, themeList } from "../../contexts/ThemeContext";
+import { themeList, useTheme } from "@/contexts/ThemeContext";
 import MyPicker from "../MyPicker";
 
 const ThemeSelector = () => {

@@ -34,7 +34,7 @@ export default function TabLayout() {
                   options={{
                     title: "Trouver un set",
                     tabBarIcon: ({color}) => <MaterialCommunityIcons name="magnify" size={24} color={color} />,
-                    header: () => <CustomHeader title="🏁 header de search set screen" />,
+                    header: () => <CustomHeader>Search Set screen</CustomHeader>,
                   }}
                 />
                 <Tabs.Screen
@@ -42,7 +42,7 @@ export default function TabLayout() {
                   options={{
                     title: "Afficher un set",
                     tabBarIcon: ({color}) => <MaterialIcons name="display-settings" size={24} color={color} />,
-                    header: () => <CustomHeader title="🏁 ici c'est display set screen" />,
+                    header: () => <CustomHeader>Display Set screen</CustomHeader>,
                   }}
                 />
                 <Tabs.Screen
@@ -50,7 +50,7 @@ export default function TabLayout() {
                   options={{
                     title: "Saved Set",
                     tabBarIcon: ({color}) => <MaterialIcons name="save" size={24} color={color} />,
-                    header: () => <CustomHeader title="🏁 saved set screen" />,
+                    header: () => <CustomHeader icon={"save"}>Saved Set screen</CustomHeader>,
                   }}
                 />
                 <Tabs.Screen
@@ -58,7 +58,7 @@ export default function TabLayout() {
                   options={{
                     title: "Galerie",
                     tabBarIcon: ({color}) => <Ionicons name="image-outline" size={24} color={color} />,
-                    header: () => <CustomHeader title="la galerie" />,
+                    header: () => <CustomHeader icon={"image-outline"}>Galery screen</CustomHeader>,
                   }}
                 />
                 <Tabs.Screen
@@ -66,7 +66,7 @@ export default function TabLayout() {
                   options={{
                     title: "les reglages",
                     tabBarIcon: ({color}) => <Ionicons name="settings" size={24} color={color} />,
-                    header: () => <CustomHeader title="c'est pour les reglages" />,
+                    header: () => <CustomHeader>Settings screen</CustomHeader>,
                   }}
                 />
               </Tabs>
