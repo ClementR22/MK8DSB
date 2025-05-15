@@ -4,32 +4,29 @@ import { modal } from "../styles/modal";
 import PressableStat from "./PressableStat";
 import { useTheme } from "@/contexts/ThemeContext";
 import SelectedAllStatsSwitch from "./SelectedAllStatsSwitch";
-import { useSetsList } from "@/contexts/SetsListContext";
-import { useSettings } from "@/contexts/SettingsContext";
 import { useScreen } from "@/contexts/ScreenContext";
+import { useStatsVisibleListConfig } from "@/contexts/StatsVisibleListConfigContext";
 
 const StatSelector = ({ statList, setStatList, toggleCheck, isVisibleStatsNotInSettingsScreen }) => {
   const { theme } = useTheme();
   const { screenName } = useScreen();
-  const { isStatsVisibleDefault } = useSettings();
-  const { syncWithChosenStats } = useSetsList();
-  const { isAllwaysSync } = useSettings();
+  const { isSync, isDefault } = useStatsVisibleListConfig();
 
   const isInSearchScreen = screenName === "search";
   const isVisibleStatsInSearchScreen = isVisibleStatsNotInSettingsScreen && isInSearchScreen;
-  const disablePressableStat = isVisibleStatsNotInSettingsScreen && (isAllwaysSync || isStatsVisibleDefault);
+  const disablePressableStat = isVisibleStatsNotInSettingsScreen && (isSync || isDefault);
 
   return (
     <View style={styles.listContainer}>
       <View style={modal(theme).content}>
         <View style={styles.row}>
-          {!(isAllwaysSync || isStatsVisibleDefault) ? (
+          {!disablePressableStat ? (
             <>
               <SelectedAllStatsSwitch statList={statList} setStatList={setStatList} />
             </>
-          ) : (!isVisibleStatsInSearchScreen &&
-            <SelectedAllStatsSwitch statList={statList} setStatList={setStatList} />)
-          }
+          ) : (
+            !isVisibleStatsInSearchScreen && <SelectedAllStatsSwitch statList={statList} setStatList={setStatList} />
+          )}
         </View>
         <ScrollView>
           {statList.map((stat) => (

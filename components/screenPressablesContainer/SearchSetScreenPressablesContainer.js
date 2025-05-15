@@ -9,7 +9,7 @@ import MyModal from "../modal/MyModal";
 import { translate } from "@/translations/translations";
 import { useState } from "react";
 import { useSetsList } from "@/contexts/SetsListContext";
-import { useIsStatsVisibleList } from "../../contexts/IsStatsVisibleListContext";
+import { useStatsVisibleList } from "../../contexts/StatsVisibleListContext";
 import { usePressableImages } from "@/contexts/PressableImagesContext";
 import { shadow_3dp } from "../styles/theme";
 import StatSelector from "../statSelector/StatSelector";
@@ -18,9 +18,9 @@ import ElementsDeselector from "../elementsSelector/ElementsDeselector";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import ResultsNumber from "../ResultsNumberSelector";
 import TooltipWrapper from "../TooltipWrapper";
-import { useSettings } from "@/contexts/SettingsContext";
 import { toggleAndGetChecks } from "../../utils/toggleCheck";
 import showToast from "@/utils/toast";
+import { useStatsVisibleListConfig } from "@/contexts/StatsVisibleListConfigContext";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const { theme } = useTheme();
@@ -35,15 +35,15 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
 
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
 
-  const { setIsStatsVisibleList } = useIsStatsVisibleList();
+  const { setStatsVisibleList } = useStatsVisibleList();
 
-  const { isAllwaysSync } = useSettings();
+  const { isSync } = useStatsVisibleListConfig();
 
   useEffect(() => {
-    if (isAllwaysSync) {
-      syncWithChosenStats(setIsStatsVisibleList);
+    if (isSync) {
+      syncWithChosenStats(setStatsVisibleList);
     }
-  }, [isAllwaysSync, chosenStats]);
+  }, [isSync, chosenStats]);
 
   const { pressableImagesByCategory } = usePressableImages();
 

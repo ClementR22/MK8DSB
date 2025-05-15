@@ -5,7 +5,7 @@ import { useSetsList } from "@/contexts/SetsListContext";
 import SavedSetScreenPressablesContainer from "@/components/screenPressablesContainer/SavedSetScreenPressablesContainer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScreenProvider } from "../contexts/ScreenContext";
-import { IsStatsVisibleListProvider } from "@/contexts/IsStatsVisibleListContext";
+import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
 
 const SavedSetScreen = () => {
@@ -13,7 +13,7 @@ const SavedSetScreen = () => {
 
   return (
     <ScreenProvider screenName="save">
-      <IsStatsVisibleListProvider>
+      <StatsVisibleListProvider>
         <PressableImagesProvider>
           <ScrollView>
             <SavedSetScreenPressablesContainer />
@@ -36,7 +36,7 @@ const SavedSetScreen = () => {
             <Text>show saveds sets</Text>
           </Pressable>
         </PressableImagesProvider>
-      </IsStatsVisibleListProvider>
+      </StatsVisibleListProvider>
     </ScreenProvider>
   );
 };

@@ -2,16 +2,16 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import StatSliderResult from "./StatSliderResult";
 import { translate } from "@/translations/translations";
-import { useIsStatsVisibleList } from "@/contexts/IsStatsVisibleListContext";
+import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
 import { useScreen } from "../../contexts/ScreenContext";
 
 const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
   const { screenName } = useScreen();
-  const { isStatsVisibleList, chosenStatsInScreen } = useIsStatsVisibleList();
+  const { statsVisibleList, chosenStatsInScreen } = useStatsVisibleList();
 
   return (
     <View style={{ flex: 1, backgroundColor: "green" }}>
-      {isStatsVisibleList.map(({ name, checked }, statIndex) => {
+      {statsVisibleList.map(({ name, checked }, statIndex) => {
         const nameTranslated = translate(name); // avant le if pour respecter l'ordre d'appel des hooks
         if (checked) {
           return (

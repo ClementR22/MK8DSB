@@ -12,7 +12,7 @@ import { useSetsList } from "@/contexts/SetsListContext";
 import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
 import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import { IsStatsVisibleListProvider } from "@/contexts/IsStatsVisibleListContext";
+import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
 import BoxContainer from "@/components/BoxContainer";
 import FlexContainer from "@/components/FlexContainer";
@@ -32,7 +32,7 @@ const SearchSetScreen = () => {
   return (
     <ScreenProvider screenName="search">
       <LoadSetModalProvider>
-        <IsStatsVisibleListProvider>
+        <StatsVisibleListProvider>
           <PressableImagesProvider>
             <ScrollView>
               <FlexContainer>
@@ -75,7 +75,7 @@ const SearchSetScreen = () => {
               <SetCardContainer setsToShow={setsToShow} />
             </ScrollView>
           </PressableImagesProvider>
-        </IsStatsVisibleListProvider>
+        </StatsVisibleListProvider>
       </LoadSetModalProvider>
     </ScreenProvider>
   );

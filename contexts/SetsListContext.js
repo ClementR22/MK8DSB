@@ -27,7 +27,7 @@ export const SetsListProvider = ({ children }) => {
     })
   );
 
-  const syncWithChosenStats = (setIsStatsVisibleList) => setIsStatsVisibleList(chosenStats);
+  const syncWithChosenStats = (setStatsVisibleList) => setStatsVisibleList(chosenStats);
 
   const setDefault = {
     name: "Set 0",
@@ -51,7 +51,7 @@ export const SetsListProvider = ({ children }) => {
 
   const getSetsSavedKeys = async () => {
     try {
-      const excludedKeys = ["language", "theme", "isAllwaysSync", "isStatsVisibleDefault", "isStatsVisibleListDefault"];
+      const excludedKeys = ["language", "theme", "statsVisibleConfig", "statsVisibleListDefault"];
       const keys = await AsyncStorage.getAllKeys();
       const onlySetsKeys = keys.filter((key) => !excludedKeys.includes(key));
       return sortKeys(onlySetsKeys);
