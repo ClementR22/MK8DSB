@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
-import MyModal from "./MyModal";
 import { useLoadSetModal } from "@/contexts/LoadSetModalContext";
 import SetCardContainer from "../setCard/SetCardContainer";
 import { useSetsList } from "@/contexts/SetsListContext";
 import ButtonImportSet from "../managingSetsPressable/ButtonImportSet";
+import Modal from "@/components/Modal";
 
 const LoadSetModal = () => {
   const { setsListSaved } = useSetsList();
@@ -14,7 +14,7 @@ const LoadSetModal = () => {
   }, [setsListSaved]);
 
   return (
-    <MyModal
+    <Modal
       modalTitle="LoadASavedSet"
       isModalVisible={isLoadSetModalVisible}
       setIsModalVisible={(visible) => toggleLoadSetModal(visible)}
@@ -23,7 +23,7 @@ const LoadSetModal = () => {
       }
     >
       <SetCardContainer setsToShow={savedSets} isInLoadSetModal={true} />
-    </MyModal>
+    </Modal>
   );
 };
 

@@ -3,7 +3,7 @@ import { Pressable, Text, View } from "react-native";
 import Tooltip from "react-native-walkthrough-tooltip";
 import { translate } from "@/translations/translations";
 
-const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", children }) => {
+const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", children, ...props }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
   const openTooltip = () => {
@@ -14,7 +14,13 @@ const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", childr
   };
 
   return (
-    <View style={style ? style : {}}>
+    <Pressable
+      style={style}
+      onPress={onPress}
+      onLongPress={() => openTooltip()}
+      onHoverIn={() => console.log("caca")}
+      {...props}
+    >
       <Tooltip
         isVisible={tooltipVisible}
         content={
@@ -30,11 +36,11 @@ const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", childr
         disableShadow={true}
         showChildInTooltip={false}
       >
-        <Pressable onPress={onPress} onLongPress={() => openTooltip()}>
+        {/*<Pressable onPress={onPress} onLongPress={() => openTooltip()}>*/}
           {children}
-        </Pressable>
+        {/*</Pressable>*/}
       </Tooltip>
-    </View>
+    </Pressable>
   );
 };
 
