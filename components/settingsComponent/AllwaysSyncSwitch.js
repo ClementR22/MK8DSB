@@ -10,8 +10,8 @@ const AllwaysSyncSwitch = () => {
 
   return (
     <FlexContainer flexDirection="row" justifyContent="space-between">
+      <Text>{translate("AllwaysSyncVisibilityOfFoundSetsStatsWithChosenStats")}</Text>
       <Switch value={isAllwaysSync} onValueChange={() => setIsAllwaysSync(!isAllwaysSync)} />
-      <Text style={{ textAlign: "right" }}>{translate("AllwaysSyncVisibilityOfFoundSetsStatsWithChosenStats")}</Text>
     </FlexContainer>
   );
 };

@@ -10,8 +10,8 @@ const IsStatsVisibleDefaultSwitch = () => {
 
   return (
     <FlexContainer flexDirection="row" justifyContent="space-between">
-      <Switch value={isStatsVisibleDefault} onValueChange={() => setIsStatsVisibleDefault(!isStatsVisibleDefault)} />
       <Text>{translate("SetVisibleStatsByDefault")}</Text>
+      <Switch value={isStatsVisibleDefault} onValueChange={() => setIsStatsVisibleDefault(!isStatsVisibleDefault)} />
     </FlexContainer>
   );
 };
