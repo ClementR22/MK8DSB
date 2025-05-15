@@ -6,7 +6,7 @@ import BoxContainer from "@/components/BoxContainer";
 
 const SavedSetScreenPressablesContainer = () => {
   return (
-    <BoxContainer flexDirection="row" justifyContent="space-around">
+    <BoxContainer flexDirection="row" justifyContent="space-evenly">
       <ButtonSortSet />
       <ButtonImportSet />
       <StatSliderResultSelectorPressable />
