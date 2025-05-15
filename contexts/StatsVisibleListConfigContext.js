@@ -6,7 +6,7 @@ import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 export const statsVisibleConfigList = [
   { label: "DontConfigure", value: "no" },
   { label: "Configure", value: "yes" },
-  { label: "SyncWithChosenStats", value: "sync" },
+  { label: "AllwaysSync", value: "sync" },
 ];
 
 const statsVisibleListConfig = {

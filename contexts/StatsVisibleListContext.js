@@ -1,21 +1,15 @@
 import React, { createContext, useContext, useState } from "react";
-import { statNames } from "@/data/data";
 import { useSetsList } from "./SetsListContext";
 import { useScreen } from "./ScreenContext";
 import { toggleCheckList } from "@/utils/toggleCheck";
-import { useStatsVisibleListConfig } from "./StatsVisibleListConfigContext";
+import { statsVisibleListDefaultInit, useStatsVisibleListConfig } from "./StatsVisibleListConfigContext";
 
 const StatsVisibleListContext = createContext();
 
 export const StatsVisibleListProvider = ({ children }) => {
   const { isDefault, statsVisibleListDefault } = useStatsVisibleListConfig();
 
-  const [statsVisibleList_, setStatsVisibleList] = useState(
-    statNames.map((statName) => ({
-      name: statName,
-      checked: false,
-    }))
-  );
+  const [statsVisibleList_, setStatsVisibleList] = useState(statsVisibleListDefaultInit);
 
   const statsVisibleList = isDefault ? statsVisibleListDefault : statsVisibleList_;
 

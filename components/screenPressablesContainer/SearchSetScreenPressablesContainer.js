@@ -206,7 +206,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
       <StatSliderResultSelectorPressable />
 
       <Modal
-        modalTitle="StatsToParameter"
+        modalTitle="StatsToConfigure"
         isModalVisible={chosenStatsModalVisible}
         setIsModalVisible={setChosenStatsModalVisible}
       >

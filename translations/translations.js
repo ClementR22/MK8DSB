@@ -24,7 +24,7 @@ const translations = {
     SearchedStats: "Searched stats",
 
     // modal title
-    StatsToParameter: "Stats to parameter",
+    StatsToConfigure: "Stats to configure",
     Filters: "Filters",
     NumberOfResults: "Number of results",
     StatsToDisplay: "Stats to display",
@@ -32,17 +32,22 @@ const translations = {
     NameTheSet: "Name the set",
     SelectASet: "Select a set",
     Licenses: "Licenses",
+    DefaultVisibleStats: "Default visible stats",
+
+    // text
+    "ConfigureDefaultVisibleStats?": "Configure default visible stats?",
 
     // button label
     Search: "Search",
     All: "All",
-    Sync: "Sync with chosen stats",
+    Sync: "sync with the configured stats",
     Dark: "Dark",
     Light: "Light",
     System: "System",
-    AllwaysSyncVisibilityOfFoundSetsStatsWithChosenStats:
-      "Allways synchronize the visibility of found sets stats with chosen stats",
-    SetVisibleStatsByDefault: "Set visible stats by default",
+    Configure: "Configure by default",
+    DontConfigure: "Don't configure by default",
+    AllwaysSync: "Always in sync with the configured stats",
+    ConfigureTheStats: "Configure the stats",
     ContactUs: "Contact us",
     OpenSourceLicenses: "Open Source Licenses",
     ResetSettings: "Reset settings",
@@ -241,7 +246,7 @@ const translations = {
     SearchedStats: "Statistiques recherchées",
 
     // modal title
-    StatsToParameter: "Stats à paramétrer",
+    StatsToConfigure: "Stats à configurer",
     Filters: "Filtres",
     NumberOfResults: "Nombre de résultats",
     StatsToDisplay: "Stats à afficher",
@@ -249,17 +254,22 @@ const translations = {
     NameTheSet: "Nommer le set",
     SelectASet: "Selectionner un set",
     Licenses: "Licences",
+    DefaultVisibleStats: "Stats visibles par défault",
+
+    // text
+    "ConfigureDefaultVisibleStats?": "Configurer les stats visibles par défault ?",
 
     // button label
     Search: "Chercher",
     All: "Toutes",
-    Sync: "Sync avec les stats choisies",
+    Sync: "Sync avec les stats paramétrées",
     Dark: "Sombre",
     Light: "Clair",
     System: "Appareil",
-    AllwaysSyncVisibilityOfFoundSetsStatsWithChosenStats:
-      "Toujours synchroniser l'affichage des stats des sets trouvés par rapport aux stats choisies",
-    SetVisibleStatsByDefault: "Configurer les stats visibles par defaut",
+    Configure: "Configurer par défault",
+    DontConfigure: "Ne pas configurer par défault",
+    AllwaysSync: "Toujours sync avec les stats paramétrées",
+    ConfigureTheStats: "Configurer les stats",
     ContactUs: "Nous contacter",
     OpenSourceLicenses: "Licences Open Source",
     ResetSettings: "Réinitialiser les paramètres",

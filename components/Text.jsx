@@ -1,3 +1,4 @@
+import React from "react";
 import { StyleSheet, Text as NativeText } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -12,7 +13,9 @@ function Text({ children, style, ...props }) {
   ]);
 
   return (
-    <NativeText style={styles} {...props}>{children}</NativeText>
+    <NativeText style={styles} {...props}>
+      {children}
+    </NativeText>
   );
 }
 

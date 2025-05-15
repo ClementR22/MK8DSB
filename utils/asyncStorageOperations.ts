@@ -22,3 +22,20 @@ export const loadThingFromMemory = async (thingKey: string, setThing: any) => {
     setThing(savedThingParsed);
   }
 };
+
+export const deleteThingInMemory = async (thingKey) => {
+  try {
+    await AsyncStorage.removeItem(thingKey);
+  } catch (e) {
+    console.error("Erreur lors de la suppression de ", thingKey, e);
+  }
+};
+
+export const deleteAllTheMemory = async () => {
+  try {
+    const allKeys = await AsyncStorage.getAllKeys();
+    allKeys.forEach(async (thingKey) => await AsyncStorage.removeItem(thingKey));
+  } catch (e) {
+    console.error("Erreur lors de la suppression : ", e);
+  }
+};
