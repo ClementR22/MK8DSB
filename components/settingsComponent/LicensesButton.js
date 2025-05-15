@@ -62,12 +62,14 @@ const licensesLinks = {
   "CC-BY-3.0": "https://creativecommons.org/licenses/by/3.0/",
   "CC-BY-4.0": "https://creativecommons.org/licenses/by/4.0/",
   "CC0-1.0": "https://creativecommons.org/publicdomain/zero/1.0/",
-  "GPL-2.0": "https://opensource.org/licenses/GPL-2.0",
   ISC: "https://opensource.org/licenses/ISC",
   MIT: "https://opensource.org/licenses/MIT",
   "MPL-2.0": "https://opensource.org/licenses/MPL-2.0",
   "Python-2.0": "https://opensource.org/licenses/Python-2.0",
   Unlicense: "https://unlicense.org/",
 };
+
+// pour obtenir toutes les licences
+// npx license-checker --production --json > licenses-summary.json
 
 export default LicensesButton;
