@@ -18,16 +18,19 @@ const MyModal = ({
   isWithClosePressable = true,
   leftButton = null,
   rightButton = null,
+  ...props
 }) => {
   const { theme } = useTheme();
 
   const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
+
   return (
     <Modal
       animationType="none" // Animation (slide, fade, none)
       transparent={true} // Fond transparent
       visible={isModalVisible}
       onRequestClose={() => setIsModalVisible(false)} // Ferme le modal
+      {...props}
     >
       <Pressable style={modal(theme).background} onPress={() => setIsModalVisible(false)}>
         <Pressable style={modal(theme).container} onStartShouldSetResponder={() => true}>
