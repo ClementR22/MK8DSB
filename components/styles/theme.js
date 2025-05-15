@@ -105,25 +105,30 @@ export const dark_theme = {
 
 export const shadow_1dp = {
   boxShadow: "0px 1px 1px rgba(0, 0, 0, 0.18)",
+  transition: "all 0.1s ease",
   elevation: 1,
 };
 
 export const shadow_3dp = {
   boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.22)",
+  transition: "all 0.1s ease",
   elevation: 3,
 };
 
 export const shadow_6dp = {
   boxShadow: "0px 3px 4px rgba(0, 0, 0, 0.27)",
+  transition: "all 0.1s ease",
   elevation: 6,
 };
 
 export const shadow_8dp = {
   boxShadow: "0px 4px 5px rgba(0, 0, 0, 0.3)",
+  transition: "all 0.1s ease",
   elevation: 8,
 };
 
 export const shadow_12dp = {
   boxShadow: "0px 6px 8px rgba(0, 0, 0, 0.37)",
+  transition: "all 0.1s ease",
   elevation: 12,
 };
