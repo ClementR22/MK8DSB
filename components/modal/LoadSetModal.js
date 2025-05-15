@@ -18,8 +18,10 @@ const LoadSetModal = () => {
       modalTitle="LoadASavedSet"
       isModalVisible={isLoadSetModalVisible}
       setIsModalVisible={(visible) => toggleLoadSetModal(visible)}
+      leftButton={
+        <ButtonImportSet />
+      }
     >
-      <ButtonImportSet />
       <SetCardContainer setsToShow={savedSets} isInLoadSetModal={true} />
     </MyModal>
   );

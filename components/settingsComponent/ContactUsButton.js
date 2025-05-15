@@ -1,6 +1,7 @@
 import { translate } from "@/translations/translations";
 import React from "react";
-import { Linking, Pressable, Text, View } from "react-native";
+import { Linking } from "react-native";
+import Button from "@/components/Button";
 
 const ContactUsButton = () => {
   const handleContactPress = () => {
@@ -9,11 +10,9 @@ const ContactUsButton = () => {
   };
 
   return (
-    <View>
-      <Pressable onPress={() => handleContactPress()}>
-        <Text>{translate("ContactUs")}</Text>
-      </Pressable>
-    </View>
+    <Button onPress={() => handleContactPress()}>
+      {translate("ContactUs")}
+    </Button>
   );
 };
 

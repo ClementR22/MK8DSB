@@ -1,7 +1,7 @@
 import { StyleSheet, Text as NativeText } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 
-function Text({ children, style }) {
+function Text({ children, style, ...props }) {
   const { theme } = useTheme();
 
   const styles = StyleSheet.flatten([
@@ -12,7 +12,7 @@ function Text({ children, style }) {
   ]);
 
   return (
-    <NativeText style={styles}>{children}</NativeText>
+    <NativeText style={styles} {...props}>{children}</NativeText>
   );
 }
 

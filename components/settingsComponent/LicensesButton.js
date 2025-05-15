@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { FlatList, Pressable, Text, View, Linking, StyleSheet } from "react-native";
 import MyModal from "../modal/MyModal";
 import { translate } from "@/translations/translations";
+import Button from "@/components/Button";
 
 const LicensesButton = () => {
   const [isLicensesModalVisible, setIsLicensesModalVisible] = useState(false);
 
   return (
-    <Pressable onPress={() => setIsLicensesModalVisible(true)}>
+    <Button onPress={() => setIsLicensesModalVisible(true)}>
       <Text>{translate("OpenSourceLicenses")}</Text>
       <MyModal
         modalTitle="Licenses"
@@ -32,7 +33,7 @@ const LicensesButton = () => {
           />
         </View>
       </MyModal>
-    </Pressable>
+    </Button>
   );
 };
 

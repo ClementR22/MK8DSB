@@ -7,7 +7,7 @@ import ButtonResetSettings from "@/components/ButtonResetSettings";
 import ContactUsButton from "@/components/settingsComponent/ContactUsButton";
 import LicensesButton from "@/components/settingsComponent/LicensesButton";
 import BoxContainer from "@/components/BoxContainer";
-import { ScrollView } from "react-native";
+import FlexScrollView from "@/components/FlexScrollView";
 import StatsVisibleConfigSelector from "@/components/settingsComponent/StatsVisibleConfigSelector";
 import { statsVisibleListDefaultInit, useStatsVisibleListConfig } from "../contexts/StatsVisibleListConfigContext";
 import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
@@ -50,7 +50,7 @@ const SettingsScreen = () => {
     <ScreenProvider screenName="settings">
       <BoxContainer alignItems={"space-between"}>
         <StatsVisibleListProvider>
-          <ScrollView>
+          <FlexScrollView alignItems={"space-between"}>
             <LanguageSelector />
             <ThemeSelector />
             <StatsVisibleConfigSelector />
@@ -58,7 +58,7 @@ const SettingsScreen = () => {
             <ContactUsButton />
             <LicensesButton />
             <ButtonResetSettings resetSettings={resetSettings} />
-          </ScrollView>
+          </FlexScrollView>
         </StatsVisibleListProvider>
       </BoxContainer>
     </ScreenProvider>

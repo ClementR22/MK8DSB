@@ -3,13 +3,13 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 import { button, button_icon } from "../styles/button";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { bodyTypeNames, setAllInfos } from "../../data/data";
+import { bodyTypeNames, setAllInfos } from "@/data/data";
 import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderResultSelectorPressable";
 import MyModal from "../modal/MyModal";
 import { translate } from "@/translations/translations";
 import { useState } from "react";
 import { useSetsList } from "@/contexts/SetsListContext";
-import { useStatsVisibleList } from "../../contexts/StatsVisibleListContext";
+import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
 import { usePressableImages } from "@/contexts/PressableImagesContext";
 import { shadow_3dp } from "../styles/theme";
 import StatSelector from "../statSelector/StatSelector";
@@ -18,9 +18,10 @@ import ElementsDeselector from "../elementsSelector/ElementsDeselector";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import ResultsNumber from "../ResultsNumberSelector";
 import TooltipWrapper from "../TooltipWrapper";
-import { toggleAndGetChecks } from "../../utils/toggleCheck";
+import { toggleAndGetChecks } from "@/utils/toggleCheck";
 import showToast from "@/utils/toast";
 import { useStatsVisibleListConfig } from "@/contexts/StatsVisibleListConfigContext";
+import Modal from "@/components/Modal";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const { theme } = useTheme();
@@ -204,7 +205,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
 
       <StatSliderResultSelectorPressable />
 
-      <MyModal
+      <Modal
         modalTitle="StatsToParameter"
         isModalVisible={chosenStatsModalVisible}
         setIsModalVisible={setChosenStatsModalVisible}
@@ -217,7 +218,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
           }}
           isVisibleStatsNotInSettingsScreen={false}
         />
-      </MyModal>
+      </Modal>
 
       <MyModal modalTitle="Filters" isModalVisible={isFilterModalVisible} setIsModalVisible={setIsFilterModalVisible}>
         <BodyTypeSelector chosenBodyType={chosenBodyType} setChosenBodyType={setChosenBodyType} />
