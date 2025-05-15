@@ -22,6 +22,8 @@ import { toggleAndGetChecks } from "@/utils/toggleCheck";
 import showToast from "@/utils/toast";
 import { useStatsVisibleListConfig } from "@/contexts/StatsVisibleListConfigContext";
 import Modal from "@/components/Modal";
+import ButtonIcon from "@/components/ButtonIcon";
+import { IconType } from "react-native-dynamic-vector-icons";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const { theme } = useTheme();
@@ -171,13 +173,20 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
 
   return (
     <View style={styles.pressablesContainer}>
-      <TooltipWrapper
-        tooltipText="ChooseStats"
-        style={[button_icon(theme).container, shadow_3dp]}
+      {/*<TooltipWrapper*/}
+      {/*  tooltipText="ChooseStats"*/}
+      {/*  style={[button_icon(theme).container, shadow_3dp]}*/}
+      {/*  onPress={() => setChosenStatsModalVisible(true)}*/}
+      {/*>*/}
+      {/*  <MaterialCommunityIcons name="plus" size={24} color={theme.on_primary} />*/}
+      {/*</TooltipWrapper>*/}
+
+      <ButtonIcon
+        tooltipText={"ChooseStats"}
+        iconName={"plus"}
+        iconType={IconType.MaterialCommunityIcons}
         onPress={() => setChosenStatsModalVisible(true)}
-      >
-        <MaterialCommunityIcons name="plus" size={24} color={theme.on_primary} />
-      </TooltipWrapper>
+      />
 
       <TooltipWrapper
         tooltipText="ChooseFilters"

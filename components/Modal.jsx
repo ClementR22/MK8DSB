@@ -1,6 +1,5 @@
 import React from "react";
 import { Modal as NativeModal, Pressable, StyleSheet, Text } from "react-native";
-import { button } from "@/components/styles/button";
 import { vh, vw } from "@/components/styles/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { translate } from "@/translations/translations";
@@ -105,7 +104,7 @@ function Modal({
             {leftButton}
             {isWithClosePressable && (
               <Button elevation={12} onPress={onClose ? onClose : () => setIsModalVisible(false)}>
-                <Text style={button(theme).text}>{translate(closeButtonText)}</Text>
+                {translate(closeButtonText)}
               </Button>
             )}
             {rightButton}
