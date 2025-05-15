@@ -2,7 +2,7 @@ import React from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 
-function Button({ children, onPress }) {
+function Button({ children, onPress, ...props }) {
   const { theme } = useTheme();
 
   const styles = StyleSheet.create({
@@ -21,8 +21,12 @@ function Button({ children, onPress }) {
     },
   });
 
+  const handlePress = () => {
+    onPress?.();
+  }
+
   return (
-    <Pressable onPress={onPress} style={styles.container}>
+    <Pressable onPress={handlePress} style={styles.container} {...props}>
       <Text style={styles.text}>{children}</Text>
     </Pressable>
   );
