@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { category4Names, elementsAllInfosList } from "../../data/data";
 import TooltipWrapper from "../TooltipWrapper";
 
@@ -16,25 +16,19 @@ const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
   const imageSize = mode === "icon" ? 40 : 80;
 
   return (
-    <View contentContainerStyle={styles.container}>
+    <View>
       {data.map((item) => (
-        <View key={item.category} style={styles.row}>
-          <View style={styles.imagesContainer}>
-            {item.elements.map(({ name, image }, index) => (
-              <TooltipWrapper
-                key={index}
-                tooltipText={name}
-                onPress={mode === "icon" ? () => displaySetImages() : undefined}
-              >
-                <Image
-                  source={image}
-                  style={{ width: imageSize, height: imageSize }}
-                  resizeMode="contain"
-                />
-              </TooltipWrapper>
-            ))}
-          </View>
-        </View>
+        <ScrollView key={item.category} horizontal style={styles.scrollview}>
+          {item.elements.map(({ name, image }, index) => (
+            <TooltipWrapper
+              key={index}
+              tooltipText={name}
+              onPress={mode === "icon" ? () => displaySetImages() : undefined}
+            >
+              <Image source={image} style={{ width: imageSize, height: imageSize }} resizeMode="contain" />
+            </TooltipWrapper>
+          ))}
+        </ScrollView>
       ))}
     </View>
   );
@@ -43,9 +37,6 @@ const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
 export default SetImagesContainer;
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 0,
-  },
   row: {
     alignItems: "center",
     padding: 10,
@@ -53,7 +44,12 @@ const styles = StyleSheet.create({
   imagesContainer: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-end",
     flexDirection: "row",
+  },
+  scrollview: {
+    alignSelf: "center", // 👈 centre la ScrollView elle-même quand elle est petite
+    maxWidth: "100%",
+    margin: 10,
   },
 });
