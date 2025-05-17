@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 
-function BoxContainer ({
+function BoxContainer({
   children,
   containerBackgroundColor = "transparent",
   contentBackgroundColor,

@@ -3,19 +3,18 @@ import { button_icon } from "../styles/button";
 import { useTheme } from "@/contexts/ThemeContext";
 import { shadow_3dp } from "../styles/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useSetsList } from "@/contexts/SetsListContext";
 import TooltipWrapper from "../TooltipWrapper";
+import useSetsStore from "@/stores/useSetsStore";
 
 const ButtonAddSet = () => {
   const { theme } = useTheme();
-
-  const { addNewSetInDisplay } = useSetsList();
+  const addNewSetInDisplay = useSetsStore((state) => state.addNewSetInDisplay);
 
   return (
     <TooltipWrapper
       tooltipText="AddASet"
       style={[button_icon(theme).container, shadow_3dp]}
-      onPress={() => addNewSetInDisplay()}
+      onPress={addNewSetInDisplay}
     >
       <MaterialCommunityIcons name="plus" size={24} color={theme.on_primary} />
     </TooltipWrapper>

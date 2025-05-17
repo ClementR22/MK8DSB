@@ -5,7 +5,7 @@ const arraysEqual = (a, b) => {
   return a.every((value, index) => value === b[index]); // Comparer chaque élément
 };
 
-export const searchSetStatsFromElementsClassIds = (classIdsSeeked) => {
+export const getSetStatsFromElementsClassIds = (classIdsSeeked) => {
   const result = setAllInfos.find(({ classIds }) => {
     return arraysEqual(classIds, classIdsSeeked);
   });

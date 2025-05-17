@@ -9,8 +9,8 @@ import StatSelector from "../statSelector/StatSelector";
 import TooltipWrapper from "../TooltipWrapper";
 import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
 import { translate } from "@/translations/translations";
-import { useSetsList } from "@/contexts/SetsListContext";
 import { modal } from "@/components/styles/modal";
+import useSetsStore from "@/stores/useSetsStore";
 
 const StatSliderResultSelectorPressable = () => {
   const { statsVisibleList, setStatsVisibleList, toggleCheckListStatsVisibleList } = useStatsVisibleList();
@@ -20,7 +20,7 @@ const StatSliderResultSelectorPressable = () => {
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
   const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
 
-  const { syncWithChosenStats } = useSetsList();
+  const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
 
   return (
     <View>

@@ -7,7 +7,7 @@ const PressableStat = ({ stat, toggleCheck, disabled }) => {
     <Checkbox.Item
       label={translate(stat.name)}
       status={stat.checked ? "checked" : "unchecked"}
-      onPress={() => toggleCheck()}
+      onPress={toggleCheck}
       disabled={disabled}
     />
   );

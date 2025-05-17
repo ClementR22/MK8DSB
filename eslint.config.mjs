@@ -1,8 +1,6 @@
-// eslint.config.mjs
-
 import js from "@eslint/js";
 import globals from "globals";
-import tseslint from "typescript-eslint";
+import tseslint from "@typescript-eslint/eslint-plugin"; // correction de l'import
 import pluginReact from "eslint-plugin-react";
 import pluginUnusedImports from "eslint-plugin-unused-imports";
 import { defineConfig } from "eslint/config";
@@ -11,11 +9,11 @@ export default defineConfig([
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
     languageOptions: {
-      parser: tseslint.parser,
+      parser: "@typescript-eslint/parser", // correction du parser (string)
       parserOptions: {
         ecmaVersion: 2020,
         sourceType: "module",
-        project: "./tsconfig.json", // <-- Chemin correct vers ton tsconfig.json
+        project: "./tsconfig.json", // chemin correct vers ton tsconfig.json
       },
       globals: {
         ...globals.browser,
@@ -31,7 +29,7 @@ export default defineConfig([
       js,
       react: pluginReact,
       "unused-imports": pluginUnusedImports,
-      "@typescript-eslint": tseslint.plugin,
+      "@typescript-eslint": tseslint,
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -43,9 +41,9 @@ export default defineConfig([
         "warn",
         {
           vars: "all",
-          varsIgnorePattern: "^_",
+          varsIgnorePattern: "^_", // ignore variables commençant par _
           args: "after-used",
-          argsIgnorePattern: "^_",
+          argsIgnorePattern: "^_", // ignore arguments commençant par _
         },
       ],
       "@typescript-eslint/no-require-imports": "off",

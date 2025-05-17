@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 import { button, button_icon } from "../styles/button";
@@ -8,7 +8,6 @@ import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderRes
 import MyModal from "../modal/MyModal";
 import { translate } from "@/translations/translations";
 import { useState } from "react";
-import { useSetsList } from "@/contexts/SetsListContext";
 import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
 import { usePressableImages } from "@/contexts/PressableImagesContext";
 import { shadow_3dp } from "../styles/theme";
@@ -24,11 +23,15 @@ import { useStatsVisibleListConfig } from "@/contexts/StatsVisibleListConfigCont
 import Modal from "@/components/Modal";
 import ButtonIcon from "@/components/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
+import useSetsStore from "@/stores/useSetsStore";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const { theme } = useTheme();
 
-  const { chosenStats, setChosenStats, setSetsListFound, syncWithChosenStats } = useSetsList();
+  const chosenStats = useSetsStore((state) => state.chosenStats);
+  const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
+  const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
+  const toggleCheckChosenStats = useSetsStore((state) => state.toggleCheckChosenStats);
 
   const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);
 
@@ -40,13 +43,13 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
 
   const { setStatsVisibleList } = useStatsVisibleList();
 
-  const { isSync } = useStatsVisibleListConfig();
+  const { statsVisibleConfig, isSync } = useStatsVisibleListConfig();
 
   useEffect(() => {
     if (isSync) {
       syncWithChosenStats(setStatsVisibleList);
     }
-  }, [isSync, chosenStats]);
+  }, [isSync, chosenStats, statsVisibleConfig]);
 
   const { pressableImagesByCategory } = usePressableImages();
 
@@ -56,22 +59,6 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
       checked: true,
     }))
   );
-
-  const toggleCheckChosenStats = (name) => {
-    setChosenStats(() => {
-      const newList = toggleAndGetChecks(chosenStats, name);
-      // Vérifiez s'il reste au moins un checked
-      const hasChecked = newList.some((item) => item.checked);
-
-      // Si tous les éléments sont décochés, rétablissez l'état de l'élément
-      if (!hasChecked) {
-        showToast("Erreur", "Il faut garder au moins une stat");
-        return newList.map((item) => (item.name === name ? { ...item, checked: true } : item));
-      }
-
-      return newList;
-    });
-  };
 
   const updateSetsToShow = (setsFound) => {
     const setsFoundWithName = setsFound.map((set, index) => ({
@@ -83,35 +70,31 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
     setSetsListFound(setsFoundWithName);
   };
 
-  const elementsFilterObjectToList = (pressableImagesByCategory) => {
-    const selectedClassIds4categories = [];
-    // Parcourir chaque catégorie
+  const selectedClassIds4categories = useMemo(() => {
+    const result = [];
     Object.entries(pressableImagesByCategory).forEach(([, category]) => {
-      const pressedClassesInCategory = [];
-
-      // Parcourir chaque classe dans la catégorie
+      const pressed = [];
       Object.entries(category).forEach(([classKey, classElements]) => {
-        // Si au moins une image est pressée (true), ajouter la classe à pressedClasses
         const isAnyImagePressed = Object.values(classElements).some(({ pressed }) => pressed);
         if (isAnyImagePressed) {
-          pressedClassesInCategory.push(+classKey); // +str pour convertir en entier
+          pressed.push(+classKey);
         }
       });
-      // Ajouter la liste des classes pressées (ou une liste vide) à result
-      selectedClassIds4categories.push(pressedClassesInCategory);
+      result.push(pressed);
     });
+    return result;
+  }, [pressableImagesByCategory]);
 
-    return selectedClassIds4categories;
-  };
+  const chosenBodyTypeList = useMemo(
+    () => chosenBodyType.filter((bodyType) => bodyType.checked).map((bodyType) => bodyType.name),
+    [chosenBodyType]
+  );
 
   const search = () => {
     const chosenStatsChecked = chosenStats.map((stat) => stat.checked);
     const chosenStatsValue = chosenStats.map((stat) => stat.value);
     const chosenStatsFilterNumber = chosenStats.map((stat) => stat.statFilterNumber);
-
-    const chosenBodyTypeList = chosenBodyType.filter((bodyType) => bodyType.checked).map((bodyType) => bodyType.name);
-
-    const chosenElementsIds = elementsFilterObjectToList(pressableImagesByCategory);
+    const chosenElementsIds = selectedClassIds4categories;
 
     if (!chosenStatsChecked.includes(true) || chosenBodyTypeList.length === 0) {
       updateSetsToShow([]); // Ou gérer l'état de "rien trouvé"
@@ -198,7 +181,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
 
       <Pressable
         style={[button(theme).container, { flexDirection: "row", paddingRight: 24, paddingLeft: 16 }, shadow_3dp]}
-        onPress={() => search()}
+        onPress={search}
       >
         <MaterialCommunityIcons name="magnify" size={24} color={theme.on_primary} />
         <Text style={[button(theme).text, { marginLeft: 8 }]}>{translate("Search")}</Text>
@@ -221,7 +204,6 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
       >
         <StatSelector
           statList={chosenStats}
-          setStatList={setChosenStats}
           toggleCheck={(name) => {
             toggleCheckChosenStats(name);
           }}

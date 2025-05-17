@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text } from "react-native";
 
 // Components import
@@ -8,7 +8,6 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { translate } from "@/translations/translations";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import { LoadSetModalProvider } from "@/contexts/LoadSetModalContext";
-import { useSetsList } from "@/contexts/SetsListContext";
 import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
 import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
 import { ScreenProvider } from "@/contexts/ScreenContext";
@@ -16,18 +15,21 @@ import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
 import BoxContainer from "@/components/BoxContainer";
 import FlexContainer from "@/components/FlexContainer";
+import RenameSetModal from "@/components/modal/RenameSetModal";
+import { useSettings } from "@/contexts/SettingsContext";
+import useSetsStore from "@/stores/useSetsStore";
 
 const SearchSetScreen = () => {
   const { theme } = useTheme();
-
-  const { chosenStats, setChosenStats } = useSetsList();
-
+  const { loadSettings } = useSettings();
+  const fetchSavedSets = useSetsStore((state) => state.fetchSavedSets);
+  const chosenStats = useSetsStore((state) => state.chosenStats);
   const [setsToShow, setSetsToShow] = useState([]);
 
-  // Mettre à jour la valeur du slider
-  const updateSliderValue = (name, newValue) => {
-    setChosenStats(chosenStats.map((stat) => (stat.name === name ? { ...stat, value: newValue } : stat)));
-  };
+  useEffect(() => {
+    loadSettings();
+    fetchSavedSets();
+  }, []);
 
   return (
     <ScreenProvider screenName="search">
@@ -61,7 +63,6 @@ const SearchSetScreen = () => {
                           key={stat.name}
                           name={stat.name}
                           sliderValue={stat.value}
-                          setSliderValue={(newValue) => updateSliderValue(stat.name, newValue)}
                           statFilterNumber={stat.statFilterNumber}
                           setStatFilterNumber={stat.setStatFilterNumber}
                         />
@@ -73,6 +74,7 @@ const SearchSetScreen = () => {
               </FlexContainer>
 
               <SetCardContainer setsToShow={setsToShow} />
+              <RenameSetModal />
             </ScrollView>
           </PressableImagesProvider>
         </StatsVisibleListProvider>

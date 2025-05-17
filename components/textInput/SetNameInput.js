@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useSetsList } from "@/contexts/SetsListContext";
 import MyTextInput from "./MyTextInput";
 import { useScreen } from "../../contexts/ScreenContext";
+import useSetsStore from "@/stores/useSetsStore";
 
 const SetNameInput = ({ setToShowName, setCardIndex }) => {
   const { screenName } = useScreen();
@@ -9,7 +9,7 @@ const SetNameInput = ({ setToShowName, setCardIndex }) => {
   const defaultName = `Set ${setCardIndex + 1}`;
   const [localName, setLocalName] = useState(setToShowName ?? defaultName);
 
-  const { renameSet } = useSetsList();
+  const renameSet = useSetsStore((state) => state.renameSet);
 
   useEffect(() => {
     setLocalName(setToShowName ?? defaultName);

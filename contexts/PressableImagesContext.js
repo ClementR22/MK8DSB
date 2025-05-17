@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { bodyTypeNames, elementsAllInfosList } from "@/data/data";
-import { useSetsList } from "./SetsListContext";
 import { useScreen } from "./ScreenContext";
+import useSetsStore from "@/stores/useSetsStore";
 
 // Fonction pour initialiser l'état pressableImagesList
 const initializePressableImagesList = () => {
@@ -97,7 +97,7 @@ export const PressableImagesProvider = ({ children }) => {
     );
   };
 
-  const { updateSetsList } = useSetsList();
+  const updateSetsList = useSetsStore((state) => state.updateSetsList);
 
   const isFirstRender = useRef(true);
 

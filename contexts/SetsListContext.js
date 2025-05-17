@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { statNames } from "@/data/data";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import showToast from "@/utils/toast";
-import { searchSetStatsFromElementsClassIds } from "@/utils/searchSetStatsFromElementsClassIds";
+import { getSetStatsFromElementsClassIds } from "@/utils/getSetStatsFromElementsClassIds";
 import * as Clipboard from "expo-clipboard";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 
@@ -227,7 +227,7 @@ export const SetsListProvider = ({ children }) => {
           const newSet = {
             ...set,
             classIds: pressedClassIdsList,
-            stats: searchSetStatsFromElementsClassIds(pressedClassIdsList),
+            stats: getSetStatsFromElementsClassIds(pressedClassIdsList),
           };
           if (screenName === "save") {
             const key = setsSavedKeys[index];

@@ -17,7 +17,7 @@ const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", childr
     <Pressable
       style={style}
       onPress={onPress}
-      onLongPress={() => openTooltip()}
+      onLongPress={openTooltip}
       onHoverIn={() => console.log("caca")}
       {...props}
     >
@@ -37,7 +37,7 @@ const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", childr
         showChildInTooltip={false}
       >
         {/*<Pressable onPress={onPress} onLongPress={() => openTooltip()}>*/}
-          {children}
+        {children}
         {/*</Pressable>*/}
       </Tooltip>
     </Pressable>

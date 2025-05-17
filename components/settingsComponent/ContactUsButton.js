@@ -9,11 +9,7 @@ const ContactUsButton = () => {
     Linking.openURL(url);
   };
 
-  return (
-    <Button onPress={() => handleContactPress()}>
-      {translate("ContactUs")}
-    </Button>
-  );
+  return <Button onPress={handleContactPress}>{translate("ContactUs")}</Button>;
 };
 
 export default ContactUsButton;

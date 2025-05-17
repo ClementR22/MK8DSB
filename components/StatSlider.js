@@ -6,30 +6,19 @@ import ButtonMultiStateToggle from "./ButtonMultiStateToggle";
 import { vw } from "./styles/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { translate } from "@/translations/translations";
+import useSetsStore from "@/stores/useSetsStore";
 
-const StatSlider = ({
-  name,
-  sliderValue,
-  setSliderValue,
-  statFilterNumber,
-  setStatFilterNumber,
-}) => {
+const StatSlider = ({ name, sliderValue, statFilterNumber }) => {
   const { theme } = useTheme();
+  const updateStatValue = useSetsStore((state) => state.updateStatValue);
+  const setStatFilterNumber = useSetsStore((state) => state.setStatFilterNumber);
+  const setStatFilterNumberWithName = (newNumber) => setStatFilterNumber(name, newNumber);
 
   return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: theme.surface, borderColor: theme.outline_variant },
-      ]}
-    >
+    <View style={[styles.container, { backgroundColor: theme.surface, borderColor: theme.outline_variant }]}>
       <View style={styles.containerTop}>
         <View style={styles.textContainer}>
-          <Text
-            numberOfLines={1}
-            ellipsizeMode="middle"
-            style={[styles.textLeft, { color: theme.on_surface }]}
-          >
+          <Text numberOfLines={1} ellipsizeMode="middle" style={[styles.textLeft, { color: theme.on_surface }]}>
             {translate(name)}
           </Text>
 
@@ -40,7 +29,7 @@ const StatSlider = ({
         </View>
         <ButtonMultiStateToggle
           number={statFilterNumber}
-          setNumber={setStatFilterNumber}
+          setNumber={setStatFilterNumberWithName}
           filterCase={true}
           tooltipText="ChangeCondition"
         />
@@ -50,15 +39,12 @@ const StatSlider = ({
         <View style={styles.sliderContainer}>
           <Slider
             value={sliderValue}
-            onValueChange={([value]) => setSliderValue(value)}
+            onValueChange={([value]) => updateStatValue(name, value)}
             minimumValue={0}
             maximumValue={6}
             step={0.25}
             //thumbStyle={[styles.thumb, { backgroundColor: theme.primary }]}
-            trackStyle={[
-              styles.track,
-              { backgroundColor: theme.secondary_container },
-            ]}
+            trackStyle={[styles.track, { backgroundColor: theme.secondary_container }]}
             thumbTouchSize={{ width: 10, height: 10 }}
           />
         </View>

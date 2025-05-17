@@ -7,15 +7,8 @@ const ButtonScrollToTop = ({ scrollToTopWithScrollViewRef }) => {
   const { theme } = useTheme();
 
   return (
-    <Pressable
-      style={styles.floatingButton}
-      onPress={() => scrollToTopWithScrollViewRef()}
-    >
-      <MaterialCommunityIcons
-        name="chevron-up"
-        size={24}
-        color={theme.on_primary}
-      />
+    <Pressable style={styles.floatingButton} onPress={scrollToTopWithScrollViewRef}>
+      <MaterialCommunityIcons name="chevron-up" size={24} color={theme.on_primary} />
     </Pressable>
   );
 };

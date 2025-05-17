@@ -9,11 +9,9 @@ import LicensesButton from "@/components/settingsComponent/LicensesButton";
 import BoxContainer from "@/components/BoxContainer";
 import FlexScrollView from "@/components/FlexScrollView";
 import StatsVisibleConfigSelector from "@/components/settingsComponent/StatsVisibleConfigSelector";
-import { statsVisibleListDefaultInit, useStatsVisibleListConfig } from "../contexts/StatsVisibleListConfigContext";
+import { useStatsVisibleListConfig } from "../contexts/StatsVisibleListConfigContext";
 import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useTheme } from "@/contexts/ThemeContext";
-import { loadThingFromMemory } from "@/utils/asyncStorageOperations";
 import Modal from "@/components/Modal";
 import Button from "@/components/Button";
 import { translateToLanguage } from "@/translations/translations";
@@ -21,39 +19,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Text } from "react-native";
 import { Pressable } from "react-native";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
+import { useSettings } from "@/contexts/SettingsContext";
 
 const SettingsScreen = () => {
-  const { isDefault, setStatsVisibleConfig, setStatsVisibleListDefault } = useStatsVisibleListConfig();
-  const { language, setLanguage } = useLanguage();
-  const { setTheme } = useTheme();
-
-  useEffect(() => {
-    loadSettings();
-  }, []);
+  const { isDefault } = useStatsVisibleListConfig();
+  const { language } = useLanguage();
+  const { resetSettings } = useSettings();
 
   const [isStatsVisibleDefaultModalVisible, setIsStatsVisibleDefaultModalVisible] = useState(false);
-
-  const settingsByDefaultKeysAndValues = {
-    language: { setState: setLanguage, value: "en" },
-    statsVisibleConfig: { setState: setStatsVisibleConfig, value: "no" },
-    statsVisibleListDefault: {
-      setState: setStatsVisibleListDefault,
-      value: statsVisibleListDefaultInit,
-    },
-    theme: { setState: setTheme, value: "light" },
-  };
-
-  const loadSettings = () => {
-    Object.entries(settingsByDefaultKeysAndValues).map(([settingKey, { setState }]) => {
-      loadThingFromMemory(settingKey, setState);
-    });
-  };
-
-  const resetSettings = async () => {
-    Object.values(settingsByDefaultKeysAndValues).forEach(({ setState, value }) => {
-      setState(value);
-    });
-  };
 
   return (
     <ScreenProvider screenName="settings">
@@ -93,7 +66,7 @@ const SettingsScreen = () => {
         </Pressable>
 
         {/* DEBUG */}
-        <Pressable onPress={() => deleteAllTheMemory()}>
+        <Pressable onPress={deleteAllTheMemory}>
           <Text>removeMemory</Text>
         </Pressable>
       </BoxContainer>

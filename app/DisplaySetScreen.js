@@ -3,14 +3,15 @@ import { ScrollView } from "react-native";
 import StatSliderResultContainer from "@/components/statSliderResult/StatSliderResultContainer";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
-import { useSetsList } from "@/contexts/SetsListContext";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import DisplaySetScreenPressablesContainer from "@/components/screenPressablesContainer/DisplaySetScreenPressablesContainer";
 import { LoadSetModalProvider } from "../contexts/LoadSetModalContext";
+import EditSetModal from "@/components/modal/EditSetModal";
+import useSetsStore from "@/stores/useSetsStore";
 
 const DisplaySetScreen = () => {
-  const { setsListDisplayed } = useSetsList();
+  const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
 
   const setsToShowMultipleStatsLists = setsListDisplayed.map((setToShow) => {
     const setToShowStatsList = setToShow.stats;
@@ -29,6 +30,7 @@ const DisplaySetScreen = () => {
 
               <StatSliderResultContainer setsToShowMultipleStatsLists={setsToShowMultipleStatsLists} />
             </ScrollView>
+            <EditSetModal />
           </PressableImagesProvider>
         </StatsVisibleListProvider>
       </LoadSetModalProvider>
