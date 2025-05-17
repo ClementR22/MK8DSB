@@ -3,13 +3,8 @@ import { useTheme } from "@/contexts/ThemeContext";
 import MyModal from "../modal/MyModal";
 import SetImagesContainer from "./SetImagesContainer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
-import { button_icon } from "../styles/button";
-import { shadow_3dp } from "../styles/theme";
-import { FontAwesome6, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import ElementsSelector from "../elementsSelector/ElementsSelector";
 import { usePressableImages } from "@/contexts/PressableImagesContext";
 import SetNameInput from "../textInput/SetNameInput";
-import TooltipWrapper from "../TooltipWrapper";
 import BoxContainer from "../BoxContainer";
 import { useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
@@ -33,7 +28,7 @@ const SetCard = ({
 
   const [isImagesModalVisible, setIsImagesModalVisible] = useState(false);
 
-  const isElementsSelectorModalVisible = useModalsStore((state) => state.isElementsSelectorModalVisible);
+  const isEditModalVisible = useModalsStore((state) => state.isEditModalVisible);
 
   const displaySetImages = () => {
     setIsImagesModalVisible(true);
@@ -102,10 +97,10 @@ const SetCard = ({
   const { updatePressableImagesList } = usePressableImages();
 
   useEffect(() => {
-    if (isElementsSelectorModalVisible) {
+    if (isEditModalVisible) {
       updatePressableImagesList(setToShowClassIds);
     }
-  }, [isElementsSelectorModalVisible]);
+  }, [isEditModalVisible]);
 
   return (
     <BoxContainer contentBackgroundColor={theme.surface} margin={0}>

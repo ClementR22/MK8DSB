@@ -9,7 +9,7 @@ const GalleryScreen = () => {
     <ScreenProvider screenName="gallery">
       <PressableImagesProvider>
         <View style={styles.container}>
-          <ElementsSelector />
+          <ElementsSelector galleryCase={true} />
         </View>
       </PressableImagesProvider>
     </ScreenProvider>

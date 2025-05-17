@@ -6,7 +6,7 @@ import CategorySelector from "./CategorySelector";
 import SelectedCategoryElementsView from "./SelectedCategoryElementsView";
 import ButtonScrollToTop from "../ButtonScrollToTop";
 
-const ElementsSelector = () => {
+const ElementsSelector = ({ galleryCase = false }) => {
   const { orderNumber, setOrderNumber } = useOrderNumber();
 
   // État pour suivre l'onglet sélectionné
@@ -72,6 +72,7 @@ const ElementsSelector = () => {
           selectedTab={selectedTab}
           scrollToSectionWithScrollViewRef={scrollToSectionWithScrollViewRef}
           sectionRefs={sectionRefs}
+          galleryCase={galleryCase}
         />
       </ScrollView>
 

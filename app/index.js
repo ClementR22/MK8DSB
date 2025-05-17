@@ -12,7 +12,6 @@ import SearchSetScreenPressablesContainer from "@/components/screenPressablesCon
 import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
-import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
 import BoxContainer from "@/components/BoxContainer";
 import FlexContainer from "@/components/FlexContainer";
 import RenameSetModal from "@/components/modal/RenameSetModal";
@@ -35,26 +34,26 @@ const SearchSetScreen = () => {
     <ScreenProvider screenName="search">
       <LoadSetModalProvider>
         <StatsVisibleListProvider>
-          <PressableImagesProvider>
-            <ScrollView>
-              <FlexContainer>
-                <BoxContainer contentBackgroundColor={theme.surface_container_high}>
-                  <Text
-                    style={[
-                      styles.text,
-                      {
-                        paddingHorizontal: 10,
-                        borderRadius: 5,
-                        marginBottom: 16,
-                        color: theme.on_surface,
-                      },
-                    ]}
-                  >
-                    {translate("SearchedStats")}
-                  </Text>
+          <ScrollView>
+            <FlexContainer>
+              <BoxContainer contentBackgroundColor={theme.surface_container_high}>
+                <Text
+                  style={[
+                    styles.text,
+                    {
+                      paddingHorizontal: 10,
+                      borderRadius: 5,
+                      marginBottom: 16,
+                      color: theme.on_surface,
+                    },
+                  ]}
+                >
+                  {translate("SearchedStats")}
+                </Text>
 
-                  <ButtonLoadSet tooltip_text="LoadStatsOfASet" />
+                <ButtonLoadSet tooltip_text="LoadStatsOfASet" />
 
+<<<<<<< Updated upstream
                   {/* Afficher le slider uniquement si la case est cochée */}
                   {chosenStats.map(
                     (stat) =>
@@ -69,14 +68,36 @@ const SearchSetScreen = () => {
                       )
                   )}
                 </BoxContainer>
+=======
+                {/* Afficher le slider uniquement si la case est cochée */}
+                {chosenStats.map(
+                  (stat) =>
+                    stat.checked && (
+                      <StatSlider
+                        key={stat.name}
+                        name={stat.name}
+                        sliderValue={stat.value}
+                        statFilterNumber={stat.statFilterNumber}
+                        setStatFilterNumber={stat.setStatFilterNumber}
+                      />
+                    )
+                )}
+              </BoxContainer>
+>>>>>>> Stashed changes
 
-                <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} />
-              </FlexContainer>
+              <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} />
+            </FlexContainer>
 
+<<<<<<< Updated upstream
               <SetCardContainer setsToShow={setsToShow} />
               <RenameSetModal />
             </ScrollView>
           </PressableImagesProvider>
+=======
+            <SetCardContainer setsToShow={setsToShow} />
+            <RenameSetModal />
+          </ScrollView>
+>>>>>>> Stashed changes
         </StatsVisibleListProvider>
       </LoadSetModalProvider>
     </ScreenProvider>

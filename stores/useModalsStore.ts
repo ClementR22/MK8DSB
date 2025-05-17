@@ -1,19 +1,24 @@
 import { create } from "zustand";
 
 interface ModalsStoreState {
-  isTextInputModalVisible: boolean;
-  setIsTextInputModalVisible: (newVisible: boolean) => void;
-  isElementsSelectorModalVisible: boolean;
-  setIsElementsSelectorModalVisible: (newVisible: boolean) => void;
+  isRenameSetModalVisible: boolean;
+  setIsRenameSetModalVisible: (newVisible: boolean) => void;
+  isEditModalVisible: boolean;
+  setIsEditModalVisible: (newVisible: boolean) => void;
+  screenNameForEditModal: string;
+  setScreenNameForEditModal: (screenName: string) => void;
 }
 
 // Store Zustand typé
 const useModalsStore = create<ModalsStoreState>((set, get) => ({
-  isTextInputModalVisible: false,
-  setIsTextInputModalVisible: (newVisible) => set({ isTextInputModalVisible: newVisible }),
+  isRenameSetModalVisible: false,
+  setIsRenameSetModalVisible: (newVisible) => set({ isRenameSetModalVisible: newVisible }),
 
-  isElementsSelectorModalVisible: false,
-  setIsElementsSelectorModalVisible: (newVisible) => set({ isElementsSelectorModalVisible: newVisible }),
+  isEditModalVisible: false,
+  setIsEditModalVisible: (newVisible) => set({ isEditModalVisible: newVisible }),
+
+  screenNameForEditModal: "search",
+  setScreenNameForEditModal: (screenName) => set({ screenNameForEditModal: screenName }),
 }));
 
 export default useModalsStore;

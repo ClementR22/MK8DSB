@@ -21,10 +21,8 @@ const ButtonLoadSet = ({ tooltip_text }) => {
         toggleLoadSetModal(true);
       }}
     >
-      <View>
-        <MaterialCommunityIcons name="cards-outline" size={24} color={theme.on_primary} />
-        <LoadSetModal />
-      </View>
+      <MaterialCommunityIcons name="cards-outline" size={24} color={theme.on_primary} />
+      <LoadSetModal />
     </TooltipWrapper>
   );
 };

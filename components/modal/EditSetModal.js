@@ -4,15 +4,10 @@ import ElementsSelector from "../elementsSelector/ElementsSelector";
 import useModalsStore from "@/stores/useModalsStore";
 
 const EditSetModal = () => {
-  const isElementsSelectorModalVisible = useModalsStore((state) => state.isElementsSelectorModalVisible);
-  const setIsElementsSelectorModalVisible = useModalsStore((state) => state.setIsElementsSelectorModalVisible);
-
+  const isEditModalVisible = useModalsStore((state) => state.isEditModalVisible);
+  const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
   return (
-    <MyModal
-      modalTitle="SelectASet"
-      isModalVisible={isElementsSelectorModalVisible}
-      setIsModalVisible={setIsElementsSelectorModalVisible}
-    >
+    <MyModal modalTitle="SelectASet" isModalVisible={isEditModalVisible} setIsModalVisible={setIsEditModalVisible}>
       <ElementsSelector />
     </MyModal>
   );

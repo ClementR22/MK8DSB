@@ -18,17 +18,17 @@ const SetCardActionButtons = React.memo(({ setCardIndex, config, situation }) =>
   const removeSet = useSetsStore((state) => state.removeSet);
   const exportSet = useSetsStore((state) => state.exportSet);
   const setSetCardEdittedIndex = useSetsStore((state) => state.setSetCardEdittedIndex);
-  const setIsTextInputModalVisible = useModalsStore((state) => state.setIsTextInputModalVisible);
-  const setIsElementsSelectorModalVisible = useModalsStore((state) => state.setIsElementsSelectorModalVisible);
+  const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
+  const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
 
   const onEditPress = () => {
     setSetCardEdittedIndex(setCardIndex);
-    setIsElementsSelectorModalVisible(true);
+    setIsEditModalVisible(true);
   };
 
   const onSavePress = () => {
     setSetCardEdittedIndex(setCardIndex);
-    situation === "search" ? setIsTextInputModalVisible(true) : saveSetFromDisplay(setCardIndex);
+    situation === "search" ? setIsRenameSetModalVisible(true) : saveSetFromDisplay(setCardIndex);
   };
 
   return (
@@ -109,7 +109,7 @@ const SetCardActionButtons = React.memo(({ setCardIndex, config, situation }) =>
         <TooltipWrapper
           tooltipText="Remove"
           style={[button_icon(theme).container, shadow_3dp]}
-          onPress={() => removeSet(setCardIndex, situation)}
+          onPress={() => removeSetInMemory(setCardIndex)}
         >
           <MaterialCommunityIcons name="trash-can" size={24} color={theme.on_primary} />
         </TooltipWrapper>

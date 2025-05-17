@@ -10,10 +10,15 @@ import { usePressableImages } from "@/contexts/PressableImagesContext";
 import { useOrderNumber } from "@/contexts/OrderNumberContext";
 import { useScreen } from "../../contexts/ScreenContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import useModalsStore from "@/stores/useModalsStore";
 
-const SelectedCategoryElementsView_ = ({ selectedTab, scrollToSectionWithScrollViewRef, sectionRefs }) => {
-  const { screenName } = useScreen();
-  const galleryCase = screenName === "gallery";
+const SelectedCategoryElementsView_ = ({
+  selectedTab,
+  scrollToSectionWithScrollViewRef,
+  sectionRefs,
+  galleryCase = false,
+}) => {
+  const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
   const { theme } = useTheme();
   const { language } = useLanguage();
 
@@ -22,7 +27,7 @@ const SelectedCategoryElementsView_ = ({ selectedTab, scrollToSectionWithScrollV
   const { pressableImagesByCategory, handlePressImage, handlePressImageByClass } = usePressableImages();
 
   const handlePress =
-    screenName != "search"
+    screenNameForEditModal != "search"
       ? (element) => {
           handlePressImageByClass(element.classId, element.category);
         }

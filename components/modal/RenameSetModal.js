@@ -8,21 +8,21 @@ const RenameSetModal = () => {
   const saveSetFromFound = useSetsStore((state) => state.saveSetFromFound);
   const setsListFound = useSetsStore((state) => state.setsListFound);
   const setCardEdittedIndex = useSetsStore((state) => state.setCardEdittedIndex);
-  const isTextInputModalVisible = useModalsStore((state) => state.isTextInputModalVisible);
-  const setIsTextInputModalVisible = useModalsStore((state) => state.setIsTextInputModalVisible);
+  const isRenameSetModalVisible = useModalsStore((state) => state.isRenameSetModalVisible);
+  const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
 
   const setFoundName = setsListFound[setCardEdittedIndex]?.name;
 
   const saveAndClose = () => {
     saveSetFromFound();
-    setIsTextInputModalVisible(false);
+    setIsRenameSetModalVisible(false);
   };
 
   return (
     <MyModal
       modalTitle="NameTheSet"
-      isModalVisible={isTextInputModalVisible}
-      setIsModalVisible={setIsTextInputModalVisible}
+      isModalVisible={isRenameSetModalVisible}
+      setIsModalVisible={setIsRenameSetModalVisible}
       closeButtonText="OK"
       onClose={saveAndClose}
     >
