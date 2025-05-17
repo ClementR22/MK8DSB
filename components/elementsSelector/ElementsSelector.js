@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { useOrderNumber } from "@/contexts/OrderNumberContext";
 import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import CategorySelector from "./CategorySelector";
@@ -7,8 +7,10 @@ import SelectedCategoryElementsView from "./SelectedCategoryElementsView";
 import ButtonScrollToTop from "../ButtonScrollToTop";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useModalsStore from "@/stores/useModalsStore";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const ElementsSelector = ({ galleryCase = false }) => {
+  const { theme } = useTheme();
   const { orderNumber, setOrderNumber } = useOrderNumber();
 
   // État pour suivre l'onglet sélectionné
@@ -16,7 +18,7 @@ const ElementsSelector = ({ galleryCase = false }) => {
 
   const scrollViewRef = useRef(null);
 
-  const scrollToSection = (sectionRef, animated) => {
+  function scrollToSection(sectionRef, animated) {
     sectionRef.current?.measureLayout(
       scrollViewRef.current, // Mesurer par rapport à la ScrollView
       (x, y) => {
@@ -24,9 +26,9 @@ const ElementsSelector = ({ galleryCase = false }) => {
       },
       (error) => {
         console.error("Erreur de mesure :", error);
-      }
+      },
     );
-  };
+  }
 
   const scrollToSectionWithScrollViewRef = useCallback((sectionRef, animated = true) => {
     scrollToSection(sectionRef, animated);
@@ -54,11 +56,26 @@ const ElementsSelector = ({ galleryCase = false }) => {
 
   const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
   const pressableImagesList = usePressableElementsStore(
-    (state) => state.statesByScreen[screenNameForEditModal].pressableImagesList
+    (state) => state.statesByScreen[screenNameForEditModal].pressableImagesList,
   );
-  const showe = () => {
-    console.log("pressableImagesList", pressableImagesList);
-  };
+
+  const styles = StyleSheet.create({
+    outerContainer: {
+      flex: 1,
+      width: "100%",
+      backgroundColor: theme.surface_container_highest,
+      padding: 20,
+    },
+    tabText: {
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    text: {
+      fontSize: 25,
+      fontWeight: "bold",
+      marginBottom: 16,
+    },
+  });
 
   return (
     <View style={styles.outerContainer} key="outerContainer">
@@ -70,10 +87,6 @@ const ElementsSelector = ({ galleryCase = false }) => {
         setSelectedTab={setSelectedTab}
         scrollToTopWithScrollViewRef={scrollToTopWithScrollViewRef}
       />
-
-      <Pressable onPress={showe}>
-        <Text>show</Text>
-      </Pressable>
 
       <ScrollView
         onScroll={handleScroll}
@@ -94,23 +107,5 @@ const ElementsSelector = ({ galleryCase = false }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  outerContainer: {
-    flex: 1,
-    width: "100%",
-    backgroundColor: "blue",
-    padding: 20,
-  },
-  tabText: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  text: {
-    fontSize: 25,
-    fontWeight: "bold",
-    marginBottom: 16,
-  },
-});
 
 export default ElementsSelector;
