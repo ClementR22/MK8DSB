@@ -6,33 +6,33 @@ import { button } from "../styles/button";
 import { useTheme } from "@/contexts/ThemeContext";
 import { translate, translateToLanguage } from "@/translations/translations";
 import ElementChip from "./ElementChip";
-import { usePressableImages } from "@/contexts/PressableImagesContext";
 import { useOrderNumber } from "@/contexts/OrderNumberContext";
 import { useScreen } from "../../contexts/ScreenContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";
+import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useModalsStore from "@/stores/useModalsStore";
 
-const SelectedCategoryElementsView_ = ({
-  selectedTab,
-  scrollToSectionWithScrollViewRef,
-  sectionRefs,
-  galleryCase = false,
-}) => {
-  const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
+const SelectedCategoryElementsView_ = ({ selectedTab, scrollToSectionWithScrollViewRef, sectionRefs }) => {
   const { theme } = useTheme();
   const { language } = useLanguage();
-
   const { orderNumber } = useOrderNumber();
-
-  const { pressableImagesByCategory, handlePressImage, handlePressImageByClass } = usePressableImages();
+  const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
+  const galleryCase = screenNameForEditModal === "gallery";
+  const pressableImagesList = usePressableElementsStore(
+    (state) => state.statesByScreen[screenNameForEditModal].pressableImagesList
+  );
+  const pressableImagesByCategory = computePressableElementsByCategory(pressableImagesList);
+  const handlePressImage = usePressableElementsStore((state) => state.handlePressImage);
+  const handlePressImageByClass = usePressableElementsStore((state) => state.handlePressImageByClass);
 
   const handlePress =
     screenNameForEditModal != "search"
       ? (element) => {
-          handlePressImageByClass(element.classId, element.category);
+          handlePressImageByClass(screenNameForEditModal, element.classId, element.category);
         }
       : (element) => {
-          handlePressImage(element.id);
+          handlePressImage(screenNameForEditModal, element.id);
         };
 
   const ElementsView = ({ elements }) => {
@@ -115,13 +115,7 @@ const SelectedCategoryElementsView_ = ({
   if (orderNumber != 3) {
     const selectedCategoryElements = getSelectedCategoryElements();
 
-    const memoizedSortedElements = useMemo(() => {
-      return sortElements(selectedCategoryElements, orderNumber);
-    }, [orderNumber, selectedTab]);
-
-    const selectedCategoryElementsSorted = galleryCase
-      ? memoizedSortedElements
-      : sortElements(selectedCategoryElements, orderNumber);
+    const selectedCategoryElementsSorted = sortElements(selectedCategoryElements, orderNumber);
 
     if (selectedTab != "body") {
       return <ElementsView elements={selectedCategoryElementsSorted} />;

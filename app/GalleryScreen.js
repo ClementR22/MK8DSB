@@ -1,17 +1,14 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { PressableImagesProvider } from "@/contexts/PressableImagesContext";
 import ElementsSelector from "../components/elementsSelector/ElementsSelector";
 import { ScreenProvider } from "../contexts/ScreenContext";
 
 const GalleryScreen = () => {
   return (
     <ScreenProvider screenName="gallery">
-      <PressableImagesProvider>
-        <View style={styles.container}>
-          <ElementsSelector galleryCase={true} />
-        </View>
-      </PressableImagesProvider>
+      <View style={styles.container}>
+        <ElementsSelector galleryCase={true} />
+      </View>
     </ScreenProvider>
   );
 };

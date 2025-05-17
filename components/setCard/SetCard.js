@@ -3,12 +3,12 @@ import { useTheme } from "@/contexts/ThemeContext";
 import MyModal from "../modal/MyModal";
 import SetImagesContainer from "./SetImagesContainer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
-import { usePressableImages } from "@/contexts/PressableImagesContext";
 import SetNameInput from "../textInput/SetNameInput";
 import BoxContainer from "../BoxContainer";
 import { useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
 import useModalsStore from "@/stores/useModalsStore";
+import usePressableElementsStore from "@/stores/usePressableElementsStore";
 
 const SetCard = ({
   setToShowName,
@@ -94,11 +94,11 @@ const SetCard = ({
     return { ...base };
   }, [situation, screenName]);
 
-  const { updatePressableImagesList } = usePressableImages();
+  const updatePressableImagesList = usePressableElementsStore((state) => state.updatePressableImagesList);
 
   useEffect(() => {
     if (isEditModalVisible) {
-      updatePressableImagesList(setToShowClassIds);
+      updatePressableImagesList(situation, setToShowClassIds);
     }
   }, [isEditModalVisible]);
 

@@ -9,7 +9,6 @@ import MyModal from "../modal/MyModal";
 import { translate } from "@/translations/translations";
 import { useState } from "react";
 import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
-import { usePressableImages } from "@/contexts/PressableImagesContext";
 import { shadow_3dp } from "../styles/theme";
 import StatSelector from "../statSelector/StatSelector";
 import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
@@ -24,25 +23,21 @@ import Modal from "@/components/Modal";
 import ButtonIcon from "@/components/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
+import usePressableElementsStore from "@/stores/usePressableElementsStore";
+import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";
+import useModalsStore from "@/stores/useModalsStore";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const { theme } = useTheme();
-
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
   const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
   const toggleCheckChosenStats = useSetsStore((state) => state.toggleCheckChosenStats);
-
   const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);
-
   const [resultsNumberModalVisible, setResultsNumberModalVisible] = useState(false);
-
   const [resultsNumber, setResultsNumber] = useState(5);
-
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
-
   const { setStatsVisibleList } = useStatsVisibleList();
-
   const { statsVisibleConfig, isSync } = useStatsVisibleListConfig();
 
   useEffect(() => {
@@ -51,7 +46,11 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
     }
   }, [isSync, chosenStats, statsVisibleConfig]);
 
-  const { pressableImagesByCategory } = usePressableImages();
+  const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
+  const pressableImagesList = usePressableElementsStore(
+    (state) => state.statesByScreen[screenNameForEditModal].pressableImagesList
+  );
+  const pressableImagesByCategory = computePressableElementsByCategory(pressableImagesList);
 
   const [chosenBodyType, setChosenBodyType] = useState(
     bodyTypeNames.map((bodyTypeName) => ({

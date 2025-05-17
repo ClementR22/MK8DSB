@@ -1,10 +1,16 @@
 import React from "react";
 import { View } from "react-native";
-import { usePressableImages } from "@/contexts/PressableImagesContext";
 import ElementChip from "./ElementChip";
+import useModalsStore from "@/stores/useModalsStore";
+import usePressableElementsStore from "@/stores/usePressableElementsStore";
 
 const ElementsDeselector = () => {
-  const { pressableImagesList, handlePressImage } = usePressableImages();
+  const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
+  const pressableImagesList = usePressableElementsStore(
+    (state) => state.statesByScreen[screenNameForEditModal].pressableImagesList
+  );
+  const handlePressImage = usePressableElementsStore((state) => state.handlePressImage);
+
   return (
     <View
       style={{
@@ -17,13 +23,7 @@ const ElementsDeselector = () => {
       {pressableImagesList
         .filter((element) => element.pressed)
         .map(({ id, name, image, pressed }) => (
-          <ElementChip
-            key={id}
-            name={name}
-            pressed={pressed}
-            onPress={() => handlePressImage(id)}
-            source={image}
-          />
+          <ElementChip key={id} name={name} pressed={pressed} onPress={() => handlePressImage(id)} source={image} />
         ))}
     </View>
   );

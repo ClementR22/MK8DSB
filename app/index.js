@@ -53,22 +53,6 @@ const SearchSetScreen = () => {
 
                 <ButtonLoadSet tooltip_text="LoadStatsOfASet" />
 
-<<<<<<< Updated upstream
-                  {/* Afficher le slider uniquement si la case est cochée */}
-                  {chosenStats.map(
-                    (stat) =>
-                      stat.checked && (
-                        <StatSlider
-                          key={stat.name}
-                          name={stat.name}
-                          sliderValue={stat.value}
-                          statFilterNumber={stat.statFilterNumber}
-                          setStatFilterNumber={stat.setStatFilterNumber}
-                        />
-                      )
-                  )}
-                </BoxContainer>
-=======
                 {/* Afficher le slider uniquement si la case est cochée */}
                 {chosenStats.map(
                   (stat) =>
@@ -83,21 +67,13 @@ const SearchSetScreen = () => {
                     )
                 )}
               </BoxContainer>
->>>>>>> Stashed changes
 
               <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} />
             </FlexContainer>
 
-<<<<<<< Updated upstream
-              <SetCardContainer setsToShow={setsToShow} />
-              <RenameSetModal />
-            </ScrollView>
-          </PressableImagesProvider>
-=======
             <SetCardContainer setsToShow={setsToShow} />
             <RenameSetModal />
           </ScrollView>
->>>>>>> Stashed changes
         </StatsVisibleListProvider>
       </LoadSetModalProvider>
     </ScreenProvider>

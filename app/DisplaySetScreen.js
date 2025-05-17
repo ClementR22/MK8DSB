@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView } from "react-native";
 import StatSliderResultContainer from "@/components/statSliderResult/StatSliderResultContainer";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
@@ -10,7 +10,6 @@ import useSetsStore from "@/stores/useSetsStore";
 
 const DisplaySetScreen = () => {
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
-
   const setsToShowMultipleStatsLists = setsListDisplayed.map((setToShow) => {
     const setToShowStatsList = setToShow.stats;
     return setToShowStatsList;

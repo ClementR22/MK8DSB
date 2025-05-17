@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Tabs } from "expo-router";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Toast from "react-native-toast-message";
-import { SetsListProvider } from "@/contexts/SetsListContext";
 import { OrderNumberProvider } from "@/contexts/OrderNumberContext";
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import CustomHeader from "@/components/CustomHeader";
@@ -16,14 +15,22 @@ import { usePathname } from "expo-router";
 import useModalsStore from "@/stores/useModalsStore";
 
 const screenNameFromPath = (pathname: string): string | null => {
-  if (pathname.includes("earch")) return "search";
+  if (pathname === "/") return "search";
   if (pathname.includes("isplay")) return "display";
   if (pathname.includes("ave")) return "save";
+  if (pathname.includes("allery")) return "gallery";
   return null;
 };
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const pathname = usePathname();
+  const setScreenNameForEditModal = useModalsStore((state) => state.setScreenNameForEditModal);
+
+  useEffect(() => {
+    const screenName = screenNameFromPath(pathname);
+    setScreenNameForEditModal(screenName);
+  }, [pathname]);
 
   return (
     <CustomThemeProvider>
