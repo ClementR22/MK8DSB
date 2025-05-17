@@ -1,7 +1,6 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet } from "react-native";
-import TooltipWrapper from "./TooltipWrapper";
+import ButtonIcon from "@/components/ButtonIcon";
+import { IconType } from "react-native-dynamic-vector-icons";
 
 const ButtonMultiStateToggle = ({
   number,
@@ -29,36 +28,14 @@ const ButtonMultiStateToggle = ({
   };
 
   return (
-    <TooltipWrapper
+    <ButtonIcon
       tooltipText={tooltipText}
-      style={[
-        styles.pressable,
-        styles.selectedFilter, // le style reste actif car un seul bouton
-      ]}
+      iconName={iconsNames[number]}
+      iconSize={24}
+      iconType={IconType.MaterialCommunityIcons}
       onPress={handlePress}
-    >
-      <MaterialCommunityIcons
-        name={iconsNames[number]}
-        size={24}
-        style={styles.selectedText}
-      />
-    </TooltipWrapper>
+    ></ButtonIcon>
   );
 };
-
-const styles = StyleSheet.create({
-  pressable: {
-    display: "flex",
-    height: 40,
-    width: 40,
-    borderRadius: 100,
-    backgroundColor: "#6750A4",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  selectedText: {
-    color: "#fff",
-  },
-});
 
 export default ButtonMultiStateToggle;

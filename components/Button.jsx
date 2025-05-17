@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Pressable, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 import { shadow_12dp, shadow_1dp, shadow_3dp, shadow_6dp, shadow_8dp } from "@/components/styles/theme";
+import TooltipWrapper from "@/components/TooltipWrapper";
 
-function Button({ children, onPress, elevation, ...props }) {
-  const { theme } = useTheme();
+function Button({children, onPress, elevation, tooltipText, ...props}) {
+  const {theme} = useTheme();
 
   const [buttonHover, setButtonHover] = useState(false);
 
@@ -49,7 +50,8 @@ function Button({ children, onPress, elevation, ...props }) {
   };
 
   return (
-    <Pressable
+    <TooltipWrapper
+      tooltipText={tooltipText}
       onPress={handlePress}
       style={[styles.container, buttonHover && getElevation()]}
       onHoverIn={() => setButtonHover(true)}
@@ -57,7 +59,7 @@ function Button({ children, onPress, elevation, ...props }) {
       {...props}
     >
       <Text style={styles.text}>{children}</Text>
-    </Pressable>
+    </TooltipWrapper>
   );
 }
 

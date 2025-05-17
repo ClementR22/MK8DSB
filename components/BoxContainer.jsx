@@ -10,16 +10,19 @@ function BoxContainer({
   flexDirection = "column",
   alignItems = "center",
   gap = 10,
+  width = "100%",
+  maxWidth = 360,
   margin = 16,
   inputStyles,
 }) {
-  const { theme } = useTheme();
+  const {theme} = useTheme();
 
   const styles = StyleSheet.create({
     container: {
       fontFamily: "inherit",
       backgroundColor: containerBackgroundColor,
-      width: "100%",
+      width: width,
+      maxWidth: maxWidth,
       marginHorizontal: "auto",
       justifyContent: "flex-start",
     },

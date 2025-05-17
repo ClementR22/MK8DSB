@@ -34,8 +34,7 @@ function ButtonIcon({
 
   const getElevation = () => {
     if (!elevation) {
-      StyleSheet.flatten(styles.container, shadow_6dp);
-      return;
+      return shadow_6dp;
     }
     switch (elevation) {
       case 1:
