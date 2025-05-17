@@ -5,10 +5,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCard from "./SetCard";
 import FlexContainer from "@/components/FlexContainer";
 
-const getSetsLength = (sets) => {
-  return sets.length === 0;
-};
-
 const SetCardContainer = ({ setsToShow, isInLoadSetModal = false }) => {
   const { theme } = useTheme();
 
@@ -23,7 +19,6 @@ const SetCardContainer = ({ setsToShow, isInLoadSetModal = false }) => {
             backgroundColor: theme.surface_container_high,
             justifyContent: "center",
           },
-          getSetsLength(setsToShow) ? { flex: 1 } : {},
         ]}
         horizontal={true}
       >

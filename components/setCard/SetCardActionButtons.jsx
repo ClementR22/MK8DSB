@@ -109,7 +109,7 @@ const SetCardActionButtons = React.memo(({ setCardIndex, config, situation }) =>
         <TooltipWrapper
           tooltipText="Remove"
           style={[button_icon(theme).container, shadow_3dp]}
-          onPress={() => removeSetInMemory(setCardIndex)}
+          onPress={() => removeSet(setCardIndex, situation)}
         >
           <MaterialCommunityIcons name="trash-can" size={24} color={theme.on_primary} />
         </TooltipWrapper>
