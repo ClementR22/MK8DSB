@@ -27,14 +27,7 @@ function Button({children, onPress, elevation, tooltipText, ...props}) {
     },
   });
 
-  const handlePress = () => {
-    onPress?.();
-  };
-
   const getElevation = () => {
-    if (!elevation) {
-      return shadow_6dp;
-    }
     switch (elevation) {
       case 1:
         return shadow_1dp;
@@ -46,13 +39,15 @@ function Button({children, onPress, elevation, tooltipText, ...props}) {
         return shadow_8dp;
       case 12:
         return shadow_12dp;
+      default:
+        return shadow_6dp;
     }
   };
 
   return (
     <TooltipWrapper
       tooltipText={tooltipText}
-      onPress={handlePress}
+      onPress={onPress}
       style={[styles.container, buttonHover && getElevation()]}
       onHoverIn={() => setButtonHover(true)}
       onHoverOut={() => setButtonHover(false)}
