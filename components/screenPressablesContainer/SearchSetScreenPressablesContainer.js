@@ -25,7 +25,6 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";
-import useModalsStore from "@/stores/useModalsStore";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const { theme } = useTheme();
@@ -46,10 +45,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
     }
   }, [isSync, chosenStats, statsVisibleConfig]);
 
-  const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
-  const pressableImagesList = usePressableElementsStore(
-    (state) => state.statesByScreen[screenNameForEditModal].pressableImagesList
-  );
+  const pressableImagesList = usePressableElementsStore((state) => state.statesByScreen["search"].pressableImagesList);
   const pressableImagesByCategory = computePressableElementsByCategory(pressableImagesList);
 
   const [chosenBodyType, setChosenBodyType] = useState(

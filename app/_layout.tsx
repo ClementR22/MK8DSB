@@ -29,7 +29,7 @@ export default function TabLayout() {
 
   useEffect(() => {
     const screenName = screenNameFromPath(pathname);
-    setScreenNameForEditModal(screenName);
+    if (screenName != null) setScreenNameForEditModal(screenName);
   }, [pathname]);
 
   return (
