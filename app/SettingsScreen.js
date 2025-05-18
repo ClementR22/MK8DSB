@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import LanguageSelector from "@/components/settingsComponent/LanguageSelector";
@@ -9,15 +9,14 @@ import LicensesButton from "@/components/settingsComponent/LicensesButton";
 import BoxContainer from "@/components/BoxContainer";
 import FlexScrollView from "@/components/FlexScrollView";
 import StatsVisibleConfigSelector from "@/components/settingsComponent/StatsVisibleConfigSelector";
-import { useStatsVisibleListConfig } from "../contexts/StatsVisibleListConfigContext";
+import { useStatsVisibleListConfig } from "@/contexts/StatsVisibleListConfigContext";
 import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Modal from "@/components/Modal";
 import Button from "@/components/Button";
 import { translateToLanguage } from "@/translations/translations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Text } from "react-native";
-import { Pressable } from "react-native";
+import Text from "@/components/Text";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import { useSettings } from "@/contexts/SettingsContext";
 
@@ -54,7 +53,7 @@ const SettingsScreen = () => {
           </FlexScrollView>
         </StatsVisibleListProvider>
         <Text>DEBUG</Text>
-        <Pressable
+        <Button
           onPress={async () => {
             console.log("show async");
             const keys = await AsyncStorage.getAllKeys();
@@ -62,13 +61,13 @@ const SettingsScreen = () => {
             console.log("items", await AsyncStorage.multiGet(keys));
           }}
         >
-          <Text>show memory</Text>
-        </Pressable>
+          show memory
+        </Button>
 
         {/* DEBUG */}
-        <Pressable onPress={deleteAllTheMemory}>
-          <Text>removeMemory</Text>
-        </Pressable>
+        <Button onPress={deleteAllTheMemory}>
+          removeMemory
+        </Button>
       </BoxContainer>
     </ScreenProvider>
   );

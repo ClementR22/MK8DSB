@@ -33,9 +33,6 @@ function ButtonIcon({
   });
 
   const getElevation = () => {
-    if (!elevation) {
-      return shadow_6dp;
-    }
     switch (elevation) {
       case 1:
         return shadow_1dp;
@@ -47,6 +44,8 @@ function ButtonIcon({
         return shadow_8dp;
       case 12:
         return shadow_12dp;
+      default:
+        return shadow_6dp;
     }
   };
 

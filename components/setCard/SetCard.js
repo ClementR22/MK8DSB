@@ -103,7 +103,11 @@ const SetCard = ({
   }, [isEditModalVisible]);
 
   return (
-    <BoxContainer contentBackgroundColor={theme.surface} margin={0}>
+    <BoxContainer
+      contentBackgroundColor={theme.surface}
+      margin={0}
+      maxWidth={300}
+    >
       {config.showTextInput && (
         <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} isWithConfimation={true} />
       )}
