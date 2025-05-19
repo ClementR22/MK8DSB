@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 import { shadow_12dp, shadow_1dp, shadow_3dp, shadow_6dp, shadow_8dp } from "@/components/styles/theme";
 import TooltipWrapper from "@/components/TooltipWrapper";
 
-function Button({children, onPress, elevation, tooltipText, ...props}) {
-  const {theme} = useTheme();
-
+function Button({ children, onPress, elevation, tooltipText, ...props }) {
+  const { theme } = useTheme();
   const [buttonHover, setButtonHover] = useState(false);
 
   const styles = StyleSheet.create({
@@ -44,18 +43,25 @@ function Button({children, onPress, elevation, tooltipText, ...props}) {
     }
   };
 
-  return (
-    <TooltipWrapper
-      tooltipText={tooltipText}
-      onPress={onPress}
-      style={[styles.container, buttonHover && getElevation()]}
-      onHoverIn={() => setButtonHover(true)}
-      onHoverOut={() => setButtonHover(false)}
-      {...props}
-    >
-      <Text style={styles.text}>{children}</Text>
-    </TooltipWrapper>
-  );
+  const sharedProps = {
+    onPress,
+    style: [styles.container, buttonHover && getElevation()],
+    onHoverIn: () => setButtonHover(true),
+    onHoverOut: () => setButtonHover(false),
+    ...props,
+  };
+
+  const content = <Text style={styles.text}>{children}</Text>;
+
+  if (tooltipText) {
+    return (
+      <TooltipWrapper tooltipText={tooltipText} {...sharedProps}>
+        {content}
+      </TooltipWrapper>
+    );
+  } else {
+    return <Pressable {...sharedProps}>{content}</Pressable>;
+  }
 }
 
 export default Button;

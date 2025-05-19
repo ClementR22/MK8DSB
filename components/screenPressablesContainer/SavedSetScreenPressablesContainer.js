@@ -12,7 +12,12 @@ const SavedSetScreenPressablesContainer = () => {
   return (
     <BoxContainer flexDirection="row" justifyContent="space-evenly">
       {/* Sort set button */}
-      <ButtonIcon iconType={IconType.MaterialCommunityIcons} iconName={"sort"} onPress={sortSetsSavedKeys} />
+      <ButtonIcon
+        iconType={IconType.MaterialCommunityIcons}
+        iconName={"sort"}
+        onPress={sortSetsSavedKeys}
+        tooltipText="Sort"
+      />
       <ButtonImportSet />
       <StatSliderResultSelectorPressable />
     </BoxContainer>
