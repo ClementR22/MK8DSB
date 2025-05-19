@@ -1,12 +1,12 @@
 import React from "react";
 import { button_icon } from "../styles/button";
 import { useTheme } from "@/contexts/ThemeContext";
-import { shadow_3dp } from "../styles/theme";
+import { shadow_3dp } from "@/components/styles/theme";
 import { Feather } from "@expo/vector-icons";
 import TooltipWrapper from "../TooltipWrapper";
 import * as Clipboard from "expo-clipboard";
 import { getSetStatsFromElementsClassIds } from "@/utils/getSetStatsFromElementsClassIds";
-import { useScreen } from "../../contexts/ScreenContext";
+import { useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 
 const ButtonImportSet = () => {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { button, button_icon } from "../styles/button";
-import { shadow_12dp, shadow_3dp } from "../styles/theme";
+import { shadow_12dp, shadow_3dp } from "@/components/styles/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import MyModal from "../modal/MyModal";

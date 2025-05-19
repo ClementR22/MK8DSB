@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { vh, vw } from "./theme";
+import { vh, vw } from "@/components/styles/theme";
 
 export const modal = (theme) =>
   StyleSheet.create({

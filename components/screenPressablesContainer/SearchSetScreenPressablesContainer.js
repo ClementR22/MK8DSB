@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 import { button, button_icon } from "../styles/button";
@@ -7,17 +7,14 @@ import { bodyTypeNames, setAllInfos } from "@/data/data";
 import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderResultSelectorPressable";
 import MyModal from "../modal/MyModal";
 import { translate } from "@/translations/translations";
-import { useState } from "react";
 import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
-import { shadow_3dp } from "../styles/theme";
+import { shadow_3dp } from "@/components/styles/theme";
 import StatSelector from "../statSelector/StatSelector";
 import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
 import ElementsDeselector from "../elementsSelector/ElementsDeselector";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import ResultsNumber from "../ResultsNumberSelector";
 import TooltipWrapper from "../TooltipWrapper";
-import { toggleAndGetChecks } from "@/utils/toggleCheck";
-import showToast from "@/utils/toast";
 import { useStatsVisibleListConfig } from "@/contexts/StatsVisibleListConfigContext";
 import Modal from "@/components/Modal";
 import ButtonIcon from "@/components/ButtonIcon";
@@ -52,7 +49,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
     bodyTypeNames.map((bodyTypeName) => ({
       name: bodyTypeName,
       checked: true,
-    }))
+    })),
   );
 
   const updateSetsToShow = (setsFound) => {
@@ -82,7 +79,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
 
   const chosenBodyTypeList = useMemo(
     () => chosenBodyType.filter((bodyType) => bodyType.checked).map((bodyType) => bodyType.name),
-    [chosenBodyType]
+    [chosenBodyType],
   );
 
   const search = () => {
@@ -142,9 +139,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
     if (gaps.length === 0) {
       updateSetsToShow([]); // Ou gérer l'état de "rien trouvé"
     } else {
-      const setsFound = gaps
-        .slice(0, Math.min(resultsNumber, gaps.length))
-        .map(({ setIndex }) => ({ ...setAllInfos[setIndex] }));
+      const setsFound = gaps.slice(0, Math.min(resultsNumber, gaps.length)).map(({ setIndex }) => ({ ...setAllInfos[setIndex] }));
       updateSetsToShow(setsFound);
     }
   };

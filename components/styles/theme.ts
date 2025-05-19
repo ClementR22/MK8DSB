@@ -1,11 +1,24 @@
 import { Dimensions } from "react-native";
+import { ShadowProp, ThemeColor } from "./theme.d";
 
-export const vh = Dimensions.get("screen").height;
-export const vw = Dimensions.get("screen").width;
+export const vh: number = Dimensions.get("screen").height;
+export const vw: number = Dimensions.get("screen").width;
 
 // Default Material 3 theme (https://m3.material.io/styles/color/static/baseline)
 
-export const light_theme = {
+// Standard CSS Material elevation
+/*
+  shadow_0dp: "0",
+  shadow_1dp: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+  shadow_3dp: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+  shadow_6dp: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
+  shadow_8dp: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)",
+  shadow_12dp: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
+
+  shadow_hover: "all 0.3s cubic-bezier(.25,.8,.25,1)",
+//*/
+
+export const light_theme: ThemeColor = {
   primary: "#6750A4",
   on_primary: "#FFFFFF",
   primary_container: "#EADDFF",
@@ -46,21 +59,9 @@ export const light_theme = {
   boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.25)",
 
   primary_hover: "rgba(103, 80, 164, 0.08)",
-
-  // Standard CSS Material elevation
-  /*
-    shadow_0dp: "0",
-    shadow_1dp: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
-    shadow_3dp: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
-    shadow_6dp: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
-    shadow_8dp: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)",
-    shadow_12dp: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
-
-    shadow_hover: "all 0.3s cubic-bezier(.25,.8,.25,1)",
-    //*/
 };
 
-export const dark_theme = {
+export const dark_theme: ThemeColor = {
   primary: "#D0BCFF",
   on_primary: "#381E72",
   primary_container: "#4F378B",
@@ -103,32 +104,32 @@ export const dark_theme = {
   primary_hover: "rgba(103, 80, 164, 0.08)",
 };
 
-export const shadow_1dp = {
+export const shadow_1dp: ShadowProp = {
   boxShadow: "0px 1px 1px rgba(0, 0, 0, 0.18)",
-  transition: "all 0.1s ease",
+  transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
   elevation: 1,
 };
 
-export const shadow_3dp = {
+export const shadow_3dp: ShadowProp = {
   boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.22)",
-  transition: "all 0.1s ease",
+  transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
   elevation: 3,
 };
 
-export const shadow_6dp = {
+export const shadow_6dp: ShadowProp = {
   boxShadow: "0px 3px 4px rgba(0, 0, 0, 0.27)",
-  transition: "all 0.1s ease",
+  transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
   elevation: 6,
 };
 
-export const shadow_8dp = {
+export const shadow_8dp: ShadowProp = {
   boxShadow: "0px 4px 5px rgba(0, 0, 0, 0.3)",
-  transition: "all 0.1s ease",
+  transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
   elevation: 8,
 };
 
-export const shadow_12dp = {
+export const shadow_12dp: ShadowProp = {
   boxShadow: "0px 6px 8px rgba(0, 0, 0, 0.37)",
-  transition: "all 0.1s ease",
+  transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
   elevation: 12,
 };

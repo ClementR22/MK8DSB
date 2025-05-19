@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Slider } from "@miblanchard/react-native-slider";
 import ButtonMultiStateToggle from "./ButtonMultiStateToggle";
 
-import { vw } from "./styles/theme";
+import { vw } from "@/components/styles/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { translate } from "@/translations/translations";
 import useSetsStore from "@/stores/useSetsStore";

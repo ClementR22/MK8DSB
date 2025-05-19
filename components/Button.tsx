@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, Pressable } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 import { shadow_12dp, shadow_1dp, shadow_3dp, shadow_6dp, shadow_8dp } from "@/components/styles/theme";
+import { ShadowProp } from "@/components/styles/theme.d";
 import TooltipWrapper from "@/components/TooltipWrapper";
 
 function Button({ children, onPress, elevation, tooltipText, ...props }) {
@@ -17,6 +18,7 @@ function Button({ children, onPress, elevation, tooltipText, ...props }) {
       backgroundColor: theme.primary,
       justifyContent: "center",
       alignItems: "center",
+      // @ts-ignore
       transition: "all 0.2s ease",
     },
     text: {
@@ -26,7 +28,7 @@ function Button({ children, onPress, elevation, tooltipText, ...props }) {
     },
   });
 
-  const getElevation = () => {
+  function getElevation(): ShadowProp {
     switch (elevation) {
       case 1:
         return shadow_1dp;
@@ -41,7 +43,7 @@ function Button({ children, onPress, elevation, tooltipText, ...props }) {
       default:
         return shadow_6dp;
     }
-  };
+  }
 
   const sharedProps = {
     onPress,
