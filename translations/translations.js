@@ -1,7 +1,8 @@
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 export const translate = (key) => {
-  const { language } = useLanguage();
+  const language = useLanguageStore((state) => state.language); // Accès à state.state.language
+
   return translateToLanguage(key, language);
 };
 

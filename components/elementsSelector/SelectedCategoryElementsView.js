@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import ElementImage from "./ElementImage";
 import { bodyTypeNames } from "@/data/data";
@@ -7,15 +7,14 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { translate, translateToLanguage } from "@/translations/translations";
 import ElementChip from "./ElementChip";
 import { useOrderNumber } from "@/contexts/OrderNumberContext";
-import { useScreen } from "../../contexts/ScreenContext";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useModalsStore from "@/stores/useModalsStore";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const SelectedCategoryElementsView_ = ({ selectedTab, scrollToSectionWithScrollViewRef, sectionRefs }) => {
   const { theme } = useTheme();
-  const { language } = useLanguage();
+  const language = useLanguageStore((state) => state.language);
   const { orderNumber } = useOrderNumber();
   const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
   const galleryCase = screenNameForEditModal === "gallery";

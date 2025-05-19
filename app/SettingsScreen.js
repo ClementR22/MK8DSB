@@ -11,7 +11,6 @@ import FlexScrollView from "@/components/FlexScrollView";
 import StatsVisibleConfigSelector from "@/components/settingsComponent/StatsVisibleConfigSelector";
 import { useStatsVisibleListConfig } from "@/contexts/StatsVisibleListConfigContext";
 import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
-import { useLanguage } from "@/contexts/LanguageContext";
 import Modal from "@/components/Modal";
 import Button from "@/components/Button";
 import { translateToLanguage } from "@/translations/translations";
@@ -19,10 +18,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Text from "@/components/Text";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import { useSettings } from "@/contexts/SettingsContext";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const SettingsScreen = () => {
   const { isDefault } = useStatsVisibleListConfig();
-  const { language } = useLanguage();
+  const language = useLanguageStore((state) => state.language);
   const { resetSettings } = useSettings();
 
   const [isStatsVisibleDefaultModalVisible, setIsStatsVisibleDefaultModalVisible] = useState(false);
@@ -65,9 +65,7 @@ const SettingsScreen = () => {
         </Button>
 
         {/* DEBUG */}
-        <Button onPress={deleteAllTheMemory}>
-          removeMemory
-        </Button>
+        <Button onPress={deleteAllTheMemory}>removeMemory</Button>
       </BoxContainer>
     </ScreenProvider>
   );
