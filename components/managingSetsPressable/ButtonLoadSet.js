@@ -1,8 +1,7 @@
 import React from "react";
-import { View } from "react-native";
 import { button_icon } from "../styles/button";
 import { useTheme } from "@/contexts/ThemeContext";
-import { shadow_3dp } from "../styles/theme";
+import { shadow_3dp } from "@/components/styles/theme";
 import { useLoadSetModal } from "@/contexts/LoadSetModalContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import TooltipWrapper from "../TooltipWrapper";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, Pressable, Text } from "react-native";
 import { modal } from "../styles/modal";
 import { button } from "../styles/button";
-import { shadow_12dp } from "../styles/theme";
+import { shadow_12dp } from "@/components/styles/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { translate } from "@/translations/translations";
 import Toast from "react-native-toast-message";

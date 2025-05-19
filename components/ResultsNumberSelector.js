@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { button_icon } from "./styles/button";
-import { shadow_12dp } from "./styles/theme";
+import { shadow_12dp } from "@/components/styles/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {

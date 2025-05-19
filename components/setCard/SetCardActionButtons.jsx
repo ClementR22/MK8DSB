@@ -1,11 +1,11 @@
-import React, { memo } from "react";
+import React from "react";
 import useSetsStore from "@/stores/useSetsStore";
 import { useTheme } from "@/contexts/ThemeContext";
 import BoxContainer from "../BoxContainer";
 import TooltipWrapper from "../TooltipWrapper";
 import { FontAwesome6, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { button_icon } from "../styles/button";
-import { shadow_3dp } from "../styles/theme";
+import { shadow_3dp } from "@/components/styles/theme";
 import useModalsStore from "@/stores/useModalsStore";
 
 const SetCardActionButtons = React.memo(({ setCardIndex, config, situation }) => {
