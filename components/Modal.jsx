@@ -45,7 +45,7 @@ function Modal({
       backgroundColor: "blue", //theme.surface_container_high,
     },
     childrenContainer: {
-      maxHeight: 0.5 * vh,
+      maxHeight: 0.6 * vh,
     },
 
     /* 
