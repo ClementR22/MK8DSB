@@ -23,7 +23,13 @@ const ElementsDeselector = () => {
       {pressableImagesList
         .filter((element) => element.pressed)
         .map(({ id, name, image, pressed }) => (
-          <ElementChip key={id} name={name} pressed={pressed} onPress={() => handlePressImage(id)} source={image} />
+          <ElementChip
+            key={id}
+            name={name}
+            pressed={pressed}
+            onPress={() => handlePressImage(screenNameForEditModal, id)}
+            source={image}
+          />
         ))}
     </View>
   );
