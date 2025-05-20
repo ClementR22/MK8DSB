@@ -9,37 +9,35 @@ const SetCardContainer = ({ setsToShow, isInLoadSetModal = false }) => {
   const { theme } = useTheme();
 
   return (
-    <FlexContainer alignItems={"stretch"} justifyContent={"stretch"}>
-      <ScrollView
-        contentContainerStyle={[
-          styles.setCardContainer,
-          {
-            minWidth: 300,
-            flexGrow: 1,
-            backgroundColor: theme.surface_container_high,
-            justifyContent: "center",
-          },
-        ]}
-        horizontal={true}
-      >
-        {setsToShow.length === 0 ? (
-          <MaterialCommunityIcons name="chat-question" size={72} color={theme.on_surface} />
-        ) : null}
+    <ScrollView
+      contentContainerStyle={[
+        styles.setCardContainer,
+        {
+          minWidth: 300,
+          flexGrow: 1,
+          backgroundColor: theme.surface_container_high,
+          justifyContent: "center",
+        },
+      ]}
+      horizontal={true}
+    >
+      {setsToShow.length === 0 ? (
+        <MaterialCommunityIcons name="chat-question" size={72} color={theme.on_surface} />
+      ) : null}
 
-        {setsToShow.map(({ name, classIds, stats }, index) => {
-          return (
-            <SetCard
-              key={"card" + index}
-              setToShowName={name}
-              setToShowClassIds={classIds}
-              setToShowStats={stats}
-              setCardIndex={index}
-              isInLoadSetModal={isInLoadSetModal}
-            />
-          );
-        })}
-      </ScrollView>
-    </FlexContainer>
+      {setsToShow.map(({ name, classIds, stats }, index) => {
+        return (
+          <SetCard
+            key={"card" + index}
+            setToShowName={name}
+            setToShowClassIds={classIds}
+            setToShowStats={stats}
+            setCardIndex={index}
+            isInLoadSetModal={isInLoadSetModal}
+          />
+        );
+      })}
+    </ScrollView>
   );
 };
 
