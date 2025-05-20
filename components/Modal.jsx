@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal as NativeModal, Pressable, StyleSheet, Text } from "react-native";
+import { Modal as NativeModal, Pressable, StyleSheet, Text, View } from "react-native";
 import { vh, vw } from "@/components/styles/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { translate } from "@/translations/translations";
@@ -34,7 +34,7 @@ function Modal({
       backgroundColor: "rgba(0, 0, 0, 0.5)",
     },
     container: {
-      maxHeight: "90%",
+      //maxHeight: "90%",
       zIndex: 10,
       cursor: "auto",
       //alignSelf: "center",
@@ -42,8 +42,13 @@ function Modal({
       // maxWidth: 400,
       borderRadius: 28,
       paddingVertical: 24,
-      backgroundColor: theme.surface_container_high,
-    } /* 
+      backgroundColor: "blue", //theme.surface_container_high,
+    },
+    childrenContainer: {
+      maxHeight: 0.5 * vh,
+    },
+
+    /* 
     content: {
       flex: 1,
       marginBottom: 0,
@@ -59,8 +64,7 @@ function Modal({
       paddingHorizontal: 24,
       fontSize: 24,
       marginBottom: 16,
-    }, */,
-    title_center: {
+    }, */ title_center: {
       color: theme.on_surface,
       alignSelf: "center",
       paddingHorizontal: 24,
@@ -98,7 +102,7 @@ function Modal({
         <Pressable style={styles.container} onStartShouldSetResponder={() => true}>
           {modalTitle && <Text style={styles.title_center}>{translate(modalTitle)}</Text>}
 
-          {children}
+          <View style={styles.childrenContainer}>{children}</View>
 
           <FlexContainer style={{ backgroundColor: "red" }} flexDirection={"row"} gap={10}>
             {leftButton}

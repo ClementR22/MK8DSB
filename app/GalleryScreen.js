@@ -7,7 +7,7 @@ const GalleryScreen = () => {
   return (
     <ScreenProvider screenName="gallery">
       <View style={styles.container}>
-        <ElementsSelector galleryCase={true} />
+        <ElementsSelector />
       </View>
     </ScreenProvider>
   );

@@ -206,11 +206,11 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
         />
       </Modal>
 
-      <MyModal modalTitle="Filters" isModalVisible={isFilterModalVisible} setIsModalVisible={setIsFilterModalVisible}>
+      <Modal modalTitle="Filters" isModalVisible={isFilterModalVisible} setIsModalVisible={setIsFilterModalVisible}>
         <BodyTypeSelector chosenBodyType={chosenBodyType} setChosenBodyType={setChosenBodyType} />
         <ElementsDeselector />
         <ElementsSelector />
-      </MyModal>
+      </Modal>
 
       <MyModal
         modalTitle="NumberOfResults"

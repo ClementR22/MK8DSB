@@ -9,7 +9,7 @@ import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { useTheme } from "@/contexts/ThemeContext";
 
-const ElementsSelector = ({ galleryCase = false }) => {
+const ElementsSelector = () => {
   const { theme } = useTheme();
   const { orderNumber, setOrderNumber } = useOrderNumber();
 
@@ -26,7 +26,7 @@ const ElementsSelector = ({ galleryCase = false }) => {
       },
       (error) => {
         console.error("Erreur de mesure :", error);
-      },
+      }
     );
   }
 
@@ -56,16 +56,10 @@ const ElementsSelector = ({ galleryCase = false }) => {
 
   const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
   const pressableImagesList = usePressableElementsStore(
-    (state) => state.statesByScreen[screenNameForEditModal].pressableImagesList,
+    (state) => state.statesByScreen[screenNameForEditModal].pressableImagesList
   );
 
   const styles = StyleSheet.create({
-    outerContainer: {
-      flex: 1,
-      width: "100%",
-      backgroundColor: theme.surface_container_highest,
-      padding: 20,
-    },
     tabText: {
       fontSize: 16,
       fontWeight: "bold",
@@ -78,7 +72,7 @@ const ElementsSelector = ({ galleryCase = false }) => {
   });
 
   return (
-    <View style={styles.outerContainer} key="outerContainer">
+    <>
       <ButtonMultiStateToggle number={orderNumber} setNumber={setOrderNumber} tooltipText="Sort" />
       {/* Navigation par onglets */}
 
@@ -99,12 +93,11 @@ const ElementsSelector = ({ galleryCase = false }) => {
           selectedTab={selectedTab}
           scrollToSectionWithScrollViewRef={scrollToSectionWithScrollViewRef}
           sectionRefs={sectionRefs}
-          galleryCase={galleryCase}
         />
       </ScrollView>
 
       {showScrollTopButton && <ButtonScrollToTop scrollToTopWithScrollViewRef={scrollToTopWithScrollViewRef} />}
-    </View>
+    </>
   );
 };
 

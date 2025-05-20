@@ -16,7 +16,7 @@ const StatSelector = ({ statList, setStatList, toggleCheck, isVisibleStatsNotInS
   const disablePressableStat = isVisibleStatsNotInSettingsScreen && (isSync || isDefault);
 
   return (
-    <View style={styles.listContainer}>
+    <>
       <View style={styles.row}>
         {!disablePressableStat ? (
           <>
@@ -39,17 +39,12 @@ const StatSelector = ({ statList, setStatList, toggleCheck, isVisibleStatsNotInS
           />
         ))}
       </ScrollView>
-    </View>
+    </>
   );
 };
 
 export default StatSelector;
 
 const styles = StyleSheet.create({
-  listContainer: {
-    padding: 10,
-    maxHeight: "80%", // 👈 Limite la hauteur dans le Modal
-    backgroundColor: "green",
-  },
   row: { flexDirection: "row", gap: 10 },
 });
