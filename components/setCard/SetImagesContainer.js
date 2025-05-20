@@ -16,7 +16,7 @@ const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
   const imageSize = mode === "icon" ? 40 : 80;
 
   return (
-    <View>
+    <>
       {data.map((item) => (
         <ScrollView key={item.category} horizontal style={styles.scrollview}>
           {item.elements.map(({ name, image }, index) => (
@@ -30,7 +30,7 @@ const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
           ))}
         </ScrollView>
       ))}
-    </View>
+    </>
   );
 };
 
