@@ -15,17 +15,18 @@ import ElementsDeselector from "../elementsSelector/ElementsDeselector";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import ResultsNumber from "../ResultsNumberSelector";
 import TooltipWrapper from "../TooltipWrapper";
-import { useStatsVisibleListConfig } from "@/contexts/StatsVisibleListConfigContext";
 import Modal from "@/components/Modal";
 import ButtonIcon from "@/components/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";
+import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const { theme } = useTheme();
   const chosenStats = useSetsStore((state) => state.chosenStats);
+  const setChosenStats = useSetsStore((state) => state.setChosenStats);
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
   const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
   const toggleCheckChosenStats = useSetsStore((state) => state.toggleCheckChosenStats);
@@ -34,7 +35,8 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const [resultsNumber, setResultsNumber] = useState(5);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   const { setStatsVisibleList } = useStatsVisibleList();
-  const { statsVisibleConfig, isSync } = useStatsVisibleListConfig();
+  const isSync = useStatsVisibleListConfigStore((state) => state.isSync);
+  const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
 
   useEffect(() => {
     if (isSync) {
@@ -49,7 +51,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
     bodyTypeNames.map((bodyTypeName) => ({
       name: bodyTypeName,
       checked: true,
-    })),
+    }))
   );
 
   const updateSetsToShow = (setsFound) => {
@@ -79,7 +81,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
 
   const chosenBodyTypeList = useMemo(
     () => chosenBodyType.filter((bodyType) => bodyType.checked).map((bodyType) => bodyType.name),
-    [chosenBodyType],
+    [chosenBodyType]
   );
 
   const search = () => {
@@ -139,7 +141,9 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
     if (gaps.length === 0) {
       updateSetsToShow([]); // Ou gérer l'état de "rien trouvé"
     } else {
-      const setsFound = gaps.slice(0, Math.min(resultsNumber, gaps.length)).map(({ setIndex }) => ({ ...setAllInfos[setIndex] }));
+      const setsFound = gaps
+        .slice(0, Math.min(resultsNumber, gaps.length))
+        .map(({ setIndex }) => ({ ...setAllInfos[setIndex] }));
       updateSetsToShow(setsFound);
     }
   };
@@ -194,6 +198,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
       >
         <StatSelector
           statList={chosenStats}
+          setStatList={setChosenStats}
           toggleCheck={(name) => {
             toggleCheckChosenStats(name);
           }}

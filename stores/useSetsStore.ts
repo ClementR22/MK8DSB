@@ -38,7 +38,7 @@ interface SetsStoreState {
   setsSavedKeys: string[];
   setCardEdittedIndex: number;
 
-  //setChosenStats: (newChosenStats: ChosenStat[]) => void;
+  setChosenStats: (newChosenStats: ChosenStat[]) => void;
   setSetsListFound: (newSetsList: SetObject[]) => void;
   setSetCardEdittedIndex: (newIndex: number) => void;
 
@@ -90,6 +90,10 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   setsListFound: [],
   setsSavedKeys: [],
   setCardEdittedIndex: 0,
+
+  setChosenStats: (newChosenStats) => {
+    set({ chosenStats: newChosenStats });
+  },
 
   setSetsListFound: (newSetsList) => set({ setsListFound: newSetsList }),
 

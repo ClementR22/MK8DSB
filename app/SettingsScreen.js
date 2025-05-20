@@ -9,7 +9,6 @@ import LicensesButton from "@/components/settingsComponent/LicensesButton";
 import BoxContainer from "@/components/BoxContainer";
 import FlexScrollView from "@/components/FlexScrollView";
 import StatsVisibleConfigSelector from "@/components/settingsComponent/StatsVisibleConfigSelector";
-import { useStatsVisibleListConfig } from "@/contexts/StatsVisibleListConfigContext";
 import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
 import Modal from "@/components/Modal";
 import Button from "@/components/Button";
@@ -19,9 +18,10 @@ import Text from "@/components/Text";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import { useSettings } from "@/contexts/SettingsContext";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 
 const SettingsScreen = () => {
-  const { isDefault } = useStatsVisibleListConfig();
+  const isDefault = useStatsVisibleListConfigStore((state) => state.isDefault);
   const language = useLanguageStore((state) => state.language);
   const { resetSettings } = useSettings();
 

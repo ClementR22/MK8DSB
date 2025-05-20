@@ -4,8 +4,6 @@ import { Switch } from "react-native-paper";
 import { translate } from "@/translations/translations";
 
 const SelectedAllStatsSwitch = ({ statList, setStatList }) => {
-  // BLABLA
-  // virer  setStatList
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [formerStatList, setFormerStatList] = useState(null);
   const internalUpdate = useRef(false); // Marqueur de mise à jour interne
@@ -19,7 +17,7 @@ const SelectedAllStatsSwitch = ({ statList, setStatList }) => {
       setFormerStatList(statList);
 
       // Coche tous les stat
-      setStatList((prevList) => prevList.map((stat) => ({ ...stat, checked: true })));
+      setStatList(statList.map((stat) => ({ ...stat, checked: true })));
     } else if (formerStatList) {
       // si l'utilisateur ne veut pas tout activer et qu'il existe une liste précédente
       // Restaure la liste précédente
