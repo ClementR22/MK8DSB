@@ -5,7 +5,6 @@ import { button, button_icon } from "../styles/button";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { bodyTypeNames, setAllInfos } from "@/data/data";
 import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderResultSelectorPressable";
-import MyModal from "../modal/MyModal";
 import { translate } from "@/translations/translations";
 import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
 import { shadow_3dp } from "@/components/styles/theme";
@@ -212,13 +211,13 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
         <ElementsSelector />
       </Modal>
 
-      <MyModal
+      <Modal
         modalTitle="NumberOfResults"
         isModalVisible={resultsNumberModalVisible}
         setIsModalVisible={setResultsNumberModalVisible}
       >
         <ResultsNumber resultsNumber={resultsNumber} setResultsNumber={setResultsNumber} />
-      </MyModal>
+      </Modal>
     </View>
   );
 };

@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
-import MyModal from "../modal/MyModal";
 import SetImagesContainer from "./SetImagesContainer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
 import SetNameInput from "../textInput/SetNameInput";
@@ -9,6 +8,7 @@ import { useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
 import useModalsStore from "@/stores/useModalsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
+import Modal from "../Modal";
 
 const SetCard = ({
   setToShowName,
@@ -103,11 +103,7 @@ const SetCard = ({
   }, [isEditModalVisible]);
 
   return (
-    <BoxContainer
-      contentBackgroundColor={theme.surface}
-      margin={0}
-      maxWidth={300}
-    >
+    <BoxContainer contentBackgroundColor={theme.surface} margin={0} maxWidth={300}>
       {config.showTextInput && (
         <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} isWithConfimation={true} />
       )}
@@ -116,9 +112,9 @@ const SetCard = ({
 
       {config.showStatSliderResult && <StatSliderResultContainer setsToShowMultipleStatsLists={[setToShowStats]} />}
 
-      <MyModal isModalVisible={isImagesModalVisible} setIsModalVisible={setIsImagesModalVisible}>
+      <Modal isModalVisible={isImagesModalVisible} setIsModalVisible={setIsImagesModalVisible}>
         <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="image" />
-      </MyModal>
+      </Modal>
 
       <SetCardActionButtons setCardIndex={setCardIndex} config={config} situation={situation} />
     </BoxContainer>

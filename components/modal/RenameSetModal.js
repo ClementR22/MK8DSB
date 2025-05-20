@@ -1,8 +1,8 @@
 import React from "react";
-import MyModal from "./MyModal";
 import useModalsStore from "@/stores/useModalsStore";
 import useSetsStore from "@/stores/useSetsStore";
 import SetNameInput from "../textInput/SetNameInput";
+import Modal from "../Modal";
 
 const RenameSetModal = () => {
   const saveSetFromFound = useSetsStore((state) => state.saveSetFromFound);
@@ -19,7 +19,7 @@ const RenameSetModal = () => {
   };
 
   return (
-    <MyModal
+    <Modal
       modalTitle="NameTheSet"
       isModalVisible={isRenameSetModalVisible}
       setIsModalVisible={setIsRenameSetModalVisible}
@@ -27,7 +27,7 @@ const RenameSetModal = () => {
       onClose={saveAndClose}
     >
       <SetNameInput setToShowName={setFoundName} />
-    </MyModal>
+    </Modal>
   );
 };
 

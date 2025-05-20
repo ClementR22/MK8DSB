@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FlatList, Pressable, Text, View, Linking, StyleSheet } from "react-native";
-import MyModal from "../modal/MyModal";
 import { translate } from "@/translations/translations";
 import Button from "@/components/Button";
+import { Modal } from "react-native-paper";
 
 const LicensesButton = () => {
   const [isLicensesModalVisible, setIsLicensesModalVisible] = useState(false);
@@ -10,7 +10,7 @@ const LicensesButton = () => {
   return (
     <Button onPress={() => setIsLicensesModalVisible(true)}>
       <Text>{translate("OpenSourceLicenses")}</Text>
-      <MyModal
+      <Modal
         modalTitle="Licenses"
         isModalVisible={isLicensesModalVisible}
         setIsModalVisible={setIsLicensesModalVisible}
@@ -32,7 +32,7 @@ const LicensesButton = () => {
             contentContainerStyle={styles.flatListContainer}
           />
         </View>
-      </MyModal>
+      </Modal>
     </Button>
   );
 };
