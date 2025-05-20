@@ -4,13 +4,13 @@ import { button, button_icon } from "../styles/button";
 import { shadow_12dp, shadow_3dp } from "@/components/styles/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import MyModal from "../modal/MyModal";
 import StatSelector from "../statSelector/StatSelector";
 import TooltipWrapper from "../TooltipWrapper";
 import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
 import { translate } from "@/translations/translations";
 import { modal } from "@/components/styles/modal";
 import useSetsStore from "@/stores/useSetsStore";
+import Modal from "../Modal";
 
 const StatSliderResultSelectorPressable = () => {
   const { statsVisibleList, setStatsVisibleList, toggleCheckListStatsVisibleList } = useStatsVisibleList();
@@ -32,7 +32,7 @@ const StatSliderResultSelectorPressable = () => {
         <MaterialCommunityIcons name="checkbox-multiple-marked" size={24} color={theme.on_primary} />
       </TooltipWrapper>
 
-      <MyModal
+      <Modal
         modalTitle="StatsToDisplay"
         isModalVisible={foundStatsModalVisible}
         setIsModalVisible={setFoundStatsModalVisible}
@@ -55,7 +55,7 @@ const StatSliderResultSelectorPressable = () => {
           }}
           isVisibleStatsNotInSettingsScreen={true}
         />
-      </MyModal>
+      </Modal>
     </View>
   );
 };

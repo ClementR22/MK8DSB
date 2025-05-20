@@ -34,16 +34,16 @@ function Modal({
       backgroundColor: "rgba(0, 0, 0, 0.5)",
     },
     container: {
-      maxHeight: 0.9 * vh,
+      maxHeight: "90%",
       zIndex: 10,
       cursor: "auto",
       //alignSelf: "center",
-      width: 0.9 * vw,
-      maxWidth: 400,
+      width: "90%",
+      // maxWidth: 400,
       borderRadius: 28,
       paddingVertical: 24,
       backgroundColor: theme.surface_container_high,
-    },
+    } /* 
     content: {
       flex: 1,
       marginBottom: 0,
@@ -59,14 +59,14 @@ function Modal({
       paddingHorizontal: 24,
       fontSize: 24,
       marginBottom: 16,
-    },
+    }, */,
     title_center: {
       color: theme.on_surface,
       alignSelf: "center",
       paddingHorizontal: 24,
       fontSize: 24,
       marginBottom: 0,
-    },
+    } /* 
     close_button_center: {
       alignSelf: "center",
       width: 100,
@@ -83,7 +83,7 @@ function Modal({
       alignItems: "center",
       flexDirection: "row",
       borderRadius: 24,
-    },
+    }, */,
   });
 
   return (
@@ -100,7 +100,7 @@ function Modal({
 
           {children}
 
-          <FlexContainer flexDirection={"row"} gap={10}>
+          <FlexContainer style={{ backgroundColor: "red" }} flexDirection={"row"} gap={10}>
             {leftButton}
             {isWithClosePressable && (
               <Button elevation={12} onPress={onClose ? onClose : () => setIsModalVisible(false)}>
