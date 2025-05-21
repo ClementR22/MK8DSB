@@ -43,8 +43,8 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
     }
   }, [isSync, chosenStats, statsVisibleConfig]);
 
-  const pressableImagesList = usePressableElementsStore((state) => state.statesByScreen["search"].pressableImagesList);
-  const pressableImagesByCategory = computePressableElementsByCategory(pressableImagesList);
+  const pressableElementsList = usePressableElementsStore((state) => state.pressableElementsListByScreen["search"]);
+  const pressableElementsByCategory = computePressableElementsByCategory(pressableElementsList);
 
   const [chosenBodyType, setChosenBodyType] = useState(
     bodyTypeNames.map((bodyTypeName) => ({
@@ -65,7 +65,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
 
   const selectedClassIds4categories = useMemo(() => {
     const result = [];
-    Object.entries(pressableImagesByCategory).forEach(([, category]) => {
+    Object.entries(pressableElementsByCategory).forEach(([, category]) => {
       const pressed = [];
       Object.entries(category).forEach(([classKey, classElements]) => {
         const isAnyImagePressed = Object.values(classElements).some(({ pressed }) => pressed);
@@ -76,7 +76,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
       result.push(pressed);
     });
     return result;
-  }, [pressableImagesByCategory]);
+  }, [pressableElementsByCategory]);
 
   const chosenBodyTypeList = useMemo(
     () => chosenBodyType.filter((bodyType) => bodyType.checked).map((bodyType) => bodyType.name),

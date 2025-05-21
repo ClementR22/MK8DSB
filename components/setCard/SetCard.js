@@ -9,6 +9,7 @@ import SetCardActionButtons from "./SetCardActionButtons";
 import useModalsStore from "@/stores/useModalsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import Modal from "../Modal";
+import useSetsStore from "@/stores/useSetsStore";
 
 const SetCard = ({
   setToShowName,
@@ -27,8 +28,6 @@ const SetCard = ({
   }
 
   const [isImagesModalVisible, setIsImagesModalVisible] = useState(false);
-
-  const isEditModalVisible = useModalsStore((state) => state.isEditModalVisible);
 
   const displaySetImages = () => {
     setIsImagesModalVisible(true);
@@ -94,13 +93,17 @@ const SetCard = ({
     return { ...base };
   }, [situation, screenName]);
 
-  const updatePressableImagesList = usePressableElementsStore((state) => state.updatePressableImagesList);
+  const setPressedClassIdsObjByScreen = usePressableElementsStore((state) => state.setPressedClassIdsObjByScreen);
+  const updatePressableElementsList = usePressableElementsStore((state) => state.updatePressableElementsList);
+  const setSetCardEdittedIndex = useSetsStore((state) => state.setSetCardEdittedIndex);
+  const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
 
-  useEffect(() => {
-    if (isEditModalVisible) {
-      updatePressableImagesList(situation, setToShowClassIds);
-    }
-  }, [isEditModalVisible]);
+  function handleEditPress() {
+    setSetCardEdittedIndex(setCardIndex);
+    setPressedClassIdsObjByScreen(screenName, setToShowClassIds);
+    setIsEditModalVisible(true);
+    updatePressableElementsList(screenName, setToShowClassIds);
+  }
 
   return (
     <BoxContainer contentBackgroundColor={theme.surface} margin={0} maxWidth={300}>
@@ -116,7 +119,12 @@ const SetCard = ({
         <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="image" />
       </Modal>
 
-      <SetCardActionButtons setCardIndex={setCardIndex} config={config} situation={situation} />
+      <SetCardActionButtons
+        setCardIndex={setCardIndex}
+        config={config}
+        situation={situation}
+        handleEditPress={handleEditPress}
+      />
     </BoxContainer>
   );
 };

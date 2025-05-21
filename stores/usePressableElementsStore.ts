@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import { bodyTypeNames, elementsAllInfosList } from "@/data/data";
-import { useMemo } from "react";
+import { bodyTypeNames, category4Names, elementsAllInfosList } from "@/data/data";
+import useSetsStore from "./useSetsStore";
 
 // --- Types ---
 type ElementCategory = string; // tu peux le raffiner si tu veux un enum (ex: "character" | "body" | etc.)
 
-export type PressableImage = {
+export type PressableElement = {
   id: number;
   name: string;
   category: ElementCategory;
@@ -23,20 +23,19 @@ type PressedClassIds = {
 
 type ScreenName = "search" | "display" | "save" | "gallery";
 
-type ScreenState = {
-  pressableImagesList: PressableImage[];
-  pressedClassIds?: PressedClassIds;
-};
-
 type PressableElementsStore = {
-  statesByScreen: Record<ScreenName, ScreenState>;
+  pressableElementsListByScreen: Record<ScreenName, PressableElement[]>;
+  pressedClassIdsObjByScreen: Record<ScreenName, PressedClassIds>;
+  setPressedClassIdsObjByScreen: (screenName: ScreenName, setToShowClassIds: number[]) => void;
+  isSetsListUpdated: boolean;
+  setIsSetsListUpdated: (newIsSetsListUpdated: boolean) => void;
   handlePressImage: (screenName: ScreenName, id: number) => void;
   handlePressImageByClass: (screenName: ScreenName, classId: number, category7: string) => void;
-  updatePressableImagesList: (screenName: ScreenName, setClassIds: number[]) => void;
+  updatePressableElementsList: (screenName: ScreenName, setClassIds: number[]) => void;
 };
 
 // --- Initialisation ---
-const createPressableImagesList = (): PressableImage[] =>
+const createPressableElementsList = (): PressableElement[] =>
   elementsAllInfosList.map(({ id, name, category, classId, image }) => ({
     id,
     name,
@@ -48,107 +47,101 @@ const createPressableImagesList = (): PressableImage[] =>
 
 // --- Zustand store ---
 const usePressableElementsStore = create<PressableElementsStore>((set, get) => ({
-  statesByScreen: {
-    search: {
-      pressableImagesList: createPressableImagesList(),
-      pressedClassIds: {
-        character: 9,
-        body: 16,
-        wheels: 30,
-        glider: 39,
+  pressableElementsListByScreen: {
+    search: createPressableElementsList(),
+    display: createPressableElementsList(),
+    save: createPressableElementsList(),
+    gallery: createPressableElementsList(),
+  },
+
+  pressedClassIdsObjByScreen: {
+    search: { character: 0, body: 0, wheels: 0, glider: 0 },
+    display: { character: 0, body: 0, wheels: 0, glider: 0 },
+    save: { character: 0, body: 0, wheels: 0, glider: 0 },
+    gallery: { character: 0, body: 0, wheels: 0, glider: 0 },
+  },
+
+  isSetsListUpdated: true,
+
+  setIsSetsListUpdated: (newIsSetsListUpdated) => {
+    set({ isSetsListUpdated: newIsSetsListUpdated });
+  },
+
+  setPressedClassIdsObjByScreen: (screenName, setToShowClassIds) => {
+    const newPressedClassIdsObj = Object.fromEntries(
+      category4Names.map((category, index) => [category, setToShowClassIds[index]])
+    );
+    set((state) => ({
+      pressedClassIdsObjByScreen: {
+        ...state.pressedClassIdsObjByScreen,
+        [screenName]: newPressedClassIdsObj,
       },
-    },
-    display: {
-      pressableImagesList: createPressableImagesList(),
-      pressedClassIds: {
-        character: 9,
-        body: 16,
-        wheels: 30,
-        glider: 39,
-      },
-    },
-    save: {
-      pressableImagesList: createPressableImagesList(),
-      pressedClassIds: {
-        character: 9,
-        body: 16,
-        wheels: 30,
-        glider: 39,
-      },
-    },
-    gallery: {
-      pressableImagesList: createPressableImagesList(),
-    },
+    }));
   },
 
   handlePressImage: (screenName, id) => {
-    const screen = get().statesByScreen[screenName];
-    if (!screen) return;
-
-    const newList = screen.pressableImagesList.map((item, index) =>
+    const pressableElementsList = get().pressableElementsListByScreen[screenName];
+    const newList = pressableElementsList.map((item, index) =>
       index === id ? { ...item, pressed: !item.pressed } : item
     );
 
     set((state) => ({
-      statesByScreen: {
-        ...state.statesByScreen,
-        [screenName]: {
-          ...screen,
-          pressableImagesList: newList,
-        },
+      pressableElementsListByScreen: {
+        ...state.pressableElementsListByScreen,
+        [screenName]: newList,
       },
     }));
   },
 
   handlePressImageByClass: (screenName, classId, category7) => {
-    const screen = get().statesByScreen[screenName];
-    if (!screen || !screen.pressedClassIds) return;
+    const pressableElementsList = get().pressableElementsListByScreen[screenName];
 
     let category4 = category7;
-    let category4ElementList = [category7];
+    let category4List = [category7];
 
     if (bodyTypeNames.includes(category7)) {
       category4 = "body";
-      category4ElementList = bodyTypeNames;
+      category4List = bodyTypeNames;
     }
 
-    const newList = screen.pressableImagesList.map((item) =>
-      category4ElementList.includes(item.category) ? { ...item, pressed: item.classId === classId } : item
+    const newPressableElementsList = pressableElementsList.map((item) =>
+      category4List.includes(item.category) ? { ...item, pressed: item.classId === classId } : item
     );
 
-    const newPressedClassIds = {
-      ...screen.pressedClassIds,
+    set((state) => ({
+      pressableElementsListByScreen: {
+        ...state.pressableElementsListByScreen,
+        [screenName]: newPressableElementsList,
+      },
+    }));
+
+    const pressedClassIdsObj = get().pressedClassIdsObjByScreen[screenName];
+    const newPressedClassIdsObj = {
+      ...pressedClassIdsObj,
       [category4]: classId,
     };
 
     set((state) => ({
-      statesByScreen: {
-        ...state.statesByScreen,
-        [screenName]: {
-          ...screen,
-          pressableImagesList: newList,
-          pressedClassIds: newPressedClassIds,
-        },
+      pressedClassIdsObjByScreen: {
+        ...state.pressedClassIdsObjByScreen,
+        [screenName]: newPressedClassIdsObj,
       },
     }));
+
+    set({ isSetsListUpdated: false });
   },
 
-  updatePressableImagesList: (screenName, setClassIds: number[]) => {
-    const screen = get().statesByScreen[screenName];
-    if (!screen) return;
-
-    const newList = screen.pressableImagesList.map((item) => ({
+  updatePressableElementsList: (screenName, setClassIds) => {
+    const pressableElementsList = get().pressableElementsListByScreen[screenName];
+    const newPressableElementsList = pressableElementsList.map((item) => ({
       ...item,
       pressed: setClassIds.includes(item.classId),
     }));
 
     set((state) => ({
-      statesByScreen: {
-        ...state.statesByScreen,
-        [screenName]: {
-          ...screen,
-          pressableImagesList: newList,
-        },
+      pressableElementsListByScreen: {
+        ...state.pressableElementsListByScreen,
+        [screenName]: newPressableElementsList,
       },
     }));
   },

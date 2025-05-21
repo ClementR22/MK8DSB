@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useSetsStore from "@/stores/useSetsStore";
 import { useTheme } from "@/contexts/ThemeContext";
 import BoxContainer from "../BoxContainer";
@@ -8,9 +8,8 @@ import { button_icon } from "../styles/button";
 import { shadow_3dp } from "@/components/styles/theme";
 import useModalsStore from "@/stores/useModalsStore";
 
-const SetCardActionButtons = React.memo(({ setCardIndex, config, situation }) => {
+const SetCardActionButtons = React.memo(({ setCardIndex, config, situation, handleEditPress }) => {
   const { theme } = useTheme();
-  const saveSetFromDisplay = useSetsStore((state) => state.saveSetFromDisplay);
   const loadSetSaveToSearch = useSetsStore((state) => state.loadSetSaveToSearch);
   const loadSetSaveToDisplay = useSetsStore((state) => state.loadSetSaveToDisplay);
   const loadSetSearchToDisplay = useSetsStore((state) => state.loadSetSearchToDisplay);
@@ -18,23 +17,18 @@ const SetCardActionButtons = React.memo(({ setCardIndex, config, situation }) =>
   const removeSet = useSetsStore((state) => state.removeSet);
   const exportSet = useSetsStore((state) => state.exportSet);
   const setSetCardEdittedIndex = useSetsStore((state) => state.setSetCardEdittedIndex);
+  const saveSetFromDisplay = useSetsStore((state) => state.saveSetFromDisplay);
   const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
-  const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
 
-  const onEditPress = () => {
-    setSetCardEdittedIndex(setCardIndex);
-    setIsEditModalVisible(true);
-  };
-
-  const onSavePress = () => {
+  function handleSavePress() {
     setSetCardEdittedIndex(setCardIndex);
     situation === "search" ? setIsRenameSetModalVisible(true) : saveSetFromDisplay(setCardIndex);
-  };
+  }
 
   return (
     <BoxContainer flexDirection="row" key="displaySetActionButtonContainer" margin={0}>
       {config.showEdit && (
-        <TooltipWrapper tooltipText="Edit" style={[button_icon(theme).container, shadow_3dp]} onPress={onEditPress}>
+        <TooltipWrapper tooltipText="Edit" style={[button_icon(theme).container, shadow_3dp]} onPress={handleEditPress}>
           <MaterialIcons name="edit" size={24} color={theme.on_primary} />
         </TooltipWrapper>
       )}
@@ -52,7 +46,7 @@ const SetCardActionButtons = React.memo(({ setCardIndex, config, situation }) =>
       )}
 
       {config.showSave && (
-        <TooltipWrapper tooltipText="Save" style={[button_icon(theme).container, shadow_3dp]} onPress={onSavePress}>
+        <TooltipWrapper tooltipText="Save" style={[button_icon(theme).container, shadow_3dp]} onPress={handleSavePress}>
           <MaterialIcons name="save" size={24} color={theme.on_primary} />
         </TooltipWrapper>
       )}

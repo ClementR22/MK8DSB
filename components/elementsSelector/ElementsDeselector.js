@@ -6,8 +6,8 @@ import usePressableElementsStore from "@/stores/usePressableElementsStore";
 
 const ElementsDeselector = () => {
   const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
-  const pressableImagesList = usePressableElementsStore(
-    (state) => state.statesByScreen[screenNameForEditModal].pressableImagesList
+  const pressableElementsList = usePressableElementsStore(
+    (state) => state.pressableElementsListByScreen[screenNameForEditModal]
   );
   const handlePressImage = usePressableElementsStore((state) => state.handlePressImage);
 
@@ -20,7 +20,7 @@ const ElementsDeselector = () => {
         flexWrap: "wrap",
       }}
     >
-      {pressableImagesList
+      {pressableElementsList
         .filter((element) => element.pressed)
         .map(({ id, name, image, pressed }) => (
           <ElementChip

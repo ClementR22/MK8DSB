@@ -7,6 +7,7 @@ import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import DisplaySetScreenPressablesContainer from "@/components/screenPressablesContainer/DisplaySetScreenPressablesContainer";
 import { LoadSetModalProvider } from "../contexts/LoadSetModalContext";
 import useSetsStore from "@/stores/useSetsStore";
+import usePressableElementsStore from "@/stores/usePressableElementsStore";
 
 const DisplaySetScreen = () => {
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);

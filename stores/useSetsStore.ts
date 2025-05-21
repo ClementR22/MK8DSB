@@ -28,7 +28,7 @@ export interface SetObject {
   stats: number[];
 }
 
-export type ScreenName = "search" | "display" | "save";
+export type ScreenName = "search" | "display" | "save" | "gallery";
 
 interface SetsStoreState {
   chosenStats: ChosenStat[];
@@ -97,7 +97,9 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
 
   setSetsListFound: (newSetsList) => set({ setsListFound: newSetsList }),
 
-  setSetCardEdittedIndex: (newNumber) => set({ setCardEdittedIndex: newNumber }),
+  setSetCardEdittedIndex: (newNumber) => {
+    set({ setCardEdittedIndex: newNumber });
+  },
 
   updateStatValue: (name, newValue) =>
     set((state) => ({
@@ -272,21 +274,21 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     set({ [listName]: updated } as any);
   },
 
-  updateSetsList: async (pressedClassIds, screenName) => {
+  updateSetsList: async (pressedClassIdsObj, screenName) => {
     const listName = screenName === "display" ? "setsListDisplayed" : "setsListSaved";
     const list = get()[listName as keyof SetsStoreState] as SetObject[];
-    const classIds = Object.values(pressedClassIds);
-    const index = get().setCardEdittedIndex;
+    const classIds = Object.values(pressedClassIdsObj);
+    const setCardEdittedIndex = get().setCardEdittedIndex;
 
-    const updated = list.map((set, i) => {
-      if (i === index) {
+    const updated = list.map((set, setCardIndex) => {
+      if (setCardIndex === setCardEdittedIndex) {
         const newSet = {
           ...set,
           classIds,
           stats: getSetStatsFromElementsClassIds(classIds),
         };
         if (screenName === "save") {
-          const key = get().setsSavedKeys[index];
+          const key = get().setsSavedKeys[setCardEdittedIndex];
           get().setSetInMemory(key, newSet);
         }
         return newSet;

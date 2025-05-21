@@ -1,12 +1,13 @@
 import { create } from "zustand";
 
+type ScreenName = "search" | "display" | "save" | "gallery";
 interface ModalsStoreState {
   isRenameSetModalVisible: boolean;
   setIsRenameSetModalVisible: (newVisible: boolean) => void;
   isEditModalVisible: boolean;
   setIsEditModalVisible: (newVisible: boolean) => void;
-  screenNameForEditModal: string;
-  setScreenNameForEditModal: (screenName: string) => void;
+  screenNameForEditModal: ScreenName;
+  setScreenNameForEditModal: (screenName: ScreenName) => void;
 }
 
 // Store Zustand typé

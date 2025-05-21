@@ -11,8 +11,12 @@ import { SettingsProvider } from "@/contexts/SettingsContext";
 import EditSetModal from "@/components/modal/EditSetModal";
 import { usePathname } from "expo-router";
 import useModalsStore from "@/stores/useModalsStore";
+import useSetsStore from "@/stores/useSetsStore";
+import usePressableElementsStore from "@/stores/usePressableElementsStore";
 
-const screenNameFromPath = (pathname: string): string | null => {
+type ScreenName = "search" | "display" | "save" | "gallery";
+
+const screenNameFromPath = (pathname: string): ScreenName | null => {
   if (pathname === "/") return "search";
   if (pathname.includes("isplay")) return "display";
   if (pathname.includes("ave")) return "save";
@@ -23,12 +27,25 @@ const screenNameFromPath = (pathname: string): string | null => {
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const pathname = usePathname();
+  const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
   const setScreenNameForEditModal = useModalsStore((state) => state.setScreenNameForEditModal);
+  const isSetsListUpdated = usePressableElementsStore((state) => state.isSetsListUpdated);
+  const setIsSetsListUpdated = usePressableElementsStore((state) => state.setIsSetsListUpdated);
+  const pressedClassIdsObjByScreen = usePressableElementsStore((state) => state.pressedClassIdsObjByScreen);
+  const pressedClassIdsObj = pressedClassIdsObjByScreen[screenNameForEditModal];
+  const updateSetsList = useSetsStore((state) => state.updateSetsList);
 
   useEffect(() => {
     const screenName = screenNameFromPath(pathname);
     if (screenName != null) setScreenNameForEditModal(screenName);
   }, [pathname]);
+
+  useEffect(() => {
+    if (!isSetsListUpdated) {
+      updateSetsList(pressedClassIdsObj, screenNameForEditModal);
+      setIsSetsListUpdated(true);
+    }
+  }, [isSetsListUpdated]);
 
   return (
     <CustomThemeProvider>

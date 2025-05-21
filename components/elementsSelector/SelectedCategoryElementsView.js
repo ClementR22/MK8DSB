@@ -11,6 +11,7 @@ import { computePressableElementsByCategory } from "@/utils/computePressableElem
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import useSetsStore from "@/stores/useSetsStore";
 
 const SelectedCategoryElementsView_ = ({ selectedTab, scrollToSectionWithScrollViewRef, sectionRefs }) => {
   const { theme } = useTheme();
@@ -18,10 +19,10 @@ const SelectedCategoryElementsView_ = ({ selectedTab, scrollToSectionWithScrollV
   const { orderNumber } = useOrderNumber();
   const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
   const galleryCase = screenNameForEditModal === "gallery";
-  const pressableImagesList = usePressableElementsStore(
-    (state) => state.statesByScreen[screenNameForEditModal].pressableImagesList
+  const pressableElementsList = usePressableElementsStore(
+    (state) => state.pressableElementsListByScreen[screenNameForEditModal]
   );
-  const pressableImagesByCategory = computePressableElementsByCategory(pressableImagesList);
+  const pressableElementsByCategory = computePressableElementsByCategory(pressableElementsList);
   const handlePressImage = usePressableElementsStore((state) => state.handlePressImage);
   const handlePressImageByClass = usePressableElementsStore((state) => state.handlePressImageByClass);
 
@@ -78,7 +79,7 @@ const SelectedCategoryElementsView_ = ({ selectedTab, scrollToSectionWithScrollV
   };
 
   const getSelectedCategoryElements = () => {
-    return fusionClassLists(pressableImagesByCategory[selectedTab]);
+    return fusionClassLists(pressableElementsByCategory[selectedTab]);
   };
   const sortElements = (selectedCategoryElements, orderNumber) => {
     switch (orderNumber) {
@@ -124,7 +125,7 @@ const SelectedCategoryElementsView_ = ({ selectedTab, scrollToSectionWithScrollV
     }
   } else {
     // OU BIEN RANGEMENT PAR CLASSE
-    const selectedCategoryElements = pressableImagesByCategory[selectedTab]; // deja trié par classe dans pressableImagesByCategory
+    const selectedCategoryElements = pressableElementsByCategory[selectedTab]; // deja trié par classe dans pressableElementsByCategory
     return (
       <View style={styles.bodyTypesContainer}>
         {Object.entries(selectedCategoryElements).map(([classKey, classElements]) => (

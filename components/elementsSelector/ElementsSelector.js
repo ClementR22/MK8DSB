@@ -5,8 +5,6 @@ import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import CategorySelector from "./CategorySelector";
 import SelectedCategoryElementsView from "./SelectedCategoryElementsView";
 import ButtonScrollToTop from "../ButtonScrollToTop";
-import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import useModalsStore from "@/stores/useModalsStore";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const ElementsSelector = () => {
@@ -53,23 +51,6 @@ const ElementsSelector = () => {
       sectionRefs.current = Array.from({ length: 5 }, () => React.createRef());
     }
   }, []);
-
-  const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
-  const pressableImagesList = usePressableElementsStore(
-    (state) => state.statesByScreen[screenNameForEditModal].pressableImagesList
-  );
-
-  const styles = StyleSheet.create({
-    tabText: {
-      fontSize: 16,
-      fontWeight: "bold",
-    },
-    text: {
-      fontSize: 25,
-      fontWeight: "bold",
-      marginBottom: 16,
-    },
-  });
 
   return (
     <>
