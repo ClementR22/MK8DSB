@@ -34,8 +34,8 @@
     "expo-web-browser": "~14.1.6",
     "license-checker": "^25.0.1",
     "react": "19.0.0",
-    "react-native": "0.79.2",
     "react-dom": "19.0.0",
+    "react-native": "0.79.2",
     "react-native-dynamic-vector-icons": "^2.0.0",
     "react-native-oss-license": "^0.7.0",
     "react-native-paper": "^5.12.5",
@@ -44,6 +44,7 @@
     "react-native-screens": "~4.10.0",
     "react-native-toast-message": "^2.2.1",
     "react-native-walkthrough-tooltip": "^1.6.0",
+    "react-native-web": "^0.20.0",
     "zustand": "^5.0.4"
   },
   "devDependencies": {
