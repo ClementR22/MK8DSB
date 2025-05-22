@@ -16,7 +16,7 @@ const ThemeContext = createContext();
 export const CustomThemeProvider = ({ children }) => {
   const colorScheme = useColorScheme();
   const [theme, setTheme_] = useState(light_theme); // dark_theme | light_theme
-  const [themeValue, setThemeValue] = useState("light"); // "light" | "dark" | "system"
+  const [themeValue, setThemeValue] = useState("system"); // "light" | "dark" | "system"
 
   const setTheme = async (newThemeValue) => {
     setThemeValue(newThemeValue);

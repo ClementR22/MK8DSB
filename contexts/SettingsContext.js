@@ -25,7 +25,7 @@ export const SettingsProvider = ({ children }) => {
       setState: setStatsVisibleListDefault,
       value: statsVisibleListDefaultInit,
     },
-    theme: { setState: setTheme, value: "light" },
+    theme: { setState: setTheme, value: "system" },
   };
 
   const loadSettings = () => {
