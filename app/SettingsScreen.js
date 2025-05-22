@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import LanguageSelector from "@/components/settingsComponent/LanguageSelector";
@@ -10,23 +10,24 @@ import BoxContainer from "@/components/BoxContainer";
 import FlexScrollView from "@/components/FlexScrollView";
 import StatsVisibleConfigSelector from "@/components/settingsComponent/StatsVisibleConfigSelector";
 import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
-import Modal from "@/components/Modal";
 import Button from "@/components/Button";
-import { translateToLanguage } from "@/translations/translations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Text from "@/components/Text";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import { useSettings } from "@/contexts/SettingsContext";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const SettingsScreen = () => {
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
   const isDefault = statsVisibleConfig === "yes";
-  const language = useLanguageStore((state) => state.language);
   const { resetSettings } = useSettings();
 
-  const [isStatsVisibleDefaultModalVisible, setIsStatsVisibleDefaultModalVisible] = useState(false);
+  const [isStatsVisibleDefaultSelectorVisible, setIsStatsVisibleDefaultSelectorVisible] = useState(true);
+
+  useEffect(() => {
+    setIsStatsVisibleDefaultSelectorVisible(isDefault);
+  }, [isDefault]);
 
   return (
     <ScreenProvider screenName="settings">
@@ -37,17 +38,14 @@ const SettingsScreen = () => {
             <ThemeSelector />
             <StatsVisibleConfigSelector />
             {isDefault && (
-              <Button onPress={() => setIsStatsVisibleDefaultModalVisible(true)}>
-                {translateToLanguage("ConfigureTheStats", language)}
+              <Button onPress={() => setIsStatsVisibleDefaultSelectorVisible(!isStatsVisibleDefaultSelectorVisible)}>
+                <MaterialCommunityIcons
+                  name={isStatsVisibleDefaultSelectorVisible ? "arrow-expand-up" : "arrow-expand-down"}
+                  size={24}
+                />
               </Button>
             )}
-            <Modal
-              modalTitle="DefaultVisibleStats"
-              isModalVisible={isStatsVisibleDefaultModalVisible}
-              setIsModalVisible={setIsStatsVisibleDefaultModalVisible}
-            >
-              <StatsVisibleListDefaultSelector />
-            </Modal>
+            {isStatsVisibleDefaultSelectorVisible && <StatsVisibleListDefaultSelector />}
             <ContactUsButton />
             <LicensesButton />
             <ButtonResetSettings resetSettings={resetSettings} />
