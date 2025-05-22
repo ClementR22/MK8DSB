@@ -5,16 +5,7 @@ import { shadow_12dp, shadow_1dp, shadow_3dp, shadow_6dp, shadow_8dp } from "@/c
 import Icon from "react-native-dynamic-vector-icons";
 import TooltipWrapper from "@/components/TooltipWrapper";
 
-function ButtonIcon({
-  children,
-  onPress,
-  tooltipText,
-  elevation,
-  iconName,
-  iconType,
-  iconSize = 24,
-  ...props
-}) {
+function ButtonIcon({ children, onPress, tooltipText, elevation, iconName, iconType, iconSize = 24, ...props }) {
   const { theme } = useTheme();
 
   const [buttonHover, setButtonHover] = useState(false);

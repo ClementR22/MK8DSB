@@ -332,8 +332,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
         ? get().setsListDisplayed
         : get().setsListSaved;
 
-    console.log("list", list);
-    console.log("list[index];", list[index]);
     const { name, classIds } = list[index];
     const json = JSON.stringify({ name, classIds });
     Clipboard.setStringAsync(json);

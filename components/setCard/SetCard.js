@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import SetImagesContainer from "./SetImagesContainer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
@@ -10,6 +10,7 @@ import useModalsStore from "@/stores/useModalsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import Modal from "../Modal";
 import useSetsStore from "@/stores/useSetsStore";
+import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
 
 const SetCard = ({
   setToShowName,
@@ -37,54 +38,26 @@ const SetCard = ({
     search: {
       showTextInput: false,
       showStatSliderResult: true,
-      showEdit: false,
-      showRemove: false,
-      showSave: true,
-      showLoadSaveToSearch: false,
-      showLoadSaveToDisplay: false,
-      showLoadSearchToDisplay: true,
-      showLoadDisplayToSearch: false,
-      showRemoveInMemory: false,
-      showExport: true,
+      actionNamesList: ["save", "loadSearchToDisplay", "export"],
+      moreActionNamesList: undefined,
     },
     display: {
       showTextInput: true,
       showStatSliderResult: false,
-      showEdit: true,
-      showRemove: true,
-      showSave: true,
-      showLoadSaveToSearch: false,
-      showLoadSaveToDisplay: false,
-      showLoadSearchToDisplay: false,
-      showLoadDisplayToSearch: true,
-      showRemoveInMemory: false,
-      showExport: true,
+      actionNamesList: ["edit", "save", "loadDisplayToSearch"],
+      moreActionNamesList: ["remove", "export"],
     },
     save: {
       showTextInput: true,
       showStatSliderResult: true,
-      showEdit: true,
-      showRemove: false,
-      showSave: false,
-      showLoadSaveToSearch: true,
-      showLoadSaveToDisplay: true,
-      showLoadSearchToDisplay: false,
-      showLoadDisplayToSearch: false,
-      showRemoveInMemory: true,
-      showExport: true,
+      actionNamesList: ["edit", "loadSaveToSearch", "loadSaveToDisplay"],
+      moreActionNamesList: ["export", "removeInMemory"],
     },
     load: {
       showTextInput: false,
       showStatSliderResult: false,
-      showEdit: false,
-      showRemove: false,
-      showSave: false,
-      showLoadSaveToSearch: screenName === "search",
-      showLoadSaveToDisplay: screenName === "display",
-      showLoadSearchToDisplay: false,
-      showLoadDisplayToSearch: false,
-      showRemoveInMemory: false,
-      showExport: false,
+      actionNamesList: [screenName === "search" ? "showLoadSaveToSearch" : "showLoadSaveToDisplay"],
+      moreActionNamesList: undefined,
     },
   };
 
@@ -107,6 +80,14 @@ const SetCard = ({
 
   return (
     <BoxContainer contentBackgroundColor={theme.surface} margin={0} maxWidth={300}>
+      {config.moreActionNamesList && (
+        <SetCardMoreActionsButton
+          moreActionNamesList={config.moreActionNamesList}
+          setCardIndex={setCardIndex}
+          situation={situation}
+        />
+      )}
+
       {config.showTextInput && (
         <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} isWithConfimation={true} />
       )}
@@ -120,8 +101,8 @@ const SetCard = ({
       </Modal>
 
       <SetCardActionButtons
+        actionNamesList={config.actionNamesList}
         setCardIndex={setCardIndex}
-        config={config}
         situation={situation}
         handleEditPress={handleEditPress}
       />

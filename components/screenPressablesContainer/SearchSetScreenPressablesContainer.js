@@ -158,8 +158,8 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
       {/*</TooltipWrapper>*/}
 
       <ButtonIcon
-        tooltipText={"ChooseStats"}
-        iconName={"plus"}
+        tooltipText="ChooseStats"
+        iconName="plus"
         iconType={IconType.MaterialCommunityIcons}
         onPress={() => setChosenStatsModalVisible(true)}
       />
