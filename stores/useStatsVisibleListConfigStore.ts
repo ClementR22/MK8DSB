@@ -14,8 +14,6 @@ export interface StatVisibility {
 interface StatsVisibleListConfigState {
   statsVisibleConfig: StatsVisibleConfig;
   setStatsVisibleConfig: (newValue: StatsVisibleConfig) => Promise<void>;
-  isDefault: boolean;
-  isSync: boolean;
 
   statsVisibleListDefault: StatVisibility[];
   setStatsVisibleListDefault: (newList: StatVisibility[]) => void;
@@ -52,16 +50,10 @@ export const statsVisibleListDefaultInit: StatVisibility[] = statNames.map((stat
 // === STORE ZUSTAND ===
 export const useStatsVisibleListConfigStore = create<StatsVisibleListConfigState>((set, get) => ({
   statsVisibleConfig: "no",
+
   async setStatsVisibleConfig(newValue) {
     set({ statsVisibleConfig: newValue });
     await saveThingInMemory("statsVisibleConfig", newValue);
-  },
-
-  get isDefault() {
-    return get().statsVisibleConfig === "yes";
-  },
-  get isSync() {
-    return get().statsVisibleConfig === "sync";
   },
 
   statsVisibleListDefault: statsVisibleListDefaultInit,

@@ -37,6 +37,8 @@ const translations = {
 
     // text
     "ConfigureDefaultVisibleStats?": "Configure default visible stats?",
+    Language: "Language",
+    Theme: "Theme",
 
     // button label
     Search: "Search",
@@ -45,8 +47,8 @@ const translations = {
     Dark: "Dark",
     Light: "Light",
     System: "System",
-    Configure: "Configure by default",
-    DontConfigure: "Don't configure by default",
+    Configure: "Yes",
+    DontConfigure: "No",
     AllwaysSync: "Always in sync with the configured stats",
     ConfigureTheStats: "Configure the stats",
     ContactUs: "Contact us",
@@ -259,16 +261,20 @@ const translations = {
 
     // text
     "ConfigureDefaultVisibleStats?": "Configurer les stats visibles par défault ?",
+    Language: "Langue",
+    Theme: "Theme",
 
     // button label
     Search: "Chercher",
     All: "Toutes",
     Sync: "Sync avec les stats paramétrées",
+    Language: "Langue",
+    Theme: "Theme",
     Dark: "Sombre",
     Light: "Clair",
     System: "Appareil",
-    Configure: "Configurer par défault",
-    DontConfigure: "Ne pas configurer par défault",
+    Configure: "Oui",
+    DontConfigure: "Non",
     AllwaysSync: "Toujours sync avec les stats paramétrées",
     ConfigureTheStats: "Configurer les stats",
     ContactUs: "Nous contacter",

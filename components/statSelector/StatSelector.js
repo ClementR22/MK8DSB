@@ -8,8 +8,9 @@ import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConf
 
 const StatSelector = ({ statList, setStatList, toggleCheck, isVisibleStatsNotInSettingsScreen }) => {
   const { screenName } = useScreen();
-  const isSync = useStatsVisibleListConfigStore((state) => state.isSync);
-  const isDefault = useStatsVisibleListConfigStore((state) => state.isDefault);
+  const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
+  const isDefault = statsVisibleConfig === "yes";
+  const isSync = statsVisibleConfig === "sync";
 
   const isInSearchScreen = screenName === "search";
   const isVisibleStatsInSearchScreen = isVisibleStatsNotInSettingsScreen && isInSearchScreen;

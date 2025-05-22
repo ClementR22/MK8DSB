@@ -5,7 +5,15 @@ import MyPicker from "../MyPicker";
 const ThemeSelector = () => {
   const { setTheme, themeValue } = useTheme();
 
-  return <MyPicker value={themeValue} setValue={setTheme} itemList={themeList} isTranslateLabel={true} />;
+  return (
+    <MyPicker
+      value={themeValue}
+      setValue={setTheme}
+      itemList={themeList}
+      pickerTitle="Theme"
+      isTranslatedContent={true}
+    />
+  );
 };
 
 export default ThemeSelector;

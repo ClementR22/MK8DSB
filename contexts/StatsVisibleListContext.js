@@ -11,7 +11,8 @@ import useSetsStore from "@/stores/useSetsStore";
 const StatsVisibleListContext = createContext();
 
 export const StatsVisibleListProvider = ({ children }) => {
-  const isDefault = useStatsVisibleListConfigStore((state) => state.isDefault);
+  const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
+  const isDefault = statsVisibleConfig === "yes";
   const statsVisibleListDefault = useStatsVisibleListConfigStore((state) => state.statsVisibleListDefault);
   const [statsVisibleList_, setStatsVisibleList] = useState(statsVisibleListDefaultInit);
   const statsVisibleList = isDefault ? statsVisibleListDefault : statsVisibleList_;

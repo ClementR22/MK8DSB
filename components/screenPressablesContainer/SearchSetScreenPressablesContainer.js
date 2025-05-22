@@ -34,8 +34,8 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const [resultsNumber, setResultsNumber] = useState(5);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   const { setStatsVisibleList } = useStatsVisibleList();
-  const isSync = useStatsVisibleListConfigStore((state) => state.isSync);
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
+  const isSync = statsVisibleConfig === "sync";
 
   useEffect(() => {
     if (isSync) {

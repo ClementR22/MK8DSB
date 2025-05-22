@@ -21,7 +21,8 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 
 const SettingsScreen = () => {
-  const isDefault = useStatsVisibleListConfigStore((state) => state.isDefault);
+  const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
+  const isDefault = statsVisibleConfig === "yes";
   const language = useLanguageStore((state) => state.language);
   const { resetSettings } = useSettings();
 
