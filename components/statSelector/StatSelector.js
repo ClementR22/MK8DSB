@@ -1,8 +1,7 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import PressableStat from "./PressableStat";
-import { useTheme } from "@/contexts/ThemeContext";
-import SelectedAllStatsSwitch from "./SelectedAllStatsSwitch";
+import SelectAllStatsSwitch from "./SelectAllStatsSwitch";
 import { useScreen } from "@/contexts/ScreenContext";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 
@@ -21,10 +20,11 @@ const StatSelector = ({ statList, setStatList, toggleCheck, isVisibleStatsNotInS
       <View style={styles.row}>
         {!disablePressableStat ? (
           <>
-            <SelectedAllStatsSwitch statList={statList} setStatList={setStatList} />
+            <SelectAllStatsSwitch statList={statList} setStatList={setStatList} />
           </>
         ) : (
-          !isVisibleStatsInSearchScreen && <SelectedAllStatsSwitch statList={statList} setStatList={setStatList} />
+          // si on est dans le cas des chosen stats, on met quand meme le switch
+          !isVisibleStatsInSearchScreen && <SelectAllStatsSwitch statList={statList} setStatList={setStatList} />
         )}
       </View>
 

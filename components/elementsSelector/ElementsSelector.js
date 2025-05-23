@@ -6,7 +6,7 @@ import CategorySelector from "./CategorySelector";
 import SelectedCategoryElementsView from "./SelectedCategoryElementsView";
 import ButtonScrollToTop from "../ButtonScrollToTop";
 import { useSortedElements } from "@/hooks/useSortedElements";
-import { useLanguageStore } from "@/stores/useLanguageStore copy";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";

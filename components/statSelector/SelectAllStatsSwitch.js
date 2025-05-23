@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Switch } from "react-native-paper";
 import { translate } from "@/translations/translations";
 
-const SelectedAllStatsSwitch = ({ statList, setStatList }) => {
+const SelectAllStatsSwitch = ({ statList, setStatList }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [formerStatList, setFormerStatList] = useState(null);
   const internalUpdate = useRef(false); // Marqueur de mise à jour interne
@@ -28,14 +28,24 @@ const SelectedAllStatsSwitch = ({ statList, setStatList }) => {
   };
 
   const updateToggleSwitch = () => {
+    console.log("useeffecr");
+
     if (internalUpdate.current) {
       internalUpdate.current = false; // <- reset le flag
       return; // <- skip la mise à jour si c'était un changement interne
     } // ce test permet uniquement d'éviter les calculs inutiles
 
     const hasUnchecked = statList.some((stat) => stat.checked === false);
-    if (hasUnchecked) {
-      setIsSwitchOn(false);
+    if (isSwitchOn == hasUnchecked) {
+      // si il faut mettre à jour le switch
+      if (hasUnchecked) {
+        // cas 1 : desactivation
+        setIsSwitchOn(false);
+      } else {
+        // cas 2 : activation
+        setIsSwitchOn(true);
+        setFormerStatList(statList); // nouveau formerStatList avec tous les checked à true
+      }
     }
   };
 
@@ -49,7 +59,7 @@ const SelectedAllStatsSwitch = ({ statList, setStatList }) => {
   );
 };
 
-export default SelectedAllStatsSwitch;
+export default SelectAllStatsSwitch;
 
 const styles = StyleSheet.create({
   switchContainer: {

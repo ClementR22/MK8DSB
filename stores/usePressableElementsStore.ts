@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { bodyTypeNames, category4Names, elementsAllInfosList } from "@/data/data";
-import useSetsStore from "./useSetsStore";
 
 // --- Types ---
 type ElementCategory = string; // tu peux le raffiner si tu veux un enum (ex: "character" | "body" | etc.)

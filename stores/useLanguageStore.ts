@@ -1,4 +1,3 @@
-// stores/languageStore.ts
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 import { create } from "zustand";
 
@@ -16,6 +15,7 @@ type LanguageStore = {
 
 export const useLanguageStore = create<LanguageStore>()((set, get) => ({
   language: "en",
+
   setLanguage: (lang) => {
     set({ language: lang });
     saveThingInMemory("language", get().language);
