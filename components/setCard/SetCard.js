@@ -11,6 +11,7 @@ import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import Modal from "../Modal";
 import useSetsStore from "@/stores/useSetsStore";
 import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
+import { Pressable } from "react-native";
 
 const SetCard = ({
   setToShowName,
@@ -79,34 +80,36 @@ const SetCard = ({
   }
 
   return (
-    <BoxContainer contentBackgroundColor={theme.surface} margin={0} maxWidth={300}>
-      {config.moreActionNamesList && (
-        <SetCardMoreActionsButton
-          moreActionNamesList={config.moreActionNamesList}
+    <Pressable>
+      <BoxContainer contentBackgroundColor={theme.surface} margin={0} maxWidth={300}>
+        {config.moreActionNamesList && (
+          <SetCardMoreActionsButton
+            moreActionNamesList={config.moreActionNamesList}
+            setCardIndex={setCardIndex}
+            situation={situation}
+          />
+        )}
+
+        {config.showTextInput && (
+          <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} isWithConfimation={true} />
+        )}
+
+        <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="icon" displaySetImages={displaySetImages} />
+
+        {config.showStatSliderResult && <StatSliderResultContainer setsToShowMultipleStatsLists={[setToShowStats]} />}
+
+        <Modal isModalVisible={isImagesModalVisible} setIsModalVisible={setIsImagesModalVisible}>
+          <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="image" />
+        </Modal>
+
+        <SetCardActionButtons
+          actionNamesList={config.actionNamesList}
           setCardIndex={setCardIndex}
           situation={situation}
+          handleEditPress={handleEditPress}
         />
-      )}
-
-      {config.showTextInput && (
-        <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} isWithConfimation={true} />
-      )}
-
-      <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="icon" displaySetImages={displaySetImages} />
-
-      {config.showStatSliderResult && <StatSliderResultContainer setsToShowMultipleStatsLists={[setToShowStats]} />}
-
-      <Modal isModalVisible={isImagesModalVisible} setIsModalVisible={setIsImagesModalVisible}>
-        <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="image" />
-      </Modal>
-
-      <SetCardActionButtons
-        actionNamesList={config.actionNamesList}
-        setCardIndex={setCardIndex}
-        situation={situation}
-        handleEditPress={handleEditPress}
-      />
-    </BoxContainer>
+      </BoxContainer>
+    </Pressable>
   );
 };
 
