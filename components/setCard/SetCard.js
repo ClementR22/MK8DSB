@@ -56,7 +56,7 @@ const SetCard = ({
     load: {
       showTextInput: false,
       showStatSliderResult: false,
-      actionNamesList: [screenName === "search" ? "showLoadSaveToSearch" : "showLoadSaveToDisplay"],
+      actionNamesList: [screenName === "search" ? "loadSaveToSearch" : "loadSaveToDisplay"],
       moreActionNamesList: undefined,
     },
   };
@@ -100,6 +100,7 @@ const SetCard = ({
         <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="image" />
       </Modal>
 
+      {console.log(config.actionNamesList, setCardIndex, situation, handleEditPress)}
       <SetCardActionButtons
         actionNamesList={config.actionNamesList}
         setCardIndex={setCardIndex}
