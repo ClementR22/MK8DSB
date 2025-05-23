@@ -1,13 +1,13 @@
 import React from "react";
 import { button_icon } from "../styles/button";
-import { useTheme } from "@/contexts/ThemeContext";
 import { shadow_3dp } from "@/components/styles/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import TooltipWrapper from "../TooltipWrapper";
 import useSetsStore from "@/stores/useSetsStore";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const ButtonAddSet = () => {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
   const addNewSetInDisplay = useSetsStore((state) => state.addNewSetInDisplay);
 
   return (

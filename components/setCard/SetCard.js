@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useTheme } from "@/contexts/ThemeContext";
 import SetImagesContainer from "./SetImagesContainer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
 import SetNameInput from "../textInput/SetNameInput";
@@ -12,6 +11,7 @@ import Modal from "../Modal";
 import useSetsStore from "@/stores/useSetsStore";
 import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
 import { Pressable } from "react-native";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const SetCard = ({
   setToShowName,
@@ -22,7 +22,7 @@ const SetCard = ({
 }) => {
   const { screenName } = useScreen();
   const situation = isInLoadSetModal ? "load" : screenName;
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
 
   /// DEBUG
   if (!setToShowName) {

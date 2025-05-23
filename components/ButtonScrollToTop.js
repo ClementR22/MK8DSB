@@ -1,10 +1,10 @@
 import React from "react";
 import { Pressable, StyleSheet } from "react-native";
-import { useTheme } from "@/contexts/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const ButtonScrollToTop = ({ scrollToTop }) => {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
 
   return (
     <Pressable style={styles.floatingButton} onPress={scrollToTop}>

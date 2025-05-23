@@ -1,13 +1,12 @@
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { useTheme } from "@/contexts/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCard from "./SetCard";
-import FlexContainer from "@/components/FlexContainer";
 import useModalsStore from "@/stores/useModalsStore";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const SetCardContainer = ({ setsToShow, isInLoadSetModal = false }) => {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
   const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
 
   return (

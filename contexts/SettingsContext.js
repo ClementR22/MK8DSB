@@ -1,8 +1,8 @@
 import React, { createContext, useContext } from "react";
-import { useTheme } from "@/contexts/ThemeContext";
 import { loadThingFromMemory } from "@/utils/asyncStorageOperations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useStatsVisibleListConfigStore, statsVisibleListDefaultInit } from "@/stores/useStatsVisibleListConfigStore";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 // Création du contexte
 const SettingsContext = createContext();
@@ -16,7 +16,7 @@ export const SettingsProvider = ({ children }) => {
   const setStatsVisibleConfig = useStatsVisibleListConfigStore((state) => state.setStatsVisibleConfig);
   const setStatsVisibleListDefault = useStatsVisibleListConfigStore((state) => state.setStatsVisibleListDefault);
   const setLanguage = useLanguageStore((state) => state.setLanguage);
-  const { setTheme } = useTheme();
+  const setTheme = useThemeStore((state) => state.setTheme);
 
   const settingsByDefaultKeysAndValues = {
     language: { setState: setLanguage, value: "en" },

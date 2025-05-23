@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { button_icon } from "./styles/button";
 import { shadow_12dp } from "@/components/styles/theme";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
   const [hovered_1, setHover_1] = useState(false);
   const [hovered_2, setHover_2] = useState(false);
 
@@ -17,9 +17,7 @@ const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
 
   // Fonction pour décrémenter
   const decrement = () => {
-    setResultsNumber((prevResultsNumber) =>
-      prevResultsNumber > 0 ? prevResultsNumber - 1 : 0
-    ); // Évite d'aller en dessous de 0
+    setResultsNumber((prevResultsNumber) => (prevResultsNumber > 0 ? prevResultsNumber - 1 : 0)); // Évite d'aller en dessous de 0
   };
 
   return (
@@ -30,10 +28,7 @@ const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
         onHoverIn={() => setHover_1(true)}
         onHoverOut={() => setHover_1(false)}
       >
-        <MaterialCommunityIcons
-          name="minus"
-          color="white"
-        ></MaterialCommunityIcons>
+        <MaterialCommunityIcons name="minus" color="white"></MaterialCommunityIcons>
       </Pressable>
       <Text style={styles.resultsNumberText}>{resultsNumber}</Text>
       <Pressable
@@ -42,10 +37,7 @@ const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
         onHoverIn={() => setHover_2(true)}
         onHoverOut={() => setHover_2(false)}
       >
-        <MaterialCommunityIcons
-          name="plus"
-          color="white"
-        ></MaterialCommunityIcons>
+        <MaterialCommunityIcons name="plus" color="white"></MaterialCommunityIcons>
       </Pressable>
     </View>
   );

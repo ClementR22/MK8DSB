@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
-import { useTheme } from "@/contexts/ThemeContext";
 import { shadow_12dp, shadow_1dp, shadow_3dp, shadow_6dp, shadow_8dp } from "@/components/styles/theme";
 import Icon from "react-native-dynamic-vector-icons";
 import TooltipWrapper from "@/components/TooltipWrapper";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 function ButtonIcon({ children, onPress, tooltipText, elevation, iconName, iconType, iconSize = 24, ...props }) {
-  const { theme } = useTheme();
-
+  const theme = useThemeStore((state) => state.theme);
   const [buttonHover, setButtonHover] = useState(false);
 
   const styles = StyleSheet.create({

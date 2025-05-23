@@ -1,6 +1,5 @@
 import React from "react";
 import { button_icon } from "../styles/button";
-import { useTheme } from "@/contexts/ThemeContext";
 import { shadow_3dp } from "@/components/styles/theme";
 import { Feather } from "@expo/vector-icons";
 import TooltipWrapper from "../TooltipWrapper";
@@ -11,10 +10,11 @@ import useSetsStore from "@/stores/useSetsStore";
 import { translate, translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import showToast from "@/utils/toast";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const ButtonImportSet = () => {
   const { screenName } = useScreen();
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
   const importSet = useSetsStore((state) => state.importSet);
   const language = useLanguageStore((state) => state.language);
 

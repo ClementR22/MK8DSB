@@ -1,11 +1,11 @@
 import React from "react";
 import { Modal as NativeModal, Pressable, StyleSheet, Text, View } from "react-native";
 import { vh, vw } from "@/components/styles/theme";
-import { useTheme } from "@/contexts/ThemeContext";
 import { translate } from "@/translations/translations";
 import Toast from "react-native-toast-message";
 import FlexContainer from "@/components/FlexContainer";
 import Button from "@/components/Button";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 function Modal({
   modalTitle,
@@ -19,7 +19,7 @@ function Modal({
   rightButton = null,
   ...props
 }) {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
 
   const styles = StyleSheet.create({
     background: {

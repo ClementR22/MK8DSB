@@ -4,7 +4,6 @@ import { ScrollView, StyleSheet, Text } from "react-native";
 // Components import
 import StatSlider from "../components/StatSlider";
 import { vw } from "@/components/styles/theme";
-import { useTheme } from "@/contexts/ThemeContext";
 import { translate } from "@/translations/translations";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import { LoadSetModalProvider } from "@/contexts/LoadSetModalContext";
@@ -18,9 +17,10 @@ import RenameSetModal from "@/components/modal/RenameSetModal";
 import { useSettings } from "@/contexts/SettingsContext";
 import useSetsStore from "@/stores/useSetsStore";
 import useModalsStore from "@/stores/useModalsStore";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const SearchSetScreen = () => {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
   const { loadSettings } = useSettings();
   const fetchSavedSets = useSetsStore((state) => state.fetchSavedSets);
   const chosenStats = useSetsStore((state) => state.chosenStats);

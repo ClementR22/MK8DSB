@@ -3,10 +3,10 @@ import { Modal, Pressable, Text } from "react-native";
 import { modal } from "../styles/modal";
 import { button } from "../styles/button";
 import { shadow_12dp } from "@/components/styles/theme";
-import { useTheme } from "@/contexts/ThemeContext";
 import { translate } from "@/translations/translations";
 import Toast from "react-native-toast-message";
 import FlexContainer from "@/components/FlexContainer";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const MyModal = ({
   modalTitle,
@@ -20,7 +20,7 @@ const MyModal = ({
   rightButton = null,
   ...props
 }) => {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
 
   const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
 
@@ -38,11 +38,15 @@ const MyModal = ({
 
           {children}
 
-          <FlexContainer flexDirection={"row"} gap={(leftButton || rightButton) ? 10 : 0}>
+          <FlexContainer flexDirection={"row"} gap={leftButton || rightButton ? 10 : 0}>
             {leftButton}
             {isWithClosePressable && (
               <Pressable
-                style={[button(theme).container, modal(theme).close_button_center, filterModalButtonHover && shadow_12dp]}
+                style={[
+                  button(theme).container,
+                  modal(theme).close_button_center,
+                  filterModalButtonHover && shadow_12dp,
+                ]}
                 onHoverIn={() => setFilterModalButtonHover(true)}
                 onHoverOut={() => setFilterModalButtonHover(false)}
                 onPress={onClose ? onClose : () => setIsModalVisible(false)}

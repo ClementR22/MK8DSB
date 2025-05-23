@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 function BoxContainer({
   children,
@@ -13,7 +13,7 @@ function BoxContainer({
   margin = 16,
   inputStyles,
 }) {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
 
   const styles = StyleSheet.create({
     container: {

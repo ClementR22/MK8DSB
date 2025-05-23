@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, Pressable } from "react-native";
-import { useTheme } from "@/contexts/ThemeContext";
 import { shadow_12dp, shadow_1dp, shadow_3dp, shadow_6dp, shadow_8dp } from "@/components/styles/theme";
 import { ShadowProp } from "@/components/styles/theme.d";
 import TooltipWrapper from "@/components/TooltipWrapper";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 function Button({ children, onPress, elevation, tooltipText, ...props }) {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
   const [buttonHover, setButtonHover] = useState(false);
 
   const styles = StyleSheet.create({

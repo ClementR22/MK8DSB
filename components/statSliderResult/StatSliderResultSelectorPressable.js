@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { button, button_icon } from "../styles/button";
 import { shadow_12dp, shadow_3dp } from "@/components/styles/theme";
-import { useTheme } from "@/contexts/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import StatSelector from "../statSelector/StatSelector";
 import TooltipWrapper from "../TooltipWrapper";
@@ -11,11 +10,12 @@ import { translate } from "@/translations/translations";
 import { modal } from "@/components/styles/modal";
 import useSetsStore from "@/stores/useSetsStore";
 import Modal from "../Modal";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const StatSliderResultSelectorPressable = () => {
   const { statsVisibleList, setStatsVisibleList, toggleCheckListStatsVisibleList } = useStatsVisibleList();
 
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
 
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
   const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);

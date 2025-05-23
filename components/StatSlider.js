@@ -4,12 +4,12 @@ import { Slider } from "@miblanchard/react-native-slider";
 import ButtonMultiStateToggle from "./ButtonMultiStateToggle";
 
 import { vw } from "@/components/styles/theme";
-import { useTheme } from "@/contexts/ThemeContext";
 import { translate } from "@/translations/translations";
 import useSetsStore from "@/stores/useSetsStore";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const StatSlider = ({ name, sliderValue, statFilterNumber }) => {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
   const updateStatValue = useSetsStore((state) => state.updateStatValue);
   const setStatFilterNumber = useSetsStore((state) => state.setStatFilterNumber);
   const setStatFilterNumberWithName = (newNumber) => setStatFilterNumber(name, newNumber);

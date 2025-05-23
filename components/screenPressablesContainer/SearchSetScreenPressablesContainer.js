@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useTheme } from "@/contexts/ThemeContext";
 import { button, button_icon } from "../styles/button";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { bodyTypeNames, setAllInfos } from "@/data/data";
@@ -21,9 +20,10 @@ import useSetsStore from "@/stores/useSetsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const setChosenStats = useSetsStore((state) => state.setChosenStats);
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);

@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, Text as NativeText } from "react-native";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 function Text({ children, style, ...props }) {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
 
   const styles = StyleSheet.flatten([
     {

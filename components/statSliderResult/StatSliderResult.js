@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const StatSliderResult = ({ value, chosenValue = null }) => {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
 
   if (chosenValue == null) {
     chosenValue = value;

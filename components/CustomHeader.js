@@ -3,10 +3,10 @@ import { View } from "react-native";
 import Text from "@/components/Text";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const CustomHeader = ({ children, icon = "car-sports" }) => {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
 
   return (
     <View
@@ -20,27 +20,29 @@ const CustomHeader = ({ children, icon = "car-sports" }) => {
         alignItems: "center",
       }}
     >
-      {icon in MaterialCommunityIcons.glyphMap &&
+      {icon in MaterialCommunityIcons.glyphMap && (
         <MaterialCommunityIcons
           name={icon}
           size={24}
           color={theme.on_surface}
           style={{ width: 48, height: 48, padding: 12, marginHorizontal: 4 }}
         />
-      }
-      {icon in MaterialIcons.glyphMap &&
+      )}
+      {icon in MaterialIcons.glyphMap && (
         <MaterialIcons
           name={icon}
           size={24}
           color={theme.on_surface}
           style={{ width: 48, height: 48, padding: 12, marginHorizontal: 4 }}
         />
-      }
-      <Text style={{
-        fontSize: 22,
-        fontWeight: "bold",
-        textAlign: "center",
-      }}>
+      )}
+      <Text
+        style={{
+          fontSize: 22,
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
         {children}
       </Text>
     </View>

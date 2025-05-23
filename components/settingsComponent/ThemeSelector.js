@@ -1,13 +1,14 @@
 import React from "react";
-import { themeList, useTheme } from "@/contexts/ThemeContext";
 import MyPicker from "../MyPicker";
+import { useThemeStore, themeList } from "@/stores/useThemeStore";
 
 const ThemeSelector = () => {
-  const { setTheme, themeValue } = useTheme();
+  const themeLabel = useThemeStore((state) => state.themeLabel);
+  const setTheme = useThemeStore((state) => state.setTheme);
 
   return (
     <MyPicker
-      value={themeValue}
+      value={themeLabel}
       setValue={setTheme}
       itemList={themeList}
       pickerTitle="Theme"
