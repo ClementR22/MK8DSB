@@ -28,12 +28,12 @@ const SelectedCategoryElementsView = React.memo(
     const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
     const isGalleryMode = screenNameForEditModal === "gallery";
 
+    const sectionRefs = useRef([]);
+
     const handleScrollToSection = useCallback(
       (sectionKey) => scrollToSection(sectionRefs.current[sectionKey]),
       [sectionRefs]
     );
-
-    const sectionRefs = useRef([]);
 
     if (orderNumber === 3) {
       // si on est en tri par class
