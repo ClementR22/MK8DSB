@@ -1,7 +1,6 @@
 import React, { useCallback, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import useModalsStore from "@/stores/useModalsStore";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import ElementsView from "./ElementsView";
 import BodyTabContent from "./BodyTabContent";
 
@@ -21,12 +20,13 @@ const SelectedCategoryElementsView = React.memo(
     orderNumber,
     pressableElementsByCategory,
     selectedCategoryElementsSorted,
-    handlePress,
+    screenName,
     scrollToSection,
   }) => {
-    const language = useLanguageStore((state) => state.language);
     const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
     const isGalleryMode = screenNameForEditModal === "gallery";
+    const handlePressImage = usePressableElementsStore((state) => state.handlePressImage);
+    const handlePressImageByClass = usePressableElementsStore((state) => state.handlePressImageByClass);
 
     const sectionRefs = useRef([]);
 
@@ -34,6 +34,12 @@ const SelectedCategoryElementsView = React.memo(
       (sectionKey) => scrollToSection(sectionRefs.current[sectionKey]),
       [sectionRefs]
     );
+
+    const handlePress = useMemo(() => {
+      return screenName !== "search"
+        ? (element) => handlePressImageByClass(screenName, element.classId, element.category)
+        : (element) => handlePressImage(screenName, element.id);
+    }, [screenName, handlePressImage, handlePressImageByClass]);
 
     if (orderNumber === 3) {
       // si on est en tri par class
@@ -57,7 +63,6 @@ const SelectedCategoryElementsView = React.memo(
           isGalleryMode={isGalleryMode}
           sectionRefs={sectionRefs}
           handleScrollToSection={handleScrollToSection}
-          language={language}
         />
       );
     }

@@ -28,8 +28,6 @@ const SelectAllStatsSwitch = ({ statList, setStatList }) => {
   };
 
   const updateToggleSwitch = () => {
-    console.log("useeffecr");
-
     if (internalUpdate.current) {
       internalUpdate.current = false; // <- reset le flag
       return; // <- skip la mise à jour si c'était un changement interne

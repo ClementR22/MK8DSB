@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { ScrollView } from "react-native";
-import { useOrderNumber } from "@/contexts/OrderNumberContext";
 import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import CategorySelector from "./CategorySelector";
 import SelectedCategoryElementsView from "./SelectedCategoryElementsView";
@@ -12,7 +11,7 @@ import useModalsStore from "@/stores/useModalsStore";
 import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";
 
 const ElementsSelector = () => {
-  const { orderNumber, setOrderNumber } = useOrderNumber();
+  const [orderNumber, setOrderNumber] = useState(0);
   const language = useLanguageStore((state) => state.language);
   const screenName = useModalsStore((state) => state.screenNameForEditModal);
   const pressableElementsList = usePressableElementsStore((state) => state.pressableElementsListByScreen[screenName]);
@@ -27,15 +26,6 @@ const ElementsSelector = () => {
     orderNumber,
     language
   );
-
-  const handlePressImage = usePressableElementsStore((state) => state.handlePressImage);
-  const handlePressImageByClass = usePressableElementsStore((state) => state.handlePressImageByClass);
-
-  const handlePress = useMemo(() => {
-    return screenName !== "search"
-      ? (element) => handlePressImageByClass(screenName, element.classId, element.category)
-      : (element) => handlePressImage(screenName, element.id);
-  }, [screenName, handlePressImage, handlePressImageByClass]);
 
   const scrollViewRef = useRef(null);
 
@@ -74,7 +64,7 @@ const ElementsSelector = () => {
           orderNumber={orderNumber}
           pressableElementsByCategory={pressableElementsByCategory}
           selectedCategoryElementsSorted={selectedCategoryElementsSorted}
-          handlePress={handlePress}
+          screenName={screenName}
           scrollToSection={scrollToSection}
         />
       </ScrollView>
