@@ -20,6 +20,17 @@ export const translateToLanguage = (key, language) => {
 const translations = {
   en: {
     // screen title
+    FindSetTitle: "Find a set",
+    DisplaySetTitle: "Display a set",
+    SavedSetTitle: "Saved sets",
+    GalleryTitle: "Gallery",
+    SettingsTitle: "Settings",
+
+    FindSetTabTitle: "Find",
+    DisplaySetTabTitle: "Display",
+    SavedSetTabTitle: "Saved",
+    GalleryTabTitle: "Gallery",
+    SettingsTabTitle: "Settings",
 
     // other title
     SearchedStats: "Searched stats",
@@ -248,6 +259,17 @@ const translations = {
 
   fr: {
     // screen title
+    FindSetTitle: "Trouver un set",
+    DisplaySetTitle: "Afficher un set",
+    SavedSetTitle: "Sets sauvegardés",
+    GalleryTitle: "Gallerie",
+    SettingsTitle: "Paramètres",
+
+    FindSetTabTitle: "Chercher",
+    DisplaySetTabTitle: "Afficher",
+    SavedSetTabTitle: "Sauvegardé",
+    GalleryTabTitle: "Gallerie",
+    SettingsTabTitle: "Paramètres",
 
     // other title
     SearchedStats: "Statistiques recherchées",
