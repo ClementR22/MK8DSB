@@ -68,12 +68,6 @@ const ElementsSelector = () => {
         showsVerticalScrollIndicator={false}
         onScroll={handleScroll}
         scrollEventThrottle={16}
-        contentContainerStyle={{
-          padding: 20,
-          flexDirection: "row",
-          flexWrap: "wrap",
-          rowGap: 8,
-        }}
       >
         <SelectedCategoryElementsView
           selectedTab={selectedTab}
