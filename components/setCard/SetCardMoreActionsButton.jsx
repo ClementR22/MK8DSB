@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import { Menu } from "react-native-paper";
 import { getActionIconPropsList } from "@/utils/getActionIconPropsList";
 import Icon from "react-native-dynamic-vector-icons";
+import ButtonIcon from "@/components/ButtonIcon";
 
 const SetCardMoreActionsButton = React.memo(({ moreActionNamesList, setCardIndex, situation }) => {
   const [visible, setVisble] = useState(false);
@@ -11,19 +11,11 @@ const SetCardMoreActionsButton = React.memo(({ moreActionNamesList, setCardIndex
   const actionIconPropsList = getActionIconPropsList(setCardIndex, situation);
 
   return (
-    <View style={{ position: "absolute", left: 0, top: 0, backgroundColor: "red" }}>
+    <View>
       <Menu
         visible={visible}
         onDismiss={() => setVisble(false)}
-        anchor={
-          <Pressable
-            onPress={() => {
-              setVisble(true);
-            }}
-          >
-            <MaterialIcons name="more-vert" size={24} />
-          </Pressable>
-        }
+        anchor={<ButtonIcon onPress={() => setVisble(true)} iconName={"more-vert"} iconType={"MaterialIcons"} />}
       >
         {moreActionNamesList.map((actionName) => {
           const { title, name, type, onPress } = actionIconPropsList[actionName];

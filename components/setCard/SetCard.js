@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import SetImagesContainer from "./SetImagesContainer";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
 import SetNameInput from "../textInput/SetNameInput";
-import BoxContainer from "../BoxContainer";
+import BoxContainer from "@/components/BoxContainer";
+import FlexContainer from "@/components/FlexContainer";
 import { useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
 import useModalsStore from "@/stores/useModalsStore";
@@ -82,17 +83,19 @@ const SetCard = ({
   return (
     <Pressable>
       <BoxContainer contentBackgroundColor={theme.surface} margin={0} maxWidth={300}>
-        {config.moreActionNamesList && (
-          <SetCardMoreActionsButton
-            moreActionNamesList={config.moreActionNamesList}
-            setCardIndex={setCardIndex}
-            situation={situation}
-          />
-        )}
+        <FlexContainer flexDirection={"row"}>
+          {config.showTextInput && (
+            <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} isWithConfimation={true} />
+          )}
 
-        {config.showTextInput && (
-          <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} isWithConfimation={true} />
-        )}
+          {config.moreActionNamesList && (
+            <SetCardMoreActionsButton
+              moreActionNamesList={config.moreActionNamesList}
+              setCardIndex={setCardIndex}
+              situation={situation}
+            />
+          )}
+        </FlexContainer>
 
         <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="icon" displaySetImages={displaySetImages} />
 
