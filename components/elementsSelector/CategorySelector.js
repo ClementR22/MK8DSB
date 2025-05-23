@@ -5,11 +5,7 @@ import closeImage from "../../assets/images/close.png";
 
 const iconSize = 38;
 
-const CategorySelector = ({
-  selectedTab,
-  setSelectedTab,
-  scrollToTopWithScrollViewRef,
-}) => {
+const CategorySelector = ({ selectedTab, setSelectedTab, scrollToTop }) => {
   const elementIcons = [
     elementsAllInfosList[0].image,
     elementsAllInfosList[52].image,
@@ -25,15 +21,11 @@ const CategorySelector = ({
           key={elementName}
           style={[styles.tab, selectedTab === elementName && styles.activeTab]}
           onPress={() => {
-            scrollToTopWithScrollViewRef();
             setSelectedTab(elementName);
+            scrollToTop();
           }}
         >
-          <Image
-            source={elementIcons[index]}
-            style={styles.image}
-            resizeMode="contain"
-          />
+          <Image source={elementIcons[index]} style={styles.image} resizeMode="contain" />
         </Pressable>
       ))}
     </View>

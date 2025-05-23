@@ -3,11 +3,11 @@ import { Pressable, StyleSheet } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const ButtonScrollToTop = ({ scrollToTopWithScrollViewRef }) => {
+const ButtonScrollToTop = ({ scrollToTop }) => {
   const { theme } = useTheme();
 
   return (
-    <Pressable style={styles.floatingButton} onPress={scrollToTopWithScrollViewRef}>
+    <Pressable style={styles.floatingButton} onPress={scrollToTop}>
       <MaterialCommunityIcons name="chevron-up" size={24} color={theme.on_primary} />
     </Pressable>
   );
