@@ -100,7 +100,6 @@ const SetCard = ({
         <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="image" />
       </Modal>
 
-      {console.log(config.actionNamesList, setCardIndex, situation, handleEditPress)}
       <SetCardActionButtons
         actionNamesList={config.actionNamesList}
         setCardIndex={setCardIndex}

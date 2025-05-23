@@ -39,6 +39,10 @@ const translations = {
     "ConfigureDefaultVisibleStats?": "Configure default visible stats?",
     Language: "Language",
     Theme: "Theme",
+    ImportError: "Import error",
+    ClipboardIsEmpty: "Clipboard is empty",
+    IncorrectFormat: "Incorrect format",
+    ThisSetDoesNotExist: "This set does not exist",
 
     // button label
     Search: "Search",
@@ -263,13 +267,15 @@ const translations = {
     "ConfigureDefaultVisibleStats?": "Configurer les stats visibles par défault ?",
     Language: "Langue",
     Theme: "Theme",
+    ImportError: "Erreur d'importation",
+    ClipboardIsEmpty: "Le presse-papiers est vide",
+    IncorrectFormat: "Format incorrect",
+    ThisSetDoesNotExist: "Ce set n'existe pas",
 
     // button label
     Search: "Chercher",
     All: "Toutes",
     Sync: "Sync avec les stats paramétrées",
-    Language: "Langue",
-    Theme: "Theme",
     Dark: "Sombre",
     Light: "Clair",
     System: "Appareil",

@@ -8,31 +8,56 @@ import * as Clipboard from "expo-clipboard";
 import { getSetStatsFromElementsClassIds } from "@/utils/getSetStatsFromElementsClassIds";
 import { useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
+import { translate, translateToLanguage } from "@/translations/translations";
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import showToast from "@/utils/toast";
 
 const ButtonImportSet = () => {
   const { screenName } = useScreen();
   const { theme } = useTheme();
   const importSet = useSetsStore((state) => state.importSet);
+  const language = useLanguageStore((state) => state.language);
 
   const handlePaste = async () => {
     try {
       const clipboardContent = await Clipboard.getStringAsync();
-      const parsedSet = JSON.parse(clipboardContent);
 
-      if (!parsedSet.name || !parsedSet.classIds) {
-        throw new Error("Le set collé est incomplet.");
+      if (!clipboardContent || clipboardContent.trim() === "") {
+        throw new Error("ClipboardIsEmpty");
       }
 
-      const stats = getSetStatsFromElementsClassIds(parsedSet.classIds);
+      let parsedSet;
+      try {
+        parsedSet = JSON.parse(clipboardContent);
+      } catch (err) {
+        throw new Error("IncorrectFormat");
+      }
+
+      if (typeof parsedSet !== "object" || Array.isArray(parsedSet) || parsedSet === null) {
+        throw new Error("IncorrectFormat");
+      }
+
+      const { name, classIds } = parsedSet;
+
+      if (typeof name !== "string" || name.trim() === "") {
+        throw new Error("IncorrectFormat");
+      }
+
+      if (!Array.isArray(classIds) || classIds.some((id) => typeof id !== "number")) {
+        throw new Error("IncorrectFormat");
+      }
+
+      const stats = getSetStatsFromElementsClassIds(classIds);
       if (!stats || stats.length === 0) {
-        throw new Error("Les éléments sont invalides.");
+        throw new Error("ThisSetDoesNotExist");
       }
 
-      const set = { ...parsedSet, stats: stats };
-      // Importer le set
+      const set = { ...parsedSet, stats };
       importSet(set, screenName);
     } catch (e) {
-      alert("Erreur d'import : " + e.message);
+      const text1 = translateToLanguage("ImportError", language);
+      const text2 = translateToLanguage(":", language) + translateToLanguage(e.message, language) + ".";
+      showToast(text1, text2, "error");
     }
   };
 
