@@ -55,7 +55,7 @@ const translations = {
     DontConfigure: "No",
     AllwaysSync: "Always in sync with the configured stats",
     ConfigureTheStats: "Configure the stats",
-    ContactUs: "Contact us",
+    SendFeedback: "Send feedback",
     OpenSourceLicenses: "Open Source Licenses",
     ResetSettings: "Reset settings",
 
@@ -283,7 +283,7 @@ const translations = {
     DontConfigure: "Non",
     AllwaysSync: "Toujours sync avec les stats paramétrées",
     ConfigureTheStats: "Configurer les stats",
-    ContactUs: "Nous contacter",
+    SendFeedback: "Faire un retour",
     OpenSourceLicenses: "Licences Open Source",
     ResetSettings: "Réinitialiser les paramètres",
 
