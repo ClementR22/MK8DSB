@@ -2,6 +2,7 @@ import React from "react";
 import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { category4Names, elementsAllInfosList } from "../../data/data";
 import TooltipWrapper from "../TooltipWrapper";
+import useModalsStore from "@/stores/useModalsStore";
 
 const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
   const data = category4Names.map((category, index) => {
@@ -15,10 +16,12 @@ const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
 
   const imageSize = mode === "icon" ? 40 : 80;
 
+  const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
+
   return (
     <>
       {data.map((item) => (
-        <ScrollView key={item.category} horizontal style={styles.scrollview}>
+        <ScrollView key={item.category} scrollEnabled={!isTooltipVisible} horizontal style={styles.scrollview}>
           {item.elements.map(({ name, image }, index) => (
             <TooltipWrapper
               key={index}

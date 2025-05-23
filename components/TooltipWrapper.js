@@ -1,17 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import Tooltip from "react-native-walkthrough-tooltip";
 import { translate } from "@/translations/translations";
+import useModalsStore from "@/stores/useModalsStore";
 
 const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", children, ...props }) => {
-  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [isTooltipVisible_, setIsTooltipVisible_] = useState(false);
 
-  const openTooltip = () => {
-    setTooltipVisible(true);
-    setTimeout(() => {
-      setTooltipVisible(false);
+  const setIsTooltipVisible = useModalsStore((state) => state.setIsTooltipVisible);
+
+  const timeoutRef = useRef(null);
+
+  function openTooltip() {
+    setIsTooltipVisible_(true);
+    setIsTooltipVisible(true);
+    timeoutRef.current = setTimeout(() => {
+      closeTooltip();
     }, 2000);
-  };
+  }
+
+  function closeTooltip() {
+    setIsTooltipVisible_(false);
+    setIsTooltipVisible(false);
+  }
+
+  useEffect(() => {
+    return () => clearTimeout(timeoutRef.current);
+  }, []);
 
   return (
     <Pressable
@@ -22,16 +37,10 @@ const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", childr
       {...props}
     >
       <Tooltip
-        isVisible={tooltipVisible}
-        content={
-          <View style={{ flexDirection: "row" }}>
-            <View>
-              <Text numberOfLines={1}>{translate(tooltipText)}</Text>
-            </View>
-          </View>
-        }
+        isVisible={isTooltipVisible_}
+        content={<Text numberOfLines={1}>{translate(tooltipText)}</Text>}
         placement={placement}
-        onClose={() => setTooltipVisible(false)}
+        onClose={closeTooltip}
         backgroundColor="rgba(0,0,0,0)"
         disableShadow={true}
         showChildInTooltip={false}

@@ -4,12 +4,15 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCard from "./SetCard";
 import FlexContainer from "@/components/FlexContainer";
+import useModalsStore from "@/stores/useModalsStore";
 
 const SetCardContainer = ({ setsToShow, isInLoadSetModal = false }) => {
   const { theme } = useTheme();
+  const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
 
   return (
     <ScrollView
+      scrollEnabled={!isTooltipVisible}
       contentContainerStyle={[
         styles.setCardContainer,
         {

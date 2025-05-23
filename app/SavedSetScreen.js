@@ -5,14 +5,16 @@ import SavedSetScreenPressablesContainer from "@/components/screenPressablesCont
 import { ScreenProvider } from "../contexts/ScreenContext";
 import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import useSetsStore from "@/stores/useSetsStore";
+import useModalsStore from "@/stores/useModalsStore";
 
 const SavedSetScreen = () => {
   const setsListSaved = useSetsStore((state) => state.setsListSaved);
+  const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
 
   return (
     <ScreenProvider screenName="save">
       <StatsVisibleListProvider>
-        <ScrollView>
+        <ScrollView scrollEnabled={!isTooltipVisible}>
           <SavedSetScreenPressablesContainer />
           <SetCardContainer setsToShow={setsListSaved} />
         </ScrollView>

@@ -8,6 +8,7 @@ import DisplaySetScreenPressablesContainer from "@/components/screenPressablesCo
 import { LoadSetModalProvider } from "../contexts/LoadSetModalContext";
 import useSetsStore from "@/stores/useSetsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
+import useModalsStore from "@/stores/useModalsStore";
 
 const DisplaySetScreen = () => {
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
@@ -16,11 +17,13 @@ const DisplaySetScreen = () => {
     return setToShowStatsList;
   });
 
+  const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
+
   return (
     <ScreenProvider screenName="display">
       <LoadSetModalProvider>
         <StatsVisibleListProvider>
-          <ScrollView>
+          <ScrollView scrollEnabled={!isTooltipVisible}>
             <DisplaySetScreenPressablesContainer />
 
             <SetCardContainer setsToShow={setsListDisplayed} />

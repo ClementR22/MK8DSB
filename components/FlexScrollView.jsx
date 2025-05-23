@@ -1,7 +1,10 @@
+import useModalsStore from "@/stores/useModalsStore";
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
 function FlexScrollView({ children, flexDirection, alignItems, justifyContent, gap, style }) {
+  const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
+
   const styles = StyleSheet.create({
     container: {
       backgroundColor: "transparent",
@@ -13,7 +16,11 @@ function FlexScrollView({ children, flexDirection, alignItems, justifyContent, g
     },
   });
 
-  return <ScrollView contentContainerStyle={[styles.container, style]}>{children}</ScrollView>;
+  return (
+    <ScrollView scrollEnabled={!isTooltipVisible} contentContainerStyle={[styles.container, style]}>
+      {children}
+    </ScrollView>
+  );
 }
 
 export default FlexScrollView;

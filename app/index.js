@@ -17,6 +17,7 @@ import FlexContainer from "@/components/FlexContainer";
 import RenameSetModal from "@/components/modal/RenameSetModal";
 import { useSettings } from "@/contexts/SettingsContext";
 import useSetsStore from "@/stores/useSetsStore";
+import useModalsStore from "@/stores/useModalsStore";
 
 const SearchSetScreen = () => {
   const { theme } = useTheme();
@@ -24,6 +25,7 @@ const SearchSetScreen = () => {
   const fetchSavedSets = useSetsStore((state) => state.fetchSavedSets);
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const [setsToShow, setSetsToShow] = useState([]);
+  const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
 
   useEffect(() => {
     loadSettings();
@@ -34,7 +36,7 @@ const SearchSetScreen = () => {
     <ScreenProvider screenName="search">
       <LoadSetModalProvider>
         <StatsVisibleListProvider>
-          <ScrollView>
+          <ScrollView scrollEnabled={!isTooltipVisible}>
             <FlexContainer>
               <BoxContainer contentBackgroundColor={theme.surface_container_high}>
                 <Text
