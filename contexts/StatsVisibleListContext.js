@@ -1,11 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { useScreen } from "./ScreenContext";
 import { toggleCheckList } from "@/utils/toggleCheck";
-import {
-  statsVisibleListDefaultInit,
-  useStatsVisibleListConfig,
-  useStatsVisibleListConfigStore,
-} from "@/stores/useStatsVisibleListConfigStore";
+import { statsVisibleListDefaultInit, useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import useSetsStore from "@/stores/useSetsStore";
 
 const StatsVisibleListContext = createContext();

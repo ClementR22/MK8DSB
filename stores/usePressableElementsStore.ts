@@ -20,9 +20,9 @@ type PressedClassIds = {
   glider: number;
 };
 
-type ScreenName = "search" | "display" | "save" | "gallery";
+export type ScreenName = "search" | "display" | "save" | "gallery";
 
-type PressableElementsStore = {
+export type PressableElementsStore = {
   pressableElementsListByScreen: Record<ScreenName, PressableElement[]>;
   pressedClassIdsObjByScreen: Record<ScreenName, PressedClassIds>;
   setPressedClassIdsObjByScreen: (screenName: ScreenName, setToShowClassIds: number[]) => void;
@@ -79,10 +79,12 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
   },
 
   handlePressImage: (screenName, id) => {
+    console.log("handle", screenName, id);
     const pressableElementsList = get().pressableElementsListByScreen[screenName];
     const newList = pressableElementsList.map((item, index) =>
       index === id ? { ...item, pressed: !item.pressed } : item
     );
+    console.log("newList", newList);
 
     set((state) => ({
       pressableElementsListByScreen: {
@@ -90,6 +92,7 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
         [screenName]: newList,
       },
     }));
+    console.log(get().pressableElementsListByScreen);
   },
 
   handlePressImageByClass: (screenName, classId, category7) => {

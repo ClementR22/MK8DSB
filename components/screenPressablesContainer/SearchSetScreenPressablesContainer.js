@@ -17,10 +17,10 @@ import Modal from "@/components/Modal";
 import ButtonIcon from "@/components/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
-import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { usePressableElements } from "@/hooks/usePressableElements";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const theme = useThemeStore((state) => state.theme);
@@ -43,7 +43,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
     }
   }, [isSync, chosenStats, statsVisibleConfig]);
 
-  const pressableElementsList = usePressableElementsStore((state) => state.pressableElementsListByScreen["search"]);
+  const { pressableElementsList } = usePressableElements();
   const pressableElementsByCategory = computePressableElementsByCategory(pressableElementsList);
 
   const [chosenBodyType, setChosenBodyType] = useState(

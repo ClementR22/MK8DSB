@@ -1,9 +1,8 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { StyleSheet, View } from "react-native";
-import useModalsStore from "@/stores/useModalsStore";
 import ElementsView from "./ElementsView";
 import BodyTabContent from "./BodyTabContent";
-import usePressableElementsStore from "@/stores/usePressableElementsStore";
+import { usePressableElements } from "@/hooks/usePressableElements";
 
 const groupByBodyType = (list) => {
   return list.reduce((acc, item) => {
@@ -24,10 +23,8 @@ const SelectedCategoryElementsView = React.memo(
     screenName,
     scrollToSection,
   }) => {
-    const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
-    const isGalleryMode = screenNameForEditModal === "gallery";
-    const handlePressImage = usePressableElementsStore((state) => state.handlePressImage);
-    const handlePressImageByClass = usePressableElementsStore((state) => state.handlePressImageByClass);
+    const isGalleryMode = screenName === "gallery";
+    const { handlePressImage, handlePressImageByClass } = usePressableElements();
 
     const sectionRefs = useRef([]);
 
@@ -38,8 +35,8 @@ const SelectedCategoryElementsView = React.memo(
 
     const handlePress = useMemo(() => {
       return screenName !== "search"
-        ? (element) => handlePressImageByClass(screenName, element.classId, element.category)
-        : (element) => handlePressImage(screenName, element.id);
+        ? (element) => handlePressImageByClass(element.classId, element.category)
+        : (element) => handlePressImage(element.id);
     }, [screenName, handlePressImage, handlePressImageByClass]);
 
     if (orderNumber === 3) {

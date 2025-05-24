@@ -6,17 +6,20 @@ import SelectedCategoryElementsView from "./SelectedCategoryElementsView";
 import ButtonScrollToTop from "../ButtonScrollToTop";
 import { useSortedElements } from "@/hooks/useSortedElements";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";
+import { usePressableElements } from "@/hooks/usePressableElements";
 
 const ElementsSelector = () => {
   const [orderNumber, setOrderNumber] = useState(0);
   const language = useLanguageStore((state) => state.language);
   const screenName = useModalsStore((state) => state.screenNameForEditModal);
-  const pressableElementsList = usePressableElementsStore((state) => state.pressableElementsListByScreen[screenName]);
+  const { pressableElementsList } = usePressableElements();
   const pressableElementsByCategory = useMemo(() => {
-    return computePressableElementsByCategory(pressableElementsList);
+    console.log("usememeo");
+    const ok = computePressableElementsByCategory(pressableElementsList);
+    console.log("ok", ok);
+    return ok;
   }, [pressableElementsList]);
   const [selectedTab, setSelectedTab] = useState("character");
 
