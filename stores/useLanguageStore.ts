@@ -6,7 +6,7 @@ export const languageList = [
   { label: "Français", value: "fr" },
 ];
 
-type Language = "en" | "fr";
+export type Language = "en" | "fr";
 
 type LanguageStore = {
   language: Language;

@@ -14,14 +14,14 @@ import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import BoxContainer from "@/components/BoxContainer";
 import FlexContainer from "@/components/FlexContainer";
 import RenameSetModal from "@/components/modal/RenameSetModal";
-import { useSettings } from "@/contexts/SettingsContext";
 import useSetsStore from "@/stores/useSetsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { useSettingsStore } from "@/stores/useSettingsStore";
 
 const SearchSetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
-  const { loadSettings } = useSettings();
+  const loadSettings = useSettingsStore((state) => state.loadSettings);
   const fetchSavedSets = useSetsStore((state) => state.fetchSavedSets);
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const [setsToShow, setSetsToShow] = useState([]);

@@ -6,17 +6,19 @@ import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 // === TYPES ===
 export type StatsVisibleConfig = "no" | "yes" | "sync";
 
-export interface StatVisibility {
+type StatVisibility = {
   name: string;
   checked: boolean;
-}
+};
+
+export type StatsVisibleList = StatVisibility[];
 
 interface StatsVisibleListConfigState {
   statsVisibleConfig: StatsVisibleConfig;
   setStatsVisibleConfig: (newValue: StatsVisibleConfig) => Promise<void>;
 
-  statsVisibleListDefault: StatVisibility[];
-  setStatsVisibleListDefault: (newList: StatVisibility[]) => void;
+  statsVisibleListDefault: StatsVisibleList;
+  setStatsVisibleListDefault: (newList: StatsVisibleList) => void;
   toggleCheckListStatsVisibleListDefault: (name: string) => void;
 }
 
@@ -42,12 +44,11 @@ const statsVisibleListConfig: Record<string, boolean> = {
   miniTurbo: false,
 };
 
-export const statsVisibleListDefaultInit: StatVisibility[] = statNames.map((statName) => ({
+export const statsVisibleListDefaultInit: StatsVisibleList = statNames.map((statName) => ({
   name: statName,
   checked: statsVisibleListConfig[statName],
 }));
 
-// === STORE ZUSTAND ===
 export const useStatsVisibleListConfigStore = create<StatsVisibleListConfigState>((set, get) => ({
   statsVisibleConfig: "no",
 
@@ -65,6 +66,6 @@ export const useStatsVisibleListConfigStore = create<StatsVisibleListConfigState
 
   toggleCheckListStatsVisibleListDefault(name) {
     const newList = toggleAndGetChecks(get().statsVisibleListDefault, name);
-    set({ statsVisibleListDefault: newList });
+    get().setStatsVisibleListDefault(newList);
   },
 }));

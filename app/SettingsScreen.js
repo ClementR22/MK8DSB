@@ -14,14 +14,14 @@ import Button from "@/components/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Text from "@/components/Text";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
-import { useSettings } from "@/contexts/SettingsContext";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useSettingsStore } from "@/stores/useSettingsStore";
 
 const SettingsScreen = () => {
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
   const isDefault = statsVisibleConfig === "yes";
-  const { resetSettings } = useSettings();
+  const resetSettings = useSettingsStore((state) => state.resetSettings);
 
   const [isStatsVisibleDefaultSelectorVisible, setIsStatsVisibleDefaultSelectorVisible] = useState(true);
 

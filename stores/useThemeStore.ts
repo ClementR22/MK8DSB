@@ -10,17 +10,18 @@ export const themeList = [
   { label: "System", value: "system" },
 ];
 
-type ThemeType = typeof light_theme;
+type Theme = typeof light_theme;
+export type ThemeLabel = "light" | "dark" | "system";
 
 type ThemeStore = {
-  theme: ThemeType;
-  themeLabel: "light" | "dark" | "system";
+  theme: Theme;
+  themeLabel: ThemeLabel;
   setTheme: (newLabel: "light" | "dark" | "system") => Promise<void>;
   updateSystemTheme: () => void;
 };
 
 export const useThemeStore = create<ThemeStore>((set, get) => {
-  const getTheme = (label: "light" | "dark" | "system"): ThemeType => {
+  const getTheme = (label: "light" | "dark" | "system"): Theme => {
     if (label === "light") return light_theme;
     if (label === "dark") return dark_theme;
     const system = Appearance.getColorScheme();

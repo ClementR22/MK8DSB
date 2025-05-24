@@ -1,24 +1,23 @@
-import React, { createContext, useContext } from "react";
+import { create } from "zustand";
 import { loadThingFromMemory } from "@/utils/asyncStorageOperations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useStatsVisibleListConfigStore, statsVisibleListDefaultInit } from "@/stores/useStatsVisibleListConfigStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-// Création du contexte
-const SettingsContext = createContext();
+type SettingKey = "language" | "statsVisibleConfig" | "statsVisibleListDefault" | "theme";
 
-export const useSettings = () => {
-  return useContext(SettingsContext);
+type SettingsEntry = {
+  setState: (value: any) => void;
+  value: any;
 };
 
-// Fournisseur de contexte
-export const SettingsProvider = ({ children }) => {
+export const useSettingsStore = create(() => {
+  const setLanguage = useLanguageStore((state) => state.setLanguage);
   const setStatsVisibleConfig = useStatsVisibleListConfigStore((state) => state.setStatsVisibleConfig);
   const setStatsVisibleListDefault = useStatsVisibleListConfigStore((state) => state.setStatsVisibleListDefault);
-  const setLanguage = useLanguageStore((state) => state.setLanguage);
   const setTheme = useThemeStore((state) => state.setTheme);
 
-  const settingsByDefaultKeysAndValues = {
+  const settingsByDefaultKeysAndValues: Record<SettingKey, SettingsEntry> = {
     language: { setState: setLanguage, value: "en" },
     statsVisibleConfig: { setState: setStatsVisibleConfig, value: "no" },
     statsVisibleListDefault: {
@@ -29,16 +28,16 @@ export const SettingsProvider = ({ children }) => {
   };
 
   const loadSettings = () => {
-    Object.entries(settingsByDefaultKeysAndValues).map(([settingKey, { setState }]) => {
-      loadThingFromMemory(settingKey, setState);
+    Object.entries(settingsByDefaultKeysAndValues).forEach(([key, { setState }]) => {
+      loadThingFromMemory(key, setState);
     });
   };
 
-  const resetSettings = async () => {
+  const resetSettings = () => {
     Object.values(settingsByDefaultKeysAndValues).forEach(({ setState, value }) => {
       setState(value);
     });
   };
 
-  return <SettingsContext.Provider value={{ loadSettings, resetSettings }}>{children}</SettingsContext.Provider>;
-};
+  return { loadSettings, resetSettings };
+});
