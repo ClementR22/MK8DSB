@@ -6,7 +6,6 @@ import StatSlider from "../components/StatSlider";
 import { vw } from "@/components/styles/theme";
 import { translate } from "@/translations/translations";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
-import { LoadSetModalProvider } from "@/contexts/LoadSetModalContext";
 import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
 import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
 import { ScreenProvider } from "@/contexts/ScreenContext";
@@ -34,50 +33,47 @@ const SearchSetScreen = () => {
 
   return (
     <ScreenProvider screenName="search">
-      <LoadSetModalProvider>
-        <StatsVisibleListProvider>
-          <ScrollView scrollEnabled={!isTooltipVisible}>
-            <FlexContainer>
-              <BoxContainer contentBackgroundColor={theme.surface_container_high}>
-                <Text
-                  style={[
-                    styles.text,
-                    {
-                      paddingHorizontal: 10,
-                      borderRadius: 5,
-                      marginBottom: 16,
-                      color: theme.on_surface,
-                    },
-                  ]}
-                >
-                  {translate("SearchedStats")}
-                </Text>
+      <StatsVisibleListProvider>
+        <ScrollView scrollEnabled={!isTooltipVisible}>
+          <FlexContainer>
+            <BoxContainer contentBackgroundColor={theme.surface_container_high}>
+              <Text
+                style={[
+                  styles.text,
+                  {
+                    paddingHorizontal: 10,
+                    borderRadius: 5,
+                    marginBottom: 16,
+                    color: theme.on_surface,
+                  },
+                ]}
+              >
+                {translate("SearchedStats")}
+              </Text>
 
-                <ButtonLoadSet tooltip_text="LoadStatsOfASet" />
+              <ButtonLoadSet tooltip_text="LoadStatsOfASet" />
 
-                {/* Afficher le slider uniquement si la case est cochée */}
-                {chosenStats.map(
-                  (stat) =>
-                    stat.checked && (
-                      <StatSlider
-                        key={stat.name}
-                        name={stat.name}
-                        sliderValue={stat.value}
-                        statFilterNumber={stat.statFilterNumber}
-                        setStatFilterNumber={stat.setStatFilterNumber}
-                      />
-                    )
-                )}
-              </BoxContainer>
+              {/* Afficher le slider uniquement si la case est cochée */}
+              {chosenStats.map(
+                (stat) =>
+                  stat.checked && (
+                    <StatSlider
+                      key={stat.name}
+                      name={stat.name}
+                      sliderValue={stat.value}
+                      statFilterNumber={stat.statFilterNumber}
+                      setStatFilterNumber={stat.setStatFilterNumber}
+                    />
+                  )
+              )}
+            </BoxContainer>
 
-              <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} />
-            </FlexContainer>
-
-            <SetCardContainer setsToShow={setsToShow} />
-            <RenameSetModal />
-          </ScrollView>
-        </StatsVisibleListProvider>
-      </LoadSetModalProvider>
+            <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} />
+          </FlexContainer>
+          <SetCardContainer setsToShow={setsToShow} />
+          <RenameSetModal />
+        </ScrollView>
+      </StatsVisibleListProvider>
     </ScreenProvider>
   );
 };

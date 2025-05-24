@@ -11,6 +11,7 @@ import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { PaperProvider } from "react-native-paper";
 import { Appearance } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
+import LoadSetModal from "@/components/modal/LoadSetModal";
 
 type ScreenName = "search" | "display" | "save" | "gallery";
 
@@ -106,6 +107,7 @@ export default function TabLayout() {
         />
       </Tabs>
       <EditSetModal />
+      <LoadSetModal />
       <Toast />
     </PaperProvider>
   );

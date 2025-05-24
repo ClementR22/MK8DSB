@@ -3,7 +3,6 @@ import { button_icon } from "../styles/button";
 import { shadow_3dp } from "@/components/styles/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import TooltipWrapper from "../TooltipWrapper";
-import LoadSetModal from "../modal/LoadSetModal";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLoadSetModalStore } from "@/stores/useLoadSetModalStore";
 
@@ -18,7 +17,6 @@ const ButtonLoadSet = ({ tooltip_text }) => {
       onPress={() => setIsLoadSetModalVisible(true)}
     >
       <MaterialCommunityIcons name="cards-outline" size={24} color={theme.on_primary} />
-      <LoadSetModal />
     </TooltipWrapper>
   );
 };

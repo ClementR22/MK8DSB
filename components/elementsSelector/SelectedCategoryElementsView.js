@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import useModalsStore from "@/stores/useModalsStore";
 import ElementsView from "./ElementsView";
 import BodyTabContent from "./BodyTabContent";
+import usePressableElementsStore from "@/stores/usePressableElementsStore";
 
 const groupByBodyType = (list) => {
   return list.reduce((acc, item) => {

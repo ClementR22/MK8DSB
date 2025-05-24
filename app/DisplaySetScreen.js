@@ -5,9 +5,7 @@ import SetCardContainer from "@/components/setCard/SetCardContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import DisplaySetScreenPressablesContainer from "@/components/screenPressablesContainer/DisplaySetScreenPressablesContainer";
-import { LoadSetModalProvider } from "../contexts/LoadSetModalContext";
 import useSetsStore from "@/stores/useSetsStore";
-import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useModalsStore from "@/stores/useModalsStore";
 
 const DisplaySetScreen = () => {
@@ -21,17 +19,13 @@ const DisplaySetScreen = () => {
 
   return (
     <ScreenProvider screenName="display">
-      <LoadSetModalProvider>
-        <StatsVisibleListProvider>
-          <ScrollView scrollEnabled={!isTooltipVisible}>
-            <DisplaySetScreenPressablesContainer />
-
-            <SetCardContainer setsToShow={setsListDisplayed} />
-
-            <StatSliderResultContainer setsToShowMultipleStatsLists={setsToShowMultipleStatsLists} />
-          </ScrollView>
-        </StatsVisibleListProvider>
-      </LoadSetModalProvider>
+      <StatsVisibleListProvider>
+        <ScrollView scrollEnabled={!isTooltipVisible}>
+          <DisplaySetScreenPressablesContainer />
+          <SetCardContainer setsToShow={setsListDisplayed} />
+          <StatSliderResultContainer setsToShowMultipleStatsLists={setsToShowMultipleStatsLists} />
+        </ScrollView>
+      </StatsVisibleListProvider>
     </ScreenProvider>
   );
 };
