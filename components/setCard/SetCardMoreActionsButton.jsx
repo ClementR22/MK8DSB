@@ -15,7 +15,14 @@ const SetCardMoreActionsButton = React.memo(({ moreActionNamesList, setCardIndex
       <Menu
         visible={visible}
         onDismiss={() => setVisble(false)}
-        anchor={<ButtonIcon onPress={() => setVisble(true)} iconName={"more-vert"} iconType={"MaterialIcons"} />}
+        anchor={
+          <ButtonIcon
+            onPress={() => setVisble(true)}
+            tooltipText={"MoreActions"}
+            iconName={"more-vert"}
+            iconType={"MaterialIcons"}
+          />
+        }
       >
         {moreActionNamesList.map((actionName) => {
           const { title, name, type, onPress } = actionIconPropsList[actionName];

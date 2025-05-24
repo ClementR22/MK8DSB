@@ -7,13 +7,13 @@ import * as Clipboard from "expo-clipboard";
 import { getSetStatsFromElementsClassIds } from "@/utils/getSetStatsFromElementsClassIds";
 import { useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
-import { translate, translateToLanguage } from "@/translations/translations";
+import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import showToast from "@/utils/toast";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 const ButtonImportSet = () => {
-  const { screenName } = useScreen();
+  const screenName = useScreen();
   const theme = useThemeStore((state) => state.theme);
   const importSet = useSetsStore((state) => state.importSet);
   const language = useLanguageStore((state) => state.language);

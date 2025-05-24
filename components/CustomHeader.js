@@ -4,6 +4,8 @@ import Text from "@/components/Text";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useThemeStore } from "@/stores/useThemeStore";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { translate } from "@/translations/translations";
 
 const CustomHeader = ({ children, icon = "car-sports" }) => {
   const theme = useThemeStore((state) => state.theme);

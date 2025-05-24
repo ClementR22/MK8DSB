@@ -5,8 +5,8 @@ import useModalsStore from "@/stores/useModalsStore";
 import { usePressableElements } from "@/hooks/usePressableElements";
 
 const ElementsDeselector = () => {
-  const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
-  const { pressableElementsList, handlePressImage } = usePressableElements();
+  const screenName = useModalsStore((state) => state.screenNameForEditModal);
+  const { pressableElementsList, handlePressImage } = usePressableElements(screenName);
 
   return (
     <View

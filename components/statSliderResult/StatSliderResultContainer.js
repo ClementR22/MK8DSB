@@ -6,7 +6,7 @@ import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
 import { useScreen } from "../../contexts/ScreenContext";
 
 const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
-  const { screenName } = useScreen();
+  const screenName = useScreen();
   const { statsVisibleList, chosenStatsInScreen } = useStatsVisibleList();
 
   return (

@@ -4,7 +4,7 @@ import { useScreen } from "../../contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 
 const SetNameInput = ({ setToShowName, setCardIndex }) => {
-  const { screenName } = useScreen();
+  const screenName = useScreen();
 
   const defaultName = `Set ${setCardIndex + 1}`;
   const [localName, setLocalName] = useState(setToShowName ?? defaultName);

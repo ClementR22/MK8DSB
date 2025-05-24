@@ -1,22 +1,28 @@
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import { useScreen } from "@/contexts/ScreenContext";
-import { PressableElementsStore } from "@/stores/usePressableElementsStore";
-import { ScreenName } from "@/stores/usePressableElementsStore";
+import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 
-export function usePressableElements() {
-  const screenName: ScreenName = useScreen().screenName;
-  const store: PressableElementsStore = usePressableElementsStore();
+export function usePressableElements(screenNameFromProps) {
+  const contextScreenName: ScreenName = useScreen();
+  const screenName = screenNameFromProps ?? contextScreenName;
+  const pressableElementsList = usePressableElementsStore((s) => s.pressableElementsListByScreen[screenName]);
+  const pressedClassIdsObj = usePressableElementsStore((s) => s.pressedClassIdsObjByScreen[screenName]);
+  const isSetsListUpdated = usePressableElementsStore((s) => s.isSetsListUpdated);
+  const setIsSetsListUpdated = usePressableElementsStore((s) => s.setIsSetsListUpdated);
+  const setPressedClassIdsObjByScreen = usePressableElementsStore((s) => s.setPressedClassIdsObjByScreen);
+  const handlePressImage = usePressableElementsStore((s) => s.handlePressImage);
+  const handlePressImageByClass = usePressableElementsStore((s) => s.handlePressImageByClass);
+  const updatePressableElementsList = usePressableElementsStore((s) => s.updatePressableElementsList);
 
   return {
-    pressableElementsList: store.pressableElementsListByScreen[screenName],
-    pressedClassIdsObj: store.pressedClassIdsObjByScreen[screenName],
+    pressableElementsList,
+    pressedClassIdsObj,
+    isSetsListUpdated,
+    setIsSetsListUpdated,
     setPressedClassIdsObj: (setToShowClassIds: number[]) =>
-      store.setPressedClassIdsObjByScreen(screenName, setToShowClassIds),
-    handlePressImage: (id: number) => store.handlePressImage(screenName, id),
+      setPressedClassIdsObjByScreen(screenName, setToShowClassIds),
+    handlePressImage: (id: number) => handlePressImage(screenName, id),
     handlePressImageByClass: (classId: number, category7: string) =>
-      store.handlePressImageByClass(screenName, classId, category7),
-    updatePressableElementsList: (setClassIds: number[]) => store.updatePressableElementsList(screenName, setClassIds),
-    isSetsListUpdated: store.isSetsListUpdated,
-    setIsSetsListUpdated: store.setIsSetsListUpdated,
+      handlePressImageByClass(screenName, classId, category7),
+    updatePressableElementsList: (setClassIds: number[]) => updatePressableElementsList(screenName, setClassIds),
   };
 }

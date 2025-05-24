@@ -6,7 +6,7 @@ import { useScreen } from "@/contexts/ScreenContext";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 
 const StatSelector = ({ statList, setStatList, toggleCheck, isVisibleStatsNotInSettingsScreen }) => {
-  const { screenName } = useScreen();
+  const screenName = useScreen();
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
   const isDefault = statsVisibleConfig === "yes";
   const isSync = statsVisibleConfig === "sync";

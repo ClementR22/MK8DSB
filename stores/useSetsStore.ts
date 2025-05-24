@@ -30,7 +30,7 @@ export interface SetObject {
 
 export type ScreenName = "search" | "display" | "save" | "gallery";
 
-interface SetsStoreState {
+export interface SetsStoreState {
   chosenStats: ChosenStat[];
   setsListDisplayed: SetObject[];
   setsListSaved: SetObject[];
@@ -41,7 +41,6 @@ interface SetsStoreState {
   setChosenStats: (newChosenStats: ChosenStat[]) => void;
   setSetsListFound: (newSetsList: SetObject[]) => void;
   setSetCardEdittedIndex: (newIndex: number) => void;
-
   updateStatValue: (name: string, newValue: number) => void;
   toggleCheckChosenStats: (name: string) => boolean;
   syncWithChosenStats: (setStatsVisibleList: (list: VisibleStat[]) => void) => void;

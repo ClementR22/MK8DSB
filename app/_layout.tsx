@@ -11,8 +11,8 @@ import { PaperProvider } from "react-native-paper";
 import { Appearance } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import LoadSetModal from "@/components/modal/LoadSetModal";
-
-type ScreenName = "search" | "display" | "save" | "gallery";
+import { translate } from "@/translations/translations";
+import { ScreenName } from "@/contexts/ScreenContext";
 
 function screenNameFromPath(pathname: string): ScreenName | null {
   if (pathname === "/") return "search";

@@ -4,11 +4,13 @@ import ButtonImportSet from "../managingSetsPressable/ButtonImportSet";
 import Modal from "@/components/Modal";
 import useSetsStore from "@/stores/useSetsStore";
 import { useLoadSetModalStore } from "@/stores/useLoadSetModalStore";
+import useModalsStore from "@/stores/useModalsStore";
 
 const LoadSetModal = () => {
   const setsListSaved = useSetsStore((state) => state.setsListSaved);
   const isLoadSetModalVisible = useLoadSetModalStore((state) => state.isLoadSetModalVisible);
   const setIsLoadSetModalVisible = useLoadSetModalStore((state) => state.setIsLoadSetModalVisible);
+  const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
 
   const savedSets = useMemo(() => {
     return setsListSaved;
@@ -21,7 +23,7 @@ const LoadSetModal = () => {
       setIsModalVisible={setIsLoadSetModalVisible}
       leftButton={<ButtonImportSet />}
     >
-      <SetCardContainer setsToShow={savedSets} isInLoadSetModal={true} />
+      <SetCardContainer setsToShow={savedSets} isInLoadSetModal={true} screenNameFromProps={screenNameForEditModal} />
     </Modal>
   );
 };

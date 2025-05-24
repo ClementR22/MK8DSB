@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { bodyTypeNames, category4Names, elementsAllInfosList } from "@/data/data";
+import { ScreenName } from "@/contexts/ScreenContext";
 
 // --- Types ---
 type ElementCategory = string; // tu peux le raffiner si tu veux un enum (ex: "character" | "body" | etc.)
@@ -19,8 +20,6 @@ type PressedClassIds = {
   wheels: number;
   glider: number;
 };
-
-export type ScreenName = "search" | "display" | "save" | "gallery";
 
 export type PressableElementsStore = {
   pressableElementsListByScreen: Record<ScreenName, PressableElement[]>;
@@ -79,12 +78,10 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
   },
 
   handlePressImage: (screenName, id) => {
-    console.log("handle", screenName, id);
     const pressableElementsList = get().pressableElementsListByScreen[screenName];
     const newList = pressableElementsList.map((item, index) =>
       index === id ? { ...item, pressed: !item.pressed } : item
     );
-    console.log("newList", newList);
 
     set((state) => ({
       pressableElementsListByScreen: {
@@ -92,7 +89,6 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
         [screenName]: newList,
       },
     }));
-    console.log(get().pressableElementsListByScreen);
   },
 
   handlePressImageByClass: (screenName, classId, category7) => {

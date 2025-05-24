@@ -92,6 +92,7 @@ const translations = {
     LoadTheSetToDisplayScreen: "Load the set to display screen",
     Export: "Export",
     ImportACopiedSet: "Import a copied set",
+    MoreActions: "More actions",
 
     // other
     ":": ": ",
@@ -331,6 +332,7 @@ const translations = {
     LoadTheSetToDisplayScreen: "Charger le set dans l'écran d'affichage",
     Export: "Exporter",
     ImportACopiedSet: "Importer un set copié",
+    MoreActions: "Plus d'actions",
 
     // other
     ":": " : ",

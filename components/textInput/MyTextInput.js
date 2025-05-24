@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, TextInput } from "react-native";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const MyTextInput = ({ value, onChangeText, onBlur }) => {
-  const { theme } = useTheme();
+  const theme = useThemeStore((state) => state.theme);
 
   const styles = StyleSheet.create({
     textInput: {

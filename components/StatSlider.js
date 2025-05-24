@@ -2,8 +2,6 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Slider } from "@miblanchard/react-native-slider";
 import ButtonMultiStateToggle from "./ButtonMultiStateToggle";
-
-import { vw } from "@/components/styles/theme";
 import { translate } from "@/translations/translations";
 import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";

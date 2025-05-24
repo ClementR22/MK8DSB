@@ -1,6 +1,6 @@
+import { ScreenName } from "@/contexts/ScreenContext";
 import { create } from "zustand";
 
-type ScreenName = "search" | "display" | "save" | "gallery";
 interface ModalsStoreState {
   isRenameSetModalVisible: boolean;
   setIsRenameSetModalVisible: (newVisible: boolean) => void;

@@ -24,7 +24,7 @@ const SelectedCategoryElementsView = React.memo(
     scrollToSection,
   }) => {
     const isGalleryMode = screenName === "gallery";
-    const { handlePressImage, handlePressImageByClass } = usePressableElements();
+    const { handlePressImage, handlePressImageByClass } = usePressableElements(screenName);
 
     const sectionRefs = useRef([]);
 

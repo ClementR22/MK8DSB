@@ -1,6 +1,3 @@
-import React from "react";
-import { FontAwesome6, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-
 import useSetsStore from "@/stores/useSetsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { IconType } from "react-native-dynamic-vector-icons";

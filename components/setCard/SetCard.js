@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import SetImagesContainer from "./SetImagesContainer";
+import React, { useMemo } from "react";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
 import SetNameInput from "../textInput/SetNameInput";
 import BoxContainer from "@/components/BoxContainer";
@@ -8,11 +7,11 @@ import { useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
 import useModalsStore from "@/stores/useModalsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import Modal from "../Modal";
 import useSetsStore from "@/stores/useSetsStore";
 import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
 import { Pressable } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
+import SetImagesModal from "./SetImagesModal";
 
 const SetCard = ({
   setToShowName,
@@ -20,21 +19,12 @@ const SetCard = ({
   setToShowStats = null,
   setCardIndex = null,
   isInLoadSetModal = false,
+  screenNameFromProps,
 }) => {
-  const { screenName } = useScreen();
+  const contextScreenName = useScreen();
+  const screenName = screenNameFromProps ?? contextScreenName;
   const situation = isInLoadSetModal ? "load" : screenName;
   const theme = useThemeStore((state) => state.theme);
-
-  /// DEBUG
-  if (!setToShowName) {
-    console.log("setToShowName not defined in SetCard");
-  }
-
-  const [isImagesModalVisible, setIsImagesModalVisible] = useState(false);
-
-  const displaySetImages = () => {
-    setIsImagesModalVisible(true);
-  };
 
   const situationConfig = {
     search: {
@@ -97,13 +87,9 @@ const SetCard = ({
           )}
         </FlexContainer>
 
-        <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="icon" displaySetImages={displaySetImages} />
+        <SetImagesModal setToShowClassIds={setToShowClassIds} />
 
         {config.showStatSliderResult && <StatSliderResultContainer setsToShowMultipleStatsLists={[setToShowStats]} />}
-
-        <Modal isModalVisible={isImagesModalVisible} setIsModalVisible={setIsImagesModalVisible}>
-          <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="image" />
-        </Modal>
 
         <SetCardActionButtons
           actionNamesList={config.actionNamesList}

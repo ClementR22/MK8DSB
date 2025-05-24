@@ -5,7 +5,7 @@ import SetCard from "./SetCard";
 import useModalsStore from "@/stores/useModalsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-const SetCardContainer = ({ setsToShow, isInLoadSetModal = false }) => {
+const SetCardContainer = ({ setsToShow, isInLoadSetModal = false, screenNameFromProps }) => {
   const theme = useThemeStore((state) => state.theme);
   const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
 
@@ -36,6 +36,7 @@ const SetCardContainer = ({ setsToShow, isInLoadSetModal = false }) => {
             setToShowStats={stats}
             setCardIndex={index}
             isInLoadSetModal={isInLoadSetModal}
+            screenNameFromProps={screenNameFromProps}
           />
         );
       })}

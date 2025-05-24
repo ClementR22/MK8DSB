@@ -4,7 +4,7 @@ import { category4Names, elementsAllInfosList } from "../../data/data";
 import TooltipWrapper from "../TooltipWrapper";
 import useModalsStore from "@/stores/useModalsStore";
 
-const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
+const SetImagesContainer = ({ setToShowClassIds, mode, onPress = undefined }) => {
   const data = category4Names.map((category, index) => {
     return {
       category: category,
@@ -16,28 +16,20 @@ const SetImagesContainer = ({ setToShowClassIds, mode, displaySetImages }) => {
 
   const imageSize = mode === "icon" ? 40 : 80;
 
-  const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
-
   return (
     <>
       {data.map((item) => (
-        <ScrollView key={item.category} scrollEnabled={!isTooltipVisible} horizontal style={styles.scrollview}>
+        <View key={item.category} style={{ flexDirection: "row", justifyContent: "center", margin: 20 }}>
           {item.elements.map(({ name, image }, index) => (
-            <TooltipWrapper
-              key={index}
-              tooltipText={name}
-              onPress={mode === "icon" ? () => displaySetImages() : undefined}
-            >
+            <TooltipWrapper key={index} tooltipText={name} onPress={onPress}>
               <Image source={image} style={{ width: imageSize, height: imageSize }} resizeMode="contain" />
             </TooltipWrapper>
           ))}
-        </ScrollView>
+        </View>
       ))}
     </>
   );
 };
-
-export default SetImagesContainer;
 
 const styles = StyleSheet.create({
   row: {
@@ -56,3 +48,5 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
+
+export default React.memo(SetImagesContainer);

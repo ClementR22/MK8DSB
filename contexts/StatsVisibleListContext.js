@@ -12,7 +12,7 @@ export const StatsVisibleListProvider = ({ children }) => {
   const statsVisibleListDefault = useStatsVisibleListConfigStore((state) => state.statsVisibleListDefault);
   const [statsVisibleList_, setStatsVisibleList] = useState(statsVisibleListDefaultInit);
   const statsVisibleList = isDefault ? statsVisibleListDefault : statsVisibleList_;
-  const { screenName } = useScreen();
+  const screenName = useScreen();
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const chosenStatsInScreen = screenName === "search" ? chosenStats : Array(12).fill(null);
 

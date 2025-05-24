@@ -14,12 +14,9 @@ const ElementsSelector = () => {
   const [orderNumber, setOrderNumber] = useState(0);
   const language = useLanguageStore((state) => state.language);
   const screenName = useModalsStore((state) => state.screenNameForEditModal);
-  const { pressableElementsList } = usePressableElements();
+  const { pressableElementsList } = usePressableElements(screenName);
   const pressableElementsByCategory = useMemo(() => {
-    console.log("usememeo");
-    const ok = computePressableElementsByCategory(pressableElementsList);
-    console.log("ok", ok);
-    return ok;
+    return computePressableElementsByCategory(pressableElementsList);
   }, [pressableElementsList]);
   const [selectedTab, setSelectedTab] = useState("character");
 
