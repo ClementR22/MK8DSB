@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { Tabs } from "expo-router";
+import { Tabs, usePathname } from "expo-router";
 import Toast from "react-native-toast-message";
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import CustomHeader from "@/components/CustomHeader";
 import EditSetModal from "@/components/modal/EditSetModal";
-import { usePathname } from "expo-router";
 import useModalsStore from "@/stores/useModalsStore";
 import useSetsStore from "@/stores/useSetsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
@@ -68,41 +67,41 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: "Trouver un set",
+            title: translate("FindSetTabTitle"),
             tabBarIcon: ({ color }) => <MaterialCommunityIcons name="magnify" size={24} color={color} />,
-            header: () => <CustomHeader>Search Set screen</CustomHeader>,
+            header: () => <CustomHeader icon={"magnify"}>{"FindSetTitle"}</CustomHeader>,
           }}
         />
         <Tabs.Screen
           name="DisplaySetScreen"
           options={{
-            title: "Afficher un set",
+            title: translate("DisplaySetTabTitle"),
             tabBarIcon: ({ color }) => <MaterialIcons name="display-settings" size={24} color={color} />,
-            header: () => <CustomHeader>Display Set screen</CustomHeader>,
+            header: () => <CustomHeader>{"DisplaySetTitle"}</CustomHeader>,
           }}
         />
         <Tabs.Screen
           name="SavedSetScreen"
           options={{
-            title: "Saved Set",
+            title: translate("SavedSetTabTitle"),
             tabBarIcon: ({ color }) => <MaterialIcons name="save" size={24} color={color} />,
-            header: () => <CustomHeader icon={"save"}>Saved Set screen</CustomHeader>,
+            header: () => <CustomHeader icon={"save"}>{"SavedSetTitle"}</CustomHeader>,
           }}
         />
         <Tabs.Screen
           name="GalleryScreen"
           options={{
-            title: "Galerie",
+            title: translate("GalleryTabTitle"),
             tabBarIcon: ({ color }) => <Ionicons name="image-outline" size={24} color={color} />,
-            header: () => <CustomHeader icon={"image-outline"}>Gallery screen</CustomHeader>,
+            header: () => <CustomHeader icon={"image-outline"}>{"GalleryTitle"}</CustomHeader>,
           }}
         />
         <Tabs.Screen
           name="SettingsScreen"
           options={{
-            title: "les reglages",
+            title: translate("SettingsTabTitle"),
             tabBarIcon: ({ color }) => <Ionicons name="settings" size={24} color={color} />,
-            header: () => <CustomHeader>Settings screen</CustomHeader>,
+            header: () => <CustomHeader icon={"settings"}>{"SettingsTitle"}</CustomHeader>,
           }}
         />
       </Tabs>
