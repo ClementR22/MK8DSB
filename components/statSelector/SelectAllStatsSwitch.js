@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Switch } from "react-native-paper";
 import { translate } from "@/translations/translations";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const SelectAllStatsSwitch = ({ statList, setStatList }) => {
+  const theme = useThemeStore((state) => state.theme);
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [formerStatList, setFormerStatList] = useState(null);
   const internalUpdate = useRef(false); // Marqueur de mise à jour interne
@@ -52,7 +54,7 @@ const SelectAllStatsSwitch = ({ statList, setStatList }) => {
   return (
     <View style={styles.switchContainer}>
       <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
-      <Text>{translate("All")}</Text>
+      <Text style={{ color: theme.on_surface }}>{translate("All")}</Text>
     </View>
   );
 };

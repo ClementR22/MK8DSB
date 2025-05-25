@@ -2,6 +2,7 @@ import React from "react";
 import { ScrollView } from "react-native";
 import PressableStat from "./PressableStat";
 import SelectAllStatsSwitch from "./SelectAllStatsSwitch";
+
 const StatSelector = ({ statList, setStatList, toggleCheck }) => {
   return (
     <>
