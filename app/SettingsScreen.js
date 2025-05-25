@@ -16,13 +16,14 @@ import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConf
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import ButtonAndModal from "@/components/modal/ButtonAndModal";
 import { translate } from "@/translations/translations";
-import { deleteAllSetsInMemory } from "@/utils/asyncStorageOperations";
 import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
+import useSetsStore from "@/stores/useSetsStore";
 
 const SettingsScreen = () => {
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
   const isDefault = statsVisibleConfig === "yes";
   const resetSettings = useSettingsStore((state) => state.resetSettings);
+  const deleteAllSavedSets = useSetsStore((state) => state.deleteAllSavedSets);
 
   return (
     <ScreenProvider screenName="settings">
@@ -44,7 +45,7 @@ const SettingsScreen = () => {
 
             <ButtonAndModal
               triggerButtonText={"DeleteAllSetsInMemory"}
-              onConfirm={deleteAllSetsInMemory}
+              onConfirm={deleteAllSavedSets}
               confirmButtonText="Confirm"
               closeButtonText="Cancel"
             >

@@ -49,7 +49,7 @@ export const deleteAllTheMemory = async () => {
   }
 };
 
-export const deleteAllSetsInMemory = async () => {
+export const deleteAllSavedSetsInMemory = async () => {
   try {
     const setsKeys = await getOnlySetsSavedKeysFromMemory();
     setsKeys.forEach(async (thingKey) => await AsyncStorage.removeItem(thingKey));

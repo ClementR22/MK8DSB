@@ -4,7 +4,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import showToast from "@/utils/toast";
 import { getSetStatsFromElementsClassIds } from "@/utils/getSetStatsFromElementsClassIds";
 import * as Clipboard from "expo-clipboard";
-import { getOnlySetsSavedKeysFromMemory, saveThingInMemory } from "@/utils/asyncStorageOperations";
+import {
+  deleteAllSavedSetsInMemory,
+  getOnlySetsSavedKeysFromMemory,
+  saveThingInMemory,
+} from "@/utils/asyncStorageOperations";
 import { toggleAndGetChecks } from "@/utils/toggleCheck";
 
 // Types
@@ -66,6 +70,7 @@ export interface SetsStoreState {
   sortSetsSavedKeys: () => void;
   exportSet: (index: number, screenName: ScreenName) => void;
   importSet: (setCard: SetObject, screenName: ScreenName) => void;
+  deleteAllSavedSets: () => void;
 }
 
 // Données par défaut
@@ -343,6 +348,11 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
         ? get().loadSetToDisplay
         : get().saveSet;
     loadSet(setCard);
+  },
+
+  deleteAllSavedSets: () => {
+    set({ setsListSaved: [] });
+    deleteAllSavedSetsInMemory();
   },
 }));
 
