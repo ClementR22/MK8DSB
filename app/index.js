@@ -53,18 +53,10 @@ const SearchSetScreen = () => {
               <ButtonLoadSet tooltip_text="LoadStatsOfASet" />
 
               {/* Afficher le slider uniquement si la case est cochée */}
-              {chosenStats.map(
-                (stat) =>
-                  stat.checked && (
-                    <StatSlider
-                      key={stat.name}
-                      name={stat.name}
-                      sliderValue={stat.value}
-                      statFilterNumber={stat.statFilterNumber}
-                      setStatFilterNumber={stat.setStatFilterNumber}
-                    />
-                  )
-              )}
+              {chosenStats.map((stat) => {
+                const { checked, name, statFilterNumber } = stat;
+                return checked && <StatSlider key={name} name={name} statFilterNumber={statFilterNumber} />;
+              })}
             </BoxContainer>
 
             <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} />
