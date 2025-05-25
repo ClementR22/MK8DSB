@@ -191,7 +191,6 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
           toggleCheck={(name) => {
             toggleCheckChosenStats(name);
           }}
-          isVisibleStatsNotInSettingsScreen={false}
         />
       </Modal>
 

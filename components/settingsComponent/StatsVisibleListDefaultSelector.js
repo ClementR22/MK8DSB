@@ -14,7 +14,6 @@ const StatsVisibleListDefaultSelector = () => {
       statList={statsVisibleListDefault}
       setStatList={setStatsVisibleListDefault}
       toggleCheck={(name) => toggleCheckListStatsVisibleListDefault(name)}
-      isVisibleStatsNotInSettingsScreen={false}
     />
   );
 };

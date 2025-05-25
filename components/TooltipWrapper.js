@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text } from "react-native";
 import Tooltip from "react-native-walkthrough-tooltip";
 import { translate } from "@/translations/translations";
 import useModalsStore from "@/stores/useModalsStore";
 
-const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", children, ...props }) => {
+const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", disabled = false, children, ...props }) => {
   const [isTooltipVisible_, setIsTooltipVisible_] = useState(false);
 
   const setIsTooltipVisible = useModalsStore((state) => state.setIsTooltipVisible);
@@ -30,11 +30,12 @@ const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", childr
 
   return (
     <Pressable
-      style={style}
+      style={[style, { backgroundColor: disabled ? "grey" : undefined }]}
       onPress={onPress}
       onLongPress={openTooltip}
       onHoverIn={() => console.log("caca")}
       {...props}
+      disabled={disabled}
     >
       <Tooltip
         isVisible={isTooltipVisible_}

@@ -5,7 +5,17 @@ import Icon from "react-native-dynamic-vector-icons";
 import TooltipWrapper from "@/components/TooltipWrapper";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-function ButtonIcon({ children, onPress, tooltipText, elevation, iconName, iconType, iconSize = 24, ...props }) {
+function ButtonIcon({
+  children,
+  onPress,
+  tooltipText,
+  elevation,
+  iconName,
+  iconType,
+  iconSize = 24,
+  disabled = false,
+  ...props
+}) {
   const theme = useThemeStore((state) => state.theme);
   const [buttonHover, setButtonHover] = useState(false);
 
@@ -47,6 +57,7 @@ function ButtonIcon({ children, onPress, tooltipText, elevation, iconName, iconT
       onHoverIn={() => setButtonHover(true)}
       onHoverOut={() => setButtonHover(false)}
       {...props}
+      disabled={disabled}
     >
       <Icon type={iconType} name={iconName} size={iconSize} color={theme.on_primary} />
     </TooltipWrapper>
