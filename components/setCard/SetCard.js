@@ -20,11 +20,14 @@ const SetCard = ({
   setCardIndex = null,
   isInLoadSetModal = false,
   screenNameFromProps,
+  hideRemoveSet = false,
 }) => {
   const contextScreenName = useScreen();
   const screenName = screenNameFromProps ?? contextScreenName;
   const situation = isInLoadSetModal ? "load" : screenName;
   const theme = useThemeStore((state) => state.theme);
+
+  console.log("hideRemoveSet", hideRemoveSet);
 
   const situationConfig = {
     search: {
@@ -37,7 +40,7 @@ const SetCard = ({
       showTextInput: true,
       showStatSliderResult: false,
       actionNamesList: ["edit", "save", "loadDisplayToSearch"],
-      moreActionNamesList: ["remove", "export"],
+      moreActionNamesList: [], // va valoir ["export", "remove"] ou bien ["export"]
     },
     save: {
       showTextInput: true,
@@ -54,9 +57,26 @@ const SetCard = ({
   };
 
   const config = useMemo(() => {
-    const base = situationConfig[situation] ?? {};
-    return { ...base };
-  }, [situation, screenName]);
+    const currentConfig = situationConfig[situation] ?? {};
+
+    // Gérer spécifiquement le `moreActionNamesList` pour la situation 'display'
+    if (situation === "display") {
+      const dynamicMoreActions = [];
+      // Inclure "remove" SEULEMENT si hideRemoveSet est false
+      if (!hideRemoveSet) {
+        dynamicMoreActions.push("remove");
+      }
+      dynamicMoreActions.push("export"); // "export" est toujours inclus pour display
+
+      return {
+        ...currentConfig,
+        moreActionNamesList: dynamicMoreActions,
+      };
+    }
+
+    // Pour les autres situations, retourner la configuration telle quelle
+    return { ...currentConfig };
+  }, [situation, hideRemoveSet, screenName]); // Ajoutez hideRemoveSet aux dépendances du useMemo
 
   const setPressedClassIdsObjByScreen = usePressableElementsStore((state) => state.setPressedClassIdsObjByScreen);
   const updatePressableElementsList = usePressableElementsStore((state) => state.updatePressableElementsList);

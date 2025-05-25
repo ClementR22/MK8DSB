@@ -17,12 +17,14 @@ const DisplaySetScreen = () => {
 
   const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
 
+  const hideRemoveSet = setsListDisplayed.length === 1;
+
   return (
     <ScreenProvider screenName="display">
       <StatsVisibleListProvider>
         <ScrollView scrollEnabled={!isTooltipVisible}>
           <DisplaySetScreenPressablesContainer />
-          <SetCardContainer setsToShow={setsListDisplayed} />
+          <SetCardContainer setsToShow={setsListDisplayed} hideRemoveSet={hideRemoveSet} />
           <StatSliderResultContainer setsToShowMultipleStatsLists={setsToShowMultipleStatsLists} />
         </ScrollView>
       </StatsVisibleListProvider>
