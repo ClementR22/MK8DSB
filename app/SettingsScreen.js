@@ -14,8 +14,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Text from "@/components/Text";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import { useSettingsStore } from "@/stores/useSettingsStore";
-import DeleteAllSetsMemoryModal from "@/components/modal/DeleteAllSetsMemoryModal";
-import DefaultVisibleStatsModal from "@/components/modal/DefaultVisibleStatsModal";
+import ButtonAndModal from "@/components/modal/ButtonAndModal";
+import { translate } from "@/translations/translations";
+import { deleteAllSetsInMemory } from "@/utils/asyncStorageOperations";
+import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
 
 const SettingsScreen = () => {
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
@@ -30,12 +32,24 @@ const SettingsScreen = () => {
             <LanguageSelector />
             <ThemeSelector />
             <StatsVisibleConfigSelector />
-            {isDefault && <DefaultVisibleStatsModal />}
+            {isDefault && (
+              <ButtonAndModal triggerButtonText={"DefaultVisibleStats"}>
+                <StatsVisibleListDefaultSelector />
+              </ButtonAndModal>
+            )}
 
             <ContactUsButton />
             <LicensesButton />
             <ButtonResetSettings resetSettings={resetSettings} />
-            <DeleteAllSetsMemoryModal />
+
+            <ButtonAndModal
+              triggerButtonText={"DeleteAllSetsInMemory"}
+              onConfirm={deleteAllSetsInMemory}
+              confirmButtonText="Confirm"
+              closeButtonText="Cancel"
+            >
+              <Text>{translate("DeleteAllSetsInMemoryText")}</Text>
+            </ButtonAndModal>
           </FlexScrollView>
         </StatsVisibleListProvider>
         <Text>DEBUG</Text>

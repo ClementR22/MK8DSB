@@ -1,39 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import { FlatList, Pressable, Text, View, Linking, StyleSheet } from "react-native";
-import { translate } from "@/translations/translations";
-import Button from "@/components/Button";
-import { Modal } from "react-native-paper";
+import ButtonAndModal from "../modal/ButtonAndModal";
 
 const LicensesButton = () => {
-  const [isLicensesModalVisible, setIsLicensesModalVisible] = useState(false);
-
   return (
-    <Button onPress={() => setIsLicensesModalVisible(true)}>
-      <Text>{translate("OpenSourceLicenses")}</Text>
-      <Modal
-        modalTitle="Licenses"
-        isModalVisible={isLicensesModalVisible}
-        setIsModalVisible={setIsLicensesModalVisible}
-      >
-        <View style={{ flex: 1, padding: 20 }}>
-          <FlatList
-            data={Object.entries(licensesLinks)}
-            keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item }) => {
-              const [licenseName, licenseUrl] = item;
-              return (
-                <Pressable onPress={() => Linking.openURL(licenseUrl)}>
-                  <View style={styles.licenseItem}>
-                    <Text style={styles.licenseName}>{licenseName}</Text>
-                  </View>
-                </Pressable>
-              );
-            }}
-            contentContainerStyle={styles.flatListContainer}
-          />
-        </View>
-      </Modal>
-    </Button>
+    <ButtonAndModal modalTitle="Licenses" triggerButtonText="OpenSourceLicenses">
+      <View style={{ flex: 1, padding: 20 }}>
+        <FlatList
+          data={Object.entries(licensesLinks)}
+          keyExtractor={(_, index) => index.toString()}
+          renderItem={({ item }) => {
+            const [licenseName, licenseUrl] = item;
+            return (
+              <Pressable onPress={() => Linking.openURL(licenseUrl)}>
+                <View style={styles.licenseItem}>
+                  <Text style={styles.licenseName}>{licenseName}</Text>
+                </View>
+              </Pressable>
+            );
+          }}
+          contentContainerStyle={styles.flatListContainer}
+        />
+      </View>
+    </ButtonAndModal>
   );
 };
 
@@ -73,4 +62,4 @@ const licensesLinks = {
 // pour obtenir toutes les licences
 // npx license-checker --production --json > licenses-summary.json
 
-export default LicensesButton;
+export default React.memo(LicensesButton);

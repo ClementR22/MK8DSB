@@ -21,6 +21,7 @@ import { computePressableElementsByCategory } from "@/utils/computePressableElem
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { usePressableElements } from "@/hooks/usePressableElements";
+import ButtonAndModal from "../modal/ButtonAndModal";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const theme = useThemeStore((state) => state.theme);
@@ -29,10 +30,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
   const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
   const toggleCheckChosenStats = useSetsStore((state) => state.toggleCheckChosenStats);
-  const [chosenStatsModalVisible, setChosenStatsModalVisible] = useState(false);
-  const [resultsNumberModalVisible, setResultsNumberModalVisible] = useState(false);
   const [resultsNumber, setResultsNumber] = useState(5);
-  const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   const { setStatsVisibleList } = useStatsVisibleList();
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
   const isSync = statsVisibleConfig === "sync";
@@ -149,19 +147,31 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
 
   return (
     <View style={styles.pressablesContainer}>
-      <ButtonIcon
-        tooltipText="ChooseStats"
-        iconName="plus"
-        iconType={IconType.MaterialCommunityIcons}
-        onPress={() => setChosenStatsModalVisible(true)}
-      />
+      <ButtonAndModal
+        modalTitle="StatsToConfigure"
+        customTrigger={
+          <ButtonIcon tooltipText="ChooseStats" iconName="plus" iconType={IconType.MaterialCommunityIcons} />
+        }
+      >
+        <StatSelector
+          statList={chosenStats}
+          setStatList={setChosenStats}
+          toggleCheck={(name) => {
+            toggleCheckChosenStats(name);
+          }}
+        />
+      </ButtonAndModal>
 
-      <ButtonIcon
-        onPress={() => setIsFilterModalVisible(true)}
-        tooltipText="ChooseFilters"
-        iconName="pin"
-        iconType={IconType.MaterialCommunityIcons}
-      />
+      <ButtonAndModal
+        modalTitle="Filters"
+        customTrigger={
+          <ButtonIcon tooltipText="ChooseFilters" iconName="pin" iconType={IconType.MaterialCommunityIcons} />
+        }
+      >
+        <BodyTypeSelector chosenBodyType={chosenBodyType} setChosenBodyType={setChosenBodyType} />
+        <ElementsDeselector />
+        <ElementsSelector />
+      </ButtonAndModal>
 
       <Pressable
         style={[button(theme).container, { flexDirection: "row", paddingRight: 24, paddingLeft: 16 }, shadow_3dp]}
@@ -171,42 +181,16 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
         <Text style={[button(theme).text, { marginLeft: 8 }]}>{translate("Search")}</Text>
       </Pressable>
 
-      <ButtonIcon
-        onPress={() => setResultsNumberModalVisible(true)}
-        tooltipText="NumberOfResults"
-        iconName="numbers"
-        iconType={IconType.MaterialIcons}
-      />
-
-      <StatSliderResultSelectorPressable />
-
-      <Modal
-        modalTitle="StatsToConfigure"
-        isModalVisible={chosenStatsModalVisible}
-        setIsModalVisible={setChosenStatsModalVisible}
-      >
-        <StatSelector
-          statList={chosenStats}
-          setStatList={setChosenStats}
-          toggleCheck={(name) => {
-            toggleCheckChosenStats(name);
-          }}
-        />
-      </Modal>
-
-      <Modal modalTitle="Filters" isModalVisible={isFilterModalVisible} setIsModalVisible={setIsFilterModalVisible}>
-        <BodyTypeSelector chosenBodyType={chosenBodyType} setChosenBodyType={setChosenBodyType} />
-        <ElementsDeselector />
-        <ElementsSelector />
-      </Modal>
-
-      <Modal
+      <ButtonAndModal
         modalTitle="NumberOfResults"
-        isModalVisible={resultsNumberModalVisible}
-        setIsModalVisible={setResultsNumberModalVisible}
+        customTrigger={
+          <ButtonIcon tooltipText="NumberOfResults" iconName="numbers" iconType={IconType.MaterialIcons} />
+        }
       >
         <ResultsNumber resultsNumber={resultsNumber} setResultsNumber={setResultsNumber} />
-      </Modal>
+      </ButtonAndModal>
+
+      <StatSliderResultSelectorPressable />
     </View>
   );
 };

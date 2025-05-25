@@ -13,6 +13,7 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "../ButtonIcon";
 import { useScreen } from "@/contexts/ScreenContext";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
+import ButtonAndModal from "../modal/ButtonAndModal";
 
 const StatSliderResultSelectorPressable = () => {
   const { statsVisibleList, setStatsVisibleList, toggleCheckListStatsVisibleList } = useStatsVisibleList();
@@ -21,49 +22,44 @@ const StatSliderResultSelectorPressable = () => {
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
 
-  const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
   const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
 
   const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
   const disabled = statsVisibleConfig !== "no";
 
-  return (
-    <>
-      <ButtonIcon
-        onPress={() => setFoundStatsModalVisible(true)}
-        tooltipText="DisplayedStats"
-        iconName="checkbox-multiple-marked"
-        iconType={IconType.MaterialCommunityIcons}
-        disabled={disabled}
-      />
+  const leftButton = isInSearchScreen ? (
+    <Pressable
+      style={[button(theme).container, modal(theme).close_button_center, filterModalButtonHover && shadow_12dp]}
+      onHoverIn={() => setFilterModalButtonHover(true)}
+      onHoverOut={() => setFilterModalButtonHover(false)}
+      onPress={() => syncWithChosenStats(setStatsVisibleList)}
+    >
+      <Text>{translate("Sync")}</Text>
+    </Pressable>
+  ) : undefined;
 
-      <Modal
-        modalTitle="StatsToDisplay"
-        isModalVisible={foundStatsModalVisible}
-        setIsModalVisible={setFoundStatsModalVisible}
-        leftButton={
-          isInSearchScreen && (
-            <Pressable
-              style={[button(theme).container, modal(theme).close_button_center, filterModalButtonHover && shadow_12dp]}
-              onHoverIn={() => setFilterModalButtonHover(true)}
-              onHoverOut={() => setFilterModalButtonHover(false)}
-              onPress={() => syncWithChosenStats(setStatsVisibleList)}
-            >
-              <Text>{translate("Sync")}</Text>
-            </Pressable>
-          )
-        }
-      >
-        <StatSelector
-          statList={statsVisibleList}
-          setStatList={setStatsVisibleList}
-          toggleCheck={(name) => {
-            toggleCheckListStatsVisibleList(name);
-          }}
+  return (
+    <ButtonAndModal
+      customTrigger={
+        <ButtonIcon
+          tooltipText="DisplayedStats"
+          iconName="checkbox-multiple-marked"
+          iconType={IconType.MaterialCommunityIcons}
+          disabled={disabled}
         />
-      </Modal>
-    </>
+      }
+      modalTitle="StatsToDisplay"
+      leftButton={leftButton}
+    >
+      <StatSelector
+        statList={statsVisibleList}
+        setStatList={setStatsVisibleList}
+        toggleCheck={(name) => {
+          toggleCheckListStatsVisibleList(name);
+        }}
+      />
+    </ButtonAndModal>
   );
 };
 
