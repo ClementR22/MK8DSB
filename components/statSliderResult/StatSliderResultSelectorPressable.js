@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { Pressable, Text, View } from "react-native";
-import { button, button_icon } from "../styles/button";
-import { shadow_12dp, shadow_3dp } from "@/components/styles/theme";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Pressable, Text } from "react-native";
+import { button } from "../styles/button";
+import { shadow_12dp } from "@/components/styles/theme";
 import StatSelector from "../statSelector/StatSelector";
-import TooltipWrapper from "../TooltipWrapper";
 import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
 import { translate } from "@/translations/translations";
 import { modal } from "@/components/styles/modal";
 import useSetsStore from "@/stores/useSetsStore";
 import Modal from "../Modal";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { IconType } from "react-native-dynamic-vector-icons";
+import ButtonIcon from "../ButtonIcon";
 
 const StatSliderResultSelectorPressable = () => {
   const { statsVisibleList, setStatsVisibleList, toggleCheckListStatsVisibleList } = useStatsVisibleList();
@@ -23,14 +23,13 @@ const StatSliderResultSelectorPressable = () => {
   const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
 
   return (
-    <View>
-      <TooltipWrapper
-        tooltipText="DisplayedStats"
-        style={[button_icon(theme).container, shadow_3dp]}
+    <>
+      <ButtonIcon
         onPress={() => setFoundStatsModalVisible(true)}
-      >
-        <MaterialCommunityIcons name="checkbox-multiple-marked" size={24} color={theme.on_primary} />
-      </TooltipWrapper>
+        tooltipText="DisplayedStats"
+        iconName="checkbox-multiple-marked"
+        iconType={IconType.MaterialCommunityIcons}
+      />
 
       <Modal
         modalTitle="StatsToDisplay"
@@ -56,7 +55,7 @@ const StatSliderResultSelectorPressable = () => {
           isVisibleStatsNotInSettingsScreen={true}
         />
       </Modal>
-    </View>
+    </>
   );
 };
 

@@ -1,8 +1,4 @@
 import React from "react";
-import { button_icon } from "../styles/button";
-import { shadow_3dp } from "@/components/styles/theme";
-import { Feather } from "@expo/vector-icons";
-import TooltipWrapper from "../TooltipWrapper";
 import * as Clipboard from "expo-clipboard";
 import { getSetStatsFromElementsClassIds } from "@/utils/getSetStatsFromElementsClassIds";
 import { useScreen } from "@/contexts/ScreenContext";
@@ -11,10 +7,11 @@ import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import showToast from "@/utils/toast";
 import { useThemeStore } from "@/stores/useThemeStore";
+import ButtonIcon from "../ButtonIcon";
+import { IconType } from "react-native-dynamic-vector-icons";
 
 const ButtonImportSet = () => {
   const screenName = useScreen();
-  const theme = useThemeStore((state) => state.theme);
   const importSet = useSetsStore((state) => state.importSet);
   const language = useLanguageStore((state) => state.language);
 
@@ -62,13 +59,7 @@ const ButtonImportSet = () => {
   };
 
   return (
-    <TooltipWrapper
-      tooltipText="ImportACopiedSet"
-      style={[button_icon(theme).container, shadow_3dp]}
-      onPress={handlePaste}
-    >
-      <Feather name="download" size={24} color={theme.on_primary} />
-    </TooltipWrapper>
+    <ButtonIcon onPress={handlePaste} tooltipText="ImportACopiedSet" iconName="download" iconType={IconType.Feather} />
   );
 };
 

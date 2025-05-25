@@ -149,14 +149,6 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
 
   return (
     <View style={styles.pressablesContainer}>
-      {/*<TooltipWrapper*/}
-      {/*  tooltipText="ChooseStats"*/}
-      {/*  style={[button_icon(theme).container, shadow_3dp]}*/}
-      {/*  onPress={() => setChosenStatsModalVisible(true)}*/}
-      {/*>*/}
-      {/*  <MaterialCommunityIcons name="plus" size={24} color={theme.on_primary} />*/}
-      {/*</TooltipWrapper>*/}
-
       <ButtonIcon
         tooltipText="ChooseStats"
         iconName="plus"
@@ -164,13 +156,12 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
         onPress={() => setChosenStatsModalVisible(true)}
       />
 
-      <TooltipWrapper
-        tooltipText="ChooseFilters"
-        style={[button_icon(theme).container, shadow_3dp]}
+      <ButtonIcon
         onPress={() => setIsFilterModalVisible(true)}
-      >
-        <MaterialCommunityIcons name="pin" size={24} color={theme.on_primary} />
-      </TooltipWrapper>
+        tooltipText="ChooseFilters"
+        iconName="pin"
+        iconType={IconType.MaterialCommunityIcons}
+      />
 
       <Pressable
         style={[button(theme).container, { flexDirection: "row", paddingRight: 24, paddingLeft: 16 }, shadow_3dp]}
@@ -180,13 +171,12 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
         <Text style={[button(theme).text, { marginLeft: 8 }]}>{translate("Search")}</Text>
       </Pressable>
 
-      <TooltipWrapper
-        tooltipText="NumberOfResults"
-        style={[button_icon(theme).container, shadow_3dp]}
+      <ButtonIcon
         onPress={() => setResultsNumberModalVisible(true)}
-      >
-        <MaterialIcons name="numbers" size={24} color={theme.on_primary} />
-      </TooltipWrapper>
+        tooltipText="NumberOfResults"
+        iconName="numbers"
+        iconType={IconType.MaterialIcons}
+      />
 
       <StatSliderResultSelectorPressable />
 
