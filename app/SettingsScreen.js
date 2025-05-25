@@ -17,17 +17,17 @@ import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSettingsStore } from "@/stores/useSettingsStore";
+import Modal from "@/components/Modal";
+import { translate, translateToLanguage } from "@/translations/translations";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const SettingsScreen = () => {
+  const language = useLanguageStore((state) => state.language);
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
   const isDefault = statsVisibleConfig === "yes";
   const resetSettings = useSettingsStore((state) => state.resetSettings);
 
-  const [isStatsVisibleDefaultSelectorVisible, setIsStatsVisibleDefaultSelectorVisible] = useState(true);
-
-  useEffect(() => {
-    setIsStatsVisibleDefaultSelectorVisible(isDefault);
-  }, [isDefault]);
+  const [isStatsSelectorModalVisible, setIsStatsSelectorModalVisible] = useState(false);
 
   return (
     <ScreenProvider screenName="settings">
@@ -38,14 +38,17 @@ const SettingsScreen = () => {
             <ThemeSelector />
             <StatsVisibleConfigSelector />
             {isDefault && (
-              <Button onPress={() => setIsStatsVisibleDefaultSelectorVisible(!isStatsVisibleDefaultSelectorVisible)}>
-                <MaterialCommunityIcons
-                  name={isStatsVisibleDefaultSelectorVisible ? "arrow-expand-up" : "arrow-expand-down"}
-                  size={24}
-                />
+              <Button onPress={() => setIsStatsSelectorModalVisible(true)}>
+                {translateToLanguage("DefaultVisibleStats", language)}
               </Button>
             )}
-            {isStatsVisibleDefaultSelectorVisible && <StatsVisibleListDefaultSelector />}
+            <Modal
+              modalTitle="DefaultVisibleStats"
+              isModalVisible={isStatsSelectorModalVisible}
+              setIsModalVisible={setIsStatsSelectorModalVisible}
+            >
+              <StatsVisibleListDefaultSelector />
+            </Modal>
             <ContactUsButton />
             <LicensesButton />
             <ButtonResetSettings resetSettings={resetSettings} />
