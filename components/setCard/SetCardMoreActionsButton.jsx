@@ -23,6 +23,7 @@ const SetCardMoreActionsButton = React.memo(({ moreActionNamesList, setCardIndex
             iconType={"MaterialIcons"}
           />
         }
+        anchorPosition="bottom"
       >
         {moreActionNamesList.map((actionName) => {
           const { title, name, type, onPress } = actionIconPropsList[actionName];
