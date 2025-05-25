@@ -21,14 +21,12 @@ const SetImagesModal: React.FC<SetImagesModalProps> = React.memo(({ setToShowCla
         <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="icon" onPress={openModal} />
       </Pressable>
 
-      {/* Le modal lui-même */}
       <Modal
         modalTitle={null}
         isModalVisible={isImagesModalVisible}
         setIsModalVisible={setIsImagesModalVisible}
         onClose={closeModal}
       >
-        {/* Le contenu détaillé du modal */}
         <SetImagesContainer
           setToShowClassIds={setToShowClassIds}
           mode="image"

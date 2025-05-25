@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import showToast from "./toast";
 
 export const saveThingInMemory = async (thingKey: string, newThing: any) => {
   try {
@@ -23,6 +24,13 @@ export const loadThingFromMemory = async (thingKey: string, setThing: any) => {
   }
 };
 
+export const getOnlySetsSavedKeysFromMemory = async () => {
+  const excludedKeys = ["language", "theme", "statsVisibleConfig", "statsVisibleListDefault"];
+  const keys = await AsyncStorage.getAllKeys();
+  const onlySetKeys = keys.filter((k) => !excludedKeys.includes(k));
+  return onlySetKeys;
+};
+
 export const deleteThingInMemory = async (thingKey) => {
   try {
     await AsyncStorage.removeItem(thingKey);
@@ -35,6 +43,17 @@ export const deleteAllTheMemory = async () => {
   try {
     const allKeys = await AsyncStorage.getAllKeys();
     allKeys.forEach(async (thingKey) => await AsyncStorage.removeItem(thingKey));
+    showToast("Lamemoireaetesupprimee", "ehoui");
+  } catch (e) {
+    console.error("Erreur lors de la suppression : ", e);
+  }
+};
+
+export const deleteAllSetsInMemory = async () => {
+  try {
+    const setsKeys = await getOnlySetsSavedKeysFromMemory();
+    setsKeys.forEach(async (thingKey) => await AsyncStorage.removeItem(thingKey));
+    showToast("lessetssontsupprimes", "ehoui");
   } catch (e) {
     console.error("Erreur lors de la suppression : ", e);
   }

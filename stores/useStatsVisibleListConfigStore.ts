@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { statNames } from "@/data/data";
-import { toggleAndGetChecks, toggleCheckList } from "@/utils/toggleCheck";
+import { toggleAndGetChecks } from "@/utils/toggleCheck";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 
 // === TYPES ===

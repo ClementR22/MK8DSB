@@ -54,6 +54,7 @@ const translations = {
     ClipboardIsEmpty: "Clipboard is empty",
     IncorrectFormat: "Incorrect format",
     ThisSetDoesNotExist: "This set does not exist",
+    DeleteAllSetsInMemoryText: "Do you really want to delete all saved sets?",
 
     // button label
     Search: "Search",
@@ -69,6 +70,9 @@ const translations = {
     SendFeedback: "Send feedback",
     OpenSourceLicenses: "Open Source Licenses",
     ResetSettings: "Reset settings",
+    DeleteAllSetsInMemory: "Delete all saved sets",
+    Confirm: "Confirm",
+    Cancel: "Cancel",
 
     // modal button label
     Close: "Close",
@@ -294,6 +298,7 @@ const translations = {
     ClipboardIsEmpty: "Le presse-papiers est vide",
     IncorrectFormat: "Format incorrect",
     ThisSetDoesNotExist: "Ce set n'existe pas",
+    DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
 
     // button label
     Search: "Chercher",
@@ -309,6 +314,9 @@ const translations = {
     SendFeedback: "Faire un retour",
     OpenSourceLicenses: "Licences Open Source",
     ResetSettings: "Réinitialiser les paramètres",
+    DeleteAllSetsInMemory: "Supprimer tous les sets enregistrés",
+    Confirm: "Confirmer",
+    Cancel: "Annuler",
 
     // modal button label
     Close: "Fermer",

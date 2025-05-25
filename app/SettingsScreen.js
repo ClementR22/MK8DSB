@@ -20,6 +20,7 @@ import { useSettingsStore } from "@/stores/useSettingsStore";
 import Modal from "@/components/Modal";
 import { translate, translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import DeleteAllSetsMemoryModal from "@/components/modal/DeleteAllSetsMemoryModal";
 
 const SettingsScreen = () => {
   const language = useLanguageStore((state) => state.language);
@@ -65,9 +66,9 @@ const SettingsScreen = () => {
         >
           show memory
         </Button>
-
         {/* DEBUG */}
-        <Button onPress={deleteAllTheMemory}>removeMemory</Button>
+
+        <DeleteAllSetsMemoryModal />
       </BoxContainer>
     </ScreenProvider>
   );

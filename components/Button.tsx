@@ -5,7 +5,7 @@ import { ShadowProp } from "@/components/styles/theme.d";
 import TooltipWrapper from "@/components/TooltipWrapper";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-function Button({ children, onPress, elevation, tooltipText, ...props }) {
+function Button({ children, onPress, elevation = undefined, tooltipText, ...props }) {
   const theme = useThemeStore((state) => state.theme);
   const [buttonHover, setButtonHover] = useState(false);
 

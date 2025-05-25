@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import showToast from "@/utils/toast";
 import { getSetStatsFromElementsClassIds } from "@/utils/getSetStatsFromElementsClassIds";
 import * as Clipboard from "expo-clipboard";
-import { saveThingInMemory } from "@/utils/asyncStorageOperations";
+import { getOnlySetsSavedKeysFromMemory, saveThingInMemory } from "@/utils/asyncStorageOperations";
 import { toggleAndGetChecks } from "@/utils/toggleCheck";
 
 // Types
@@ -131,10 +131,8 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   getSetsSavedKeys: async () => {
-    const excludedKeys = ["language", "theme", "statsVisibleConfig", "statsVisibleListDefault"];
-    const keys = await AsyncStorage.getAllKeys();
-    const onlySetKeys = keys.filter((k) => !excludedKeys.includes(k));
-    const sorted = onlySetKeys.sort((a, b) => a.localeCompare(b));
+    const setsKeys = await getOnlySetsSavedKeysFromMemory();
+    const sorted = setsKeys.sort((a, b) => a.localeCompare(b));
     set({ setsSavedKeys: sorted });
     return sorted;
   },
