@@ -11,11 +11,14 @@ import Modal from "../Modal";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "../ButtonIcon";
+import { useScreen } from "@/contexts/ScreenContext";
 
 const StatSliderResultSelectorPressable = () => {
   const { statsVisibleList, setStatsVisibleList, toggleCheckListStatsVisibleList } = useStatsVisibleList();
 
   const theme = useThemeStore((state) => state.theme);
+  const screenName = useScreen();
+  const isInSearchScreen = screenName === "search";
 
   const [foundStatsModalVisible, setFoundStatsModalVisible] = useState(false);
   const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
@@ -36,14 +39,16 @@ const StatSliderResultSelectorPressable = () => {
         isModalVisible={foundStatsModalVisible}
         setIsModalVisible={setFoundStatsModalVisible}
         leftButton={
-          <Pressable
-            style={[button(theme).container, modal(theme).close_button_center, filterModalButtonHover && shadow_12dp]}
-            onHoverIn={() => setFilterModalButtonHover(true)}
-            onHoverOut={() => setFilterModalButtonHover(false)}
-            onPress={() => syncWithChosenStats(setStatsVisibleList)}
-          >
-            <Text>{translate("Sync")}</Text>
-          </Pressable>
+          isInSearchScreen && (
+            <Pressable
+              style={[button(theme).container, modal(theme).close_button_center, filterModalButtonHover && shadow_12dp]}
+              onHoverIn={() => setFilterModalButtonHover(true)}
+              onHoverOut={() => setFilterModalButtonHover(false)}
+              onPress={() => syncWithChosenStats(setStatsVisibleList)}
+            >
+              <Text>{translate("Sync")}</Text>
+            </Pressable>
+          )
         }
       >
         <StatSelector

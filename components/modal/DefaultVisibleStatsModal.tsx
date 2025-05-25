@@ -7,7 +7,7 @@ import { deleteAllSetsInMemory } from "@/utils/asyncStorageOperations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import StatsVisibleListDefaultSelector from "../settingsComponent/StatsVisibleListDefaultSelector";
 
-const DefaultVisibleStatsModal: React.FC = React.memo(({}) => {
+const DefaultVisibleStatsModal: React.FC = React.memo(() => {
   const language = useLanguageStore((state) => state.language);
   const [isModalVisible, setIsModalVisible] = useState(false);
 

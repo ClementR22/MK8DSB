@@ -5,7 +5,7 @@ import Button from "../Button";
 import { translate } from "@/translations/translations";
 import { deleteAllSetsInMemory } from "@/utils/asyncStorageOperations";
 
-const DeleteAllSetsMemoryModal: React.FC = React.memo(({}) => {
+const DeleteAllSetsMemoryModal: React.FC = React.memo(() => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const openModal = useCallback(() => {
