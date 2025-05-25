@@ -2,10 +2,13 @@ import React, { useState, useCallback, useMemo } from "react";
 import { StyleSheet, Text } from "react-native"; // Importez View et StyleSheet si nécessaire pour le positionnement du bouton
 import Modal from "@/components/Modal"; // Assurez-vous que le chemin est correct
 import Button from "../Button";
-import { translate } from "@/translations/translations";
+import { translate, translateToLanguage } from "@/translations/translations";
 import { deleteAllSetsInMemory } from "@/utils/asyncStorageOperations";
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import StatsVisibleListDefaultSelector from "../settingsComponent/StatsVisibleListDefaultSelector";
 
-const DeleteAllSetsMemoryModal: React.FC = React.memo(({}) => {
+const DefaultVisibleStatsModal: React.FC = React.memo(({}) => {
+  const language = useLanguageStore((state) => state.language);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const openModal = useCallback(() => {
@@ -19,23 +22,16 @@ const DeleteAllSetsMemoryModal: React.FC = React.memo(({}) => {
 
   return (
     <>
-      <Button onPress={openModal} tooltipText={undefined}>
-        {translate("DeleteAllSetsInMemory")}
+      <Button onPress={() => setIsModalVisible(true)} tooltipText={undefined}>
+        {translateToLanguage("DefaultVisibleStats", language)}
       </Button>
-
       <Modal
         modalTitle={undefined}
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
-        closeButtonText="Cancel"
-        leftButton={
-          <Button onPress={deleteAllTheMemoryAndReloadSettings} tooltipText={undefined}>
-            {translate("Confirm")}
-          </Button>
-        }
         onClose={closeModal}
       >
-        <Text>{translate("DeleteAllSetsInMemoryText")}</Text>
+        <StatsVisibleListDefaultSelector />
       </Modal>
     </>
   );
@@ -48,4 +44,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DeleteAllSetsMemoryModal;
+export default DefaultVisibleStatsModal;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import LanguageSelector from "@/components/settingsComponent/LanguageSelector";
@@ -9,26 +9,18 @@ import LicensesButton from "@/components/settingsComponent/LicensesButton";
 import BoxContainer from "@/components/BoxContainer";
 import FlexScrollView from "@/components/FlexScrollView";
 import StatsVisibleConfigSelector from "@/components/settingsComponent/StatsVisibleConfigSelector";
-import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
 import Button from "@/components/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Text from "@/components/Text";
-import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSettingsStore } from "@/stores/useSettingsStore";
-import Modal from "@/components/Modal";
-import { translate, translateToLanguage } from "@/translations/translations";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import DeleteAllSetsMemoryModal from "@/components/modal/DeleteAllSetsMemoryModal";
+import DefaultVisibleStatsModal from "@/components/modal/DefaultVisibleStatsModal";
 
 const SettingsScreen = () => {
-  const language = useLanguageStore((state) => state.language);
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
   const isDefault = statsVisibleConfig === "yes";
   const resetSettings = useSettingsStore((state) => state.resetSettings);
-
-  const [isStatsSelectorModalVisible, setIsStatsSelectorModalVisible] = useState(false);
 
   return (
     <ScreenProvider screenName="settings">
@@ -38,21 +30,12 @@ const SettingsScreen = () => {
             <LanguageSelector />
             <ThemeSelector />
             <StatsVisibleConfigSelector />
-            {isDefault && (
-              <Button onPress={() => setIsStatsSelectorModalVisible(true)}>
-                {translateToLanguage("DefaultVisibleStats", language)}
-              </Button>
-            )}
-            <Modal
-              modalTitle="DefaultVisibleStats"
-              isModalVisible={isStatsSelectorModalVisible}
-              setIsModalVisible={setIsStatsSelectorModalVisible}
-            >
-              <StatsVisibleListDefaultSelector />
-            </Modal>
+            {isDefault && <DefaultVisibleStatsModal />}
+
             <ContactUsButton />
             <LicensesButton />
             <ButtonResetSettings resetSettings={resetSettings} />
+            <DeleteAllSetsMemoryModal />
           </FlexScrollView>
         </StatsVisibleListProvider>
         <Text>DEBUG</Text>
@@ -66,9 +49,6 @@ const SettingsScreen = () => {
         >
           show memory
         </Button>
-        {/* DEBUG */}
-
-        <DeleteAllSetsMemoryModal />
       </BoxContainer>
     </ScreenProvider>
   );
