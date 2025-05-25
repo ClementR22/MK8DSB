@@ -17,7 +17,7 @@ const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
 
   // Fonction pour décrémenter
   const decrement = () => {
-    setResultsNumber((prevResultsNumber) => (prevResultsNumber > 0 ? prevResultsNumber - 1 : 0)); // Évite d'aller en dessous de 0
+    setResultsNumber((prevResultsNumber) => (prevResultsNumber > 1 ? prevResultsNumber - 1 : 1)); // Évite d'aller en dessous de 0
   };
 
   return (
