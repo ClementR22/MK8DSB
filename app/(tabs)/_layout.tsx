@@ -44,14 +44,14 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "red",
-        tabBarInactiveTintColor: undefined,
+        tabBarActiveTintColor: "red", // changer la couleur
+        tabBarInactiveTintColor: undefined, // changer la couleur
         headerShown: true,
         sceneStyle: {
           backgroundColor: theme.surface,
         },
         tabBarStyle: {
-          backgroundColor: theme.surface,
+          backgroundColor: theme.surface, // changer la couleur
         },
       }}
     >
