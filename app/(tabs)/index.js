@@ -54,8 +54,10 @@ const SearchSetScreen = () => {
 
               {/* Afficher le slider uniquement si la case est cochée */}
               {chosenStats.map((stat) => {
-                const { checked, name, statFilterNumber } = stat;
-                return checked && <StatSlider key={name} name={name} statFilterNumber={statFilterNumber} />;
+                const { name, value, checked, statFilterNumber } = stat;
+                return (
+                  checked && <StatSlider key={name} name={name} value={value} statFilterNumber={statFilterNumber} />
+                );
               })}
             </BoxContainer>
 

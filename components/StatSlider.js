@@ -6,16 +6,14 @@ import { translate } from "@/translations/translations";
 import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-const StatSlider = ({ name, statFilterNumber }) => {
+const StatSlider = ({ name, value, statFilterNumber }) => {
   const theme = useThemeStore((state) => state.theme);
   const updateStatValue = useSetsStore((state) => state.updateStatValue);
   const setStatFilterNumber = useSetsStore((state) => state.setStatFilterNumber);
   const setStatFilterNumberWithName = (newNumber) => setStatFilterNumber(name, newNumber);
 
-  const [tempValue, setTempValue] = useState();
-  const onValueChange = ([value]) => setTempValue(value);
-  const onSlidingComplete = () => {
-    updateStatValue(name, tempValue);
+  const onSlidingComplete = ([value]) => {
+    updateStatValue(name, value);
   };
 
   const styles = useMemo(() =>
@@ -87,7 +85,7 @@ const StatSlider = ({ name, statFilterNumber }) => {
 
           <Text style={styles.textRight}>
             {translate(":")}
-            {tempValue}
+            {value}
           </Text>
         </View>
         <ButtonMultiStateToggle
@@ -101,8 +99,7 @@ const StatSlider = ({ name, statFilterNumber }) => {
       <View style={styles.containerBottom}>
         <View style={styles.sliderContainer}>
           <Slider
-            value={tempValue}
-            onValueChange={onValueChange}
+            value={value}
             onSlidingComplete={onSlidingComplete}
             minimumValue={0}
             maximumValue={6}

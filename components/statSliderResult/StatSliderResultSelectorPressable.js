@@ -7,7 +7,6 @@ import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
 import { translate } from "@/translations/translations";
 import { modal } from "@/components/styles/modal";
 import useSetsStore from "@/stores/useSetsStore";
-import Modal from "../Modal";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "../ButtonIcon";

@@ -56,7 +56,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="SearchSetScreen"
+        name="index"
         options={{
           title: translate("FindSetTabTitle"),
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="magnify" size={24} color={color} />,

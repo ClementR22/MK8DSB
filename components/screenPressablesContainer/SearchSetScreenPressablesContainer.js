@@ -12,8 +12,6 @@ import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
 import ElementsDeselector from "../elementsSelector/ElementsDeselector";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import ResultsNumber from "../ResultsNumberSelector";
-import TooltipWrapper from "../TooltipWrapper";
-import Modal from "@/components/Modal";
 import ButtonIcon from "@/components/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
