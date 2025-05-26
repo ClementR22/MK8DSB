@@ -28,14 +28,15 @@ const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", disabl
     return () => clearTimeout(timeoutRef.current);
   }, []);
 
+  const onPressOrDisabled = disabled ? null : onPress;
+
   return (
     <Pressable
       style={[style, disabled && { backgroundColor: "grey" }]}
-      onPress={onPress}
+      onPress={onPressOrDisabled}
       onLongPress={openTooltip}
       onHoverIn={() => console.log("caca")}
       {...props}
-      disabled={disabled}
     >
       <Tooltip
         isVisible={isTooltipVisible_}

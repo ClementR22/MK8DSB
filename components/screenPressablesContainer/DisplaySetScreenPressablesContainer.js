@@ -11,7 +11,7 @@ const DisplaySetScreenPressablesContainer = () => {
 
       <ButtonAddSet />
 
-      <ButtonLoadSet tooltip_text="LoadASet" />
+      <ButtonLoadSet tooltipText="LoadASet" />
     </BoxContainer>
   );
 };

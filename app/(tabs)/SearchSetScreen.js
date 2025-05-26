@@ -50,7 +50,7 @@ const SearchSetScreen = () => {
                 {translate("SearchedStats")}
               </Text>
 
-              <ButtonLoadSet tooltip_text="LoadStatsOfASet" />
+              <ButtonLoadSet tooltipText="LoadStatsOfASet" />
 
               {/* Afficher le slider uniquement si la case est cochée */}
               {chosenStats.map((stat) => {

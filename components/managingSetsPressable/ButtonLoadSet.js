@@ -3,13 +3,13 @@ import { useLoadSetModalStore } from "@/stores/useLoadSetModalStore";
 import ButtonIcon from "../ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 
-const ButtonLoadSet = ({ tooltip_text }) => {
+const ButtonLoadSet = ({ tooltipText }) => {
   const setIsLoadSetModalVisible = useLoadSetModalStore((state) => state.setIsLoadSetModalVisible);
 
   return (
     <ButtonIcon
       onPress={() => setIsLoadSetModalVisible(true)}
-      tooltipText={tooltip_text}
+      tooltipText={tooltipText}
       iconName="cards-outline"
       iconType={IconType.MaterialCommunityIcons}
     />

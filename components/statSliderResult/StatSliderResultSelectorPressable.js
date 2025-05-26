@@ -39,11 +39,13 @@ const StatSliderResultSelectorPressable = () => {
     </Pressable>
   ) : undefined;
 
+  const tooltipText = disabled ? "ConfiguredByDefault" : "DisplayedStats";
+
   return (
     <ButtonAndModal
       customTrigger={
         <ButtonIcon
-          tooltipText="DisplayedStats"
+          tooltipText={tooltipText}
           iconName="checkbox-multiple-marked"
           iconType={IconType.MaterialCommunityIcons}
           disabled={disabled}
