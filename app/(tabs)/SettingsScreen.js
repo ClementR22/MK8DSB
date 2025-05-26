@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import LanguageSelector from "@/components/settingsComponent/LanguageSelector";
@@ -18,12 +18,20 @@ import ButtonAndModal from "@/components/modal/ButtonAndModal";
 import { translate } from "@/translations/translations";
 import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
 import useSetsStore from "@/stores/useSetsStore";
+import { Pressable } from "react-native";
+import { useRouter } from "expo-router";
 
 const SettingsScreen = () => {
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
   const isDefault = statsVisibleConfig === "yes";
   const resetSettings = useSettingsStore((state) => state.resetSettings);
   const deleteAllSavedSets = useSetsStore((state) => state.deleteAllSavedSets);
+
+  const router = useRouter();
+
+  const handleShowHelp = () => {
+    router.push("/help/HelpSearchSetScreen");
+  };
 
   return (
     <ScreenProvider screenName="settings">
@@ -53,6 +61,11 @@ const SettingsScreen = () => {
             </ButtonAndModal>
           </FlexScrollView>
         </StatsVisibleListProvider>
+
+        <Pressable onPress={handleShowHelp} style={{ margin: 30 }}>
+          <Text>ok</Text>
+        </Pressable>
+
         <Text>DEBUG</Text>
         <Button
           onPress={async () => {

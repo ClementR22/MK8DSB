@@ -27,8 +27,6 @@ const SetCard = ({
   const situation = isInLoadSetModal ? "load" : screenName;
   const theme = useThemeStore((state) => state.theme);
 
-  console.log("hideRemoveSet", hideRemoveSet);
-
   const situationConfig = {
     search: {
       showTextInput: false,

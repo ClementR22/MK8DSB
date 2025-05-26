@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { ScrollView } from "react-native";
-import SetCardContainer from "../components/setCard/SetCardContainer";
+import SetCardContainer from "@/components/setCard/SetCardContainer";
 import SavedSetScreenPressablesContainer from "@/components/screenPressablesContainer/SavedSetScreenPressablesContainer";
-import { ScreenProvider } from "../contexts/ScreenContext";
+import { ScreenProvider } from "@/contexts/ScreenContext";
 import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import useSetsStore from "@/stores/useSetsStore";
 import useModalsStore from "@/stores/useModalsStore";

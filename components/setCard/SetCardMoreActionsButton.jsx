@@ -7,7 +7,6 @@ import ButtonIcon from "@/components/ButtonIcon";
 
 const SetCardMoreActionsButton = React.memo(({ moreActionNamesList, setCardIndex, situation }) => {
   const [visible, setVisble] = useState(false);
-  console.log("moreActionNamesList", moreActionNamesList);
   const actionIconPropsList = getActionIconPropsList(setCardIndex, situation);
 
   return (
