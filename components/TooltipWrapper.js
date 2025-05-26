@@ -30,7 +30,7 @@ const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", disabl
 
   return (
     <Pressable
-      style={[style, { backgroundColor: disabled ? "grey" : undefined }]}
+      style={[style, disabled && { backgroundColor: "grey" }]}
       onPress={onPress}
       onLongPress={openTooltip}
       onHoverIn={() => console.log("caca")}
