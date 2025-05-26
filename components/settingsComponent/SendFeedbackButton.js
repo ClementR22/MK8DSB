@@ -3,7 +3,7 @@ import React from "react";
 import { Linking } from "react-native";
 import Button from "@/components/Button";
 
-const ContactUsButton = () => {
+const SendFeedbackButton = () => {
   const handleContactPress = () => {
     const url = "https://forms.gle/YZvjYiu2pT9Futvd9";
     Linking.openURL(url);
@@ -12,4 +12,4 @@ const ContactUsButton = () => {
   return <Button onPress={handleContactPress}>{translate("SendFeedback")}</Button>;
 };
 
-export default ContactUsButton;
+export default SendFeedbackButton;

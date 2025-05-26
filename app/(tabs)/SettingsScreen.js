@@ -4,7 +4,7 @@ import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import LanguageSelector from "@/components/settingsComponent/LanguageSelector";
 import ThemeSelector from "@/components/settingsComponent/ThemeSelector";
 import ButtonResetSettings from "@/components/ButtonResetSettings";
-import ContactUsButton from "@/components/settingsComponent/ContactUsButton";
+import SendFeedbackButton from "@/components/settingsComponent/SendFeedbackButton";
 import LicensesButton from "@/components/settingsComponent/LicensesButton";
 import BoxContainer from "@/components/BoxContainer";
 import FlexScrollView from "@/components/FlexScrollView";
@@ -47,7 +47,7 @@ const SettingsScreen = () => {
               </ButtonAndModal>
             )}
 
-            <ContactUsButton />
+            <SendFeedbackButton />
             <LicensesButton />
             <ButtonResetSettings resetSettings={resetSettings} />
 
