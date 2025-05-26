@@ -60,7 +60,11 @@ export default function TabLayout() {
         options={{
           title: translate("FindSetTabTitle"),
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="magnify" size={24} color={color} />,
-          header: () => <CustomHeader icon={"magnify"}>{"FindSetTitle"}</CustomHeader>,
+          header: () => (
+            <CustomHeader icon={"magnify"} helpRoute="/help/HelpSearchSetScreen">
+              {"FindSetTitle"}
+            </CustomHeader>
+          ),
         }}
       />
       <Tabs.Screen
@@ -68,7 +72,7 @@ export default function TabLayout() {
         options={{
           title: translate("DisplaySetTabTitle"),
           tabBarIcon: ({ color }) => <MaterialIcons name="display-settings" size={24} color={color} />,
-          header: () => <CustomHeader>{"DisplaySetTitle"}</CustomHeader>,
+          header: () => <CustomHeader helpRoute="/help/HelpSearchSetScreen">{"DisplaySetTitle"}</CustomHeader>,
         }}
       />
       <Tabs.Screen
@@ -76,7 +80,11 @@ export default function TabLayout() {
         options={{
           title: translate("SavedSetTabTitle"),
           tabBarIcon: ({ color }) => <MaterialIcons name="save" size={24} color={color} />,
-          header: () => <CustomHeader icon={"save"}>{"SavedSetTitle"}</CustomHeader>,
+          header: () => (
+            <CustomHeader icon={"save"} helpRoute="/help/HelpSearchSetScreen">
+              {"SavedSetTitle"}
+            </CustomHeader>
+          ),
         }}
       />
       <Tabs.Screen
@@ -84,7 +92,11 @@ export default function TabLayout() {
         options={{
           title: translate("GalleryTabTitle"),
           tabBarIcon: ({ color }) => <Ionicons name="image-outline" size={24} color={color} />,
-          header: () => <CustomHeader icon={"image-outline"}>{"GalleryTitle"}</CustomHeader>,
+          header: () => (
+            <CustomHeader icon={"image-outline"} helpRoute="/help/HelpSearchSetScreen">
+              {"GalleryTitle"}
+            </CustomHeader>
+          ),
         }}
       />
       <Tabs.Screen
@@ -92,7 +104,11 @@ export default function TabLayout() {
         options={{
           title: translate("SettingsTabTitle"),
           tabBarIcon: ({ color }) => <Ionicons name="settings" size={24} color={color} />,
-          header: () => <CustomHeader icon={"settings"}>{"SettingsTitle"}</CustomHeader>,
+          header: () => (
+            <CustomHeader icon={"settings"} helpRoute="/help/HelpSearchSetScreen">
+              {"SettingsTitle"}
+            </CustomHeader>
+          ),
         }}
       />
     </Tabs>

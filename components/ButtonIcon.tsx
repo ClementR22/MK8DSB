@@ -12,6 +12,8 @@ interface ButtonIconProps extends Omit<PressableProps, "onPress" | "style" | "di
   onPress: () => void;
   // Le texte du tooltip qui s'affiche au survol/appui long. Optionnel.
   tooltipText?: string;
+  // Le placement du tooltip
+  toolTipPlacement?: string;
   // Le niveau d'élévation/ombre du bouton. Optionnel, utilise une valeur par défaut.
   elevation?: ButtonIconElevation;
   // Le nom de l'icône à afficher (par exemple, 'home', 'star'). Requis.
@@ -27,6 +29,7 @@ interface ButtonIconProps extends Omit<PressableProps, "onPress" | "style" | "di
 const ButtonIcon: React.FC<ButtonIconProps> = ({
   onPress,
   tooltipText,
+  toolTipPlacement = "top",
   elevation,
   iconName,
   iconType,
@@ -76,6 +79,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
       onHoverOut={() => setButtonHover(false)}
       {...props}
       disabled={disabled}
+      placement={toolTipPlacement}
     >
       <Icon type={iconType} name={iconName} size={iconSize} color={theme.on_primary} />
     </TooltipWrapper>

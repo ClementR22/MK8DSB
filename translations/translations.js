@@ -98,6 +98,7 @@ const translations = {
     Export: "Export",
     ImportACopiedSet: "Import a copied set",
     MoreActions: "More actions",
+    Help: "Help",
 
     // other
     ":": ": ",
@@ -343,6 +344,7 @@ const translations = {
     Export: "Exporter",
     ImportACopiedSet: "Importer un set copié",
     MoreActions: "Plus d'actions",
+    Help: "Aide",
 
     // other
     ":": " : ",
