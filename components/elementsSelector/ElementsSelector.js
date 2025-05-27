@@ -8,16 +8,22 @@ import { useSortedElements } from "@/hooks/useSortedElements";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";
-import { usePressableElements } from "@/hooks/usePressableElements";
+import usePressableElementsStore from "@/stores/usePressableElementsStore";
 
-const ElementsSelector = () => {
+const ElementsSelector = React.memo(() => {
+  // Gardez ElementsSelector mémoïsé
   const [orderNumber, setOrderNumber] = useState(0);
   const language = useLanguageStore((state) => state.language);
   const screenName = useModalsStore((state) => state.screenNameForEditModal);
-  const { pressableElementsList } = usePressableElements(screenName);
+
+  const pressableElementsList = usePressableElementsStore((state) => state.pressableElementsListByScreen[screenName]);
+  const handlePressImage = usePressableElementsStore((state) => state.handlePressImage);
+  const handlePressImageByClass = usePressableElementsStore((state) => state.handlePressImageByClass);
+
   const pressableElementsByCategory = useMemo(() => {
     return computePressableElementsByCategory(pressableElementsList);
   }, [pressableElementsList]);
+
   const [selectedTab, setSelectedTab] = useState("character");
 
   const selectedCategoryElementsSorted = useSortedElements(
@@ -66,12 +72,14 @@ const ElementsSelector = () => {
           selectedCategoryElementsSorted={selectedCategoryElementsSorted}
           screenName={screenName}
           scrollToSection={scrollToSection}
+          handlePressImage={handlePressImage}
+          handlePressImageByClass={handlePressImageByClass}
         />
       </ScrollView>
 
       {showScrollTopButton && <ButtonScrollToTop scrollToTop={scrollToTop} />}
     </>
   );
-};
+});
 
 export default ElementsSelector;
