@@ -36,8 +36,8 @@ export default function RootLayout() {
               name="help/HelpSearchSetScreen" // Correspond au dossier `app/help`
               options={{
                 title: translate("FindSetTabTitle"),
-                header: () => <CustomHeader icon={"magnify"}>{"FindSetTitle"}</CustomHeader>,
                 animation: "none",
+                headerShown: false,
               }}
             />
           </Stack>

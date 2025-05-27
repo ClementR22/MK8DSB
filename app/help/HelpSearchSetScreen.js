@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 import { slides } from "@/data/helpSlides/slides";
 import { useRouter } from "expo-router";
@@ -17,11 +17,10 @@ const HelpSearchSetScreen = () => {
           alignItems: "center",
           justifyContent: "space-around",
           paddingBottom: 100,
+          height: "100%",
         }}
       >
-        <Text style={styles.title}>{item.title}</Text>
-        <Image source={item.image} style={styles.image} />
-        <Text style={styles.text}>{item.text}</Text>
+        {item}
       </View>
     );
   };
@@ -75,25 +74,6 @@ const HelpSearchSetScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "white",
-    textAlign: "center",
-    marginBottom: 20,
-    paddingHorizontal: 20,
-  },
-  text: {
-    fontSize: 18,
-    color: "rgba(255, 255, 255, 0.8)",
-    textAlign: "center",
-    paddingHorizontal: 30,
-  },
-  image: {
-    width: 250,
-    height: 250,
-    resizeMode: "contain",
-  },
   buttonContainer: {
     width: 100,
     height: 40,

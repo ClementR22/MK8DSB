@@ -40,7 +40,7 @@ const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", disabl
     >
       <Tooltip
         isVisible={isTooltipVisible_}
-        content={<Text numberOfLines={1}>{translate(tooltipText)}</Text>}
+        content={<Text numberOfLines={1}>{tooltipText && translate(tooltipText)}</Text>}
         placement={placement}
         onClose={closeTooltip}
         backgroundColor="rgba(0,0,0,0)"

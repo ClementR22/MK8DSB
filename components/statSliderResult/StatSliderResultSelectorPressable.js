@@ -25,7 +25,7 @@ const StatSliderResultSelectorPressable = () => {
 
   const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
-  const disabled = statsVisibleConfig !== "no";
+  const disabled = statsVisibleConfig !== "no" && screenName === "search";
 
   const leftButton = isInSearchScreen ? (
     <Pressable

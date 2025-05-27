@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Slider } from "@miblanchard/react-native-slider";
 import ButtonMultiStateToggle from "./ButtonMultiStateToggle";
@@ -6,15 +6,41 @@ import { translate } from "@/translations/translations";
 import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-const StatSlider = ({ name, value, statFilterNumber }) => {
+const StatSlider = ({ name, value, statFilterNumber, disabled = false }) => {
   const theme = useThemeStore((state) => state.theme);
   const updateStatValue = useSetsStore((state) => state.updateStatValue);
   const setStatFilterNumber = useSetsStore((state) => state.setStatFilterNumber);
   const setStatFilterNumberWithName = (newNumber) => setStatFilterNumber(name, newNumber);
 
-  const onSlidingComplete = ([value]) => {
-    updateStatValue(name, value);
+  const [tempValue, setTempValue] = useState(value);
+
+  const onValueChange = ([newValue]) => {
+    setTempValue(newValue);
   };
+
+  const onSlidingComplete = ([newValue]) => {
+    updateStatValue(name, newValue);
+  };
+
+  useEffect(() => {
+    setTempValue(value);
+  }, [value]);
+
+  let borderColor;
+  switch (statFilterNumber) {
+    case 0: {
+      borderColor = theme.outline_variant;
+      break;
+    }
+    case 1: {
+      borderColor = theme.primary;
+      break;
+    }
+    case 2: {
+      borderColor = "black";
+      break;
+    }
+  }
 
   const styles = useMemo(() =>
     StyleSheet.create({
@@ -24,7 +50,7 @@ const StatSlider = ({ name, value, statFilterNumber }) => {
         backgroundColor: theme.surface,
         borderWidth: 2,
         borderRadius: 12,
-        borderColor: theme.outline_variant,
+        borderColor: borderColor,
         marginBottom: 6,
         width: "100%", // Largeur maximale de 90% de la largeur de l'écran
       },
@@ -85,7 +111,7 @@ const StatSlider = ({ name, value, statFilterNumber }) => {
 
           <Text style={styles.textRight}>
             {translate(":")}
-            {value}
+            {tempValue}
           </Text>
         </View>
         <ButtonMultiStateToggle
@@ -99,7 +125,8 @@ const StatSlider = ({ name, value, statFilterNumber }) => {
       <View style={styles.containerBottom}>
         <View style={styles.sliderContainer}>
           <Slider
-            value={value}
+            value={tempValue}
+            onValueChange={onValueChange}
             onSlidingComplete={onSlidingComplete}
             minimumValue={0}
             maximumValue={6}
@@ -107,6 +134,7 @@ const StatSlider = ({ name, value, statFilterNumber }) => {
             //thumbStyle={[styles.thumb, { backgroundColor: theme.primary }]}
             trackStyle={styles.track}
             thumbTouchSize={{ width: 10, height: 10 }}
+            disabled={disabled}
           />
         </View>
       </View>

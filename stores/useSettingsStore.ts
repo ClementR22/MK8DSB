@@ -19,7 +19,7 @@ export const useSettingsStore = create(() => {
 
   const settingsByDefaultKeysAndValues: Record<SettingKey, SettingsEntry> = {
     language: { setState: setLanguage, value: "en" },
-    statsVisibleConfig: { setState: setStatsVisibleConfig, value: "no" },
+    statsVisibleConfig: { setState: setStatsVisibleConfig, value: "sync" },
     statsVisibleListDefault: {
       setState: setStatsVisibleListDefault,
       value: statsVisibleListDefaultInit,
