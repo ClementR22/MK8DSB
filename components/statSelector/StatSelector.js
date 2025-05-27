@@ -10,17 +10,11 @@ const StatSelector = ({ statList, setStatList, toggleCheck }) => {
 
       <ScrollView>
         {statList.map((stat) => (
-          <PressableStat
-            key={stat.name}
-            stat={stat}
-            toggleCheck={() => {
-              toggleCheck(stat.name);
-            }}
-          />
+          <PressableStat key={stat.name} stat={stat} toggleCheck={toggleCheck} />
         ))}
       </ScrollView>
     </>
   );
 };
 
-export default StatSelector;
+export default React.memo(StatSelector);
