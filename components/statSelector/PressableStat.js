@@ -5,6 +5,9 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import checkbox from "../styles/checkbox";
 
 const PressableStat = ({ stat, toggleCheck }) => {
+  const theme = useThemeStore((state) => state.theme);
+  const { text, container } = checkbox(theme);
+
   const toggleCheckWithName = useCallback(() => {
     toggleCheck(stat.name);
   }, [toggleCheck, stat.name]); // toggleCheck prop itself should be stable now
@@ -14,6 +17,8 @@ const PressableStat = ({ stat, toggleCheck }) => {
       label={translate(stat.name)}
       status={stat.checked ? "checked" : "unchecked"}
       onPress={toggleCheckWithName}
+      labelStyle={text}
+      style={container}
     />
   );
 };
