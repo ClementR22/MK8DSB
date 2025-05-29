@@ -50,7 +50,7 @@ export const statsVisibleListDefaultInit: StatsVisibleList = statNames.map((stat
 }));
 
 export const useStatsVisibleListConfigStore = create<StatsVisibleListConfigState>((set, get) => ({
-  statsVisibleConfig: "no",
+  statsVisibleConfig: "sync",
 
   async setStatsVisibleConfig(newValue) {
     set({ statsVisibleConfig: newValue });
