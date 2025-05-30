@@ -7,7 +7,7 @@ const SetCardActionButtons = React.memo(({ actionNamesList, setCardIndex, situat
   const actionIconPropsList = getActionIconPropsList(setCardIndex, situation, handleEditPress);
 
   return (
-    <BoxContainer flexDirection="row" key="displaySetActionButtonContainer" margin={0}>
+    <BoxContainer flexDirection="row" key="displaySetActionButtonContainer" margin={0} justifyContent={"space-around"}>
       {actionNamesList.map((actionName) => {
         const { title, name, type, onPress } = actionIconPropsList[actionName];
         return <ButtonIcon key={actionName} tooltipText={title} iconName={name} iconType={type} onPress={onPress} />;
