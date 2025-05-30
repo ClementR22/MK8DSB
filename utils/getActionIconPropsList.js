@@ -76,9 +76,9 @@ export function getActionIconPropsList(setCardIndex, situation, handleEditPress)
     },
 
     export: {
-      title: "Export",
-      name: "share",
-      type: IconType.FontAwesome5,
+      title: "Copy",
+      name: "clipboard-outline",
+      type: IconType.MaterialCommunityIcons,
       onPress: () => exportSet(setCardIndex, situation),
     },
   };
