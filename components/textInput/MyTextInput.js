@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TextInput } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-const MyTextInput = ({ value, onChangeText, onBlur }) => {
+const MyTextInput = ({ value, onChangeText, onBlur, style }) => {
   const theme = useThemeStore((state) => state.theme);
 
   const styles = StyleSheet.create({
@@ -18,7 +18,7 @@ const MyTextInput = ({ value, onChangeText, onBlur }) => {
 
   return (
     <TextInput
-      style={styles.textInput}
+      style={[styles.textInput, style]}
       value={value}
       onChangeText={onChangeText}
       onBlur={onBlur}

@@ -26,6 +26,10 @@ const SetNameInput = ({ setToShowName, setCardIndex }) => {
 
   return (
     <MyTextInput
+      style={{
+        width: "100%",
+        // maxWidth: 450,
+      }}
       value={localName}
       onChangeText={(text) => {
         setLocalName(text);

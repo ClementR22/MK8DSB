@@ -9,10 +9,10 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import EditSetModal from "@/components/modal/EditSetModal";
 import LoadSetModal from "@/components/modal/LoadSetModal";
 import { translate } from "@/translations/translations";
-import CustomHeader from "@/components/CustomHeader";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { useLoadSettings } from "@/hooks/useLoadSettings";
 import useSetsStore from "@/stores/useSetsStore";
+import Snackbar from "@/components/Snackbar";
 
 export default function RootLayout() {
   const updateSystemTheme = useThemeStore((s) => s.updateSystemTheme);
@@ -52,6 +52,7 @@ export default function RootLayout() {
           <EditSetModal />
           <LoadSetModal />
           <Toast />
+          <Snackbar />
         </PaperProvider>
       </SafeAreaView>
     </SafeAreaProvider>
