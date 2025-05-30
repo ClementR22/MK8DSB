@@ -15,20 +15,12 @@ import RenameSetModal from "@/components/modal/RenameSetModal";
 import useSetsStore from "@/stores/useSetsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { useSettingsStore } from "@/stores/useSettingsStore";
 
 const SearchSetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
-  const loadSettings = useSettingsStore((state) => state.loadSettings);
-  const fetchSavedSets = useSetsStore((state) => state.fetchSavedSets);
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const [setsToShow, setSetsToShow] = useState([]);
   const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
-
-  useEffect(() => {
-    loadSettings();
-    fetchSavedSets();
-  }, []);
 
   return (
     <ScreenProvider screenName="search">

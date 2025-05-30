@@ -11,15 +11,23 @@ import LoadSetModal from "@/components/modal/LoadSetModal";
 import { translate } from "@/translations/translations";
 import CustomHeader from "@/components/CustomHeader";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { useLoadSettings } from "@/hooks/useLoadSettings";
+import useSetsStore from "@/stores/useSetsStore";
 
 export default function RootLayout() {
   const updateSystemTheme = useThemeStore((s) => s.updateSystemTheme);
+  const fetchSavedSets = useSetsStore((state) => state.fetchSavedSets);
 
   useEffect(() => {
     const listener = Appearance.addChangeListener(() => {
       updateSystemTheme();
     });
     return () => listener.remove();
+  }, []);
+
+  useLoadSettings();
+  useEffect(() => {
+    fetchSavedSets();
   }, []);
 
   return (

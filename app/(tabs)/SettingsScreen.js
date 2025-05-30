@@ -13,19 +13,19 @@ import Button from "@/components/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Text from "@/components/Text";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
-import { useSettingsStore } from "@/stores/useSettingsStore";
 import ButtonAndModal from "@/components/modal/ButtonAndModal";
 import { translate } from "@/translations/translations";
 import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
 import useSetsStore from "@/stores/useSetsStore";
 import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
+import { useResetSettings } from "@/hooks/useResetSettings";
 
 const SettingsScreen = () => {
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
   const isDefault = statsVisibleConfig === "yes";
-  const resetSettings = useSettingsStore((state) => state.resetSettings);
   const deleteAllSavedSets = useSetsStore((state) => state.deleteAllSavedSets);
+  const resetSettings = useResetSettings();
 
   const router = useRouter();
 
