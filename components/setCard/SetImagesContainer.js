@@ -1,8 +1,7 @@
 import React from "react";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
-import { category4Names, elementsAllInfosList } from "../../data/data";
+import { Image, StyleSheet, View } from "react-native";
+import { category4Names, elementsAllInfosList } from "@/data/data";
 import TooltipWrapper from "../TooltipWrapper";
-import useModalsStore from "@/stores/useModalsStore";
 
 const SetImagesContainer = ({ setToShowClassIds, mode, onPress = undefined }) => {
   const data = category4Names.map((category, index) => {
@@ -16,13 +15,33 @@ const SetImagesContainer = ({ setToShowClassIds, mode, onPress = undefined }) =>
 
   const imageSize = mode === "icon" ? 40 : 80;
 
+  const styles = StyleSheet.create({
+    category: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      margin: 20,
+      width: "calc(100% - 40)",
+    },
+    image: {
+      maxWidth: imageSize,
+      maxHeight: imageSize,
+    },
+    tooltip: {
+      height: "calc(100% /5)",
+      width: "calc(100% / 5)",
+      flexGrow: 1,
+      alignItems: "center",
+    }
+  });
+
   return (
     <>
       {data.map((item) => (
-        <View key={item.category} style={{ flexDirection: "row", justifyContent: "center", margin: 20 }}>
+        <View key={item.category} style={styles.category}>
           {item.elements.map(({ name, image }, index) => (
-            <TooltipWrapper key={index} tooltipText={name} onPress={onPress}>
-              <Image source={image} style={{ width: imageSize, height: imageSize }} resizeMode="contain" />
+            <TooltipWrapper key={index} tooltipText={name} onPress={onPress} style={styles.tooltip}>
+              <Image source={image} style={styles.image} resizeMode="contain" />
             </TooltipWrapper>
           ))}
         </View>
@@ -30,23 +49,5 @@ const SetImagesContainer = ({ setToShowClassIds, mode, onPress = undefined }) =>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  row: {
-    alignItems: "center",
-    padding: 10,
-  },
-  imagesContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "flex-end",
-    flexDirection: "row",
-  },
-  scrollview: {
-    alignSelf: "center", // 👈 centre la ScrollView elle-même quand elle est petite
-    maxWidth: "100%",
-    margin: 10,
-  },
-});
 
 export default React.memo(SetImagesContainer);

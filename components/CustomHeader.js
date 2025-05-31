@@ -1,8 +1,7 @@
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Text from "@/components/Text";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useThemeStore } from "@/stores/useThemeStore";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { translate } from "@/translations/translations";
@@ -22,6 +21,7 @@ const CustomHeader = ({ children, icon = "car-sports", helpRoute }) => {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
+        paddingEnd: 15,
       },
       icon: {
         width: 48,
@@ -58,16 +58,14 @@ const CustomHeader = ({ children, icon = "car-sports", helpRoute }) => {
         <Text style={styles.text}>{translate(children)}</Text>
       </View>
 
-      <View style={{ backgroundColor: "red", marginRight: 12 }}>
-        <ButtonIcon
-          tooltipText="Help"
-          toolTipPlacement="bottom"
-          iconName="help-circle"
-          iconType={IconType.Feather}
-          onPress={handleShowHelp}
-          style={{ backgroundColor: null }}
-        />
-      </View>
+      <ButtonIcon
+        tooltipText="Help"
+        toolTipPlacement="bottom"
+        iconName="help-circle"
+        iconType={IconType.Feather}
+        onPress={handleShowHelp}
+        // style={{ backgroundColor: null }}
+      />
     </View>
   );
 };
