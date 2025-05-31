@@ -72,7 +72,7 @@ export default function TabLayout() {
         options={{
           title: translate("DisplaySetTabTitle"),
           tabBarIcon: ({ color }) => <MaterialIcons name="display-settings" size={24} color={color} />,
-          header: () => <CustomHeader helpRoute="/help/HelpSearchSetScreen">{"DisplaySetTitle"}</CustomHeader>,
+          header: () => <CustomHeader helpRoute="/help/HelpDisplaySetScreen">{"DisplaySetTitle"}</CustomHeader>,
         }}
       />
       <Tabs.Screen
