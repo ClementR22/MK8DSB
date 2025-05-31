@@ -11,7 +11,8 @@ function Button({
   onPress,
   elevation = undefined,
   tooltipText, // option
-  icon, // option
+  icon = undefined, // option
+  minWidth = undefined,
   ...props
 }) {
   const theme = useThemeStore((state) => state.theme);
@@ -59,7 +60,7 @@ function Button({
 
   const sharedProps = {
     onPress,
-    style: [styles.container, buttonHover && getElevation()],
+    style: [styles.container, buttonHover && getElevation(), { minWidth }],
     onHoverIn: () => setButtonHover(true),
     onHoverOut: () => setButtonHover(false),
     ...props,

@@ -107,7 +107,7 @@ function Modal({
           <FlexContainer flexDirection={"row"} gap={10}>
             {leftButton}
             {isWithClosePressable && (
-              <Button elevation={12} onPress={onClose ? onClose : () => setIsModalVisible(false)}>
+              <Button elevation={12} onPress={onClose ? onClose : () => setIsModalVisible(false)} minWidth={100}>
                 {translate(closeButtonText)}
               </Button>
             )}
