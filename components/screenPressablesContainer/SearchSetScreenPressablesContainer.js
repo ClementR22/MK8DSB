@@ -20,6 +20,7 @@ import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConf
 import { useThemeStore } from "@/stores/useThemeStore";
 import { usePressableElements } from "@/hooks/usePressableElements";
 import ButtonAndModal from "../modal/ButtonAndModal";
+import Button from "../Button";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const theme = useThemeStore((state) => state.theme);
@@ -171,13 +172,9 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
         <ElementsSelector />
       </ButtonAndModal>
 
-      <Pressable
-        style={[button(theme).container, { flexDirection: "row", paddingRight: 24, paddingLeft: 16 }, shadow_3dp]}
-        onPress={search}
-      >
-        <MaterialCommunityIcons name="magnify" size={24} color={theme.on_primary} />
-        <Text style={[button(theme).text, { marginLeft: 8 }]}>{translate("Search")}</Text>
-      </Pressable>
+      <Button onPress={search} icon={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
+        <Text>{translate("Search")}</Text>
+      </Button>
 
       <ButtonAndModal
         modalTitle="NumberOfResults"

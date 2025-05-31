@@ -1,25 +1,37 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text, Pressable, View } from "react-native";
 import { shadow_12dp, shadow_1dp, shadow_3dp, shadow_6dp, shadow_8dp } from "@/components/styles/theme";
 import { ShadowProp } from "@/components/styles/theme.d";
 import TooltipWrapper from "@/components/TooltipWrapper";
 import { useThemeStore } from "@/stores/useThemeStore";
+import Icon from "react-native-dynamic-vector-icons";
 
-function Button({ children, onPress, elevation = undefined, tooltipText, ...props }) {
+function Button({
+  children,
+  onPress,
+  elevation = undefined,
+  tooltipText, // option
+  icon, // option
+  ...props
+}) {
   const theme = useThemeStore((state) => state.theme);
   const [buttonHover, setButtonHover] = useState(false);
 
   const styles = StyleSheet.create({
     container: {
       display: "flex",
+      flexDirection: "row",
       height: 40,
-      minWidth: 100,
+      // minWidth: 100, remplacé par
+      paddingHorizontal: icon ? 15 : 10,
       borderRadius: 100,
       backgroundColor: theme.primary,
       justifyContent: "center",
       alignItems: "center",
       // @ts-ignore
       transition: "all 0.2s ease",
+      gap: 5,
+      alignSelf: "center", // permet d'adapter la taille au contenu et non au parent
     },
     text: {
       fontWeight: "500",
@@ -53,8 +65,12 @@ function Button({ children, onPress, elevation = undefined, tooltipText, ...prop
     ...props,
   };
 
-  const content = <Text style={styles.text}>{children}</Text>;
-
+  const content = (
+    <>
+      {icon && <Icon type={icon.type} name={icon.name} size={24} color={theme.on_primary} />}
+      <Text style={styles.text}>{children}</Text>
+    </>
+  );
   if (tooltipText) {
     return (
       <TooltipWrapper tooltipText={tooltipText} {...sharedProps}>
