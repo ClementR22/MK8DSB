@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal as NativeModal, Pressable, StyleSheet, Text, View } from "react-native";
-import { vh, vw } from "@/components/styles/theme";
+import { vh } from "@/components/styles/theme";
 import { translate } from "@/translations/translations";
 import Toast from "react-native-toast-message";
 import FlexContainer from "@/components/FlexContainer";
@@ -47,47 +47,16 @@ function Modal({
     childrenContainer: {
       maxHeight: 0.6 * vh,
     },
-
-    /*
-    content: {
-      flex: 1,
-      marginBottom: 0,
-      maxHeight: vh * 0.5,
-      paddingVertical: 10,
-      borderTopColor: theme.outline,
-      borderTopWidth: 1,
-      borderBottomColor: theme.outline,
-      borderBottomWidth: 1,
-    },
-    title: {
-      color: theme.on_surface,
-      paddingHorizontal: 24,
-      fontSize: 24,
-      marginBottom: 16,
-    }, */ title_center: {
+    title_center: {
       color: theme.on_surface,
       alignSelf: "center",
       paddingHorizontal: 24,
       fontSize: 24,
       marginBottom: 0,
-    } /*
-    close_button_center: {
-      alignSelf: "center",
-      width: 100,
     },
-    close_button_right: {
-      flexGrow: 1,
-      alignSelf: "flex-end",
-      width: 100,
-      marginRight: 24,
-    },
-    pressableStat: {
-      marginBottom: 2,
-      marginHorizontal: 24,
-      alignItems: "center",
-      flexDirection: "row",
-      borderRadius: 24,
-    }, */,
+    button_container: {
+      marginTop: 10,
+    }
   });
 
   return (
@@ -104,7 +73,7 @@ function Modal({
 
           <View style={styles.childrenContainer}>{children}</View>
 
-          <FlexContainer flexDirection={"row"} gap={10}>
+          <FlexContainer flexDirection={"row"} gap={10} style={styles.button_container}>
             {leftButton}
             {isWithClosePressable && (
               <Button elevation={12} onPress={onClose ? onClose : () => setIsModalVisible(false)} minWidth={100}>
