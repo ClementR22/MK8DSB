@@ -12,6 +12,7 @@ function BoxContainer({
   gap = 10,
   margin = 16,
   inputStyles,
+  widthContainer = "100%",
 }) {
   const theme = useThemeStore((state) => state.theme);
 
@@ -19,14 +20,13 @@ function BoxContainer({
     container: {
       fontFamily: "inherit",
       backgroundColor: containerBackgroundColor,
-      width: "100%",
+      width: widthContainer,
       marginHorizontal: "auto",
       justifyContent: "flex-start",
     },
     content: {
       backgroundColor: contentBackgroundColor || theme.surface_container_high,
       justifyContent: justifyContent,
-      maxWidth: 400,
       margin: margin,
       padding: 10,
       borderRadius: 12,

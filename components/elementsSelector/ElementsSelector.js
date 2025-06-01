@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { ScrollView } from "react-native";
+import { Pressable, ScrollView } from "react-native";
 import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import CategorySelector from "./CategorySelector";
 import SelectedCategoryElementsView from "./SelectedCategoryElementsView";
@@ -65,16 +65,20 @@ const ElementsSelector = React.memo(() => {
         onScroll={handleScroll}
         scrollEventThrottle={16}
       >
-        <SelectedCategoryElementsView
-          selectedTab={selectedTab}
-          orderNumber={orderNumber}
-          pressableElementsByCategory={pressableElementsByCategory}
-          selectedCategoryElementsSorted={selectedCategoryElementsSorted}
-          screenName={screenName}
-          scrollToSection={scrollToSection}
-          handlePressImage={handlePressImage}
-          handlePressImageByClass={handlePressImageByClass}
-        />
+        <Pressable>
+          {/*  pour capturer l'événement du doigt qui scroll, nécéssaire quand un ScrollView est dans un Modal
+           */}
+          <SelectedCategoryElementsView
+            selectedTab={selectedTab}
+            orderNumber={orderNumber}
+            pressableElementsByCategory={pressableElementsByCategory}
+            selectedCategoryElementsSorted={selectedCategoryElementsSorted}
+            screenName={screenName}
+            scrollToSection={scrollToSection}
+            handlePressImage={handlePressImage}
+            handlePressImageByClass={handlePressImageByClass}
+          />
+        </Pressable>
       </ScrollView>
 
       {showScrollTopButton && <ButtonScrollToTop scrollToTop={scrollToTop} />}

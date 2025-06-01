@@ -89,34 +89,33 @@ const SetCard = ({
   }
 
   return (
-    <Pressable>
-      <BoxContainer contentBackgroundColor={theme.surface} margin={0} maxWidth={300}>
-        <FlexContainer flexDirection={"row"}>
-          {config.showTextInput && (
-            <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} isWithConfimation={true} />
-          )}
+    <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={null}>
+      {/*       Corriger le flex container car il prend trop de place
+       */}
+      {/* <FlexContainer flexDirection={"row"}>
+        {config.showTextInput && (
+          <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} isWithConfimation={true} />
+        )}
 
-          {config.moreActionNamesList && (
-            <SetCardMoreActionsButton
-              moreActionNamesList={config.moreActionNamesList}
-              setCardIndex={setCardIndex}
-              situation={situation}
-            />
-          )}
-        </FlexContainer>
+        {config.moreActionNamesList && (
+          <SetCardMoreActionsButton
+            moreActionNamesList={config.moreActionNamesList}
+            setCardIndex={setCardIndex}
+            situation={situation}
+          />
+        )}
+      </FlexContainer> */}
+      <SetImagesModal setToShowClassIds={setToShowClassIds} />
 
-        <SetImagesModal setToShowClassIds={setToShowClassIds} />
+      {config.showStatSliderResult && <StatSliderResultContainer setsToShowMultipleStatsLists={[setToShowStats]} />}
 
-        {config.showStatSliderResult && <StatSliderResultContainer setsToShowMultipleStatsLists={[setToShowStats]} />}
-
-        <SetCardActionButtons
-          actionNamesList={config.actionNamesList}
-          setCardIndex={setCardIndex}
-          situation={situation}
-          handleEditPress={handleEditPress}
-        />
-      </BoxContainer>
-    </Pressable>
+      <SetCardActionButtons
+        actionNamesList={config.actionNamesList}
+        setCardIndex={setCardIndex}
+        situation={situation}
+        handleEditPress={handleEditPress}
+      />
+    </BoxContainer>
   );
 };
 
