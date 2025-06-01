@@ -17,7 +17,7 @@ const SetImagesModal: React.FC<SetImagesModalProps> = React.memo(({ setToShowCla
 
   return (
     <>
-      <Pressable onPress={openModal} style={styles.previewContainer}>
+      <Pressable onPress={openModal} style={styles.pressable}>
         <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="icon" onPress={openModal} />
       </Pressable>
 
@@ -38,9 +38,8 @@ const SetImagesModal: React.FC<SetImagesModalProps> = React.memo(({ setToShowCla
 });
 
 const styles = StyleSheet.create({
-  previewContainer: {
-    // Styles pour le conteneur du bouton/aperçu si besoin
-    // Par exemple, pour ajouter une marge ou un alignement
+  pressable: {
+    width: "100%", // pour que toute la largeur de la SetCard soit cliquable
   },
 });
 
