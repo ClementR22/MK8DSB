@@ -9,7 +9,6 @@ import useModalsStore from "@/stores/useModalsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useSetsStore from "@/stores/useSetsStore";
 import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
-import { Pressable } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import SetImagesModal from "./SetImagesModal";
 
@@ -89,10 +88,10 @@ const SetCard = ({
   }
 
   return (
-    <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={null}>
+    <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={200}>
       {/*       Corriger le flex container car il prend trop de place
        */}
-      {/* <FlexContainer flexDirection={"row"}>
+      <FlexContainer flexDirection={"row"}>
         {config.showTextInput && (
           <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} isWithConfimation={true} />
         )}
@@ -104,7 +103,7 @@ const SetCard = ({
             situation={situation}
           />
         )}
-      </FlexContainer> */}
+      </FlexContainer>
       <SetImagesModal setToShowClassIds={setToShowClassIds} />
 
       {config.showStatSliderResult && <StatSliderResultContainer setsToShowMultipleStatsLists={[setToShowStats]} />}
