@@ -10,7 +10,7 @@ function Button({
   children,
   onPress,
   elevation = undefined, // option
-  tooltipText, // option
+  tooltipText = undefined, // option
   icon = undefined, // option
   minWidth = undefined, //option
   ...props

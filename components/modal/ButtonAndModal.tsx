@@ -58,7 +58,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = React.memo(
     const leftButtonForModal = leftButton ? (
       leftButton
     ) : confirmButtonText ? (
-      <Button onPress={handleConfirm} tooltipText={undefined}>
+      <Button elevation={12} onPress={handleConfirm} minWidth={100}>
         <Text> {translate(confirmButtonText)}</Text>
       </Button>
     ) : undefined;
