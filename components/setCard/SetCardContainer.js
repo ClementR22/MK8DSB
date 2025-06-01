@@ -9,23 +9,23 @@ const SetCardContainer = ({ setsToShow, isInLoadSetModal = false, screenNameFrom
   const theme = useThemeStore((state) => state.theme);
   const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
 
+  const noSetToShow = setsToShow.length === 0;
+  const contentWidth = noSetToShow ? "100%" : undefined;
+
   return (
-    <ScrollView scrollEnabled={!isTooltipVisible} horizontal={true}>
+    <ScrollView scrollEnabled={!isTooltipVisible} horizontal={true} contentContainerStyle={{ width: contentWidth }}>
       <Pressable
         style={[
           styles.setCardContainer,
           {
             flexDirection: "row",
-            // minWidth: 300, //
             flexGrow: 1,
             backgroundColor: theme.surface_container_high,
-            justifyContent: "center",
+            justifyContent: "center", // utile pour l'icon chat-question
           },
         ]}
       >
-        {setsToShow.length === 0 ? (
-          <MaterialCommunityIcons name="chat-question" size={72} color={theme.on_surface} />
-        ) : null}
+        {noSetToShow && <MaterialCommunityIcons name="chat-question" size={72} color={theme.on_surface} />}
 
         {setsToShow.map(({ name, classIds, stats }, index) => {
           return (
