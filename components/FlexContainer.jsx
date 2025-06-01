@@ -2,7 +2,17 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { shadow_3dp } from "@/components/styles/theme";
 
-function FlexContainer({ children, flexDirection, alignItems, justifyContent, gap, boxShadow, padding, backgroundColor, style }) {
+function FlexContainer({
+  children,
+  flexDirection,
+  alignItems,
+  justifyContent,
+  gap,
+  boxShadow,
+  padding,
+  backgroundColor,
+  style,
+}) {
   const styles = StyleSheet.create({
     container: {
       backgroundColor: backgroundColor || "transparent",

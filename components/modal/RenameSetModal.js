@@ -26,7 +26,8 @@ const RenameSetModal = () => {
       closeButtonText="OK"
       onClose={saveAndClose}
     >
-      <SetNameInput setToShowName={setFoundName} />
+      <SetNameInput setToShowName={setFoundName} flex={null} />
+      {/* // flex={null} permet d'éviter que SetNameInput soit écrasé */}
     </Modal>
   );
 };
