@@ -56,7 +56,7 @@ function Modal({
     },
     button_container: {
       marginTop: 10,
-    }
+    },
   });
 
   return (

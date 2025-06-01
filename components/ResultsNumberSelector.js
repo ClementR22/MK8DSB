@@ -4,11 +4,11 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { button_icon } from "./styles/button";
 import { shadow_12dp } from "@/components/styles/theme";
 import { useThemeStore } from "@/stores/useThemeStore";
+import ButtonIcon from "./ButtonIcon";
+import { IconType } from "react-native-dynamic-vector-icons";
 
 const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
   const theme = useThemeStore((state) => state.theme);
-  const [hovered_1, setHover_1] = useState(false);
-  const [hovered_2, setHover_2] = useState(false);
 
   // Fonction pour incrémenter
   const increment = () => {
@@ -22,23 +22,9 @@ const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
 
   return (
     <View style={styles.container}>
-      <Pressable
-        style={[button_icon(theme).container, hovered_1 && shadow_12dp]}
-        onPress={decrement}
-        onHoverIn={() => setHover_1(true)}
-        onHoverOut={() => setHover_1(false)}
-      >
-        <MaterialCommunityIcons name="minus" color="white"></MaterialCommunityIcons>
-      </Pressable>
+      <ButtonIcon onPress={decrement} iconName="minus" iconType={IconType.MaterialCommunityIcons} />
       <Text style={styles.resultsNumberText}>{resultsNumber}</Text>
-      <Pressable
-        style={[button_icon(theme).container, hovered_2 && shadow_12dp]}
-        onPress={increment}
-        onHoverIn={() => setHover_2(true)}
-        onHoverOut={() => setHover_2(false)}
-      >
-        <MaterialCommunityIcons name="plus" color="white"></MaterialCommunityIcons>
-      </Pressable>
+      <ButtonIcon onPress={increment} iconName="plus" iconType={IconType.MaterialCommunityIcons} />
     </View>
   );
 };

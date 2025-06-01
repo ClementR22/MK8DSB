@@ -9,10 +9,10 @@ import Icon from "react-native-dynamic-vector-icons";
 function Button({
   children,
   onPress,
-  elevation = undefined,
+  elevation = undefined, // option
   tooltipText, // option
   icon = undefined, // option
-  minWidth = undefined,
+  minWidth = undefined, //option
   ...props
 }) {
   const theme = useThemeStore((state) => state.theme);

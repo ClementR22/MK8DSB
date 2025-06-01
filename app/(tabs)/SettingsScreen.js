@@ -17,8 +17,6 @@ import ButtonAndModal from "@/components/modal/ButtonAndModal";
 import { translate } from "@/translations/translations";
 import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
 import useSetsStore from "@/stores/useSetsStore";
-import { Pressable } from "react-native";
-import { useRouter } from "expo-router";
 import { useResetSettings } from "@/hooks/useResetSettings";
 
 const SettingsScreen = () => {
@@ -26,12 +24,6 @@ const SettingsScreen = () => {
   const isDefault = statsVisibleConfig === "yes";
   const deleteAllSavedSets = useSetsStore((state) => state.deleteAllSavedSets);
   const resetSettings = useResetSettings();
-
-  const router = useRouter();
-
-  const handleShowHelp = () => {
-    router.push("/help/HelpSearchSetScreen");
-  };
 
   return (
     <ScreenProvider screenName="settings">
@@ -61,10 +53,6 @@ const SettingsScreen = () => {
             </ButtonAndModal>
           </FlexScrollView>
         </StatsVisibleListProvider>
-
-        <Pressable onPress={handleShowHelp} style={{ margin: 30 }}>
-          <Text>ok</Text>
-        </Pressable>
 
         <Text>DEBUG</Text>
         <Button

@@ -28,13 +28,13 @@ interface ButtonIconProps extends Omit<PressableProps, "onPress" | "style" | "di
 
 const ButtonIcon: React.FC<ButtonIconProps> = ({
   onPress,
-  tooltipText,
-  toolTipPlacement = "top",
-  elevation,
+  tooltipText, // option
+  toolTipPlacement = "top", // option
+  elevation, // option
   iconName,
   iconType,
-  iconSize = 24,
-  disabled = false,
+  iconSize = 24, // option
+  disabled = false, // option
   ...props
 }) => {
   const theme = useThemeStore((state) => state.theme);

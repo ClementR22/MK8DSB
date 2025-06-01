@@ -13,6 +13,7 @@ import ButtonIcon from "../ButtonIcon";
 import { useScreen } from "@/contexts/ScreenContext";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import ButtonAndModal from "../modal/ButtonAndModal";
+import Button from "../Button";
 
 const StatSliderResultSelectorPressable = () => {
   const { statsVisibleList, setStatsVisibleList, toggleCheckListStatsVisibleList } = useStatsVisibleList();
@@ -21,21 +22,14 @@ const StatSliderResultSelectorPressable = () => {
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
 
-  const [filterModalButtonHover, setFilterModalButtonHover] = useState(false);
-
   const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
   const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
   const disabled = statsVisibleConfig !== "no" && screenName === "search";
 
   const leftButton = isInSearchScreen ? (
-    <Pressable
-      style={[button(theme).container, modal(theme).close_button_center, filterModalButtonHover && shadow_12dp]}
-      onHoverIn={() => setFilterModalButtonHover(true)}
-      onHoverOut={() => setFilterModalButtonHover(false)}
-      onPress={() => syncWithChosenStats(setStatsVisibleList)}
-    >
+    <Button onPress={() => syncWithChosenStats(setStatsVisibleList)}>
       <Text>{translate("Sync")}</Text>
-    </Pressable>
+    </Button>
   ) : undefined;
 
   const tooltipText = disabled ? "ConfiguredByDefault" : "DisplayedStats";
