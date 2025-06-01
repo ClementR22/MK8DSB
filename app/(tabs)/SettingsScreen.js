@@ -27,9 +27,11 @@ const SettingsScreen = () => {
 
   return (
     <ScreenProvider screenName="settings">
-      <BoxContainer alignItems={"space-between"}>
-        <StatsVisibleListProvider>
-          <FlexScrollView alignItems={"space-between"}>
+      <StatsVisibleListProvider>
+        <FlexScrollView>
+          {/* peut etre remplacer FlexScrollView par une view dans le futur */}
+          <BoxContainer alignItems={null}>
+            {/* alignItems={null} permet au contenu de pourvoir prendre toute la largeur */}
             <LanguageSelector />
             <ThemeSelector />
             <StatsVisibleConfigSelector />
@@ -51,21 +53,21 @@ const SettingsScreen = () => {
             >
               <Text>{translate("DeleteAllSetsInMemoryText")}</Text>
             </ButtonAndModal>
-          </FlexScrollView>
-        </StatsVisibleListProvider>
 
-        <Text>DEBUG</Text>
-        <Button
-          onPress={async () => {
-            console.log("show async");
-            const keys = await AsyncStorage.getAllKeys();
-            console.log("keys", keys);
-            console.log("items", await AsyncStorage.multiGet(keys));
-          }}
-        >
-          show memory
-        </Button>
-      </BoxContainer>
+            <Text>DEBUG</Text>
+            <Button
+              onPress={async () => {
+                console.log("show async");
+                const keys = await AsyncStorage.getAllKeys();
+                console.log("keys", keys);
+                console.log("items", await AsyncStorage.multiGet(keys));
+              }}
+            >
+              show memory
+            </Button>
+          </BoxContainer>
+        </FlexScrollView>
+      </StatsVisibleListProvider>
     </ScreenProvider>
   );
 };
