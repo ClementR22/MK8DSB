@@ -39,7 +39,7 @@ const SearchSetScreen = () => {
                   },
                 ]}
               >
-                {translate("SearchedStats")}
+                {translate("DesiredStats")}
               </Text>
 
               <ButtonLoadSet tooltipText="LoadStatsOfASet" />

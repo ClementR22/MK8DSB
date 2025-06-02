@@ -36,7 +36,7 @@ const SettingsScreen = () => {
             <ThemeSelector />
             <StatsVisibleConfigSelector />
             {isDefault && (
-              <ButtonAndModal triggerButtonText={"DefaultVisibleStats"}>
+              <ButtonAndModal triggerButtonText="DefaultDisplayedStats" modalTitle="DefaultDisplayedStats">
                 <StatsVisibleListDefaultSelector />
               </ButtonAndModal>
             )}
@@ -46,7 +46,7 @@ const SettingsScreen = () => {
             <ButtonResetSettings resetSettings={resetSettings} />
 
             <ButtonAndModal
-              triggerButtonText={"DeleteAllSetsInMemory"}
+              triggerButtonText="DeleteAllSetsInMemory"
               onConfirm={deleteAllSavedSets}
               confirmButtonText="Confirm"
               closeButtonText="Cancel"

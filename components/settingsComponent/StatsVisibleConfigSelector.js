@@ -11,7 +11,7 @@ const StatsVisibleConfigSelector = () => {
       value={statsVisibleConfig}
       setValue={setStatsVisibleConfig}
       itemList={statsVisibleConfigList}
-      pickerTitle="ConfigureDefaultVisibleStats?"
+      pickerTitle="ConfigureDefaultDisplayedStats?"
       isTranslatedContent={true}
     />
   );

@@ -32,22 +32,19 @@ const translations = {
     GalleryTabTitle: "Gallery",
     SettingsTabTitle: "Settings",
 
-    // other title
-    SearchedStats: "Searched stats",
-
     // modal title
-    StatsToConfigure: "Stats to configure",
+    DesiredStats: "Desired stats",
     Filters: "Filters",
     NumberOfResults: "Number of results",
-    StatsToDisplay: "Stats to display",
+    DisplayedStats: "Displayed stats",
     LoadASavedSet: "Load a saved set",
     NameTheSet: "Name the set",
     SelectASet: "Select a set",
     Licenses: "Licenses",
-    DefaultVisibleStats: "Default visible stats",
+    DefaultDisplayedStats: "Default displayed stats",
 
     // text
-    "ConfigureDefaultVisibleStats?": "Configure default visible stats?",
+    "ConfigureDefaultDisplayedStats?": "Configure default displayed stats?",
     Language: "Language",
     Theme: "Theme",
     ImportError: "Import error",
@@ -59,13 +56,13 @@ const translations = {
     // button label
     Search: "Search",
     All: "All",
-    Sync: "sync with the configured stats",
+    Sync: "Match desired stats",
     Dark: "Dark",
     Light: "Light",
     System: "System",
     Configure: "Yes",
     DontConfigure: "No",
-    AllwaysSync: "Always in sync with the configured stats",
+    AllwaysSync: "Always match desired stats",
     ConfigureTheStats: "Configure the stats",
     SendFeedback: "Send feedback",
     OpenSourceLicenses: "Open Source Licenses",
@@ -278,22 +275,19 @@ const translations = {
     GalleryTabTitle: "Gallerie",
     SettingsTabTitle: "Paramètres",
 
-    // other title
-    SearchedStats: "Statistiques recherchées",
-
     // modal title
-    StatsToConfigure: "Stats à configurer",
+    DesiredStats: "Stats souhaitées",
     Filters: "Filtres",
     NumberOfResults: "Nombre de résultats",
-    StatsToDisplay: "Stats à afficher",
+    DisplayedStats: "Stats affichées",
     LoadASavedSet: "Charger un set enregistré",
     NameTheSet: "Nommer le set",
     SelectASet: "Selectionner un set",
     Licenses: "Licences",
-    DefaultVisibleStats: "Stats visibles par défault",
+    DefaultDisplayedStats: "Stats affichées par défault",
 
     // text
-    "ConfigureDefaultVisibleStats?": "Configurer les stats visibles par défault ?",
+    "ConfigureDefaultDisplayedStats?": "Configurer les stats affichées par défault ?",
     Language: "Langue",
     Theme: "Theme",
     ImportError: "Erreur d'importation",
@@ -305,13 +299,13 @@ const translations = {
     // button label
     Search: "Chercher",
     All: "Toutes",
-    Sync: "Sync avec les stats paramétrées",
+    Sync: "Copier les stats souhaitées",
     Dark: "Sombre",
     Light: "Clair",
     System: "Appareil",
     Configure: "Oui",
     DontConfigure: "Non",
-    AllwaysSync: "Toujours sync avec les stats paramétrées",
+    AllwaysSync: "Toujours copier les stats paramétrées",
     ConfigureTheStats: "Configurer les stats",
     SendFeedback: "Faire un retour",
     OpenSourceLicenses: "Licences Open Source",

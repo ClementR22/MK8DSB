@@ -44,7 +44,7 @@ const StatSliderResultSelectorPressable = () => {
           disabled={disabled}
         />
       }
-      modalTitle="StatsToDisplay"
+      modalTitle="DisplayedStats"
       leftButton={leftButton}
     >
       <StatSelector

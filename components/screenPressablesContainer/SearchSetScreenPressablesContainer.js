@@ -147,7 +147,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   return (
     <View style={styles.pressablesContainer}>
       <ButtonAndModal
-        modalTitle="StatsToConfigure"
+        modalTitle="DesiredStats"
         customTrigger={
           <ButtonIcon tooltipText="ChooseStats" iconName="plus" iconType={IconType.MaterialCommunityIcons} />
         }
