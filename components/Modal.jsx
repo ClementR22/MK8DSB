@@ -50,6 +50,7 @@ function Modal({
     title_center: {
       color: theme.on_surface,
       alignSelf: "center",
+      textAlign: "center",
       paddingHorizontal: 24,
       fontSize: 24,
       marginBottom: 0,
