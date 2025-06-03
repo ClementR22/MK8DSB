@@ -5,14 +5,14 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 const LicensesButton = () => {
   return (
     <ButtonAndModal modalTitle="Licenses" triggerButtonText="OpenSourceLicenses">
-      <View style={{ flex: 1, padding: 20 }}>
+      <View style={{ paddingTop: 20 }}>
         <FlatList
           data={Object.entries(licensesLinks)}
           keyExtractor={(_, index) => index.toString()}
           renderItem={({ item }) => {
             const [licenseName, licenseUrl] = item;
             return (
-              <Pressable onPress={() => Linking.openURL(licenseUrl)}>
+              <Pressable onPress={() => Linking.openURL(licenseUrl)} style={{ paddingHorizontal: 20 }}>
                 <View style={styles.licenseItem}>
                   <Text style={styles.licenseName}>{licenseName}</Text>
                 </View>
