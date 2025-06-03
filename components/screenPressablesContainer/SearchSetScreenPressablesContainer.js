@@ -15,13 +15,14 @@ import { usePressableElements } from "@/hooks/usePressableElements";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../Button";
 import useModalsStore from "@/stores/useModalsStore";
+import StatSelectorChosenStatsButtonAndModal from "../statSelector/StatSelectorChosenStatsButtonAndModal";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
+  const chosenStats = useSetsStore((state) => state.chosenStats);
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
   const [resultsNumber, setResultsNumber] = useState(5);
   const setIsChosenStatsModalVisible = useModalsStore((state) => state.setIsChosenStatsModalVisible);
   const openChosenStatsModal = useCallback(() => setIsChosenStatsModalVisible(true));
-
   const { pressableElementsList } = usePressableElements();
   const pressableElementsByCategory = computePressableElementsByCategory(pressableElementsList);
 
@@ -63,7 +64,6 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   );
 
   const search = () => {
-    const chosenStats = useSetsStore.getState().chosenStats;
     const chosenStatsChecked = chosenStats.map((stat) => stat.checked);
     const chosenStatsValue = chosenStats.map((stat) => stat.value);
     const chosenStatsFilterNumber = chosenStats.map((stat) => stat.statFilterNumber);
@@ -129,12 +129,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
 
   return (
     <View style={styles.pressablesContainer}>
-      <ButtonIcon
-        onPress={openChosenStatsModal}
-        tooltipText="ChooseStats"
-        iconName="plus"
-        iconType={IconType.MaterialCommunityIcons}
-      />
+      <StatSelectorChosenStatsButtonAndModal />
 
       <ButtonAndModal
         modalTitle="Filters"

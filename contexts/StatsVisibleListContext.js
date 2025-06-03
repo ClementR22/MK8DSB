@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useScreen } from "./ScreenContext";
 import { toggleCheckList } from "@/utils/toggleCheck";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
@@ -16,15 +16,15 @@ export const StatsVisibleListProvider = ({ children }) => {
     if (isStatsVisibleDefault) setStatsVisibleList(statsVisibleListDefault);
   }, [isStatsVisibleDefault, statsVisibleListDefault]);
 
-  const screenName = useScreen();
-  const chosenStats = useSetsStore((state) => state.chosenStats);
-  const chosenStatsInScreen = screenName === "search" ? chosenStats : Array(12).fill(null);
-
   const toggleCheckListStatsVisibleList = (name) => toggleCheckList(setStatsVisibleList, name);
 
   return (
     <StatsVisibleListContext.Provider
-      value={{ statsVisibleList, setStatsVisibleList, chosenStatsInScreen, toggleCheckListStatsVisibleList }}
+      value={{
+        statsVisibleList,
+        setStatsVisibleList,
+        toggleCheckListStatsVisibleList,
+      }}
     >
       {children}
     </StatsVisibleListContext.Provider>

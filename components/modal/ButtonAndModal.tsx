@@ -9,6 +9,10 @@ interface ButtonAndModalProps {
   children: React.ReactNode;
   // Permet de passer un titre en dur (string) ou de ne pas avoir de titre (null).
   modalTitle?: string | null;
+  // Si fournie, la modale est contrôlée de l'extérieur
+  isModalVisibleProp?: boolean;
+  // Setter pour le contrôle externe
+  setIsModalVisibleProp?: (visible: boolean) => void;
   // Un élément React personnalisé qui servira de déclencheur pour ouvrir le modal.
   customTrigger?: React.ReactElement<{ onPress?: (event: GestureResponderEvent) => void } & Record<string, any>>;
   // Sinon on utilisera un Button avec le texte donné en props
@@ -28,6 +32,8 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = React.memo(
   ({
     children,
     modalTitle = undefined, // Initialisé à undefined pour ne pas passer null par défaut
+    isModalVisibleProp = undefined,
+    setIsModalVisibleProp = undefined,
     customTrigger = undefined,
     triggerButtonText = undefined,
     onConfirm,
@@ -35,17 +41,27 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = React.memo(
     closeButtonText = undefined,
     leftButton = undefined,
   }) => {
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    // État interne pour gérer la visibilité si les props externes ne sont pas fournies
+    const [internalIsModalVisible, setInternalIsModalVisible] = useState(false);
+
+    // Détermine la visibilité actuelle de la modale :
+    // Si isModalVisibleProp est défini, utilisez-le. Sinon, utilisez l'état interne.
+    const currentIsModalVisible = isModalVisibleProp !== undefined ? isModalVisibleProp : internalIsModalVisible;
+
+    // Détermine la fonction de mise à jour de la visibilité :
+    // Si setIsModalVisibleProp est défini, utilisez-le. Sinon, utilisez le setter interne.
+    const currentSetIsModalVisible =
+      setIsModalVisibleProp !== undefined ? setIsModalVisibleProp : setInternalIsModalVisible;
 
     // Fonction pour ouvrir le modal
     const openModal = useCallback(() => {
-      setIsModalVisible(true);
-    }, []);
+      currentSetIsModalVisible(true);
+    }, [currentSetIsModalVisible]);
 
     // Fonction pour fermer le modal
     const closeModal = useCallback(() => {
-      setIsModalVisible(false);
-    }, []);
+      currentSetIsModalVisible(false);
+    }, [currentSetIsModalVisible]);
 
     // Gère l'action de confirmation, si un bouton de confirmation est présent
     const handleConfirm = useCallback(() => {
@@ -78,11 +94,13 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = React.memo(
 
         <Modal
           modalTitle={modalTitle}
-          isModalVisible={isModalVisible}
-          setIsModalVisible={setIsModalVisible}
+          // Passe la visibilité déterminée (externe ou interne)
+          isModalVisible={currentIsModalVisible}
+          // Passe le setter déterminé (externe ou interne)
+          setIsModalVisible={currentSetIsModalVisible}
           closeButtonText={closeButtonText}
           leftButton={leftButtonForModal}
-          onClose={closeModal}
+          onClose={closeModal} // Assurez-vous que onClose utilise aussi le setter approprié
         >
           {children}
         </Modal>

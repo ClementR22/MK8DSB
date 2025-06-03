@@ -9,7 +9,6 @@ import {
   getOnlySetsSavedKeysFromMemory,
   saveThingInMemory,
 } from "@/utils/asyncStorageOperations";
-import { toggleAndGetChecksForChosenStats } from "@/utils/toggleCheck";
 
 // Types
 export type StatName = string;
@@ -46,7 +45,6 @@ export interface SetsStoreState {
   setSetsListFound: (newSetsList: SetObject[]) => void;
   setSetCardEdittedIndex: (newIndex: number) => void;
   updateStatValue: (name: string, newValue: number) => void;
-  toggleCheckChosenStats: (name: string) => boolean;
   syncWithChosenStats: (setStatsVisibleList: (list: VisibleStat[]) => void) => void;
   setStatFilterNumber: (statName: string, newState: number) => void;
   getSetsSavedKeys: () => Promise<string[]>;
@@ -109,19 +107,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     set((state) => ({
       chosenStats: state.chosenStats.map((stat) => (stat.name === name ? { ...stat, value: newValue } : stat)),
     })),
-
-  toggleCheckChosenStats: (name) => {
-    const chosenStats = get().chosenStats;
-    const newList = toggleAndGetChecksForChosenStats(chosenStats, name);
-    const hasChecked = newList.some((item) => item.checked);
-    if (!hasChecked) {
-      // Ici tu peux aussi déclencher un toast si tu veux,
-      // ou faire ça dans le composant après l'appel
-      return; // annule la modif si pas de checked
-    }
-    set({ chosenStats: newList });
-    return true;
-  },
 
   syncWithChosenStats: (setStatsVisibleList) => {
     setStatsVisibleList(get().chosenStats);
