@@ -31,14 +31,13 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const toggleCheckChosenStats = useSetsStore((state) => state.toggleCheckChosenStats);
   const [resultsNumber, setResultsNumber] = useState(5);
   const { setStatsVisibleList } = useStatsVisibleList();
-  const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
-  const isSync = statsVisibleConfig === "sync";
+  const isStatsVisibleSync = useStatsVisibleListConfigStore((state) => state.isStatsVisibleSync);
 
   useEffect(() => {
-    if (isSync) {
+    if (isStatsVisibleSync) {
       syncWithChosenStats(setStatsVisibleList);
     }
-  }, [isSync, chosenStats, statsVisibleConfig]);
+  }, [isStatsVisibleSync, chosenStats]);
 
   const { pressableElementsList } = usePressableElements();
   const pressableElementsByCategory = computePressableElementsByCategory(pressableElementsList);

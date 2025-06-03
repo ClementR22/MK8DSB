@@ -25,7 +25,7 @@ export const loadThingFromMemory = async (thingKey: string, setThing: any) => {
 };
 
 export const getOnlySetsSavedKeysFromMemory = async () => {
-  const excludedKeys = ["language", "theme", "statsVisibleConfig", "statsVisibleListDefault"];
+  const excludedKeys = ["language", "theme", "isStatsVisibleSync", "isStatsVisibleDefault", "statsVisibleListDefault"];
   const keys = await AsyncStorage.getAllKeys();
   const onlySetKeys = keys.filter((k) => !excludedKeys.includes(k));
   return onlySetKeys;

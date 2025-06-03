@@ -8,7 +8,7 @@ import SendFeedbackButton from "@/components/settingsComponent/SendFeedbackButto
 import LicensesButton from "@/components/settingsComponent/LicensesButton";
 import BoxContainer from "@/components/BoxContainer";
 import FlexScrollView from "@/components/FlexScrollView";
-import StatsVisibleConfigSelector from "@/components/settingsComponent/StatsVisibleConfigSelector";
+import StatsVisibleSyncSwitch from "@/components/settingsComponent/StatsVisibleSyncSwitch";
 import Button from "@/components/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Text from "@/components/Text";
@@ -18,10 +18,10 @@ import { translate } from "@/translations/translations";
 import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
 import useSetsStore from "@/stores/useSetsStore";
 import { useResetSettings } from "@/hooks/useResetSettings";
+import StatsVisibleDefaultSwitch from "@/components/settingsComponent/StatsVisibleDefaultSwitch";
 
 const SettingsScreen = () => {
-  const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
-  const isDefault = statsVisibleConfig === "yes";
+  const isStatsVisibleDefault = useStatsVisibleListConfigStore((state) => state.isStatsVisibleDefault);
   const deleteAllSavedSets = useSetsStore((state) => state.deleteAllSavedSets);
   const resetSettings = useResetSettings();
 
@@ -33,16 +33,24 @@ const SettingsScreen = () => {
           <BoxContainer alignItems={null}>
             {/* alignItems={null} permet au contenu de pourvoir prendre toute la largeur */}
             <LanguageSelector />
+
             <ThemeSelector />
-            <StatsVisibleConfigSelector />
-            {isDefault && (
+
+            <Text>{translate("DisplayedStatsConfiguration")}</Text>
+
+            <StatsVisibleSyncSwitch />
+            <StatsVisibleDefaultSwitch />
+
+            {isStatsVisibleDefault && (
               <ButtonAndModal triggerButtonText="DefaultDisplayedStats" modalTitle="DefaultDisplayedStats">
                 <StatsVisibleListDefaultSelector />
               </ButtonAndModal>
             )}
 
             <SendFeedbackButton />
+
             <LicensesButton />
+
             <ButtonResetSettings resetSettings={resetSettings} />
 
             <ButtonAndModal

@@ -23,16 +23,16 @@ const StatSliderResultSelectorPressable = () => {
   const isInSearchScreen = screenName === "search";
 
   const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
-  const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
-  const disabled = statsVisibleConfig !== "no" && screenName === "search";
+  const isStatsVisibleSync = useStatsVisibleListConfigStore((state) => state.isStatsVisibleSync);
+  const disabled = isStatsVisibleSync && screenName === "search";
 
   const leftButton = isInSearchScreen ? (
     <Button onPress={() => syncWithChosenStats(setStatsVisibleList)}>
-      <Text>{translate("Sync")}</Text>
+      <Text>{translate("MatchDesiredStats")}</Text>
     </Button>
   ) : undefined;
 
-  const tooltipText = disabled ? "ConfiguredByDefault" : "DisplayedStats";
+  const tooltipText = disabled ? "DisabledBecauseMatchDesiredStats" : "DisplayedStats";
 
   return (
     <ButtonAndModal

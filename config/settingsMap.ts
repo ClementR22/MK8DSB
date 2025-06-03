@@ -1,8 +1,9 @@
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import { useStatsVisibleListConfigStore, statsVisibleListDefaultInit } from "@/stores/useStatsVisibleListConfigStore";
+import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { statsVisibleListInit } from "./statsVisibleListInit";
 
-type SettingKey = "language" | "statsVisibleConfig" | "statsVisibleListDefault" | "theme";
+type SettingKey = "language" | "isStatsVisibleSync" | "isStatsVisibleDefault" | "statsVisibleListDefault" | "theme";
 
 type SettingsEntry = {
   setState: (value: any) => void;
@@ -11,14 +12,16 @@ type SettingsEntry = {
 
 export function useSettingsMap(): Record<SettingKey, SettingsEntry> {
   const setLanguage = useLanguageStore((state) => state.setLanguage);
-  const setStatsVisibleConfig = useStatsVisibleListConfigStore((state) => state.setStatsVisibleConfig);
+  const setIsStatsVisibleSync = useStatsVisibleListConfigStore((state) => state.setIsStatsVisibleSync);
+  const setIsStatsVisibleDefault = useStatsVisibleListConfigStore((state) => state.setIsStatsVisibleDefault);
   const setStatsVisibleListDefault = useStatsVisibleListConfigStore((state) => state.setStatsVisibleListDefault);
   const setTheme = useThemeStore((state) => state.setTheme);
 
   return {
     language: { setState: setLanguage, defaultValue: "en" },
-    statsVisibleConfig: { setState: setStatsVisibleConfig, defaultValue: "sync" },
-    statsVisibleListDefault: { setState: setStatsVisibleListDefault, defaultValue: statsVisibleListDefaultInit },
+    isStatsVisibleSync: { setState: setIsStatsVisibleSync, defaultValue: true },
+    isStatsVisibleDefault: { setState: setIsStatsVisibleDefault, defaultValue: false },
+    statsVisibleListDefault: { setState: setStatsVisibleListDefault, defaultValue: statsVisibleListInit },
     theme: { setState: setTheme, defaultValue: "system" },
   };
 }

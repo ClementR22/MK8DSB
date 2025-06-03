@@ -1,0 +1,37 @@
+import React from "react";
+import { Switch as NativeSwitch } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { useThemeStore } from "@/stores/useThemeStore";
+import { Text } from "react-native";
+import { translate } from "@/translations/translations";
+
+interface SwitchProps {
+  value: boolean;
+  // on peut donner SetValue OU BIEN onToggleSwitch
+  setValue?: (newValue: boolean) => void;
+  onToggleSwitch?: () => void;
+  switchLabel: string;
+}
+
+const Switch: React.FC<SwitchProps> = ({ value, setValue, onToggleSwitch, switchLabel }) => {
+  const theme = useThemeStore((state) => state.theme);
+
+  const onToggleSwitch_ = onToggleSwitch ?? (() => setValue(!value));
+
+  return (
+    <View style={styles.switchContainer}>
+      <NativeSwitch value={value} onValueChange={onToggleSwitch_} />
+      <Text style={{ color: theme.on_surface }}>{translate(switchLabel)}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  switchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+});
+
+export default Switch;

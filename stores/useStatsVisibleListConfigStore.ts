@@ -1,10 +1,7 @@
 import { create } from "zustand";
-import { statNames } from "@/data/data";
 import { toggleAndGetChecks } from "@/utils/toggleCheck";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
-
-// === TYPES ===
-export type StatsVisibleConfig = "no" | "yes" | "sync";
+import { statsVisibleListInit } from "@/config/statsVisibleListInit";
 
 type StatVisibility = {
   name: string;
@@ -14,8 +11,11 @@ type StatVisibility = {
 export type StatsVisibleList = StatVisibility[];
 
 interface StatsVisibleListConfigState {
-  statsVisibleConfig: StatsVisibleConfig;
-  setStatsVisibleConfig: (newValue: StatsVisibleConfig) => Promise<void>;
+  isStatsVisibleSync: boolean;
+  setIsStatsVisibleSync: (newValue: boolean) => Promise<void>;
+
+  isStatsVisibleDefault: boolean;
+  setIsStatsVisibleDefault: (newValue: boolean) => Promise<void>;
 
   statsVisibleListDefault: StatsVisibleList;
   setStatsVisibleListDefault: (newList: StatsVisibleList) => void;
@@ -23,41 +23,23 @@ interface StatsVisibleListConfigState {
 }
 
 // === CONFIGURATION INITIALE ===
-export const statsVisibleConfigList: { label: string; value: StatsVisibleConfig }[] = [
-  { label: "DontConfigure", value: "no" },
-  { label: "Configure", value: "yes" },
-  { label: "AllwaysSync", value: "sync" },
-];
-
-const statsVisibleListConfig: Record<string, boolean> = {
-  speedGround: true,
-  speedAntiGravity: false,
-  speedWater: false,
-  speedAir: false,
-  acceleration: false,
-  weight: false,
-  handlingGround: false,
-  handlingAntiGravity: false,
-  handlingWater: false,
-  handlingAir: false,
-  traction: false,
-  miniTurbo: false,
-};
-
-export const statsVisibleListDefaultInit: StatsVisibleList = statNames.map((statName) => ({
-  name: statName,
-  checked: statsVisibleListConfig[statName],
-}));
 
 export const useStatsVisibleListConfigStore = create<StatsVisibleListConfigState>((set, get) => ({
-  statsVisibleConfig: "sync",
+  isStatsVisibleSync: true,
 
-  async setStatsVisibleConfig(newValue) {
-    set({ statsVisibleConfig: newValue });
-    await saveThingInMemory("statsVisibleConfig", newValue);
+  async setIsStatsVisibleSync(newValue) {
+    set({ isStatsVisibleSync: newValue });
+    await saveThingInMemory("isStatsVisibleSync", newValue);
   },
 
-  statsVisibleListDefault: statsVisibleListDefaultInit,
+  isStatsVisibleDefault: false,
+
+  async setIsStatsVisibleDefault(newValue) {
+    set({ isStatsVisibleDefault: newValue });
+    await saveThingInMemory("isStatsVisibleDefault", newValue);
+  },
+
+  statsVisibleListDefault: statsVisibleListInit,
 
   setStatsVisibleListDefault(newList) {
     set({ statsVisibleListDefault: newList });

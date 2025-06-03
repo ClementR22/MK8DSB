@@ -1,11 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Switch } from "react-native-paper";
-import { translate } from "@/translations/translations";
-import { useThemeStore } from "@/stores/useThemeStore";
+import Switch from "../Switch";
 
 const SelectAllStatsSwitch = ({ statList, setStatList }) => {
-  const theme = useThemeStore((state) => state.theme);
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [formerStatList, setFormerStatList] = useState(null);
   const internalUpdate = useRef(false); // Marqueur de mise à jour interne
@@ -51,20 +47,7 @@ const SelectAllStatsSwitch = ({ statList, setStatList }) => {
 
   useEffect(() => updateToggleSwitch(), [statList]);
 
-  return (
-    <View style={styles.switchContainer}>
-      <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
-      <Text style={{ color: theme.on_surface }}>{translate("All")}</Text>
-    </View>
-  );
+  return <Switch value={isSwitchOn} onToggleSwitch={onToggleSwitch} switchLabel="All" />;
 };
 
 export default SelectAllStatsSwitch;
-
-const styles = StyleSheet.create({
-  switchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-});

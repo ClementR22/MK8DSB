@@ -1,17 +1,21 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useScreen } from "./ScreenContext";
 import { toggleCheckList } from "@/utils/toggleCheck";
-import { statsVisibleListDefaultInit, useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
+import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import useSetsStore from "@/stores/useSetsStore";
+import { statsVisibleListInit } from "@/config/statsVisibleListInit";
 
 const StatsVisibleListContext = createContext();
 
 export const StatsVisibleListProvider = ({ children }) => {
-  const statsVisibleConfig = useStatsVisibleListConfigStore((state) => state.statsVisibleConfig);
-  const isDefault = statsVisibleConfig === "yes";
+  const isStatsVisibleDefault = useStatsVisibleListConfigStore((state) => state.isStatsVisibleDefault);
   const statsVisibleListDefault = useStatsVisibleListConfigStore((state) => state.statsVisibleListDefault);
-  const [statsVisibleList_, setStatsVisibleList] = useState(statsVisibleListDefaultInit);
-  const statsVisibleList = isDefault ? statsVisibleListDefault : statsVisibleList_;
+  const [statsVisibleList, setStatsVisibleList] = useState(statsVisibleListInit);
+
+  useEffect(() => {
+    if (isStatsVisibleDefault) setStatsVisibleList(statsVisibleListDefault);
+  }, [isStatsVisibleDefault, statsVisibleListDefault]);
+
   const screenName = useScreen();
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const chosenStatsInScreen = screenName === "search" ? chosenStats : Array(12).fill(null);
