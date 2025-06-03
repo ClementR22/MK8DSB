@@ -8,6 +8,8 @@ interface ModalsStoreState {
   setIsEditModalVisible: (newVisible: boolean) => void;
   screenNameForEditModal: ScreenName;
   setScreenNameForEditModal: (newScreenName: ScreenName) => void;
+  isChosenStatsModalVisible: boolean;
+  setIsChosenStatsModalVisible: (newVisible: boolean) => void;
   isTooltipVisible: boolean;
   setIsTooltipVisible: (newIsTooltipVisible: boolean) => void;
 }
@@ -22,6 +24,9 @@ const useModalsStore = create<ModalsStoreState>((set, get) => ({
 
   screenNameForEditModal: "search",
   setScreenNameForEditModal: (newScreenName) => set({ screenNameForEditModal: newScreenName }),
+
+  isChosenStatsModalVisible: false,
+  setIsChosenStatsModalVisible: (newVisible) => set({ isChosenStatsModalVisible: newVisible }),
 
   isTooltipVisible: false,
   setIsTooltipVisible: (newIsTooltipVisible) => set({ isTooltipVisible: newIsTooltipVisible }),

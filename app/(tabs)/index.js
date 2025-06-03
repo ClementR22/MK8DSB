@@ -8,19 +8,36 @@ import SetCardContainer from "@/components/setCard/SetCardContainer";
 import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
 import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
+import { StatsVisibleListProvider, useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
 import BoxContainer from "@/components/BoxContainer";
 import FlexContainer from "@/components/FlexContainer";
 import RenameSetModal from "@/components/modal/RenameSetModal";
 import useSetsStore from "@/stores/useSetsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
+import Modal from "@/components/Modal";
+import StatSelectorChosenStats from "@/components/statSelector/StatSelectorChosenStats";
 
 const SearchSetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
-  const chosenStats = useSetsStore((state) => state.chosenStats);
   const [setsToShow, setSetsToShow] = useState([]);
   const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
+  const isChosenStatsModalVisible = useModalsStore((state) => state.isChosenStatsModalVisible);
+  const setIsChosenStatsModalVisible = useModalsStore((state) => state.setIsChosenStatsModalVisible);
+  const [asyncChosenStats, setAsyncChosenStats] = useState([]);
+
+  // Mettre à jour l'état asyncChosenStats à la fermeture du modal
+  const onCloseChosenStatsModal = () => {
+    const chosenStats = useSetsStore.getState().chosenStats;
+    setAsyncChosenStats(chosenStats);
+
+    setIsChosenStatsModalVisible(false);
+  };
+
+  // Initialise asyncChosenStats
+  useEffect(() => {
+    onCloseChosenStatsModal();
+  }, []);
 
   return (
     <ScreenProvider screenName="search">
@@ -45,7 +62,7 @@ const SearchSetScreen = () => {
               <ButtonLoadSet tooltipText="LoadStatsOfASet" />
 
               {/* Afficher le slider uniquement si la case est cochée */}
-              {chosenStats.map((stat) => {
+              {asyncChosenStats.map((stat) => {
                 const { name, value, checked, statFilterNumber } = stat;
                 return (
                   checked && <StatSlider key={name} name={name} value={value} statFilterNumber={statFilterNumber} />
@@ -55,8 +72,19 @@ const SearchSetScreen = () => {
 
             <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} />
           </FlexContainer>
+
           <SetCardContainer setsToShow={setsToShow} />
+
           <RenameSetModal />
+
+          <Modal
+            modalTitle="DesiredStats"
+            isModalVisible={isChosenStatsModalVisible}
+            setIsModalVisible={setIsChosenStatsModalVisible}
+            onClose={onCloseChosenStatsModal}
+          >
+            <StatSelectorChosenStats />
+          </Modal>
         </ScrollView>
       </StatsVisibleListProvider>
     </ScreenProvider>

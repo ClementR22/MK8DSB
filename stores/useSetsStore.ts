@@ -9,7 +9,7 @@ import {
   getOnlySetsSavedKeysFromMemory,
   saveThingInMemory,
 } from "@/utils/asyncStorageOperations";
-import { toggleAndGetChecks } from "@/utils/toggleCheck";
+import { toggleAndGetChecksForChosenStats } from "@/utils/toggleCheck";
 
 // Types
 export type StatName = string;
@@ -112,7 +112,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
 
   toggleCheckChosenStats: (name) => {
     const chosenStats = get().chosenStats;
-    const newList = toggleAndGetChecks(chosenStats, name);
+    const newList = toggleAndGetChecksForChosenStats(chosenStats, name);
     const hasChecked = newList.some((item) => item.checked);
     if (!hasChecked) {
       // Ici tu peux aussi déclencher un toast si tu veux,

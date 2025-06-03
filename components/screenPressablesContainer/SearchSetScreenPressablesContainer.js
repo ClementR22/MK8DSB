@@ -1,13 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { button, button_icon } from "../styles/button";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import React, { useCallback, useMemo, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { bodyTypeNames, setAllInfos } from "@/data/data";
 import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderResultSelectorPressable";
 import { translate } from "@/translations/translations";
-import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
-import { shadow_3dp } from "@/components/styles/theme";
-import StatSelector from "../statSelector/StatSelector";
 import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
 import ElementsDeselector from "../elementsSelector/ElementsDeselector";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
@@ -16,28 +11,16 @@ import ButtonIcon from "@/components/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
 import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";
-import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
-import { useThemeStore } from "@/stores/useThemeStore";
 import { usePressableElements } from "@/hooks/usePressableElements";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../Button";
+import useModalsStore from "@/stores/useModalsStore";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
-  const theme = useThemeStore((state) => state.theme);
-  const chosenStats = useSetsStore((state) => state.chosenStats);
-  const setChosenStats = useSetsStore((state) => state.setChosenStats);
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
-  const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
-  const toggleCheckChosenStats = useSetsStore((state) => state.toggleCheckChosenStats);
   const [resultsNumber, setResultsNumber] = useState(5);
-  const { setStatsVisibleList } = useStatsVisibleList();
-  const isStatsVisibleSync = useStatsVisibleListConfigStore((state) => state.isStatsVisibleSync);
-
-  useEffect(() => {
-    if (isStatsVisibleSync) {
-      syncWithChosenStats(setStatsVisibleList);
-    }
-  }, [isStatsVisibleSync, chosenStats]);
+  const setIsChosenStatsModalVisible = useModalsStore((state) => state.setIsChosenStatsModalVisible);
+  const openChosenStatsModal = useCallback(() => setIsChosenStatsModalVisible(true));
 
   const { pressableElementsList } = usePressableElements();
   const pressableElementsByCategory = computePressableElementsByCategory(pressableElementsList);
@@ -80,6 +63,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   );
 
   const search = () => {
+    const chosenStats = useSetsStore.getState().chosenStats;
     const chosenStatsChecked = chosenStats.map((stat) => stat.checked);
     const chosenStatsValue = chosenStats.map((stat) => stat.value);
     const chosenStatsFilterNumber = chosenStats.map((stat) => stat.statFilterNumber);
@@ -145,20 +129,12 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
 
   return (
     <View style={styles.pressablesContainer}>
-      <ButtonAndModal
-        modalTitle="DesiredStats"
-        customTrigger={
-          <ButtonIcon tooltipText="ChooseStats" iconName="plus" iconType={IconType.MaterialCommunityIcons} />
-        }
-      >
-        <StatSelector
-          statList={chosenStats}
-          setStatList={setChosenStats}
-          toggleCheck={(name) => {
-            toggleCheckChosenStats(name);
-          }}
-        />
-      </ButtonAndModal>
+      <ButtonIcon
+        onPress={openChosenStatsModal}
+        tooltipText="ChooseStats"
+        iconName="plus"
+        iconType={IconType.MaterialCommunityIcons}
+      />
 
       <ButtonAndModal
         modalTitle="Filters"
