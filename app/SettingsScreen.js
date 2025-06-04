@@ -19,6 +19,7 @@ import StatsVisibleListDefaultSelector from "@/components/settingsComponent/Stat
 import useSetsStore from "@/stores/useSetsStore";
 import { useResetSettings } from "@/hooks/useResetSettings";
 import StatsVisibleDefaultSwitch from "@/components/settingsComponent/StatsVisibleDefaultSwitch";
+import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 
 const SettingsScreen = () => {
   const isStatsVisibleDefault = useStatsVisibleListConfigStore((state) => state.isStatsVisibleDefault);
@@ -72,6 +73,15 @@ const SettingsScreen = () => {
               }}
             >
               show memory
+            </Button>
+
+            <Button
+              onPress={async () => {
+                console.log("remove all the memory");
+                deleteAllTheMemory();
+              }}
+            >
+              remvove memory
             </Button>
           </BoxContainer>
         </FlexScrollView>
