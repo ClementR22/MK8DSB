@@ -1,18 +1,56 @@
+// app/_layout_tabs.tsx
 import React, { useEffect } from "react";
-import { Stack } from "expo-router";
-import Toast from "react-native-toast-message";
-import { PaperProvider } from "react-native-paper";
-import { Appearance } from "react-native";
+import { Tabs, usePathname } from "expo-router";
+import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import CustomHeader from "@/components/CustomHeader";
+import useModalsStore from "@/stores/useModalsStore";
+import useSetsStore from "@/stores/useSetsStore";
+import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
-
+import { translate } from "@/translations/translations";
+import { ScreenName } from "@/contexts/ScreenContext";
+import { useLoadSettings } from "@/hooks/useLoadSettings";
+import { Appearance } from "react-native";
 import EditSetModal from "@/components/modal/EditSetModal";
 import LoadSetModal from "@/components/modal/LoadSetModal";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { useLoadSettings } from "@/hooks/useLoadSettings";
-import useSetsStore from "@/stores/useSetsStore";
+import Toast from "react-native-toast-message";
 import Snackbar from "@/components/Snackbar";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { PaperProvider } from "react-native-paper";
+import HelpSearchSetScreen from "@/components/help/HelpSearchSetScreen";
+import HelpDisplaySetScreen from "@/components/help/HelpDisplaySetScreen";
 
-export default function RootLayout() {
+function screenNameFromPath(pathname: string): ScreenName | null {
+  if (pathname === "/") return "search";
+  if (pathname.includes("isplay")) return "display";
+  if (pathname.includes("ave")) return "save";
+  if (pathname.includes("allery")) return "gallery";
+  return null;
+}
+
+export default function TabLayout() {
+  const pathname = usePathname();
+  const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
+  const setScreenNameForEditModal = useModalsStore((state) => state.setScreenNameForEditModal);
+  const isSetsListUpdated = usePressableElementsStore((state) => state.isSetsListUpdated);
+  const setIsSetsListUpdated = usePressableElementsStore((state) => state.setIsSetsListUpdated);
+  const pressedClassIdsObjByScreen = usePressableElementsStore((state) => state.pressedClassIdsObjByScreen);
+  const pressedClassIdsObj = pressedClassIdsObjByScreen[screenNameForEditModal];
+  const updateSetsList = useSetsStore((state) => state.updateSetsList);
+  const theme = useThemeStore((state) => state.theme);
+
+  useEffect(() => {
+    const screenName = screenNameFromPath(pathname);
+    if (screenName != null) setScreenNameForEditModal(screenName);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isSetsListUpdated) {
+      updateSetsList(pressedClassIdsObj, screenNameForEditModal); // Appel de la fonction
+      setIsSetsListUpdated(true);
+    }
+  }, [isSetsListUpdated, updateSetsList, pressedClassIdsObj, screenNameForEditModal, setIsSetsListUpdated]); // Ajouter toutes les dépendances
+
   const updateSystemTheme = useThemeStore((s) => s.updateSystemTheme);
   const fetchSavedSets = useSetsStore((state) => state.fetchSavedSets);
 
@@ -32,24 +70,76 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
         <PaperProvider>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-
-            <Stack.Screen
-              name="help/HelpSearchSetScreen"
+          <Tabs
+            screenOptions={{
+              tabBarActiveTintColor: "red", // changer la couleur
+              tabBarInactiveTintColor: undefined, // changer la couleur
+              headerShown: true,
+              sceneStyle: {
+                backgroundColor: theme.surface,
+              },
+              tabBarStyle: {
+                backgroundColor: theme.surface, // changer la couleur
+              },
+            }}
+          >
+            <Tabs.Screen
+              name="index"
               options={{
-                animation: "none",
-                headerShown: false,
+                title: translate("FindSetTabTitle"),
+                tabBarIcon: ({ color }) => <MaterialCommunityIcons name="magnify" size={24} color={color} />,
+                header: () => (
+                  <CustomHeader icon={"magnify"} helpComponent={<HelpSearchSetScreen />}>
+                    {"FindSetTitle"}
+                  </CustomHeader>
+                ),
               }}
             />
-            <Stack.Screen
-              name="help/HelpDisplaySetScreen"
+            <Tabs.Screen
+              name="DisplaySetScreen"
               options={{
-                animation: "none",
-                headerShown: false,
+                title: translate("DisplaySetTabTitle"),
+                tabBarIcon: ({ color }) => <MaterialIcons name="display-settings" size={24} color={color} />,
+                header: () => <CustomHeader helpComponent={<HelpDisplaySetScreen />}>{"DisplaySetTitle"}</CustomHeader>,
               }}
             />
-          </Stack>
+            <Tabs.Screen
+              name="SavedSetScreen"
+              options={{
+                title: translate("SavedSetTabTitle"),
+                tabBarIcon: ({ color }) => <MaterialIcons name="save" size={24} color={color} />,
+                header: () => (
+                  <CustomHeader icon={"save"} helpComponent={<HelpSearchSetScreen />}>
+                    {"SavedSetTitle"}
+                  </CustomHeader>
+                ),
+              }}
+            />
+            <Tabs.Screen
+              name="GalleryScreen"
+              options={{
+                title: translate("GalleryTabTitle"),
+                tabBarIcon: ({ color }) => <Ionicons name="image-outline" size={24} color={color} />,
+                header: () => (
+                  <CustomHeader icon={"image-outline"} helpComponent={<HelpSearchSetScreen />}>
+                    {"GalleryTitle"}
+                  </CustomHeader>
+                ),
+              }}
+            />
+            <Tabs.Screen
+              name="SettingsScreen"
+              options={{
+                title: translate("SettingsTabTitle"),
+                tabBarIcon: ({ color }) => <Ionicons name="settings" size={24} color={color} />,
+                header: () => (
+                  <CustomHeader icon={"settings"} helpComponent={<HelpSearchSetScreen />}>
+                    {"SettingsTitle"}
+                  </CustomHeader>
+                ),
+              }}
+            />
+          </Tabs>{" "}
           <EditSetModal />
           <LoadSetModal />
           <Toast />
