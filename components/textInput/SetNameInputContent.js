@@ -2,7 +2,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import React from "react";
 import { StyleSheet, TextInput } from "react-native";
 
-const SetNameInputContent = ({ value, onChangeText, onEndEditing, flex = 1 }) => {
+const SetNameInputContent = ({ value, onChangeText, onEndEditing, flex = 1, editable = true }) => {
   const theme = useThemeStore((state) => state.theme);
 
   const styles = StyleSheet.create({
@@ -17,7 +17,15 @@ const SetNameInputContent = ({ value, onChangeText, onEndEditing, flex = 1 }) =>
     },
   });
 
-  return <TextInput style={styles.textInput} value={value} onChangeText={onChangeText} onBlur={onEndEditing} />;
+  return (
+    <TextInput
+      style={styles.textInput}
+      value={value}
+      onChangeText={onChangeText}
+      onBlur={onEndEditing}
+      editable={editable}
+    />
+  );
 };
 
 export default SetNameInputContent;

@@ -46,7 +46,7 @@ const SetCard = ({
       moreActionNamesList: ["export", "removeInMemory"],
     },
     load: {
-      showTextInput: false,
+      showTextInput: true,
       showStatSliderResult: false,
       actionNamesList: [screenName === "search" ? "loadSaveToSearch" : "loadSaveToDisplay"],
       moreActionNamesList: undefined,
@@ -73,7 +73,7 @@ const SetCard = ({
 
     // Pour les autres situations, retourner la configuration telle quelle
     return { ...currentConfig };
-  }, [situation, hideRemoveSet, screenName]); // Ajoutez hideRemoveSet aux dépendances du useMemo
+  }, [situation, hideRemoveSet, screenName]);
 
   const setPressedClassIdsObjByScreen = usePressableElementsStore((state) => state.setPressedClassIdsObjByScreen);
   const updatePressableElementsList = usePressableElementsStore((state) => state.updatePressableElementsList);
@@ -93,7 +93,7 @@ const SetCard = ({
        */}
       <FlexContainer flexDirection={"row"}>
         {config.showTextInput && (
-          <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} isWithConfimation={true} />
+          <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} editable={!isInLoadSetModal} />
         )}
 
         {config.moreActionNamesList && (

@@ -8,6 +8,7 @@ const SetNameInput = ({
   setToShowName,
   setCardIndex,
   flex = 1, // option
+  editable = true, // option
 }) => {
   const screenName = useScreen();
   const renameSet = useSetsStore((state) => state.renameSet);
@@ -25,7 +26,13 @@ const SetNameInput = ({
   };
 
   return (
-    <SetNameInputContent value={localName} onChangeText={setLocalName} onEndEditing={handleEndEditing} flex={flex} />
+    <SetNameInputContent
+      value={localName}
+      onChangeText={setLocalName}
+      onEndEditing={handleEndEditing}
+      flex={flex}
+      editable={editable}
+    />
   );
 };
 
