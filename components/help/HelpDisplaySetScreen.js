@@ -40,8 +40,7 @@ const slides = [
           </HelpIconAndText>
 
           <HelpIconAndText name="checkbox-multiple-marked" type={IconType.MaterialCommunityIcons} isButton={true}>
-            Choisir les stats à afficher dans les sliders. Afficher uniquement ce qui compte pour vous (vitesse,
-            maniabilité, ...)
+            Choisir les statistiques à afficher : affichez uniquement celles qui comptent pour vous
           </HelpIconAndText>
 
           <HelpIconAndText name="cards-outline" type={IconType.MaterialCommunityIcons} isButton={true}>
@@ -65,18 +64,18 @@ const slides = [
           </HelpIconAndText>
 
           <HelpIconAndText name="magnify" type={IconType.MaterialCommunityIcons}>
-            Réutilisez ses stats dans l'écran de recherche pour découvrir des variantes proches
+            Réutilisez ses stats dans l'écran de recherche pour trouver des variantes similaires
           </HelpIconAndText>
 
-          <HelpIconAndText name="arrow-right-bold-box-outline" type={IconType.MaterialCommunityIcons}>
+          <HelpIconAndText name="clipboard-outline" type={IconType.MaterialCommunityIcons}>
             {/* // clipboard-outline */}
-            L'exportez pour le partager à vos amis
+            L’exporter au format texte pour le partager facilement
           </HelpIconAndText>
         </HelpListContainer>
 
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        {/* <View style={{ flexDirection: "row", alignItems: "center" }}>
           <SetNameInputPreview name="Le renommer" />
-        </View>
+        </View> */}
 
         <HelpText>Gérez vos sets comme un pro !</HelpText>
 

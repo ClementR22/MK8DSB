@@ -56,7 +56,7 @@ const slides = [
           </HelpIconAndText>
 
           <HelpIconAndText name="checkbox-multiple-marked" type={IconType.MaterialCommunityIcons}>
-            Choisir les statistiques à afficher dans les sets trouvés
+            Choisir les statistiques à afficher dans les sets trouvés pour une meilleure lisibilité
           </HelpIconAndText>
 
           <HelpIconAndText name="cards-outline" type={IconType.MaterialCommunityIcons}>
@@ -95,11 +95,11 @@ const slides = [
 
           <HelpIconAndText name="compare" type={IconType.MaterialCommunityIcons}>
             {/* // display-settings MaterialIcons */}
-            Le comparer avec d'autres sets pour faire le meilleur choix
+            Le comparer avec d’autres pour faire le meilleur choix
           </HelpIconAndText>
 
           <HelpIconAndText name="clipboard-outline" type={IconType.MaterialCommunityIcons}>
-            L'exportez pour le partager à vos amis
+            L’exporter au format texte pour le partager facilement
           </HelpIconAndText>
         </HelpListContainer>
 

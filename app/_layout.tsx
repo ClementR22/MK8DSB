@@ -19,6 +19,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
 import HelpSearchSetScreen from "@/components/help/HelpSearchSetScreen";
 import HelpDisplaySetScreen from "@/components/help/HelpDisplaySetScreen";
+import HelpSavedSetScreen from "@/components/help/HelpSavedSetScreen";
 
 function screenNameFromPath(pathname: string): ScreenName | null {
   if (pathname === "/") return "search";
@@ -109,7 +110,7 @@ export default function TabLayout() {
                 title: translate("SavedSetTabTitle"),
                 tabBarIcon: ({ color }) => <MaterialIcons name="save" size={24} color={color} />,
                 header: () => (
-                  <CustomHeader icon={"save"} helpComponent={<HelpSearchSetScreen />}>
+                  <CustomHeader icon={"save"} helpComponent={<HelpSavedSetScreen />}>
                     {"SavedSetTitle"}
                   </CustomHeader>
                 ),
