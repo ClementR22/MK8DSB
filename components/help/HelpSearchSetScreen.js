@@ -12,6 +12,7 @@ import Button from "@/components/Button";
 import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
 import ButtonAndModalForHelp from "@/components/modal/ButtonAndModalForHelp";
 import HelpModal, { HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
+import StatSliderPreview from "../StatSliderPreview";
 
 const HelpSearchSetScreen = () => {
   return <HelpModal slides={slides} />;
@@ -21,15 +22,17 @@ const slides = [
   {
     content: (
       <>
-        <HelpTitle>Trouver le set parfait</HelpTitle>
+        <HelpTitle>Trouvez le set parfait</HelpTitle>
 
+        <HelpText>Vous rêvez de trouver LE set parfaitement adapté à votre style de jeu ?</HelpText>
         <HelpText>
-          Vous rêvez de trouver LE set parfaitement adapté à votre style de jeu ? Cet écran vous permet de rechercher
-          des sets correspondant précisément aux statistiques que vous privilégiez.
+          Définissez vos statistiques souhaitées (vitesse, mini-turbo, etc.) à l’aide des curseurs et découvrez les sets
+          qui s’en approchent le plus.
         </HelpText>
-        <HelpText>
-          Utilisez les curseurs pour indiquer l'importance de chaque statistique dans votre recherche.
-        </HelpText>
+
+        <View style={{ paddingHorizontal: 26, width: "100%" }}>
+          <StatSliderPreview name="speedGround" />
+        </View>
       </>
     ),
     config: { backgroundColor: "#59b2ab" },
@@ -40,36 +43,32 @@ const slides = [
         <HelpTitle>Fonctionnalités</HelpTitle>
 
         <HelpListContainer>
-          <HelpIconAndText name="plus" type={IconType.MaterialCommunityIcons} isButton={true}>
+          <HelpIconAndText name="plus" type={IconType.MaterialCommunityIcons}>
             Ajouter une statistique supplémentaire à prendre en compte dans la recherche
           </HelpIconAndText>
 
-          <HelpIconAndText name="pin" type={IconType.MaterialCommunityIcons} isButton={true}>
-            Imposer un ou plusieurs éléments (personnage, véhicule, roues, etc.)
+          <HelpIconAndText name="pin" type={IconType.MaterialCommunityIcons}>
+            Imposer des éléments (personnage, véhicule, roues, etc.)
           </HelpIconAndText>
 
-          <HelpIconAndText name="numbers" type={IconType.MaterialIcons} isButton={true}>
-            Définir le nombre maximum de résultats à afficher
+          <HelpIconAndText name="numbers" type={IconType.MaterialIcons}>
+            Définir le nombre de résultats à afficher
           </HelpIconAndText>
 
-          <HelpIconAndText name="checkbox-multiple-marked" type={IconType.MaterialCommunityIcons} isButton={true}>
+          <HelpIconAndText name="checkbox-multiple-marked" type={IconType.MaterialCommunityIcons}>
             Choisir les statistiques à afficher dans les sets trouvés
           </HelpIconAndText>
 
-          <HelpIconAndText name="cards-outline" type={IconType.MaterialCommunityIcons} isButton={true}>
-            Charger les statistiques d'un set que vous avez déjà enregistré
+          <HelpIconAndText name="cards-outline" type={IconType.MaterialCommunityIcons}>
+            Charger un set depuis vos favoris pour en réutiliser les statistiques
           </HelpIconAndText>
 
-          <HelpIconAndText name="approximately-equal" type={IconType.MaterialCommunityIcons} isButton={true}>
-            Choisir le niveau d'exigence pour chaque statistique : valeur exacte, supérieure ou proche
-          </HelpIconAndText>
-
-          <HelpIconAndText name="cards-outline" type={IconType.MaterialCommunityIcons} isButton={true}>
-            Charger les statistiques d'un set que vous avez déjà enregistré
+          <HelpIconAndText name="approximately-equal" type={IconType.MaterialCommunityIcons}>
+            Choisir le niveau d'exigence de chaque statistique : exacte, supérieure ou proche
           </HelpIconAndText>
         </HelpListContainer>
 
-        <HelpText> Une fois vos critères définis, cliquez sur “Search” pour lancer la recherche !</HelpText>
+        <HelpText>Une fois tous vos critères définis, lancez la recherche en cliquant sur</HelpText>
 
         <Button icon={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
           <Text>Search</Text>
@@ -84,26 +83,27 @@ const slides = [
         <HelpTitle>Et ensuite ?</HelpTitle>
 
         <HelpText>
-          Une fois la recherche lancée, vous découvrirez une sélection de sets correspondant à vos critères.
+          Une fois la recherche lancée, une sélection de sets correspondant à vos critères vous est proposée.
         </HelpText>
 
-        <HelpText>Pour chaque set proposé, vous pourrez :</HelpText>
+        <HelpText>Pour chaque set affiché, vous pouvez :</HelpText>
 
         <HelpListContainer>
           <HelpIconAndText name="heart-outline" type={IconType.MaterialCommunityIcons}>
-            L'ajouter à vos favoris pour le retrouver facilement plus tard
+            L'ajouter à vos favoris pour le retrouver plus tard
           </HelpIconAndText>
 
           <HelpIconAndText name="compare" type={IconType.MaterialCommunityIcons}>
+            {/* // display-settings MaterialIcons */}
             Le comparer avec d'autres sets pour faire le meilleur choix
           </HelpIconAndText>
 
-          <HelpIconAndText name="pencil-outline" type={IconType.MaterialCommunityIcons}>
-            Le modifier à votre goût et l'enregistrer
+          <HelpIconAndText name="clipboard-outline" type={IconType.MaterialCommunityIcons}>
+            L'exportez pour le partager à vos amis
           </HelpIconAndText>
         </HelpListContainer>
 
-        <HelpText>C'est vous qui décidez du meilleur set pour passer la ligne d'arrivée en tête !</HelpText>
+        <HelpText>À vous de choisir le set parfait pour franchir la ligne d’arrivée en tête !</HelpText>
       </>
     ),
     config: { backgroundColor: "#59b2ab" },

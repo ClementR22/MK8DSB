@@ -1,6 +1,10 @@
 import React from "react";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal, { HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
+import SetNameInput from "../textInput/SetNameInput";
+import FlexContainer from "../FlexContainer";
+import { View } from "react-native";
+import SetNameInputPreview from "../textInput/SetNameInputPreview";
 
 const HelpDisplaySetScreen = () => {
   return <HelpModal slides={slides} />;
@@ -12,9 +16,10 @@ const slides = [
       <>
         <HelpTitle>Explorer vos Sets</HelpTitle>
 
-        <HelpText>L'écran Display vous permet de consulter en détail un ou plusieurs sets.</HelpText>
+        <HelpText>L'écran Display vous permet de visualiser et comparer vos sets en détail.</HelpText>
         <HelpText>
-          Ajoutez autant de sets que vous voulez pour les comparer visuellement grâce aux barres de stats !
+          Ajoutez autant de sets que vous voulez et comparez facilement les performances grâce aux barres de stats
+          dynamiques
         </HelpText>
       </>
     ),
@@ -23,11 +28,11 @@ const slides = [
   {
     content: (
       <>
-        <HelpTitle>Modifier et Personnaliser</HelpTitle>
+        <HelpTitle>Modifier et Comparer</HelpTitle>
 
         <HelpListContainer>
           <HelpIconAndText name="edit" type={IconType.MaterialIcons} isButton={true}>
-            Cliquez sur un élément (personnage, kart, roues...) pour le modifier instantanément
+            Modifier les éléments d'un set (personnage, roues, aile, ...) tout est personnalisable
           </HelpIconAndText>
 
           <HelpIconAndText name="plus" type={IconType.MaterialCommunityIcons} isButton={true}>
@@ -35,7 +40,12 @@ const slides = [
           </HelpIconAndText>
 
           <HelpIconAndText name="checkbox-multiple-marked" type={IconType.MaterialCommunityIcons} isButton={true}>
-            Choisir les statistiques à afficher dans les sliders affichés en dessous
+            Choisir les stats à afficher dans les sliders. Afficher uniquement ce qui compte pour vous (vitesse,
+            maniabilité, ...)
+          </HelpIconAndText>
+
+          <HelpIconAndText name="cards-outline" type={IconType.MaterialCommunityIcons} isButton={true}>
+            Charger un set depuis vos favoris pour le modifier, le comparer ou vous en inspirer
           </HelpIconAndText>
         </HelpListContainer>
       </>
@@ -45,23 +55,35 @@ const slides = [
   {
     content: (
       <>
-        <HelpTitle>Favoris et Chargements</HelpTitle>
+        <HelpTitle>Et ensuite ?</HelpTitle>
+
+        <HelpText> Pour chaque set affiché, vous pouvez :</HelpText>
 
         <HelpListContainer>
           <HelpIconAndText name="heart-outline" type={IconType.MaterialCommunityIcons}>
-            Enregistrez vos sets préférés en un clic
+            L'ajouter à vos favoris pour le retrouver plus tard
           </HelpIconAndText>
 
-          <HelpIconAndText name="download" type={IconType.MaterialCommunityIcons}>
-            Chargez un set depuis vos favoris pour l'analyser ou le modifier
+          <HelpIconAndText name="magnify" type={IconType.MaterialCommunityIcons}>
+            Réutilisez ses stats dans l'écran de recherche pour découvrir des variantes proches
           </HelpIconAndText>
 
           <HelpIconAndText name="arrow-right-bold-box-outline" type={IconType.MaterialCommunityIcons}>
-            Exportez vos sets pour les partager ou les utiliser ailleurs dans l'app
+            {/* // clipboard-outline */}
+            L'exportez pour le partager à vos amis
           </HelpIconAndText>
         </HelpListContainer>
 
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <SetNameInputPreview name="Le renommer" />
+        </View>
+
         <HelpText>Gérez vos sets comme un pro !</HelpText>
+
+        <HelpText>
+          Comparez, personnalisez, sauvegardez : tout est fait pour vous aider à trouver le meilleur set selon votre
+          style de jeu.
+        </HelpText>
 
         <HelpIconAndText name="chart-bar" type={IconType.MaterialCommunityIcons}>
           Pourquoi pas cette icone.

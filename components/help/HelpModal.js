@@ -16,24 +16,12 @@ export default HelpModal = ({ slides }) => {
 
   const renderItem = ({ item }) => {
     const { content, config } = item;
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: config.backgroundColor,
-          alignItems: "center",
-          justifyContent: "space-around",
-          paddingBottom: 200,
-        }}
-      >
-        {content}
-      </View>
-    );
+    return <View style={[styles.container, { backgroundColor: config.backgroundColor }]}>{content}</View>;
   };
 
   const renderButton = (label) => (
-    <View style={styles.buttonContainer}>
-      <Text style={styles.buttonText}>{label}</Text>
+    <View style={styles.navigationButtonContainer}>
+      <Text style={styles.navigationButtonText}>{label}</Text>
     </View>
   );
 
@@ -59,13 +47,13 @@ export default HelpModal = ({ slides }) => {
 
 export const HelpTitle = ({ children }) => <Text style={styles.title}>{children}</Text>;
 
-export const HelpText = ({ children }) => <Text style={styles.text}>{children}</Text>;
+export const HelpText = ({ children, style }) => <Text style={[styles.text, style]}>{children}</Text>;
 
 export const HelpListContainer = ({ children }) => (
   <View style={{ width: "100%", paddingHorizontal: 15, gap: 20 }}>{children}</View>
 );
 
-export const HelpIconAndText = ({ name, type, isButton = false, children }) => {
+export const HelpIconAndText = ({ name, type, isButton = true, children }) => {
   const { theme } = useThemeStore();
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -78,7 +66,14 @@ export const HelpIconAndText = ({ name, type, isButton = false, children }) => {
 };
 
 const styles = StyleSheet.create({
-  buttonContainer: {
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-around",
+    paddingBottom: 200,
+    gap: 20,
+  },
+  navigationButtonContainer: {
     width: 100,
     height: 40,
     backgroundColor: "rgba(255, 255, 255, 0.7)",
@@ -94,7 +89,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  buttonText: {
+  navigationButtonText: {
     color: "#000",
     fontSize: 16,
   },
@@ -109,7 +104,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
     textAlign: "center",
-    marginBottom: 20,
     paddingHorizontal: 20,
   },
   text: {
