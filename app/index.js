@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 // Components import
 import StatSlider from "@/components/statSlider/StatSlider";
@@ -28,21 +28,23 @@ const SearchSetScreen = () => {
         <ScrollView scrollEnabled={!isTooltipVisible}>
           <FlexContainer>
             <BoxContainer contentBackgroundColor={theme.surface_container_high}>
-              <Text
-                style={[
-                  styles.text,
-                  {
-                    paddingHorizontal: 10,
-                    borderRadius: 5,
-                    marginBottom: 16,
-                    color: theme.on_surface,
-                  },
-                ]}
-              >
-                {translate("DesiredStats")}
-              </Text>
+              <View style={{ flexDirection: "row", width: "100%", alignItems: "center", padding: 3 }}>
+                <View style={{ flex: 1 }}>
+                  <Text
+                    style={[
+                      styles.text,
+                      {
+                        alignSelf: "center",
+                        color: theme.on_surface,
+                      },
+                    ]}
+                  >
+                    {translate("DesiredStats")}
+                  </Text>
+                </View>
 
-              <ButtonLoadSet tooltipText="LoadStatsOfASet" />
+                <ButtonLoadSet tooltipText="LoadStatsOfASet" />
+              </View>
 
               {/* Afficher le slider uniquement si la case est cochée */}
               {chosenStats.map((stat) => {
