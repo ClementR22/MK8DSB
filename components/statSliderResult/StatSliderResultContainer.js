@@ -4,9 +4,11 @@ import StatSliderResult from "./StatSliderResult";
 import { translate } from "@/translations/translations";
 import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
 import { useScreen } from "../../contexts/ScreenContext";
-import useSetsStore from "@/stores/useSetsStore"; // Gardez l'import
+import useSetsStore from "@/stores/useSetsStore";
+import { useThemeStore } from "@/stores/useThemeStore"; // Gardez l'import
 
 const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
+  const theme = useThemeStore((state) => state.theme);
   const screenName = useScreen();
   const { statsVisibleList } = useStatsVisibleList();
   const isInSearchScreen = screenName === "search";
@@ -18,7 +20,7 @@ const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: "green" }}>
+    <View style={{ width: "100%", flexGrow: 1 }}>
       {statsVisibleList.map(({ name, checked }, statIndex) => {
         const nameTranslated = translate(name);
         if (checked) {
@@ -27,7 +29,7 @@ const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
               key={statIndex}
               style={[
                 styles.sliderContainer,
-                { backgroundColor: "red" }, //theme.surface_container },
+                { backgroundColor: theme.surface_container_highest }, //theme.surface_container },
               ]}
             >
               <Text style={styles.text}>
@@ -42,8 +44,8 @@ const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
                     key={setIndex}
                     style={{
                       flexDirection: "row",
-                      alignItems: "center",
-                      backgroundColor: "yellow",
+                      alignItems: "stretch",
+                      // backgroundColor: "yellow",
                     }}
                   >
                     <StatSliderResult value={setToShowStats[statIndex]} chosenValue={chosenValue} />

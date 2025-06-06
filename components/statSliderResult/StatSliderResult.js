@@ -17,8 +17,31 @@ const StatSliderResult = ({ value, chosenValue = null }) => {
   };
 
   const getBackgroundColor = () => {
-    return bonusFound > 0 ? "#34be4d" : bonusFound < 0 ? "#ff6240" : "black";
+    return bonusFound > 0 ? "#34be4d" : bonusFound < 0 ? "#ff6240" : theme.surface_container_low;
   };
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingHorizontal: 8,
+    },
+    sliderTrack: {
+      flexDirection: "row",
+      height: 10,
+      borderRadius: 5,
+      overflow: "hidden",
+      backgroundColor: theme.surface_container_low,
+    },
+    trackSegment: {
+      height: "100%",
+    },
+  });
+
+  function bonus() {
+    if (bonusFound > 0) return 1;
+    if (bonusFound < 0) return 0;
+    else return -1;
+  }
 
   return (
     <View style={styles.container}>
@@ -42,10 +65,10 @@ const StatSliderResult = ({ value, chosenValue = null }) => {
               {
                 width: 10,
                 borderWidth: 3,
-                borderTopRightRadius: 100,
-                borderBottomRightRadius: 100,
+                borderTopRightRadius: bonus() === 0 ? 0 : 100,
+                borderBottomRightRadius: bonus() === 0 ? 0 : 100,
                 backgroundColor: theme.primary,
-                borderColor: theme.primary,
+                borderColor: getBackgroundColor(),
               },
             ]}
           />
@@ -57,6 +80,8 @@ const StatSliderResult = ({ value, chosenValue = null }) => {
             styles.trackSegment,
             {
               backgroundColor: getBackgroundColor(),
+              borderTopRightRadius: bonus() === 1 ? 0 : 100,
+              borderBottomRightRadius: bonus() === 1 ? 0 : 100,
               flex: Math.abs(bonusFound),
             },
           ]}
@@ -70,8 +95,8 @@ const StatSliderResult = ({ value, chosenValue = null }) => {
               {
                 width: 10,
                 borderWidth: 3,
-                backgroundColor: getBackgroundColor(),
-                borderColor: theme.primary,
+                backgroundColor: theme.primary,
+                borderColor: getBackgroundColor(),
               },
             ]}
           />
@@ -82,7 +107,6 @@ const StatSliderResult = ({ value, chosenValue = null }) => {
           style={[
             styles.trackSegment,
             {
-              backgroundColor: theme.secondary_container,
               flex: getFlexForSegment(6 - value, bonusFound),
             },
           ]}
@@ -91,22 +115,5 @@ const StatSliderResult = ({ value, chosenValue = null }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 8,
-    // backgroundColor: "purple",
-  },
-  sliderTrack: {
-    flexDirection: "row",
-    height: 10,
-    borderRadius: 5,
-    overflow: "hidden",
-  },
-  trackSegment: {
-    height: "100%",
-  },
-});
 
 export default StatSliderResult;
