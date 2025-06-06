@@ -29,20 +29,22 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
     () =>
       StyleSheet.create({
         container: {
-          paddingHorizontal: 12,
-          paddingVertical: 8,
+          flexDirection: "row",
+          paddingHorizontal: 7,
+          paddingVertical: 3,
           backgroundColor: theme.surface,
           borderWidth: 2,
           borderRadius: 12,
           borderColor,
-          marginBottom: 6,
+          marginBottom: 0,
           width: "100%",
         },
+        containerLeft: { flex: 1 },
         containerTop: {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: 3,
+          paddingHorizontal: 3,
         },
         textContainer: {
           flexDirection: "row",
@@ -64,7 +66,7 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
         containerBottom: {
           width: "100%",
           paddingHorizontal: 10,
-          paddingVertical: 5,
+          paddingVertical: 3,
         },
         sliderContainer: {
           height: 20,
@@ -76,38 +78,43 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
           borderRadius: 4,
           backgroundColor: theme.secondary_container,
         },
+        containerRight: { paddingTop: 4 },
       }),
     [theme, borderColor]
   );
 
   return (
     <View style={styles.container}>
-      <View style={styles.containerTop}>
-        <View style={styles.textContainer}>
-          <Text numberOfLines={1} ellipsizeMode="middle" style={styles.textLeft}>
-            {translate(name)}
-          </Text>
-          <Text style={styles.textRight}>
-            {translate(":")}
-            {tempValue}
-          </Text>
+      <View style={styles.containerLeft}>
+        <View style={styles.containerTop}>
+          <View style={styles.textContainer}>
+            <Text numberOfLines={1} ellipsizeMode="middle" style={styles.textLeft}>
+              {translate(name)}
+            </Text>
+            <Text style={styles.textRight}>
+              {translate(":")}
+              {tempValue}
+            </Text>
+          </View>
         </View>
-        <ButtonMultiStateToggle number={number} setNumber={setNumber} filterCase={true} tooltipText="ChangeCondition" />
-      </View>
 
-      <View style={styles.containerBottom}>
-        <View style={styles.sliderContainer}>
-          <Slider
-            value={tempValue}
-            onValueChange={onValueChange}
-            onSlidingComplete={onSlidingComplete}
-            minimumValue={0}
-            maximumValue={6}
-            step={0.25}
-            trackStyle={styles.track}
-            thumbTouchSize={{ width: 10, height: 10 }}
-          />
+        <View style={styles.containerBottom}>
+          <View style={styles.sliderContainer}>
+            <Slider
+              value={tempValue}
+              onValueChange={onValueChange}
+              onSlidingComplete={onSlidingComplete}
+              minimumValue={0}
+              maximumValue={6}
+              step={0.25}
+              trackStyle={styles.track}
+              thumbTouchSize={{ width: 10, height: 10 }}
+            />
+          </View>
         </View>
+      </View>
+      <View style={styles.containerRight}>
+        <ButtonMultiStateToggle number={number} setNumber={setNumber} filterCase={true} tooltipText="ChangeCondition" />
       </View>
     </View>
   );
