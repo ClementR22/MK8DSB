@@ -1,7 +1,7 @@
 import { translate } from "@/translations/translations";
 import React, { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import ButtonMultiStateToggle from "./ButtonMultiStateToggle";
+import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import { Slider } from "@miblanchard/react-native-slider";
 
 const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingComplete }) => {

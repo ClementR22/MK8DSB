@@ -4,7 +4,7 @@ import AppIntroSlider from "react-native-app-intro-slider";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonIcon from "@/components/ButtonIcon";
-import StatSlider from "@/components/StatSlider";
+import StatSlider from "@/components/statSlider/StatSlider";
 import { IconType } from "react-native-dynamic-vector-icons";
 import { translate } from "@/translations/translations";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -12,7 +12,7 @@ import Button from "@/components/Button";
 import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
 import ButtonAndModalForHelp from "@/components/modal/ButtonAndModalForHelp";
 import HelpModal, { HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
-import StatSliderPreview from "../StatSliderPreview";
+import StatSliderPreview from "../statSlider/StatSliderPreview";
 
 const HelpSearchSetScreen = () => {
   return <HelpModal slides={slides} />;
