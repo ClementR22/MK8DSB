@@ -1,9 +1,9 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import StatSliderResult from "./StatSliderResult";
 import { translate } from "@/translations/translations";
 import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
-import { useScreen } from "../../contexts/ScreenContext";
+import { useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore"; // Gardez l'import
 
