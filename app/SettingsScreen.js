@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import LanguageSelector from "@/components/settingsComponent/LanguageSelector";
@@ -31,7 +31,8 @@ const SettingsScreen = () => {
       <StatsVisibleListProvider>
         <FlexScrollView>
           {/* peut etre remplacer FlexScrollView par une view dans le futur */}
-          <BoxContainer alignItems={null}>
+          <BoxContainer alignItems={"stretch"}>
+            {/*<BoxContainer alignItems={null}>*/}
             {/* alignItems={null} permet au contenu de pourvoir prendre toute la largeur */}
             <LanguageSelector />
 

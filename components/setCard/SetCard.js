@@ -88,7 +88,7 @@ const SetCard = ({
   }
 
   return (
-    <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={200}>
+    <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={250}>
       {/*       Corriger le flex container car il prend trop de place
        */}
       <FlexContainer flexDirection={"row"}>
