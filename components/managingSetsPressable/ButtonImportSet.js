@@ -10,8 +10,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "../ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 
-const ButtonImportSet = () => {
-  const screenName = useScreen();
+const ButtonImportSet = ({ screenName }) => {
   const importSet = useSetsStore((state) => state.importSet);
   const language = useLanguageStore((state) => state.language);
 

@@ -21,8 +21,6 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
   const [resultsNumber, setResultsNumber] = useState(5);
-  const setIsChosenStatsModalVisible = useModalsStore((state) => state.setIsChosenStatsModalVisible);
-  const openChosenStatsModal = useCallback(() => setIsChosenStatsModalVisible(true));
   const { pressableElementsList } = usePressableElements();
   const pressableElementsByCategory = computePressableElementsByCategory(pressableElementsList);
 
@@ -40,6 +38,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
       stats: set.stats,
     }));
     setSetsToShow(setsFoundWithName);
+    console.log("setsFoundWithName", setsFoundWithName);
     setSetsListFound(setsFoundWithName);
   };
 

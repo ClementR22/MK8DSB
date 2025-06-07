@@ -206,7 +206,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   saveSet: async (setToSave) => {
-    console.log("don", setToSave);
     try {
       set((state) => ({
         setsListSaved: [...state.setsListSaved, setToSave],
@@ -221,7 +220,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   saveSetInMemory: async (setToSave) => {
-    console.log("setToSave", setToSave);
     let key = 0;
     const keys = get().setsSavedKeys;
     while (keys.includes(String(key))) key++;
@@ -236,8 +234,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   saveSetFromFound: async () => {
-    console.log("setsListFound", get().setsListFound);
-    console.log("ok", get().setsListFound[get().setCardEdittedIndex]);
     await get().saveSet(get().setsListFound[get().setCardEdittedIndex]);
   },
 
@@ -318,7 +314,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
         : screenName === "display"
         ? get().setsListDisplayed
         : get().setsListSaved;
-
+    console.log("setsListFound", get().setsListFound[index]);
     const { name, classIds } = list[index];
     const json = JSON.stringify({ name, classIds });
     Clipboard.setStringAsync(json);

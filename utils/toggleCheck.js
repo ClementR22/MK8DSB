@@ -9,7 +9,7 @@ export const toggleAndGetChecksForChosenStats = (prev, name) => {
       return {
         ...item,
         checked: newChecked,
-        value: newChecked ? 0 : null,
+        value: item.value | 0, // met la valeur à 0 seulement quand elle est null
       };
     }
     return item;

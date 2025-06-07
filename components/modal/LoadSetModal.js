@@ -21,7 +21,7 @@ const LoadSetModal = () => {
       modalTitle="LoadASavedSet"
       isModalVisible={isLoadSetModalVisible}
       setIsModalVisible={setIsLoadSetModalVisible}
-      secondButton={<ButtonImportSet />}
+      secondButton={<ButtonImportSet screenName={screenNameForEditModal} />}
     >
       <SetCardContainer setsToShow={savedSets} isInLoadSetModal={true} screenNameFromProps={screenNameForEditModal} />
     </Modal>

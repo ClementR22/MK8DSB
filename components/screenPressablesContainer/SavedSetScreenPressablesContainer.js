@@ -18,7 +18,7 @@ const SavedSetScreenPressablesContainer = () => {
         iconType={IconType.MaterialCommunityIcons}
         onPress={sortSetsSavedKeys}
       />
-      <ButtonImportSet />
+      <ButtonImportSet screenName="save" />
       <StatSliderResultSelectorPressable />
     </BoxContainer>
   );

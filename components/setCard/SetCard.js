@@ -28,7 +28,7 @@ const SetCard = ({
 
   const situationConfig = {
     search: {
-      showTextInput: false,
+      showTextInput: true,
       showStatSliderResult: true,
       actionNamesList: ["save", "loadSearchToDisplay", "export"],
       moreActionNamesList: undefined,
