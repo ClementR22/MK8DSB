@@ -21,13 +21,13 @@ interface ModalProps {
   setIsModalVisible: (newVisible: boolean) => void;
   children: ReactNode;
   onClose: () => void;
-  closeButtonText: string;
+  closeButtonText?: string;
   isWithClosePressable?: boolean;
   // can give a componenent
   secondButton?: ReactElement;
   // or props to make it here
   secondButtonProps?: { text: string; onPress: () => void; tooltipText: string };
-  secondButtonPosition: "left" | "right";
+  secondButtonPosition?: "left" | "right";
 }
 
 function Modal({
