@@ -70,7 +70,7 @@ const slides = [
 
         <HelpText>Une fois tous vos critères définis, lancez la recherche en cliquant sur</HelpText>
 
-        <Button icon={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
+        <Button iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
           <Text>Search</Text>
         </Button>
       </>

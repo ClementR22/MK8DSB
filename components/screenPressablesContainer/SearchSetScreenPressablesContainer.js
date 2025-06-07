@@ -142,7 +142,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
         <ElementsSelector />
       </ButtonAndModal>
 
-      <Button onPress={search} icon={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
+      <Button onPress={search} iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
         <Text>{translate("Search")}</Text>
       </Button>
 

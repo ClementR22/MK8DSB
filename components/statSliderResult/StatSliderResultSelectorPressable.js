@@ -18,7 +18,6 @@ import Button from "../Button";
 const StatSliderResultSelectorPressable = () => {
   const { statsVisibleList, setStatsVisibleList, toggleCheckListStatsVisibleList } = useStatsVisibleList();
 
-  const theme = useThemeStore((state) => state.theme);
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
 
@@ -26,13 +25,11 @@ const StatSliderResultSelectorPressable = () => {
   const isStatsVisibleSync = useStatsVisibleListConfigStore((state) => state.isStatsVisibleSync);
   const disabled = isStatsVisibleSync && screenName === "search";
 
-  const leftButton = isInSearchScreen ? (
-    <Button onPress={() => syncWithChosenStats(setStatsVisibleList)}>
-      <Text>{translate("MatchDesiredStats")}</Text>
-    </Button>
-  ) : undefined;
-
   const tooltipText = disabled ? "DisabledBecauseMatchDesiredStats" : "DisplayedStats";
+  const secondButtonProps = isInSearchScreen && {
+    text: "MatchDesiredStats",
+    onPress: () => syncWithChosenStats(setStatsVisibleList),
+  };
 
   return (
     <ButtonAndModal
@@ -45,7 +42,7 @@ const StatSliderResultSelectorPressable = () => {
         />
       }
       modalTitle="DisplayedStats"
-      leftButton={leftButton}
+      secondButtonProps={secondButtonProps}
     >
       <StatSelector
         statList={statsVisibleList}

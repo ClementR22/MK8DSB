@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement, ReactNode } from "react";
 import { Modal as NativeModal, Pressable, StyleSheet, Text, View } from "react-native";
 import { vh } from "@/components/styles/theme";
 import { translate } from "@/translations/translations";
@@ -7,19 +7,53 @@ import FlexContainer from "@/components/FlexContainer";
 import Button from "@/components/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 
+function ModalButton({ text, onPress }) {
+  return (
+    <Button elevation={12} onPress={onPress} minWidth={100}>
+      {translate(text)}
+    </Button>
+  );
+}
+
+interface ModalProps {
+  modalTitle: string;
+  isModalVisible: boolean;
+  setIsModalVisible: (newVisible: boolean) => void;
+  children: ReactNode;
+  onClose: () => void;
+  closeButtonText: string;
+  isWithClosePressable?: boolean;
+  // can give a componenent
+  secondButton?: ReactElement;
+  // or props to make it here
+  secondButtonProps?: { text: string; onPress: () => void; tooltipText: string };
+  secondButtonPosition: "left" | "right";
+}
+
 function Modal({
   modalTitle,
   isModalVisible,
   setIsModalVisible,
   children,
-  onClose, // option
+  onClose, // option // blabla
   closeButtonText = "Close",
   isWithClosePressable = true,
-  leftButton = null,
-  rightButton = null,
+  secondButton,
+  secondButtonProps,
+  secondButtonPosition = "left",
   ...props
-}) {
+}: ModalProps) {
   const theme = useThemeStore((state) => state.theme);
+
+  const isSecondButtonLeft = secondButtonPosition == "left";
+
+  let secondButtonCompleted = null;
+  if (secondButton) {
+    secondButtonCompleted = secondButton;
+  } else if (secondButtonProps) {
+    const { text, onPress } = secondButtonProps;
+    secondButtonCompleted = <ModalButton text={text} onPress={onPress} />;
+  }
 
   const styles = StyleSheet.create({
     background: {
@@ -74,14 +108,15 @@ function Modal({
 
           <View style={styles.childrenContainer}>{children}</View>
 
-          <FlexContainer flexDirection={"row"} gap={10} style={styles.button_container}>
-            {leftButton}
+          <FlexContainer
+            flexDirection={isSecondButtonLeft ? "row" : "row-reverse"}
+            gap={10}
+            style={styles.button_container}
+          >
+            {secondButtonCompleted}
             {isWithClosePressable && (
-              <Button elevation={12} onPress={onClose ? onClose : () => setIsModalVisible(false)} minWidth={100}>
-                {translate(closeButtonText)}
-              </Button>
+              <ModalButton text={closeButtonText} onPress={onClose ? onClose : () => setIsModalVisible(false)} />
             )}
-            {rightButton}
           </FlexContainer>
         </Pressable>
       </Pressable>

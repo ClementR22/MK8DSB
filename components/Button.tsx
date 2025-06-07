@@ -1,20 +1,36 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, Pressable, View } from "react-native";
+import React, { ReactNode, useState } from "react";
+import { StyleSheet, Text, Pressable, View, PressableProps } from "react-native";
 import { shadow_12dp, shadow_1dp, shadow_3dp, shadow_6dp, shadow_8dp } from "@/components/styles/theme";
 import { ShadowProp } from "@/components/styles/theme.d";
 import TooltipWrapper from "@/components/TooltipWrapper";
 import { useThemeStore } from "@/stores/useThemeStore";
-import Icon from "react-native-dynamic-vector-icons";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+
+// Type pour l'icône
+type IconProps = {
+  name: string;
+  type: IconType; // par exemple "MaterialIcons"
+};
+
+// Props du composant
+interface ButtonProps extends PressableProps {
+  children: ReactNode;
+  onPress: () => void;
+  elevation?: 1 | 3 | 6 | 8 | 12;
+  tooltipText?: string;
+  iconProps?: IconProps;
+  minWidth?: number;
+}
 
 function Button({
   children,
   onPress,
   elevation = undefined, // option
   tooltipText = undefined, // option
-  icon = undefined, // option
+  iconProps = undefined, // option
   minWidth = undefined, //option
   ...props
-}) {
+}: ButtonProps) {
   const theme = useThemeStore((state) => state.theme);
   const [buttonHover, setButtonHover] = useState(false);
 
@@ -24,7 +40,7 @@ function Button({
       flexDirection: "row",
       height: 40,
       // minWidth: 100, remplacé par
-      paddingHorizontal: icon ? 15 : 10,
+      paddingHorizontal: iconProps ? 15 : 10,
       borderRadius: 100,
       backgroundColor: theme.primary,
       justifyContent: "center",
@@ -68,7 +84,7 @@ function Button({
 
   const content = (
     <>
-      {icon && <Icon type={icon.type} name={icon.name} size={24} color={theme.on_primary} />}
+      {iconProps && <Icon type={iconProps.type} name={iconProps.name} size={24} color={theme.on_primary} />}
       <Text style={styles.text}>{children}</Text>
     </>
   );

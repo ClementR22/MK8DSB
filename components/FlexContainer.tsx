@@ -12,6 +12,16 @@ function FlexContainer({
   padding,
   backgroundColor,
   style,
+}: {
+  children: any;
+  flexDirection?: any;
+  alignItems?: any;
+  justifyContent?: any;
+  gap?: any;
+  boxShadow?: any;
+  padding?: any;
+  backgroundColor?: any;
+  style?: any;
 }) {
   const styles = StyleSheet.create({
     container: {

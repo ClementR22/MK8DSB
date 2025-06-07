@@ -23,8 +23,7 @@ const RenameSetModal = () => {
       modalTitle="NameTheSet"
       isModalVisible={isRenameSetModalVisible}
       setIsModalVisible={setIsRenameSetModalVisible}
-      closeButtonText="OK"
-      onClose={saveAndClose}
+      secondButtonProps={{ text: "Confirm", onPress: saveAndClose }}
     >
       <SetNameInput setToShowName={setFoundName} flex={null} />
       {/* // flex={null} permet d'éviter que SetNameInput soit écrasé */}

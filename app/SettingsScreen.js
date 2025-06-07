@@ -56,8 +56,7 @@ const SettingsScreen = () => {
 
             <ButtonAndModal
               triggerButtonText="DeleteAllSetsInMemory"
-              onConfirm={deleteAllSavedSets}
-              confirmButtonText="Confirm"
+              secondButtonProps={{ text: "Confirm", onPress: deleteAllSavedSets }}
               closeButtonText="Cancel"
             >
               <Text>{translate("DeleteAllSetsInMemoryText")}</Text>
