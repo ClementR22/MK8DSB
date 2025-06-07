@@ -40,7 +40,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
       stats: set.stats,
     }));
     setSetsToShow(setsFoundWithName);
-    console.log("setsFoundWithName", setsFoundWithName);
+
     setSetsListFound(setsFoundWithName);
   };
 

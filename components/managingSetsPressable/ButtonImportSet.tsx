@@ -1,7 +1,7 @@
 import React from "react";
 import * as Clipboard from "expo-clipboard";
 import { getSetStatsFromElementsClassIds } from "@/utils/getSetStatsFromElementsClassIds";
-import { useScreen } from "@/contexts/ScreenContext";
+import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -10,7 +10,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "../ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 
-const ButtonImportSet = ({ screenName }) => {
+const ButtonImportSet = ({ screenName, onComplete }: { screenName: ScreenName; onComplete?: () => void }) => {
   const importSet = useSetsStore((state) => state.importSet);
   const language = useLanguageStore((state) => state.language);
 
@@ -50,6 +50,8 @@ const ButtonImportSet = ({ screenName }) => {
 
       const set = { ...parsedSet, stats };
       importSet(set, screenName);
+
+      onComplete?.();
     } catch (e) {
       const text1 = translateToLanguage("ImportError", language);
       const text2 = translateToLanguage(":", language) + translateToLanguage(e.message, language) + ".";

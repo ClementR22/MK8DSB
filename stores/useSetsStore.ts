@@ -9,6 +9,7 @@ import {
   getOnlySetsSavedKeysFromMemory,
   saveThingInMemory,
 } from "@/utils/asyncStorageOperations";
+import { ScreenName } from "@/contexts/ScreenContext";
 
 // Types
 export type StatName = string;
@@ -30,8 +31,6 @@ export interface SetObject {
   classIds: number[];
   stats: number[];
 }
-
-export type ScreenName = "search" | "display" | "save" | "gallery";
 
 export interface SetsStoreState {
   chosenStats: ChosenStat[];

@@ -23,6 +23,7 @@ interface ButtonAndModalProps {
   secondButton?: ReactElement;
   // or props to make it here
   secondButtonProps?: { text: string; onPress: () => void; tooltipText: string };
+  closeAfterSecondButton?: boolean;
   secondButtonPosition: "left" | "right";
 }
 
@@ -37,6 +38,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = React.memo(
     closeButtonText = undefined,
     secondButton,
     secondButtonProps,
+    closeAfterSecondButton,
     secondButtonPosition = "left",
   }) => {
     // État interne pour gérer la visibilité si les props externes ne sont pas fournies
@@ -82,6 +84,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = React.memo(
           onClose={closeModal} // Assurez-vous que onClose utilise aussi le setter approprié
           secondButton={secondButton}
           secondButtonProps={secondButtonProps}
+          closeAfterSecondButton={closeAfterSecondButton}
           secondButtonPosition={secondButtonPosition}
         >
           {children}

@@ -43,6 +43,7 @@ const StatSliderResultSelectorPressable = () => {
       }
       modalTitle="DisplayedStats"
       secondButtonProps={secondButtonProps}
+      closeAfterSecondButton={false}
     >
       <StatSelector
         statList={statsVisibleList}

@@ -13,17 +13,12 @@ const RenameSetModal = () => {
 
   const setFoundName = setsListFound[setCardEdittedIndex]?.name;
 
-  const saveAndClose = () => {
-    saveSetFromFound();
-    setIsRenameSetModalVisible(false);
-  };
-
   return (
     <Modal
       modalTitle="NameTheSet"
       isModalVisible={isRenameSetModalVisible}
       setIsModalVisible={setIsRenameSetModalVisible}
-      secondButtonProps={{ text: "Confirm", onPress: saveAndClose }}
+      secondButtonProps={{ text: "Confirm", onPress: saveSetFromFound }}
     >
       <SetNameInput setToShowName={setFoundName} flex={null} />
       {/* // flex={null} permet d'éviter que SetNameInput soit écrasé */}

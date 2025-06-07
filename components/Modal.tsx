@@ -7,7 +7,7 @@ import FlexContainer from "@/components/FlexContainer";
 import Button from "@/components/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-function ModalButton({ text, onPress }) {
+function ModalButton({ text, onPress }: { text: string; onPress: () => void }) {
   return (
     <Button elevation={12} onPress={onPress} minWidth={100}>
       {translate(text)}
@@ -24,9 +24,10 @@ interface ModalProps {
   closeButtonText?: string;
   isWithClosePressable?: boolean;
   // can give a componenent
-  secondButton?: ReactElement;
+  secondButton?: ReactElement<{ onComplete?: () => void }>;
   // or props to make it here
   secondButtonProps?: { text: string; onPress: () => void; tooltipText: string };
+  closeAfterSecondButton?: boolean;
   secondButtonPosition?: "left" | "right";
 }
 
@@ -40,6 +41,7 @@ function Modal({
   isWithClosePressable = true,
   secondButton,
   secondButtonProps,
+  closeAfterSecondButton = true,
   secondButtonPosition = "left",
   ...props
 }: ModalProps) {
@@ -47,13 +49,23 @@ function Modal({
 
   const isSecondButtonLeft = secondButtonPosition == "left";
 
-  let secondButtonCompleted = null;
-  if (secondButton) {
-    secondButtonCompleted = secondButton;
-  } else if (secondButtonProps) {
-    const { text, onPress } = secondButtonProps;
-    secondButtonCompleted = <ModalButton text={text} onPress={onPress} />;
-  }
+  const renderSecondButton = () => {
+    if (secondButton) {
+      return React.cloneElement(secondButton, {
+        onComplete: () => setIsModalVisible(false),
+      });
+    }
+
+    if (secondButtonProps) {
+      const { text, onPress } = secondButtonProps;
+      const finalOnPress = () => {
+        onPress();
+        if (closeAfterSecondButton) setIsModalVisible(false);
+      };
+      return <ModalButton text={text} onPress={finalOnPress} />;
+    }
+    return null;
+  };
 
   const styles = StyleSheet.create({
     background: {
@@ -113,7 +125,7 @@ function Modal({
             gap={10}
             style={styles.button_container}
           >
-            {secondButtonCompleted}
+            {renderSecondButton()}
             {isWithClosePressable && (
               <ModalButton text={closeButtonText} onPress={onClose ? onClose : () => setIsModalVisible(false)} />
             )}
