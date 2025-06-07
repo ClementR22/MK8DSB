@@ -40,6 +40,7 @@ export interface SetsStoreState {
   setsListFound: SetObject[];
   setsSavedKeys: string[];
   setCardEdittedIndex: number;
+  setKeyInDisplay: number;
 
   setChosenStats: (newChosenStats: ChosenStat[]) => void;
   setSetsListFound: (newSetsList: SetObject[]) => void;
@@ -73,7 +74,7 @@ export interface SetsStoreState {
 
 // Données par défaut
 const setDefault: SetObject = {
-  name: "Set 0",
+  name: "Set 1",
   classIds: [9, 16, 30, 39],
   stats: [4, 3.75, 4.25, 4.5, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 4],
 };
@@ -92,6 +93,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   setsListFound: [],
   setsSavedKeys: [],
   setCardEdittedIndex: 0,
+  setKeyInDisplay: 1,
 
   setChosenStats: (newChosenStats) => {
     set({ chosenStats: newChosenStats });
@@ -135,12 +137,13 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   addNewSetInDisplay: () => {
-    const existingNames = get().setsListDisplayed.map((s) => s.name);
-    let n = 0;
-    while (existingNames.includes(`Set ${n}`)) n++;
-    set((state) => ({
-      setsListDisplayed: [...state.setsListDisplayed, { ...setDefault, name: `Set ${n}` }],
-    }));
+    set((state) => {
+      const nextIndex = state.setKeyInDisplay + 1;
+      return {
+        setKeyInDisplay: nextIndex,
+        setsListDisplayed: [...state.setsListDisplayed, { ...setDefault, name: `Set ${nextIndex}` }],
+      };
+    });
   },
 
   loadSetToDisplay: (setToLoad) => {
@@ -150,17 +153,11 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   removeSet: (index, screenName) => {
-    const { setsListDisplayed, setsListSaved } = get();
+    const isSave = screenName === "save";
+    const targetList = !isSave ? get().setsListDisplayed : get().setsListSaved;
+    const listName = !isSave ? "setsListDisplayed" : "setsListSaved";
 
-    const isDisplay = screenName === "display";
-    const targetList = isDisplay ? setsListDisplayed : setsListSaved;
-    const listName = isDisplay ? "setsListDisplayed" : "setsListSaved";
-
-    if (isDisplay && targetList.length === 1) {
-      showToast("Erreur", "Vous devez garder au moins 1 set");
-      return;
-    }
-    if (!isDisplay) {
+    if (isSave) {
       get().removeSetInMemory(index);
     }
 

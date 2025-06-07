@@ -31,9 +31,11 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
     }))
   );
 
+  const SetFoundTranslated = translate("SetFound");
+
   const updateSetsToShow = (setsFound) => {
     const setsFoundWithName = setsFound.map((set, index) => ({
-      name: "SetFound " + String(index),
+      name: `${SetFoundTranslated} ${index + 1}`,
       classIds: set.classIds,
       stats: set.stats,
     }));

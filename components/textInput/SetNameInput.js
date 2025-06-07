@@ -13,13 +13,17 @@ const SetNameInput = ({
   const screenName = useScreen();
   const renameSet = useSetsStore((state) => state.renameSet);
 
-  const defaultName = `Set ${setCardIndex + 1}`;
-  const [localName, setLocalName] = useState(setToShowName ?? defaultName);
+  const [localName, setLocalName] = useState(setToShowName);
+
+  // met à jour la valeur de setToShowName quand elle change suite à renameSet()
+  useEffect(() => {
+    setLocalName(setToShowName);
+  }, [setToShowName]);
 
   const handleEndEditing = () => {
     if (!localName.trim()) {
-      setLocalName(defaultName); // Évite de mettre un nom vide
-      renameSet(null, screenName, setCardIndex);
+      setLocalName(setToShowName); // Évite de mettre un nom vide
+      renameSet(setToShowName, screenName, setCardIndex);
     } else {
       renameSet(localName, screenName, setCardIndex);
     }

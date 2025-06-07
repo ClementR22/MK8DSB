@@ -97,6 +97,7 @@ const translations = {
 
     // other
     ":": ": ",
+    SetFound: "Set found",
 
     // stat
     speedGround: "Ground speed",
@@ -338,6 +339,7 @@ const translations = {
 
     // other
     ":": " : ",
+    SetFound: "Set trouvé",
 
     // stat
     speedGround: "Vitesse sol",
