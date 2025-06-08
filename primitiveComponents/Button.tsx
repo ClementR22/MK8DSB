@@ -1,9 +1,10 @@
 import React, { ReactNode, useState } from "react";
 import { Pressable, PressableProps, StyleSheet, Text } from "react-native";
-import { shadow_12dp, shadow_1dp, shadow_3dp, shadow_6dp, shadow_8dp, ShadowProp } from "@/components/styles/theme";
+import { shadow_12dp, shadow_1dp, shadow_3dp, shadow_6dp, shadow_8dp } from "@/components/styles/theme";
 import TooltipWrapper from "@/components/TooltipWrapper";
 import { useThemeStore } from "@/stores/useThemeStore";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { ShadowProp } from "@/components/styles/theme.d";
 
 // Type pour l'icône
 type IconProps = {
@@ -19,6 +20,7 @@ interface ButtonProps extends PressableProps {
   tooltipText?: string;
   iconProps?: IconProps;
   minWidth?: number;
+  disabled?: boolean;
 }
 
 function Button({
@@ -28,6 +30,7 @@ function Button({
   tooltipText = undefined, // option
   iconProps = undefined, // option
   minWidth = undefined, //option
+  disabled = undefined,
   ...props
 }: ButtonProps) {
   const theme = useThemeStore((state) => state.theme);
@@ -73,9 +76,12 @@ function Button({
     }
   }
 
+  const onPressOrDisabled = disabled ? null : onPress;
+
   const sharedProps = {
-    onPress,
-    style: [styles.container, buttonHover && getElevation(), { minWidth }],
+    onPress: onPressOrDisabled,
+    disabled: disabled,
+    style: [styles.container, buttonHover && getElevation(), { minWidth }, disabled && { backgroundColor: "grey" }],
     onHoverIn: () => setButtonHover(true),
     onHoverOut: () => setButtonHover(false),
     ...props,
@@ -88,6 +94,7 @@ function Button({
     </>
   );
   if (tooltipText) {
+    console.log("oooooooooooooo");
     return (
       <TooltipWrapper tooltipText={tooltipText} {...sharedProps}>
         {content}

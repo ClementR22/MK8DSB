@@ -10,18 +10,17 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 
 const StatSliderResultSelectorPressable = () => {
   const { statsVisibleList, setStatsVisibleList, toggleCheckListStatsVisibleList } = useStatsVisibleList();
-
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
-
   const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
   const isStatsVisibleSync = useStatsVisibleListConfigStore((state) => state.isStatsVisibleSync);
-  const disabled = isStatsVisibleSync && screenName === "search";
+  const disabled = isInSearchScreen && isStatsVisibleSync;
 
-  const tooltipText = disabled ? "DisabledBecauseMatchDesiredStats" : "DisplayedStats";
+  const tooltipText = "DisplayedStats";
   const secondButtonProps = isInSearchScreen && {
     text: "MatchDesiredStats",
     onPress: () => syncWithChosenStats(setStatsVisibleList),
+    disabled: disabled,
   };
 
   return (
@@ -31,7 +30,6 @@ const StatSliderResultSelectorPressable = () => {
           tooltipText={tooltipText}
           iconName="checkbox-multiple-marked"
           iconType={IconType.MaterialCommunityIcons}
-          disabled={disabled}
         />
       }
       modalTitle="DisplayedStats"
@@ -44,6 +42,8 @@ const StatSliderResultSelectorPressable = () => {
         toggleCheck={(name) => {
           toggleCheckListStatsVisibleList(name);
         }}
+        isStatVisibleInSearchScreen={isInSearchScreen}
+        disabled={disabled}
       />
     </ButtonAndModal>
   );

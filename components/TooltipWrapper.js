@@ -4,7 +4,7 @@ import Tooltip from "react-native-walkthrough-tooltip";
 import { translate } from "@/translations/translations";
 import useModalsStore from "@/stores/useModalsStore";
 
-const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", disabled = false, children, ...props }) => {
+const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", disabled, children, ...props }) => {
   const [isTooltipVisible_, setIsTooltipVisible_] = useState(false);
 
   const setIsTooltipVisible = useModalsStore((state) => state.setIsTooltipVisible);

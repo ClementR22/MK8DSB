@@ -22,7 +22,7 @@ function FlexContainer({
   boxShadow?: any;
   padding?: any;
   backgroundColor?: any;
-  minHeight: number;
+  minHeight?: number;
   style?: any;
 }) {
   const styles = StyleSheet.create({

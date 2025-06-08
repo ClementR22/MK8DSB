@@ -40,7 +40,6 @@ const SettingsScreen = () => {
 
             <Text>{translate("DisplayedStatsConfiguration")}</Text>
 
-            <StatsVisibleSyncSwitch />
             <StatsVisibleDefaultSwitch />
 
             {isStatsVisibleDefault && (
