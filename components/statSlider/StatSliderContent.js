@@ -50,18 +50,14 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
           flexDirection: "row",
           flex: 1,
         },
-        textLeft: {
+        text: {
           color: theme.on_surface,
           fontSize: 22,
           marginLeft: 6,
           flexShrink: 1,
-          maxWidth: "70%",
+          maxWidth: "90%",
           overflow: "hidden",
-        },
-        textRight: {
-          color: theme.on_surface,
-          fontSize: 22,
-          flexShrink: 0,
+          fontWeight: 600,
         },
         containerBottom: {
           width: "100%",
@@ -69,18 +65,41 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
           paddingVertical: 3,
         },
         sliderContainer: {
-          height: 20,
+          height: 50,
           alignItems: "stretch",
           justifyContent: "center",
         },
         track: {
-          height: 8,
-          borderRadius: 4,
-          backgroundColor: theme.secondary_container,
+          height: 16,
+          borderRadius: 100,
+          backgroundColor: "blue", //theme.secondary_container,
+          color: theme.on_surface,
         },
-        containerRight: { paddingTop: 4 },
+        thumb: {
+          backgroundColor: theme.primary,
+          borderRadius: 100,
+          width: 4,
+          height: 44,
+        },
+        minimumTrack: {
+          backgroundColor: theme.primary,
+          borderColor: theme.surface,
+          borderRightWidth: 8,
+          borderTopRightRadius: 0,
+          borderBottomRightRadius: 0,
+        },
+        maximumTrack: {
+          backgroundColor: theme.secondary_container,
+          borderColor: theme.surface,
+          borderLeftWidth: 8,
+          borderTopLeftRadius: 0,
+          borderBottomLeftRadius: 0,
+        },
+        containerRight: {
+          paddingTop: 4,
+        },
       }),
-    [theme, borderColor]
+    [theme, borderColor],
   );
 
   return (
@@ -88,10 +107,8 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
       <View style={styles.containerLeft}>
         <View style={styles.containerTop}>
           <View style={styles.textContainer}>
-            <Text numberOfLines={1} ellipsizeMode="middle" style={styles.textLeft}>
+            <Text numberOfLines={1} ellipsizeMode="middle" style={styles.text}>
               {translate(name)}
-            </Text>
-            <Text style={styles.textRight}>
               {translate(":")}
               {tempValue}
             </Text>
@@ -109,6 +126,11 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
               step={0.25}
               trackStyle={styles.track}
               thumbTouchSize={{ width: 10, height: 10 }}
+              thumbStyle={styles.thumb}
+              minimumTrackStyle={styles.minimumTrack}
+              maximumTrackStyle={[styles.maximumTrack, {
+                borderLeftWidth: (tempValue / 6) * 230 + 10,
+              }]}
             />
           </View>
         </View>

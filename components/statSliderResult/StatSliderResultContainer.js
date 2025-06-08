@@ -19,6 +19,20 @@ const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
     chosenStats = useSetsStore((state) => state.chosenStats);
   }
 
+  const styles = StyleSheet.create({
+    sliderContainer: {
+      padding: 10,
+      borderRadius: 8,
+      marginBottom: 10,
+    },
+    text: {
+      fontSize: 16,
+      fontWeight: "bold",
+      marginBottom: 5,
+      color: theme.on_surface,
+    },
+  });
+
   return (
     <View style={{ width: "100%", flexGrow: 1 }}>
       {statsVisibleList.map(({ name, checked }, statIndex) => {
@@ -29,12 +43,13 @@ const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
               key={statIndex}
               style={[
                 styles.sliderContainer,
-                { backgroundColor: theme.surface_container_highest }, //theme.surface_container },
+                { backgroundColor: theme.surface_container_high, marginHorizontal: 16 }, //theme.surface_container },
               ]}
             >
               <Text style={styles.text}>
                 {nameTranslated}
-                {isInSearchScreen && ` : ${JSON.stringify(setsToShowMultipleStatsLists[0]?.[statIndex])}`}
+                {translate(":")}
+                {JSON.stringify(setsToShowMultipleStatsLists[0]?.[statIndex])}
               </Text>
               {setsToShowMultipleStatsLists.map((setToShowStats, setIndex) => {
                 const chosenValue = isInSearchScreen ? chosenStats[statIndex].value : null;
@@ -45,11 +60,9 @@ const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
                     style={{
                       flexDirection: "row",
                       alignItems: "stretch",
-                      // backgroundColor: "yellow",
                     }}
                   >
                     <StatSliderResult value={setToShowStats[statIndex]} chosenValue={chosenValue} />
-                    {!isInSearchScreen && <Text style={{ flex: 0.2 }}>{setToShowStats[statIndex]}</Text>}
                   </View>
                 );
               })}
@@ -63,16 +76,3 @@ const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
 };
 
 export default StatSliderResultContainer;
-
-const styles = StyleSheet.create({
-  sliderContainer: {
-    padding: 10,
-    borderRadius: 8,
-    marginBottom: 10,
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-});
