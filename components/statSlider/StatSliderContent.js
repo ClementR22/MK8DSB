@@ -3,10 +3,25 @@ import React, { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import { Slider } from "@miblanchard/react-native-slider";
+import useGeneralStore from "@/stores/useGeneralStore";
+import useSetsStore from "@/stores/useSetsStore";
 
-const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingComplete }) => {
+const StatSliderContent = ({ name, value, number, setNumber, theme, disable = false }) => {
+  const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
+  const updateStatValue = useSetsStore((state) => state.updateStatValue);
+
   const [tempValue, setTempValue] = useState(value);
+
   const onValueChange = ([v]) => setTempValue(v);
+
+  const onSlidingStart = () => setIsScrollEnable(false);
+
+  const onSlidingComplete = !disable
+    ? ([v]) => {
+        updateStatValue(name, v);
+        setIsScrollEnable(true);
+      }
+    : null;
 
   useEffect(() => {
     setTempValue(value);
@@ -108,9 +123,7 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
         <View style={styles.containerTop}>
           <View style={styles.textContainer}>
             <Text numberOfLines={1} ellipsizeMode="middle" style={styles.text}>
-              {translate(name)}
-              {translate(":")}
-              {tempValue}
+              {`${translate(name)}${translate(":")}${tempValue}`}
             </Text>
           </View>
         </View>
@@ -120,6 +133,7 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
             <Slider
               value={tempValue}
               onValueChange={onValueChange}
+              onSlidingStart={onSlidingStart}
               onSlidingComplete={onSlidingComplete}
               minimumValue={0}
               maximumValue={6}

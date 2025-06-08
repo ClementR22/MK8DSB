@@ -5,8 +5,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import StatSlider from "@/components/statSlider/StatSlider";
 import { translate } from "@/translations/translations";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
-import SearchSetScreenPressablesContainer
-  from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
+import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
 import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
@@ -14,19 +13,19 @@ import BoxContainer from "@/primitiveComponents/BoxContainer";
 import FlexContainer from "@/primitiveComponents/FlexContainer";
 import RenameSetModal from "@/components/modal/RenameSetModal";
 import useSetsStore from "@/stores/useSetsStore";
-import useModalsStore from "@/stores/useModalsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 const SearchSetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
   const [setsToShow, setSetsToShow] = useState([]);
-  const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
+  const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
   const chosenStats = useSetsStore((state) => state.chosenStats);
 
   return (
     <ScreenProvider screenName="search">
       <StatsVisibleListProvider>
-        <ScrollView scrollEnabled={!isTooltipVisible}>
+        <ScrollView scrollEnabled={isScrollEnable}>
           <FlexContainer>
             <BoxContainer contentBackgroundColor={theme.surface_container_high}>
               <View style={{ flexDirection: "row", width: "100%", alignItems: "center", padding: 3 }}>

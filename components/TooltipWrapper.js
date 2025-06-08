@@ -2,18 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import { Pressable, Text } from "react-native";
 import Tooltip from "react-native-walkthrough-tooltip";
 import { translate } from "@/translations/translations";
-import useModalsStore from "@/stores/useModalsStore";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", disabled, children, ...props }) => {
   const [isTooltipVisible_, setIsTooltipVisible_] = useState(false);
 
-  const setIsTooltipVisible = useModalsStore((state) => state.setIsTooltipVisible);
+  const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
 
   const timeoutRef = useRef(null);
 
   function openTooltip() {
     setIsTooltipVisible_(true);
-    setIsTooltipVisible(true);
+    setIsScrollEnable(false);
     timeoutRef.current = setTimeout(() => {
       closeTooltip();
     }, 2000);
@@ -21,7 +21,7 @@ const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", disabl
 
   function closeTooltip() {
     setIsTooltipVisible_(false);
-    setIsTooltipVisible(false);
+    setIsScrollEnable(true);
   }
 
   useEffect(() => {

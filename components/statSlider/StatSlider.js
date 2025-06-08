@@ -5,7 +5,6 @@ import StatSliderContent from "./StatSliderContent";
 
 const StatSlider = ({ name, value, statFilterNumber }) => {
   const theme = useThemeStore((state) => state.theme);
-  const updateStatValue = useSetsStore((state) => state.updateStatValue);
   const setStatFilterNumber = useSetsStore((state) => state.setStatFilterNumber);
   const setStatFilterNumberWithName = (newNumber) => setStatFilterNumber(name, newNumber);
 
@@ -16,7 +15,6 @@ const StatSlider = ({ name, value, statFilterNumber }) => {
       number={statFilterNumber}
       setNumber={setStatFilterNumberWithName}
       theme={theme}
-      onSlidingComplete={([v]) => updateStatValue(name, v)}
     />
   );
 };

@@ -2,8 +2,8 @@ import React from "react";
 import { Pressable, ScrollView, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCard from "./SetCard";
-import useModalsStore from "@/stores/useModalsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 const SetCardContainer = ({
   setsToShow,
@@ -12,13 +12,13 @@ const SetCardContainer = ({
   hideRemoveSet = undefined,
 }) => {
   const theme = useThemeStore((state) => state.theme);
-  const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
+  const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const noSetToShow = setsToShow.length === 0;
   const contentWidth = noSetToShow ? "100%" : undefined;
 
   return (
-    <ScrollView scrollEnabled={!isTooltipVisible} horizontal={true} contentContainerStyle={{ width: contentWidth }}>
+    <ScrollView scrollEnabled={isScrollEnable} horizontal={true} contentContainerStyle={{ width: contentWidth }}>
       <Pressable
         style={[
           styles.setCardContainer,
