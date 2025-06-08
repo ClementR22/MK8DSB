@@ -52,6 +52,7 @@ const translations = {
     IncorrectFormat: "Incorrect format",
     ThisSetDoesNotExist: "This set does not exist",
     DeleteAllSetsInMemoryText: "Do you really want to delete all saved sets?",
+    ResetSettingsText: "Do you really want to reset settings?",
 
     // button label
     Search: "Search",
@@ -295,6 +296,7 @@ const translations = {
     IncorrectFormat: "Format incorrect",
     ThisSetDoesNotExist: "Ce set n'existe pas",
     DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
+    ResetSettingsText: "Souhaitez-vous vraiment réinitialiser les préférences ?",
 
     // button label
     Search: "Chercher",

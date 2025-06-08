@@ -3,7 +3,7 @@ import { ScreenProvider } from "@/contexts/ScreenContext";
 import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
 import LanguageSelector from "@/components/settingsComponent/LanguageSelector";
 import ThemeSelector from "@/components/settingsComponent/ThemeSelector";
-import ButtonResetSettings from "@/components/ButtonResetSettings";
+import ButtonResetSettings from "@/components/settingsComponent/ButtonResetSettings";
 import SendFeedbackButton from "@/components/settingsComponent/SendFeedbackButton";
 import LicensesButton from "@/components/settingsComponent/LicensesButton";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
@@ -17,10 +17,11 @@ import StatsVisibleListDefaultSelector from "@/components/settingsComponent/Stat
 import useSetsStore from "@/stores/useSetsStore";
 import { useResetSettings } from "@/hooks/useResetSettings";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
+import ButtonDeleteAllSetsInMemory from "@/components/settingsComponent/ButtonDeleteAllSetsInMemory";
 
 const SettingsScreen = () => {
-  const deleteAllSavedSets = useSetsStore((state) => state.deleteAllSavedSets);
   const resetSettings = useResetSettings();
+  const deleteAllSavedSets = useSetsStore((state) => state.deleteAllSavedSets);
 
   return (
     <ScreenProvider screenName="settings">
@@ -44,13 +45,7 @@ const SettingsScreen = () => {
 
             <ButtonResetSettings resetSettings={resetSettings} />
 
-            <ButtonAndModal
-              triggerButtonText="DeleteAllSetsInMemory"
-              secondButtonProps={{ text: "Confirm", onPress: deleteAllSavedSets }}
-              closeButtonText="Cancel"
-            >
-              <Text>{translate("DeleteAllSetsInMemoryText")}</Text>
-            </ButtonAndModal>
+            <ButtonDeleteAllSetsInMemory deleteAllSavedSets={deleteAllSavedSets} />
 
             <Text>DEBUG</Text>
             <Button
