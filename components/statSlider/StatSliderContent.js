@@ -19,7 +19,7 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
       case 1:
         return theme.primary;
       case 2:
-        return "black";
+        return theme.on_surface;
       default:
         return theme.outline_variant;
     }
@@ -99,7 +99,7 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
           paddingTop: 4,
         },
       }),
-    [theme, borderColor],
+    [theme, borderColor]
   );
 
   return (
@@ -128,9 +128,12 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
               thumbTouchSize={{ width: 10, height: 10 }}
               thumbStyle={styles.thumb}
               minimumTrackStyle={styles.minimumTrack}
-              maximumTrackStyle={[styles.maximumTrack, {
-                borderLeftWidth: (tempValue / 6) * 230 + 10,
-              }]}
+              maximumTrackStyle={[
+                styles.maximumTrack,
+                {
+                  borderLeftWidth: (tempValue / 6) * 230 + 10,
+                },
+              ]}
             />
           </View>
         </View>
