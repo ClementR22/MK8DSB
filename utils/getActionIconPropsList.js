@@ -72,7 +72,7 @@ export function getActionIconPropsList(setCardIndex, situation, handleEditPress)
       title: "Remove",
       name: "trash-can",
       type: IconType.MaterialCommunityIcons,
-      onPress: () => removeSet(setCardIndex),
+      onPress: () => removeSet(setCardIndex, situation),
     },
 
     export: {
