@@ -8,13 +8,12 @@ import { statsVisibleListInit } from "@/config/statsVisibleListInit";
 const StatsVisibleListContext = createContext();
 
 export const StatsVisibleListProvider = ({ children }) => {
-  const isStatsVisibleDefault = useStatsVisibleListConfigStore((state) => state.isStatsVisibleDefault);
   const statsVisibleListDefault = useStatsVisibleListConfigStore((state) => state.statsVisibleListDefault);
   const [statsVisibleList, setStatsVisibleList] = useState(statsVisibleListInit);
 
   useEffect(() => {
-    if (isStatsVisibleDefault) setStatsVisibleList(statsVisibleListDefault);
-  }, [isStatsVisibleDefault, statsVisibleListDefault]);
+    setStatsVisibleList(statsVisibleListDefault);
+  }, [statsVisibleListDefault]);
 
   const toggleCheckListStatsVisibleList = (name) => toggleCheckList(setStatsVisibleList, name);
 

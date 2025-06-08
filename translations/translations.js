@@ -36,12 +36,13 @@ const translations = {
     DesiredStats: "Desired stats",
     Filters: "Filters",
     NumberOfResults: "Number of results",
+    DisplayedStatsInSets: "Displayed stats in sets",
     DisplayedStats: "Displayed stats",
     LoadASavedSet: "Load a saved set",
     NameTheSet: "Name the set",
     SelectASet: "Select a set",
     Licenses: "Licenses",
-    DefaultDisplayedStats: "Default displayed stats",
+    DefaultDisplayedStats: "Default displayed stats in sets",
 
     // text
     Language: "Language",
@@ -51,7 +52,6 @@ const translations = {
     IncorrectFormat: "Incorrect format",
     ThisSetDoesNotExist: "This set does not exist",
     DeleteAllSetsInMemoryText: "Do you really want to delete all saved sets?",
-    DisplayedStatsConfiguration: "Displayed stats configuration",
 
     // button label
     Search: "Search",
@@ -61,7 +61,7 @@ const translations = {
     System: "System",
     MatchDesiredStats: "Match desired stats",
     AlwaysSync: "Always match desired stats",
-    ConfigureDefaultDisplayedStats: "Configure default displayed stats",
+    ConfigureDefaultStats: "Configure default displayed stats",
     SendFeedback: "Send feedback",
     OpenSourceLicenses: "Open Source Licenses",
     ResetSettings: "Reset settings",
@@ -76,6 +76,7 @@ const translations = {
     // tooltip text
     ChooseStats: "Choose some stats",
     ChooseFilters: "Choose some filters",
+    DisplayedStatsInSets: "Displayed stats in sets",
     DisplayedStats: "Displayed stats",
     DisabledBecauseMatchDesiredStats: "Match desired stats",
     ChangeCondition: "Fix a condition",
@@ -278,12 +279,13 @@ const translations = {
     DesiredStats: "Stats souhaitées",
     Filters: "Filtres",
     NumberOfResults: "Nombre de résultats",
+    DisplayedStatsInSets: "Stats affichées dans les sets",
     DisplayedStats: "Stats affichées",
     LoadASavedSet: "Charger un set enregistré",
     NameTheSet: "Nommer le set",
     SelectASet: "Selectionner un set",
     Licenses: "Licences",
-    DefaultDisplayedStats: "Stats affichées par défault",
+    DefaultDisplayedStats: "Stats affichées par défault dans les sets",
 
     // text
     Language: "Langue",
@@ -293,7 +295,6 @@ const translations = {
     IncorrectFormat: "Format incorrect",
     ThisSetDoesNotExist: "Ce set n'existe pas",
     DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
-    DisplayedStatsConfiguration: "Configuration des stats affichées",
 
     // button label
     Search: "Chercher",
@@ -303,7 +304,7 @@ const translations = {
     System: "Appareil",
     MatchDesiredStats: "Copier les stats souhaitées",
     AlwaysSync: "Toujours copier les stats souhaitées",
-    ConfigureDefaultDisplayedStats: "Configurer les stats affichées par défault",
+    ConfigureDefaultStats: "Configurer les stats affichées par défault",
     SendFeedback: "Faire un retour",
     OpenSourceLicenses: "Licences Open Source",
     ResetSettings: "Réinitialiser les paramètres",
@@ -318,6 +319,7 @@ const translations = {
     // tooltip text
     ChooseStats: "Choisissez des stats",
     ChooseFilters: "Choisissez des filtres",
+    DisplayedStatsInSets: "Stats affichées dans les sets",
     DisplayedStats: "Stats affichées",
     DisabledBecauseMatchDesiredStats: "Copie les stats souhaitées",
     ChangeCondition: "Fixer une condition",

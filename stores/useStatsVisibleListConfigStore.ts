@@ -14,9 +14,6 @@ interface StatsVisibleListConfigState {
   isStatsVisibleSync: boolean;
   setIsStatsVisibleSync: (newValue: boolean) => Promise<void>;
 
-  isStatsVisibleDefault: boolean;
-  setIsStatsVisibleDefault: (newValue: boolean) => Promise<void>;
-
   statsVisibleListDefault: StatsVisibleList;
   setStatsVisibleListDefault: (newList: StatsVisibleList) => void;
   toggleCheckListStatsVisibleListDefault: (name: string) => void;
@@ -30,13 +27,6 @@ export const useStatsVisibleListConfigStore = create<StatsVisibleListConfigState
   async setIsStatsVisibleSync(newValue) {
     set({ isStatsVisibleSync: newValue });
     await saveThingInMemory("isStatsVisibleSync", newValue);
-  },
-
-  isStatsVisibleDefault: false,
-
-  async setIsStatsVisibleDefault(newValue) {
-    set({ isStatsVisibleDefault: newValue });
-    await saveThingInMemory("isStatsVisibleDefault", newValue);
   },
 
   statsVisibleListDefault: statsVisibleListInit,

@@ -12,11 +12,12 @@ const StatSliderResultSelectorPressable = () => {
   const { statsVisibleList, setStatsVisibleList, toggleCheckListStatsVisibleList } = useStatsVisibleList();
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
+  const isInDisplayScreen = screenName === "display";
   const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
   const isStatsVisibleSync = useStatsVisibleListConfigStore((state) => state.isStatsVisibleSync);
   const disabled = isInSearchScreen && isStatsVisibleSync;
 
-  const tooltipText = "DisplayedStats";
+  const tooltipText = isInDisplayScreen ? "DisplayedStats" : "DisplayedStatsInSets";
   const secondButtonProps = isInSearchScreen && {
     text: "MatchDesiredStats",
     onPress: () => syncWithChosenStats(setStatsVisibleList),
@@ -32,7 +33,7 @@ const StatSliderResultSelectorPressable = () => {
           iconType={IconType.MaterialCommunityIcons}
         />
       }
-      modalTitle="DisplayedStats"
+      modalTitle={isInDisplayScreen ? "DisplayedStats" : "DisplayedStatsInSets"}
       secondButtonProps={secondButtonProps}
       closeAfterSecondButton={false}
     >

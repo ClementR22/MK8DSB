@@ -8,21 +8,17 @@ import SendFeedbackButton from "@/components/settingsComponent/SendFeedbackButto
 import LicensesButton from "@/components/settingsComponent/LicensesButton";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import FlexScrollView from "@/primitiveComponents/FlexScrollView";
-import StatsVisibleSyncSwitch from "@/components/settingsComponent/StatsVisibleSyncSwitch";
 import Button from "@/primitiveComponents/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Text from "@/primitiveComponents/Text";
-import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import ButtonAndModal from "@/components/modal/ButtonAndModal";
 import { translate } from "@/translations/translations";
 import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
 import useSetsStore from "@/stores/useSetsStore";
 import { useResetSettings } from "@/hooks/useResetSettings";
-import StatsVisibleDefaultSwitch from "@/components/settingsComponent/StatsVisibleDefaultSwitch";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 
 const SettingsScreen = () => {
-  const isStatsVisibleDefault = useStatsVisibleListConfigStore((state) => state.isStatsVisibleDefault);
   const deleteAllSavedSets = useSetsStore((state) => state.deleteAllSavedSets);
   const resetSettings = useResetSettings();
 
@@ -38,15 +34,9 @@ const SettingsScreen = () => {
 
             <ThemeSelector />
 
-            <Text>{translate("DisplayedStatsConfiguration")}</Text>
-
-            <StatsVisibleDefaultSwitch />
-
-            {isStatsVisibleDefault && (
-              <ButtonAndModal triggerButtonText="DefaultDisplayedStats" modalTitle="DefaultDisplayedStats">
-                <StatsVisibleListDefaultSelector />
-              </ButtonAndModal>
-            )}
+            <ButtonAndModal triggerButtonText="ConfigureDefaultStats" modalTitle="DefaultDisplayedStats">
+              <StatsVisibleListDefaultSelector />
+            </ButtonAndModal>
 
             <SendFeedbackButton />
 
