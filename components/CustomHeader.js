@@ -1,11 +1,10 @@
-import React, { useMemo, useState } from "react";
-import { Modal, StyleSheet, View } from "react-native";
-import Text from "@/components/Text";
+import React, { useMemo } from "react";
+import { StyleSheet, View } from "react-native";
+import Text from "@/primitiveComponents/Text";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useThemeStore } from "@/stores/useThemeStore";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { translate } from "@/translations/translations";
-import ButtonIcon from "./ButtonIcon";
 
 const CustomHeader = ({ children, icon = "car-sports", helpComponent }) => {
   const theme = useThemeStore((state) => state.theme);

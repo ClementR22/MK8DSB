@@ -3,8 +3,8 @@ import { Modal as NativeModal, Pressable, StyleSheet, Text, View } from "react-n
 import { vh } from "@/components/styles/theme";
 import { translate } from "@/translations/translations";
 import Toast from "react-native-toast-message";
-import FlexContainer from "@/components/FlexContainer";
-import Button from "@/components/Button";
+import FlexContainer from "@/primitiveComponents/FlexContainer";
+import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 function ModalButton({ text, onPress }: { text: string; onPress: () => void }) {

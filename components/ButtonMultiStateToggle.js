@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonIcon from "@/components/ButtonIcon";
+import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 
 const ButtonMultiStateToggle = ({ number, setNumber, filterCase = false, tooltipText }) => {

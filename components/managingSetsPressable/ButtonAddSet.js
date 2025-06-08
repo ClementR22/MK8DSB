@@ -1,6 +1,6 @@
 import React from "react";
 import useSetsStore from "@/stores/useSetsStore";
-import ButtonIcon from "../ButtonIcon";
+import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 
 const ButtonAddSet = () => {

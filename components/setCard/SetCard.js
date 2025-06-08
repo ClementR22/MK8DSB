@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
 import SetNameInput from "../textInput/SetNameInput";
-import BoxContainer from "@/components/BoxContainer";
-import FlexContainer from "@/components/FlexContainer";
+import BoxContainer from "@/primitiveComponents/BoxContainer";
+import FlexContainer from "@/primitiveComponents/FlexContainer";
 import { useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
 import useModalsStore from "@/stores/useModalsStore";

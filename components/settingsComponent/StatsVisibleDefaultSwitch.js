@@ -1,6 +1,6 @@
 import React from "react";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
-import Switch from "../Switch";
+import Switch from "../../primitiveComponents/Switch";
 
 const StatsVisibleDefaultSwitch = () => {
   const isStatsVisibleDefault = useStatsVisibleListConfigStore((state) => state.isStatsVisibleDefault);

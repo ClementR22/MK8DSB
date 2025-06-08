@@ -2,7 +2,7 @@ import React from "react";
 import useModalsStore from "@/stores/useModalsStore";
 import useSetsStore from "@/stores/useSetsStore";
 import SetNameInput from "../textInput/SetNameInput";
-import Modal from "../Modal";
+import Modal from "../../primitiveComponents/Modal";
 
 const RenameSetModal = () => {
   const saveSetFromFound = useSetsStore((state) => state.saveSetFromFound);

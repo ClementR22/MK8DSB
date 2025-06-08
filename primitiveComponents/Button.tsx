@@ -1,7 +1,6 @@
 import React, { ReactNode, useState } from "react";
-import { StyleSheet, Text, Pressable, View, PressableProps } from "react-native";
-import { shadow_12dp, shadow_1dp, shadow_3dp, shadow_6dp, shadow_8dp } from "@/components/styles/theme";
-import { ShadowProp } from "@/components/styles/theme.d";
+import { Pressable, PressableProps, StyleSheet, Text } from "react-native";
+import { shadow_12dp, shadow_1dp, shadow_3dp, shadow_6dp, shadow_8dp, ShadowProp } from "@/components/styles/theme";
 import TooltipWrapper from "@/components/TooltipWrapper";
 import { useThemeStore } from "@/stores/useThemeStore";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";

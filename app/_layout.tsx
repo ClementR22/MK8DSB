@@ -14,7 +14,7 @@ import { Appearance } from "react-native";
 import EditSetModal from "@/components/modal/EditSetModal";
 import LoadSetModal from "@/components/modal/LoadSetModal";
 import Toast from "react-native-toast-message";
-import Snackbar from "@/components/Snackbar";
+import Snackbar from "@/primitiveComponents/Snackbar";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
 import HelpSearchSetScreen from "@/components/help/HelpSearchSetScreen";

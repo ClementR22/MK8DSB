@@ -1,7 +1,7 @@
 import { translate } from "@/translations/translations";
 import React from "react";
 import { Linking } from "react-native";
-import Button from "@/components/Button";
+import Button from "@/primitiveComponents/Button";
 
 const SendFeedbackButton = () => {
   const handleContactPress = () => {

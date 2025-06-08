@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Switch from "../Switch";
+import Switch from "../../primitiveComponents/Switch";
 
 const SelectAllStatsSwitch = ({ statList, setStatList }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);

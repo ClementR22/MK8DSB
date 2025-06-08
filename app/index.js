@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 // Components import
 import StatSlider from "@/components/statSlider/StatSlider";
 import { translate } from "@/translations/translations";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
-import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
+import SearchSetScreenPressablesContainer
+  from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
 import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import { StatsVisibleListProvider, useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
-import BoxContainer from "@/components/BoxContainer";
-import FlexContainer from "@/components/FlexContainer";
+import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
+import BoxContainer from "@/primitiveComponents/BoxContainer";
+import FlexContainer from "@/primitiveComponents/FlexContainer";
 import RenameSetModal from "@/components/modal/RenameSetModal";
 import useSetsStore from "@/stores/useSetsStore";
 import useModalsStore from "@/stores/useModalsStore";

@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import SetCardContainer from "../setCard/SetCardContainer";
 import ButtonImportSet from "../managingSetsPressable/ButtonImportSet";
-import Modal from "@/components/Modal";
+import Modal from "@/primitiveComponents/Modal";
 import useSetsStore from "@/stores/useSetsStore";
 import { useLoadSetModalStore } from "@/stores/useLoadSetModalStore";
 import useModalsStore from "@/stores/useModalsStore";

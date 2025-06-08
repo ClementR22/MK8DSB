@@ -1,6 +1,6 @@
 import React from "react";
-import BoxContainer from "../BoxContainer";
-import ButtonIcon from "../ButtonIcon";
+import BoxContainer from "../../primitiveComponents/BoxContainer";
+import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { getActionIconPropsList } from "@/utils/getActionIconPropsList";
 
 const SetCardActionButtons = React.memo(({ actionNamesList, setCardIndex, situation, handleEditPress }) => {

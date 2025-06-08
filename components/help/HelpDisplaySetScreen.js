@@ -1,10 +1,6 @@
 import React from "react";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal, { HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
-import SetNameInput from "../textInput/SetNameInput";
-import FlexContainer from "../FlexContainer";
-import { View } from "react-native";
-import SetNameInputPreview from "../textInput/SetNameInputPreview";
 
 const HelpDisplaySetScreen = () => {
   return <HelpModal slides={slides} />;

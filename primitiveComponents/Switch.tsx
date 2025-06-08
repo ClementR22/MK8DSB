@@ -1,8 +1,7 @@
 import React from "react";
 import { Switch as NativeSwitch } from "react-native-paper";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { Text } from "react-native";
 import { translate } from "@/translations/translations";
 
 interface SwitchProps {

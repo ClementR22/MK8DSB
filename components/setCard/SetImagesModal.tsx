@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from "react";
-import { Pressable, View, StyleSheet } from "react-native"; // Importez View et StyleSheet si nécessaire pour le positionnement du bouton
-import Modal from "@/components/Modal"; // Assurez-vous que le chemin est correct
+import React, { useCallback, useState } from "react";
+import { Pressable, StyleSheet } from "react-native"; // Importez View et StyleSheet si nécessaire pour le positionnement du bouton
+import Modal from "@/primitiveComponents/Modal"; // Assurez-vous que le chemin est correct
 import SetImagesContainer from "./SetImagesContainer"; // Assurez-vous que le chemin est correct
 
 interface SetImagesModalProps {

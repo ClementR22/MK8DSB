@@ -3,13 +3,11 @@ import React, { useEffect, useState } from "react";
 import StatSelector from "./StatSelector";
 import { toggleAndGetChecksForChosenStats } from "@/utils/toggleCheck";
 import useModalsStore from "@/stores/useModalsStore";
-import Modal from "../Modal";
-import { View } from "react-native";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
 import ButtonAndModal from "../modal/ButtonAndModal";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import ButtonIcon from "../ButtonIcon";
+import { IconType } from "react-native-dynamic-vector-icons";
+import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 
 const StatSelectorChosenStats = ({ chosenStatsInModal, setChosenStatsInModal }) => {
   const toggleCheckChosenStats = (name) => {

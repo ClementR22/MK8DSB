@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Menu } from "react-native-paper";
 import { getActionIconPropsList } from "@/utils/getActionIconPropsList";
 import Icon from "react-native-dynamic-vector-icons";
-import ButtonIcon from "@/components/ButtonIcon";
+import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 
 const SetCardMoreActionsButton = React.memo(({ moreActionNamesList, setCardIndex, situation }) => {
   const [visible, setVisble] = useState(false);

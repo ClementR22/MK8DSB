@@ -1,13 +1,12 @@
 import React from "react";
 import * as Clipboard from "expo-clipboard";
 import { getSetStatsFromElementsClassIds } from "@/utils/getSetStatsFromElementsClassIds";
-import { ScreenName, useScreen } from "@/contexts/ScreenContext";
+import { ScreenName } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import showToast from "@/utils/toast";
-import { useThemeStore } from "@/stores/useThemeStore";
-import ButtonIcon from "../ButtonIcon";
+import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 
 const ButtonImportSet = ({ screenName, onComplete }: { screenName: ScreenName; onComplete?: () => void }) => {

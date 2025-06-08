@@ -2,7 +2,7 @@ import React from "react";
 import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderResultSelectorPressable";
 import ButtonLoadSet from "../managingSetsPressable/ButtonLoadSet";
 import ButtonAddSet from "../managingSetsPressable/ButtonAddSet";
-import BoxContainer from "../BoxContainer";
+import BoxContainer from "../../primitiveComponents/BoxContainer";
 
 const DisplaySetScreenPressablesContainer = () => {
   return (

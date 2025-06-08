@@ -1,7 +1,7 @@
-import React, { useState, useCallback, ReactElement } from "react";
-import { GestureResponderEvent, StyleSheet, Text } from "react-native";
-import Modal from "@/components/Modal";
-import Button from "../Button";
+import React, { ReactElement, useCallback, useState } from "react";
+import { GestureResponderEvent, StyleSheet } from "react-native";
+import Modal from "@/primitiveComponents/Modal";
+import Button from "../../primitiveComponents/Button";
 import { translate } from "@/translations/translations";
 
 interface ButtonAndModalProps {

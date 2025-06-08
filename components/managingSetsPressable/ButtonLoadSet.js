@@ -1,6 +1,6 @@
 import React from "react";
 import { useLoadSetModalStore } from "@/stores/useLoadSetModalStore";
-import ButtonIcon from "../ButtonIcon";
+import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 
 const ButtonLoadSet = ({ tooltipText }) => {

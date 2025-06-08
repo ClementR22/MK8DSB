@@ -1,16 +1,7 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, Modal } from "react-native";
-import AppIntroSlider from "react-native-app-intro-slider";
-import { useRouter } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
-import ButtonIcon from "@/components/ButtonIcon";
-import StatSlider from "@/components/statSlider/StatSlider";
+import React from "react";
+import { Text, View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
-import { translate } from "@/translations/translations";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Button from "@/components/Button";
-import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
-import ButtonAndModalForHelp from "@/components/modal/ButtonAndModalForHelp";
+import Button from "@/primitiveComponents/Button";
 import HelpModal, { HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
 import StatSliderPreview from "../statSlider/StatSliderPreview";
 

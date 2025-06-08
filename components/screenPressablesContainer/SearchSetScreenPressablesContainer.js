@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { bodyTypeNames, setAllInfos } from "@/data/data";
 import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderResultSelectorPressable";
@@ -7,14 +7,13 @@ import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
 import ElementsDeselector from "../elementsSelector/ElementsDeselector";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import ResultsNumber from "../ResultsNumberSelector";
-import ButtonIcon from "@/components/ButtonIcon";
+import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
 import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";
 import { usePressableElements } from "@/hooks/usePressableElements";
 import ButtonAndModal from "../modal/ButtonAndModal";
-import Button from "../Button";
-import useModalsStore from "@/stores/useModalsStore";
+import Button from "../../primitiveComponents/Button";
 import StatSelectorChosenStatsButtonAndModal from "../statSelector/StatSelectorChosenStatsButtonAndModal";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {

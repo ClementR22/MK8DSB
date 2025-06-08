@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 import ButtonAndModalForHelp from "../modal/ButtonAndModalForHelp";
-import ButtonIcon from "../ButtonIcon";
 import Icon from "react-native-dynamic-vector-icons";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default HelpModal = ({ slides }) => {
   const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);

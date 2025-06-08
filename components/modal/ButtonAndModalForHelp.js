@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonIcon from "../ButtonIcon";
+import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { Modal, SafeAreaView } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 
