@@ -2,10 +2,10 @@ import React, { ReactElement, ReactNode } from "react";
 import { Modal as NativeModal, Pressable, StyleSheet, Text, View } from "react-native";
 import { vh } from "@/components/styles/theme";
 import { translate } from "@/translations/translations";
-import Toast from "react-native-toast-message";
 import FlexContainer from "@/primitiveComponents/FlexContainer";
 import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
+import Snackbar from "./Snackbar";
 
 function ModalButton({
   text,
@@ -141,7 +141,7 @@ function Modal({
           </FlexContainer>
         </Pressable>
       </Pressable>
-      <Toast />
+      <Snackbar />
     </NativeModal>
   );
 }

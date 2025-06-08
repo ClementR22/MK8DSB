@@ -13,7 +13,6 @@ import { useLoadSettings } from "@/hooks/useLoadSettings";
 import { Appearance } from "react-native";
 import EditSetModal from "@/components/modal/EditSetModal";
 import LoadSetModal from "@/components/modal/LoadSetModal";
-import Toast from "react-native-toast-message";
 import Snackbar from "@/primitiveComponents/Snackbar";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
@@ -143,7 +142,6 @@ export default function TabLayout() {
           </Tabs>
           <EditSetModal />
           <LoadSetModal />
-          <Toast />
           <Snackbar />
         </PaperProvider>
       </SafeAreaView>
