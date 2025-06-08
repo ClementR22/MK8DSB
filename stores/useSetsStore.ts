@@ -180,7 +180,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       value: setToLoad.stats[i],
     }));
     set({ chosenStats: newStats });
-    showToast("Succès", "Les stats du set ont été chargées");
+    showToast("Succès" + " " + "Les stats du set ont été chargées");
   },
 
   loadSetSaveToSearch: (index) => {
@@ -193,12 +193,12 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
 
   loadSetSaveToDisplay: (index) => {
     get().loadSetToDisplay(get().setsListSaved[index]);
-    showToast("Succès", "Le set a été chargé");
+    showToast("Succès" + " " + "Le set a été chargé");
   },
 
   loadSetSearchToDisplay: (index) => {
     get().loadSetToDisplay(get().setsListFound[index]);
-    showToast("Succès", "Le set a été ajouté à l'écran de comparaison");
+    showToast("Succès" + " " + "Le set a été ajouté à l'écran de comparaison");
   },
 
   saveSet: async (setToSave) => {
@@ -207,7 +207,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
         setsListSaved: [...state.setsListSaved, setToSave],
       }));
       await get().saveSetInMemory(setToSave);
-      showToast("Succès", "Le set est enregistré");
+      showToast("Succès" + " " + "Le set est enregistré");
       return true;
     } catch (e) {
       alert(e);
@@ -314,7 +314,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     const { name, classIds } = list[index];
     const json = JSON.stringify({ name, classIds });
     Clipboard.setStringAsync(json);
-    showToast("Succès", "Set copié dans le presse-papier !");
+    showToast("Succès" + " " + "Set copié dans le presse-papier !");
   },
 
   importSet: (setCard: SetObject, screenName: ScreenName) => {

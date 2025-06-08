@@ -52,9 +52,12 @@ const ButtonImportSet = ({ screenName, onComplete }: { screenName: ScreenName; o
 
       onComplete?.();
     } catch (e) {
-      const text1 = translateToLanguage("ImportError", language);
-      const text2 = translateToLanguage(":", language) + translateToLanguage(e.message, language) + ".";
-      showToast(text1, text2, "error");
+      const text =
+        translateToLanguage("ImportError", language) +
+        translateToLanguage(":", language) +
+        translateToLanguage(e.message, language) +
+        ".";
+      showToast(text);
     }
   };
 

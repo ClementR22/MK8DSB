@@ -43,7 +43,7 @@ export const deleteAllTheMemory = async () => {
   try {
     const allKeys = await AsyncStorage.getAllKeys();
     allKeys.forEach(async (thingKey) => await AsyncStorage.removeItem(thingKey));
-    showToast("Lamemoireaetesupprimee", "ehoui");
+    showToast("Lamemoireaetesupprimee");
   } catch (e) {
     console.error("Erreur lors de la suppression : ", e);
   }
@@ -53,7 +53,7 @@ export const deleteAllSavedSetsInMemory = async () => {
   try {
     const setsKeys = await getOnlySetsSavedKeysFromMemory();
     setsKeys.forEach(async (thingKey) => await AsyncStorage.removeItem(thingKey));
-    showToast("lessetssontsupprimes", "ehoui");
+    showToast("lessetssontsupprimes");
   } catch (e) {
     console.error("Erreur lors de la suppression : ", e);
   }
