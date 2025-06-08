@@ -19,7 +19,7 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
       case 1:
         return theme.primary;
       case 2:
-        return "black";
+        return theme.inverse_surface
       default:
         return theme.outline_variant;
     }

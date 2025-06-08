@@ -17,6 +17,24 @@ const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
     setResultsNumber((prevResultsNumber) => (prevResultsNumber > 1 ? prevResultsNumber - 1 : 1)); // Évite d'aller en dessous de 0
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "none",
+      margin: 10,
+      flexDirection: "row",
+      paddingHorizontal: 14,
+    },
+    resultsNumberText: {
+      fontSize: 48,
+      textAlign: "center",
+      width: "auto",
+      flexGrow: 1,
+      color: theme.on_surface,
+    },
+  });
+
   return (
     <View style={styles.container}>
       <ButtonIcon onPress={decrement} iconName="minus" iconType={IconType.MaterialCommunityIcons} />
@@ -25,22 +43,5 @@ const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "none",
-    margin: 10,
-    flexDirection: "row",
-    paddingHorizontal: 14,
-  },
-  resultsNumberText: {
-    fontSize: 48,
-    textAlign: "center",
-    width: "auto",
-    flexGrow: 1,
-  },
-});
 
 export default ResultsNumberSelector;
