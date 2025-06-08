@@ -11,6 +11,7 @@ function BoxContainer({
   alignItems = "center",
   gap = 10,
   margin = 16,
+  marginTop,
   inputStyles,
   widthContainer = "100%",
 }) {
@@ -28,6 +29,7 @@ function BoxContainer({
       backgroundColor: contentBackgroundColor || theme.surface_container_high,
       justifyContent: justifyContent,
       margin: margin,
+      marginTop: marginTop,
       padding: 10,
       borderRadius: 12,
       gap: gap,

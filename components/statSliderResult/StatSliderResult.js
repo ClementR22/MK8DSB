@@ -23,7 +23,6 @@ const StatSliderResult = ({ value, chosenValue = null }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      paddingHorizontal: 8,
     },
     sliderTrack: {
       flexDirection: "row",

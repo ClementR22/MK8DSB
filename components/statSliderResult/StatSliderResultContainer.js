@@ -20,10 +20,11 @@ const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
   }
 
   const styles = StyleSheet.create({
+    container: { width: "100%", flexGrow: 1, gap: 10 },
     sliderContainer: {
       padding: 10,
       borderRadius: 8,
-      marginBottom: 10,
+      backgroundColor: theme.surface_container_high, //theme.surface_container
     },
     text: {
       fontSize: 16,
@@ -34,18 +35,12 @@ const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
   });
 
   return (
-    <View style={{ width: "100%", flexGrow: 1 }}>
+    <View style={styles.container}>
       {statsVisibleList.map(({ name, checked }, statIndex) => {
         const nameTranslated = translate(name);
         if (checked) {
           return (
-            <View
-              key={statIndex}
-              style={[
-                styles.sliderContainer,
-                { backgroundColor: theme.surface_container_high, marginHorizontal: 16 }, //theme.surface_container },
-              ]}
-            >
+            <View key={statIndex} style={styles.sliderContainer}>
               <Text style={styles.text}>
                 {nameTranslated}
                 {translate(":")}

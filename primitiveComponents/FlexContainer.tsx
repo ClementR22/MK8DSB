@@ -11,6 +11,7 @@ function FlexContainer({
   boxShadow,
   padding,
   backgroundColor,
+  minHeight,
   style,
 }: {
   children: any;
@@ -21,6 +22,7 @@ function FlexContainer({
   boxShadow?: any;
   padding?: any;
   backgroundColor?: any;
+  minHeight: number;
   style?: any;
 }) {
   const styles = StyleSheet.create({
@@ -33,6 +35,8 @@ function FlexContainer({
       gap: gap ? gap : 10,
       boxSizing: boxShadow || shadow_3dp,
       padding: padding || 0,
+      width: "100%",
+      minHeight: minHeight,
     },
   });
 
