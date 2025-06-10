@@ -83,7 +83,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   chosenStats: statNames.map((statName, index) => ({
     name: statName,
     checked: index === 0,
-    value: index === 0 ? 0 : null,
+    value: 0,
     statFilterNumber: 0,
   })),
 
