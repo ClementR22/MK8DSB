@@ -303,14 +303,13 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   exportSet: (index, screenName) => {
-    console.log("ok", screenName);
     const list =
       screenName === "search"
         ? get().setsListFound
         : screenName === "display"
         ? get().setsListDisplayed
         : get().setsListSaved;
-    console.log("setsListFound", get().setsListFound[index]);
+
     const { name, classIds } = list[index];
     const json = JSON.stringify({ name, classIds });
     Clipboard.setStringAsync(json);

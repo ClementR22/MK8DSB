@@ -34,6 +34,8 @@ const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
     },
   });
 
+  const translated2Points = translate(":");
+
   return (
     <View style={styles.container}>
       {statsVisibleList.map(({ name, checked }, statIndex) => {
@@ -43,7 +45,7 @@ const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
             <View key={statIndex} style={styles.sliderContainer}>
               <Text style={styles.text}>
                 {nameTranslated}
-                {translate(":")}
+                {translated2Points}
                 {JSON.stringify(setsToShowMultipleStatsLists[0]?.[statIndex])}
               </Text>
               {setsToShowMultipleStatsLists.map((setToShowStats, setIndex) => {

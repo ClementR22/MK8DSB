@@ -8,7 +8,7 @@ import { useScreen } from "@/contexts/ScreenContext";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import ButtonAndModal from "../modal/ButtonAndModal";
 
-const StatSliderResultSelectorPressable = () => {
+const StatSliderResultSelectorModalAndPressable = () => {
   const { statsVisibleList, setStatsVisibleList, toggleCheckListStatsVisibleList } = useStatsVisibleList();
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
@@ -50,4 +50,4 @@ const StatSliderResultSelectorPressable = () => {
   );
 };
 
-export default StatSliderResultSelectorPressable;
+export default StatSliderResultSelectorModalAndPressable;

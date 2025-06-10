@@ -1,5 +1,5 @@
 import React from "react";
-import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderResultSelectorPressable";
+import StatSliderResultSelectorModalAndPressable from "../statSliderResult/StatSliderResultSelectorModalAndPressable";
 import ButtonImportSet from "../managingSetsPressable/ButtonImportSet";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
@@ -19,7 +19,7 @@ const SavedSetScreenPressablesContainer = () => {
         onPress={sortSetsSavedKeys}
       />
       <ButtonImportSet screenName="save" />
-      <StatSliderResultSelectorPressable />
+      <StatSliderResultSelectorModalAndPressable />
     </BoxContainer>
   );
 };
