@@ -15,6 +15,10 @@ import RenameSetModal from "@/components/modal/RenameSetModal";
 import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
+import CompactSlider from "@/components/CompactSlider";
+import { compactStatNames } from "@/data/data";
+import ButtonIcon from "@/primitiveComponents/ButtonIcon";
+import { IconType } from "react-native-dynamic-vector-icons";
 
 const SearchSetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -22,13 +26,23 @@ const SearchSetScreen = () => {
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
   const chosenStats = useSetsStore((state) => state.chosenStats);
 
+  const [isReduceStatSliders, setIsReduceStatSliders] = useState(false);
+  const toggleReduceStatSlider = () => setIsReduceStatSliders(!isReduceStatSliders);
+
   return (
     <ScreenProvider screenName="search">
       <StatsVisibleListProvider>
         <ScrollView scrollEnabled={isScrollEnable}>
           <FlexContainer>
-            <BoxContainer contentBackgroundColor={theme.surface_container_high}>
+            <BoxContainer contentBackgroundColor={theme.surface_container_high} borderRadius={27}>
               <View style={{ flexDirection: "row", width: "100%", alignItems: "center", padding: 3 }}>
+                <ButtonIcon
+                  onPress={toggleReduceStatSlider}
+                  iconName={isReduceStatSliders ? "chevron-down" : "chevron-up"}
+                  iconType={IconType.MaterialCommunityIcons}
+                  tooltipText={isReduceStatSliders ? "DevelopSliders" : "ReduceSliders"}
+                />
+
                 <View style={{ flex: 1 }}>
                   <Text
                     style={[
@@ -47,12 +61,29 @@ const SearchSetScreen = () => {
               </View>
 
               {/* Afficher le slider uniquement si la case est cochée */}
-              {chosenStats.map((stat) => {
-                const { name, value, checked, statFilterNumber } = stat;
-                return (
-                  checked && <StatSlider key={name} name={name} value={value} statFilterNumber={statFilterNumber} />
-                );
-              })}
+              {isReduceStatSliders
+                ? chosenStats.map(
+                    (stat, index) =>
+                      stat.checked && (
+                        <CompactSlider
+                          key={`compactSlider-${compactStatNames[index]}-${index}`}
+                          name={compactStatNames[index]}
+                          value={stat.value} // tu peux remplacer 4 par stat.value si besoin
+                          statFilterNumber={stat.statFilterNumber}
+                        />
+                      )
+                  )
+                : chosenStats.map(
+                    (stat) =>
+                      stat.checked && (
+                        <StatSlider
+                          key={`statSlider-${stat.name}`}
+                          name={stat.name}
+                          value={stat.value}
+                          statFilterNumber={stat.statFilterNumber}
+                        />
+                      )
+                  )}
             </BoxContainer>
 
             <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} />

@@ -96,6 +96,8 @@ const translations = {
     ImportACopiedSet: "Import a copied set",
     MoreActions: "More actions",
     Help: "Help",
+    DevelopSliders: "Develop sliders",
+    ReduceSliders: "Reduce sliders",
 
     // other
     ":": ": ",
@@ -114,6 +116,20 @@ const translations = {
     handlingAir: "Air handling ",
     traction: "Traction",
     miniTurbo: "Mini-Turbo",
+
+    // stat reduced
+    spdG: "Spd G",
+    spdAG: "Spd AG",
+    spdW: "Spd W",
+    spdA: "Spd A",
+    acc: "Accel",
+    wgt: "Weight",
+    hanG: "Han G",
+    hanAG: "Han AG",
+    hanW: "Han W",
+    hanA: "Han A",
+    tra: "Tra",
+    mtu: "Mtu",
 
     // category
     character: "Character",
@@ -340,6 +356,8 @@ const translations = {
     ImportACopiedSet: "Importer un set copié",
     MoreActions: "Plus d'actions",
     Help: "Aide",
+    DevelopSliders: "Développer les curseurs",
+    ReduceSliders: "Reduire les curseurs",
 
     // other
     ":": " : ",
@@ -358,6 +376,20 @@ const translations = {
     handlingAir: "Maniabilité air",
     traction: "Adhérence",
     miniTurbo: "Mini-turbo",
+
+    // stat reduced
+    spdG: "Vit S",
+    spdAG: "Vit AG",
+    spdW: "Vit E",
+    spdA: "Vit A",
+    acc: "Accel",
+    wgt: "Poids",
+    hanG: "Man S",
+    hanAG: "Man AG",
+    hanW: "Man E",
+    hanA: "Man A",
+    tra: "Adh",
+    mtu: "Mtu",
 
     // category
     character: "Personnage",

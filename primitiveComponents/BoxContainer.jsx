@@ -14,6 +14,7 @@ function BoxContainer({
   marginTop,
   inputStyles,
   widthContainer = "100%",
+  borderRadius = 12,
 }) {
   const theme = useThemeStore((state) => state.theme);
 
@@ -31,7 +32,7 @@ function BoxContainer({
       margin: margin,
       marginTop: marginTop,
       padding: 10,
-      borderRadius: 12,
+      borderRadius,
       gap: gap,
       flexDirection: flexDirection,
       alignItems: alignItems,

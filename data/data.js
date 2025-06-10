@@ -132,6 +132,21 @@ export const statNames = [
   "miniTurbo",
 ];
 
+export const compactStatNames = [
+  "spdG",
+  "spdAG",
+  "spdW",
+  "spdA",
+  "acc",
+  "wgt",
+  "hanG",
+  "hanAG",
+  "hanW",
+  "hanA",
+  "tra",
+  "mtu",
+];
+
 export const category4Names = ["character", "body", "wheels", "glider"];
 
 // const category7Names = ["character", "kart", "bike", "sportBike", "ATV", "wheels", "glider"];

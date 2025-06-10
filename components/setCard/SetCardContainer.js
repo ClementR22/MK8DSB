@@ -23,10 +23,7 @@ const SetCardContainer = ({
         style={[
           styles.setCardContainer,
           {
-            flexDirection: "row",
-            flexGrow: 1,
             backgroundColor: theme.surface_container_high,
-            justifyContent: "center", // utile pour l'icon chat-question
           },
         ]}
       >
@@ -62,5 +59,8 @@ const styles = StyleSheet.create({
     //backgroundColor: theme.surface_container_high,
     borderRadius: 24,
     columnGap: 16,
+    flexDirection: "row",
+    flexGrow: 1,
+    justifyContent: "center", // utile pour l'icon chat-question
   },
 });
