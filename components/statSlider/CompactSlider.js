@@ -1,5 +1,5 @@
 import { useThemeStore } from "@/stores/useThemeStore";
-import React, { useMemo } from "react";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { getSliderBorderColor } from "@/utils/getSliderBorderColor";
 import { translate } from "@/translations/translations";

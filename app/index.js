@@ -15,7 +15,7 @@ import RenameSetModal from "@/components/modal/RenameSetModal";
 import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
-import CompactSlider from "@/components/CompactSlider";
+import CompactSlider from "@/components/statSlider/CompactSlider";
 import { compactStatNames } from "@/data/data";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
