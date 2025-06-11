@@ -1,53 +1,80 @@
 import React, { useEffect, useRef, useState } from "react";
 import Switch from "../../primitiveComponents/Switch";
 
-const SelectAllStatsSwitch = ({ statList, setStatList }) => {
+const SelectAllStatsSwitch = ({
+  statList,
+  setStatList,
+  statListBeforeAll,
+  setStatListBeforeAll,
+  disabled = false,
+  externalUpdateRef,
+}) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
-  const [formerStatList, setFormerStatList] = useState(null);
-  const internalUpdate = useRef(false); // Marqueur de mise à jour interne
+
+  const internalUpdate = useRef(false);
+
+  const isFirstRender = useRef(true);
 
   const onToggleSwitch = () => {
+    // on déclare que le changement est provoqué par le switch, pour bloquer le useEffect
     internalUpdate.current = true;
 
     if (!isSwitchOn) {
       // si l'utilisateur vient active le switch
       // Sauvegarde l’état courant avant modification
-      setFormerStatList(statList);
+      setStatListBeforeAll(statList);
 
-      // Coche tous les stat
-      setStatList(statList.map((stat) => ({ ...stat, checked: true })));
-    } else if (formerStatList) {
-      // si l'utilisateur ne veut pas tout activer et qu'il existe une liste précédente
-      // Restaure la liste précédente
-      setStatList(formerStatList);
+      // coche tous les stat
+      const newList = statList.map((stat) => ({ ...stat, checked: true }));
+      setStatList(newList);
+      setIsSwitchOn(true);
+
+      // si l'utilisateur veut restaurer la liste précédente et qu'elle existe
+    } else if (statListBeforeAll) {
+      // on restaure la liste précédente
+      setStatList(statListBeforeAll);
+      setIsSwitchOn(false);
     }
-
-    setIsSwitchOn(!isSwitchOn);
   };
 
   const updateToggleSwitch = () => {
-    if (internalUpdate.current) {
-      internalUpdate.current = false; // <- reset le flag
-      return; // <- skip la mise à jour si c'était un changement interne
-    } // ce test permet uniquement d'éviter les calculs inutiles
+    const hasAllChecked = !statList.some((stat) => stat.checked === false);
 
-    const hasUnchecked = statList.some((stat) => stat.checked === false);
-    if (isSwitchOn == hasUnchecked) {
-      // si il faut mettre à jour le switch
-      if (hasUnchecked) {
-        // cas 1 : desactivation
-        setIsSwitchOn(false);
-      } else {
-        // cas 2 : activation
-        setIsSwitchOn(true);
-        setFormerStatList(statList); // nouveau formerStatList avec tous les checked à true
+    // si le switch n'est pas à jour
+    if (isSwitchOn != hasAllChecked) {
+      // on le met à jour
+      setIsSwitchOn(hasAllChecked);
+
+      // si tout est checké
+      if (hasAllChecked) {
+        if (isFirstRender.current) {
+          isFirstRender.current = false; // reset le flag
+          return; // skip la mise à jour de statListBeforeAll si le changement est dû au 1er render
+        }
+
+        if (externalUpdateRef.current) {
+          externalUpdateRef.current = false; // reset le flag
+          return; // skip la mise à jour de statListBeforeAll si le changement vient de StatsVisibleSyncSwitch
+        } else {
+          // sinon, on est dans le cas : l'utilisateur vient de cocher le dernier élément manuellement
+          // on MAJ statListBeforeAll avec tous les checked à true
+          setStatListBeforeAll(statList); // nouvelle référence avec tous cochés
+        }
       }
     }
   };
 
-  useEffect(() => updateToggleSwitch(), [statList]);
+  useEffect(() => {
+    if (internalUpdate.current) {
+      internalUpdate.current = false; // reset le flag
+      return; // skip la mise à jour du switch si le changement provoqué par le switch
+      // celle de statListBeforeAll est deja faite
+    }
 
-  return <Switch value={isSwitchOn} onToggleSwitch={onToggleSwitch} switchLabel="All" />;
+    updateToggleSwitch();
+  }, [statList]);
+
+  return <Switch value={isSwitchOn} onToggleSwitch={onToggleSwitch} disabled={disabled} switchLabel="All" />;
 };
 
 export default SelectAllStatsSwitch;
