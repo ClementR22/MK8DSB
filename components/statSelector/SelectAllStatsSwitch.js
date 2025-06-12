@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import Switch from "../../primitiveComponents/Switch";
 
+function areAllStatsChecked(statList) {
+  return !statList.some((stat) => stat.checked === false);
+}
+
 const SelectAllStatsSwitch = ({
   statList,
   setStatList,
@@ -9,7 +13,7 @@ const SelectAllStatsSwitch = ({
   disabled = false,
   externalUpdateRef,
 }) => {
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const [isSwitchOn, setIsSwitchOn] = useState(areAllStatsChecked(statList));
 
   const internalUpdate = useRef(false);
 
@@ -38,7 +42,8 @@ const SelectAllStatsSwitch = ({
   };
 
   const updateToggleSwitch = () => {
-    const hasAllChecked = !statList.some((stat) => stat.checked === false);
+    console.log("upd");
+    const hasAllChecked = areAllStatsChecked(statList);
 
     // si le switch n'est pas à jour
     if (isSwitchOn != hasAllChecked) {
@@ -47,11 +52,6 @@ const SelectAllStatsSwitch = ({
 
       // si tout est checké
       if (hasAllChecked) {
-        if (isFirstRender.current) {
-          isFirstRender.current = false; // reset le flag
-          return; // skip la mise à jour de statListBeforeAll si le changement est dû au 1er render
-        }
-
         if (externalUpdateRef.current) {
           externalUpdateRef.current = false; // reset le flag
           return; // skip la mise à jour de statListBeforeAll si le changement vient de StatsVisibleSyncSwitch
@@ -65,6 +65,11 @@ const SelectAllStatsSwitch = ({
   };
 
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false; // reset le flag
+      return; // skip la mise à jour de statListBeforeAll si le changement est dû au 1er render
+    }
+
     if (internalUpdate.current) {
       internalUpdate.current = false; // reset le flag
       return; // skip la mise à jour du switch si le changement provoqué par le switch

@@ -9,7 +9,12 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 
-const StatSelectorChosenStats = ({ chosenStatsInModal, setChosenStatsInModal }) => {
+const StatSelectorChosenStats = ({
+  chosenStatsInModal,
+  setChosenStatsInModal,
+  statListBeforeAll,
+  setStatListBeforeAll,
+}) => {
   const toggleCheckChosenStats = (name) => {
     const newList = toggleAndGetChecksForChosenStats(chosenStatsInModal, name);
     const hasChecked = newList.some((item) => item.checked);
@@ -25,6 +30,8 @@ const StatSelectorChosenStats = ({ chosenStatsInModal, setChosenStatsInModal }) 
     <StatSelector
       statList={chosenStatsInModal}
       setStatList={setChosenStatsInModal}
+      statListBeforeAll={statListBeforeAll}
+      setStatListBeforeAll={setStatListBeforeAll}
       toggleCheck={(name) => {
         toggleCheckChosenStats(name);
       }}
@@ -42,6 +49,8 @@ const StatSelectorChosenStatsButtonAndModal = () => {
   const { setStatsVisibleList } = useStatsVisibleList();
 
   const [chosenStatsInModal, setChosenStatsInModal] = useState(chosenStats);
+
+  const [statListBeforeAll, setStatListBeforeAll] = useState(null);
 
   useEffect(() => {
     if (isChosenStatsModalVisible) {
@@ -67,7 +76,12 @@ const StatSelectorChosenStatsButtonAndModal = () => {
         <ButtonIcon tooltipText="ChooseStats" iconName="plus" iconType={IconType.MaterialCommunityIcons} />
       }
     >
-      <StatSelectorChosenStats chosenStatsInModal={chosenStatsInModal} setChosenStatsInModal={setChosenStatsInModal} />
+      <StatSelectorChosenStats
+        chosenStatsInModal={chosenStatsInModal}
+        setChosenStatsInModal={setChosenStatsInModal}
+        statListBeforeAll={statListBeforeAll}
+        setStatListBeforeAll={setStatListBeforeAll}
+      />
     </ButtonAndModal>
   );
 };

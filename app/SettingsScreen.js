@@ -11,13 +11,11 @@ import FlexScrollView from "@/primitiveComponents/FlexScrollView";
 import Button from "@/primitiveComponents/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Text from "@/primitiveComponents/Text";
-import ButtonAndModal from "@/components/modal/ButtonAndModal";
-import { translate } from "@/translations/translations";
-import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
 import useSetsStore from "@/stores/useSetsStore";
 import { useResetSettings } from "@/hooks/useResetSettings";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import ButtonDeleteAllSetsInMemory from "@/components/settingsComponent/ButtonDeleteAllSetsInMemory";
+import StatSliderResultSelectorModalAndPressableForDefault from "@/components/settingsComponent/StatSliderResultSelectorModalAndPressableForDefault";
 
 const SettingsScreen = () => {
   const resetSettings = useResetSettings();
@@ -35,9 +33,7 @@ const SettingsScreen = () => {
 
             <ThemeSelector />
 
-            <ButtonAndModal triggerButtonText="ConfigureDefaultStats" modalTitle="DefaultDisplayedStats">
-              <StatsVisibleListDefaultSelector />
-            </ButtonAndModal>
+            <StatSliderResultSelectorModalAndPressableForDefault />
 
             <SendFeedbackButton />
 
