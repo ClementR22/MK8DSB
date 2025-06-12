@@ -2,7 +2,7 @@ import React from "react";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import StatSelectorButtonAndModal from "../statSelector/StatSelectorButtonAndModal";
 
-const StatSliderResultSelectorModalAndPressableForDefault = () => {
+const StatSliderResultDefaultSelectorButtonAndModal = () => {
   const statsVisibleListDefault = useStatsVisibleListConfigStore((state) => state.statsVisibleListDefault);
   const setStatsVisibleListDefault = useStatsVisibleListConfigStore((state) => state.setStatsVisibleListDefault);
   const toggleCheck = useStatsVisibleListConfigStore((state) => state.toggleCheckListStatsVisibleListDefault);
@@ -20,4 +20,4 @@ const StatSliderResultSelectorModalAndPressableForDefault = () => {
   );
 };
 
-export default StatSliderResultSelectorModalAndPressableForDefault;
+export default StatSliderResultDefaultSelectorButtonAndModal;

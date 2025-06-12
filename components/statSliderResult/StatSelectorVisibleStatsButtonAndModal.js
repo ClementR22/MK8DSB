@@ -7,7 +7,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
 import StatSelectorButtonAndModal from "../statSelector/StatSelectorButtonAndModal";
 
-const StatSliderResultSelectorModalAndPressable = () => {
+const StatSelectorVisibleStatsButtonAndModal = () => {
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
   const isInDisplayScreen = screenName === "display";
@@ -45,4 +45,4 @@ const StatSliderResultSelectorModalAndPressable = () => {
   );
 };
 
-export default StatSliderResultSelectorModalAndPressable;
+export default StatSelectorVisibleStatsButtonAndModal;

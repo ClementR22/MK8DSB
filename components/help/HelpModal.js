@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
-import ButtonAndModalForHelp from "../modal/ButtonAndModalForHelp";
+import ButtonAndHelpmodal from "../modal/ButtonAndHelpmodal";
 import Icon from "react-native-dynamic-vector-icons";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -26,7 +26,7 @@ export default HelpModal = ({ slides }) => {
   );
 
   return (
-    <ButtonAndModalForHelp isHelpModalVisible={isHelpModalVisible} setIsHelpModalVisible={setIsHelpModalVisible}>
+    <ButtonAndHelpmodal isHelpModalVisible={isHelpModalVisible} setIsHelpModalVisible={setIsHelpModalVisible}>
       <AppIntroSlider
         data={slides}
         renderItem={renderItem}
@@ -43,7 +43,7 @@ export default HelpModal = ({ slides }) => {
         scrollEnabled={isScrollEnable}
         pagingEnabled={false}
       />
-    </ButtonAndModalForHelp>
+    </ButtonAndHelpmodal>
   );
 };
 

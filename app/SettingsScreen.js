@@ -15,7 +15,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import { useResetSettings } from "@/hooks/useResetSettings";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import ButtonDeleteAllSetsInMemory from "@/components/settingsComponent/ButtonDeleteAllSetsInMemory";
-import StatSliderResultSelectorModalAndPressableForDefault from "@/components/settingsComponent/StatSliderResultSelectorModalAndPressableForDefault";
+import StatSliderResultDefaultSelectorButtonAndModal from "@/components/settingsComponent/StatSliderResultDefaultSelectorButtonAndModal";
 
 const SettingsScreen = () => {
   const resetSettings = useResetSettings();
@@ -33,7 +33,7 @@ const SettingsScreen = () => {
 
             <ThemeSelector />
 
-            <StatSliderResultSelectorModalAndPressableForDefault />
+            <StatSliderResultDefaultSelectorButtonAndModal />
 
             <SendFeedbackButton />
 

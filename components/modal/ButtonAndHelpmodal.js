@@ -3,7 +3,7 @@ import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { Modal, SafeAreaView } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 
-const ButtonAndModalForHelp = ({ isHelpModalVisible, setIsHelpModalVisible, children }) => {
+const ButtonAndHelpmodal = ({ isHelpModalVisible, setIsHelpModalVisible, children }) => {
   return (
     <>
       <ButtonIcon
@@ -24,4 +24,4 @@ const ButtonAndModalForHelp = ({ isHelpModalVisible, setIsHelpModalVisible, chil
   );
 };
 
-export default ButtonAndModalForHelp;
+export default ButtonAndHelpmodal;
