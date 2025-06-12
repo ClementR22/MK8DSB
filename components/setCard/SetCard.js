@@ -32,14 +32,14 @@ const SetCard = ({
       showTextInput: false,
       showIndex: true,
       showStatSliderResult: true,
-      actionNamesList: ["save", "loadSearchToDisplay", "export"],
+      actionNamesList: ["export", "loadSearchToDisplay", "save"],
       moreActionNamesList: undefined,
     },
     display: {
       showTextInput: true,
       showIndex: false,
       showStatSliderResult: false,
-      actionNamesList: ["edit", "save", "loadDisplayToSearch"],
+      actionNamesList: ["edit", "loadDisplayToSearch", "save"],
       moreActionNamesList: [], // va valoir ["export", "remove"] ou bien ["export"]
     },
     save: {

@@ -7,11 +7,11 @@ import BoxContainer from "../../primitiveComponents/BoxContainer";
 const DisplaySetScreenPressablesContainer = () => {
   return (
     <BoxContainer flexDirection="row" justifyContent="space-evenly">
-      <StatSliderResultSelectorModalAndPressable />
-
       <ButtonAddSet />
 
       <ButtonLoadSet tooltipText="LoadASet" />
+
+      <StatSliderResultSelectorModalAndPressable />
     </BoxContainer>
   );
 };
