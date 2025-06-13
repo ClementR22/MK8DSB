@@ -47,13 +47,8 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, disable = fa
         containerLeft: { flex: 1 },
         containerTop: {
           flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingHorizontal: 3,
-        },
-        textContainer: {
-          flexDirection: "row",
-          flex: 1,
+          marginLeft: 3,
+          marginRight: 10,
         },
         text: {
           color: theme.on_surface,
@@ -111,11 +106,10 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, disable = fa
     <View style={styles.container}>
       <View style={styles.containerLeft}>
         <View style={styles.containerTop}>
-          <View style={styles.textContainer}>
-            <Text numberOfLines={1} ellipsizeMode="middle" style={styles.text}>
-              {`${translate(name)}${translate(":")}${tempValue}`}
-            </Text>
-          </View>
+          <Text style={[styles.text, { flexShrink: 1 }]} numberOfLines={1} ellipsizeMode="tail">
+            {translate(name)}
+          </Text>
+          <Text style={[styles.text, { flexShrink: 0 }]}>{`${translate(":")}${tempValue}`}</Text>
         </View>
 
         <View style={styles.containerBottom}>
