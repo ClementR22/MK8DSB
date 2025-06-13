@@ -3,7 +3,7 @@ import ElementsSelector from "../elementsSelector/ElementsSelector";
 import useModalsStore from "@/stores/useModalsStore";
 import Modal from "../../primitiveComponents/Modal";
 
-const EditSetModal = () => {
+const ModalEditSet = () => {
   const isEditModalVisible = useModalsStore((state) => state.isEditModalVisible);
   const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
   return (
@@ -13,4 +13,4 @@ const EditSetModal = () => {
   );
 };
 
-export default EditSetModal;
+export default ModalEditSet;

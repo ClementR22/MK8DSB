@@ -6,16 +6,16 @@ import StatSlider from "@/components/statSlider/StatSlider";
 import { translate } from "@/translations/translations";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
-import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
+import ButtonLoadSet from "@/components/managingSetsButton/ButtonLoadSet";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import FlexContainer from "@/primitiveComponents/FlexContainer";
-import RenameSetModal from "@/components/modal/RenameSetModal";
+import ModalRenameSet from "@/components/modal/ModalRenameSet";
 import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
-import CompactSlider from "@/components/statSlider/CompactSlider";
+import StatSliderCompact from "@/components/statSlider/StatSliderCompact";
 import { compactStatNames } from "@/data/data";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
@@ -65,7 +65,7 @@ const SearchSetScreen = () => {
                 ? chosenStats.map(
                     (stat, index) =>
                       stat.checked && (
-                        <CompactSlider
+                        <StatSliderCompact
                           key={`compactSlider-${compactStatNames[index]}-${index}`}
                           name={compactStatNames[index]}
                           value={stat.value} // tu peux remplacer 4 par stat.value si besoin
@@ -91,7 +91,7 @@ const SearchSetScreen = () => {
 
           <SetCardContainer setsToShow={setsToShow} />
 
-          <RenameSetModal />
+          <ModalRenameSet />
         </ScrollView>
       </ResultStatsProvider>
     </ScreenProvider>

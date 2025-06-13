@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { ScrollView } from "react-native";
-import StatSliderResultContainer from "@/components/statSliderResult/StatSliderResultContainer";
+import StatSliderResult from "@/components/statSliderResult/StatSliderResult";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
@@ -25,7 +25,7 @@ const DisplaySetScreen = () => {
         <ScrollView scrollEnabled={isScrollEnable}>
           <DisplaySetScreenPressablesContainer />
           <SetCardContainer setsToShow={setsListDisplayed} hideRemoveSet={hideRemoveSet} />
-          <StatSliderResultContainer setsToShowMultipleStatsLists={setsToShowMultipleStatsLists} />
+          <StatSliderResult setsToShowMultipleStatsLists={setsToShowMultipleStatsLists} />
         </ScrollView>
       </ResultStatsProvider>
     </ScreenProvider>

@@ -11,8 +11,8 @@ import { translate } from "@/translations/translations";
 import { ScreenName } from "@/contexts/ScreenContext";
 import { useLoadSettings } from "@/hooks/useLoadSettings";
 import { Appearance } from "react-native";
-import EditSetModal from "@/components/modal/EditSetModal";
-import LoadSetModal from "@/components/modal/LoadSetModal";
+import ModalEditSet from "@/components/modal/ModalEditSet";
+import ModalLoadSet from "@/components/modal/ModalLoadSet";
 import Snackbar from "@/primitiveComponents/Snackbar";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
@@ -140,8 +140,8 @@ export default function TabLayout() {
               }}
             />
           </Tabs>
-          <EditSetModal />
-          <LoadSetModal />
+          <ModalEditSet />
+          <ModalLoadSet />
           <Snackbar />
         </PaperProvider>
       </SafeAreaView>

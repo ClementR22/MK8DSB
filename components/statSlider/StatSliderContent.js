@@ -5,7 +5,7 @@ import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import { Slider } from "@miblanchard/react-native-slider";
 import useGeneralStore from "@/stores/useGeneralStore";
 import useSetsStore from "@/stores/useSetsStore";
-import { getSliderBorderColor } from "@/utils/getSliderBorderColor";
+import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 
 const StatSliderContent = ({ name, value, number, setNumber, theme, disable = false }) => {
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
@@ -28,7 +28,7 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, disable = fa
     setTempValue(value);
   }, [value]);
 
-  const borderColor = useMemo(() => getSliderBorderColor(number, theme), [number, theme]);
+  const borderColor = useMemo(() => getStatSliderBorderColor(number, theme), [number, theme]);
 
   const styles = useMemo(
     () =>

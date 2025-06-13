@@ -1,6 +1,6 @@
 import React from "react";
-import StatSelectorResultStatsButtonAndModal from "../statSliderResult/StatSelectorResultStatsButtonAndModal";
-import ButtonImportSet from "../managingSetsPressable/ButtonImportSet";
+import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
+import ButtonImportSet from "../managingSetsButton/ButtonImportSet";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
@@ -19,7 +19,7 @@ const SavedSetScreenPressablesContainer = () => {
         onPress={sortSetsSavedKeys}
       />
       <ButtonImportSet screenName="save" />
-      <StatSelectorResultStatsButtonAndModal />
+      <ButtonAndModalStatSelectorResultStats />
     </BoxContainer>
   );
 };

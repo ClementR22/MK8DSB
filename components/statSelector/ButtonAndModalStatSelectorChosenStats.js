@@ -6,9 +6,9 @@ import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore"
 import { useResultStats } from "@/contexts/ResultStatsContext";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
-import StatSelectorButtonAndModal from "./StatSelectorButtonAndModal";
+import ButtonAndModalStatSelector from "./ButtonAndModalStatSelector";
 
-const StatSelectorChosenStatsButtonAndModal = () => {
+const ButtonAndModalStatSelectorChosenStats = () => {
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const setChosenStats = useSetsStore((state) => state.setChosenStats);
   const isChosenStatsModalVisible = useModalsStore((state) => state.isChosenStatsModalVisible);
@@ -46,7 +46,7 @@ const StatSelectorChosenStatsButtonAndModal = () => {
   }, [isChosenStatsModalVisible, isResultStatsSync]);
 
   return (
-    <StatSelectorButtonAndModal
+    <ButtonAndModalStatSelector
       statList={chosenStatsInModal}
       setStatList={setChosenStatsInModal}
       toggleCheck={(name) => {
@@ -62,4 +62,4 @@ const StatSelectorChosenStatsButtonAndModal = () => {
   );
 };
 
-export default StatSelectorChosenStatsButtonAndModal;
+export default ButtonAndModalStatSelectorChosenStats;

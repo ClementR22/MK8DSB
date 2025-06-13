@@ -5,9 +5,9 @@ import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
-import StatSelectorButtonAndModal from "../statSelector/StatSelectorButtonAndModal";
+import ButtonAndModalStatSelector from "./ButtonAndModalStatSelector";
 
-const StatSelectorResultStatsButtonAndModal = () => {
+const ButtonAndModalStatSelectorResultStats = () => {
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
   const isInDisplayScreen = screenName === "display";
@@ -25,7 +25,7 @@ const StatSelectorResultStatsButtonAndModal = () => {
     : undefined;
 
   return (
-    <StatSelectorButtonAndModal
+    <ButtonAndModalStatSelector
       statList={resultStats}
       setStatList={setResultStats}
       toggleCheck={toggleCheckResultStats}
@@ -45,4 +45,4 @@ const StatSelectorResultStatsButtonAndModal = () => {
   );
 };
 
-export default StatSelectorResultStatsButtonAndModal;
+export default ButtonAndModalStatSelectorResultStats;

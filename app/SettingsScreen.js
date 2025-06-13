@@ -4,8 +4,8 @@ import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import LanguageSelector from "@/components/settingsComponent/LanguageSelector";
 import ThemeSelector from "@/components/settingsComponent/ThemeSelector";
 import ButtonResetSettings from "@/components/settingsComponent/ButtonResetSettings";
-import SendFeedbackButton from "@/components/settingsComponent/SendFeedbackButton";
-import LicensesButton from "@/components/settingsComponent/LicensesButton";
+import ButtonSendFeedback from "@/components/settingsComponent/ButtonSendFeedbackButton";
+import ButtonLicenses from "@/components/settingsComponent/ButtonLicenses";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import FlexScrollView from "@/primitiveComponents/FlexScrollView";
 import Button from "@/primitiveComponents/Button";
@@ -15,7 +15,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import { useResetSettings } from "@/hooks/useResetSettings";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import ButtonDeleteAllSetsInMemory from "@/components/settingsComponent/ButtonDeleteAllSetsInMemory";
-import StatSelectorResultStatsDefaultButtonAndModal from "@/components/settingsComponent/StatSelectorResultStatsDefaultButtonAndModal";
+import ButtonAndModalStatSelectorResultStatsDefault from "@/components/settingsComponent/ButtonAndModalStatSelectorResultStatsDefault";
 
 const SettingsScreen = () => {
   const resetSettings = useResetSettings();
@@ -33,11 +33,11 @@ const SettingsScreen = () => {
 
             <ThemeSelector />
 
-            <StatSelectorResultStatsDefaultButtonAndModal />
+            <ButtonAndModalStatSelectorResultStatsDefault />
 
-            <SendFeedbackButton />
+            <ButtonSendFeedback />
 
-            <LicensesButton />
+            <ButtonLicenses />
 
             <ButtonResetSettings resetSettings={resetSettings} />
 

@@ -1,9 +1,10 @@
 import React from "react";
 import { IconType } from "react-native-dynamic-vector-icons";
-import HelpModal, { HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
+import { HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
+import ButtonAndHelpmodal from "./ButtonAndHelpmodal";
 
 const HelpDisplaySetScreen = () => {
-  return <HelpModal slides={slides} />;
+  return <ButtonAndHelpmodal slides={slides} />;
 };
 
 const slides = [

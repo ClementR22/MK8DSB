@@ -1,4 +1,4 @@
-export function getSliderBorderColor(number, theme) {
+export function getStatSliderBorderColor(number, theme) {
   switch (number) {
     case 0:
       return theme.outline_variant;

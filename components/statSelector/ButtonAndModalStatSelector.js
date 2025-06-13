@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import StatSelector from "./StatSelector";
 
-const StatSelectorButtonAndModal = ({
+const ButtonAndModalStatSelector = ({
   statList,
   setStatList,
   toggleCheck,
@@ -48,4 +48,4 @@ const StatSelectorButtonAndModal = ({
   );
 };
 
-export default StatSelectorButtonAndModal;
+export default ButtonAndModalStatSelector;

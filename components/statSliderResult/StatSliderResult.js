@@ -1,116 +1,73 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
+import { StyleSheet, Text, View } from "react-native";
+import StatSliderResultBar from "./StatSliderResultBar";
+import { translate } from "@/translations/translations";
+import { useResultStats } from "@/contexts/ResultStatsContext";
+import { useScreen } from "@/contexts/ScreenContext";
+import useSetsStore from "@/stores/useSetsStore";
+import { useThemeStore } from "@/stores/useThemeStore"; // Gardez l'import
 
-const StatSliderResult = ({ value, chosenValue = null }) => {
+const StatSliderResult = ({ setsToShowMultipleStatsLists }) => {
   const theme = useThemeStore((state) => state.theme);
+  const screenName = useScreen();
+  const { resultStats } = useResultStats();
+  const isInSearchScreen = screenName === "search";
 
-  if (chosenValue == null) {
-    chosenValue = value;
+  let chosenStats = null; // Initialisé à null par défaut
+
+  if (isInSearchScreen) {
+    chosenStats = useSetsStore((state) => state.chosenStats);
   }
 
-  const bonusFound = value - chosenValue;
-
-  const getFlexForSegment = (baseValue, bonus) => {
-    const flexValue = bonus >= 0 ? baseValue : baseValue + bonus;
-    return Math.max(flexValue, 0); // Assurer que la flexbox ne soit jamais négative
-  };
-
-  const getBackgroundColor = () => {
-    return bonusFound > 0 ? "#34be4d" : bonusFound < 0 ? "#ff6240" : theme.surface_container_low;
-  };
-
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
+    container: { width: "100%", flexGrow: 1, gap: 10 },
+    sliderContainer: {
+      padding: 10,
+      borderRadius: 8,
+      backgroundColor: theme.surface_container_high, //theme.surface_container
     },
-    sliderTrack: {
-      flexDirection: "row",
-      height: 10,
-      borderRadius: 5,
-      overflow: "hidden",
-      backgroundColor: theme.surface_container_low,
-    },
-    trackSegment: {
-      height: "100%",
+    text: {
+      fontSize: 16,
+      fontWeight: "bold",
+      marginBottom: 5,
+      color: theme.on_surface,
     },
   });
 
-  function bonus() {
-    if (bonusFound > 0) return 1;
-    if (bonusFound < 0) return 0;
-    else return -1;
-  }
+  const translated2Points = translate(":");
 
   return (
     <View style={styles.container}>
-      <View style={styles.sliderTrack}>
-        {/* Segment noir fixe à gauche */}
-        <View
-          style={[
-            styles.trackSegment,
-            {
-              backgroundColor: theme.primary,
-              flex: getFlexForSegment(chosenValue, bonusFound),
-            },
-          ]}
-        />
+      {resultStats.map(({ name, checked }, statIndex) => {
+        const nameTranslated = translate(name);
+        if (checked) {
+          return (
+            <View key={statIndex} style={styles.sliderContainer}>
+              <Text style={styles.text}>
+                {nameTranslated}
+                {translated2Points}
+                {JSON.stringify(setsToShowMultipleStatsLists[0]?.[statIndex])}
+              </Text>
+              {setsToShowMultipleStatsLists.map((setToShowStats, setIndex) => {
+                const chosenValue = isInSearchScreen ? chosenStats[statIndex].value : null;
 
-        {/* Si bonusFound est négatif, afficher le jaune avant le bleu/rouge */}
-        {bonusFound < 0 && (
-          <View
-            style={[
-              styles.trackSegment,
-              {
-                width: 10,
-                borderWidth: 3,
-                borderTopRightRadius: bonus() === 0 ? 0 : 100,
-                borderBottomRightRadius: bonus() === 0 ? 0 : 100,
-                backgroundColor: theme.primary,
-                borderColor: getBackgroundColor(),
-              },
-            ]}
-          />
-        )}
-
-        {/* Segment bleu ou rouge */}
-        <View
-          style={[
-            styles.trackSegment,
-            {
-              backgroundColor: getBackgroundColor(),
-              borderTopRightRadius: bonus() === 1 ? 0 : 100,
-              borderBottomRightRadius: bonus() === 1 ? 0 : 100,
-              flex: Math.abs(bonusFound),
-            },
-          ]}
-        />
-
-        {/* Si bonusFound est positif, afficher le jaune après le bleu/rouge */}
-        {bonusFound >= 0 && (
-          <View
-            style={[
-              styles.trackSegment,
-              {
-                width: 10,
-                borderWidth: 3,
-                backgroundColor: theme.primary,
-                borderColor: getBackgroundColor(),
-              },
-            ]}
-          />
-        )}
-
-        {/* Segment gris fixe à droite */}
-        <View
-          style={[
-            styles.trackSegment,
-            {
-              flex: getFlexForSegment(6 - value, bonusFound),
-            },
-          ]}
-        />
-      </View>
+                return (
+                  <View
+                    key={setIndex}
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "stretch",
+                    }}
+                  >
+                    <StatSliderResultBar value={setToShowStats[statIndex]} chosenValue={chosenValue} />
+                  </View>
+                );
+              })}
+            </View>
+          );
+        }
+        return null;
+      })}
     </View>
   );
 };

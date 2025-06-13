@@ -1,15 +1,15 @@
 import React, { useMemo } from "react";
 import SetCardContainer from "../setCard/SetCardContainer";
-import ButtonImportSet from "../managingSetsPressable/ButtonImportSet";
+import ButtonImportSet from "../managingSetsButton/ButtonImportSet";
 import Modal from "@/primitiveComponents/Modal";
 import useSetsStore from "@/stores/useSetsStore";
-import { useLoadSetModalStore } from "@/stores/useLoadSetModalStore";
+import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
 import useModalsStore from "@/stores/useModalsStore";
 
-const LoadSetModal = () => {
+const ModalLoadSet = () => {
   const setsListSaved = useSetsStore((state) => state.setsListSaved);
-  const isLoadSetModalVisible = useLoadSetModalStore((state) => state.isLoadSetModalVisible);
-  const setIsLoadSetModalVisible = useLoadSetModalStore((state) => state.setIsLoadSetModalVisible);
+  const isLoadSetModalVisible = useModalLoadSetStore((state) => state.isLoadSetModalVisible);
+  const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
   const screenNameForEditModal = useModalsStore((state) => state.screenNameForEditModal);
 
   const savedSets = useMemo(() => {
@@ -28,4 +28,4 @@ const LoadSetModal = () => {
   );
 };
 
-export default LoadSetModal;
+export default ModalLoadSet;

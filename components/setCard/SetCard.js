@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
+import StatSliderResult from "../statSliderResult/StatSliderResult";
 import SetNameInput from "../textInput/SetNameInput";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import FlexContainer from "@/primitiveComponents/FlexContainer";
@@ -139,7 +139,7 @@ const SetCard = ({
 
       {config.showStatSliderResult && (
         <BoxContainer contentBackgroundColor={theme.surface} margin={0} marginTop={8} widthContainer={width}>
-          <StatSliderResultContainer setsToShowMultipleStatsLists={[setToShowStats]} />
+          <StatSliderResult setsToShowMultipleStatsLists={[setToShowStats]} />
         </BoxContainer>
       )}
     </View>

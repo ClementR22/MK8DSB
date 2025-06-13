@@ -1,7 +1,7 @@
 import React from "react";
-import StatSelectorResultStatsButtonAndModal from "../statSliderResult/StatSelectorResultStatsButtonAndModal";
-import ButtonLoadSet from "../managingSetsPressable/ButtonLoadSet";
-import ButtonAddSet from "../managingSetsPressable/ButtonAddSet";
+import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
+import ButtonLoadSet from "../managingSetsButton/ButtonLoadSet";
+import ButtonAddSet from "../managingSetsButton/ButtonAddSet";
 import BoxContainer from "../../primitiveComponents/BoxContainer";
 
 const DisplaySetScreenPressablesContainer = () => {
@@ -11,7 +11,7 @@ const DisplaySetScreenPressablesContainer = () => {
 
       <ButtonLoadSet tooltipText="LoadASet" />
 
-      <StatSelectorResultStatsButtonAndModal />
+      <ButtonAndModalStatSelectorResultStats />
     </BoxContainer>
   );
 };

@@ -1,6 +1,6 @@
 import Snackbar from "./SnackbarManager";
 
-function showToast (text = "Ceci est une alerte temporaire 👋") {
+function showToast(text = "Ceci est une alerte temporaire 👋") {
   Snackbar.show(text);
 }
 

@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
-import ButtonAndHelpmodal from "../modal/ButtonAndHelpmodal";
 import Icon from "react-native-dynamic-vector-icons";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 
-export default HelpModal = ({ slides }) => {
-  const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
+export default HelpModal = ({ slides, setIsHelpModalVisible }) => {
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const onDoneOrSkip = () => {
@@ -26,24 +24,22 @@ export default HelpModal = ({ slides }) => {
   );
 
   return (
-    <ButtonAndHelpmodal isHelpModalVisible={isHelpModalVisible} setIsHelpModalVisible={setIsHelpModalVisible}>
-      <AppIntroSlider
-        data={slides}
-        renderItem={renderItem}
-        onDone={onDoneOrSkip}
-        onSkip={onDoneOrSkip}
-        showSkipButton
-        showPrevButton
-        renderDoneButton={() => renderButton("Terminer")}
-        renderPrevButton={() => renderButton("Précédent")}
-        renderNextButton={() => renderButton("Suivant")}
-        renderSkipButton={() => renderButton("Fermer")}
-        dotStyle={styles.dotStyle}
-        activeDotStyle={styles.activeDotStyle}
-        scrollEnabled={isScrollEnable}
-        pagingEnabled={false}
-      />
-    </ButtonAndHelpmodal>
+    <AppIntroSlider
+      data={slides}
+      renderItem={renderItem}
+      onDone={onDoneOrSkip}
+      onSkip={onDoneOrSkip}
+      showSkipButton
+      showPrevButton
+      renderDoneButton={() => renderButton("Terminer")}
+      renderPrevButton={() => renderButton("Précédent")}
+      renderNextButton={() => renderButton("Suivant")}
+      renderSkipButton={() => renderButton("Fermer")}
+      dotStyle={styles.dotStyle}
+      activeDotStyle={styles.activeDotStyle}
+      scrollEnabled={isScrollEnable}
+      pagingEnabled={false}
+    />
   );
 };
 

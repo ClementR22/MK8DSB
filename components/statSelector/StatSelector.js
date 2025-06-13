@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { ScrollView, View } from "react-native";
 import PressableStat from "./PressableStat";
 import SelectAllStatsSwitch from "./SelectAllStatsSwitch";
-import ResultStatsSyncSwitch from "../settingsComponent/ResultStatsSyncSwitch";
+import ResultStatsSyncSwitch from "./ResultStatsSyncSwitch";
 
 const StatSelector = ({
   statList,

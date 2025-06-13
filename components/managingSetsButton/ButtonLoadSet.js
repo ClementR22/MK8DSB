@@ -1,10 +1,10 @@
 import React from "react";
-import { useLoadSetModalStore } from "@/stores/useLoadSetModalStore";
+import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 
 const ButtonLoadSet = ({ tooltipText }) => {
-  const setIsLoadSetModalVisible = useLoadSetModalStore((state) => state.setIsLoadSetModalVisible);
+  const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
 
   return (
     <ButtonIcon
