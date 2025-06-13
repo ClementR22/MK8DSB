@@ -12,10 +12,8 @@ const StatSelectorResultStatsDefaultButtonAndModal = () => {
       statList={resultStatsDefault}
       setStatList={setResultStatsDefault}
       toggleCheck={toggleCheck}
-      customTrigger={undefined}
       triggerButtonText="ConfigureDefaultStats"
       modalTitle="DefaultDisplayedStats"
-      secondButtonProps={undefined}
     />
   );
 };

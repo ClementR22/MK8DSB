@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useResultStatsConfigStore } from "@/stores/useResultStatsDefaultStore";
+import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import Switch from "../../primitiveComponents/Switch";
 import useSetsStore from "@/stores/useSetsStore";
 
@@ -10,8 +10,8 @@ const ResultStatsSyncSwitch = ({
   setStatListBeforeSync,
   externalUpdateRef,
 }) => {
-  const isResultStatsSync = useResultStatsConfigStore((state) => state.isResultStatsSync);
-  const setIsResultStatsSync = useResultStatsConfigStore((state) => state.setIsResultStatsSync);
+  const isResultStatsSync = useResultStatsDefaultStore((state) => state.isResultStatsSync);
+  const setIsResultStatsSync = useResultStatsDefaultStore((state) => state.setIsResultStatsSync);
   const chosenStats = useSetsStore((state) => state.chosenStats);
 
   const onToggleSwitch = () => {

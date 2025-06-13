@@ -1,5 +1,5 @@
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import { useResultStatsConfigStore } from "@/stores/useResultStatsDefaultStore";
+import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { resultStatsInit } from "./resultStatsInit";
 
@@ -12,8 +12,8 @@ type SettingsEntry = {
 
 export function useSettingsMap(): Record<SettingKey, SettingsEntry> {
   const setLanguage = useLanguageStore((state) => state.setLanguage);
-  const setIsResultStatsSync = useResultStatsConfigStore((state) => state.setIsResultStatsSync);
-  const setResultStatsDefault = useResultStatsConfigStore((state) => state.setResultStatsDefault);
+  const setIsResultStatsSync = useResultStatsDefaultStore((state) => state.setIsResultStatsSync);
+  const setResultStatsDefault = useResultStatsDefaultStore((state) => state.setResultStatsDefault);
   const setTheme = useThemeStore((state) => state.setTheme);
 
   return {

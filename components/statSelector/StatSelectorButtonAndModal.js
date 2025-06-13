@@ -13,6 +13,10 @@ const StatSelectorButtonAndModal = ({
   isResultStatsInSearchScreen = false,
   disabled = false,
   includeBeforeSync = false,
+  // Si fournie, la modale est contrôlée de l'extérieur
+  isModalVisibleProp = undefined,
+  // Setter pour le contrôle externe
+  setIsModalVisibleProp = undefined,
 }) => {
   const [statListBeforeAll, setStatListBeforeAll] = useState(null);
   const [statListBeforeSync, setStatListBeforeSync] = useState(statList);
@@ -24,6 +28,8 @@ const StatSelectorButtonAndModal = ({
       modalTitle={modalTitle}
       secondButtonProps={secondButtonProps}
       closeAfterSecondButton={false}
+      isModalVisibleProp={isModalVisibleProp}
+      setIsModalVisibleProp={setIsModalVisibleProp}
     >
       <StatSelector
         statList={statList}

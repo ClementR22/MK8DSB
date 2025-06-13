@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { toggleCheckList } from "@/utils/toggleCheck";
+import { toggleAndGetChecks, toggleCheckList } from "@/utils/toggleCheck";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 import { resultStatsInit } from "@/config/resultStatsInit";
 
@@ -37,6 +37,7 @@ export const useResultStatsDefaultStore = create<ResultStatsDefaultStore>((set, 
   },
 
   toggleCheckListResultStatsDefault(name) {
-    toggleCheckList(get().setResultStatsDefault, name);
+    const newList = toggleAndGetChecks(get().resultStatsDefault, name);
+    get().setResultStatsDefault(newList);
   },
 }));
