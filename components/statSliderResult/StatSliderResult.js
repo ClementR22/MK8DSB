@@ -43,11 +43,15 @@ const StatSliderResult = ({ setsToShowMultipleStatsLists }) => {
         if (checked) {
           return (
             <View key={statIndex} style={styles.sliderContainer}>
-              <Text style={styles.text}>
-                {nameTranslated}
-                {translated2Points}
-                {JSON.stringify(setsToShowMultipleStatsLists[0]?.[statIndex])}
-              </Text>
+              <View style={{ flexDirection: "row", alignItems: "center", flexWrap: "nowrap" }}>
+                <Text style={[styles.text, { flexShrink: 1 }]} numberOfLines={1} ellipsizeMode="tail">
+                  {nameTranslated}
+                </Text>
+                <Text style={[styles.text, { flexShrink: 0 }]}>
+                  {translated2Points}
+                  {JSON.stringify(setsToShowMultipleStatsLists[0]?.[statIndex])}
+                </Text>
+              </View>
               {setsToShowMultipleStatsLists.map((setToShowStats, setIndex) => {
                 const chosenValue = isInSearchScreen ? chosenStats[statIndex].value : null;
 
