@@ -3,7 +3,7 @@ import { ScrollView } from "react-native";
 import StatSliderResultContainer from "@/components/statSliderResult/StatSliderResultContainer";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
+import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import DisplaySetScreenPressablesContainer from "@/components/screenPressablesContainer/DisplaySetScreenPressablesContainer";
 import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -21,13 +21,13 @@ const DisplaySetScreen = () => {
 
   return (
     <ScreenProvider screenName="display">
-      <StatsVisibleListProvider>
+      <ResultStatsProvider>
         <ScrollView scrollEnabled={isScrollEnable}>
           <DisplaySetScreenPressablesContainer />
           <SetCardContainer setsToShow={setsListDisplayed} hideRemoveSet={hideRemoveSet} />
           <StatSliderResultContainer setsToShowMultipleStatsLists={setsToShowMultipleStatsLists} />
         </ScrollView>
-      </StatsVisibleListProvider>
+      </ResultStatsProvider>
     </ScreenProvider>
   );
 };

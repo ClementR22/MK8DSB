@@ -3,7 +3,7 @@ import { ScrollView } from "react-native";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import SavedSetScreenPressablesContainer from "@/components/screenPressablesContainer/SavedSetScreenPressablesContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
+import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 
@@ -13,12 +13,12 @@ const SavedSetScreen = () => {
 
   return (
     <ScreenProvider screenName="save">
-      <StatsVisibleListProvider>
+      <ResultStatsProvider>
         <ScrollView scrollEnabled={isScrollEnable}>
           <SavedSetScreenPressablesContainer />
           <SetCardContainer setsToShow={setsListSaved} />
         </ScrollView>
-      </StatsVisibleListProvider>
+      </ResultStatsProvider>
     </ScreenProvider>
   );
 };

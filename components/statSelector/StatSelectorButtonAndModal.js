@@ -10,7 +10,7 @@ const StatSelectorButtonAndModal = ({
   triggerButtonText,
   modalTitle,
   secondButtonProps,
-  isStatVisibleInSearchScreen = false,
+  isResultStatsInSearchScreen = false,
   disabled = false,
   includeBeforeSync = false,
 }) => {
@@ -35,7 +35,7 @@ const StatSelectorButtonAndModal = ({
           statListBeforeSync,
           setStatListBeforeSync,
         })}
-        isStatVisibleInSearchScreen={isStatVisibleInSearchScreen}
+        isResultStatsInSearchScreen={isResultStatsInSearchScreen}
         disabled={disabled}
       />
     </ButtonAndModal>

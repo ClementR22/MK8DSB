@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import StatSliderResult from "./StatSliderResult";
 import { translate } from "@/translations/translations";
-import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
+import { useResultStats } from "@/contexts/ResultStatsContext";
 import { useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore"; // Gardez l'import
@@ -10,7 +10,7 @@ import { useThemeStore } from "@/stores/useThemeStore"; // Gardez l'import
 const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
   const theme = useThemeStore((state) => state.theme);
   const screenName = useScreen();
-  const { statsVisibleList } = useStatsVisibleList();
+  const { resultStats } = useResultStats();
   const isInSearchScreen = screenName === "search";
 
   let chosenStats = null; // Initialisé à null par défaut
@@ -38,7 +38,7 @@ const StatSliderResultContainer = ({ setsToShowMultipleStatsLists }) => {
 
   return (
     <View style={styles.container}>
-      {statsVisibleList.map(({ name, checked }, statIndex) => {
+      {resultStats.map(({ name, checked }, statIndex) => {
         const nameTranslated = translate(name);
         if (checked) {
           return (

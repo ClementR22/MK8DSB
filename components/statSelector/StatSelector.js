@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { ScrollView, View } from "react-native";
 import PressableStat from "./PressableStat";
 import SelectAllStatsSwitch from "./SelectAllStatsSwitch";
-import StatsVisibleSyncSwitch from "../settingsComponent/StatsVisibleSyncSwitch";
+import ResultStatsSyncSwitch from "../settingsComponent/ResultStatsSyncSwitch";
 
 const StatSelector = ({
   statList,
@@ -12,7 +12,7 @@ const StatSelector = ({
   statListBeforeSync,
   setStatListBeforeSync,
   toggleCheck,
-  isStatVisibleInSearchScreen = false,
+  isResultStatsInSearchScreen = false,
   disabled = false,
 }) => {
   const externalUpdateRef = useRef(false);
@@ -29,8 +29,8 @@ const StatSelector = ({
           externalUpdateRef={externalUpdateRef}
         />
 
-        {isStatVisibleInSearchScreen && (
-          <StatsVisibleSyncSwitch
+        {isResultStatsInSearchScreen && (
+          <ResultStatsSyncSwitch
             statList={statList}
             setStatList={setStatList}
             statListBeforeSync={statListBeforeSync}

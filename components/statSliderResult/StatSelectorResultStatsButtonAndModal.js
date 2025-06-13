@@ -1,34 +1,34 @@
 import React from "react";
-import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
+import { useResultStats } from "@/contexts/ResultStatsContext";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
-import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
+import { useResultStatsConfigStore } from "@/stores/useResultStatsDefaultStore";
 import StatSelectorButtonAndModal from "../statSelector/StatSelectorButtonAndModal";
 
-const StatSelectorVisibleStatsButtonAndModal = () => {
+const StatSelectorResultStatsButtonAndModal = () => {
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
   const isInDisplayScreen = screenName === "display";
 
-  const { statsVisibleList, setStatsVisibleList, toggleCheckListStatsVisibleList } = useStatsVisibleList();
+  const { resultStats, setResultStats, toggleCheckResultStats } = useResultStats();
   const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
-  const isStatsVisibleSync = useStatsVisibleListConfigStore((state) => state.isStatsVisibleSync);
+  const isResultStatsSync = useResultStatsConfigStore((state) => state.isResultStatsSync);
 
   const secondButtonProps = isInSearchScreen
     ? {
         text: "MatchDesiredStats",
-        onPress: () => syncWithChosenStats(setStatsVisibleList),
-        disabled: isStatsVisibleSync,
+        onPress: () => syncWithChosenStats(setResultStats),
+        disabled: isResultStatsSync,
       }
     : undefined;
 
   return (
     <StatSelectorButtonAndModal
-      statList={statsVisibleList}
-      setStatList={setStatsVisibleList}
-      toggleCheck={toggleCheckListStatsVisibleList}
+      statList={resultStats}
+      setStatList={setResultStats}
+      toggleCheck={toggleCheckResultStats}
       customTrigger={
         <ButtonIcon
           tooltipText={isInDisplayScreen ? "DisplayedStats" : "DisplayedStatsInSets"}
@@ -38,11 +38,11 @@ const StatSelectorVisibleStatsButtonAndModal = () => {
       }
       modalTitle={isInDisplayScreen ? "DisplayedStats" : "DisplayedStatsInSets"}
       secondButtonProps={secondButtonProps}
-      isStatVisibleInSearchScreen={isInSearchScreen}
-      disabled={isInSearchScreen && isStatsVisibleSync}
+      isResultStatsInSearchScreen={isInSearchScreen}
+      disabled={isInSearchScreen && isResultStatsSync}
       includeBeforeSync
     />
   );
 };
 
-export default StatSelectorVisibleStatsButtonAndModal;
+export default StatSelectorResultStatsButtonAndModal;

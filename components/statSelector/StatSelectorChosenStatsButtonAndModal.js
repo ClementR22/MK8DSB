@@ -3,18 +3,24 @@ import React, { useEffect, useState } from "react";
 import StatSelector from "./StatSelector";
 import { toggleAndGetChecksForChosenStats } from "@/utils/toggleCheck";
 import useModalsStore from "@/stores/useModalsStore";
-import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
-import { useStatsVisibleList } from "@/contexts/StatsVisibleListContext";
+import { useResultStatsConfigStore } from "@/stores/useResultStatsDefaultStore";
+import { useResultStats } from "@/contexts/ResultStatsContext";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 
-const StatSelectorChosenStats = ({
-  chosenStatsInModal,
-  setChosenStatsInModal,
-  statListBeforeAll,
-  setStatListBeforeAll,
-}) => {
+const StatSelectorChosenStatsButtonAndModal = () => {
+  const chosenStats = useSetsStore((state) => state.chosenStats);
+  const setChosenStats = useSetsStore((state) => state.setChosenStats);
+  const isChosenStatsModalVisible = useModalsStore((state) => state.isChosenStatsModalVisible);
+  const setIsChosenStatsModalVisible = useModalsStore((state) => state.setIsChosenStatsModalVisible);
+  const isResultStatsSync = useResultStatsConfigStore((state) => state.isResultStatsSync);
+  const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
+  const { setResultStats } = useResultStats();
+
+  const [chosenStatsInModal, setChosenStatsInModal] = useState(chosenStats);
+  const [statListBeforeAll, setStatListBeforeAll] = useState(null);
+
   const toggleCheckChosenStats = (name) => {
     const newList = toggleAndGetChecksForChosenStats(chosenStatsInModal, name);
     const hasChecked = newList.some((item) => item.checked);
@@ -26,32 +32,6 @@ const StatSelectorChosenStats = ({
     setChosenStatsInModal(newList);
   };
 
-  return (
-    <StatSelector
-      statList={chosenStatsInModal}
-      setStatList={setChosenStatsInModal}
-      statListBeforeAll={statListBeforeAll}
-      setStatListBeforeAll={setStatListBeforeAll}
-      toggleCheck={(name) => {
-        toggleCheckChosenStats(name);
-      }}
-    />
-  );
-};
-
-const StatSelectorChosenStatsButtonAndModal = () => {
-  const chosenStats = useSetsStore((state) => state.chosenStats);
-  const setChosenStats = useSetsStore((state) => state.setChosenStats);
-  const isChosenStatsModalVisible = useModalsStore((state) => state.isChosenStatsModalVisible);
-  const setIsChosenStatsModalVisible = useModalsStore((state) => state.setIsChosenStatsModalVisible);
-  const isStatsVisibleSync = useStatsVisibleListConfigStore((state) => state.isStatsVisibleSync);
-  const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
-  const { setStatsVisibleList } = useStatsVisibleList();
-
-  const [chosenStatsInModal, setChosenStatsInModal] = useState(chosenStats);
-
-  const [statListBeforeAll, setStatListBeforeAll] = useState(null);
-
   useEffect(() => {
     if (isChosenStatsModalVisible) {
       // à l'ouverture, on récupère le state global chosenStats dans le state local chosenStatsInModal
@@ -60,27 +40,30 @@ const StatSelectorChosenStatsButtonAndModal = () => {
       // à la fermeture, on donne met à jour le state global chosenStats
       setChosenStats(chosenStatsInModal);
 
-      // et, s'il le faut on synchronise statsVisibleList
-      if (isStatsVisibleSync) {
-        syncWithChosenStats(setStatsVisibleList);
+      // et, s'il le faut on synchronise resultStats
+      if (isResultStatsSync) {
+        syncWithChosenStats(setResultStats);
       }
     }
-  }, [isChosenStatsModalVisible, isStatsVisibleSync]);
+  }, [isChosenStatsModalVisible, isResultStatsSync]);
 
   return (
     <ButtonAndModal
-      modalTitle="DesiredStats"
-      isModalVisibleProp={isChosenStatsModalVisible}
-      setIsModalVisibleProp={setIsChosenStatsModalVisible}
       customTrigger={
         <ButtonIcon tooltipText="ChooseStats" iconName="plus" iconType={IconType.MaterialCommunityIcons} />
       }
+      isModalVisibleProp={isChosenStatsModalVisible}
+      setIsModalVisibleProp={setIsChosenStatsModalVisible}
+      modalTitle="DesiredStats"
     >
-      <StatSelectorChosenStats
-        chosenStatsInModal={chosenStatsInModal}
-        setChosenStatsInModal={setChosenStatsInModal}
+      <StatSelector
+        statList={chosenStatsInModal}
+        setStatList={setChosenStatsInModal}
         statListBeforeAll={statListBeforeAll}
         setStatListBeforeAll={setStatListBeforeAll}
+        toggleCheck={(name) => {
+          toggleCheckChosenStats(name);
+        }}
       />
     </ButtonAndModal>
   );

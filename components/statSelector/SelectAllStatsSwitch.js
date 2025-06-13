@@ -54,7 +54,7 @@ const SelectAllStatsSwitch = ({
       if (hasAllChecked) {
         if (externalUpdateRef.current) {
           externalUpdateRef.current = false; // reset le flag
-          return; // skip la mise à jour de statListBeforeAll si le changement vient de StatsVisibleSyncSwitch
+          return; // skip la mise à jour de statListBeforeAll si le changement vient de ResultStatsSyncSwitch
         } else {
           // sinon, on est dans le cas : l'utilisateur vient de cocher le dernier élément manuellement
           // on MAJ statListBeforeAll avec tous les checked à true

@@ -8,7 +8,7 @@ import SetCardContainer from "@/components/setCard/SetCardContainer";
 import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
 import ButtonLoadSet from "@/components/managingSetsPressable/ButtonLoadSet";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
+import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import FlexContainer from "@/primitiveComponents/FlexContainer";
 import RenameSetModal from "@/components/modal/RenameSetModal";
@@ -31,7 +31,7 @@ const SearchSetScreen = () => {
 
   return (
     <ScreenProvider screenName="search">
-      <StatsVisibleListProvider>
+      <ResultStatsProvider>
         <ScrollView scrollEnabled={isScrollEnable}>
           <FlexContainer>
             <BoxContainer contentBackgroundColor={theme.surface_container_high} borderRadius={27}>
@@ -93,7 +93,7 @@ const SearchSetScreen = () => {
 
           <RenameSetModal />
         </ScrollView>
-      </StatsVisibleListProvider>
+      </ResultStatsProvider>
     </ScreenProvider>
   );
 };

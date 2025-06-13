@@ -10,6 +10,7 @@ import {
   saveThingInMemory,
 } from "@/utils/asyncStorageOperations";
 import { ScreenName } from "@/contexts/ScreenContext";
+import { ResultStats } from "./useResultStatsDefaultStore";
 
 // Types
 export type StatName = string;
@@ -19,11 +20,6 @@ export interface ChosenStat {
   checked: boolean;
   value: number | null;
   statFilterNumber: number;
-}
-
-export interface VisibleStat {
-  name: StatName;
-  checked: boolean;
 }
 
 export interface SetObject {
@@ -45,7 +41,7 @@ export interface SetsStoreState {
   setSetsListFound: (newSetsList: SetObject[]) => void;
   setSetCardEdittedIndex: (newIndex: number) => void;
   updateStatValue: (name: string, newValue: number) => void;
-  syncWithChosenStats: (setStatsVisibleList: (list: VisibleStat[]) => void) => void;
+  syncWithChosenStats: (setResultStats: (list: ResultStats) => void) => void;
   setStatFilterNumber: (statName: string, newState: number) => void;
   getSetsSavedKeys: () => Promise<string[]>;
   fetchSavedSets: () => Promise<void>;
@@ -109,8 +105,8 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       chosenStats: state.chosenStats.map((stat) => (stat.name === name ? { ...stat, value: newValue } : stat)),
     })),
 
-  syncWithChosenStats: (setStatsVisibleList) => {
-    setStatsVisibleList(get().chosenStats);
+  syncWithChosenStats: (setResultStats) => {
+    setResultStats(get().chosenStats);
   },
 
   setStatFilterNumber: (statName, newState) => {

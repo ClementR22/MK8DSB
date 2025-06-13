@@ -1,6 +1,6 @@
 import React from "react";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
+import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import LanguageSelector from "@/components/settingsComponent/LanguageSelector";
 import ThemeSelector from "@/components/settingsComponent/ThemeSelector";
 import ButtonResetSettings from "@/components/settingsComponent/ButtonResetSettings";
@@ -15,7 +15,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import { useResetSettings } from "@/hooks/useResetSettings";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import ButtonDeleteAllSetsInMemory from "@/components/settingsComponent/ButtonDeleteAllSetsInMemory";
-import StatSliderResultDefaultSelectorButtonAndModal from "@/components/settingsComponent/StatSliderResultDefaultSelectorButtonAndModal";
+import StatSelectorResultStatsDefaultButtonAndModal from "@/components/settingsComponent/StatSelectorResultStatsDefaultButtonAndModal";
 
 const SettingsScreen = () => {
   const resetSettings = useResetSettings();
@@ -23,7 +23,7 @@ const SettingsScreen = () => {
 
   return (
     <ScreenProvider screenName="settings">
-      <StatsVisibleListProvider>
+      <ResultStatsProvider>
         <FlexScrollView>
           {/* peut etre remplacer FlexScrollView par une view dans le futur */}
           <BoxContainer alignItems={"stretch"}>
@@ -33,7 +33,7 @@ const SettingsScreen = () => {
 
             <ThemeSelector />
 
-            <StatSliderResultDefaultSelectorButtonAndModal />
+            <StatSelectorResultStatsDefaultButtonAndModal />
 
             <SendFeedbackButton />
 
@@ -65,7 +65,7 @@ const SettingsScreen = () => {
             </Button>
           </BoxContainer>
         </FlexScrollView>
-      </StatsVisibleListProvider>
+      </ResultStatsProvider>
     </ScreenProvider>
   );
 };
