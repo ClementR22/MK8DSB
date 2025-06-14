@@ -1,7 +1,7 @@
 import { statNames } from "@/data/data";
-import { StatsVisibleList } from "@/stores/useStatsVisibleListConfigStore";
+import { ResultStats } from "@/stores/useResultStatsDefaultStore";
 
-const statsVisibleListConfig: Record<string, boolean> = {
+const resultStatsConfig: Record<string, boolean> = {
   speedGround: true,
   speedAntiGravity: false,
   speedWater: false,
@@ -16,7 +16,7 @@ const statsVisibleListConfig: Record<string, boolean> = {
   miniTurbo: false,
 };
 
-export const statsVisibleListInit: StatsVisibleList = statNames.map((statName) => ({
+export const resultStatsInit: ResultStats = statNames.map((statName) => ({
   name: statName,
-  checked: statsVisibleListConfig[statName],
+  checked: resultStatsConfig[statName],
 }));

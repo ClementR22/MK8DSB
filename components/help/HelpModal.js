@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
-import ButtonAndModalForHelp from "../modal/ButtonAndModalForHelp";
 import Icon from "react-native-dynamic-vector-icons";
 import { useThemeStore } from "@/stores/useThemeStore";
+import useGeneralStore from "@/stores/useGeneralStore";
 
-export default HelpModal = ({ slides }) => {
-  const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
+export default HelpModal = ({ slides, setIsHelpModalVisible }) => {
+  const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const onDoneOrSkip = () => {
     setIsHelpModalVisible(false);
@@ -24,22 +24,22 @@ export default HelpModal = ({ slides }) => {
   );
 
   return (
-    <ButtonAndModalForHelp isHelpModalVisible={isHelpModalVisible} setIsHelpModalVisible={setIsHelpModalVisible}>
-      <AppIntroSlider
-        data={slides}
-        renderItem={renderItem}
-        onDone={onDoneOrSkip}
-        onSkip={onDoneOrSkip}
-        showSkipButton
-        showPrevButton
-        renderDoneButton={() => renderButton("Terminer")}
-        renderPrevButton={() => renderButton("Précédent")}
-        renderNextButton={() => renderButton("Suivant")}
-        renderSkipButton={() => renderButton("Fermer")}
-        dotStyle={styles.dotStyle}
-        activeDotStyle={styles.activeDotStyle}
-      />
-    </ButtonAndModalForHelp>
+    <AppIntroSlider
+      data={slides}
+      renderItem={renderItem}
+      onDone={onDoneOrSkip}
+      onSkip={onDoneOrSkip}
+      showSkipButton
+      showPrevButton
+      renderDoneButton={() => renderButton("Terminer")}
+      renderPrevButton={() => renderButton("Précédent")}
+      renderNextButton={() => renderButton("Suivant")}
+      renderSkipButton={() => renderButton("Fermer")}
+      dotStyle={styles.dotStyle}
+      activeDotStyle={styles.activeDotStyle}
+      scrollEnabled={isScrollEnable}
+      pagingEnabled={false}
+    />
   );
 };
 
@@ -62,6 +62,10 @@ export const HelpIconAndText = ({ name, type, isButton = true, children }) => {
     </View>
   );
 };
+
+export const HelpFullWidthContainer = ({ paddingHorizontal, marginHorizontal, children }) => (
+  <View style={{ width: "100%", paddingHorizontal, marginHorizontal }}>{children}</View>
+);
 
 const styles = StyleSheet.create({
   container: {

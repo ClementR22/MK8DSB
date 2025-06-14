@@ -1,9 +1,10 @@
-import React from "react";
-import { Pressable, ScrollView, StyleSheet } from "react-native";
+import React, { useRef } from "react";
+import { Pressable, ScrollView, StyleSheet, Text } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCard from "./SetCard";
-import useModalsStore from "@/stores/useModalsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
+import useGeneralStore from "@/stores/useGeneralStore";
+import { translate } from "@/translations/translations";
 
 const SetCardContainer = ({
   setsToShow,
@@ -12,25 +13,36 @@ const SetCardContainer = ({
   hideRemoveSet = undefined,
 }) => {
   const theme = useThemeStore((state) => state.theme);
-  const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
+  const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const noSetToShow = setsToShow.length === 0;
   const contentWidth = noSetToShow ? "100%" : undefined;
 
+  const translatedPlaceHolderText = translate("NoSetFound...");
+
+  const isFirstRender = useRef(true);
+  let placeHolder = null;
+
+  if (noSetToShow) {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      placeHolder = <MaterialCommunityIcons name="chat-question" size={72} color={theme.on_surface} />;
+    } else {
+      placeHolder = <Text>{translatedPlaceHolderText}</Text>;
+    }
+  }
+
   return (
-    <ScrollView scrollEnabled={!isTooltipVisible} horizontal={true} contentContainerStyle={{ width: contentWidth }}>
+    <ScrollView scrollEnabled={isScrollEnable} horizontal={true} contentContainerStyle={{ width: contentWidth }}>
       <Pressable
         style={[
           styles.setCardContainer,
           {
-            flexDirection: "row",
-            flexGrow: 1,
             backgroundColor: theme.surface_container_high,
-            justifyContent: "center", // utile pour l'icon chat-question
           },
         ]}
       >
-        {noSetToShow && <MaterialCommunityIcons name="chat-question" size={72} color={theme.on_surface} />}
+        {placeHolder}
 
         {setsToShow.map(({ name, classIds, stats }, index) => {
           return (
@@ -62,5 +74,8 @@ const styles = StyleSheet.create({
     //backgroundColor: theme.surface_container_high,
     borderRadius: 24,
     columnGap: 16,
+    flexDirection: "row",
+    flexGrow: 1,
+    justifyContent: "center", // utile pour l'icon chat-question
   },
 });

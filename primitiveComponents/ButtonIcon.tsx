@@ -77,9 +77,9 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
       style={[styles.container, buttonHover && getElevation()]}
       onHoverIn={() => setButtonHover(true)}
       onHoverOut={() => setButtonHover(false)}
-      {...props}
       disabled={disabled}
       placement={toolTipPlacement}
+      {...props}
     >
       <Icon type={iconType} name={iconName} size={iconSize} color={theme.on_primary} />
     </TooltipWrapper>

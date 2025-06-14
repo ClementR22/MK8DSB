@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import StatSliderResultContainer from "../statSliderResult/StatSliderResultContainer";
+import StatSliderResultsContainer from "../statSliderResult/StatSliderResultsContainer";
 import SetNameInput from "../textInput/SetNameInput";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import FlexContainer from "@/primitiveComponents/FlexContainer";
@@ -11,6 +11,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
 import { useThemeStore } from "@/stores/useThemeStore";
 import SetImagesModal from "./SetImagesModal";
+import { Text, View } from "react-native";
 
 const SetCard = ({
   setToShowName,
@@ -28,25 +29,29 @@ const SetCard = ({
 
   const situationConfig = {
     search: {
-      showTextInput: true,
+      showTextInput: false,
+      showIndex: true,
       showStatSliderResult: true,
-      actionNamesList: ["save", "loadSearchToDisplay", "export"],
+      actionNamesList: ["export", "loadSearchToDisplay", "save"],
       moreActionNamesList: undefined,
     },
     display: {
       showTextInput: true,
+      showIndex: false,
       showStatSliderResult: false,
-      actionNamesList: ["edit", "save", "loadDisplayToSearch"],
+      actionNamesList: ["edit", "loadDisplayToSearch", "save"],
       moreActionNamesList: [], // va valoir ["export", "remove"] ou bien ["export"]
     },
     save: {
       showTextInput: true,
+      showIndex: false,
       showStatSliderResult: true,
       actionNamesList: ["edit", "loadSaveToSearch", "loadSaveToDisplay"],
       moreActionNamesList: ["export", "removeInMemory"],
     },
     load: {
       showTextInput: true,
+      showIndex: false,
       showStatSliderResult: false,
       actionNamesList: [screenName === "search" ? "loadSaveToSearch" : "loadSaveToDisplay"],
       moreActionNamesList: undefined,
@@ -87,34 +92,57 @@ const SetCard = ({
     updatePressableElementsList(screenName, setToShowClassIds);
   }
 
+  const width = 220;
+
   return (
-    <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={250}>
-      {/*       Corriger le flex container car il prend trop de place
-       */}
-      <FlexContainer flexDirection={"row"}>
-        {config.showTextInput && (
-          <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} editable={!isInLoadSetModal} />
+    <View>
+      <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={width} gap={0}>
+        {config.showIndex && (
+          <Text
+            style={{
+              color: theme.on_surface,
+              fontSize: 30,
+              fontWeight: "bold",
+              position: "absolute",
+              top: 4,
+              right: 15,
+            }}
+          >
+            {setCardIndex + 1}
+          </Text>
         )}
+        <FlexContainer flexDirection={"row"} minHeight={30}>
+          {/* le FlexContainer a une hauteur fixe */}
 
-        {config.moreActionNamesList && (
-          <SetCardMoreActionsButton
-            moreActionNamesList={config.moreActionNamesList}
-            setCardIndex={setCardIndex}
-            situation={situation}
-          />
-        )}
-      </FlexContainer>
-      <SetImagesModal setToShowClassIds={setToShowClassIds} />
+          {config.showTextInput && (
+            <View>
+              <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} editable={!isInLoadSetModal} />
+            </View>
+          )}
+          {config.moreActionNamesList && (
+            <SetCardMoreActionsButton
+              moreActionNamesList={config.moreActionNamesList}
+              setCardIndex={setCardIndex}
+              situation={situation}
+            />
+          )}
+        </FlexContainer>
+        <SetImagesModal setToShowClassIds={setToShowClassIds} />
 
-      {config.showStatSliderResult && <StatSliderResultContainer setsToShowMultipleStatsLists={[setToShowStats]} />}
+        <SetCardActionButtons
+          actionNamesList={config.actionNamesList}
+          setCardIndex={setCardIndex}
+          situation={situation}
+          handleEditPress={handleEditPress}
+        />
+      </BoxContainer>
 
-      <SetCardActionButtons
-        actionNamesList={config.actionNamesList}
-        setCardIndex={setCardIndex}
-        situation={situation}
-        handleEditPress={handleEditPress}
-      />
-    </BoxContainer>
+      {config.showStatSliderResult && (
+        <BoxContainer contentBackgroundColor={theme.surface} margin={0} marginTop={8} widthContainer={width}>
+          <StatSliderResultsContainer setsToShowMultipleStatsLists={[setToShowStats]} />
+        </BoxContainer>
+      )}
+    </View>
   );
 };
 

@@ -4,7 +4,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import SetNameInput from "../textInput/SetNameInput";
 import Modal from "../../primitiveComponents/Modal";
 
-const RenameSetModal = () => {
+const ModalRenameSet = () => {
   const saveSetFromFound = useSetsStore((state) => state.saveSetFromFound);
   const setsListFound = useSetsStore((state) => state.setsListFound);
   const setCardEdittedIndex = useSetsStore((state) => state.setCardEdittedIndex);
@@ -26,4 +26,4 @@ const RenameSetModal = () => {
   );
 };
 
-export default RenameSetModal;
+export default ModalRenameSet;

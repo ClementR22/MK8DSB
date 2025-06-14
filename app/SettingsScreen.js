@@ -1,34 +1,29 @@
 import React from "react";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
+import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import LanguageSelector from "@/components/settingsComponent/LanguageSelector";
 import ThemeSelector from "@/components/settingsComponent/ThemeSelector";
-import ButtonResetSettings from "@/components/ButtonResetSettings";
-import SendFeedbackButton from "@/components/settingsComponent/SendFeedbackButton";
-import LicensesButton from "@/components/settingsComponent/LicensesButton";
+import ButtonResetSettings from "@/components/settingsComponent/ButtonResetSettings";
+import ButtonSendFeedback from "@/components/settingsComponent/ButtonSendFeedbackButton";
+import ButtonLicenses from "@/components/settingsComponent/ButtonLicenses";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import FlexScrollView from "@/primitiveComponents/FlexScrollView";
-import StatsVisibleSyncSwitch from "@/components/settingsComponent/StatsVisibleSyncSwitch";
 import Button from "@/primitiveComponents/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Text from "@/primitiveComponents/Text";
-import { useStatsVisibleListConfigStore } from "@/stores/useStatsVisibleListConfigStore";
-import ButtonAndModal from "@/components/modal/ButtonAndModal";
-import { translate } from "@/translations/translations";
-import StatsVisibleListDefaultSelector from "@/components/settingsComponent/StatsVisibleListDefaultSelector";
 import useSetsStore from "@/stores/useSetsStore";
 import { useResetSettings } from "@/hooks/useResetSettings";
-import StatsVisibleDefaultSwitch from "@/components/settingsComponent/StatsVisibleDefaultSwitch";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
+import ButtonDeleteAllSetsInMemory from "@/components/settingsComponent/ButtonDeleteAllSetsInMemory";
+import ButtonAndModalStatSelectorResultStatsDefault from "@/components/settingsComponent/ButtonAndModalStatSelectorResultStatsDefault";
 
 const SettingsScreen = () => {
-  const isStatsVisibleDefault = useStatsVisibleListConfigStore((state) => state.isStatsVisibleDefault);
-  const deleteAllSavedSets = useSetsStore((state) => state.deleteAllSavedSets);
   const resetSettings = useResetSettings();
+  const deleteAllSavedSets = useSetsStore((state) => state.deleteAllSavedSets);
 
   return (
     <ScreenProvider screenName="settings">
-      <StatsVisibleListProvider>
+      <ResultStatsProvider>
         <FlexScrollView>
           {/* peut etre remplacer FlexScrollView par une view dans le futur */}
           <BoxContainer alignItems={"stretch"}>
@@ -38,30 +33,15 @@ const SettingsScreen = () => {
 
             <ThemeSelector />
 
-            <Text>{translate("DisplayedStatsConfiguration")}</Text>
+            <ButtonAndModalStatSelectorResultStatsDefault />
 
-            <StatsVisibleSyncSwitch />
-            <StatsVisibleDefaultSwitch />
+            <ButtonSendFeedback />
 
-            {isStatsVisibleDefault && (
-              <ButtonAndModal triggerButtonText="DefaultDisplayedStats" modalTitle="DefaultDisplayedStats">
-                <StatsVisibleListDefaultSelector />
-              </ButtonAndModal>
-            )}
-
-            <SendFeedbackButton />
-
-            <LicensesButton />
+            <ButtonLicenses />
 
             <ButtonResetSettings resetSettings={resetSettings} />
 
-            <ButtonAndModal
-              triggerButtonText="DeleteAllSetsInMemory"
-              secondButtonProps={{ text: "Confirm", onPress: deleteAllSavedSets }}
-              closeButtonText="Cancel"
-            >
-              <Text>{translate("DeleteAllSetsInMemoryText")}</Text>
-            </ButtonAndModal>
+            <ButtonDeleteAllSetsInMemory deleteAllSavedSets={deleteAllSavedSets} />
 
             <Text>DEBUG</Text>
             <Button
@@ -85,7 +65,7 @@ const SettingsScreen = () => {
             </Button>
           </BoxContainer>
         </FlexScrollView>
-      </StatsVisibleListProvider>
+      </ResultStatsProvider>
     </ScreenProvider>
   );
 };

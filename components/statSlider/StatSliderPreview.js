@@ -13,8 +13,7 @@ const StatSliderPreview = ({ name }) => {
       number={statFilterNumber}
       setNumber={setStatFilterNumber} // pas d’action
       theme={theme}
-      onValueChange={() => {}} // inactif
-      onSlidingComplete={() => {}} // inactif
+      disable={true}
     />
   );
 };

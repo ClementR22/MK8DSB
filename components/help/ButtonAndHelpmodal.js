@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { Modal, SafeAreaView } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
+import HelpModal from "./HelpModal";
 
-const ButtonAndModalForHelp = ({ isHelpModalVisible, setIsHelpModalVisible, children }) => {
+const ButtonAndHelpmodal = ({ slides }) => {
+  const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
+
   return (
     <>
       <ButtonIcon
@@ -17,11 +20,11 @@ const ButtonAndModalForHelp = ({ isHelpModalVisible, setIsHelpModalVisible, chil
 
       <Modal visible={isHelpModalVisible}>
         <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
-          {children}
+          <HelpModal slides={slides} setIsHelpModalVisible={setIsHelpModalVisible} />
         </SafeAreaView>
       </Modal>
     </>
   );
 };
 
-export default ButtonAndModalForHelp;
+export default ButtonAndHelpmodal;

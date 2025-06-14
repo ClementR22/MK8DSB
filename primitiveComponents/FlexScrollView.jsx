@@ -1,9 +1,9 @@
-import useModalsStore from "@/stores/useModalsStore";
 import React from "react";
+import useGeneralStore from "@/stores/useGeneralStore";
 import { ScrollView, StyleSheet } from "react-native";
 
 function FlexScrollView({ children, flexDirection, alignItems, justifyContent, gap, style }) {
-  const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
+  const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const styles = StyleSheet.create({
     container: {
@@ -17,7 +17,7 @@ function FlexScrollView({ children, flexDirection, alignItems, justifyContent, g
   });
 
   return (
-    <ScrollView scrollEnabled={!isTooltipVisible} contentContainerStyle={[styles.container, style]}>
+    <ScrollView scrollEnabled={isScrollEnable} contentContainerStyle={[styles.container, style]}>
       {children}
     </ScrollView>
   );

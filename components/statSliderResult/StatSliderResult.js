@@ -1,117 +1,55 @@
+import { translate } from "@/translations/translations";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import StatSliderResultBar from "./StatSliderResultBar";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-const StatSliderResult = ({ value, chosenValue = null }) => {
+const StatSliderResult = ({ name, stat_i_multipleSetStats, chosenValue }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  if (chosenValue == null) {
-    chosenValue = value;
-  }
-
-  const bonusFound = value - chosenValue;
-
-  const getFlexForSegment = (baseValue, bonus) => {
-    const flexValue = bonus >= 0 ? baseValue : baseValue + bonus;
-    return Math.max(flexValue, 0); // Assurer que la flexbox ne soit jamais négative
-  };
-
-  const getBackgroundColor = () => {
-    return bonusFound > 0 ? "#34be4d" : bonusFound < 0 ? "#ff6240" : theme.surface_container_low;
-  };
-
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      paddingHorizontal: 8,
+    container: { width: "100%", flexGrow: 1, gap: 10 },
+    sliderContainer: {
+      padding: 10,
+      borderRadius: 8,
+      backgroundColor: theme.surface_container_high, //theme.surface_container
     },
-    sliderTrack: {
-      flexDirection: "row",
-      height: 10,
-      borderRadius: 5,
-      overflow: "hidden",
-      backgroundColor: theme.surface_container_low,
-    },
-    trackSegment: {
-      height: "100%",
+    textContainer: { flexDirection: "row", alignItems: "center", flexWrap: "nowrap" },
+    text: {
+      fontSize: 16,
+      fontWeight: "bold",
+      marginBottom: 5,
+      color: theme.on_surface,
     },
   });
 
-  function bonus() {
-    if (bonusFound > 0) return 1;
-    if (bonusFound < 0) return 0;
-    else return -1;
-  }
+  const translated2Points = translate(":");
 
   return (
-    <View style={styles.container}>
-      <View style={styles.sliderTrack}>
-        {/* Segment noir fixe à gauche */}
-        <View
-          style={[
-            styles.trackSegment,
-            {
-              backgroundColor: theme.primary,
-              flex: getFlexForSegment(chosenValue, bonusFound),
-            },
-          ]}
-        />
-
-        {/* Si bonusFound est négatif, afficher le jaune avant le bleu/rouge */}
-        {bonusFound < 0 && (
-          <View
-            style={[
-              styles.trackSegment,
-              {
-                width: 10,
-                borderWidth: 3,
-                borderTopRightRadius: bonus() === 0 ? 0 : 100,
-                borderBottomRightRadius: bonus() === 0 ? 0 : 100,
-                backgroundColor: theme.primary,
-                borderColor: getBackgroundColor(),
-              },
-            ]}
-          />
-        )}
-
-        {/* Segment bleu ou rouge */}
-        <View
-          style={[
-            styles.trackSegment,
-            {
-              backgroundColor: getBackgroundColor(),
-              borderTopRightRadius: bonus() === 1 ? 0 : 100,
-              borderBottomRightRadius: bonus() === 1 ? 0 : 100,
-              flex: Math.abs(bonusFound),
-            },
-          ]}
-        />
-
-        {/* Si bonusFound est positif, afficher le jaune après le bleu/rouge */}
-        {bonusFound >= 0 && (
-          <View
-            style={[
-              styles.trackSegment,
-              {
-                width: 10,
-                borderWidth: 3,
-                backgroundColor: theme.primary,
-                borderColor: getBackgroundColor(),
-              },
-            ]}
-          />
-        )}
-
-        {/* Segment gris fixe à droite */}
-        <View
-          style={[
-            styles.trackSegment,
-            {
-              flex: getFlexForSegment(6 - value, bonusFound),
-            },
-          ]}
-        />
+    <View style={styles.sliderContainer}>
+      <View style={styles.textContainer}>
+        <Text style={[styles.text, { flexShrink: 1 }]} numberOfLines={1} ellipsizeMode="tail">
+          {translate(name)}
+        </Text>
+        <Text style={[styles.text, { flexShrink: 0 }]}>
+          {translated2Points}
+          {JSON.stringify(stat_i_multipleSetStats[0])}
+        </Text>
       </View>
+
+      {stat_i_multipleSetStats.map((setStat, index) => {
+        return (
+          <View
+            key={index}
+            style={{
+              flexDirection: "row",
+              alignItems: "stretch",
+            }}
+          >
+            <StatSliderResultBar value={setStat} chosenValue={chosenValue} />
+          </View>
+        );
+      })}
     </View>
   );
 };

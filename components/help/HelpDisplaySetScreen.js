@@ -1,9 +1,11 @@
 import React from "react";
 import { IconType } from "react-native-dynamic-vector-icons";
-import HelpModal, { HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
+import { HelpFullWidthContainer, HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
+import ButtonAndHelpmodal from "./ButtonAndHelpmodal";
+import StatSliderResult from "../statSliderResult/StatSliderResult";
 
 const HelpDisplaySetScreen = () => {
-  return <HelpModal slides={slides} />;
+  return <ButtonAndHelpmodal slides={slides} />;
 };
 
 const slides = [
@@ -14,9 +16,15 @@ const slides = [
 
         <HelpText>L'écran Display vous permet de visualiser et comparer vos sets en détail.</HelpText>
         <HelpText>
-          Ajoutez autant de sets que vous voulez et comparez facilement les performances grâce aux barres de stats
-          dynamiques
+          Ajoutez autant de sets que vous voulez et comparez facilement leurs performances grâce aux barres de stats
+          interactives
         </HelpText>
+
+        <HelpFullWidthContainer>
+          <StatSliderResult name={"speedGround"} stat_i_multipleSetStats={[4, 3]} chosenValue={null} />
+        </HelpFullWidthContainer>
+
+        <HelpText>Chaque barre de stats représente les performances d’un set distinct</HelpText>
       </>
     ),
     config: { backgroundColor: "#5d8aa8" },

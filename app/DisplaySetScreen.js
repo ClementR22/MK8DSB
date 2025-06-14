@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { ScrollView } from "react-native";
-import StatSliderResultContainer from "@/components/statSliderResult/StatSliderResultContainer";
+import StatSliderResultsContainer from "@/components/statSliderResult/StatSliderResultsContainer";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import { StatsVisibleListProvider } from "@/contexts/StatsVisibleListContext";
+import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import DisplaySetScreenPressablesContainer from "@/components/screenPressablesContainer/DisplaySetScreenPressablesContainer";
 import useSetsStore from "@/stores/useSetsStore";
-import useModalsStore from "@/stores/useModalsStore";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 const DisplaySetScreen = () => {
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
@@ -15,19 +15,19 @@ const DisplaySetScreen = () => {
     return setToShowStatsList;
   });
 
-  const isTooltipVisible = useModalsStore((state) => state.isTooltipVisible);
+  const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const hideRemoveSet = setsListDisplayed.length === 1;
 
   return (
     <ScreenProvider screenName="display">
-      <StatsVisibleListProvider>
-        <ScrollView scrollEnabled={!isTooltipVisible}>
+      <ResultStatsProvider>
+        <ScrollView scrollEnabled={isScrollEnable}>
           <DisplaySetScreenPressablesContainer />
           <SetCardContainer setsToShow={setsListDisplayed} hideRemoveSet={hideRemoveSet} />
-          <StatSliderResultContainer setsToShowMultipleStatsLists={setsToShowMultipleStatsLists} />
+          <StatSliderResultsContainer setsToShowMultipleStatsLists={setsToShowMultipleStatsLists} />
         </ScrollView>
-      </StatsVisibleListProvider>
+      </ResultStatsProvider>
     </ScreenProvider>
   );
 };

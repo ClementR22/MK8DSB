@@ -10,6 +10,7 @@ import {
   saveThingInMemory,
 } from "@/utils/asyncStorageOperations";
 import { ScreenName } from "@/contexts/ScreenContext";
+import { ResultStats } from "./useResultStatsDefaultStore";
 
 // Types
 export type StatName = string;
@@ -19,11 +20,6 @@ export interface ChosenStat {
   checked: boolean;
   value: number | null;
   statFilterNumber: number;
-}
-
-export interface VisibleStat {
-  name: StatName;
-  checked: boolean;
 }
 
 export interface SetObject {
@@ -45,7 +41,7 @@ export interface SetsStoreState {
   setSetsListFound: (newSetsList: SetObject[]) => void;
   setSetCardEdittedIndex: (newIndex: number) => void;
   updateStatValue: (name: string, newValue: number) => void;
-  syncWithChosenStats: (setStatsVisibleList: (list: VisibleStat[]) => void) => void;
+  syncWithChosenStats: (setResultStats: (list: ResultStats) => void) => void;
   setStatFilterNumber: (statName: string, newState: number) => void;
   getSetsSavedKeys: () => Promise<string[]>;
   fetchSavedSets: () => Promise<void>;
@@ -83,7 +79,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   chosenStats: statNames.map((statName, index) => ({
     name: statName,
     checked: index === 0,
-    value: index === 0 ? 0 : null,
+    value: 0,
     statFilterNumber: 0,
   })),
 
@@ -109,8 +105,8 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       chosenStats: state.chosenStats.map((stat) => (stat.name === name ? { ...stat, value: newValue } : stat)),
     })),
 
-  syncWithChosenStats: (setStatsVisibleList) => {
-    setStatsVisibleList(get().chosenStats);
+  syncWithChosenStats: (setResultStats) => {
+    setResultStats(get().chosenStats);
   },
 
   setStatFilterNumber: (statName, newState) => {
@@ -180,7 +176,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       value: setToLoad.stats[i],
     }));
     set({ chosenStats: newStats });
-    showToast("Succès", "Les stats du set ont été chargées");
+    showToast("Succès" + " " + "Les stats du set ont été chargées");
   },
 
   loadSetSaveToSearch: (index) => {
@@ -193,12 +189,12 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
 
   loadSetSaveToDisplay: (index) => {
     get().loadSetToDisplay(get().setsListSaved[index]);
-    showToast("Succès", "Le set a été chargé");
+    showToast("Succès" + " " + "Le set a été chargé");
   },
 
   loadSetSearchToDisplay: (index) => {
     get().loadSetToDisplay(get().setsListFound[index]);
-    showToast("Succès", "Le set a été ajouté à l'écran de comparaison");
+    showToast("Succès" + " " + "Le set a été ajouté à l'écran de comparaison");
   },
 
   saveSet: async (setToSave) => {
@@ -207,7 +203,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
         setsListSaved: [...state.setsListSaved, setToSave],
       }));
       await get().saveSetInMemory(setToSave);
-      showToast("Succès", "Le set est enregistré");
+      showToast("Succès" + " " + "Le set est enregistré");
       return true;
     } catch (e) {
       alert(e);
@@ -303,18 +299,17 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   exportSet: (index, screenName) => {
-    console.log("ok", screenName);
     const list =
       screenName === "search"
         ? get().setsListFound
         : screenName === "display"
         ? get().setsListDisplayed
         : get().setsListSaved;
-    console.log("setsListFound", get().setsListFound[index]);
+
     const { name, classIds } = list[index];
     const json = JSON.stringify({ name, classIds });
     Clipboard.setStringAsync(json);
-    showToast("Succès", "Set copié dans le presse-papier !");
+    showToast("Succès" + " " + "Set copié dans le presse-papier !");
   },
 
   importSet: (setCard: SetObject, screenName: ScreenName) => {

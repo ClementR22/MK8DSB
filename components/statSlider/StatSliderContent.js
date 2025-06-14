@@ -3,27 +3,32 @@ import React, { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import { Slider } from "@miblanchard/react-native-slider";
+import useGeneralStore from "@/stores/useGeneralStore";
+import useSetsStore from "@/stores/useSetsStore";
+import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 
-const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingComplete }) => {
+const StatSliderContent = ({ name, value, number, setNumber, theme, disable = false }) => {
+  const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
+  const updateStatValue = useSetsStore((state) => state.updateStatValue);
+
   const [tempValue, setTempValue] = useState(value);
+
   const onValueChange = ([v]) => setTempValue(v);
+
+  const onSlidingStart = () => setIsScrollEnable(false);
+
+  const onSlidingComplete = !disable
+    ? ([v]) => {
+        updateStatValue(name, v);
+        setIsScrollEnable(true);
+      }
+    : null;
 
   useEffect(() => {
     setTempValue(value);
   }, [value]);
 
-  const borderColor = useMemo(() => {
-    switch (number) {
-      case 0:
-        return theme.outline_variant;
-      case 1:
-        return theme.primary;
-      case 2:
-        return theme.inverse_surface
-      default:
-        return theme.outline_variant;
-    }
-  }, [number, theme]);
+  const borderColor = useMemo(() => getStatSliderBorderColor(number, theme), [number, theme]);
 
   const styles = useMemo(
     () =>
@@ -34,7 +39,7 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
           paddingVertical: 3,
           backgroundColor: theme.surface,
           borderWidth: 2,
-          borderRadius: 12,
+          borderRadius: 17,
           borderColor,
           marginBottom: 0,
           width: "100%",
@@ -42,13 +47,8 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
         containerLeft: { flex: 1 },
         containerTop: {
           flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingHorizontal: 3,
-        },
-        textContainer: {
-          flexDirection: "row",
-          flex: 1,
+          marginLeft: 3,
+          marginRight: 10,
         },
         text: {
           color: theme.on_surface,
@@ -99,20 +99,17 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
           paddingTop: 4,
         },
       }),
-    [theme, borderColor],
+    [theme, borderColor]
   );
 
   return (
     <View style={styles.container}>
       <View style={styles.containerLeft}>
         <View style={styles.containerTop}>
-          <View style={styles.textContainer}>
-            <Text numberOfLines={1} ellipsizeMode="middle" style={styles.text}>
-              {translate(name)}
-              {translate(":")}
-              {tempValue}
-            </Text>
-          </View>
+          <Text style={[styles.text, { flexShrink: 1 }]} numberOfLines={1} ellipsizeMode="tail">
+            {translate(name)}
+          </Text>
+          <Text style={[styles.text, { flexShrink: 0 }]}>{`${translate(":")}${tempValue}`}</Text>
         </View>
 
         <View style={styles.containerBottom}>
@@ -120,6 +117,7 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
             <Slider
               value={tempValue}
               onValueChange={onValueChange}
+              onSlidingStart={onSlidingStart}
               onSlidingComplete={onSlidingComplete}
               minimumValue={0}
               maximumValue={6}
@@ -128,9 +126,12 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, onSlidingCom
               thumbTouchSize={{ width: 10, height: 10 }}
               thumbStyle={styles.thumb}
               minimumTrackStyle={styles.minimumTrack}
-              maximumTrackStyle={[styles.maximumTrack, {
-                borderLeftWidth: (tempValue / 6) * 230 + 10,
-              }]}
+              maximumTrackStyle={[
+                styles.maximumTrack,
+                {
+                  borderLeftWidth: (tempValue / 6) * 230 + 10,
+                },
+              ]}
             />
           </View>
         </View>

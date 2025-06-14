@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
-interface LoadSetModalState {
+interface ModalLoadSetState {
   isLoadSetModalVisible: boolean;
   setIsLoadSetModalVisible: (visible: boolean) => void;
 }
 
-export const useLoadSetModalStore = create<LoadSetModalState>((set) => ({
+export const useModalLoadSetStore = create<ModalLoadSetState>((set) => ({
   isLoadSetModalVisible: false,
   setIsLoadSetModalVisible: (visible: boolean) => set({ isLoadSetModalVisible: visible }),
 }));

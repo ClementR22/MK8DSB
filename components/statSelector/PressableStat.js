@@ -4,7 +4,7 @@ import { translate } from "@/translations/translations";
 import { useThemeStore } from "@/stores/useThemeStore";
 import checkbox from "../styles/checkbox";
 
-const PressableStat = ({ stat, toggleCheck }) => {
+const PressableStat = ({ stat, toggleCheck, disabled }) => {
   const theme = useThemeStore((state) => state.theme);
   const { text, container } = checkbox(theme);
 
@@ -19,6 +19,7 @@ const PressableStat = ({ stat, toggleCheck }) => {
       onPress={toggleCheckWithName}
       labelStyle={text}
       style={container}
+      disabled={disabled}
     />
   );
 };

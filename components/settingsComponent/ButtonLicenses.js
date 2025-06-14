@@ -2,7 +2,7 @@ import React from "react";
 import { FlatList, Pressable, Text, View, Linking, StyleSheet } from "react-native";
 import ButtonAndModal from "../modal/ButtonAndModal";
 
-const LicensesButton = () => {
+const ButtonLicenses = () => {
   return (
     <ButtonAndModal modalTitle="Licenses" triggerButtonText="OpenSourceLicenses">
       <View style={{ paddingTop: 20 }}>
@@ -62,4 +62,4 @@ const licensesLinks = {
 // pour obtenir toutes les licences
 // npx license-checker --production --json > licenses-summary.json
 
-export default React.memo(LicensesButton);
+export default React.memo(ButtonLicenses);

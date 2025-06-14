@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { bodyTypeNames, setAllInfos } from "@/data/data";
-import StatSliderResultSelectorPressable from "../statSliderResult/StatSliderResultSelectorPressable";
+import StatSelectorResultStatsButtonAndModal from "../statSelector/ButtonAndModalStatSelectorResultStats";
 import { translate } from "@/translations/translations";
 import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
 import ElementsDeselector from "../elementsSelector/ElementsDeselector";
@@ -14,7 +14,7 @@ import { computePressableElementsByCategory } from "@/utils/computePressableElem
 import { usePressableElements } from "@/hooks/usePressableElements";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
-import StatSelectorChosenStatsButtonAndModal from "../statSelector/StatSelectorChosenStatsButtonAndModal";
+import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModalStatSelectorChosenStats";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
   const chosenStats = useSetsStore((state) => state.chosenStats);
@@ -129,7 +129,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
 
   return (
     <View style={styles.pressablesContainer}>
-      <StatSelectorChosenStatsButtonAndModal />
+      <ButtonAndModalStatSelectorChosenStats />
 
       <ButtonAndModal
         modalTitle="Filters"
@@ -155,7 +155,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
         <ResultsNumber resultsNumber={resultsNumber} setResultsNumber={setResultsNumber} />
       </ButtonAndModal>
 
-      <StatSliderResultSelectorPressable />
+      <StatSelectorResultStatsButtonAndModal />
     </View>
   );
 };

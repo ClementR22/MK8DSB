@@ -36,12 +36,13 @@ const translations = {
     DesiredStats: "Desired stats",
     Filters: "Filters",
     NumberOfResults: "Number of results",
+    DisplayedStatsInSets: "Displayed stats in sets",
     DisplayedStats: "Displayed stats",
     LoadASavedSet: "Load a saved set",
     NameTheSet: "Name the set",
     SelectASet: "Select a set",
     Licenses: "Licenses",
-    DefaultDisplayedStats: "Default displayed stats",
+    DefaultDisplayedStats: "Default displayed stats in sets",
 
     // text
     Language: "Language",
@@ -51,7 +52,8 @@ const translations = {
     IncorrectFormat: "Incorrect format",
     ThisSetDoesNotExist: "This set does not exist",
     DeleteAllSetsInMemoryText: "Do you really want to delete all saved sets?",
-    DisplayedStatsConfiguration: "Displayed stats configuration",
+    ResetSettingsText: "Do you really want to reset settings?",
+    "NoSetFound...": "No set found...",
 
     // button label
     Search: "Search",
@@ -61,7 +63,7 @@ const translations = {
     System: "System",
     MatchDesiredStats: "Match desired stats",
     AlwaysSync: "Always match desired stats",
-    ConfigureDefaultDisplayedStats: "Configure default displayed stats",
+    ConfigureDefaultStats: "Configure default displayed stats",
     SendFeedback: "Send feedback",
     OpenSourceLicenses: "Open Source Licenses",
     ResetSettings: "Reset settings",
@@ -76,6 +78,7 @@ const translations = {
     // tooltip text
     ChooseStats: "Choose some stats",
     ChooseFilters: "Choose some filters",
+    DisplayedStatsInSets: "Displayed stats in sets",
     DisplayedStats: "Displayed stats",
     DisabledBecauseMatchDesiredStats: "Match desired stats",
     ChangeCondition: "Fix a condition",
@@ -94,6 +97,8 @@ const translations = {
     ImportACopiedSet: "Import a copied set",
     MoreActions: "More actions",
     Help: "Help",
+    DevelopSliders: "Develop sliders",
+    ReduceSliders: "Reduce sliders",
 
     // other
     ":": ": ",
@@ -112,6 +117,20 @@ const translations = {
     handlingAir: "Air handling ",
     traction: "Traction",
     miniTurbo: "Mini-Turbo",
+
+    // stat reduced
+    spdG: "Spd G",
+    spdAG: "Spd AG",
+    spdW: "Spd W",
+    spdA: "Spd A",
+    acc: "Accel",
+    wgt: "Weight",
+    hanG: "Han G",
+    hanAG: "Han AG",
+    hanW: "Han W",
+    hanA: "Han A",
+    tra: "Tra",
+    mtu: "Mtu",
 
     // category
     character: "Character",
@@ -278,12 +297,13 @@ const translations = {
     DesiredStats: "Stats souhaitées",
     Filters: "Filtres",
     NumberOfResults: "Nombre de résultats",
+    DisplayedStatsInSets: "Stats affichées dans les sets",
     DisplayedStats: "Stats affichées",
     LoadASavedSet: "Charger un set enregistré",
     NameTheSet: "Nommer le set",
     SelectASet: "Selectionner un set",
     Licenses: "Licences",
-    DefaultDisplayedStats: "Stats affichées par défault",
+    DefaultDisplayedStats: "Stats affichées par défault dans les sets",
 
     // text
     Language: "Langue",
@@ -293,7 +313,8 @@ const translations = {
     IncorrectFormat: "Format incorrect",
     ThisSetDoesNotExist: "Ce set n'existe pas",
     DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
-    DisplayedStatsConfiguration: "Configuration des stats affichées",
+    ResetSettingsText: "Souhaitez-vous vraiment réinitialiser les préférences ?",
+    "NoSetFound...": "Aucun set trouvé...",
 
     // button label
     Search: "Chercher",
@@ -303,7 +324,7 @@ const translations = {
     System: "Appareil",
     MatchDesiredStats: "Copier les stats souhaitées",
     AlwaysSync: "Toujours copier les stats souhaitées",
-    ConfigureDefaultDisplayedStats: "Configurer les stats affichées par défault",
+    ConfigureDefaultStats: "Configurer les stats affichées par défault",
     SendFeedback: "Faire un retour",
     OpenSourceLicenses: "Licences Open Source",
     ResetSettings: "Réinitialiser les paramètres",
@@ -318,6 +339,7 @@ const translations = {
     // tooltip text
     ChooseStats: "Choisissez des stats",
     ChooseFilters: "Choisissez des filtres",
+    DisplayedStatsInSets: "Stats affichées dans les sets",
     DisplayedStats: "Stats affichées",
     DisabledBecauseMatchDesiredStats: "Copie les stats souhaitées",
     ChangeCondition: "Fixer une condition",
@@ -336,6 +358,8 @@ const translations = {
     ImportACopiedSet: "Importer un set copié",
     MoreActions: "Plus d'actions",
     Help: "Aide",
+    DevelopSliders: "Développer les curseurs",
+    ReduceSliders: "Reduire les curseurs",
 
     // other
     ":": " : ",
@@ -354,6 +378,20 @@ const translations = {
     handlingAir: "Maniabilité air",
     traction: "Adhérence",
     miniTurbo: "Mini-turbo",
+
+    // stat reduced
+    spdG: "Vit S",
+    spdAG: "Vit AG",
+    spdW: "Vit E",
+    spdA: "Vit A",
+    acc: "Accel",
+    wgt: "Poids",
+    hanG: "Man S",
+    hanAG: "Man AG",
+    hanW: "Man E",
+    hanA: "Man A",
+    tra: "Adh",
+    mtu: "Mtu",
 
     // category
     character: "Personnage",

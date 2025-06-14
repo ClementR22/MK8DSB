@@ -1,16 +1,16 @@
 import React from "react";
-import { Picker } from "@react-native-picker/picker";
+import { Picker as NativePicker } from "@react-native-picker/picker";
 import { translate } from "@/translations/translations";
 import { Text, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-const MyPicker = ({ value, setValue, itemList, pickerTitle, isTranslatedContent }) => {
+const Picker = ({ value, setValue, itemList, pickerTitle, isTranslatedContent }) => {
   const theme = useThemeStore((state) => state.theme);
 
   return (
     <View>
       <Text style={{ color: theme.on_surface }}>{translate(pickerTitle)}</Text>
-      <Picker
+      <NativePicker
         selectedValue={value}
         onValueChange={(itemValue) => {
           setValue(itemValue);
@@ -26,11 +26,11 @@ const MyPicker = ({ value, setValue, itemList, pickerTitle, isTranslatedContent 
         itemStyle={{ color: theme.on_surface }}
       >
         {itemList.map(({ label, value }) => (
-          <Picker.Item key={value} label={isTranslatedContent ? translate(label) : label} value={value} />
+          <NativePicker.Item key={value} label={isTranslatedContent ? translate(label) : label} value={value} />
         ))}
-      </Picker>
+      </NativePicker>
     </View>
   );
 };
 
-export default MyPicker;
+export default Picker;

@@ -1,5 +1,5 @@
 import React from "react";
-import MyPicker from "../MyPicker";
+import Picker from "../Picker";
 import { useLanguageStore, languageList } from "@/stores/useLanguageStore";
 
 const LanguageSelector = () => {
@@ -7,7 +7,7 @@ const LanguageSelector = () => {
   const setLanguage = useLanguageStore((state) => state.setLanguage);
 
   return (
-    <MyPicker
+    <Picker
       value={language}
       setValue={setLanguage}
       itemList={languageList}
