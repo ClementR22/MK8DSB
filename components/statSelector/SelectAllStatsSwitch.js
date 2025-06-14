@@ -42,7 +42,6 @@ const SelectAllStatsSwitch = ({
   };
 
   const updateToggleSwitch = () => {
-    console.log("upd");
     const hasAllChecked = areAllStatsChecked(statList);
 
     // si le switch n'est pas à jour

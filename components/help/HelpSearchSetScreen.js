@@ -1,8 +1,8 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import Button from "@/primitiveComponents/Button";
-import { HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
+import { HelpFullWidthContainer, HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
 import StatSliderPreview from "../statSlider/StatSliderPreview";
 import ButtonAndHelpmodal from "./ButtonAndHelpmodal";
 
@@ -22,9 +22,9 @@ const slides = [
           qui s’en approchent le plus.
         </HelpText>
 
-        <View style={{ paddingHorizontal: 26, width: "100%" }}>
+        <HelpFullWidthContainer paddingHorizontal={26}>
           <StatSliderPreview name="speedGround" />
-        </View>
+        </HelpFullWidthContainer>
       </>
     ),
     config: { backgroundColor: "#59b2ab" },

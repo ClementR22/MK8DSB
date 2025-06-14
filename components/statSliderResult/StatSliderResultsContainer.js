@@ -24,16 +24,15 @@ const StatSliderResultsContainer = ({ setsToShowMultipleStatsLists }) => {
   return (
     <View style={styles.container}>
       {resultStats.map(({ name, checked }, statIndex) => {
-        console.log("setsToShowMultipleStatsLists", setsToShowMultipleStatsLists);
         const stat_i_multipleSetStats = setsToShowMultipleStatsLists.map((statList) => statList[statIndex]);
-        const chosenValue = isInSearchScreen ? chosenStats[statIndex].value : null;
+
         if (checked) {
           return (
             <StatSliderResult
               key={statIndex}
               name={name}
               stat_i_multipleSetStats={stat_i_multipleSetStats}
-              chosenValue={chosenValue}
+              chosenValue={isInSearchScreen && chosenStats[statIndex].value}
             />
           );
         }

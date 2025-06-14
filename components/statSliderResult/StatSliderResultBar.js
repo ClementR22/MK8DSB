@@ -2,10 +2,10 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-const StatSliderResultBar = ({ value, chosenValue = null }) => {
+const StatSliderResultBar = ({ value, chosenValue = undefined }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  if (chosenValue == null) {
+  if (!chosenValue) {
     chosenValue = value;
   }
 

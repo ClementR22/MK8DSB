@@ -63,6 +63,10 @@ export const HelpIconAndText = ({ name, type, isButton = true, children }) => {
   );
 };
 
+export const HelpFullWidthContainer = ({ paddingHorizontal, marginHorizontal, children }) => (
+  <View style={{ width: "100%", paddingHorizontal, marginHorizontal }}>{children}</View>
+);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
