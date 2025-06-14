@@ -53,6 +53,7 @@ const translations = {
     ThisSetDoesNotExist: "This set does not exist",
     DeleteAllSetsInMemoryText: "Do you really want to delete all saved sets?",
     ResetSettingsText: "Do you really want to reset settings?",
+    "NoSetFound...": "No set found...",
 
     // button label
     Search: "Search",
@@ -313,6 +314,7 @@ const translations = {
     ThisSetDoesNotExist: "Ce set n'existe pas",
     DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
     ResetSettingsText: "Souhaitez-vous vraiment réinitialiser les préférences ?",
+    "NoSetFound...": "Aucun set trouvé...",
 
     // button label
     Search: "Chercher",
