@@ -101,17 +101,20 @@ function Modal({
     },
     childrenContainer: {
       maxHeight: 0.6 * vh,
+      margin: 24,
     },
     title_center: {
       color: theme.on_surface,
       alignSelf: "center",
       textAlign: "center",
       paddingHorizontal: 24,
-      fontSize: 24,
+      fontSize: 22,
+      fontWeight: 400,
       marginBottom: 0,
+      fontFamily: "Roboto",
     },
     button_container: {
-      marginTop: 10,
+      // marginTop: 10,
     },
   });
 
