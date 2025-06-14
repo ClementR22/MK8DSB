@@ -1,23 +1,11 @@
+import { translate } from "@/translations/translations";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import StatSliderResultBar from "./StatSliderResultBar";
-import { translate } from "@/translations/translations";
-import { useResultStats } from "@/contexts/ResultStatsContext";
-import { useScreen } from "@/contexts/ScreenContext";
-import useSetsStore from "@/stores/useSetsStore";
-import { useThemeStore } from "@/stores/useThemeStore"; // Gardez l'import
+import { useThemeStore } from "@/stores/useThemeStore";
 
-const StatSliderResult = ({ setsToShowMultipleStatsLists }) => {
+const StatSliderResult = ({ name, stat_i_multipleSetStats, chosenValue }) => {
   const theme = useThemeStore((state) => state.theme);
-  const screenName = useScreen();
-  const { resultStats } = useResultStats();
-  const isInSearchScreen = screenName === "search";
-
-  let chosenStats = null; // Initialisé à null par défaut
-
-  if (isInSearchScreen) {
-    chosenStats = useSetsStore((state) => state.chosenStats);
-  }
 
   const styles = StyleSheet.create({
     container: { width: "100%", flexGrow: 1, gap: 10 },
@@ -26,6 +14,7 @@ const StatSliderResult = ({ setsToShowMultipleStatsLists }) => {
       borderRadius: 8,
       backgroundColor: theme.surface_container_high, //theme.surface_container
     },
+    textContainer: { flexDirection: "row", alignItems: "center", flexWrap: "nowrap" },
     text: {
       fontSize: 16,
       fontWeight: "bold",
@@ -37,40 +26,29 @@ const StatSliderResult = ({ setsToShowMultipleStatsLists }) => {
   const translated2Points = translate(":");
 
   return (
-    <View style={styles.container}>
-      {resultStats.map(({ name, checked }, statIndex) => {
-        const nameTranslated = translate(name);
-        if (checked) {
-          return (
-            <View key={statIndex} style={styles.sliderContainer}>
-              <View style={{ flexDirection: "row", alignItems: "center", flexWrap: "nowrap" }}>
-                <Text style={[styles.text, { flexShrink: 1 }]} numberOfLines={1} ellipsizeMode="tail">
-                  {nameTranslated}
-                </Text>
-                <Text style={[styles.text, { flexShrink: 0 }]}>
-                  {translated2Points}
-                  {JSON.stringify(setsToShowMultipleStatsLists[0]?.[statIndex])}
-                </Text>
-              </View>
-              {setsToShowMultipleStatsLists.map((setToShowStats, setIndex) => {
-                const chosenValue = isInSearchScreen ? chosenStats[statIndex].value : null;
+    <View style={styles.sliderContainer}>
+      <View style={styles.textContainer}>
+        <Text style={[styles.text, { flexShrink: 1 }]} numberOfLines={1} ellipsizeMode="tail">
+          {translate(name)}
+        </Text>
+        <Text style={[styles.text, { flexShrink: 0 }]}>
+          {translated2Points}
+          {JSON.stringify(stat_i_multipleSetStats[0])}
+        </Text>
+      </View>
 
-                return (
-                  <View
-                    key={setIndex}
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "stretch",
-                    }}
-                  >
-                    <StatSliderResultBar value={setToShowStats[statIndex]} chosenValue={chosenValue} />
-                  </View>
-                );
-              })}
-            </View>
-          );
-        }
-        return null;
+      {stat_i_multipleSetStats.map((setStat, index) => {
+        return (
+          <View
+            key={index}
+            style={{
+              flexDirection: "row",
+              alignItems: "stretch",
+            }}
+          >
+            <StatSliderResultBar value={setStat} chosenValue={chosenValue} />
+          </View>
+        );
       })}
     </View>
   );
