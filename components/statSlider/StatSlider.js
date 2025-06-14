@@ -12,8 +12,8 @@ const StatSlider = ({ name, value, statFilterNumber }) => {
     <StatSliderContent
       name={name}
       value={value}
-      number={statFilterNumber}
-      setNumber={setStatFilterNumberWithName}
+      statFilterNumber={statFilterNumber}
+      setStatFilterNumber={setStatFilterNumberWithName}
       theme={theme}
     />
   );

@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { translate } from "@/translations/translations";
 
-const StatSliderCompact = ({ name = "Ground speed", value = 1 }) => {
+const StatSliderCompact = ({ name = "Ground speed", value = 1, statFilterNumber }) => {
   const theme = useThemeStore((state) => state.theme);
 
   const percentage = (value * 100) / 6;
@@ -19,7 +19,7 @@ const StatSliderCompact = ({ name = "Ground speed", value = 1 }) => {
       borderRadius: 17,
       padding: 3,
       borderWidth: 2,
-      borderColor: getStatSliderBorderColor(name, theme),
+      borderColor: getStatSliderBorderColor(statFilterNumber, theme),
     },
     bar: {
       width: "78%",

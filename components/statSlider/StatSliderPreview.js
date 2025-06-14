@@ -11,7 +11,7 @@ const StatSliderPreview = ({ name }) => {
       name={name}
       value={4}
       number={statFilterNumber}
-      setNumber={setStatFilterNumber} // pas d’action
+      setNumber={setStatFilterNumber}
       theme={theme}
       disable={true}
     />

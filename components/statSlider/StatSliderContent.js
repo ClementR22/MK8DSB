@@ -7,7 +7,7 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import useSetsStore from "@/stores/useSetsStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 
-const StatSliderContent = ({ name, value, number, setNumber, theme, disable = false }) => {
+const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber, theme, disable = false }) => {
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
   const updateStatValue = useSetsStore((state) => state.updateStatValue);
 
@@ -28,7 +28,7 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, disable = fa
     setTempValue(value);
   }, [value]);
 
-  const borderColor = useMemo(() => getStatSliderBorderColor(number, theme), [number, theme]);
+  const borderColor = useMemo(() => getStatSliderBorderColor(statFilterNumber, theme), [statFilterNumber, theme]);
 
   const styles = useMemo(
     () =>
@@ -137,7 +137,12 @@ const StatSliderContent = ({ name, value, number, setNumber, theme, disable = fa
         </View>
       </View>
       <View style={styles.containerRight}>
-        <ButtonMultiStateToggle number={number} setNumber={setNumber} filterCase={true} tooltipText="ChangeCondition" />
+        <ButtonMultiStateToggle
+          number={statFilterNumber}
+          setNumber={setStatFilterNumber}
+          filterCase={true}
+          tooltipText="ChangeCondition"
+        />
       </View>
     </View>
   );
