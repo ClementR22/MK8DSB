@@ -72,7 +72,7 @@ export default function TabLayout() {
         <PaperProvider>
           <Tabs
             screenOptions={{
-              tabBarActiveTintColor: "red", // changer la couleur
+              tabBarActiveTintColor: theme.primary, // changer la couleur
               tabBarInactiveTintColor: undefined, // changer la couleur
               headerShown: true,
               sceneStyle: {
