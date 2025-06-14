@@ -44,20 +44,38 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
           marginBottom: 0,
           width: "100%",
         },
-        containerLeft: { flex: 1 },
+        containerLeft: {
+          flex: 1,
+        },
         containerTop: {
           flexDirection: "row",
+          alignItems: "center", // Centre verticalement les enfants
           marginLeft: 3,
           marginRight: 10,
         },
-        text: {
+        // Style de base pour les textes
+        baseText: {
           color: theme.on_surface,
           fontSize: 22,
-          marginLeft: 6,
-          flexShrink: 1,
-          maxWidth: "90%",
+          fontWeight: "600",
+        },
+        // Style spécifique pour le nom de la statistique
+        nameText: {
+          // flexShrink: 1, // Permet au nom de se réduire si nécessaire
+          flexGrow: 1, // Permet au nom de prendre l'espace disponible
+          marginRight: 2, // Petite marge entre le nom et le séparateur
           overflow: "hidden",
-          fontWeight: 600,
+        },
+        // Style pour le séparateur ":"
+        separatorText: {
+          // flexShrink: 0, // Ne doit pas se réduire
+          width: 8, // Largeur fixe pour le ':'
+          // textAlign: "center", // Centre le ':'
+        },
+        // Style pour la valeur numérique
+        valueText: {
+          // flexShrink: 0, // Empêche la valeur de se réduire
+          minWidth: 45, // Ajuster cette valeur pour qu'elle corresponde à la largeur maximale attendue de tes chiffres (par ex. "6.00")
         },
         containerBottom: {
           width: "100%",
@@ -72,8 +90,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
         track: {
           height: 16,
           borderRadius: 100,
-          backgroundColor: "blue", //theme.secondary_container,
-          color: theme.on_surface,
+          backgroundColor: "blue",
         },
         thumb: {
           backgroundColor: theme.primary,
@@ -106,10 +123,14 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
     <View style={styles.container}>
       <View style={styles.containerLeft}>
         <View style={styles.containerTop}>
-          <Text style={[styles.text, { flexShrink: 1 }]} numberOfLines={1} ellipsizeMode="tail">
+          {/* Texte du nom de la statistique (aligné à gauche, tronqué si trop long) */}
+          <Text style={[styles.baseText, styles.nameText]} numberOfLines={1} ellipsizeMode="tail">
             {translate(name)}
           </Text>
-          <Text style={[styles.text, { flexShrink: 0 }]}>{`${translate(":")}${tempValue}`}</Text>
+          {/* Séparateur ":" à position fixe */}
+          <Text style={[styles.baseText, styles.separatorText]}>{translate(":")}</Text>
+          {/* Valeur numérique (alignée à droite dans sa boîte fixe) */}
+          <Text style={[styles.baseText, styles.valueText]}>{tempValue}</Text>
         </View>
 
         <View style={styles.containerBottom}>
