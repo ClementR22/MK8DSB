@@ -21,14 +21,14 @@ const translations = {
   en: {
     // screen title
     FindSetTitle: "Find a set",
-    DisplaySetTitle: "Display a set",
-    SavedSetTitle: "Saved sets",
+    DisplaySetTitle: "Compare sets",
+    SavedSetTitle: "Favorite sets",
     GalleryTitle: "Gallery",
     SettingsTitle: "Settings",
 
     FindSetTabTitle: "Find",
-    DisplaySetTabTitle: "Display",
-    SavedSetTabTitle: "Saved",
+    DisplaySetTabTitle: "Compare",
+    SavedSetTabTitle: "Favorite",
     GalleryTabTitle: "Gallery",
     SettingsTabTitle: "Settings",
 
@@ -93,7 +93,7 @@ const translations = {
     LoadTheStats: "Load the stats",
     LoadTheSet: "Load the set",
     LoadTheStatsToSearchScreen: "Load the stats to search screen",
-    LoadTheSetToDisplayScreen: "Load the set to display screen",
+    LoadTheSetToDisplayScreen: "Load the set to compare screen",
     Copy: "Copy",
     ImportACopiedSet: "Import a copied set",
     MoreActions: "More actions",
@@ -286,14 +286,14 @@ const translations = {
   fr: {
     // screen title
     FindSetTitle: "Trouver un set",
-    DisplaySetTitle: "Afficher un set",
-    SavedSetTitle: "Sets sauvegardés",
+    DisplaySetTitle: "Comparer des sets",
+    SavedSetTitle: "Sets favoris",
     GalleryTitle: "Gallerie",
     SettingsTitle: "Paramètres",
 
     FindSetTabTitle: "Chercher",
-    DisplaySetTabTitle: "Afficher",
-    SavedSetTabTitle: "Sauvegardé",
+    DisplaySetTabTitle: "Comparer",
+    SavedSetTabTitle: "Favoris",
     GalleryTabTitle: "Gallerie",
     SettingsTabTitle: "Paramètres",
 
@@ -358,7 +358,7 @@ const translations = {
     LoadTheStats: "Charger les stats",
     LoadTheSet: "Charger le set",
     LoadTheStatsToSearchScreen: "Charger les stats dans l'écran de recherche",
-    LoadTheSetToDisplayScreen: "Charger le set dans l'écran d'affichage",
+    LoadTheSetToDisplayScreen: "Charger le set dans l'écran de comparaison",
     Copy: "Copy",
     ImportACopiedSet: "Importer un set copié",
     MoreActions: "Plus d'actions",
