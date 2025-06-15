@@ -35,8 +35,8 @@ export function getActionIconPropsList(setCardIndex, situation, handleEditPress)
 
     save: {
       title: "Save",
-      name: "save",
-      type: IconType.MaterialIcons,
+      name: "heart-outline",
+      type: IconType.MaterialCommunityIcons,
       onPress: () => handleSavePress(),
     },
 
@@ -56,8 +56,8 @@ export function getActionIconPropsList(setCardIndex, situation, handleEditPress)
 
     loadSearchToDisplay: {
       title: "LoadTheSetToDisplayScreen",
-      name: "display-settings",
-      type: IconType.MaterialIcons,
+      name: "compare",
+      type: IconType.MaterialCommunityIcons,
       onPress: () => loadSetSearchToDisplay(setCardIndex),
     },
 

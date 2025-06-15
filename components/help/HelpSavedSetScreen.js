@@ -51,7 +51,6 @@ const slides = [
 
         <HelpListContainer>
           <HelpIconAndText name="compare" type={IconType.MaterialCommunityIcons}>
-            {/* // display-settings MaterialIcons */}
             Le comparer avec d’autres pour faire le meilleur choix
           </HelpIconAndText>
 

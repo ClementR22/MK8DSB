@@ -99,7 +99,7 @@ export default function TabLayout() {
               name="DisplaySetScreen"
               options={{
                 title: translate("DisplaySetTabTitle"),
-                tabBarIcon: ({ color }) => <MaterialIcons name="display-settings" size={24} color={color} />,
+                tabBarIcon: ({ color }) => <MaterialCommunityIcons name="compare" size={24} color={color} />,
                 header: () => <CustomHeader helpComponent={<HelpDisplaySetScreen />}>{"DisplaySetTitle"}</CustomHeader>,
               }}
             />
@@ -107,9 +107,9 @@ export default function TabLayout() {
               name="SavedSetScreen"
               options={{
                 title: translate("SavedSetTabTitle"),
-                tabBarIcon: ({ color }) => <MaterialIcons name="save" size={24} color={color} />,
+                tabBarIcon: ({ color }) => <MaterialCommunityIcons name="heart-outline" size={24} color={color} />,
                 header: () => (
-                  <CustomHeader icon={"save"} helpComponent={<HelpSavedSetScreen />}>
+                  <CustomHeader icon={"heart-outline"} helpComponent={<HelpSavedSetScreen />}>
                     {"SavedSetTitle"}
                   </CustomHeader>
                 ),
