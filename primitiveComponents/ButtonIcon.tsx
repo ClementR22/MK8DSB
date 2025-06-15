@@ -7,7 +7,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 
 type ButtonIconElevation = 1 | 3 | 6 | 8 | 12 | undefined;
 
-interface ButtonIconProps extends Omit<PressableProps, "onPress" | "style" | "disabled"> {
+interface ButtonIconProps extends Omit<PressableProps, "onPress" | "style"> {
   // La fonction à appeler lorsque le bouton est pressé. C'est une prop requise.
   onPress: () => void;
   // Le texte du tooltip qui s'affiche au survol/appui long. Optionnel.
@@ -22,8 +22,6 @@ interface ButtonIconProps extends Omit<PressableProps, "onPress" | "style" | "di
   iconType: IconType;
   // La taille de l'icône en pixels. Optionnel, par défaut à 24.
   iconSize?: number;
-  // Indique si le bouton est désactivé. Optionnel, par défaut à false.
-  disabled?: boolean;
 }
 
 const ButtonIcon: React.FC<ButtonIconProps> = ({
@@ -34,7 +32,6 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   iconName,
   iconType,
   iconSize = 24, // option
-  disabled = false, // option
   ...props
 }) => {
   const theme = useThemeStore((state) => state.theme);
@@ -77,7 +74,6 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
       style={[styles.container, buttonHover && getElevation()]}
       onHoverIn={() => setButtonHover(true)}
       onHoverOut={() => setButtonHover(false)}
-      disabled={disabled}
       placement={toolTipPlacement}
       {...props}
     >

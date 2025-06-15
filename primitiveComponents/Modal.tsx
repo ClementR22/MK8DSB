@@ -7,19 +7,9 @@ import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 import Snackbar from "./Snackbar";
 
-function ModalButton({
-  text,
-  onPress,
-  tooltipText,
-  disabled,
-}: {
-  text: string;
-  onPress: () => void;
-  tooltipText?: string;
-  disabled?: boolean;
-}) {
+function ModalButton({ text, onPress, tooltipText }: { text: string; onPress: () => void; tooltipText?: string }) {
   return (
-    <Button elevation={12} onPress={onPress} minWidth={100} tooltipText={tooltipText} disabled={disabled}>
+    <Button elevation={12} onPress={onPress} minWidth={100} tooltipText={tooltipText}>
       {translate(text)}
     </Button>
   );
@@ -36,7 +26,7 @@ interface ModalProps {
   // can give a componenent
   secondButton?: ReactElement<{ onComplete?: () => void }>;
   // or props to make it here
-  secondButtonProps?: { text: string; onPress: () => void; tooltipText?: string; disabled?: boolean };
+  secondButtonProps?: { text: string; onPress: () => void; tooltipText?: string };
   closeAfterSecondButton?: boolean;
   secondButtonPosition?: "left" | "right";
 }

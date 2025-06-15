@@ -20,7 +20,6 @@ const ButtonAndModalStatSelectorResultStats = () => {
     ? {
         text: "MatchDesiredStats",
         onPress: () => syncWithChosenStats(setResultStats),
-        disabled: isResultStatsSync,
       }
     : undefined;
 

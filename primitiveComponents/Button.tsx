@@ -20,7 +20,6 @@ interface ButtonProps extends PressableProps {
   tooltipText?: string;
   iconProps?: IconProps;
   minWidth?: number;
-  disabled?: boolean;
 }
 
 function Button({
@@ -30,7 +29,6 @@ function Button({
   tooltipText = undefined, // option
   iconProps = undefined, // option
   minWidth = undefined, //option
-  disabled = undefined,
   ...props
 }: ButtonProps) {
   const theme = useThemeStore((state) => state.theme);
@@ -76,12 +74,9 @@ function Button({
     }
   }
 
-  const onPressOrDisabled = disabled ? null : onPress;
-
   const sharedProps = {
-    onPress: onPressOrDisabled,
-    disabled: disabled,
-    style: [styles.container, buttonHover && getElevation(), { minWidth }, disabled && { backgroundColor: "grey" }],
+    onPress: onPress,
+    style: [styles.container, buttonHover && getElevation(), { minWidth }],
     onHoverIn: () => setButtonHover(true),
     onHoverOut: () => setButtonHover(false),
     ...props,
