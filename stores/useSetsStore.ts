@@ -28,18 +28,22 @@ export interface SetObject {
   stats: number[];
 }
 
+export interface SetFoundObject extends SetObject {
+  percentage: number;
+}
+
 export interface SetsStoreState {
   chosenStats: ChosenStat[];
   setsListDisplayed: SetObject[];
   setsListSaved: SetObject[];
-  setsListFound: SetObject[];
+  setsListFound: SetFoundObject[];
   setsSavedKeys: string[];
-  setCardEdittedIndex: number;
+  setCardEditedIndex: number;
   setKeyInDisplay: number;
 
   setChosenStats: (newChosenStats: ChosenStat[]) => void;
-  setSetsListFound: (newSetsList: SetObject[]) => void;
-  setSetCardEdittedIndex: (newIndex: number) => void;
+  setSetsListFound: (newSetsList: SetFoundObject[]) => void;
+  setsetCardEditedIndex: (newIndex: number) => void;
   updateStatValue: (name: string, newValue: number) => void;
   syncWithChosenStats: (setResultStats: (list: ResultStats) => void) => void;
   setStatFilterNumber: (statName: string, newState: number) => void;
@@ -87,7 +91,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   setsListSaved: [],
   setsListFound: [],
   setsSavedKeys: [],
-  setCardEdittedIndex: 0,
+  setCardEditedIndex: 0,
   setKeyInDisplay: 1,
 
   setChosenStats: (newChosenStats) => {
@@ -96,8 +100,8 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
 
   setSetsListFound: (newSetsList) => set({ setsListFound: newSetsList }),
 
-  setSetCardEdittedIndex: (newNumber) => {
-    set({ setCardEdittedIndex: newNumber });
+  setsetCardEditedIndex: (newNumber) => {
+    set({ setCardEditedIndex: newNumber });
   },
 
   updateStatValue: (name, newValue) =>
@@ -226,44 +230,59 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   saveSetFromFound: async () => {
-    await get().saveSet(get().setsListFound[get().setCardEdittedIndex]);
+    await get().saveSet(get().setsListFound[get().setCardEditedIndex]);
   },
 
   renameSet: (newName, screenName, setCardIndex) => {
-    const index = setCardIndex != null ? setCardIndex : get().setCardEdittedIndex;
+    const index = setCardIndex != null ? setCardIndex : get().setCardEditedIndex;
     const listName =
       screenName === "search" ? "setsListFound" : screenName === "display" ? "setsListDisplayed" : "setsListSaved";
-    const list = get()[listName as keyof SetsStoreState] as SetObject[];
-    const updated = list.map((set, i) => {
-      if (i === index) {
-        const renamed = { ...set, name: newName };
-        if (screenName === "save") {
-          const key = get().setsSavedKeys[index];
-          get().setSetInMemory(key, renamed);
-        }
-        return renamed;
-      }
-      return set;
-    });
+    if (listName === "setsListFound") {
+      const list = get()[listName] as SetFoundObject[];
 
-    set({ [listName]: updated } as any);
+      const updated = list.map((set: SetFoundObject, i: number): SetFoundObject => {
+        if (i === index) {
+          const renamed = { ...set, name: newName };
+          return renamed;
+        }
+        return set;
+      });
+      set({ [listName]: updated } as any);
+    } else {
+      const list = get()[listName] as SetObject[];
+
+      const updated = list.map((set: SetObject, i: number): SetObject => {
+        if (i === index) {
+          const renamed = { ...set, name: newName };
+
+          if (screenName === "save") {
+            const key = get().setsSavedKeys[index];
+            get().setSetInMemory(key, renamed);
+          }
+
+          return renamed;
+        }
+        return set;
+      });
+      set({ [listName]: updated } as any);
+    }
   },
 
   updateSetsList: async (pressedClassIdsObj, screenName) => {
     const listName = screenName === "display" ? "setsListDisplayed" : "setsListSaved";
     const list = get()[listName as keyof SetsStoreState] as SetObject[];
     const classIds = Object.values(pressedClassIdsObj);
-    const setCardEdittedIndex = get().setCardEdittedIndex;
+    const setCardEditedIndex = get().setCardEditedIndex;
 
     const updated = list.map((set, setCardIndex) => {
-      if (setCardIndex === setCardEdittedIndex) {
+      if (setCardIndex === setCardEditedIndex) {
         const newSet = {
           ...set,
           classIds,
           stats: getSetStatsFromElementsClassIds(classIds),
         };
         if (screenName === "save") {
-          const key = get().setsSavedKeys[setCardEdittedIndex];
+          const key = get().setsSavedKeys[setCardEditedIndex];
           get().setSetInMemory(key, newSet);
         }
         return newSet;

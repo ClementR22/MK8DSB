@@ -7,11 +7,11 @@ import Modal from "../../primitiveComponents/Modal";
 const ModalRenameSet = () => {
   const saveSetFromFound = useSetsStore((state) => state.saveSetFromFound);
   const setsListFound = useSetsStore((state) => state.setsListFound);
-  const setCardEdittedIndex = useSetsStore((state) => state.setCardEdittedIndex);
+  const setCardEditedIndex = useSetsStore((state) => state.setCardEditedIndex);
   const isRenameSetModalVisible = useModalsStore((state) => state.isRenameSetModalVisible);
   const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
 
-  const setFoundName = setsListFound[setCardEdittedIndex]?.name;
+  const setFoundName = setsListFound[setCardEditedIndex]?.name;
 
   return (
     <Modal

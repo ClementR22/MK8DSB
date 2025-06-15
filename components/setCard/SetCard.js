@@ -1,22 +1,22 @@
 import React, { useMemo } from "react";
 import StatSliderResultsContainer from "../statSliderResult/StatSliderResultsContainer";
-import SetNameInput from "../textInput/SetNameInput";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
-import FlexContainer from "@/primitiveComponents/FlexContainer";
 import { useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
 import useModalsStore from "@/stores/useModalsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useSetsStore from "@/stores/useSetsStore";
-import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
 import { useThemeStore } from "@/stores/useThemeStore";
 import SetImagesModal from "./SetImagesModal";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import SetCardEditableHeader from "./SetCardEditableHeader";
+import SetCardFoundHeader from "./SetCardFoundHeader";
 
 const SetCard = ({
   setToShowName,
   setToShowClassIds,
   setToShowStats = null,
+  setToShowpPercentage = null,
   setCardIndex = null,
   isInLoadSetModal = false,
   screenNameFromProps,
@@ -82,11 +82,11 @@ const SetCard = ({
 
   const setPressedClassIdsObjByScreen = usePressableElementsStore((state) => state.setPressedClassIdsObjByScreen);
   const updatePressableElementsList = usePressableElementsStore((state) => state.updatePressableElementsList);
-  const setSetCardEdittedIndex = useSetsStore((state) => state.setSetCardEdittedIndex);
+  const setsetCardEditedIndex = useSetsStore((state) => state.setsetCardEditedIndex);
   const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
 
   function handleEditPress() {
-    setSetCardEdittedIndex(setCardIndex);
+    setsetCardEditedIndex(setCardIndex);
     setPressedClassIdsObjByScreen(screenName, setToShowClassIds);
     setIsEditModalVisible(true);
     updatePressableElementsList(screenName, setToShowClassIds);
@@ -97,36 +97,18 @@ const SetCard = ({
   return (
     <View>
       <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={width} gap={0}>
-        {config.showIndex && (
-          <Text
-            style={{
-              color: theme.on_surface,
-              fontSize: 30,
-              fontWeight: "bold",
-              position: "absolute",
-              top: 4,
-              right: 15,
-            }}
-          >
-            {setCardIndex + 1}
-          </Text>
+        {situation === "search" ? (
+          <SetCardFoundHeader setToShowName={setToShowName} setToShowpPercentage={setToShowpPercentage} />
+        ) : (
+          <SetCardEditableHeader
+            setToShowName={setToShowName}
+            setCardIndex={setCardIndex}
+            moreActionNamesList={config.moreActionNamesList}
+            isInLoadSetModal={isInLoadSetModal}
+            situation={situation}
+          />
         )}
-        <FlexContainer flexDirection={"row"} minHeight={30}>
-          {/* le FlexContainer a une hauteur fixe */}
 
-          {config.showTextInput && (
-            <View>
-              <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} editable={!isInLoadSetModal} />
-            </View>
-          )}
-          {config.moreActionNamesList && (
-            <SetCardMoreActionsButton
-              moreActionNamesList={config.moreActionNamesList}
-              setCardIndex={setCardIndex}
-              situation={situation}
-            />
-          )}
-        </FlexContainer>
         <SetImagesModal setToShowClassIds={setToShowClassIds} />
 
         <SetCardActionButtons

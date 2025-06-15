@@ -9,12 +9,12 @@ export function getActionIconPropsList(setCardIndex, situation, handleEditPress)
   const loadSetDisplayToSearch = useSetsStore((state) => state.loadSetDisplayToSearch);
   const removeSet = useSetsStore((state) => state.removeSet);
   const exportSet = useSetsStore((state) => state.exportSet);
-  const setSetCardEdittedIndex = useSetsStore((state) => state.setSetCardEdittedIndex);
+  const setsetCardEditedIndex = useSetsStore((state) => state.setsetCardEditedIndex);
   const saveSetFromDisplay = useSetsStore((state) => state.saveSetFromDisplay);
   const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
 
   function handleSavePress() {
-    setSetCardEdittedIndex(setCardIndex);
+    setsetCardEditedIndex(setCardIndex);
     situation === "search" ? setIsRenameSetModalVisible(true) : saveSetFromDisplay(setCardIndex);
   }
 

@@ -47,7 +47,7 @@ const SetCardContainer = ({
       >
         {placeHolder}
 
-        {setsToShow.map(({ name, classIds, stats }, index) => {
+        {setsToShow.map(({ name, classIds, stats, percentage }, index) => {
           return (
             <SetCard
               key={"card" + index}
@@ -58,6 +58,7 @@ const SetCardContainer = ({
               isInLoadSetModal={isInLoadSetModal}
               screenNameFromProps={screenNameFromProps}
               hideRemoveSet={hideRemoveSet}
+              setToShowpPercentage={percentage}
             />
           );
         })}

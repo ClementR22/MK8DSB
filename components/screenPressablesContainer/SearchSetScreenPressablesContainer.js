@@ -37,6 +37,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
       name: `${SetFoundTranslated} ${index + 1}`,
       classIds: set.classIds,
       stats: set.stats,
+      percentage: set.percentage,
     }));
     setSetsToShow(setsFoundWithName);
 
@@ -122,7 +123,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
     } else {
       const setsFound = gaps
         .slice(0, Math.min(resultsNumber, gaps.length))
-        .map(({ setIndex }) => ({ ...setAllInfos[setIndex] }));
+        .map(({ setIndex, gap }) => ({ ...setAllInfos[setIndex], percentage: gap }));
       updateSetsToShow(setsFound);
     }
   };
