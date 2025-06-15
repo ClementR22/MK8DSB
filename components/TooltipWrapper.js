@@ -4,7 +4,7 @@ import Tooltip from "react-native-walkthrough-tooltip";
 import { translate } from "@/translations/translations";
 import useGeneralStore from "@/stores/useGeneralStore";
 
-const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", children, ...props }) => {
+const TooltipWrapper = ({ tooltipText, style, innerContainer, onPress, placement = "top", children, ...props }) => {
   const [isTooltipVisible_, setIsTooltipVisible_] = useState(false);
 
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
@@ -38,10 +38,9 @@ const TooltipWrapper = ({ tooltipText, style, onPress, placement = "top", childr
         backgroundColor="rgba(0,0,0,0)"
         disableShadow={true}
         showChildInTooltip={false}
+        parentWrapperStyle={innerContainer}
       >
-        {/*<Pressable onPress={onPress} onLongPress={() => openTooltip()}>*/}
         {children}
-        {/*</Pressable>*/}
       </Tooltip>
     </Pressable>
   );

@@ -54,6 +54,7 @@ const translations = {
     DeleteAllSetsInMemoryText: "Do you really want to delete all saved sets?",
     ResetSettingsText: "Do you really want to reset settings?",
     "NoSetFound...": "No set found...",
+    YourFavoriteSetsWillAppearHere: "Your favorite sets will appear here",
 
     // button label
     Search: "Search",
@@ -99,6 +100,9 @@ const translations = {
     Help: "Help",
     DevelopSliders: "Develop sliders",
     ReduceSliders: "Reduce sliders",
+    DefineAValue: "Define a value",
+    StatsOfTheSet: "Stats of the set",
+    StatsOfTheSets: "Stats of the sets",
 
     // other
     ":": ": ",
@@ -315,6 +319,7 @@ const translations = {
     DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
     ResetSettingsText: "Souhaitez-vous vraiment réinitialiser les préférences ?",
     "NoSetFound...": "Aucun set trouvé...",
+    YourFavoriteSetsWillAppearHere: "Vos sets favoris apparaîtrons ici",
 
     // button label
     Search: "Chercher",
@@ -360,6 +365,9 @@ const translations = {
     Help: "Aide",
     DevelopSliders: "Développer les curseurs",
     ReduceSliders: "Reduire les curseurs",
+    DefineAValue: "Définissez une valeur",
+    StatsOfTheSet: "Stats du set",
+    StatsOfTheSets: "Stats des sets",
 
     // other
     ":": " : ",

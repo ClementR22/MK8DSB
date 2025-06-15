@@ -6,6 +6,7 @@ import { Slider } from "@miblanchard/react-native-slider";
 import useGeneralStore from "@/stores/useGeneralStore";
 import useSetsStore from "@/stores/useSetsStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
+import TooltipWrapper from "../TooltipWrapper";
 
 const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber, theme, disable = false }) => {
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
@@ -33,7 +34,11 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
   const styles = useMemo(
     () =>
       StyleSheet.create({
-        container: {
+        outerContainer: {
+          marginBottom: 0,
+          width: "100%",
+        },
+        innerContainer: {
           flexDirection: "row",
           paddingHorizontal: 7,
           paddingVertical: 3,
@@ -41,8 +46,6 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
           borderWidth: 2,
           borderRadius: 17,
           borderColor,
-          marginBottom: 0,
-          width: "100%",
         },
         containerLeft: {
           flex: 1,
@@ -71,7 +74,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
           marginRight: 2,
         },
         valueWrapper: {
-          width: 50, // largeur fixe adaptée à 3 chiffres
+          width: 50,
           alignItems: "flex-start",
         },
         containerBottom: {
@@ -116,19 +119,16 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
   );
 
   return (
-    <View style={styles.container}>
+    <TooltipWrapper tooltipText="DefineAValue" style={styles.outerContainer} innerContainer={styles.innerContainer}>
       <View style={styles.containerLeft}>
         <View style={styles.containerTop}>
           <View style={styles.textWrapper}>
-            {/* Nom de la stat (tronqué si trop long) */}
             <Text style={[styles.baseText, styles.nameText]} numberOfLines={1} ellipsizeMode="tail">
               {translate(name)}
             </Text>
-            {/* Séparateur fixe ":" */}
             <Text style={[styles.baseText, styles.separatorText]}>{translate(":")}</Text>
           </View>
 
-          {/* Valeur numérique bien alignée à droite dans un conteneur à largeur fixe */}
           <View style={styles.valueWrapper}>
             <Text style={styles.baseText}>{tempValue}</Text>
           </View>
@@ -166,7 +166,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
           tooltipText="ChangeCondition"
         />
       </View>
-    </View>
+    </TooltipWrapper>
   );
 };
 

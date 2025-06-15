@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import StatSliderResultBar from "./StatSliderResultBar";
 import { useThemeStore } from "@/stores/useThemeStore";
+import TooltipWrapper from "../TooltipWrapper";
 
 const StatSliderResult = ({ name, stat_i_multipleSetStats, chosenValue }) => {
   const theme = useThemeStore((state) => state.theme);
@@ -26,7 +27,7 @@ const StatSliderResult = ({ name, stat_i_multipleSetStats, chosenValue }) => {
   const translated2Points = translate(":");
 
   return (
-    <View style={styles.sliderContainer}>
+    <TooltipWrapper tooltipText="StatsOfTheSet" style={styles.sliderContainer}>
       <View style={styles.textContainer}>
         <Text style={[styles.text, { flexShrink: 1 }]} numberOfLines={1} ellipsizeMode="tail">
           {translate(name)}
@@ -50,7 +51,7 @@ const StatSliderResult = ({ name, stat_i_multipleSetStats, chosenValue }) => {
           </View>
         );
       })}
-    </View>
+    </TooltipWrapper>
   );
 };
 

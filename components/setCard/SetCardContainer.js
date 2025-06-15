@@ -5,6 +5,7 @@ import SetCard from "./SetCard";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { translate } from "@/translations/translations";
+import { useScreen } from "@/contexts/ScreenContext";
 
 const SetCardContainer = ({
   setsToShow,
@@ -14,17 +15,19 @@ const SetCardContainer = ({
 }) => {
   const theme = useThemeStore((state) => state.theme);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
+  const screenName = useScreen();
+  const isInSearchScreen = screenName === "search";
 
   const noSetToShow = setsToShow.length === 0;
   const contentWidth = noSetToShow ? "100%" : undefined;
 
-  const translatedPlaceHolderText = translate("NoSetFound...");
+  const translatedPlaceHolderText = translate(isInSearchScreen ? "NoSetFound..." : "YourFavoriteSetsWillAppearHere");
 
   const isFirstRender = useRef(true);
   let placeHolder = null;
 
   if (noSetToShow) {
-    if (isFirstRender.current) {
+    if (isFirstRender.current && isInSearchScreen) {
       isFirstRender.current = false;
       placeHolder = <MaterialCommunityIcons name="chat-question" size={72} color={theme.on_surface} />;
     } else {
