@@ -38,7 +38,6 @@ export default HelpModal = ({ slides, setIsHelpModalVisible }) => {
       dotStyle={styles.dotStyle}
       activeDotStyle={styles.activeDotStyle}
       scrollEnabled={isScrollEnable}
-      pagingEnabled={false}
     />
   );
 };

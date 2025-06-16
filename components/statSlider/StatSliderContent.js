@@ -8,7 +8,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import TooltipWrapper from "../TooltipWrapper";
 
-const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber, theme, disable = false }) => {
+const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber, theme }) => {
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
   const updateStatValue = useSetsStore((state) => state.updateStatValue);
 
@@ -18,12 +18,10 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
 
   const onSlidingStart = () => setIsScrollEnable(false);
 
-  const onSlidingComplete = !disable
-    ? ([v]) => {
-        updateStatValue(name, v);
-        setIsScrollEnable(true);
-      }
-    : null;
+  const onSlidingComplete = ([v]) => {
+    updateStatValue(name, v);
+    setIsScrollEnable(true);
+  };
 
   useEffect(() => {
     setTempValue(value);

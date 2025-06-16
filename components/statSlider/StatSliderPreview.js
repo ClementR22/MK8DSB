@@ -10,10 +10,9 @@ const StatSliderPreview = ({ name }) => {
     <StatSliderContent
       name={name}
       value={4}
-      number={statFilterNumber}
-      setNumber={setStatFilterNumber}
+      statFilterNumber={statFilterNumber}
+      setStatFilterNumber={setStatFilterNumber}
       theme={theme}
-      disable={true}
     />
   );
 };
