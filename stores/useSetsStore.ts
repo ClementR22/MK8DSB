@@ -230,7 +230,8 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   saveSetFromFound: async () => {
-    await get().saveSet(get().setsListFound[get().setCardEditedIndex]);
+    const { percentage, ...setWithoutPercentage } = get().setsListFound[get().setCardEditedIndex];
+    await get().saveSet(setWithoutPercentage);
   },
 
   renameSet: (newName, screenName, setCardIndex) => {

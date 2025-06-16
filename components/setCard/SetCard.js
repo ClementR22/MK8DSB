@@ -16,7 +16,7 @@ const SetCard = ({
   setToShowName,
   setToShowClassIds,
   setToShowStats = null,
-  setToShowpPercentage = null,
+  setToShowPercentage = undefined,
   setCardIndex = null,
   isInLoadSetModal = false,
   screenNameFromProps,
@@ -97,9 +97,7 @@ const SetCard = ({
   return (
     <View>
       <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={width} gap={0}>
-        {situation === "search" ? (
-          <SetCardFoundHeader setToShowName={setToShowName} setToShowpPercentage={setToShowpPercentage} />
-        ) : (
+        {config.moreActionNamesList ? (
           <SetCardEditableHeader
             setToShowName={setToShowName}
             setCardIndex={setCardIndex}
@@ -107,6 +105,8 @@ const SetCard = ({
             isInLoadSetModal={isInLoadSetModal}
             situation={situation}
           />
+        ) : (
+          <SetCardFoundHeader setToShowName={setToShowName} setToShowPercentage={setToShowPercentage} />
         )}
 
         <SetImagesModal setToShowClassIds={setToShowClassIds} />

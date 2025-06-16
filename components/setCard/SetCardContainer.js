@@ -58,7 +58,7 @@ const SetCardContainer = ({
               isInLoadSetModal={isInLoadSetModal}
               screenNameFromProps={screenNameFromProps}
               hideRemoveSet={hideRemoveSet}
-              setToShowpPercentage={percentage}
+              setToShowPercentage={percentage}
             />
           );
         })}
