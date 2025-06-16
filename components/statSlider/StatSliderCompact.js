@@ -1,6 +1,6 @@
-import { useThemeStore } from "@/stores/useThemeStore";
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { useThemeStore } from "@/stores/useThemeStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { translate } from "@/translations/translations";
 
@@ -8,7 +8,7 @@ const StatSliderCompact = ({ name = "Ground speed", value = 1, statFilterNumber 
   const theme = useThemeStore((state) => state.theme);
 
   const percentage = (value * 100) / 6;
-  const isValueInside = value >= 1.5;
+  const isValueInside = value >= 1;
 
   const styles = StyleSheet.create({
     container: {
@@ -24,12 +24,14 @@ const StatSliderCompact = ({ name = "Ground speed", value = 1, statFilterNumber 
     bar: {
       width: "78%",
       backgroundColor: theme.secondary_container,
+      flexDirection: "row",
       borderRadius: 12,
+      position: "relative", // au cas où
       alignItems: "flex-start",
     },
     fill: {
+      // position: "absolute",
       height: "100%",
-      width: `${percentage}%`,
       backgroundColor: theme.primary,
       borderRadius: 12,
     },
@@ -45,9 +47,7 @@ const StatSliderCompact = ({ name = "Ground speed", value = 1, statFilterNumber 
     valueLabel: {
       fontSize: 16,
       fontWeight: "bold",
-      position: "absolute",
-      top: 1,
-      color: theme.on_primary,
+      top: 0,
     },
   });
 
@@ -58,16 +58,42 @@ const StatSliderCompact = ({ name = "Ground speed", value = 1, statFilterNumber 
       </View>
 
       <View style={styles.bar}>
-        <View style={styles.fill}>
+        {/* Barre de remplissage en fond */}
+        <View
+          style={[
+            styles.fill,
+            {
+              width: `${percentage}%`,
+            },
+          ]}
+        >
+          {isValueInside && (
+            <Text
+              style={[
+                styles.valueLabel,
+                {
+                  position: "absolute",
+                  right: 7,
+                  color: theme.on_primary,
+                }, // décalé à gauche par rapport au bord droit dans fill
+              ]}
+            >
+              {value}
+            </Text>
+          )}
+        </View>
+
+        {/* Texte positionné par rapport à fill */}
+        {!isValueInside && (
           <Text
             style={[
               styles.valueLabel,
-              isValueInside ? { right: 10 } : { left: "100%", marginLeft: 10, color: theme.on_surface },
+              { marginLeft: 7, color: theme.on_surface }, // à droite de fill
             ]}
           >
             {value}
           </Text>
-        </View>
+        )}
       </View>
     </View>
   );
