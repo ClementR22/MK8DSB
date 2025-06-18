@@ -1,8 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { getBonusColor } from "@/utils/getBonusColor";
 
-const StatSliderResultBar = ({ value, chosenValue = undefined }) => {
+const StatSliderCompareBar = ({ value, chosenValue = undefined }) => {
   const theme = useThemeStore((state) => state.theme);
 
   if (!chosenValue) {
@@ -16,9 +17,7 @@ const StatSliderResultBar = ({ value, chosenValue = undefined }) => {
     return Math.max(flexValue, 0); // Assurer que la flexbox ne soit jamais négative
   };
 
-  const getBackgroundColor = () => {
-    return bonusFound > 0 ? "#34be4d" : bonusFound < 0 ? "#ff6240" : theme.surface_container_low;
-  };
+  const getBackgroundColor = () => getBonusColor(bonusFound) ?? theme.surface_container_low;
 
   const styles = StyleSheet.create({
     container: {
@@ -115,4 +114,4 @@ const StatSliderResultBar = ({ value, chosenValue = undefined }) => {
   );
 };
 
-export default StatSliderResultBar;
+export default StatSliderCompareBar;

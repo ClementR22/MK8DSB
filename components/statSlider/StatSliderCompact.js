@@ -4,7 +4,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { translate } from "@/translations/translations";
 
-const StatSliderCompact = ({ name = "Ground speed", value = 1, statFilterNumber }) => {
+const StatSliderCompact = ({ name, value, statFilterNumber = 0, isInSetCard = false }) => {
   const theme = useThemeStore((state) => state.theme);
 
   const percentage = (value * 100) / 6;
@@ -53,9 +53,11 @@ const StatSliderCompact = ({ name = "Ground speed", value = 1, statFilterNumber 
 
   return (
     <View style={styles.container}>
-      <View style={styles.nameLabelContainer}>
-        <Text style={styles.nameLabel}>{translate(name)}</Text>
-      </View>
+      {!isInSetCard && (
+        <View style={styles.nameLabelContainer}>
+          <Text style={styles.nameLabel}>{translate(name)}</Text>
+        </View>
+      )}
 
       <View style={styles.bar}>
         {/* Barre de remplissage en fond */}
@@ -67,7 +69,7 @@ const StatSliderCompact = ({ name = "Ground speed", value = 1, statFilterNumber 
             },
           ]}
         >
-          {isValueInside && (
+          {isValueInside && !isInSetCard && (
             <Text
               style={[
                 styles.valueLabel,
@@ -84,7 +86,7 @@ const StatSliderCompact = ({ name = "Ground speed", value = 1, statFilterNumber 
         </View>
 
         {/* Texte positionné par rapport à fill */}
-        {!isValueInside && (
+        {!isValueInside && !isInSetCard && (
           <Text
             style={[
               styles.valueLabel,
@@ -95,6 +97,12 @@ const StatSliderCompact = ({ name = "Ground speed", value = 1, statFilterNumber 
           </Text>
         )}
       </View>
+
+      {isInSetCard && (
+        <View style={styles.nameLabelContainer}>
+          <Text style={styles.nameLabel}>{value}</Text>
+        </View>
+      )}
     </View>
   );
 };

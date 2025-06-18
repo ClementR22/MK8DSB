@@ -1,11 +1,11 @@
 import { translate } from "@/translations/translations";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import StatSliderResultBar from "./StatSliderResultBar";
+import StatSliderCompareBar from "./StatSliderCompareBar";
 import { useThemeStore } from "@/stores/useThemeStore";
 import TooltipWrapper from "../TooltipWrapper";
 
-const StatSliderResult = ({ name, stat_i_multipleSetStats, chosenValue }) => {
+const StatSliderCompare = ({ name, stat_i_multipleSetStats }) => {
   const theme = useThemeStore((state) => state.theme);
 
   const styles = StyleSheet.create({
@@ -38,7 +38,7 @@ const StatSliderResult = ({ name, stat_i_multipleSetStats, chosenValue }) => {
         </Text>
       </View>
 
-      {stat_i_multipleSetStats.map((setStat, index) => {
+      {stat_i_multipleSetStats.map((value, index) => {
         return (
           <View
             key={index}
@@ -47,7 +47,7 @@ const StatSliderResult = ({ name, stat_i_multipleSetStats, chosenValue }) => {
               alignItems: "stretch",
             }}
           >
-            <StatSliderResultBar value={setStat} chosenValue={chosenValue} />
+            <StatSliderCompareBar value={value} />
           </View>
         );
       })}
@@ -55,4 +55,4 @@ const StatSliderResult = ({ name, stat_i_multipleSetStats, chosenValue }) => {
   );
 };
 
-export default StatSliderResult;
+export default StatSliderCompare;

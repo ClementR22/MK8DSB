@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import StatSliderResultsContainer from "../statSliderResult/StatSliderResultsContainer";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import { useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
@@ -11,6 +10,8 @@ import SetImagesModal from "./SetImagesModal";
 import { View } from "react-native";
 import SetCardEditableHeader from "./SetCardEditableHeader";
 import SetCardFoundHeader from "./SetCardFoundHeader";
+import StatSliderComparesContainer from "../statSliderCompare/StatSliderComparesContainer";
+import StatSliderSetCardsContainer from "../statSliderSetCard/StatSliderSetCardsContainer";
 
 const SetCard = ({
   setToShowName,
@@ -121,7 +122,7 @@ const SetCard = ({
 
       {config.showStatSliderResult && (
         <BoxContainer contentBackgroundColor={theme.surface} margin={0} marginTop={8} widthContainer={width}>
-          <StatSliderResultsContainer setsToShowMultipleStatsLists={[setToShowStats]} />
+          <StatSliderSetCardsContainer setToShowStats={setToShowStats} />
         </BoxContainer>
       )}
     </View>

@@ -2,7 +2,7 @@ import React from "react";
 import { IconType } from "react-native-dynamic-vector-icons";
 import { HelpFullWidthContainer, HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
 import ButtonAndHelpmodal from "./ButtonAndHelpmodal";
-import StatSliderResult from "../statSliderResult/StatSliderResult";
+import StatSliderCompare from "../statSliderCompare/StatSliderCompare";
 
 const HelpDisplaySetScreen = () => {
   return <ButtonAndHelpmodal slides={slides} />;
@@ -21,7 +21,7 @@ const slides = [
         </HelpText>
 
         <HelpFullWidthContainer>
-          <StatSliderResult name={"speedGround"} stat_i_multipleSetStats={[4, 3]} chosenValue={null} />
+          <StatSliderCompare name={"speedGround"} stat_i_multipleSetStats={[4, 3]} chosenValue={null} />
         </HelpFullWidthContainer>
 
         <HelpText>Chaque barre de stats représente les performances d’un set distinct</HelpText>

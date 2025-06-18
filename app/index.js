@@ -66,8 +66,8 @@ const SearchSetScreen = () => {
                     (stat, index) =>
                       stat.checked && (
                         <StatSliderCompact
-                          key={`compactSlider-${compactStatNames[index]}-${index}`}
-                          name={compactStatNames[index]}
+                          key={index}
+                          name={compactStatNames[stat.name]}
                           value={stat.value} // tu peux remplacer 4 par stat.value si besoin
                           statFilterNumber={stat.statFilterNumber}
                         />

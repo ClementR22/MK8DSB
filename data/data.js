@@ -132,20 +132,20 @@ export const statNames = [
   "miniTurbo",
 ];
 
-export const compactStatNames = [
-  "spdG",
-  "spdAG",
-  "spdW",
-  "spdA",
-  "acc",
-  "wgt",
-  "hanG",
-  "hanAG",
-  "hanW",
-  "hanA",
-  "tra",
-  "mtu",
-];
+export const compactStatNames = {
+  speedGround: "spdG",
+  speedAntiGravity: "spdAG",
+  speedWater: "spdW",
+  speedAir: "spdA",
+  acceleration: "acc",
+  weight: "wgt",
+  handlingGround: "hanG",
+  handlingAntiGravity: "hanAG",
+  handlingWater: "hanW",
+  handlingAir: "hanA",
+  traction: "tra",
+  miniTurbo: "mtu",
+};
 
 export const category4Names = ["character", "body", "wheels", "glider"];
 
