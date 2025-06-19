@@ -1,21 +1,63 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState, useRef } from "react";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { translate } from "@/translations/translations";
 import StatSliderCompactBar from "./StatSliderCompactBar";
+import { getBonusColor } from "@/utils/getBonusColor";
 
-const StatSliderCompact = ({ name, value, statFilterNumber = 0, chosenValue = undefined, isInSetCard = false }) => {
+const StatSliderCompact = ({ name, value, statFilterNumber = 0, chosenValue = false, isInSetCard = false }) => {
+  const bonusEnabled = !!chosenValue;
+  chosenValue = chosenValue ? chosenValue : value;
+
   const theme = useThemeStore((state) => state.theme);
+
+  const [showBonusDefault, setShowBonusDefault] = useState(false);
+  const [showBonus, setShowBonus] = useState(false);
+
+  const lastPress = useRef(0);
+  const isDoubleTapPending = useRef(false);
+
+  const DOUBLE_PRESS_DELAY = 500;
+
+  const bonusFound = value - chosenValue;
+  const bonusColor = getBonusColor(bonusFound);
+
+  const handlePressIn = () => {
+    const now = Date.now();
+    const isDoubleTap = now - lastPress.current < DOUBLE_PRESS_DELAY;
+
+    if (isDoubleTap) {
+      isDoubleTapPending.current = true;
+      setShowBonusDefault(!showBonusDefault);
+      setShowBonus(!showBonusDefault);
+    } else {
+      setShowBonus(!showBonusDefault);
+    }
+
+    lastPress.current = now;
+  };
+
+  const handlePressOut = () => {
+    setShowBonus(showBonusDefault);
+
+    /* setTimeout(() => {
+      if (!isDoubleTapPending.current) {
+        setShowBonus(showBonusDefault);
+      } else {
+        isDoubleTapPending.current = false;
+      }
+    }, DOUBLE_PRESS_DELAY); */
+  };
 
   const styles = StyleSheet.create({
     container: {
       height: 34,
       width: "100%",
-      backgroundColor: theme.surface,
       flexDirection: "row",
-      borderRadius: 17,
+      backgroundColor: theme.surface,
       padding: 3,
+      borderRadius: 17,
       borderWidth: 2,
       borderColor: getStatSliderBorderColor(statFilterNumber, theme),
     },
@@ -31,7 +73,11 @@ const StatSliderCompact = ({ name, value, statFilterNumber = 0, chosenValue = un
   });
 
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPressIn={bonusEnabled ? handlePressIn : undefined}
+      onPressOut={bonusEnabled ? handlePressOut : undefined}
+    >
       {!isInSetCard && (
         <View style={styles.nameLabelContainer}>
           <Text style={styles.nameLabel}>{translate(name)}</Text>
@@ -42,10 +88,10 @@ const StatSliderCompact = ({ name, value, statFilterNumber = 0, chosenValue = un
 
       {isInSetCard && (
         <View style={styles.nameLabelContainer}>
-          <Text style={styles.nameLabel}>{value}</Text>
+          <Text style={[styles.nameLabel, showBonus && { color: bonusColor }]}>{showBonus ? bonusFound : value}</Text>
         </View>
       )}
-    </View>
+    </Pressable>
   );
 };
 

@@ -10,7 +10,6 @@ import SetImagesModal from "./SetImagesModal";
 import { View } from "react-native";
 import SetCardEditableHeader from "./SetCardEditableHeader";
 import SetCardFoundHeader from "./SetCardFoundHeader";
-import StatSliderComparesContainer from "../statSliderCompare/StatSliderComparesContainer";
 import StatSliderSetCardsContainer from "../statSliderSetCard/StatSliderSetCardsContainer";
 
 const SetCard = ({

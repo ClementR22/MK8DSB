@@ -9,7 +9,7 @@ const StatSliderCompactBar = ({ value, chosenValue, isInSetCard }) => {
   const theme = useThemeStore((state) => state.theme);
   const [barWidth, setBarWidth] = useState(0);
 
-  chosenValue = chosenValue ?? value;
+  chosenValue = chosenValue ? chosenValue : value;
   const bonus = value - chosenValue;
 
   const getWidth = (val) => (barWidth * val) / MAX_VALUE;

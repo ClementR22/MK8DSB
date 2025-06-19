@@ -89,7 +89,6 @@ function Button({
     </>
   );
   if (tooltipText) {
-    console.log("oooooooooooooo");
     return (
       <TooltipWrapper tooltipText={tooltipText} {...sharedProps}>
         {content}

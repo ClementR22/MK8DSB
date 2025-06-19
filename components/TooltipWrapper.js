@@ -13,15 +13,14 @@ const TooltipWrapper = ({
   children,
   ...props
 }) => {
-  console.log(tooltipText, style, innerContainerStyle, onPress, placement, children);
-  const [isTooltipVisible_, setIsTooltipVisible_] = useState(false);
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
 
   const timeoutRef = useRef(null);
 
   function openTooltip() {
-    setIsTooltipVisible_(true);
+    setIsTooltipVisible(true);
     setIsScrollEnable(false);
     timeoutRef.current = setTimeout(() => {
       closeTooltip();
@@ -29,7 +28,7 @@ const TooltipWrapper = ({
   }
 
   function closeTooltip() {
-    setIsTooltipVisible_(false);
+    setIsTooltipVisible(false);
     setIsScrollEnable(true);
   }
 
@@ -40,7 +39,7 @@ const TooltipWrapper = ({
   return (
     <Pressable style={style} onPress={onPress} onLongPress={openTooltip} {...props}>
       <Tooltip
-        isVisible={isTooltipVisible_}
+        isVisible={isTooltipVisible}
         content={<Text numberOfLines={1}>{tooltipText && translate(tooltipText)}</Text>}
         placement={placement}
         onClose={closeTooltip}
