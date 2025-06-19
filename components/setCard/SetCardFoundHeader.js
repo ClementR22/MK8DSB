@@ -17,7 +17,7 @@ const SetCardFoundHeader = ({ setToShowName, setToShowPercentage }) => {
   return (
     <FlexContainer flexDirection="row" minHeight={40} paddingHorizontal={10} justifyContent="space-between">
       <Text style={styles.text}>{setToShowName}</Text>
-      {setToShowPercentage && <Text style={styles.text}>{`${setToShowPercentage}`}</Text>}
+      <Text style={styles.text}>{`${setToShowPercentage}`}</Text>
     </FlexContainer>
   );
 };
