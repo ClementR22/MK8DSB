@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { ScrollView } from "react-native";
 import StatSliderComparesContainer from "@/components/statSliderCompare/StatSliderComparesContainer";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
@@ -9,6 +9,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 
 const DisplaySetScreen = () => {
+  const scrollRef = useRef(null);
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
   const setsToShowMultipleStatsLists = setsListDisplayed.map((setToShow) => {
     const setToShowStatsList = setToShow.stats;
@@ -23,8 +24,8 @@ const DisplaySetScreen = () => {
     <ScreenProvider screenName="display">
       <ResultStatsProvider>
         <ScrollView scrollEnabled={isScrollEnable}>
-          <DisplaySetScreenPressablesContainer />
-          <SetCardContainer setsToShow={setsListDisplayed} hideRemoveSet={hideRemoveSet} />
+          <DisplaySetScreenPressablesContainer scrollRef={scrollRef} />
+          <SetCardContainer ref={scrollRef} setsToShow={setsListDisplayed} hideRemoveSet={hideRemoveSet} />
           <StatSliderComparesContainer setsToShowMultipleStatsLists={setsToShowMultipleStatsLists} />
         </ScrollView>
       </ResultStatsProvider>

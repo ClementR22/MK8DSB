@@ -4,10 +4,10 @@ import ButtonLoadSet from "../managingSetsButton/ButtonLoadSet";
 import ButtonAddSet from "../managingSetsButton/ButtonAddSet";
 import BoxContainer from "../../primitiveComponents/BoxContainer";
 
-const DisplaySetScreenPressablesContainer = () => {
+const DisplaySetScreenPressablesContainer = ({ scrollRef }) => {
   return (
     <BoxContainer flexDirection="row" justifyContent="space-evenly">
-      <ButtonAddSet />
+      <ButtonAddSet scrollRef={scrollRef} />
 
       <ButtonLoadSet tooltipText="LoadASet" />
 
