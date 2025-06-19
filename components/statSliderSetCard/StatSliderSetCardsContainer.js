@@ -12,7 +12,6 @@ const StatSliderSetCardsContainer = ({ setToShowStats }) => {
   const { resultStats } = useResultStats();
 
   let chosenStats = null; // Initialisé à null par défaut
-
   if (isInSearchScreen) {
     chosenStats = useSetsStore((state) => state.chosenStats);
   }
@@ -31,7 +30,7 @@ const StatSliderSetCardsContainer = ({ setToShowStats }) => {
               name={compactStatNames[name]}
               value={setToShowStats[index]}
               isInSetCard={true}
-              // chosenValue={isInSearchScreen && chosenStats[index].value}
+              chosenValue={isInSearchScreen && chosenStats[index].value}
             />
           );
         }

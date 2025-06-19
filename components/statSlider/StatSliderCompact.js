@@ -3,12 +3,10 @@ import { View, Text, StyleSheet } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { translate } from "@/translations/translations";
+import StatSliderCompactBar from "./StatSliderCompactBar";
 
-const StatSliderCompact = ({ name, value, statFilterNumber = 0, isInSetCard = false }) => {
+const StatSliderCompact = ({ name, value, statFilterNumber = 0, chosenValue = undefined, isInSetCard = false }) => {
   const theme = useThemeStore((state) => state.theme);
-
-  const percentage = (value * 100) / 6;
-  const isValueInside = value >= 1;
 
   const styles = StyleSheet.create({
     container: {
@@ -21,20 +19,6 @@ const StatSliderCompact = ({ name, value, statFilterNumber = 0, isInSetCard = fa
       borderWidth: 2,
       borderColor: getStatSliderBorderColor(statFilterNumber, theme),
     },
-    bar: {
-      width: "78%",
-      backgroundColor: theme.secondary_container,
-      flexDirection: "row",
-      borderRadius: 12,
-      position: "relative", // au cas où
-      alignItems: "flex-start",
-    },
-    fill: {
-      // position: "absolute",
-      height: "100%",
-      backgroundColor: theme.primary,
-      borderRadius: 12,
-    },
     nameLabelContainer: {
       width: "22%",
       alignItems: "center",
@@ -43,11 +27,6 @@ const StatSliderCompact = ({ name, value, statFilterNumber = 0, isInSetCard = fa
       fontSize: 16,
       fontWeight: "bold",
       color: theme.on_surface,
-    },
-    valueLabel: {
-      fontSize: 16,
-      fontWeight: "bold",
-      top: 0,
     },
   });
 
@@ -59,44 +38,7 @@ const StatSliderCompact = ({ name, value, statFilterNumber = 0, isInSetCard = fa
         </View>
       )}
 
-      <View style={styles.bar}>
-        {/* Barre de remplissage en fond */}
-        <View
-          style={[
-            styles.fill,
-            {
-              width: `${percentage}%`,
-            },
-          ]}
-        >
-          {isValueInside && !isInSetCard && (
-            <Text
-              style={[
-                styles.valueLabel,
-                {
-                  position: "absolute",
-                  right: 7,
-                  color: theme.on_primary,
-                }, // décalé à gauche par rapport au bord droit dans fill
-              ]}
-            >
-              {value}
-            </Text>
-          )}
-        </View>
-
-        {/* Texte positionné par rapport à fill */}
-        {!isValueInside && !isInSetCard && (
-          <Text
-            style={[
-              styles.valueLabel,
-              { marginLeft: 7, color: theme.on_surface }, // à droite de fill
-            ]}
-          >
-            {value}
-          </Text>
-        )}
-      </View>
+      <StatSliderCompactBar value={value} chosenValue={chosenValue} isInSetCard={isInSetCard} />
 
       {isInSetCard && (
         <View style={styles.nameLabelContainer}>
