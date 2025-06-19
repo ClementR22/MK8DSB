@@ -119,11 +119,7 @@ const SetCard = ({
         />
       </BoxContainer>
 
-      {config.showStatSliderResult && (
-        <BoxContainer contentBackgroundColor={theme.surface} margin={0} marginTop={8} widthContainer={width}>
-          <StatSliderSetCardsContainer setToShowStats={setToShowStats} />
-        </BoxContainer>
-      )}
+      {config.showStatSliderResult && <StatSliderSetCardsContainer setToShowStats={setToShowStats} />}
     </View>
   );
 };

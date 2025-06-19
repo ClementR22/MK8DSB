@@ -58,10 +58,12 @@ const SetCardContainer = ({
     },
   });
 
+  const isFloatingContainer = (isInSearchScreen || inInSaveScreen) && !isInLoadSetModal && !noSetToShow;
+
   return (
     <View>
       {/* Zone rouge flottante */}
-      {(isInSearchScreen || inInSaveScreen) && !isInLoadSetModal && <StatNamesFloatingContainer />}
+      {isFloatingContainer && <StatNamesFloatingContainer />}
 
       <ScrollView scrollEnabled={isScrollEnable} horizontal={true} contentContainerStyle={{ width: contentWidth }}>
         <Pressable

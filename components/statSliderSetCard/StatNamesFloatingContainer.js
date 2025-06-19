@@ -64,16 +64,20 @@ const StatNamesFloatingContainer = () => {
   });
 
   return (
-    <View style={styles.floatingLabelContainer}>
-      {resultStatsChecked.map((stat, index) => {
-        const compactName = compactStatNames[stat.name];
-        return (
-          <View key={index} style={styles.nameLabelContainer}>
-            <Text style={styles.nameLabel}>{translateToLanguage(compactName, language)}</Text>
-          </View>
-        );
-      })}
-    </View>
+    <>
+      {!(nbSlider === 0) && (
+        <View style={styles.floatingLabelContainer}>
+          {resultStatsChecked.map((stat, index) => {
+            const compactName = compactStatNames[stat.name];
+            return (
+              <View key={index} style={styles.nameLabelContainer}>
+                <Text style={styles.nameLabel}>{translateToLanguage(compactName, language)}</Text>
+              </View>
+            );
+          })}
+        </View>
+      )}
+    </>
   );
 };
 
