@@ -207,7 +207,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
         setsListSaved: [...state.setsListSaved, setToSave],
       }));
       await get().saveSetInMemory(setToSave);
-      console.log("ok");
       showToast("Succès" + " " + "Le set est enregistré");
       return true;
     } catch (e) {

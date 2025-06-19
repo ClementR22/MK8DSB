@@ -43,26 +43,6 @@ const SetCardContainer = ({
     }
   }
 
-  /*
-   <View
-        style={styles.textContainer}
-        onLayout={(e) => {
-          const height = e.nativeEvent.layout.height;
-          onSliderLayout(height); // 👈 envoie au parent
-        }}
-      >
-        <Text style={[styles.text, { flexShrink: 1 }]} numberOfLines={1} ellipsizeMode="tail">
-          {translate(name)}
-        </Text>
-        <Text style={[styles.text, { flexShrink: 0 }]}>
-          {translated2Points}
-          {JSON.stringify(stat_i_multipleSetStats[0])}
-        </Text>
-      </View>
-      */
-
-  const tailleStatSliderResult = 34;
-
   const styles = StyleSheet.create({
     setCardContainer: {
       margin: 16,

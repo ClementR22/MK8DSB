@@ -134,7 +134,6 @@ function Modal({
           </FlexContainer>
         </Pressable>
       </Pressable>
-      <Snackbar />
     </NativeModal>
   );
 }

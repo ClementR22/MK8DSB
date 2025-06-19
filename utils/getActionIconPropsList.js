@@ -1,6 +1,7 @@
 import useSetsStore from "@/stores/useSetsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { IconType } from "react-native-dynamic-vector-icons";
+import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
 
 export function getActionIconPropsList(setCardIndex, situation, handleEditPress) {
   const loadSetSaveToSearch = useSetsStore((state) => state.loadSetSaveToSearch);
@@ -12,6 +13,7 @@ export function getActionIconPropsList(setCardIndex, situation, handleEditPress)
   const setsetCardEditedIndex = useSetsStore((state) => state.setsetCardEditedIndex);
   const saveSetFromDisplay = useSetsStore((state) => state.saveSetFromDisplay);
   const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
+  const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
 
   function handleSavePress() {
     setsetCardEditedIndex(setCardIndex);
@@ -44,14 +46,20 @@ export function getActionIconPropsList(setCardIndex, situation, handleEditPress)
       title: situation === "load" ? "LoadTheStats" : "LoadTheStatsToSearchScreen",
       name: situation === "save" ? "magnify" : "download",
       type: IconType.MaterialCommunityIcons,
-      onPress: () => loadSetSaveToSearch(setCardIndex),
+      onPress: () => {
+        loadSetSaveToSearch(setCardIndex);
+        setIsLoadSetModalVisible(false);
+      },
     },
 
     loadSaveToDisplay: {
       title: situation === "load" ? "LoadTheSet" : "LoadTheSetToDisplayScreen",
       name: situation === "save" ? "display-settings" : "download",
       type: IconType.MaterialIcons,
-      onPress: () => loadSetSaveToDisplay(setCardIndex),
+      onPress: () => {
+        loadSetSaveToDisplay(setCardIndex);
+        setIsLoadSetModalVisible(false);
+      },
     },
 
     loadSearchToDisplay: {
