@@ -32,11 +32,11 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
   const styles = useMemo(
     () =>
       StyleSheet.create({
-        outerContainer: {
+        outerContainerStyle: {
           marginBottom: 0,
           width: "100%",
         },
-        innerContainer: {
+        innerContainerStyle: {
           flexDirection: "row",
           paddingHorizontal: 7,
           paddingVertical: 3,
@@ -51,10 +51,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
         containerTop: {
           flexDirection: "row",
           alignItems: "center",
-          marginLeft: 3,
-          marginRight: 10,
         },
-
         textWrapper: {
           flexDirection: "row",
           flex: 1,
@@ -66,6 +63,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
           fontWeight: "600",
         },
         nameText: {
+          marginLeft: 10,
           overflow: "hidden",
         },
         separatorText: {
@@ -78,7 +76,6 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
         containerBottom: {
           width: "100%",
           paddingHorizontal: 10,
-          paddingVertical: 3,
         },
         sliderContainer: {
           height: 50,
@@ -117,7 +114,11 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
   );
 
   return (
-    <TooltipWrapper tooltipText="DefineAValue" style={styles.outerContainer} innerContainer={styles.innerContainer}>
+    <TooltipWrapper
+      tooltipText="DefineAValue"
+      style={styles.outerContainerStyle}
+      innerContainerStyle={styles.innerContainerStyle}
+    >
       <View style={styles.containerLeft}>
         <View style={styles.containerTop}>
           <View style={styles.textWrapper}>

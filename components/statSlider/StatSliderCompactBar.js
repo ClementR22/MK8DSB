@@ -1,23 +1,28 @@
 import { useThemeStore } from "@/stores/useThemeStore";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { getBonusColor } from "@/utils/getBonusColor";
 
-const BAR_WIDTH = 148;
 const MAX_VALUE = 6;
-
-const getWidth = (value) => (value * BAR_WIDTH) / MAX_VALUE;
 
 const StatSliderCompactBar = ({ value, chosenValue, isInSetCard }) => {
   const theme = useThemeStore((state) => state.theme);
+  const [barWidth, setBarWidth] = useState(0);
+
+  chosenValue = chosenValue ?? value;
   const bonus = value - chosenValue;
+
+  const getWidth = (val) => (barWidth * val) / MAX_VALUE;
 
   const fillWidth = bonus >= 0 ? getWidth(value) : getWidth(chosenValue);
   const innerFillWidth = bonus > 0 ? getWidth(chosenValue) : getWidth(value);
   const showValueInside = value >= 1.5 && !isInSetCard;
 
   return (
-    <View style={[styles.bar, { backgroundColor: theme.secondary_container }]}>
+    <View
+      style={[styles.bar, { backgroundColor: theme.secondary_container }]}
+      onLayout={(e) => setBarWidth(e.nativeEvent.layout.width)}
+    >
       {/* Fill principal */}
       <View
         style={[
@@ -29,7 +34,6 @@ const StatSliderCompactBar = ({ value, chosenValue, isInSetCard }) => {
         ]}
       >
         {isInSetCard ? (
-          // Double couche : fond bonus, puis le fill normal par-dessus
           <View
             style={[
               styles.fill,
@@ -58,7 +62,7 @@ const StatSliderCompactBar = ({ value, chosenValue, isInSetCard }) => {
 
 const styles = StyleSheet.create({
   bar: {
-    width: "78%",
+    width: "78%", // prend toute la largeur disponible du parent
     flexDirection: "row",
     borderRadius: 12,
     alignItems: "flex-start",

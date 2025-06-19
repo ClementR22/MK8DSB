@@ -6,13 +6,14 @@ import useGeneralStore from "@/stores/useGeneralStore";
 
 const TooltipWrapper = ({
   tooltipText,
-  style,
-  innerContainer = undefined,
+  style = undefined,
+  innerContainerStyle = undefined,
   onPress,
   placement = "top",
   children,
   ...props
 }) => {
+  console.log(tooltipText, style, innerContainerStyle, onPress, placement, children);
   const [isTooltipVisible_, setIsTooltipVisible_] = useState(false);
 
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
@@ -46,7 +47,7 @@ const TooltipWrapper = ({
         backgroundColor="rgba(0,0,0,0)"
         disableShadow={true}
         showChildInTooltip={false}
-        parentWrapperStyle={innerContainer}
+        parentWrapperStyle={innerContainerStyle}
       >
         {children}
       </Tooltip>
