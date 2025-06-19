@@ -3,7 +3,7 @@ import FlexContainer from "@/primitiveComponents/FlexContainer";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { StyleSheet, Text } from "react-native";
 
-const SetCardFoundHeader = ({ setToShowName, setToShowPercentage }) => {
+const SetCardStaticHeader = ({ setToShowName, setToShowPercentage = undefined }) => {
   const theme = useThemeStore((state) => state.theme);
 
   const styles = StyleSheet.create({
@@ -17,9 +17,9 @@ const SetCardFoundHeader = ({ setToShowName, setToShowPercentage }) => {
   return (
     <FlexContainer flexDirection="row" minHeight={40} paddingHorizontal={10} justifyContent="space-between">
       <Text style={styles.text}>{setToShowName}</Text>
-      <Text style={styles.text}>{`${setToShowPercentage}`}</Text>
+      {setToShowPercentage ? <Text style={styles.text}>{`${setToShowPercentage}`}</Text> : null}
     </FlexContainer>
   );
 };
 
-export default SetCardFoundHeader;
+export default SetCardStaticHeader;

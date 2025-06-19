@@ -9,7 +9,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import SetImagesModal from "./SetImagesModal";
 import { View } from "react-native";
 import SetCardEditableHeader from "./SetCardEditableHeader";
-import SetCardFoundHeader from "./SetCardFoundHeader";
+import SetCardStaticHeader from "./SetCardStaticHeader";
 import StatSliderSetCardsContainer from "../statSliderSetCard/StatSliderSetCardsContainer";
 
 const SetCard = ({
@@ -106,7 +106,7 @@ const SetCard = ({
             situation={situation}
           />
         ) : (
-          <SetCardFoundHeader setToShowName={setToShowName} setToShowPercentage={setToShowPercentage} />
+          <SetCardStaticHeader setToShowName={setToShowName} setToShowPercentage={setToShowPercentage} />
         )}
 
         <SetImagesModal setToShowClassIds={setToShowClassIds} />
