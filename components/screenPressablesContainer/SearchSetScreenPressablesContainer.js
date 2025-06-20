@@ -104,7 +104,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
           } else if (statFilterNumber === 1 && setValue < chosenValue) {
             validSet = false; // Écart trouvé
           } else {
-            gap += (chosenValue - setValue) ** 2; // Calculer le gap
+            gap += ((chosenValue - setValue) / 6) ** 2; // Calculer le gap
           }
         }
       });
@@ -121,9 +121,15 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
     if (gaps.length === 0) {
       updateSetsToShow([]); // Ou gérer l'état de "rien trouvé"
     } else {
-      const setsFound = gaps
-        .slice(0, Math.min(resultsNumber, gaps.length))
-        .map(({ setIndex, gap }) => ({ ...setAllInfos[setIndex], percentage: gap }));
+      const realResultsNumber = Math.min(resultsNumber, gaps.length);
+      const setIndexesFound = gaps.slice(0, realResultsNumber);
+      const worstGap = chosenStatsChecked.filter((checked) => checked).length;
+      const setsFound = setIndexesFound.map(({ setIndex, gap }) => {
+        console.log("gap", gap);
+        const percentage = 100 * (1 - gap / worstGap);
+        const percentageRounded = Number(percentage.toPrecision(3)); // => 123
+        return { ...setAllInfos[setIndex], percentage: percentageRounded };
+      });
       updateSetsToShow(setsFound);
     }
   };
