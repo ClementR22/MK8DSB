@@ -2,7 +2,7 @@
  * Made thanks to https://github.com/callstack/react-native-paper/issues/2825#issuecomment-1507560542
  */
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet } from "react-native";
 import { Snackbar as PaperSnackbar } from "react-native-paper";
 
@@ -18,23 +18,30 @@ const Snackbar = () => {
   const theme = useThemeStore((state) => state.theme);
   const [state, setState] = useState<State>({ visible: false });
 
-  const styles = StyleSheet.create({
-    snackbar: {
+  const snackbarContentStyle = useMemo(
+    () => ({
       backgroundColor: theme.inverse_surface,
       color: theme.inverse_on_surface,
-    },
-  });
+    }),
+    [theme.inverse_surface, theme.inverse_on_surface]
+  );
+
+  const handleDismiss = useCallback(() => {
+    setState((prevState) => ({ ...prevState, visible: false }));
+  }, []);
 
   useEffect(() => {
-    SnackbarManager.setListener((title) => setState({ visible: true, title }));
+    const listener = (title: string) => setState({ visible: true, title });
+
+    SnackbarManager.setListener(listener);
     return () => SnackbarManager.setListener(null);
   }, []);
 
   return (
     <PaperSnackbar
-      contentStyle={styles.snackbar}
+      contentStyle={snackbarContentStyle}
       visible={state.visible}
-      onDismiss={() => setState({ ...state, visible: false })}
+      onDismiss={handleDismiss}
       duration={2000}
     >
       {state.title}

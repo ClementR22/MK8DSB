@@ -1,42 +1,47 @@
-import React, { ReactElement, ReactNode } from "react";
+import React, { ReactElement, ReactNode, useCallback, useMemo } from "react";
 import { Modal as NativeModal, Pressable, StyleSheet, Text, View } from "react-native";
 import { vh } from "@/components/styles/theme";
 import { translate } from "@/translations/translations";
 import FlexContainer from "@/primitiveComponents/FlexContainer";
 import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
-import Snackbar from "./Snackbar";
 
-function ModalButton({ text, onPress, tooltipText }: { text: string; onPress: () => void; tooltipText?: string }) {
+interface ModalButtonProps {
+  text: string;
+  onPress: () => void;
+  tooltipText?: string;
+}
+
+const ModalButton = React.memo(({ text, onPress, tooltipText }: ModalButtonProps) => {
   return (
     <Button elevation={12} onPress={onPress} minWidth={100} tooltipText={tooltipText}>
       {translate(text)}
     </Button>
   );
-}
+});
 
 interface ModalProps {
   modalTitle: string;
   isModalVisible: boolean;
   setIsModalVisible: (newVisible: boolean) => void;
   children: ReactNode;
-  onClose: () => void;
+  onClose?: () => void; // option
   closeButtonText?: string;
   isWithClosePressable?: boolean;
-  // can give a componenent
+  // on peut donner un composant
   secondButton?: ReactElement<{ onComplete?: () => void }>;
-  // or props to make it here
+  // ou uniquement ses props
   secondButtonProps?: { text: string; onPress: () => void; tooltipText?: string };
   closeAfterSecondButton?: boolean;
   secondButtonPosition?: "left" | "right";
 }
 
-function Modal({
+const Modal = ({
   modalTitle,
   isModalVisible,
   setIsModalVisible,
   children,
-  onClose, // option // blabla
+  onClose,
   closeButtonText = "Close",
   isWithClosePressable = true,
   secondButton,
@@ -44,12 +49,29 @@ function Modal({
   closeAfterSecondButton = true,
   secondButtonPosition = "left",
   ...props
-}: ModalProps) {
+}: ModalProps) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const isSecondButtonLeft = secondButtonPosition == "left";
+  const containerBackgroundColorStyle = useMemo(
+    () => ({
+      backgroundColor: theme.surface_container_high,
+    }),
+    [theme.surface_container_high]
+  );
 
-  const renderSecondButton = () => {
+  const titleColorStyle = useMemo(
+    () => ({
+      color: theme.on_surface,
+    }),
+    [theme.on_surface]
+  );
+
+  const buttonContainerFlexDirection = useMemo(
+    () => (secondButtonPosition === "left" ? "row" : "row-reverse"),
+    [secondButtonPosition]
+  );
+
+  const renderSecondButton = useCallback(() => {
     if (secondButton) {
       return React.cloneElement(secondButton, {
         onComplete: () => setIsModalVisible(false),
@@ -64,78 +86,82 @@ function Modal({
       return <ModalButton {...secondButtonProps} onPress={finalOnPress} />;
     }
     return null;
-  };
+  }, [secondButton, secondButtonProps, closeAfterSecondButton, setIsModalVisible]);
 
-  const styles = StyleSheet.create({
-    background: {
-      ...StyleSheet.absoluteFillObject,
-      cursor: "auto",
-      zIndex: -1,
-      position: "absolute",
-      width: "100%",
-      height: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-    },
-    container: {
-      //maxHeight: "90%",
-      //alignSelf: "center",
-      // maxWidth: 400,
-      zIndex: 10,
-      cursor: "auto",
-      width: "90%",
-      borderRadius: 28,
-      paddingVertical: 24,
-      backgroundColor: theme.surface_container_high,
-    },
-    childrenContainer: {
-      maxHeight: 0.6 * vh,
-      margin: 24,
-    },
-    title_center: {
-      color: theme.on_surface,
-      alignSelf: "center",
-      textAlign: "center",
-      paddingHorizontal: 24,
-      fontSize: 22,
-      fontWeight: 400,
-      marginBottom: 0,
-      fontFamily: "Roboto",
-    },
-    button_container: {
-      // marginTop: 10,
-    },
-  });
+  const finalCloseOnPress = useCallback(() => {
+    if (onClose) {
+      onClose();
+    } else {
+      setIsModalVisible(false);
+    }
+  }, [onClose, setIsModalVisible]);
+
+  const handleBackgroundPress = useCallback(() => setIsModalVisible(false), [setIsModalVisible]);
+
+  const handleContainerResponder = useCallback(() => true, []);
 
   return (
     <NativeModal
       animationType="none" // Animation (slide, fade, none)
       transparent={true} // Fond transparent
       visible={isModalVisible}
-      onRequestClose={() => setIsModalVisible(false)} // Ferme le modal
+      onRequestClose={finalCloseOnPress} // Ferme le modal
       {...props}
     >
-      <Pressable style={styles.background} onPress={() => setIsModalVisible(false)}>
-        <Pressable style={styles.container} onStartShouldSetResponder={() => true}>
+      <Pressable style={styles.background} onPress={handleBackgroundPress}>
+        <Pressable
+          style={[styles.container, containerBackgroundColorStyle]}
+          onStartShouldSetResponder={handleContainerResponder}
+        >
           {modalTitle && <Text style={styles.title_center}>{translate(modalTitle)}</Text>}
 
           <View style={styles.childrenContainer}>{children}</View>
 
-          <FlexContainer
-            flexDirection={isSecondButtonLeft ? "row" : "row-reverse"}
-            gap={10}
-            style={styles.button_container}
-          >
+          <FlexContainer flexDirection={buttonContainerFlexDirection} style={styles.buttonContainer}>
             {renderSecondButton()}
-            {isWithClosePressable && (
-              <ModalButton text={closeButtonText} onPress={onClose ? onClose : () => setIsModalVisible(false)} />
-            )}
+            {isWithClosePressable && <ModalButton text={closeButtonText} onPress={finalCloseOnPress} />}
           </FlexContainer>
         </Pressable>
       </Pressable>
     </NativeModal>
   );
-}
+};
 
-export default Modal;
+const styles = StyleSheet.create({
+  background: {
+    ...StyleSheet.absoluteFillObject,
+    // cursor: "auto", // Web-specific. RN ignores.
+    zIndex: -1,
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  container: {
+    zIndex: 10,
+    // cursor: "auto", // Web-specific. RN ignores.
+    width: "90%",
+    borderRadius: 28,
+    paddingVertical: 24,
+  },
+  childrenContainer: {
+    maxHeight: 0.6 * vh, // vh must be correctly calculated and stable
+    margin: 24,
+  },
+  title_center: {
+    alignSelf: "center",
+    textAlign: "center",
+    paddingHorizontal: 24,
+    fontSize: 22,
+    fontWeight: "400", // fontWeight should be a string in RN
+    marginBottom: 0,
+    // fontFamily: "Roboto", // Ensure this font is loaded. If not, it falls back to default.
+  },
+  buttonContainer: {
+    // marginTop: 10, // Consider adding this dynamically if needed
+  },
+});
+
+export default React.memo(Modal);

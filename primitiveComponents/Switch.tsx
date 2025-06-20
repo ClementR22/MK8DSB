@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { Switch as NativeSwitch } from "react-native-paper";
 import { StyleSheet, Text, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
@@ -16,12 +16,25 @@ interface SwitchProps {
 const Switch: React.FC<SwitchProps> = ({ value, setValue, onToggleSwitch, disabled = false, switchLabel }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const onToggleSwitch_ = onToggleSwitch ?? (() => setValue(!value));
+  const handleToggle = useCallback(() => {
+    if (onToggleSwitch) {
+      onToggleSwitch();
+    } else if (setValue) {
+      setValue(!value);
+    }
+  }, [onToggleSwitch, setValue, value]);
+
+  const textStyle = useMemo(
+    () => ({
+      color: theme.on_surface,
+    }),
+    [theme.on_surface]
+  );
 
   return (
     <View style={styles.switchContainer}>
-      <NativeSwitch value={value} onValueChange={onToggleSwitch_} disabled={disabled} />
-      <Text style={{ color: theme.on_surface }}>{translate(switchLabel)}</Text>
+      <NativeSwitch value={value} onValueChange={handleToggle} disabled={disabled} />
+      <Text style={textStyle}>{translate(switchLabel)}</Text>
     </View>
   );
 };
@@ -34,4 +47,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Switch;
+export default React.memo(Switch);
