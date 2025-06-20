@@ -2,11 +2,11 @@ import React, { useMemo } from "react";
 import { Image, StyleSheet, View, ImageStyle, ImageSourcePropType } from "react-native";
 import { category4Names, elementsAllInfosList } from "@/data/data";
 import TooltipWrapper from "../TooltipWrapper";
-import { vh, vw } from "../styles/theme";
-import { SET_CARD_WIDTH } from "./SetCard";
+import { vw } from "../styles/theme";
 
 const MODAL_WIDTH = vw * 0.9;
 const MAX_WIDTH_IN_MODAL = MODAL_WIDTH - 20;
+const SET_CARD_WIDTH = 220;
 const MAX_WIDTH_IN_SET_CARD = SET_CARD_WIDTH - 20;
 const MAX_NUMBER_OF_IMAGE = 5;
 

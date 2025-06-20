@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useImperativeHandle, useMemo, useState } from "react";
+import React, { useRef, forwardRef, useImperativeHandle, useMemo, useState, useEffect } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View, ViewStyle, TextStyle, DimensionValue } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCard from "./SetCard";
@@ -60,7 +60,7 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
 
     const placeHolder = useMemo(() => {
       if (!noSetToShow) {
-        if (hasShownSearchQuestionIcon) {
+        if (!hasShownSearchQuestionIcon) {
           setHasShownSearchQuestionIcon(true);
         }
         return null;
@@ -86,7 +86,7 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
 
       return setsToShow.map((set: SetData, index: number) => (
         <SetCard
-          key={set.name || `card-${index}`}
+          key={index}
           setToShowName={set.name}
           setToShowClassIds={set.classIds}
           setToShowStats={set.stats}
@@ -114,7 +114,7 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
           ref={scrollViewRef}
           scrollEnabled={isScrollEnable}
           horizontal={true}
-          contentContainerStyle={[styles.scrollViewContentContainer, { width: calculatedContentWidth }]}
+          contentContainerStyle={{ width: calculatedContentWidth }}
         >
           <Pressable style={[styles.innerPressableContainer, pressableDynamicBg]}>
             {noSetToShow ? placeHolder : memoizedSetCards}
@@ -126,9 +126,6 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
 );
 
 const styles = StyleSheet.create({
-  scrollViewContentContainer: {
-    flexGrow: 1,
-  },
   innerPressableContainer: {
     margin: 16,
     marginTop: 0,

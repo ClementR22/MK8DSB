@@ -6,8 +6,8 @@ import StatSliderCompact from "../statSlider/StatSliderCompact";
 import { compactStatNames } from "@/data/data";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { SET_CARD_WIDTH } from "../setCard/SetCard";
 
+const SET_CARD_WIDTH = 220;
 interface StatSliderSetCardsContainerProps {
   setToShowStats: number[];
 }
