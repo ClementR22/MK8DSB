@@ -6,7 +6,7 @@ import { translate } from "@/translations/translations";
 import StatSliderCompactBar from "./StatSliderCompactBar";
 import { getBonusColor } from "@/utils/getBonusColor";
 
-const StatSliderCompact = ({ name, value, statFilterNumber = 0, chosenValue = false, isInSetCard = false }) => {
+const StatSliderCompact = ({ name, value, statFilterNumber = 0, chosenValue = undefined, isInSetCard = false }) => {
   const bonusEnabled = useMemo(() => !!chosenValue, [chosenValue]);
   const actualChosenValue = useMemo(() => chosenValue ?? value, [chosenValue, value]);
 
