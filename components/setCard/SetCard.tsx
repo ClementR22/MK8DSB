@@ -1,0 +1,169 @@
+import React, { useMemo, useCallback } from "react";
+import { View } from "react-native";
+import BoxContainer from "@/primitiveComponents/BoxContainer";
+import { ScreenName, useScreen } from "@/contexts/ScreenContext";
+import SetCardActionButtons from "./SetCardActionButtons";
+import useModalsStore from "@/stores/useModalsStore";
+import usePressableElementsStore from "@/stores/usePressableElementsStore";
+import useSetsStore from "@/stores/useSetsStore";
+import { useThemeStore } from "@/stores/useThemeStore";
+import SetImagesModal from "./SetImagesModal";
+import SetCardEditableHeader from "./SetCardEditableHeader";
+import SetCardStaticHeader from "./SetCardStaticHeader";
+import StatSliderSetCardsContainer from "../statSliderSetCard/StatSliderSetCardsContainer";
+
+export const SET_CARD_WIDTH = 220;
+
+export interface SetData {
+  name: string;
+  classIds: number[];
+  stats: number[] | null;
+  percentage: number | undefined;
+}
+
+interface SetCardProps {
+  setToShowName: string;
+  setToShowClassIds: number[];
+  setToShowStats?: number[] | null;
+  setToShowPercentage?: number;
+  setCardIndex: number;
+  isInLoadSetModal?: boolean;
+  screenNameFromProps?: ScreenName;
+  hideRemoveSet?: boolean;
+}
+
+export type actionNamesList = string[];
+
+interface SetCardSituationConfig {
+  showTextInput: boolean;
+  showIndex: boolean;
+  showStatSliderResult: boolean;
+  actionNamesList: actionNamesList;
+  moreActionNamesList?: actionNamesList;
+}
+
+const situationConfigs: Record<string, SetCardSituationConfig> = {
+  search: {
+    showTextInput: false,
+    showIndex: true,
+    showStatSliderResult: true,
+    actionNamesList: ["export", "loadSearchToDisplay", "save"],
+    moreActionNamesList: undefined,
+  },
+  display: {
+    showTextInput: true,
+    showIndex: false,
+    showStatSliderResult: false,
+    actionNamesList: ["edit", "loadDisplayToSearch", "save"],
+    moreActionNamesList: [],
+  },
+  save: {
+    showTextInput: true,
+    showIndex: false,
+    showStatSliderResult: true,
+    actionNamesList: ["edit", "loadSaveToSearch", "loadSaveToDisplay"],
+    moreActionNamesList: ["export", "removeInMemory"],
+  },
+  load: {
+    showTextInput: true,
+    showIndex: false,
+    showStatSliderResult: false,
+    actionNamesList: [],
+    moreActionNamesList: undefined,
+  },
+};
+
+const SetCard: React.FC<SetCardProps> = ({
+  setToShowName,
+  setToShowClassIds,
+  setToShowStats = null,
+  setToShowPercentage = undefined,
+  setCardIndex,
+  isInLoadSetModal = false,
+  screenNameFromProps,
+  hideRemoveSet = false,
+}) => {
+  const contextScreenName = useScreen();
+
+  const screenName = useMemo(() => screenNameFromProps ?? contextScreenName, [screenNameFromProps, contextScreenName]);
+
+  const situation = useMemo(() => (isInLoadSetModal ? "load" : screenName), [isInLoadSetModal, screenName]);
+
+  const theme = useThemeStore((state) => state.theme);
+
+  const config = useMemo(() => {
+    const currentConfig = { ...(situationConfigs[situation] || {}) };
+
+    if (situation === "load") {
+      currentConfig.actionNamesList = [screenName === "search" ? "loadSaveToSearch" : "loadSaveToDisplay"];
+    }
+
+    if (situation === "display") {
+      const dynamicMoreActions: string[] = [];
+      if (!hideRemoveSet) {
+        dynamicMoreActions.push("remove");
+      }
+      dynamicMoreActions.push("export");
+
+      return {
+        ...currentConfig,
+        moreActionNamesList: dynamicMoreActions,
+      };
+    }
+
+    return currentConfig;
+  }, [situation, hideRemoveSet, screenName]);
+
+  const setPressedClassIdsObjByScreen = usePressableElementsStore((state) => state.setPressedClassIdsObjByScreen);
+  const updatePressableElementsList = usePressableElementsStore((state) => state.updatePressableElementsList);
+  const setsetCardEditedIndex = useSetsStore((state) => state.setsetCardEditedIndex);
+  const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
+
+  const handleEditPress = useCallback(() => {
+    setsetCardEditedIndex(setCardIndex);
+    setPressedClassIdsObjByScreen(screenName, setToShowClassIds);
+    setIsEditModalVisible(true);
+    updatePressableElementsList(screenName, setToShowClassIds);
+  }, [
+    setsetCardEditedIndex,
+    setPressedClassIdsObjByScreen,
+    setIsEditModalVisible,
+    updatePressableElementsList,
+    screenName,
+    setToShowClassIds,
+    setCardIndex,
+  ]);
+
+  return (
+    <View>
+      <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={SET_CARD_WIDTH} gap={0}>
+        {config.moreActionNamesList ? (
+          <SetCardEditableHeader
+            setToShowName={setToShowName}
+            setCardIndex={setCardIndex}
+            moreActionNamesList={config.moreActionNamesList}
+            isInLoadSetModal={isInLoadSetModal}
+            situation={situation}
+          />
+        ) : (
+          <SetCardStaticHeader setToShowName={setToShowName} setToShowPercentage={setToShowPercentage} />
+        )}
+
+        <SetImagesModal setToShowClassIds={setToShowClassIds} />
+
+        <SetCardActionButtons
+          actionNamesList={config.actionNamesList}
+          setCardIndex={setCardIndex}
+          situation={situation}
+          handleEditPress={handleEditPress}
+        />
+      </BoxContainer>
+
+      {config.showStatSliderResult && setToShowStats !== null && (
+        <StatSliderSetCardsContainer setToShowStats={setToShowStats} />
+      )}
+    </View>
+  );
+};
+
+export default React.memo(SetCard);

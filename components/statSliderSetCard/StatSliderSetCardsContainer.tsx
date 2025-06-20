@@ -6,14 +6,10 @@ import StatSliderCompact from "../statSlider/StatSliderCompact";
 import { compactStatNames } from "@/data/data";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { SET_CARD_WIDTH } from "../setCard/SetCard";
 
 interface StatSliderSetCardsContainerProps {
   setToShowStats: number[];
-}
-
-interface ChosenStatItem {
-  checked: boolean;
-  value: number;
 }
 
 const StatSliderSetCardsContainer: React.FC<StatSliderSetCardsContainerProps> = ({ setToShowStats }) => {
@@ -22,7 +18,7 @@ const StatSliderSetCardsContainer: React.FC<StatSliderSetCardsContainerProps> = 
   const isInSearchScreen = screenName === "search";
   const { resultStats } = useResultStats();
 
-  const chosenStatsFromStore = useSetsStore((state) => state.chosenStats) as ChosenStatItem[];
+  const chosenStatsFromStore = useSetsStore((state) => state.chosenStats);
 
   const memoizedSliders = useMemo(() => {
     const filteredResultStats = resultStats.filter((stat) => stat.checked);
@@ -32,7 +28,7 @@ const StatSliderSetCardsContainer: React.FC<StatSliderSetCardsContainerProps> = 
     }
 
     return (
-      <BoxContainer contentBackgroundColor={theme.surface} margin={0} marginTop={8} widthContainer={220}>
+      <BoxContainer contentBackgroundColor={theme.surface} margin={0} marginTop={8} widthContainer={SET_CARD_WIDTH}>
         {filteredResultStats.map((stat: ResultStat) => {
           const originalIndex = resultStats.findIndex((item) => item.name === stat.name);
 
