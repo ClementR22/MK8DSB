@@ -34,7 +34,7 @@ const SearchSetScreen = () => {
   const renderedSliders = useMemo(() => {
     const SliderComponent = isReduceStatSliders ? StatSliderCompact : StatSlider;
 
-    return chosenStats.map((stat, index) => {
+    return chosenStats.map((stat) => {
       if (!stat.checked) {
         return null; // Ne rend rien si la stat n'est pas cochée
       }

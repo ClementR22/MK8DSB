@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { toggleCheckList } from "@/utils/toggleCheck";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import { resultStatsInit } from "@/config/resultStatsInit";
+import { deepCompareStatArrays } from "@/utils/deepCompare";
 
 const ResultStatsContext = createContext();
 
@@ -10,22 +11,25 @@ export const ResultStatsProvider = ({ children }) => {
   const [resultStats, setResultStats] = useState(resultStatsInit);
 
   useEffect(() => {
-    setResultStats(resultStatsDefault);
-  }, [resultStatsDefault]);
+    if (!deepCompareStatArrays(resultStatsDefault, resultStats)) {
+      setResultStats(resultStatsDefault);
+    }
+  }, [resultStatsDefault, resultStats]);
 
-  const toggleCheckResultStats = (name) => toggleCheckList(setResultStats, name);
+  const toggleCheckResultStats = useCallback((name) => {
+    toggleCheckList(setResultStats, name);
+  }, []);
 
-  return (
-    <ResultStatsContext.Provider
-      value={{
-        resultStats,
-        setResultStats,
-        toggleCheckResultStats,
-      }}
-    >
-      {children}
-    </ResultStatsContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      resultStats,
+      setResultStats,
+      toggleCheckResultStats,
+    }),
+    [resultStats, toggleCheckResultStats] // Dependencies: `resultStats` (state) and `toggleCheckResultStats` (memoized)
   );
+
+  return <ResultStatsContext.Provider value={contextValue}>{children}</ResultStatsContext.Provider>;
 };
 
 // Hook pour utiliser le contexte
