@@ -14,7 +14,7 @@ export const ResultStatsProvider = ({ children }) => {
     if (!deepCompareStatArrays(resultStatsDefault, resultStats)) {
       setResultStats(resultStatsDefault);
     }
-  }, [resultStatsDefault, resultStats]);
+  }, [resultStatsDefault]);
 
   const toggleCheckResultStats = useCallback((name) => {
     toggleCheckList(setResultStats, name);

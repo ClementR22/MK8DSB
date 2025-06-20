@@ -7,8 +7,7 @@ const MAX_VALUE = 6;
 
 const StatSliderCompactBar = ({ value, chosenValue, isInSetCard }) => {
   const theme = useThemeStore((state) => state.theme);
-
-  const actualChosenValue = useMemo(() => chosenValue || value, [chosenValue, value]);
+  const actualChosenValue = useMemo(() => chosenValue ?? value, [chosenValue, value]);
   const bonus = useMemo(() => value - actualChosenValue, [value, actualChosenValue]);
 
   const [barWidth, setBarWidth] = useState(0);

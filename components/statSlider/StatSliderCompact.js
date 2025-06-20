@@ -8,7 +8,7 @@ import { getBonusColor } from "@/utils/getBonusColor";
 
 const StatSliderCompact = ({ name, value, statFilterNumber = 0, chosenValue = false, isInSetCard = false }) => {
   const bonusEnabled = useMemo(() => !!chosenValue, [chosenValue]);
-  const actualChosenValue = useMemo(() => chosenValue || value, [chosenValue, value]);
+  const actualChosenValue = useMemo(() => chosenValue ?? value, [chosenValue, value]);
 
   const theme = useThemeStore((state) => state.theme);
 
