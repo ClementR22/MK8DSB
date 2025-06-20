@@ -16,7 +16,6 @@ const CustomHeader = ({ children, icon = "car-sports", helpComponent }) => {
         height: 64,
         boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
         elevation: 5,
-        display: "flex",
         flexDirection: "row",
         alignItems: "center",
         paddingEnd: 15,

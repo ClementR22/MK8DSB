@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonIconContainer: {
-    display: "flex",
     height: 40,
     width: 40,
     borderRadius: 100,

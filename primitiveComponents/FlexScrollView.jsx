@@ -8,7 +8,6 @@ function FlexScrollView({ children, flexDirection, alignItems, justifyContent, g
   const styles = StyleSheet.create({
     container: {
       backgroundColor: "transparent",
-      display: "flex",
       flexDirection: flexDirection ? flexDirection : "column",
       alignItems: alignItems || "center",
       justifyContent: justifyContent || "center",

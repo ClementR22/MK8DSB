@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 export const button = (theme) =>
   StyleSheet.create({
     container: {
-      display: "flex",
       height: 40,
       borderRadius: 100,
       backgroundColor: theme.primary,
@@ -20,7 +19,6 @@ export const button = (theme) =>
 export const button_icon = (theme) =>
   StyleSheet.create({
     container: {
-      display: "flex",
       height: 40,
       width: 40,
       borderRadius: 100,
@@ -37,7 +35,6 @@ export const button_outline = (theme) =>
   StyleSheet.create({
     container: {
       borderRadius: 24,
-      display: "flex",
       height: 40,
       justifyContent: "center",
       alignItems: "center",

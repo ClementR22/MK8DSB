@@ -8,7 +8,7 @@ function FlexContainer({
   alignItems,
   justifyContent,
   gap,
-  boxShadow,
+  // boxShadow,
   padding,
   paddingHorizontal,
   backgroundColor,
@@ -20,30 +20,26 @@ function FlexContainer({
   alignItems?: any;
   justifyContent?: any;
   gap?: any;
-  boxShadow?: any;
+  // boxShadow?: any;
   padding?: any;
   paddingHorizontal?: any;
   backgroundColor?: any;
   minHeight?: number;
   style?: any;
 }) {
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: backgroundColor ?? "transparent",
-      display: "flex",
-      flexDirection: flexDirection ? flexDirection : "column",
-      alignItems: alignItems ?? "center",
-      justifyContent: justifyContent ?? "center",
-      gap: gap ?? 10,
-      boxSizing: boxShadow ?? shadow_3dp,
-      padding: padding ?? 0,
-      paddingHorizontal: paddingHorizontal ?? 0,
-      width: "100%",
-      minHeight: minHeight,
-    },
-  });
+  const containerStyle = {
+    backgroundColor: backgroundColor ?? "transparent",
+    flexDirection: flexDirection || "column",
+    alignItems: alignItems ?? "center",
+    justifyContent: justifyContent ?? "center",
+    gap: gap ?? 10,
+    padding: padding ?? 0,
+    paddingHorizontal: paddingHorizontal ?? 0,
+    width: "100%",
+    minHeight: minHeight,
+  };
 
-  return <View style={[styles.container, style]}>{children}</View>;
+  return <View style={[containerStyle, style]}>{children}</View>;
 }
 
-export default FlexContainer;
+export default React.memo(FlexContainer);
