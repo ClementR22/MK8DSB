@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 // Components import
@@ -22,12 +22,35 @@ import { IconType } from "react-native-dynamic-vector-icons";
 
 const SearchSetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
-  const [setsToShow, setSetsToShow] = useState([]);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
   const chosenStats = useSetsStore((state) => state.chosenStats);
 
+  const [setsToShow, setSetsToShow] = useState([]);
   const [isReduceStatSliders, setIsReduceStatSliders] = useState(false);
-  const toggleReduceStatSlider = () => setIsReduceStatSliders(!isReduceStatSliders);
+  const toggleReduceStatSlider = useCallback(() => {
+    setIsReduceStatSliders((prev) => !prev);
+  }, []);
+
+  const renderedSliders = useMemo(() => {
+    const SliderComponent = isReduceStatSliders ? StatSliderCompact : StatSlider;
+
+    return chosenStats.map((stat, index) => {
+      if (!stat.checked) {
+        return null; // Ne rend rien si la stat n'est pas cochée
+      }
+
+      const nameProp = isReduceStatSliders ? compactStatNames[stat.name] : stat.name;
+
+      return (
+        <SliderComponent
+          key={`statSlider-${stat.name}-${isReduceStatSliders ? "compact" : "full"}`}
+          name={nameProp}
+          value={stat.value}
+          statFilterNumber={stat.statFilterNumber}
+        />
+      );
+    });
+  }, [chosenStats, isReduceStatSliders]);
 
   return (
     <ScreenProvider screenName="search">
@@ -35,7 +58,7 @@ const SearchSetScreen = () => {
         <ScrollView scrollEnabled={isScrollEnable}>
           <FlexContainer>
             <BoxContainer contentBackgroundColor={theme.surface_container_high} borderRadius={27}>
-              <View style={{ flexDirection: "row", width: "100%", alignItems: "center", padding: 3 }}>
+              <View style={styles.searchContainer}>
                 <ButtonIcon
                   onPress={toggleReduceStatSlider}
                   iconName={isReduceStatSliders ? "chevron-down" : "chevron-up"}
@@ -43,7 +66,7 @@ const SearchSetScreen = () => {
                   tooltipText={isReduceStatSliders ? "DevelopSliders" : "ReduceSliders"}
                 />
 
-                <View style={{ flex: 1 }}>
+                <View style={styles.headerTextContainer}>
                   <Text
                     style={[
                       styles.text,
@@ -60,30 +83,8 @@ const SearchSetScreen = () => {
                 <ButtonLoadSet tooltipText="LoadStatsOfASet" />
               </View>
 
-              {/* Afficher le slider uniquement si la case est cochée */}
-              {isReduceStatSliders
-                ? chosenStats.map(
-                    (stat, index) =>
-                      stat.checked && (
-                        <StatSliderCompact
-                          key={index}
-                          name={compactStatNames[stat.name]}
-                          value={stat.value} // tu peux remplacer 4 par stat.value si besoin
-                          statFilterNumber={stat.statFilterNumber}
-                        />
-                      )
-                  )
-                : chosenStats.map(
-                    (stat) =>
-                      stat.checked && (
-                        <StatSlider
-                          key={`statSlider-${stat.name}`}
-                          name={stat.name}
-                          value={stat.value}
-                          statFilterNumber={stat.statFilterNumber}
-                        />
-                      )
-                  )}
+              {/* Afficher les sliders memoisés */}
+              {renderedSliders}
             </BoxContainer>
 
             <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} />
@@ -98,11 +99,13 @@ const SearchSetScreen = () => {
   );
 };
 
-export default SearchSetScreen;
+export default React.memo(SearchSetScreen);
 
 const styles = StyleSheet.create({
   text: {
     fontSize: 24,
     fontWeight: "bold",
   },
+  searchContainer: { flexDirection: "row", width: "100%", alignItems: "center", padding: 3 },
+  headerTextContainer: { flex: 1 },
 });

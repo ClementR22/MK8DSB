@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import StatSliderContent from "./StatSliderContent";
@@ -6,7 +6,8 @@ import StatSliderContent from "./StatSliderContent";
 const StatSlider = ({ name, value, statFilterNumber }) => {
   const theme = useThemeStore((state) => state.theme);
   const setStatFilterNumber = useSetsStore((state) => state.setStatFilterNumber);
-  const setStatFilterNumberWithName = (newNumber) => setStatFilterNumber(name, newNumber);
+
+  const setStatFilterNumberWithName = useCallback((newNumber) => setStatFilterNumber(name, newNumber), [name]);
 
   return (
     <StatSliderContent
@@ -19,4 +20,4 @@ const StatSlider = ({ name, value, statFilterNumber }) => {
   );
 };
 
-export default StatSlider;
+export default React.memo(StatSlider);

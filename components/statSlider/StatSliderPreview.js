@@ -4,6 +4,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 
 const StatSliderPreview = ({ name }) => {
   const theme = useThemeStore((state) => state.theme);
+
   const [statFilterNumber, setStatFilterNumber] = useState(0);
 
   return (
@@ -17,4 +18,4 @@ const StatSliderPreview = ({ name }) => {
   );
 };
 
-export default StatSliderPreview;
+export default React.memo(StatSliderPreview);

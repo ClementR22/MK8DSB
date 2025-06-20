@@ -1,5 +1,5 @@
 import { translate } from "@/translations/translations";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import { Slider } from "@miblanchard/react-native-slider";
@@ -8,26 +8,30 @@ import useSetsStore from "@/stores/useSetsStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import TooltipWrapper from "../TooltipWrapper";
 
+const MAX_VALUE = 6;
+
 const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber, theme }) => {
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
   const updateStatValue = useSetsStore((state) => state.updateStatValue);
 
   const [tempValue, setTempValue] = useState(value);
+  const [barWidth, setBarWidth] = useState(0);
 
-  const onValueChange = ([v]) => setTempValue(v);
-
-  const onSlidingStart = () => setIsScrollEnable(false);
-
-  const onSlidingComplete = ([v]) => {
+  const onValueChange = useCallback(([v]) => setTempValue(v), []);
+  const onSlidingStart = useCallback(() => setIsScrollEnable(false), []);
+  const onSlidingComplete = useCallback(([v]) => {
     updateStatValue(name, v);
     setIsScrollEnable(true);
-  };
+  }, []);
 
   useEffect(() => {
-    setTempValue(value);
-  }, [value]);
+    if (tempValue !== value) {
+      setTempValue(value);
+    }
+  }, [value, tempValue]);
 
   const borderColor = useMemo(() => getStatSliderBorderColor(statFilterNumber, theme), [statFilterNumber, theme]);
+  const calculatedMaxTrackBorderWidth = useMemo(() => (tempValue / MAX_VALUE) * 230 + 10, [tempValue]);
 
   const styles = useMemo(
     () =>
@@ -141,7 +145,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
               onSlidingStart={onSlidingStart}
               onSlidingComplete={onSlidingComplete}
               minimumValue={0}
-              maximumValue={6}
+              maximumValue={MAX_VALUE}
               step={0.25}
               trackStyle={styles.track}
               thumbTouchSize={{ width: 10, height: 10 }}
@@ -150,7 +154,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
               maximumTrackStyle={[
                 styles.maximumTrack,
                 {
-                  borderLeftWidth: (tempValue / 6) * 230 + 10,
+                  borderLeftWidth: calculatedMaxTrackBorderWidth,
                 },
               ]}
             />
@@ -169,4 +173,4 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber,
   );
 };
 
-export default StatSliderContent;
+export default React.memo(StatSliderContent);
