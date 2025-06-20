@@ -1,14 +1,8 @@
 import { create } from "zustand";
-import { toggleAndGetChecks, toggleCheckList } from "@/utils/toggleCheck";
+import { toggleAndGetChecks } from "@/utils/toggleCheck";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 import { resultStatsInit } from "@/config/resultStatsInit";
-
-type ResultStat = {
-  name: string;
-  checked: boolean;
-};
-
-export type ResultStats = ResultStat[];
+import { ResultStat, ResultStats } from "@/contexts/ResultStatsContext";
 
 interface ResultStatsDefaultStore {
   isResultStatsSync: boolean;

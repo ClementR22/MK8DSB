@@ -1,21 +1,27 @@
 import React, { useCallback } from "react";
 import useSetsStore from "@/stores/useSetsStore";
-import { useThemeStore } from "@/stores/useThemeStore";
 import StatSliderContent from "./StatSliderContent";
 
-const StatSlider = ({ name, value, statFilterNumber }) => {
-  const theme = useThemeStore((state) => state.theme);
+interface StatSliderProps {
+  name: string;
+  value: number;
+  statFilterNumber: number;
+}
+
+const StatSlider = ({ name, value, statFilterNumber }: StatSliderProps) => {
   const setStatFilterNumber = useSetsStore((state) => state.setStatFilterNumber);
 
-  const setStatFilterNumberWithName = useCallback((newNumber) => setStatFilterNumber(name, newNumber), [name]);
+  const setStatFilterNumberWithName = useCallback(
+    (newNumber: number) => setStatFilterNumber(name, newNumber),
+    [name, setStatFilterNumber]
+  );
 
   return (
     <StatSliderContent
       name={name}
       value={value}
       statFilterNumber={statFilterNumber}
-      setStatFilterNumber={setStatFilterNumberWithName}
-      theme={theme}
+      setStatFilterNumber={setStatFilterNumberWithName} //
     />
   );
 };

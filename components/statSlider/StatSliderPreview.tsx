@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import StatSliderContent from "./StatSliderContent";
-import { useThemeStore } from "@/stores/useThemeStore";
 
-const StatSliderPreview = ({ name }) => {
-  const theme = useThemeStore((state) => state.theme);
-
+const StatSliderPreview = ({ name }: { name: string }) => {
   const [statFilterNumber, setStatFilterNumber] = useState(0);
 
   return (
@@ -13,7 +10,6 @@ const StatSliderPreview = ({ name }) => {
       value={4}
       statFilterNumber={statFilterNumber}
       setStatFilterNumber={setStatFilterNumber}
-      theme={theme}
     />
   );
 };

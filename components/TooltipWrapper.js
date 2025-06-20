@@ -8,7 +8,7 @@ const TooltipWrapper = ({
   tooltipText,
   style = undefined,
   innerContainerStyle = undefined,
-  onPress,
+  onPress = () => {},
   placement = "top",
   children,
   ...props
