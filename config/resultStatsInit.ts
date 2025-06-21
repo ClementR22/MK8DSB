@@ -1,5 +1,5 @@
 import { statNames } from "@/data/data";
-import { ResultStats } from "@/stores/useResultStatsDefaultStore";
+import { ResultStats } from "@/contexts/ResultStatsContext";
 
 const resultStatsConfig: Record<string, boolean> = {
   speedGround: true,

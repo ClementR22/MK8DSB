@@ -11,6 +11,7 @@ import SetImagesModal from "./SetImagesModal";
 import SetCardEditableHeader from "./SetCardEditableHeader";
 import SetCardStaticHeader from "./SetCardStaticHeader";
 import StatSliderSetCardsContainer from "../statSliderSetCard/StatSliderSetCardsContainer";
+import { arraysEqual } from "@/utils/deepCompare";
 
 export const SET_CARD_WIDTH = 220;
 
@@ -91,6 +92,13 @@ const SetCard: React.FC<SetCardProps> = ({
 
   const theme = useThemeStore((state) => state.theme);
 
+  const isSaved = useSetsStore(
+    useCallback(
+      (state) => state.setsListSaved.some((setSaved) => arraysEqual(setSaved.classIds, setToShowClassIds)),
+      [setToShowClassIds]
+    )
+  );
+
   const config = useMemo(() => {
     const currentConfig = { ...(situationConfigs[situation] || {}) };
 
@@ -155,6 +163,7 @@ const SetCard: React.FC<SetCardProps> = ({
           actionNamesList={config.actionNamesList}
           setCardIndex={setCardIndex}
           situation={situation}
+          isSaved={isSaved}
           handleEditPress={handleEditPress}
         />
       </BoxContainer>

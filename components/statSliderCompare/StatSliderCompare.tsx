@@ -48,7 +48,7 @@ const StatSliderCompare = ({ name, stat_i_multipleSetStats }: StatSliderCompareP
         </Text>
         <Text style={StyleSheet.flatten([styles.text, textDynamicStyle, { flexShrink: 0 }])}>
           {translated2Points}
-          {stat_i_multipleSetStats.length > 0 ? JSON.stringify(stat_i_multipleSetStats[0]) : ""}
+          {stat_i_multipleSetStats.length > 0 ? stat_i_multipleSetStats[0] : ""}
         </Text>
       </View>
 

@@ -10,7 +10,7 @@ import {
   saveThingInMemory,
 } from "@/utils/asyncStorageOperations";
 import { ScreenName } from "@/contexts/ScreenContext";
-import { ResultStats } from "./useResultStatsDefaultStore";
+import { ResultStats } from "@/contexts/ResultStatsContext";
 
 // Types
 export type StatName = string;

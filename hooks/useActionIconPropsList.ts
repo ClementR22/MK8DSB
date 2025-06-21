@@ -20,7 +20,8 @@ interface ActionIconPropsMap {
 export function useActionIconPropsList(
   setCardIndex: number,
   situation: ScreenName | string,
-  handleEditPress?: () => void // This is now a dependency passed from the component
+  handleEditPress?: () => void, // This is now a dependency passed from the component
+  isSaved?: boolean
 ): ActionIconPropsMap {
   // Call Hooks at the top level of this custom Hook
   const loadSetSaveToSearch = useSetsStore((state) => state.loadSetSaveToSearch);
@@ -66,7 +67,7 @@ export function useActionIconPropsList(
 
       save: {
         title: "Save",
-        name: "heart-outline",
+        name: isSaved ? "heart" : "heart-outline",
         type: IconType.MaterialCommunityIcons,
         onPress: handleSavePress,
       },
@@ -85,8 +86,8 @@ export function useActionIconPropsList(
 
       loadSaveToDisplay: {
         title: situation === "load" ? "LoadTheSet" : "LoadTheSetToDisplayScreen",
-        name: situation === "save" ? "display-settings" : "download",
-        type: IconType.MaterialIcons,
+        name: situation === "save" ? "compare" : "download",
+        type: IconType.MaterialCommunityIcons,
         onPress: () => {
           if (setCardIndex !== null) {
             loadSetSaveToDisplay(setCardIndex);
@@ -143,6 +144,7 @@ export function useActionIconPropsList(
     setCardIndex,
     situation,
     handleEditPress,
+    isSaved,
     loadSetSaveToSearch,
     loadSetSaveToDisplay,
     loadSetSearchToDisplay,

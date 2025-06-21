@@ -8,6 +8,7 @@ interface SetCardActionButtonsProps {
   actionNamesList: actionNamesList;
   setCardIndex: number;
   situation: string;
+  isSaved: boolean;
   handleEditPress: () => void;
 }
 
@@ -15,9 +16,10 @@ const SetCardActionButtons: React.FC<SetCardActionButtonsProps> = ({
   actionNamesList,
   setCardIndex,
   situation,
+  isSaved,
   handleEditPress,
 }) => {
-  const actionIconPropsList = useActionIconPropsList(setCardIndex, situation, handleEditPress);
+  const actionIconPropsList = useActionIconPropsList(setCardIndex, situation, handleEditPress, isSaved);
 
   return (
     <BoxContainer flexDirection="row" key="displaySetActionButtonContainer" margin={0} justifyContent={"space-around"}>

@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { toggleAndGetChecks } from "@/utils/toggleCheck";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 import { resultStatsInit } from "@/config/resultStatsInit";
-import { ResultStat, ResultStats } from "@/contexts/ResultStatsContext";
+import { ResultStats } from "@/contexts/ResultStatsContext";
 
 interface ResultStatsDefaultStore {
   isResultStatsSync: boolean;
