@@ -16,7 +16,7 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
 import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModalStatSelectorChosenStats";
 
-const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
+const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
   const [resultsNumber, setResultsNumber] = useState(5);
@@ -131,6 +131,10 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
       });
       updateSetsToShow(setsFound);
     }
+
+    setTimeout(() => {
+      scrollRef?.current?.scrollToStart();
+    }, 50);
   };
 
   return (

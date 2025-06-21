@@ -7,10 +7,10 @@ const ButtonAddSet = ({ scrollRef }) => {
   const addNewSetInDisplay = useSetsStore((state) => state.addNewSetInDisplay);
 
   const handleAdd = () => {
-    addNewSetInDisplay(); // ajouter un set
+    addNewSetInDisplay();
     setTimeout(() => {
-      scrollRef?.current?.scrollToEnd(); // scroller à la fin
-    }, 50); // petit délai pour que le DOM ait le temps de se mettre à jour
+      scrollRef?.current?.scrollToEnd();
+    }, 50);
   };
 
   return (

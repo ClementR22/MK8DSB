@@ -25,6 +25,9 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
   ({ setsToShow, isInLoadSetModal = false, screenNameFromProps = undefined, hideRemoveSet = undefined }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
     useImperativeHandle(ref, () => ({
+      scrollToStart: () => {
+        scrollViewRef.current?.scrollTo({ x: 0, animated: true });
+      },
       scrollToEnd: () => {
         scrollViewRef.current?.scrollToEnd({ animated: true });
       },

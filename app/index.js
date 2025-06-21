@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 // Components import
@@ -22,6 +22,7 @@ import { IconType } from "react-native-dynamic-vector-icons";
 
 const SearchSetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
+  const scrollRef = useRef(null);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
   const chosenStats = useSetsStore((state) => state.chosenStats);
 
@@ -87,10 +88,10 @@ const SearchSetScreen = () => {
               {renderedSliders}
             </BoxContainer>
 
-            <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} />
+            <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} scrollRef={scrollRef} />
           </FlexContainer>
 
-          <SetCardContainer setsToShow={setsToShow} />
+          <SetCardContainer ref={scrollRef} setsToShow={setsToShow} />
 
           <ModalRenameSet />
         </ScrollView>
