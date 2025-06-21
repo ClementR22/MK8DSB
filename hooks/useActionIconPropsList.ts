@@ -1,9 +1,10 @@
 import { IconType } from "react-native-dynamic-vector-icons";
 import { useCallback, useMemo } from "react";
-import { ScreenName } from "@/contexts/ScreenContext"; // Make sure this path is correct
+import { ScreenName } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
+import { actionNamesList } from "@/components/setCard/SetCard";
 
 interface ActionProps {
   title: string;
@@ -12,18 +13,15 @@ interface ActionProps {
   onPress: () => void;
 }
 
-interface ActionIconPropsMap {
-  [key: string]: ActionProps;
-}
+type ActionIconPropsMap = ActionProps[];
 
 export function useActionIconPropsList(
+  actionNamesToGenerate: actionNamesList,
   setCardIndex: number,
   situation: ScreenName | "load",
   handleEditPress?: () => void,
   isSaved?: boolean
 ): ActionIconPropsMap {
-  // Correct way to access store actions: select them individually.
-  // These action functions are stable references from your Zustand store.
   const loadSetSaveToSearch = useSetsStore((state) => state.loadSetSaveToSearch);
   const loadSetSaveToDisplay = useSetsStore((state) => state.loadSetSaveToDisplay);
   const loadSetSearchToDisplay = useSetsStore((state) => state.loadSetSearchToDisplay);
@@ -35,7 +33,6 @@ export function useActionIconPropsList(
   const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
   const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
 
-  // Memoize handleSavePress
   const handleSavePress = useCallback(() => {
     if (setCardIndex !== null && setCardIndex !== undefined) {
       setsetCardEditedIndex(setCardIndex);
@@ -43,7 +40,6 @@ export function useActionIconPropsList(
     situation === "search" ? setIsRenameSetModalVisible(true) : saveSetFromDisplay(setCardIndex);
   }, [setsetCardEditedIndex, setCardIndex, situation, setIsRenameSetModalVisible, saveSetFromDisplay]);
 
-  // Memoize other onPress callbacks
   const handleRemovePress = useCallback(() => {
     if (situation !== "load") {
       removeSet(setCardIndex, situation);
@@ -82,8 +78,8 @@ export function useActionIconPropsList(
     }
   }, [loadSetDisplayToSearch, setCardIndex]);
 
-  const actionPropsList = useMemo(() => {
-    return {
+  const allPossibleActionDefs = useMemo(
+    () => ({
       edit: {
         title: "Edit",
         name: "edit",
@@ -130,7 +126,7 @@ export function useActionIconPropsList(
         title: "Remove",
         name: "trash-can",
         type: IconType.MaterialCommunityIcons,
-        onPress: handleRemovePress, // Assuming this is the same 'remove' logic.
+        onPress: handleRemovePress,
       },
       export: {
         title: "Copy",
@@ -138,20 +134,34 @@ export function useActionIconPropsList(
         type: IconType.MaterialCommunityIcons,
         onPress: handleExportPress,
       },
-    };
-  }, [
-    setCardIndex,
-    situation,
-    handleEditPress,
-    isSaved,
-    handleSavePress,
-    handleRemovePress,
-    handleExportPress,
-    handleLoadSaveToSearchPress,
-    handleLoadSaveToDisplayPress,
-    handleLoadSearchToDisplayPress,
-    handleLoadDisplayToSearchPress,
-  ]);
+    }),
+    [
+      setCardIndex,
+      situation,
+      handleEditPress,
+      isSaved,
+      handleSavePress,
+      handleRemovePress,
+      handleExportPress,
+      handleLoadSaveToSearchPress,
+      handleLoadSaveToDisplayPress,
+      handleLoadSearchToDisplayPress,
+      handleLoadDisplayToSearchPress,
+    ]
+  );
 
-  return actionPropsList;
+  const actionIconPropsList = useMemo(() => {
+    const selectedActions: ActionIconPropsMap = [];
+    actionNamesToGenerate.forEach((actionName) => {
+      const actionDef = allPossibleActionDefs[actionName];
+      if (actionDef) {
+        selectedActions.push(actionDef);
+      } else {
+        console.warn(`Action definition for "${actionName}" not found in useActionIconPropsList.`);
+      }
+    });
+    return selectedActions;
+  }, [actionNamesToGenerate, allPossibleActionDefs]);
+
+  return actionIconPropsList;
 }

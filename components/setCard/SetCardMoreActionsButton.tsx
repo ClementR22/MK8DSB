@@ -20,7 +20,7 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
 }) => {
   const [visible, setVisible] = useState(false);
 
-  const actionIconPropsList = useActionIconPropsList(setCardIndex, situation);
+  const actionIconPropsList = useActionIconPropsList(moreActionNamesList, setCardIndex, situation);
 
   const handleMenuItemPress = (onPressAction: () => void) => {
     setVisible(false);
@@ -42,13 +42,11 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
         }
         anchorPosition="bottom"
       >
-        {moreActionNamesList.map((actionName) => {
-          const actionProps = actionIconPropsList[actionName];
-
+        {actionIconPropsList.map((actionProps) => {
           const { title, name, type, onPress } = actionProps;
           return (
             <Menu.Item
-              key={actionName}
+              key={name}
               onPress={() => handleMenuItemPress(onPress)}
               title={title}
               leadingIcon={({ color, size }) => <Icon type={type} name={name} size={size} color={color || "black"} />}

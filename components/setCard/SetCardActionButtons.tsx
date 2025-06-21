@@ -20,20 +20,19 @@ const SetCardActionButtons: React.FC<SetCardActionButtonsProps> = ({
   isSaved,
   handleEditPress,
 }) => {
-  const actionIconPropsList = useActionIconPropsList(setCardIndex, situation, handleEditPress, isSaved);
+  const actionIconPropsList = useActionIconPropsList(
+    actionNamesList,
+    setCardIndex,
+    situation,
+    handleEditPress,
+    isSaved
+  );
 
   return (
     <BoxContainer flexDirection="row" key="displaySetActionButtonContainer" margin={0} justifyContent={"space-around"}>
-      {actionNamesList.map((actionName) => {
-        const actionProps = actionIconPropsList[actionName];
-
-        if (!actionProps) {
-          console.warn(`Action "${actionName}" not found in actionIconPropsList`);
-          return null;
-        }
-
+      {actionIconPropsList.map((actionProps) => {
         const { title, name, type, onPress } = actionProps;
-        return <ButtonIcon key={actionName} tooltipText={title} iconName={name} iconType={type} onPress={onPress} />;
+        return <ButtonIcon key={name} tooltipText={title} iconName={name} iconType={type} onPress={onPress} />;
       })}
     </BoxContainer>
   );
