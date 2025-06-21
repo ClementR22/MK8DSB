@@ -2,13 +2,26 @@ import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import StatSliderCompare from "./StatSliderCompare";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 interface StatSliderComparesContainerProps {
   setsToShowMultipleStatsLists: number[][];
 }
 
 const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = ({ setsToShowMultipleStatsLists }) => {
+  const theme = useThemeStore((state) => state.theme);
   const { resultStats } = useResultStats();
+
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: theme.surface_container_high,
+      flexGrow: 1,
+      gap: 10,
+      margin: 16,
+      padding: 10, // total padding of 20 with StatSliderCompare padding
+      borderRadius: 24,
+    },
+  });
 
   const memoizedStatCompares = useMemo(() => {
     return resultStats
@@ -24,9 +37,5 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
 
   return <View style={styles.container}>{memoizedStatCompares}</View>;
 };
-
-const styles = StyleSheet.create({
-  container: { width: "100%", flexGrow: 1, gap: 10 },
-});
 
 export default React.memo(StatSliderComparesContainer);

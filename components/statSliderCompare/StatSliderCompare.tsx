@@ -15,12 +15,32 @@ const StatSliderCompare = ({ name, stat_i_multipleSetStats }: StatSliderCompareP
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
 
-  const sliderContainerDynamicStyle = useMemo(
-    () => ({
+  const styles = StyleSheet.create({
+    container: {
+      width: "100%",
+      flexGrow: 1,
+      gap: 10,
+    },
+    sliderContainerBase: {
+      padding: 10,
+      borderRadius: 8,
       backgroundColor: theme.surface_container_high,
-    }),
-    [theme.surface_container_high]
-  );
+    },
+    textContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      flexWrap: "nowrap",
+    },
+    textBase: {
+      fontSize: 16,
+      fontWeight: "bold",
+      marginBottom: 5,
+    },
+    barWrapper: {
+      flexDirection: "row",
+      alignItems: "stretch",
+    },
+  });
 
   const textDynamicStyle = useMemo(
     () => ({
@@ -36,7 +56,7 @@ const StatSliderCompare = ({ name, stat_i_multipleSetStats }: StatSliderCompareP
   return (
     <TooltipWrapper
       tooltipText="StatsOfTheSet"
-      style={StyleSheet.flatten([styles.sliderContainerBase, sliderContainerDynamicStyle])}
+      style={styles.sliderContainerBase}
     >
       <View style={styles.textContainer}>
         <Text
@@ -60,31 +80,4 @@ const StatSliderCompare = ({ name, stat_i_multipleSetStats }: StatSliderCompareP
     </TooltipWrapper>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    flexGrow: 1,
-    gap: 10,
-  },
-  sliderContainerBase: {
-    padding: 10,
-    borderRadius: 8,
-  },
-  textContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    flexWrap: "nowrap",
-  },
-  textBase: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  barWrapper: {
-    flexDirection: "row",
-    alignItems: "stretch",
-  },
-});
-
 export default React.memo(StatSliderCompare);
