@@ -10,6 +10,7 @@ import useModalsStore from "@/stores/useModalsStore";
 import { computePressableElementsByCategory } from "@/utils/computePressableElementsByCategory";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 
+// TODO : Changer le style dans ModalEditSet (chips toutes moches)
 const ElementsSelector = React.memo(() => {
   // Gardez ElementsSelector mémoïsé
   const [orderNumber, setOrderNumber] = useState(0);
