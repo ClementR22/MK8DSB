@@ -3,13 +3,14 @@ import FlexContainer from "@/primitiveComponents/FlexContainer";
 import SetNameInput from "../textInput/SetNameInput";
 import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
 import { actionNamesList } from "./SetCard";
+import { ScreenName } from "@/contexts/ScreenContext";
 
 interface SetCardEditableHeaderProps {
   setToShowName: string;
   setCardIndex: number;
   moreActionNamesList: actionNamesList;
   isInLoadSetModal: boolean;
-  situation: string;
+  situation: ScreenName | "load";
 }
 
 const SetCardEditableHeader: React.FC<SetCardEditableHeaderProps> = ({

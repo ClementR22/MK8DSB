@@ -3,11 +3,12 @@ import BoxContainer from "../../primitiveComponents/BoxContainer";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
 import { actionNamesList } from "./SetCard";
+import { ScreenName } from "@/contexts/ScreenContext";
 
 interface SetCardActionButtonsProps {
   actionNamesList: actionNamesList;
   setCardIndex: number;
-  situation: string;
+  situation: ScreenName | "load";
   isSaved: boolean;
   handleEditPress: () => void;
 }

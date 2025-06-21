@@ -1,9 +1,9 @@
-import { IconType } from "react-native-dynamic-vector-icons"; // Assuming this is correct
+import { IconType } from "react-native-dynamic-vector-icons";
+import { useCallback, useMemo } from "react";
+import { ScreenName } from "@/contexts/ScreenContext"; // Make sure this path is correct
 import useSetsStore from "@/stores/useSetsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
-import { useCallback, useMemo } from "react"; // Import useMemo and useCallback if needed for internal stability
-import { ScreenName } from "@/contexts/ScreenContext";
 
 interface ActionProps {
   title: string;
@@ -12,18 +12,18 @@ interface ActionProps {
   onPress: () => void;
 }
 
-// Define the return type of the hook
 interface ActionIconPropsMap {
   [key: string]: ActionProps;
 }
 
 export function useActionIconPropsList(
   setCardIndex: number,
-  situation: ScreenName | string,
-  handleEditPress?: () => void, // This is now a dependency passed from the component
+  situation: ScreenName | "load",
+  handleEditPress?: () => void,
   isSaved?: boolean
 ): ActionIconPropsMap {
-  // Call Hooks at the top level of this custom Hook
+  // Correct way to access store actions: select them individually.
+  // These action functions are stable references from your Zustand store.
   const loadSetSaveToSearch = useSetsStore((state) => state.loadSetSaveToSearch);
   const loadSetSaveToDisplay = useSetsStore((state) => state.loadSetSaveToDisplay);
   const loadSetSearchToDisplay = useSetsStore((state) => state.loadSetSearchToDisplay);
@@ -35,109 +35,108 @@ export function useActionIconPropsList(
   const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
   const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
 
-  // Memoize handleSavePress to ensure its stability, as it's used in the returned object
+  // Memoize handleSavePress
   const handleSavePress = useCallback(() => {
-    if (setCardIndex !== null) {
+    if (setCardIndex !== null && setCardIndex !== undefined) {
       setsetCardEditedIndex(setCardIndex);
     }
     situation === "search" ? setIsRenameSetModalVisible(true) : saveSetFromDisplay(setCardIndex);
   }, [setsetCardEditedIndex, setCardIndex, situation, setIsRenameSetModalVisible, saveSetFromDisplay]);
 
-  // Use useMemo to return a stable object of action props,
-  // re-calculating only when the dependencies change.
+  // Memoize other onPress callbacks
+  const handleRemovePress = useCallback(() => {
+    if (situation !== "load") {
+      removeSet(setCardIndex, situation);
+    }
+  }, [removeSet, setCardIndex, situation]);
+
+  const handleExportPress = useCallback(() => {
+    if (situation !== "load") {
+      exportSet(setCardIndex, situation);
+    }
+  }, [exportSet, setCardIndex, situation]);
+
+  const handleLoadSaveToSearchPress = useCallback(() => {
+    if (setCardIndex !== null && setCardIndex !== undefined) {
+      loadSetSaveToSearch(setCardIndex);
+    }
+    setIsLoadSetModalVisible(false);
+  }, [loadSetSaveToSearch, setCardIndex, setIsLoadSetModalVisible]);
+
+  const handleLoadSaveToDisplayPress = useCallback(() => {
+    if (setCardIndex !== null && setCardIndex !== undefined) {
+      loadSetSaveToDisplay(setCardIndex);
+    }
+    setIsLoadSetModalVisible(false);
+  }, [loadSetSaveToDisplay, setCardIndex, setIsLoadSetModalVisible]);
+
+  const handleLoadSearchToDisplayPress = useCallback(() => {
+    if (setCardIndex !== null && setCardIndex !== undefined) {
+      loadSetSearchToDisplay(setCardIndex);
+    }
+  }, [loadSetSearchToDisplay, setCardIndex]);
+
+  const handleLoadDisplayToSearchPress = useCallback(() => {
+    if (setCardIndex !== null && setCardIndex !== undefined) {
+      loadSetDisplayToSearch(setCardIndex);
+    }
+  }, [loadSetDisplayToSearch, setCardIndex]);
+
   const actionPropsList = useMemo(() => {
     return {
       edit: {
         title: "Edit",
         name: "edit",
         type: IconType.MaterialIcons,
-        onPress: handleEditPress, // Use the passed handleEditPress
+        onPress: handleEditPress,
       },
-
       remove: {
         title: "Remove",
         name: "close",
         type: IconType.Ionicons,
-        onPress: () => {
-          if (setCardIndex !== null) {
-            removeSet(setCardIndex, situation);
-          }
-        },
+        onPress: handleRemovePress,
       },
-
       save: {
         title: "Save",
         name: isSaved ? "heart" : "heart-outline",
         type: IconType.MaterialCommunityIcons,
         onPress: handleSavePress,
       },
-
       loadSaveToSearch: {
         title: situation === "load" ? "LoadTheStats" : "LoadTheStatsToSearchScreen",
         name: situation === "save" ? "magnify" : "download",
         type: IconType.MaterialCommunityIcons,
-        onPress: () => {
-          if (setCardIndex !== null) {
-            loadSetSaveToSearch(setCardIndex);
-          }
-          setIsLoadSetModalVisible(false);
-        },
+        onPress: handleLoadSaveToSearchPress,
       },
-
       loadSaveToDisplay: {
         title: situation === "load" ? "LoadTheSet" : "LoadTheSetToDisplayScreen",
         name: situation === "save" ? "compare" : "download",
         type: IconType.MaterialCommunityIcons,
-        onPress: () => {
-          if (setCardIndex !== null) {
-            loadSetSaveToDisplay(setCardIndex);
-          }
-          setIsLoadSetModalVisible(false);
-        },
+        onPress: handleLoadSaveToDisplayPress,
       },
-
       loadSearchToDisplay: {
         title: "LoadTheSetToDisplayScreen",
         name: "compare",
         type: IconType.MaterialCommunityIcons,
-        onPress: () => {
-          if (setCardIndex !== null) {
-            loadSetSearchToDisplay(setCardIndex);
-          }
-        },
+        onPress: handleLoadSearchToDisplayPress,
       },
-
       loadDisplayToSearch: {
         title: "LoadTheStatsToSearchScreen",
         name: "magnify",
         type: IconType.MaterialCommunityIcons,
-        onPress: () => {
-          if (setCardIndex !== null) {
-            loadSetDisplayToSearch(setCardIndex);
-          }
-        },
+        onPress: handleLoadDisplayToSearchPress,
       },
-
       removeInMemory: {
         title: "Remove",
         name: "trash-can",
         type: IconType.MaterialCommunityIcons,
-        onPress: () => {
-          if (setCardIndex !== null) {
-            removeSet(setCardIndex, situation);
-          }
-        },
+        onPress: handleRemovePress, // Assuming this is the same 'remove' logic.
       },
-
       export: {
         title: "Copy",
         name: "clipboard-outline",
         type: IconType.MaterialCommunityIcons,
-        onPress: () => {
-          if (setCardIndex !== null) {
-            exportSet(setCardIndex, situation);
-          }
-        },
+        onPress: handleExportPress,
       },
     };
   }, [
@@ -145,15 +144,14 @@ export function useActionIconPropsList(
     situation,
     handleEditPress,
     isSaved,
-    loadSetSaveToSearch,
-    loadSetSaveToDisplay,
-    loadSetSearchToDisplay,
-    loadSetDisplayToSearch,
-    removeSet,
-    exportSet,
     handleSavePress,
-    setIsLoadSetModalVisible,
-  ]); // Include all external dependencies for memoization
+    handleRemovePress,
+    handleExportPress,
+    handleLoadSaveToSearchPress,
+    handleLoadSaveToDisplayPress,
+    handleLoadSearchToDisplayPress,
+    handleLoadDisplayToSearchPress,
+  ]);
 
   return actionPropsList;
 }

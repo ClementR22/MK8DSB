@@ -5,11 +5,12 @@ import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { actionNamesList } from "./SetCard";
+import { ScreenName } from "@/contexts/ScreenContext";
 
 interface SetCardMoreActionsButtonProps {
   moreActionNamesList: actionNamesList;
   setCardIndex: number;
-  situation: string;
+  situation: ScreenName | "load";
 }
 
 const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
