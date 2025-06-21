@@ -12,17 +12,6 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
   const theme = useThemeStore((state) => state.theme);
   const { resultStats } = useResultStats();
 
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: theme.surface_container_high,
-      flexGrow: 1,
-      gap: 10,
-      margin: 16,
-      padding: 10, // total padding of 20 with StatSliderCompare padding
-      borderRadius: 24,
-    },
-  });
-
   const memoizedStatCompares = useMemo(() => {
     return resultStats
       .filter(({ checked }: ResultStat) => checked)
@@ -35,7 +24,19 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
       });
   }, [resultStats, setsToShowMultipleStatsLists]);
 
-  return <View style={styles.container}>{memoizedStatCompares}</View>;
+  return (
+    <View style={[styles.container, { backgroundColor: theme.surface_container_high }]}>{memoizedStatCompares}</View>
+  );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    gap: 10,
+    margin: 16,
+    padding: 10, // total padding of 20 with StatSliderCompare padding
+    borderRadius: 24,
+  },
+});
 
 export default React.memo(StatSliderComparesContainer);

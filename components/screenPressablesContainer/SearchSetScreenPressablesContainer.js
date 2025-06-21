@@ -119,13 +119,12 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow }) => {
     gaps.sort((a, b) => a.gap - b.gap);
 
     if (gaps.length === 0) {
-      updateSetsToShow([]); // Ou gérer l'état de "rien trouvé"
+      updateSetsToShow([]);
     } else {
       const realResultsNumber = Math.min(resultsNumber, gaps.length);
       const setIndexesFound = gaps.slice(0, realResultsNumber);
       const worstGap = chosenStatsChecked.filter((checked) => checked).length;
       const setsFound = setIndexesFound.map(({ setIndex, gap }) => {
-        console.log("gap", gap);
         const percentage = 100 * (1 - gap / worstGap);
         const percentageRounded = Number(percentage.toPrecision(3)); // => 123
         return { ...setAllInfos[setIndex], percentage: percentageRounded };

@@ -51,7 +51,7 @@ const StatSliderCompact = ({
   );
 
   const bonusTextStyle = useMemo(() => {
-    return StyleSheet.flatten([styles.nameLabelBase, showBonus && { color: bonusColor }]);
+    return StyleSheet.flatten([styles.nameLabel, showBonus && { color: bonusColor }]);
   }, [nameLabelColorStyle, showBonus, bonusColor]);
 
   const handlePressIn = useCallback(() => {
@@ -79,20 +79,20 @@ const StatSliderCompact = ({
 
   return (
     <Pressable
-      style={StyleSheet.flatten([styles.containerBase, dynamicContainerStyles])}
+      style={StyleSheet.flatten([styles.container, dynamicContainerStyles])}
       onPressIn={bonusEnabled ? handlePressIn : undefined}
       onPressOut={bonusEnabled ? handlePressOut : undefined}
     >
       {!isInSetCard && (
-        <View style={styles.nameLabelContainerBase}>
-          <Text style={StyleSheet.flatten([styles.nameLabelBase, nameLabelColorStyle])}>{translate(name)}</Text>
+        <View style={styles.nameLabelContainer}>
+          <Text style={StyleSheet.flatten([styles.nameLabel, nameLabelColorStyle])}>{translate(name)}</Text>
         </View>
       )}
 
       <StatSliderCompactBar value={value} chosenValue={actualChosenValue} isInSetCard={isInSetCard} />
 
       {isInSetCard && (
-        <View style={styles.nameLabelContainerBase}>
+        <View style={styles.nameLabelContainer}>
           <Text style={bonusTextStyle}>{showBonus ? bonusFound : value}</Text>
         </View>
       )}
@@ -101,7 +101,7 @@ const StatSliderCompact = ({
 };
 
 const styles = StyleSheet.create({
-  containerBase: {
+  container: {
     height: 34,
     width: "100%",
     flexDirection: "row",
@@ -109,12 +109,12 @@ const styles = StyleSheet.create({
     borderRadius: 17,
     borderWidth: 2,
   },
-  nameLabelContainerBase: {
+  nameLabelContainer: {
     width: "22%",
     alignItems: "center",
     justifyContent: "center",
   },
-  nameLabelBase: {
+  nameLabel: {
     fontSize: 16,
     fontWeight: "bold",
   },

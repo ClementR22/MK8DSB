@@ -34,10 +34,10 @@ const StatSliderCompareBar = ({ value }: StatSliderCompareBarProps) => {
 
   return (
     <View style={styles.container}>
-      <View style={StyleSheet.flatten([styles.sliderTrackBase, sliderTrackDynamicBg])}>
+      <View style={StyleSheet.flatten([styles.sliderTrack, sliderTrackDynamicBg])}>
         <View
           style={StyleSheet.flatten([
-            styles.trackSegmentBase,
+            styles.trackSegment,
             { width: innerFillWidth as `${number}%` | number },
             primarySegmentColor,
           ])}
@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
     flex: 1,
     marginVertical: 2,
   },
-  sliderTrackBase: {
+  sliderTrack: {
     flexDirection: "row",
     height: 10,
     borderRadius: 5,
     overflow: "hidden",
   },
-  trackSegmentBase: {
+  trackSegment: {
     height: "100%",
   },
   yellowSegmentCommon: {

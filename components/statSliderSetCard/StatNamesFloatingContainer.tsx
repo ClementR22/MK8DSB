@@ -58,8 +58,8 @@ const StatNamesFloatingContainer: React.FC = () => {
     return checkedStats.map((stat: ResultStat) => {
       const compactName = compactStatNames[stat.name];
       return (
-        <View key={stat.name} style={styles.nameLabelContainerBase}>
-          <Text style={StyleSheet.flatten([styles.nameLabelBase, nameLabelDynamicStyle])}>
+        <View key={stat.name} style={styles.nameLabelContainer}>
+          <Text style={StyleSheet.flatten([styles.nameLabel, nameLabelDynamicStyle])}>
             {translateToLanguage(compactName, language)}
           </Text>
         </View>
@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
     zIndex: 10,
     gap: GAP,
   },
-  nameLabelContainerBase: {
+  nameLabelContainer: {
     height: TAILLE_STAT_SLIDER_RESULT,
     justifyContent: "center",
     alignItems: "center",
     width: FIXED_NAME_LABEL_WIDTH,
   },
-  nameLabelBase: {
+  nameLabel: {
     fontSize: 12,
     fontWeight: "bold",
   },

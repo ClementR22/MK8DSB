@@ -57,7 +57,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
     [theme.surface, memoizedBorderColor]
   );
 
-  const baseTextColorStyle = useMemo(
+  const textColorStyle = useMemo(
     () => ({
       color: theme.on_surface,
     }),
@@ -91,26 +91,26 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
   return (
     <TooltipWrapper
       tooltipText="DefineAValue"
-      style={styles.outerContainerBase}
-      innerContainerStyle={StyleSheet.flatten([styles.innerContainerBase, innerContainerDynamicStyles])}
+      style={styles.outerContainer}
+      innerContainerStyle={StyleSheet.flatten([styles.innerContainer, innerContainerDynamicStyles])}
     >
       <View style={styles.containerLeft}>
         <View style={styles.containerTop}>
           <View style={styles.textWrapper}>
             <Text
-              style={StyleSheet.flatten([styles.baseText, styles.nameText, baseTextColorStyle])}
+              style={StyleSheet.flatten([styles.text, styles.nameText, textColorStyle])}
               numberOfLines={1}
               ellipsizeMode="tail"
             >
               {translate(name)}
             </Text>
-            <Text style={StyleSheet.flatten([styles.baseText, styles.separatorText, baseTextColorStyle])}>
+            <Text style={StyleSheet.flatten([styles.text, styles.separatorText, textColorStyle])}>
               {translate(":")}
             </Text>
           </View>
 
           <View style={styles.valueWrapper}>
-            <Text style={[styles.baseText, baseTextColorStyle]}>{tempValue}</Text>
+            <Text style={[styles.text, textColorStyle]}>{tempValue}</Text>
           </View>
         </View>
 
@@ -146,11 +146,11 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
 };
 
 const styles = StyleSheet.create({
-  outerContainerBase: {
+  outerContainer: {
     marginBottom: 0,
     width: "100%",
   },
-  innerContainerBase: {
+  innerContainer: {
     flexDirection: "row",
     paddingHorizontal: 7,
     paddingVertical: 3,
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  baseText: {
+  text: {
     fontSize: 22,
     fontWeight: "600",
   },
