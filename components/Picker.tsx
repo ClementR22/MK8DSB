@@ -32,15 +32,11 @@ const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle,
     ));
   }, [itemList, isTranslatedContent, language, theme]);
 
-  const pickerInputComputedStyle = useMemo(
-    () =>
-      StyleSheet.flatten([
-        styles.pickerInput,
-        {
-          backgroundColor: theme.surface,
-          color: theme.on_surface,
-        },
-      ]),
+  const pickerInputDynamicStyle = useMemo(
+    () => ({
+      backgroundColor: theme.surface,
+      color: theme.on_surface,
+    }),
     [theme.surface, theme.on_surface]
   );
 
@@ -56,7 +52,7 @@ const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle,
         onValueChange={(itemValue) => {
           setValue(itemValue);
         }}
-        style={pickerInputComputedStyle}
+        style={StyleSheet.flatten([styles.pickerInput, pickerInputDynamicStyle])}
         itemStyle={Platform.OS === "ios" ? iosItemStyle : undefined}
         mode="dropdown"
       >

@@ -1,4 +1,4 @@
-import { translate } from "@/translations/translations";
+import { translateToLanguage } from "@/translations/translations";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
@@ -8,6 +8,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import TooltipWrapper from "../TooltipWrapper";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 interface StatSliderContentProps {
   name: string;
@@ -20,6 +21,7 @@ const MAX_VALUE = 6;
 
 const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber }: StatSliderContentProps) => {
   const theme = useThemeStore((state) => state.theme);
+  const language = useLanguageStore((state) => state.language);
 
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
   const updateStatValue = useSetsStore((state) => state.updateStatValue);
@@ -30,7 +32,9 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
   const onSlidingStart = useCallback(() => setIsScrollEnable(false), [setIsScrollEnable]);
   const onSlidingComplete = useCallback(
     ([v]: [number]) => {
-      updateStatValue(name, v);
+      if (v !== value) {
+        updateStatValue(name, v);
+      }
       setIsScrollEnable(true);
     },
     [updateStatValue, name, setIsScrollEnable]
@@ -88,111 +92,88 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
     [theme.primary]
   );
 
+  const translatedName = useMemo(() => translateToLanguage(name, language), [name, language]);
+  const translatedSeparator = useMemo(() => translateToLanguage(":", language), [language]);
+
   return (
     <TooltipWrapper
       tooltipText="DefineAValue"
-      style={styles.outerContainer}
-      innerContainerStyle={StyleSheet.flatten([styles.innerContainer, innerContainerDynamicStyles])}
+      style={StyleSheet.flatten([styles.container, innerContainerDynamicStyles])}
+      innerContainerStyle={styles.innerContainer}
     >
       <View style={styles.containerLeft}>
-        <View style={styles.containerTop}>
-          <View style={styles.textWrapper}>
-            <Text
-              style={StyleSheet.flatten([styles.text, styles.nameText, textColorStyle])}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              {translate(name)}
-            </Text>
-            <Text style={StyleSheet.flatten([styles.text, styles.separatorText, textColorStyle])}>
-              {translate(":")}
-            </Text>
-          </View>
-
-          <View style={styles.valueWrapper}>
-            <Text style={[styles.text, textColorStyle]}>{tempValue}</Text>
-          </View>
+        <View style={styles.textWrapper}>
+          <Text style={StyleSheet.flatten([styles.text, textColorStyle])} numberOfLines={1} ellipsizeMode="tail">
+            {translatedName}
+          </Text>
+          <Text style={StyleSheet.flatten([styles.text, styles.separatorText, textColorStyle])}>
+            {translatedSeparator}
+          </Text>
         </View>
 
-        <View style={styles.containerBottom}>
-          <View style={styles.sliderContainer}>
-            <Slider
-              value={tempValue}
-              onValueChange={onValueChange}
-              onSlidingStart={onSlidingStart}
-              onSlidingComplete={onSlidingComplete}
-              minimumValue={0}
-              maximumValue={MAX_VALUE}
-              step={0.25}
-              trackStyle={styles.track}
-              thumbTouchSize={{ width: 10, height: 10 }}
-              thumbStyle={StyleSheet.flatten([styles.thumb, thumbDynamicStyle])}
-              minimumTrackStyle={StyleSheet.flatten([styles.minimumTrack, minimumTrackDynamicStyle])}
-              maximumTrackStyle={StyleSheet.flatten([styles.maximumTrack, maximumTrackDynamicStyle])}
-            />
-          </View>
+        <View style={styles.sliderContainer}>
+          <Slider
+            value={tempValue}
+            onValueChange={onValueChange}
+            onSlidingStart={onSlidingStart}
+            onSlidingComplete={onSlidingComplete}
+            minimumValue={0}
+            maximumValue={MAX_VALUE}
+            step={0.25}
+            trackStyle={styles.track}
+            thumbTouchSize={styles.thumbTouchSize}
+            thumbStyle={StyleSheet.flatten([styles.thumb, thumbDynamicStyle])}
+            minimumTrackStyle={StyleSheet.flatten([styles.minimumTrack, minimumTrackDynamicStyle])}
+            maximumTrackStyle={StyleSheet.flatten([styles.maximumTrack, maximumTrackDynamicStyle])}
+          />
         </View>
       </View>
+
       <View style={styles.containerRight}>
-        <ButtonMultiStateToggle
-          number={statFilterNumber}
-          setNumber={setStatFilterNumber}
-          filterCase={true}
-          tooltipText="ChangeCondition"
-        />
+        <View style={styles.valueWrapper}>
+          <Text style={[styles.text, textColorStyle]}>{tempValue}</Text>
+        </View>
+
+        <View style={styles.buttonWrapper}>
+          <ButtonMultiStateToggle
+            number={statFilterNumber}
+            setNumber={setStatFilterNumber}
+            filterCase={true}
+            tooltipText="ChangeCondition"
+          />
+        </View>
       </View>
     </TooltipWrapper>
   );
 };
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    marginBottom: 0,
+  container: {
     width: "100%",
-  },
-  innerContainer: {
-    flexDirection: "row",
-    paddingHorizontal: 7,
-    paddingVertical: 3,
     borderWidth: 2,
     borderRadius: 17,
   },
-  containerLeft: {
-    flex: 1,
-  },
-  containerTop: {
+  innerContainer: {
     flexDirection: "row",
-    alignItems: "center",
+    paddingTop: 3,
+    paddingHorizontal: 10,
+    gap: 10,
   },
+  containerLeft: { flex: 1, justifyContent: "flex-start" },
+  // justifyContent: "flex-start" permet de coller le 1er enfant (le texte) en haut
+  containerRight: { alignItems: "center", justifyContent: "flex-start" },
   textWrapper: {
     flexDirection: "row",
-    flex: 1,
-    alignItems: "center",
-  },
-  text: {
-    fontSize: 22,
-    fontWeight: "600",
-  },
-  nameText: {
-    marginLeft: 10,
-    overflow: "hidden",
-  },
-  separatorText: {
-    marginRight: 2,
-  },
-  valueWrapper: {
-    width: 50,
-    alignItems: "flex-start",
-  },
-  containerBottom: {
-    width: "100%",
-    paddingHorizontal: 10,
   },
   sliderContainer: {
-    height: 50,
-    alignItems: "stretch",
-    justifyContent: "center",
+    flex: 1,
+    marginBottom: 4,
   },
+  valueWrapper: {
+    width: 45,
+    alignItems: "flex-start",
+  },
+  buttonWrapper: { position: "absolute", bottom: 8 },
   track: {
     height: 16,
     borderRadius: 100,
@@ -200,7 +181,7 @@ const styles = StyleSheet.create({
   thumb: {
     borderRadius: 100,
     width: 4,
-    height: 44,
+    height: 36,
   },
   minimumTrack: {
     borderRightWidth: 8,
@@ -212,8 +193,13 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
   },
-  containerRight: {
-    paddingTop: 4,
+  thumbTouchSize: { width: 10, height: 10 },
+  text: {
+    fontSize: 22,
+    fontWeight: "600",
+  },
+  separatorText: {
+    marginRight: 2,
   },
 });
 
