@@ -119,7 +119,7 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
           horizontal={true}
           contentContainerStyle={{ width: calculatedContentWidth }}
         >
-          <Pressable style={[styles.innerPressableContainer, pressableDynamicBg]}>
+          <Pressable style={[styles.setCardContainer, pressableDynamicBg]}>
             {noSetToShow ? placeHolder : memoizedSetCards}
           </Pressable>
         </ScrollView>
@@ -129,12 +129,12 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
 );
 
 const styles = StyleSheet.create({
-  innerPressableContainer: {
+  setCardContainer: {
     margin: 16,
     marginTop: 0,
     padding: 20,
     alignItems: "stretch",
-    borderRadius: 24,
+    borderRadius: 22,
     columnGap: 16,
     flexDirection: "row",
     flexGrow: 1,

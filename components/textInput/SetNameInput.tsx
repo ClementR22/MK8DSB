@@ -1,43 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useScreen } from "../../contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
-import { useThemeStore } from "@/stores/useThemeStore";
 import SetNameInputContent from "./SetNameInputContent";
 
-const SetNameInput = ({
-  setToShowName,
-  setCardIndex,
-  flex = 1, // option
-  editable = true, // option
-}) => {
+interface SetNameInputProps {
+  setToShowName: string;
+  setCardIndex: number;
+  editable?: boolean;
+}
+
+const SetNameInput: React.FC<SetNameInputProps> = ({ setToShowName, setCardIndex, editable = true }) => {
   const screenName = useScreen();
   const renameSet = useSetsStore((state) => state.renameSet);
 
   const [localName, setLocalName] = useState(setToShowName);
 
-  // met à jour la valeur de setToShowName quand elle change suite à renameSet()
-  useEffect(() => {
-    setLocalName(setToShowName);
-  }, [setToShowName]);
-
-  const handleEndEditing = () => {
+  const handleEndEditing = useCallback(() => {
     if (!localName.trim()) {
       setLocalName(setToShowName); // Évite de mettre un nom vide
       renameSet(setToShowName, screenName, setCardIndex);
     } else {
       renameSet(localName, screenName, setCardIndex);
     }
-  };
+  }, [localName, setToShowName, renameSet, screenName, setCardIndex]);
 
   return (
     <SetNameInputContent
       value={localName}
       onChangeText={setLocalName}
       onEndEditing={handleEndEditing}
-      flex={flex}
       editable={editable}
     />
   );
 };
 
-export default SetNameInput;
+export default React.memo(SetNameInput);

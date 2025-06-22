@@ -8,10 +8,9 @@ import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import SetImagesModal from "./SetImagesModal";
-import SetCardEditableHeader from "./SetCardEditableHeader";
-import SetCardStaticHeader from "./SetCardStaticHeader";
 import StatSliderSetCardsContainer from "../statSliderSetCard/StatSliderSetCardsContainer";
 import { arraysEqual } from "@/utils/deepCompare";
+import SetCardHeader, { SetCardHeaderProps } from "./SetCardHeader";
 
 export const SET_CARD_WIDTH = 220;
 
@@ -36,8 +35,7 @@ interface SetCardProps {
 export type actionNamesList = string[];
 
 interface SetCardSituationConfig {
-  showTextInput: boolean;
-  showIndex: boolean;
+  isEditable: boolean;
   showStatSliderResult: boolean;
   actionNamesList: actionNamesList;
   moreActionNamesList?: actionNamesList;
@@ -45,31 +43,27 @@ interface SetCardSituationConfig {
 
 const situationConfigs: Record<string, SetCardSituationConfig> = {
   search: {
-    showTextInput: false,
-    showIndex: true,
+    isEditable: false,
     showStatSliderResult: true,
     actionNamesList: ["export", "loadSearchToDisplay", "save"],
     moreActionNamesList: undefined,
   },
   display: {
-    showTextInput: true,
-    showIndex: false,
+    isEditable: true,
     showStatSliderResult: false,
     actionNamesList: ["edit", "loadDisplayToSearch", "save"],
-    moreActionNamesList: [],
+    moreActionNamesList: [], // va etre complété plus tard
   },
   save: {
-    showTextInput: true,
-    showIndex: false,
+    isEditable: true,
     showStatSliderResult: true,
     actionNamesList: ["edit", "loadSaveToSearch", "loadSaveToDisplay"],
     moreActionNamesList: ["export", "removeInMemory"],
   },
   load: {
-    showTextInput: true,
-    showIndex: false,
+    isEditable: false,
     showStatSliderResult: false,
-    actionNamesList: [],
+    actionNamesList: [], // va etre complété plus tard
     moreActionNamesList: undefined,
   },
 };
@@ -142,20 +136,21 @@ const SetCard: React.FC<SetCardProps> = ({
     setCardIndex,
   ]);
 
+  const headerProps: SetCardHeaderProps = useMemo(() => {
+    return {
+      isEditable: config.isEditable,
+      setToShowName: setToShowName,
+      setCardIndex: setCardIndex,
+      setToShowPercentage: setToShowPercentage,
+      moreActionNamesList: config.moreActionNamesList,
+      situation: situation,
+    };
+  }, [config.isEditable, setToShowName, setCardIndex, setToShowPercentage, config.moreActionNamesList, situation]);
+
   return (
     <View>
       <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={SET_CARD_WIDTH} gap={0}>
-        {config.moreActionNamesList ? (
-          <SetCardEditableHeader
-            setToShowName={setToShowName}
-            setCardIndex={setCardIndex}
-            moreActionNamesList={config.moreActionNamesList}
-            isInLoadSetModal={isInLoadSetModal}
-            situation={situation}
-          />
-        ) : (
-          <SetCardStaticHeader setToShowName={setToShowName} setToShowPercentage={setToShowPercentage} />
-        )}
+        <SetCardHeader {...headerProps} />
 
         <SetImagesModal setToShowClassIds={setToShowClassIds} />
 

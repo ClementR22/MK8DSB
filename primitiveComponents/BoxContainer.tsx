@@ -66,7 +66,7 @@ const BoxContainer = ({
   ]);
 
   const finalContainerStyle = useMemo(
-    () => StyleSheet.flatten([styles.contaienr, containerDynamicStyle]),
+    () => StyleSheet.flatten([styles.container, containerDynamicStyle]),
     [containerDynamicStyle]
   );
 
@@ -83,12 +83,10 @@ const BoxContainer = ({
 };
 
 const styles = StyleSheet.create({
-  contaienr: {
+  container: {
     justifyContent: "flex-start",
   },
-  content: {
-    padding: 10,
-  },
+  content: { padding: 10 },
 });
 
 export default React.memo(BoxContainer);
