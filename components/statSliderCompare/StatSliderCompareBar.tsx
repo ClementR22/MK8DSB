@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 interface StatSliderCompareBarProps {
@@ -43,27 +43,26 @@ const StatSliderCompareBar = ({ value }: StatSliderCompareBarProps) => {
           ])}
         />
       </View>
+      <Text style={styles.text}>{value}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginVertical: 2,
-  },
+  container: { width: "100%", flexDirection: "row", alignItems: "center", gap: 10 },
   sliderTrack: {
-    flexDirection: "row",
-    height: 10,
+    flex: 1,
+    height: 13,
     borderRadius: 5,
     overflow: "hidden",
   },
   trackSegment: {
     height: "100%",
   },
-  yellowSegmentCommon: {
-    width: 10,
-    borderWidth: 3,
+  text: {
+    width: 40,
+    fontSize: 20,
+    fontWeight: "600",
   },
 });
 

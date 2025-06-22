@@ -1,5 +1,4 @@
 import React from "react";
-import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
 import ButtonLoadSet from "../managingSetsButton/ButtonLoadSet";
 import ButtonAddSet from "../managingSetsButton/ButtonAddSet";
 import BoxContainer from "../../primitiveComponents/BoxContainer";
@@ -10,8 +9,6 @@ const DisplaySetScreenPressablesContainer = ({ scrollRef }) => {
       <ButtonAddSet scrollRef={scrollRef} />
 
       <ButtonLoadSet tooltipText="LoadASet" />
-
-      <ButtonAndModalStatSelectorResultStats />
     </BoxContainer>
   );
 };

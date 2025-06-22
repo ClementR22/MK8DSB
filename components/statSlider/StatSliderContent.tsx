@@ -156,21 +156,22 @@ const styles = StyleSheet.create({
   innerContainer: {
     flexDirection: "row",
     paddingTop: 3,
-    paddingHorizontal: 10,
-    gap: 10,
+    paddingHorizontal: 13,
+    gap: 13,
   },
   containerLeft: { flex: 1, justifyContent: "flex-start" },
   // justifyContent: "flex-start" permet de coller le 1er enfant (le texte) en haut
-  containerRight: { alignItems: "center", justifyContent: "flex-start" },
+  containerRight: { alignItems: "center", justifyContent: "flex-start", width: 46 },
   textWrapper: {
     flexDirection: "row",
+    marginLeft: 3,
   },
   sliderContainer: {
     flex: 1,
     marginBottom: 4,
   },
   valueWrapper: {
-    width: 45,
+    width: 40,
     alignItems: "flex-start",
   },
   buttonWrapper: { position: "absolute", bottom: 8 },
@@ -195,7 +196,7 @@ const styles = StyleSheet.create({
   },
   thumbTouchSize: { width: 10, height: 10 },
   text: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "600",
   },
   separatorText: {

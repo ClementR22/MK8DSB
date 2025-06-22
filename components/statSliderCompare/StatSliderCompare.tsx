@@ -5,13 +5,14 @@ import StatSliderCompareBar from "./StatSliderCompareBar";
 import { useThemeStore } from "@/stores/useThemeStore";
 import TooltipWrapper from "../TooltipWrapper";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import BoxContainer from "@/primitiveComponents/BoxContainer";
 
 interface StatSliderCompareProps {
   name: string;
-  stat_i_multipleSetStats: number[];
+  setsStats: number[];
 }
 
-const StatSliderCompare = ({ name, stat_i_multipleSetStats }: StatSliderCompareProps) => {
+const StatSliderCompare = ({ name, setsStats }: StatSliderCompareProps) => {
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
 
@@ -29,43 +30,32 @@ const StatSliderCompare = ({ name, stat_i_multipleSetStats }: StatSliderCompareP
     [theme.on_surface]
   );
 
-  const translated2Points = useMemo(() => translateToLanguage(":", language), [language]);
-
   const translatedName = useMemo(() => translateToLanguage(name, language), [name, language]);
 
   return (
-    <TooltipWrapper
-      tooltipText="StatsOfTheSet"
-      style={StyleSheet.flatten([styles.sliderContainer, sliderContainerDynamicStyle])}
-    >
-      <View style={styles.textContainer}>
-        <Text
-          style={StyleSheet.flatten([styles.text, textDynamicStyle, { flexShrink: 1 }])}
-          numberOfLines={1}
-          ellipsizeMode="tail"
-        >
-          {translatedName}
-        </Text>
-        <Text style={StyleSheet.flatten([styles.text, textDynamicStyle, { flexShrink: 0 }])}>
-          {translated2Points}
-          {stat_i_multipleSetStats.length > 0 ? stat_i_multipleSetStats[0] : ""}
-        </Text>
-      </View>
-
-      {stat_i_multipleSetStats.map((value, index) => (
-        <View key={index} style={styles.barWrapper}>
-          <StatSliderCompareBar value={value} />
+    <TooltipWrapper tooltipText="StatsOfTheSet">
+      <BoxContainer alignItems="flex-start" gap={7}>
+        <View style={styles.textContainer}>
+          <Text style={StyleSheet.flatten([styles.text, textDynamicStyle])}>{translatedName}</Text>
         </View>
-      ))}
+
+        <View style={styles.statBarsContainer}>
+          {setsStats.map((value, index) => (
+            <StatSliderCompareBar key={index} value={value} />
+          ))}
+        </View>
+      </BoxContainer>
     </TooltipWrapper>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
     flexGrow: 1,
     gap: 10,
+    margin: 16,
+    padding: 10,
+    borderRadius: 24,
   },
   sliderContainer: {
     padding: 10,
@@ -77,14 +67,10 @@ const styles = StyleSheet.create({
     flexWrap: "nowrap",
   },
   text: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 5,
+    fontSize: 20,
+    fontWeight: "600",
   },
-  barWrapper: {
-    flexDirection: "row",
-    alignItems: "stretch",
-  },
+  statBarsContainer: { width: "100%", gap: 0 },
 });
 
 export default React.memo(StatSliderCompare);

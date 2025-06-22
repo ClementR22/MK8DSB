@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { bodyTypeNames, setAllInfos } from "@/data/data";
-import StatSelectorResultStatsButtonAndModal from "../statSelector/ButtonAndModalStatSelectorResultStats";
+import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
 import { translate } from "@/translations/translations";
 import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
 import ElementsDeselector from "../elementsSelector/ElementsDeselector";
@@ -165,7 +165,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
         <ResultsNumber resultsNumber={resultsNumber} setResultsNumber={setResultsNumber} />
       </ButtonAndModal>
 
-      <StatSelectorResultStatsButtonAndModal />
+      <ButtonAndModalStatSelectorResultStats />
     </View>
   );
 };
