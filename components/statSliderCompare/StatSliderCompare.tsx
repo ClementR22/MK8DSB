@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import StatSliderCompareBar from "./StatSliderCompareBar";
 import { useThemeStore } from "@/stores/useThemeStore";
@@ -14,9 +14,16 @@ interface StatSliderCompareProps {
   setsStats: number[];
   compareStats?: ResultStats;
   handleSelectCompareStat?: (name: string) => void;
+  scrollToSetCard?: (index: number) => void;
 }
 
-const StatSliderCompare = ({ name, setsStats, compareStats, handleSelectCompareStat }: StatSliderCompareProps) => {
+const StatSliderCompare = ({
+  name,
+  setsStats,
+  compareStats,
+  handleSelectCompareStat,
+  scrollToSetCard,
+}: StatSliderCompareProps) => {
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
 
@@ -46,8 +53,20 @@ const StatSliderCompare = ({ name, setsStats, compareStats, handleSelectCompareS
     [theme.surface]
   );
 
+  const createScrollToCardHandler = useCallback(
+    (index: number) => {
+      if (scrollToSetCard) {
+        return () => scrollToSetCard(index);
+      }
+      return undefined;
+    },
+    [scrollToSetCard]
+  );
+
   const memoizedStatBars = useMemo(() => {
-    return setsStats.map((value, index) => <StatSliderCompareBar key={index} value={value} />);
+    return setsStats.map((value, index) => (
+      <StatSliderCompareBar key={index} value={value} scrollToThisSetCard={createScrollToCardHandler(index)} />
+    ));
   }, [setsStats]);
 
   return (
@@ -64,7 +83,7 @@ const StatSliderCompare = ({ name, setsStats, compareStats, handleSelectCompareS
         <View style={styles.statBarsContainer}>{memoizedStatBars}</View>
       </TooltipWrapper>
 
-      {compareStats && (
+      {compareStats && handleSelectCompareStat && (
         <StatSliderCompareSelector compareStats={compareStats} handleSelectCompareStat={handleSelectCompareStat} />
       )}
     </BoxContainer>

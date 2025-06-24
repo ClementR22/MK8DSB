@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useMemo, useCallback, useState } from "react";
-import { ScrollView } from "react-native";
+import { Pressable, ScrollView, Text } from "react-native";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import DisplaySetScreenPressablesContainer from "@/components/screenPressablesContainer/DisplaySetScreenPressablesContainer";
@@ -46,9 +46,15 @@ const DisplaySetScreen = () => {
 
   const selectedStatName = compareStats.find((stat) => stat.checked).name;
 
+  const scrollToSetCard = useCallback((index) => {
+    if (scrollRef.current && scrollRef.current.scrollToSetCard) {
+      scrollRef.current.scrollToSetCard(index);
+    }
+  }, []); // No dependencies needed if setCardContainerRef is stable
+
   return (
     <ScreenProvider screenName="display">
-      <ScrollView scrollEnabled={isScrollEnable} ref={scrollRef}>
+      <ScrollView scrollEnabled={isScrollEnable}>
         <DisplaySetScreenPressablesContainer scrollRef={scrollRef} />
 
         <SetCardContainer ref={scrollRef} setsToShow={setsListDisplayed} hideRemoveSet={hideRemoveSet} />
@@ -58,6 +64,7 @@ const DisplaySetScreen = () => {
           setsStats={setsStatsForSelectedStat[selectedStatName]}
           compareStats={compareStats}
           handleSelectCompareStat={handleSelectCompareStat}
+          scrollToSetCard={scrollToSetCard}
         />
       </ScrollView>
     </ScreenProvider>

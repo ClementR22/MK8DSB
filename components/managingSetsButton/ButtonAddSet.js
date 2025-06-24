@@ -9,6 +9,7 @@ const ButtonAddSet = ({ scrollRef }) => {
   const handleAdd = () => {
     addNewSetInDisplay();
     setTimeout(() => {
+      // besoin d'un delai pour prendre en compte la nouvelle taille de SetCardContainer
       scrollRef?.current?.scrollToEnd();
     }, 50);
   };

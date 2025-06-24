@@ -132,9 +132,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
       updateSetsToShow(setsFound);
     }
 
-    setTimeout(() => {
-      scrollRef?.current?.scrollToStart();
-    }, 50);
+    scrollRef?.current?.scrollToStart();
   };
 
   return (

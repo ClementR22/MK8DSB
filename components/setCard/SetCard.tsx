@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from "react";
-import { View } from "react-native";
+import { LayoutChangeEvent, View } from "react-native";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
@@ -19,17 +19,6 @@ export interface SetData {
   classIds: number[];
   stats: number[] | null;
   percentage: number | undefined;
-}
-
-interface SetCardProps {
-  setToShowName: string;
-  setToShowClassIds: number[];
-  setToShowStats?: number[] | null;
-  setToShowPercentage?: number;
-  setCardIndex: number;
-  isInLoadSetModal?: boolean;
-  screenNameFromProps?: ScreenName;
-  hideRemoveSet?: boolean;
 }
 
 export type actionNamesList = string[];
@@ -68,6 +57,18 @@ const situationConfigs: Record<string, SetCardSituationConfig> = {
   },
 };
 
+interface SetCardProps {
+  setToShowName: string;
+  setToShowClassIds: number[];
+  setToShowStats?: number[] | null;
+  setToShowPercentage?: number;
+  setCardIndex: number;
+  isInLoadSetModal?: boolean;
+  screenNameFromProps?: ScreenName;
+  hideRemoveSet?: boolean;
+  onLayout?: (event: LayoutChangeEvent) => void;
+}
+
 const SetCard: React.FC<SetCardProps> = ({
   setToShowName,
   setToShowClassIds,
@@ -77,6 +78,7 @@ const SetCard: React.FC<SetCardProps> = ({
   isInLoadSetModal = false,
   screenNameFromProps,
   hideRemoveSet = false,
+  onLayout,
 }) => {
   const contextScreenName = useScreen();
 
@@ -148,7 +150,7 @@ const SetCard: React.FC<SetCardProps> = ({
   }, [config.isEditable, setToShowName, setCardIndex, setToShowPercentage, config.moreActionNamesList, situation]);
 
   return (
-    <View>
+    <View onLayout={onLayout}>
       <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={SET_CARD_WIDTH} gap={0}>
         <SetCardHeader {...headerProps} />
 

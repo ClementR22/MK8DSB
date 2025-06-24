@@ -1,14 +1,15 @@
 import React, { useCallback, useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 interface StatSliderCompareBarProps {
   value: number;
+  scrollToThisSetCard: () => void;
 }
 
 const MAX_STAT_VALUE = 6;
 
-const StatSliderCompareBar = ({ value }: StatSliderCompareBarProps) => {
+const StatSliderCompareBar = ({ value, scrollToThisSetCard }: StatSliderCompareBarProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   const sliderTrackDynamicBg = useMemo(
@@ -25,15 +26,20 @@ const StatSliderCompareBar = ({ value }: StatSliderCompareBarProps) => {
     [theme.primary]
   );
 
-  const getWidth = useCallback((val: number) => {
-    const clampedValue = Math.min(Math.max(val, 0), MAX_STAT_VALUE);
+  const innerFillWidth = useMemo(() => {
+    const clampedValue = Math.min(Math.max(value, 0), MAX_STAT_VALUE);
     return `${(clampedValue / MAX_STAT_VALUE) * 100}%`;
-  }, []);
+  }, [value]);
 
-  const innerFillWidth = useMemo(() => getWidth(value), [value, getWidth]);
+  const textDynamicStyle = useMemo(
+    () => ({
+      color: theme.on_surface,
+    }),
+    [theme.on_surface]
+  );
 
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={scrollToThisSetCard}>
       <View style={StyleSheet.flatten([styles.sliderTrack, sliderTrackDynamicBg])}>
         <View
           style={StyleSheet.flatten([
@@ -43,8 +49,8 @@ const StatSliderCompareBar = ({ value }: StatSliderCompareBarProps) => {
           ])}
         />
       </View>
-      <Text style={styles.text}>{value}</Text>
-    </View>
+      <Text style={StyleSheet.flatten([styles.text, textDynamicStyle])}>{value}</Text>
+    </Pressable>
   );
 };
 
