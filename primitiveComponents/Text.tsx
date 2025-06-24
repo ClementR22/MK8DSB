@@ -18,7 +18,7 @@ const Text = ({ children, style, ...props }) => {
         },
         style,
       ]),
-    [theme.on_surface, style] // Dependencies: Re-run if theme.on_surface or the incoming style prop changes
+    [theme.on_surface, style]
   );
 
   return (

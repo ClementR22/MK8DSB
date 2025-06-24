@@ -48,8 +48,8 @@ const Snackbar = () => {
 
   return (
     <PaperSnackbar
-      key={state.key} // Use the key here
-      wrapperStyle={styles.wrapper} // Add wrapperStyle for positioning
+      key={state.key}
+      // wrapperStyle={styles.wrapper}
       contentStyle={snackbarContentStyle}
       visible={state.visible}
       onDismiss={handleDismiss}
@@ -59,15 +59,5 @@ const Snackbar = () => {
     </PaperSnackbar>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    position: "absolute", // To make it appear above other content
-    bottom: 0, // Position at the bottom
-    left: 0,
-    right: 0,
-    zIndex: 9999, // Ensure it's on top
-  },
-});
 
 export default Snackbar;

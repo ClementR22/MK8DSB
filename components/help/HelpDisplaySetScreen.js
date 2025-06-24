@@ -21,7 +21,7 @@ const slides = [
         </HelpText>
 
         <HelpFullWidthContainer>
-          <StatSliderCompare name={"speedGround"} stat_i_multipleSetStats={[4, 3]} />
+          <StatSliderCompare name={"speedGround"} setsStats={[4, 5]} />
         </HelpFullWidthContainer>
 
         <HelpText>Chaque barre de stats représente les performances d’un set distinct</HelpText>
@@ -72,7 +72,6 @@ const slides = [
           </HelpIconAndText>
 
           <HelpIconAndText name="clipboard-outline" type={IconType.MaterialCommunityIcons}>
-            {/* // clipboard-outline */}
             L’exporter au format texte pour le partager facilement
           </HelpIconAndText>
         </HelpListContainer>

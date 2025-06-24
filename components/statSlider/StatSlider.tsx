@@ -21,7 +21,7 @@ const StatSlider = ({ name, value, statFilterNumber }: StatSliderProps) => {
       name={name}
       value={value}
       statFilterNumber={statFilterNumber}
-      setStatFilterNumber={setStatFilterNumberWithName} //
+      setStatFilterNumber={setStatFilterNumberWithName}
     />
   );
 };

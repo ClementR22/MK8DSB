@@ -12,7 +12,6 @@ import {
 import { ScreenName } from "@/contexts/ScreenContext";
 import { ResultStats } from "@/contexts/ResultStatsContext";
 
-// Types
 export type StatName = string;
 
 export interface ChosenStat {
@@ -71,14 +70,12 @@ export interface SetsStoreState {
   deleteAllSavedSets: () => void;
 }
 
-// Données par défaut
 const setDefault: SetObject = {
   name: "Set 1",
   classIds: [9, 16, 30, 39],
   stats: [4, 3.75, 4.25, 4.5, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 4],
 };
 
-// Store Zustand typé
 const useSetsStore = create<SetsStoreState>((set, get) => ({
   chosenStats: statNames.map((statName, index) => ({
     name: statName,
@@ -325,6 +322,10 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
         : screenName === "display"
         ? get().setsListDisplayed
         : get().setsListSaved;
+
+    console.log("list", list);
+    console.log("index", index);
+    console.log(list[index]);
 
     const { name, classIds } = list[index];
     const json = JSON.stringify({ name, classIds });

@@ -12,7 +12,6 @@ interface ModalsStoreState {
   setScreenNameForEditModal: (newScreenName: ScreenName) => void;
 }
 
-// Store Zustand typé
 const useModalsStore = create<ModalsStoreState>((set, get) => ({
   isRenameSetModalVisible: false,
   setIsRenameSetModalVisible: (newVisible) => set({ isRenameSetModalVisible: newVisible }),

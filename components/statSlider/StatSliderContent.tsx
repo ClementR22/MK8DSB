@@ -160,7 +160,6 @@ const styles = StyleSheet.create({
     gap: 13,
   },
   containerLeft: { flex: 1, justifyContent: "flex-start" },
-  // justifyContent: "flex-start" permet de coller le 1er enfant (le texte) en haut
   containerRight: { alignItems: "center", justifyContent: "flex-start", width: 46 },
   textWrapper: {
     flexDirection: "row",

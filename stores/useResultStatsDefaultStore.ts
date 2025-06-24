@@ -13,8 +13,6 @@ interface ResultStatsDefaultStore {
   toggleCheckListResultStatsDefault: (name: string) => void;
 }
 
-// === CONFIGURATION INITIALE ===
-
 export const useResultStatsDefaultStore = create<ResultStatsDefaultStore>((set, get) => ({
   isResultStatsSync: true,
 

@@ -19,9 +19,9 @@ interface ButtonAndModalProps {
   triggerButtonText?: string;
   // Possibilité changer le texte du bouton fermer.
   closeButtonText?: string;
-  // can give a componenent
+  // Composant pour le deuxieme bouton
   secondButton?: ReactElement;
-  // or props to make it here
+  // ou juste ses prps
   secondButtonProps?: { text: string; onPress: () => void; tooltipText: string };
   closeAfterSecondButton?: boolean;
   secondButtonPosition: "left" | "right";

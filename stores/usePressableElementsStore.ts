@@ -2,8 +2,7 @@ import { create } from "zustand";
 import { bodyTypeNames, category4Names, elementsAllInfosList } from "@/data/data";
 import { ScreenName } from "@/contexts/ScreenContext";
 
-// --- Types ---
-type ElementCategory = string; // tu peux le raffiner si tu veux un enum (ex: "character" | "body" | etc.)
+type ElementCategory = string;
 
 export type PressableElement = {
   id: number;
@@ -32,7 +31,6 @@ export type PressableElementsStore = {
   updatePressableElementsList: (screenName: ScreenName, setClassIds: number[]) => void;
 };
 
-// --- Initialisation ---
 const createPressableElementsList = (): PressableElement[] =>
   elementsAllInfosList.map(({ id, name, category, classId, image }) => ({
     id,
@@ -43,7 +41,6 @@ const createPressableElementsList = (): PressableElement[] =>
     pressed: false,
   }));
 
-// --- Zustand store ---
 const usePressableElementsStore = create<PressableElementsStore>((set, get) => ({
   pressableElementsListByScreen: {
     search: createPressableElementsList(),

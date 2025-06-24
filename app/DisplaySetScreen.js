@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo, useCallback, useState } from "react"; // Ajout de useMemo et useCallback
+import React, { useEffect, useRef, useMemo, useCallback, useState } from "react";
 import { ScrollView } from "react-native";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
@@ -14,7 +14,7 @@ const DisplaySetScreen = () => {
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
-  const setsStatsByStatName = useMemo(() => {
+  const setsStatsForSelectedStat = useMemo(() => {
     const result = {}; // { [key: string]: number[] }
 
     statNames.forEach((statName) => {
@@ -55,7 +55,7 @@ const DisplaySetScreen = () => {
 
         <StatSliderCompare
           name={selectedStatName}
-          setsStats={setsStatsByStatName[selectedStatName]}
+          setsStats={setsStatsForSelectedStat[selectedStatName]}
           compareStats={compareStats}
           handleSelectCompareStat={handleSelectCompareStat}
         />

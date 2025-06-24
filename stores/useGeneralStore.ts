@@ -6,7 +6,6 @@ interface GeneralStoreState {
   setIsScrollEnable: (newIsScrollEnable: boolean) => void;
 }
 
-// Store Zustand typé
 const useGeneralStore = create<GeneralStoreState>((set, get) => ({
   isScrollEnable: true,
   setIsScrollEnable: (newIsScrollEnable) => set({ isScrollEnable: newIsScrollEnable }),

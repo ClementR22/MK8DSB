@@ -1,4 +1,3 @@
-// stores/useThemeStore.ts
 import { Appearance } from "react-native";
 import { create } from "zustand";
 import { dark_theme, light_theme } from "@/components/styles/theme";

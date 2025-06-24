@@ -8,10 +8,10 @@ import { getBonusColor } from "@/utils/getBonusColor";
 
 interface StatSliderCompactProps {
   name: string;
-  value: number; // Assuming value is a number
-  statFilterNumber?: number; // Assuming number, default is 0
-  chosenValue?: number | undefined; // Can be a number or undefined
-  isInSetCard?: boolean; // Default is false
+  value: number;
+  statFilterNumber?: number;
+  chosenValue?: number | undefined;
+  isInSetCard?: boolean;
 }
 
 const DOUBLE_PRESS_DELAY = 500;
@@ -35,24 +35,25 @@ const StatSliderCompact = ({
 
   const lastPress = useRef(0);
 
-  const dynamicContainerStyles = useMemo(
-    () => ({
-      backgroundColor: theme.surface,
-      borderColor: getStatSliderBorderColor(statFilterNumber, theme),
-    }),
-    [theme, statFilterNumber]
-  );
+  const containerStyle = useMemo(() => {
+    const borderColor = getStatSliderBorderColor(statFilterNumber, theme);
+    return StyleSheet.flatten([styles.container, { backgroundColor: theme.surface, borderColor: borderColor }]);
+  }, [theme, statFilterNumber]);
 
-  const nameLabelColorStyle = useMemo(
+  const dynamicTextColor = useMemo(
     () => ({
       color: theme.on_surface,
     }),
     [theme.on_surface]
   );
 
-  const bonusTextStyle = useMemo(() => {
-    return StyleSheet.flatten([styles.nameLabel, showBonus && { color: bonusColor }]);
-  }, [nameLabelColorStyle, showBonus, bonusColor]);
+  const nameStyle = useMemo(() => {
+    return StyleSheet.flatten([styles.text, dynamicTextColor]);
+  }, [dynamicTextColor]);
+
+  const valueStyle = useMemo(() => {
+    return StyleSheet.flatten([styles.text, showBonus && { color: bonusColor }]);
+  }, [dynamicTextColor, showBonus, bonusColor]);
 
   const handlePressIn = useCallback(() => {
     if (!bonusEnabled) return;
@@ -79,21 +80,21 @@ const StatSliderCompact = ({
 
   return (
     <Pressable
-      style={StyleSheet.flatten([styles.container, dynamicContainerStyles])}
+      style={containerStyle}
       onPressIn={bonusEnabled ? handlePressIn : undefined}
       onPressOut={bonusEnabled ? handlePressOut : undefined}
     >
       {!isInSetCard && (
-        <View style={styles.nameLabelContainer}>
-          <Text style={StyleSheet.flatten([styles.nameLabel, nameLabelColorStyle])}>{translate(name)}</Text>
+        <View style={styles.nameContainer}>
+          <Text style={nameStyle}>{translate(name)}</Text>
         </View>
       )}
 
       <StatSliderCompactBar value={value} chosenValue={actualChosenValue} isInSetCard={isInSetCard} />
 
       {isInSetCard && (
-        <View style={styles.nameLabelContainer}>
-          <Text style={bonusTextStyle}>{showBonus ? bonusFound : value}</Text>
+        <View style={styles.nameContainer}>
+          <Text style={valueStyle}>{showBonus ? bonusFound : value}</Text>
         </View>
       )}
     </Pressable>
@@ -108,15 +109,18 @@ const styles = StyleSheet.create({
     padding: 3,
     borderRadius: 17,
     borderWidth: 2,
+    alignItems: "center",
   },
-  nameLabelContainer: {
+  nameContainer: {
     width: "22%",
     alignItems: "center",
     justifyContent: "center",
+    height: "100%",
   },
-  nameLabel: {
+  text: {
     fontSize: 16,
     fontWeight: "bold",
+    flex: 1,
   },
 });
 

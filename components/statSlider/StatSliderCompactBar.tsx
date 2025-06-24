@@ -106,6 +106,7 @@ const StatSliderCompactBar = ({ value, chosenValue, isInSetCard }: StatSliderCom
 const styles = StyleSheet.create({
   bar: {
     width: "78%",
+    height: "100%",
     flexDirection: "row",
     borderRadius: 12,
     alignItems: "flex-start",

@@ -5,6 +5,8 @@ import Button from "@/primitiveComponents/Button";
 import { HelpFullWidthContainer, HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
 import StatSliderPreview from "../statSlider/StatSliderPreview";
 import ButtonAndHelpmodal from "./ButtonAndHelpmodal";
+import StatSliderCompact from "../statSlider/StatSliderCompact";
+import BoxContainer from "@/primitiveComponents/BoxContainer";
 
 const HelpSearchSetScreen = () => {
   return <ButtonAndHelpmodal slides={slides} />;
@@ -33,7 +35,6 @@ const slides = [
     content: (
       <>
         <HelpTitle>Fonctionnalités</HelpTitle>
-
         <HelpListContainer>
           <HelpIconAndText name="plus" type={IconType.MaterialCommunityIcons}>
             Ajouter une statistique supplémentaire à prendre en compte dans la recherche
@@ -59,9 +60,7 @@ const slides = [
             Choisir le niveau d'exigence de chaque statistique : exacte, supérieure ou proche
           </HelpIconAndText>
         </HelpListContainer>
-
         <HelpText>Une fois tous vos critères définis, lancez la recherche en cliquant sur</HelpText>
-
         <Button iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
           <Text>Search</Text>
         </Button>
@@ -72,17 +71,36 @@ const slides = [
   {
     content: (
       <>
-        <HelpTitle>Et ensuite ?</HelpTitle>
+        <HelpTitle fontSize={18}>Comparer les résultats</HelpTitle>
 
         <HelpText>
-          Une fois la recherche lancée, une sélection de sets correspondant à vos critères vous est proposée.
+          Une fois la recherche lancée, vous obtenez une sélection de sets correspondant à vos critères.
         </HelpText>
 
-        <HelpText>Pour chaque set affiché, vous pouvez :</HelpText>
+        <HelpText>
+          Les statistiques que vous avez choisies s’affichent pour chaque set. Idéal pour les comparer rapidement.
+        </HelpText>
 
+        <BoxContainer margin={0} marginTop={8} widthContainer={220}>
+          <StatSliderCompact name="spdG" value={5} statFilterNumber={0} chosenValue={4} isInSetCard={true} />
+        </BoxContainer>
+
+        <HelpText>
+          💡 Astuce : appuyez sur une barre pour voir le bonus temporairement, ou double-cliquez pour l’afficher en
+          permanence.
+        </HelpText>
+      </>
+    ),
+    config: { backgroundColor: "#59b2ab" },
+  },
+  {
+    content: (
+      <>
+        <HelpTitle fontSize={18}>Et ensuite ?</HelpTitle>
+        <HelpText>Pour chaque set affiché, vous pouvez :</HelpText>
         <HelpListContainer>
           <HelpIconAndText name="heart-outline" type={IconType.MaterialCommunityIcons}>
-            L'ajouter à vos favoris pour le retrouver plus tard
+            L’ajouter à vos favoris pour le retrouver plus tard
           </HelpIconAndText>
 
           <HelpIconAndText name="compare" type={IconType.MaterialCommunityIcons}>
@@ -93,8 +111,9 @@ const slides = [
             L’exporter au format texte pour le partager facilement
           </HelpIconAndText>
         </HelpListContainer>
-
-        <HelpText>À vous de choisir le set parfait pour franchir la ligne d’arrivée en tête !</HelpText>
+        <HelpText style={{ marginTop: 6 }}>
+          🏁 Choisissez le meilleur set pour franchir la ligne d’arrivée en tête !
+        </HelpText>
       </>
     ),
     config: { backgroundColor: "#59b2ab" },

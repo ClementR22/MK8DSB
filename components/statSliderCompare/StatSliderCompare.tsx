@@ -6,14 +6,14 @@ import TooltipWrapper from "../TooltipWrapper";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import StatSliderCompareSelector from "./StatSliderCompareSelector";
-import { ResultStats } from "@/contexts/ResultStatsContext"; // Assuming ResultStats is defined here
+import { ResultStats } from "@/contexts/ResultStatsContext";
 import { translateToLanguage } from "@/translations/translations";
 
 interface StatSliderCompareProps {
   name: string;
   setsStats: number[];
-  compareStats: ResultStats;
-  handleSelectCompareStat: (name: string) => void; // Corrected type for handleSelectCompareStat
+  compareStats?: ResultStats;
+  handleSelectCompareStat?: (name: string) => void;
 }
 
 const StatSliderCompare = ({ name, setsStats, compareStats, handleSelectCompareStat }: StatSliderCompareProps) => {
@@ -64,7 +64,9 @@ const StatSliderCompare = ({ name, setsStats, compareStats, handleSelectCompareS
         <View style={styles.statBarsContainer}>{memoizedStatBars}</View>
       </TooltipWrapper>
 
-      <StatSliderCompareSelector compareStats={compareStats} handleSelectCompareStat={handleSelectCompareStat} />
+      {compareStats && (
+        <StatSliderCompareSelector compareStats={compareStats} handleSelectCompareStat={handleSelectCompareStat} />
+      )}
     </BoxContainer>
   );
 };

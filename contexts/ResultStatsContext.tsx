@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState, ReactNode } from "react";
-import { toggleCheckList } from "@/utils/toggleCheck"; // Ensure toggleCheckList is properly typed
+import { toggleCheckList } from "@/utils/toggleCheck";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import { resultStatsInit } from "@/config/resultStatsInit";
 import { deepCompareStatArrays } from "@/utils/deepCompare";

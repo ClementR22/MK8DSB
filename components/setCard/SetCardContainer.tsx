@@ -1,5 +1,5 @@
-import React, { useRef, forwardRef, useImperativeHandle, useMemo, useState, useEffect, memo } from "react"; // Added 'memo'
-import { Pressable, ScrollView, StyleSheet, Text, View, DimensionValue } from "react-native"; // Removed unused ViewStyle, TextStyle
+import React, { useRef, forwardRef, useImperativeHandle, useMemo, useState, useEffect, memo } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View, DimensionValue } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCard from "./SetCard";
 import { useThemeStore } from "@/stores/useThemeStore";
