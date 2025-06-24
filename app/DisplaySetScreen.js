@@ -1,20 +1,20 @@
-import React, { useEffect, useRef, useMemo, useCallback } from "react"; // Ajout de useMemo et useCallback
+import React, { useEffect, useRef, useMemo, useCallback, useState } from "react"; // Ajout de useMemo et useCallback
 import { ScrollView } from "react-native";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import DisplaySetScreenPressablesContainer from "@/components/screenPressablesContainer/DisplaySetScreenPressablesContainer";
 import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { statNames } from "@/data/data";
 import StatSliderCompare from "@/components/statSliderCompare/StatSliderCompare";
+import { resultStatsInit } from "@/config/resultStatsInit";
 
 const DisplaySetScreen = () => {
   const scrollRef = useRef(null);
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
-  const memoizedSetsStatsByStatName = useMemo(() => {
+  const setsStatsByStatName = useMemo(() => {
     const result = {}; // { [key: string]: number[] }
 
     statNames.forEach((statName) => {
@@ -33,11 +33,18 @@ const DisplaySetScreen = () => {
     return result;
   }, [setsListDisplayed]);
 
-  console.log("memoizedSetsStatsByStatName", memoizedSetsStatsByStatName);
+  const [compareStats, setCompareStats] = useState(resultStatsInit);
+
+  const handleSelectCompareStat = (name) => {
+    const newCompareStats = compareStats.map((stat) => {
+      return { ...stat, checked: stat.name === name };
+    });
+    setCompareStats(newCompareStats);
+  };
 
   const hideRemoveSet = setsListDisplayed.length === 1;
 
-  const name = "speedGround";
+  const selectedStatName = compareStats.find((stat) => stat.checked).name;
 
   return (
     <ScreenProvider screenName="display">
@@ -46,7 +53,12 @@ const DisplaySetScreen = () => {
 
         <SetCardContainer ref={scrollRef} setsToShow={setsListDisplayed} hideRemoveSet={hideRemoveSet} />
 
-        <StatSliderCompare name={name} setsStats={memoizedSetsStatsByStatName[name]} />
+        <StatSliderCompare
+          name={selectedStatName}
+          setsStats={setsStatsByStatName[selectedStatName]}
+          compareStats={compareStats}
+          handleSelectCompareStat={handleSelectCompareStat}
+        />
       </ScrollView>
     </ScreenProvider>
   );

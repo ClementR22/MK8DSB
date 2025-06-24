@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ViewStyle } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 interface ButtonIconProps {
-  onPress: () => void;
+  onPress: (event?: Event) => void;
   tooltipText?: string;
   toolTipPlacement?: string;
   elevation?: 1 | 3 | 6 | 8 | 12;
@@ -13,6 +13,7 @@ interface ButtonIconProps {
   iconType: IconType;
   iconSize?: number;
   shape?: "circle" | "rectangle";
+  style?: ViewStyle;
   [key: string]: any;
 }
 
@@ -25,6 +26,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   iconType,
   iconSize = 24,
   shape = "circle",
+  style = null,
   ...props
 }) => {
   const theme = useThemeStore((state) => state.theme);
@@ -40,8 +42,8 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   }, [shape]);
 
   const containerCombinedStyle = useMemo(() => {
-    return StyleSheet.flatten([styles.container, shapeStyle, { backgroundColor: theme.primary }]);
-  }, [shapeStyle, theme.primary]);
+    return StyleSheet.flatten([styles.container, shapeStyle, { backgroundColor: theme.primary }, { ...style }]);
+  }, [shapeStyle, theme.primary, style]);
 
   return (
     <ButtonBase

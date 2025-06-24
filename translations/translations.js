@@ -103,6 +103,7 @@ const translations = {
     DefineAValue: "Define a value",
     StatsOfTheSet: "Stats of the set",
     StatsOfTheSets: "Stats of the sets",
+    close: "Close",
 
     // other
     ":": ": ",
@@ -121,6 +122,10 @@ const translations = {
     handlingAir: "Air handling ",
     traction: "Traction",
     miniTurbo: "Mini-Turbo",
+
+    // other stat label
+    speed: "Speed",
+    handling: "Handling",
 
     // stat reduced
     spdG: "Spd G",
@@ -368,6 +373,7 @@ const translations = {
     DefineAValue: "Définissez une valeur",
     StatsOfTheSet: "Stats du set",
     StatsOfTheSets: "Stats des sets",
+    close: "Fermer",
 
     // other
     ":": " : ",
@@ -386,6 +392,10 @@ const translations = {
     handlingAir: "Maniabilité air",
     traction: "Adhérence",
     miniTurbo: "Mini-turbo",
+
+    // other stat label
+    speed: "Vitesse",
+    handling: "Maniabilité",
 
     // stat reduced
     spdG: "Vit S",

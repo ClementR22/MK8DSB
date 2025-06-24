@@ -1,5 +1,5 @@
-import React, { useRef, forwardRef, useImperativeHandle, useMemo, useState, useEffect } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View, ViewStyle, TextStyle, DimensionValue } from "react-native";
+import React, { useRef, forwardRef, useImperativeHandle, useMemo, useState, useEffect, memo } from "react"; // Added 'memo'
+import { Pressable, ScrollView, StyleSheet, Text, View, DimensionValue } from "react-native"; // Removed unused ViewStyle, TextStyle
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SetCard from "./SetCard";
 import { useThemeStore } from "@/stores/useThemeStore";
@@ -18,12 +18,14 @@ interface SetCardContainerProps {
 }
 
 export interface SetCardContainerHandles {
+  scrollToStart: () => void;
   scrollToEnd: () => void;
 }
 
 const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerProps>(
-  ({ setsToShow, isInLoadSetModal = false, screenNameFromProps = undefined, hideRemoveSet = undefined }, ref) => {
+  ({ setsToShow, isInLoadSetModal = false, screenNameFromProps, hideRemoveSet }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
+
     useImperativeHandle(ref, () => ({
       scrollToStart: () => {
         scrollViewRef.current?.scrollTo({ x: 0, animated: true });
@@ -40,12 +42,12 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
 
     const [hasShownSearchQuestionIcon, setHasShownSearchQuestionIcon] = useState(false);
 
-    const { isInSearchScreen, inInSaveScreen } = useMemo(() => {
+    const { isInSearchScreen, isInSaveScreen } = useMemo(() => {
       const isSearch = screenName === "search";
       const isSave = screenName === "save";
       return {
         isInSearchScreen: isSearch,
-        inInSaveScreen: isSave,
+        isInSaveScreen: isSave,
       };
     }, [screenName]);
 
@@ -57,9 +59,13 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
     );
 
     const isFloatingContainer = useMemo(
-      () => (isInSearchScreen || inInSaveScreen) && !isInLoadSetModal && !noSetToShow,
-      [isInSearchScreen, inInSaveScreen, isInLoadSetModal, noSetToShow]
+      () => (isInSearchScreen || isInSaveScreen) && !isInLoadSetModal && !noSetToShow,
+      [isInSearchScreen, isInSaveScreen, isInLoadSetModal, noSetToShow]
     );
+
+    const placeholderTextStyle = useMemo(() => {
+      return [styles.placeholderText, { color: theme.on_surface }];
+    }, [theme.on_surface]);
 
     const placeHolder = useMemo(() => {
       if (!noSetToShow) {
@@ -73,14 +79,14 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
         if (!hasShownSearchQuestionIcon) {
           return <MaterialCommunityIcons name="chat-question" size={72} color={theme.on_surface} />;
         } else {
-          return <Text style={styles.placeholderText}>{translateToLanguage("NoSetFound...", language)}</Text>;
+          return <Text style={placeholderTextStyle}>{translateToLanguage("NoSetFound...", language)}</Text>;
         }
       } else {
         return (
-          <Text style={styles.placeholderText}>{translateToLanguage("YourFavoriteSetsWillAppearHere", language)}</Text>
+          <Text style={placeholderTextStyle}>{translateToLanguage("YourFavoriteSetsWillAppearHere", language)}</Text>
         );
       }
-    }, [noSetToShow, isInSearchScreen, language, theme.on_surface, hasShownSearchQuestionIcon]);
+    }, [noSetToShow, isInSearchScreen, language, theme.on_surface]);
 
     const memoizedSetCards = useMemo(() => {
       if (noSetToShow) {
@@ -118,6 +124,7 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
           scrollEnabled={isScrollEnable}
           horizontal={true}
           contentContainerStyle={{ width: calculatedContentWidth }}
+          showsHorizontalScrollIndicator={false}
         >
           <Pressable style={[styles.setCardContainer, pressableDynamicBg]}>
             {noSetToShow ? placeHolder : memoizedSetCards}
@@ -140,7 +147,10 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: "center",
   },
-  placeholderText: {},
+  placeholderText: {
+    fontSize: 18,
+    textAlign: "center",
+  },
 });
 
-export default React.memo(SetCardContainer);
+export default memo(SetCardContainer);

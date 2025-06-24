@@ -15,6 +15,8 @@ interface BoxContainerProps {
   inputStyles?: StyleProp<ViewStyle>;
   widthContainer?: DimensionValue;
   borderRadius?: number;
+  padding?: number;
+  flexWrap?: string;
 }
 
 const BoxContainer = ({
@@ -30,6 +32,8 @@ const BoxContainer = ({
   inputStyles,
   widthContainer = "100%",
   borderRadius = 12,
+  padding = 10,
+  flexWrap = "nowrap",
 }: BoxContainerProps) => {
   const theme = useThemeStore((state) => state.theme);
 
@@ -52,6 +56,8 @@ const BoxContainer = ({
       gap: gap,
       flexDirection: flexDirection,
       alignItems: alignItems,
+      padding: padding,
+      flexWrap: flexWrap,
     };
   }, [
     contentBackgroundColor,
@@ -63,6 +69,8 @@ const BoxContainer = ({
     gap,
     flexDirection,
     alignItems,
+    padding,
+    flexWrap,
   ]);
 
   const finalContainerStyle = useMemo(
@@ -86,7 +94,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "flex-start",
   },
-  content: { padding: 10 },
+  content: {},
 });
 
 export default React.memo(BoxContainer);

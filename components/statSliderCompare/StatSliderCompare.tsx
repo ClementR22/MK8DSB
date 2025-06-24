@@ -1,4 +1,3 @@
-import { translateToLanguage } from "@/translations/translations";
 import React, { useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import StatSliderCompareBar from "./StatSliderCompareBar";
@@ -6,22 +5,20 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import TooltipWrapper from "../TooltipWrapper";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
+import StatSliderCompareSelector from "./StatSliderCompareSelector";
+import { ResultStats } from "@/contexts/ResultStatsContext"; // Assuming ResultStats is defined here
+import { translateToLanguage } from "@/translations/translations";
 
 interface StatSliderCompareProps {
   name: string;
   setsStats: number[];
+  compareStats: ResultStats;
+  handleSelectCompareStat: (name: string) => void; // Corrected type for handleSelectCompareStat
 }
 
-const StatSliderCompare = ({ name, setsStats }: StatSliderCompareProps) => {
+const StatSliderCompare = ({ name, setsStats, compareStats, handleSelectCompareStat }: StatSliderCompareProps) => {
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
-
-  const sliderContainerDynamicStyle = useMemo(
-    () => ({
-      backgroundColor: theme.surface_container_high,
-    }),
-    [theme.surface_container_high]
-  );
 
   const textDynamicStyle = useMemo(
     () => ({
@@ -32,20 +29,43 @@ const StatSliderCompare = ({ name, setsStats }: StatSliderCompareProps) => {
 
   const translatedName = useMemo(() => translateToLanguage(name, language), [name, language]);
 
+  const tooltipWrapperStyles = useMemo(
+    () => ({
+      width: "100%",
+    }),
+    []
+  );
+
+  const tooltipInnerContainerStyles = useMemo(
+    () => ({
+      alignItems: "flex-start",
+      backgroundColor: theme.surface,
+      padding: 10,
+      borderRadius: 12,
+    }),
+    [theme.surface]
+  );
+
+  const memoizedStatBars = useMemo(() => {
+    return setsStats.map((value, index) => <StatSliderCompareBar key={index} value={value} />);
+  }, [setsStats]);
+
   return (
-    <TooltipWrapper tooltipText="StatsOfTheSet">
-      <BoxContainer alignItems="flex-start" gap={7}>
+    <BoxContainer marginTop={0} margin={10} padding={15}>
+      <TooltipWrapper
+        tooltipText="StatsOfTheSet"
+        style={tooltipWrapperStyles}
+        innerContainerStyle={tooltipInnerContainerStyles}
+      >
         <View style={styles.textContainer}>
           <Text style={StyleSheet.flatten([styles.text, textDynamicStyle])}>{translatedName}</Text>
         </View>
 
-        <View style={styles.statBarsContainer}>
-          {setsStats.map((value, index) => (
-            <StatSliderCompareBar key={index} value={value} />
-          ))}
-        </View>
-      </BoxContainer>
-    </TooltipWrapper>
+        <View style={styles.statBarsContainer}>{memoizedStatBars}</View>
+      </TooltipWrapper>
+
+      <StatSliderCompareSelector compareStats={compareStats} handleSelectCompareStat={handleSelectCompareStat} />
+    </BoxContainer>
   );
 };
 

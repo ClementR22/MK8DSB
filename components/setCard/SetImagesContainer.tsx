@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   category: {
     flexDirection: "row",
     justifyContent: "center",
-    marginVertical: 10,
+    marginVertical: 7,
   },
   tooltip: {
     alignItems: "center",
