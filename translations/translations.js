@@ -148,7 +148,7 @@ const translations = {
     bike: "Bike",
     sportBike: "Sport bike",
     ATV: "ATV",
-    wheels: "Wheels",
+    wheel: "Wheel",
     glider: "Glider",
 
     // element
@@ -247,7 +247,7 @@ const translations = {
     StandardATV: "Standard ATV",
     WildWiggler: "Wild Wiggler",
     SplatBuggy: "Splat Buggy",
-    //  wheels
+    //  wheel
     Standard: "Standard",
     BlueStandard: "Blue Standard",
     GLATires: "GLA Tires",
@@ -293,13 +293,13 @@ const translations = {
     FindSetTitle: "Trouver un set",
     DisplaySetTitle: "Comparer des sets",
     SavedSetTitle: "Sets favoris",
-    GalleryTitle: "Gallerie",
+    GalleryTitle: "Galerie",
     SettingsTitle: "Paramètres",
 
     FindSetTabTitle: "Chercher",
     DisplaySetTabTitle: "Comparer",
     SavedSetTabTitle: "Favoris",
-    GalleryTabTitle: "Gallerie",
+    GalleryTabTitle: "Galerie",
     SettingsTabTitle: "Paramètres",
 
     // modal title
@@ -418,7 +418,7 @@ const translations = {
     bike: "Moto",
     sportBike: "Moto de sport",
     ATV: "Quad",
-    wheels: "Roues",
+    wheel: "Roue",
     glider: "Aile",
 
     // element
@@ -517,7 +517,7 @@ const translations = {
     StandardATV: "Quad Standard",
     WildWiggler: "Quad Wiggler",
     SplatBuggy: "Kartoon",
-    //  wheels
+    //  wheel
     Standard: "Standard",
     BlueStandard: "Standard bleu",
     GLATires: "GLA",

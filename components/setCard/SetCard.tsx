@@ -1,5 +1,5 @@
-import React, { useMemo, useCallback } from "react";
-import { LayoutChangeEvent, View } from "react-native";
+import React, { useMemo, useCallback, memo } from "react";
+import { LayoutChangeEvent, View, StyleSheet } from "react-native";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
@@ -13,12 +13,11 @@ import { arraysEqual } from "@/utils/deepCompare";
 import SetCardHeader, { SetCardHeaderProps } from "./SetCardHeader";
 
 export const SET_CARD_WIDTH = 220;
-
 export interface SetData {
   name: string;
   classIds: number[];
   stats: number[] | null;
-  percentage: number | undefined;
+  percentage?: number | undefined;
 }
 
 export type actionNamesList = string[];
@@ -30,30 +29,28 @@ interface SetCardSituationConfig {
   moreActionNamesList?: actionNamesList;
 }
 
-const situationConfigs: Record<string, SetCardSituationConfig> = {
+const BASE_ACTIONS_SEARCH: actionNamesList = ["export", "loadSearchToDisplay", "save"];
+const BASE_ACTIONS_DISPLAY: actionNamesList = ["edit", "loadDisplayToSearch", "save"];
+const BASE_ACTIONS_SAVE: actionNamesList = ["edit", "loadSaveToSearch", "loadSaveToDisplay"];
+const BASE_MORE_ACTIONS_SAVE: actionNamesList = ["export", "removeInMemory"];
+const MORE_ACTIONS_DISPLAY_COMMON: actionNamesList = ["export"]; // Common actions for display more list
+
+const situationConfigs: Record<string, Omit<SetCardSituationConfig, "actionNamesList" | "moreActionNamesList">> = {
   search: {
     isEditable: false,
     showStatSliderResult: true,
-    actionNamesList: ["export", "loadSearchToDisplay", "save"],
-    moreActionNamesList: undefined,
   },
   display: {
     isEditable: true,
     showStatSliderResult: false,
-    actionNamesList: ["edit", "loadDisplayToSearch", "save"],
-    moreActionNamesList: [], // va etre complété plus tard
   },
   save: {
     isEditable: true,
     showStatSliderResult: true,
-    actionNamesList: ["edit", "loadSaveToSearch", "loadSaveToDisplay"],
-    moreActionNamesList: ["export", "removeInMemory"],
   },
   load: {
     isEditable: false,
     showStatSliderResult: false,
-    actionNamesList: [], // va etre complété plus tard
-    moreActionNamesList: undefined,
   },
 };
 
@@ -83,74 +80,75 @@ const SetCard: React.FC<SetCardProps> = ({
   const contextScreenName = useScreen();
 
   const screenName = useMemo(() => screenNameFromProps ?? contextScreenName, [screenNameFromProps, contextScreenName]);
-
   const situation = useMemo(() => (isInLoadSetModal ? "load" : screenName), [isInLoadSetModal, screenName]);
 
   const theme = useThemeStore((state) => state.theme);
 
-  const isSaved = useSetsStore(
-    useCallback(
-      (state) => state.setsListSaved.some((setSaved) => arraysEqual(setSaved.classIds, setToShowClassIds)),
-      [setToShowClassIds]
-    )
+  const setsListSaved = useSetsStore((state) => state.setsListSaved);
+  const isSaved = useMemo(
+    () => setsListSaved.some((setSaved) => arraysEqual(setSaved.classIds, setToShowClassIds)),
+    [setsListSaved, setToShowClassIds]
   );
 
   const config = useMemo(() => {
-    const currentConfig = { ...(situationConfigs[situation] || {}) };
+    const base = situationConfigs[situation];
+    let actionNames: actionNamesList;
+    let moreActionNames: actionNamesList | undefined;
 
     if (situation === "load") {
-      currentConfig.actionNamesList = [screenName === "search" ? "loadSaveToSearch" : "loadSaveToDisplay"];
-    }
-
-    if (situation === "display") {
-      const dynamicMoreActions: string[] = [];
+      actionNames = [screenName === "search" ? "loadSaveToSearch" : "loadSaveToDisplay"];
+      moreActionNames = undefined;
+    } else if (situation === "display") {
+      actionNames = BASE_ACTIONS_DISPLAY;
+      const dynamicMore: string[] = [];
       if (!hideRemoveSet) {
-        dynamicMoreActions.push("remove");
+        dynamicMore.push("remove");
       }
-      dynamicMoreActions.push("export");
 
-      return {
-        ...currentConfig,
-        moreActionNamesList: dynamicMoreActions,
-      };
+      moreActionNames =
+        dynamicMore.length > 0 ? [...dynamicMore, ...MORE_ACTIONS_DISPLAY_COMMON] : MORE_ACTIONS_DISPLAY_COMMON;
+    } else if (situation === "save") {
+      actionNames = BASE_ACTIONS_SAVE;
+      moreActionNames = BASE_MORE_ACTIONS_SAVE;
+    } else if (situation === "search") {
+      actionNames = BASE_ACTIONS_SEARCH;
+      moreActionNames = undefined;
+    } else {
+      actionNames = [];
+      moreActionNames = undefined;
     }
 
-    return currentConfig;
+    return {
+      ...base,
+      actionNamesList: actionNames,
+      moreActionNamesList: moreActionNames,
+    };
   }, [situation, hideRemoveSet, screenName]);
 
-  const setPressedClassIdsObjByScreen = usePressableElementsStore((state) => state.setPressedClassIdsObjByScreen);
-  const updatePressableElementsList = usePressableElementsStore((state) => state.updatePressableElementsList);
+  const updateSelectionFromSet = usePressableElementsStore((state) => state.updateSelectionFromSet);
   const setsetCardEditedIndex = useSetsStore((state) => state.setsetCardEditedIndex);
   const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
 
   const handleEditPress = useCallback(() => {
     setsetCardEditedIndex(setCardIndex);
-    setPressedClassIdsObjByScreen(screenName, setToShowClassIds);
+    updateSelectionFromSet(setToShowClassIds);
     setIsEditModalVisible(true);
-    updatePressableElementsList(screenName, setToShowClassIds);
-  }, [
-    setsetCardEditedIndex,
-    setPressedClassIdsObjByScreen,
-    setIsEditModalVisible,
-    updatePressableElementsList,
-    screenName,
-    setToShowClassIds,
-    setCardIndex,
-  ]);
+  }, [setsetCardEditedIndex, updateSelectionFromSet, setIsEditModalVisible, setToShowClassIds, setCardIndex]);
 
-  const headerProps: SetCardHeaderProps = useMemo(() => {
-    return {
+  const headerProps: SetCardHeaderProps = useMemo(
+    () => ({
       isEditable: config.isEditable,
-      setToShowName: setToShowName,
-      setCardIndex: setCardIndex,
-      setToShowPercentage: setToShowPercentage,
+      setToShowName,
+      setCardIndex,
+      setToShowPercentage,
       moreActionNamesList: config.moreActionNamesList,
-      situation: situation,
-    };
-  }, [config.isEditable, setToShowName, setCardIndex, setToShowPercentage, config.moreActionNamesList, situation]);
+      situation,
+    }),
+    [config.isEditable, setToShowName, setCardIndex, setToShowPercentage, config.moreActionNamesList, situation]
+  );
 
   return (
-    <View onLayout={onLayout}>
+    <View onLayout={onLayout} style={styles.container}>
       <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={SET_CARD_WIDTH} gap={0}>
         <SetCardHeader {...headerProps} />
 
@@ -172,4 +170,8 @@ const SetCard: React.FC<SetCardProps> = ({
   );
 };
 
-export default React.memo(SetCard);
+const styles = StyleSheet.create({
+  container: {},
+});
+
+export default memo(SetCard);

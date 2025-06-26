@@ -31,7 +31,8 @@ export interface ThemeColor {
   outline_variant: string;
   scrim: string;
   boxShadow: string;
-  primary_hover: string
+  primary_hover: string;
+  inactive_dot: string;
 }
 
 export interface ShadowProp {
@@ -39,4 +40,3 @@ export interface ShadowProp {
   transition: string;
   elevation: 1 | 3 | 6 | 8 | 12;
 }
-

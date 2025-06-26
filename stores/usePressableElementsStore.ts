@@ -1,59 +1,53 @@
+// usePressableElementsStore.ts
 import { create } from "zustand";
-import { bodyTypeNames, category4Names, elementsAllInfosList } from "@/data/data";
-import { ScreenName } from "@/contexts/ScreenContext";
+import { category4Names } from "@/data/data";
+import { CategoryKey } from "@/data/elementsData";
 
-type ElementCategory = string;
-
-export type PressableElement = {
-  id: number;
-  name: string;
-  category: ElementCategory;
-  classId: number;
-  image: string;
-  pressed: boolean;
-};
-
-type PressedClassIds = {
+export type SelectedClassIds = {
   character: number;
   body: number;
-  wheels: number;
+  wheel: number;
   glider: number;
 };
 
-export type PressableElementsStore = {
-  pressableElementsListByScreen: Record<ScreenName, PressableElement[]>;
-  pressedClassIdsObjByScreen: Record<ScreenName, PressedClassIds>;
-  setPressedClassIdsObjByScreen: (screenName: ScreenName, setToShowClassIds: number[]) => void;
-  isSetsListUpdated: boolean;
-  setIsSetsListUpdated: (newIsSetsListUpdated: boolean) => void;
-  handlePressImage: (screenName: ScreenName, id: number) => void;
-  handlePressImageByClass: (screenName: ScreenName, classId: number, category7: string) => void;
-  updatePressableElementsList: (screenName: ScreenName, setClassIds: number[]) => void;
+export type MultiSelectedClassIds = {
+  character: Set<number>;
+  body: Set<number>;
+  wheel: Set<number>;
+  glider: Set<number>;
 };
 
-const createPressableElementsList = (): PressableElement[] =>
-  elementsAllInfosList.map(({ id, name, category, classId, image }) => ({
-    id,
-    name,
-    category,
-    classId,
-    image,
-    pressed: false,
-  }));
+export type PressableElementsStore = {
+  selectedClassIds: SelectedClassIds;
+  multiSelectedClassIds: MultiSelectedClassIds;
+  getSelectedClassIds: (selectionMode: "single" | "multiple") => SelectedClassIds | MultiSelectedClassIds;
+
+  isSetsListUpdated: boolean;
+  setIsSetsListUpdated: (newIsSetsListUpdated: boolean) => void;
+
+  selectElementsByClassId: (category: CategoryKey, classId: number) => void;
+  updateSelectionFromSet: (setClassIds: number[]) => void;
+  toggleMultiSelectElementsByClassId: (category: CategoryKey, elementId: number) => void;
+};
+
+const defaultSingleSelection: SelectedClassIds = { character: 9, body: 16, wheel: 30, glider: 39 };
+const defaultMultiSelection: MultiSelectedClassIds = {
+  character: new Set(),
+  body: new Set(),
+  wheel: new Set(),
+  glider: new Set(),
+};
 
 const usePressableElementsStore = create<PressableElementsStore>((set, get) => ({
-  pressableElementsListByScreen: {
-    search: createPressableElementsList(),
-    display: createPressableElementsList(),
-    save: createPressableElementsList(),
-    gallery: createPressableElementsList(),
-  },
+  selectedClassIds: { ...defaultSingleSelection },
+  multiSelectedClassIds: { ...defaultMultiSelection },
 
-  pressedClassIdsObjByScreen: {
-    search: { character: 0, body: 0, wheels: 0, glider: 0 },
-    display: { character: 0, body: 0, wheels: 0, glider: 0 },
-    save: { character: 0, body: 0, wheels: 0, glider: 0 },
-    gallery: { character: 0, body: 0, wheels: 0, glider: 0 },
+  getSelectedClassIds: (selectionMode) => {
+    if (selectionMode === "single") {
+      return get().selectedClassIds;
+    } else {
+      return get().multiSelectedClassIds;
+    }
   },
 
   isSetsListUpdated: true,
@@ -62,83 +56,58 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
     set({ isSetsListUpdated: newIsSetsListUpdated });
   },
 
-  setPressedClassIdsObjByScreen: (screenName, setToShowClassIds) => {
-    const newPressedClassIdsObj = Object.fromEntries(
-      category4Names.map((category, index) => [category, setToShowClassIds[index]])
-    );
-    set((state) => ({
-      pressedClassIdsObjByScreen: {
-        ...state.pressedClassIdsObjByScreen,
-        [screenName]: newPressedClassIdsObj,
-      },
-    }));
+  selectElementsByClassId: (category, classId) => {
+    set((state) => {
+      const currentSelected = state.selectedClassIds;
+
+      return {
+        selectedClassIds: {
+          ...currentSelected,
+          [category]: classId,
+        },
+        isSetsListUpdated: false,
+      };
+    });
   },
 
-  handlePressImage: (screenName, id) => {
-    const pressableElementsList = get().pressableElementsListByScreen[screenName];
-    const newList = pressableElementsList.map((item, index) =>
-      index === id ? { ...item, pressed: !item.pressed } : item
-    );
+  updateSelectionFromSet: (setClassIds) => {
+    set(() => {
+      const newSelected: SelectedClassIds = {
+        character: null,
+        body: null,
+        wheel: null,
+        glider: null,
+      };
 
-    set((state) => ({
-      pressableElementsListByScreen: {
-        ...state.pressableElementsListByScreen,
-        [screenName]: newList,
-      },
-    }));
+      category4Names.forEach((catName, index) => {
+        newSelected[catName as CategoryKey] = setClassIds[index];
+      });
+
+      return {
+        selectedClassIds: newSelected,
+        isSetsListUpdated: false,
+      };
+    });
   },
 
-  handlePressImageByClass: (screenName, classId, category7) => {
-    const pressableElementsList = get().pressableElementsListByScreen[screenName];
+  toggleMultiSelectElementsByClassId: (category, classId) => {
+    set((state) => {
+      const newMultiSelectedClassIds = { ...state.multiSelectedClassIds };
 
-    let category4 = category7;
-    let category4List = [category7];
+      const newCategorySet = new Set(newMultiSelectedClassIds[category]);
 
-    if (bodyTypeNames.includes(category7)) {
-      category4 = "body";
-      category4List = bodyTypeNames;
-    }
+      if (newCategorySet.has(classId)) {
+        newCategorySet.delete(classId);
+      } else {
+        newCategorySet.add(classId);
+      }
 
-    const newPressableElementsList = pressableElementsList.map((item) =>
-      category4List.includes(item.category) ? { ...item, pressed: item.classId === classId } : item
-    );
+      newMultiSelectedClassIds[category] = newCategorySet;
 
-    set((state) => ({
-      pressableElementsListByScreen: {
-        ...state.pressableElementsListByScreen,
-        [screenName]: newPressableElementsList,
-      },
-    }));
-
-    const pressedClassIdsObj = get().pressedClassIdsObjByScreen[screenName];
-    const newPressedClassIdsObj = {
-      ...pressedClassIdsObj,
-      [category4]: classId,
-    };
-
-    set((state) => ({
-      pressedClassIdsObjByScreen: {
-        ...state.pressedClassIdsObjByScreen,
-        [screenName]: newPressedClassIdsObj,
-      },
-    }));
-
-    set({ isSetsListUpdated: false });
-  },
-
-  updatePressableElementsList: (screenName, setClassIds) => {
-    const pressableElementsList = get().pressableElementsListByScreen[screenName];
-    const newPressableElementsList = pressableElementsList.map((item) => ({
-      ...item,
-      pressed: setClassIds.includes(item.classId),
-    }));
-
-    set((state) => ({
-      pressableElementsListByScreen: {
-        ...state.pressableElementsListByScreen,
-        [screenName]: newPressableElementsList,
-      },
-    }));
+      return {
+        multiSelectedClassIds: newMultiSelectedClassIds,
+      };
+    });
   },
 }));
 

@@ -59,6 +59,8 @@ export const light_theme: ThemeColor = {
   boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.25)",
 
   primary_hover: "rgba(103, 80, 164, 0.08)",
+
+  inactive_dot: "#A0A0A0",
 };
 
 export const dark_theme: ThemeColor = {
@@ -102,6 +104,8 @@ export const dark_theme: ThemeColor = {
   boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.25)", // Exemple avec "#000000"
 
   primary_hover: "rgba(103, 80, 164, 0.08)",
+
+  inactive_dot: "#555555",
 };
 
 export const shadow_1dp: ShadowProp = {

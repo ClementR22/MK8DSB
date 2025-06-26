@@ -8,8 +8,6 @@ interface ModalsStoreState {
   setIsEditModalVisible: (newVisible: boolean) => void;
   isChosenStatsModalVisible: boolean;
   setIsChosenStatsModalVisible: (newVisible: boolean) => void;
-  screenNameForEditModal: ScreenName;
-  setScreenNameForEditModal: (newScreenName: ScreenName) => void;
 }
 
 const useModalsStore = create<ModalsStoreState>((set, get) => ({
@@ -21,9 +19,6 @@ const useModalsStore = create<ModalsStoreState>((set, get) => ({
 
   isChosenStatsModalVisible: false,
   setIsChosenStatsModalVisible: (newVisible) => set({ isChosenStatsModalVisible: newVisible }),
-
-  screenNameForEditModal: "search",
-  setScreenNameForEditModal: (newScreenName) => set({ screenNameForEditModal: newScreenName }),
 }));
 
 export default useModalsStore;

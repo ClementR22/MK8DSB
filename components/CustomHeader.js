@@ -4,7 +4,6 @@ import Text from "@/primitiveComponents/Text";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useThemeStore } from "@/stores/useThemeStore";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { translate } from "@/translations/translations";
 
 const CustomHeader = ({ children, icon = "car-sports", helpComponent }) => {
   const theme = useThemeStore((state) => state.theme);
@@ -45,7 +44,7 @@ const CustomHeader = ({ children, icon = "car-sports", helpComponent }) => {
     <View style={styles.container}>
       <Icon type={iconType} name={icon} size={24} color={theme.on_surface} style={styles.icon} />
       <View style={{ flex: 1, alignItems: "flex-start" }}>
-        <Text style={styles.text}>{translate(children)}</Text>
+        <Text style={styles.text}>{children}</Text>
       </View>
 
       {helpComponent}

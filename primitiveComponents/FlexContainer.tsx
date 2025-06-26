@@ -1,23 +1,22 @@
 import React, { useMemo } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { shadow_3dp } from "@/components/styles/theme";
 
 interface FlexContainerProps {
   children: React.ReactNode;
   flexDirection?: ViewStyle["flexDirection"];
   alignItems?: ViewStyle["alignItems"];
   justifyContent?: ViewStyle["justifyContent"];
-  gap?: number; // `gap` is a number
+  gap?: number;
   padding?: number;
   paddingHorizontal?: number;
-  backgroundColor?: string; // backgroundColor is a string
-  minHeight?: number; // minHeight is a number (dp)
-  style?: StyleProp<ViewStyle>; // Use StyleProp<ViewStyle> for incoming style
+  backgroundColor?: string;
+  minHeight?: number;
+  style?: StyleProp<ViewStyle>;
 }
 
 const FlexContainer = ({
   children,
-  flexDirection = "column", // Defaulting here makes the useMemo deps cleaner
+  flexDirection = "column",
   alignItems = "center",
   justifyContent = "center",
   gap = 10,
@@ -25,7 +24,7 @@ const FlexContainer = ({
   paddingHorizontal = 0,
   backgroundColor = "transparent",
   minHeight,
-  style, // This is the incoming custom style prop
+  style,
 }: FlexContainerProps) => {
   const dynamicContainerStyle = useMemo(
     () => ({
@@ -38,7 +37,6 @@ const FlexContainer = ({
       paddingHorizontal: paddingHorizontal,
       minHeight: minHeight,
     }),
-    // Dependencies: The style object will only re-create if any of these change
     [backgroundColor, flexDirection, alignItems, justifyContent, gap, padding, paddingHorizontal, minHeight]
   );
 
