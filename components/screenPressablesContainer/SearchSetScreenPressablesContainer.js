@@ -13,6 +13,34 @@ import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModa
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
+import { bodiesList, charactersList, glidersList, wheelsList } from "@/data/elementsData";
+import ElementsDeselector from "../elementsSelector/ElementsDeselector";
+
+const allCategoryElements = {
+  character: charactersList,
+  body: bodiesList,
+  wheel: wheelsList,
+  glider: glidersList,
+};
+
+// Define a union type for any element
+// type AnyElement = CharacterElement | BodyElement | WheelElement | GliderElement;
+
+const elementsGroupedByClassId = new Map(); // new Map<number, AnyElement[]>()
+
+// Parcourir toutes les listes de catégories pour collecter tous les éléments
+Object.values(allCategoryElements).forEach((categoryList) => {
+  categoryList.forEach((element) => {
+    const groupId = element.classId; // Utilisation de 'classId' comme identifiant de groupe
+
+    // Si cette 'groupId' (classId) n'a pas encore de tableau dans la Map, on en crée un
+    if (!elementsGroupedByClassId.has(groupId)) {
+      elementsGroupedByClassId.set(groupId, []);
+    }
+    // Ajouter l'élément actuel au tableau correspondant à ce 'groupId'
+    elementsGroupedByClassId.get(groupId)?.push(element);
+  });
+});
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
   const chosenStats = useSetsStore((state) => state.chosenStats);
@@ -131,6 +159,8 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
         }
       >
         <BodyTypeSelector onFilterChange={handleBodyTypeSelectorChange} initialActiveTypes={chosenBodyType} />
+
+        <ElementsDeselector elementsGroupedByClassId={elementsGroupedByClassId} />
         <ElementsSelector selectionMode="multiple" />
       </ButtonAndModal>
 

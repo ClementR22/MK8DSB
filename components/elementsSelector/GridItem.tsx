@@ -9,7 +9,7 @@ interface GridItemProps {
   onSelectElement: (classId: number) => void;
   elementCardDynamicStyle: any;
   activeBorderStyle: any;
-  pressedStateStyle: any;
+  size?: number;
 }
 
 const GridItem: React.FC<GridItemProps> = ({
@@ -18,7 +18,7 @@ const GridItem: React.FC<GridItemProps> = ({
   onSelectElement,
   elementCardDynamicStyle,
   activeBorderStyle,
-  pressedStateStyle,
+  size,
 }) => {
   const handlePress = useCallback(() => {
     onSelectElement(element.classId);
@@ -28,7 +28,11 @@ const GridItem: React.FC<GridItemProps> = ({
     <TooltipWrapper
       tooltipText={element.name}
       onPress={handlePress}
-      innerContainerStyle={[elementCardDynamicStyle, isSelected && activeBorderStyle]}
+      innerContainerStyle={[
+        elementCardDynamicStyle,
+        isSelected && activeBorderStyle,
+        size && { width: size, height: size * 1.2 },
+      ]}
     >
       <Image source={element.imageUrl} style={styles.elementImage} resizeMode="contain" />
     </TooltipWrapper>

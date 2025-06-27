@@ -47,7 +47,6 @@ const ElementGrid: React.FC<ElementGridProps> = ({ elements, selectedClassId, on
   );
 
   const activeBorderStyle = useMemo(() => ({ borderColor: theme.primary }), [theme.primary]);
-  const pressedStateStyle = stylesGridItem.pressedState;
 
   return (
     // Removed Pressable from here, as it's typically for the entire grid to be clickable,
@@ -62,7 +61,6 @@ const ElementGrid: React.FC<ElementGridProps> = ({ elements, selectedClassId, on
           onSelectElement={onSelectElement}
           elementCardDynamicStyle={elementCardDynamicStyle}
           activeBorderStyle={activeBorderStyle}
-          pressedStateStyle={pressedStateStyle}
         />
       ))}
     </View>
@@ -89,9 +87,6 @@ const stylesGridItem = StyleSheet.create({
     alignItems: "center",
     width: ITEM_WIDTH,
     height: ITEM_HEIGHT,
-  },
-  pressedState: {
-    opacity: 0.7,
   },
   // If elementImage relied on ITEM_WIDTH, it would also need to become a dynamic style object
   // passed via props, or GridItem needs to calculate its own internal image size.

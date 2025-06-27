@@ -14,7 +14,6 @@ import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import PagesNavigator from "./PagesNavigator";
-import BodyTypeFilter, { BodyType } from "./BodyTypeSelector";
 
 const allCategoryElements: {
   [key in CategoryKey]: (CharacterElement | BodyElement | WheelElement | GliderElement)[];
