@@ -6,6 +6,7 @@ import FlexContainer from "@/primitiveComponents/FlexContainer";
 import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 
+export const MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL = 24;
 interface ModalButtonProps {
   text: string;
   onPress: () => void;
@@ -148,7 +149,7 @@ const styles = StyleSheet.create({
   },
   childrenContainer: {
     maxHeight: 0.6 * vh, // vh must be correctly calculated and stable
-    marginHorizontal: 24,
+    paddingHorizontal: MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL,
   },
   title_center: {
     alignSelf: "center",

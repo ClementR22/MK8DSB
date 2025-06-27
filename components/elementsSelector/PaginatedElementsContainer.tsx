@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback, memo, useEffect } from "react";
-import { View, StyleSheet, ScrollView, ViewStyle, StyleProp, Pressable } from "react-native";
+import { View, StyleSheet, ScrollView, ViewStyle, StyleProp, Dimensions } from "react-native"; // Import Dimensions
 
-import ElementGrid from "./ElementGrid";
+import ElementGrid, { ELEMENT_GRID_PADDING_VERTICAL, GAP, ITEM_HEIGHT } from "./ElementGrid";
 import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { ELEMENTS_PER_PAGE } from "./ElementsSelector";
@@ -10,7 +10,7 @@ interface PaginatedElementSelectorProps {
   selectedCategory: CategoryKey;
   categoryElements: (CharacterElement | BodyElement | WheelElement | GliderElement)[];
   onElementsSelectionChange: (classId: number) => void;
-  initialSelectedClassId: number | Set<number>; // This prop is the source of truth
+  initialSelectedClassId: number | Set<number>;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -23,9 +23,6 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
   currentPage,
   setCurrentPage,
 }) => {
-  // OPTIMIZATION: Use useCallback for the Zustand selector to ensure its stability.
-  // This helps prevent unnecessary re-renders if the `theme` object reference
-  // changes, but its `surface` property remains the same.
   const themeSurface = useThemeStore(useCallback((state) => state.theme.surface, []));
 
   const currentElements = useMemo(() => {
@@ -42,7 +39,6 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
   );
 
   const containerStyle = useMemo(
-    // Now depends on `themeSurface` which is a stable primitive.
     () => [styles.fixedHeightContainer, { backgroundColor: themeSurface }] as StyleProp<ViewStyle>,
     [themeSurface]
   );
@@ -64,14 +60,11 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
 
 const styles = StyleSheet.create({
   fixedHeightContainer: {
-    height: 300, // Set your desired fixed height here
-    // Example: height: Dimensions.get('window').height * 0.4,
-    // If this component should fill remaining space in a flex parent, use flex: 1
-    // flex: 1,
+    height: ITEM_HEIGHT * 3 + GAP * 2 + ELEMENT_GRID_PADDING_VERTICAL * 2,
   },
   scrollViewContent: {
-    flexGrow: 1, // Allows ElementGrid to grow and fill the ScrollView's height
-    alignItems: "center", // Horizontally centers content within the ScrollView
+    flexGrow: 1,
+    alignItems: "center",
   },
 });
 
