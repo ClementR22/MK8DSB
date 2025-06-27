@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { Text, Image, Pressable, StyleSheet, Dimensions } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { BodyElement, CharacterElement, GliderElement, WheelElement } from "@/data/elementsData";
+import { BodyElement, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
 
 const { width: screenWidth } = Dimensions.get("window");
 const NUM_COLUMNS = 4;
@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
   elementImage: {
     width: ITEM_WIDTH * 0.8,
     height: ITEM_WIDTH * 0.8,
-    borderRadius: (ITEM_WIDTH * 0.8) / 2,
     marginBottom: 5,
   },
   elementName: {

@@ -1,9 +1,9 @@
 import React, { useState, useMemo, useCallback, memo } from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, ScrollView, Pressable } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import { useLanguageStore } from "@/stores/useLanguageStore";
+import useGeneralStore from "@/stores/useGeneralStore";
 // If you need to translate tooltipText or other UI strings, import translateToLanguage
 // import { translateToLanguage } from "@/translations/translations";
 // import { useLanguageStore } from "@/stores/useLanguageStore"; // and use the language store
@@ -67,7 +67,7 @@ interface SortModeSelectorProps {
 
 const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
   const theme = useThemeStore((state) => state.theme);
-  const language = useLanguageStore((state) => state.language); // Uncomment if using translation for tooltips
+  const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   // State to manage which set of sorting buttons is currently displayed (main menu or sub-menus).
   const [displayedSortNames, setDisplayedSortNames] = useState<string[]>(defaultSortNames);
@@ -273,7 +273,16 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
     theme.primary,
   ]);
 
-  return <View style={styles.container}>{displayedButtons}</View>;
+  return (
+    <ScrollView
+      horizontal
+      contentContainerStyle={styles.topHorizontalScrollView}
+      showsHorizontalScrollIndicator={false}
+      scrollEnabled={isScrollEnable}
+    >
+      <Pressable style={styles.container}>{displayedButtons}</Pressable>
+    </ScrollView>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -284,6 +293,12 @@ const styles = StyleSheet.create({
     gap: 8, // Add some spacing between buttons (requires React Native 0.71+)
     // If using older React Native, use margin for spacing:
     // margin: 4,
+  },
+  topHorizontalScrollView: {
+    flexDirection: "row", // Ensure children are laid out horizontally
+    alignItems: "center", // Vertically align items in the scroll view
+    paddingVertical: 10,
+    height: 60, // Fixed height for the scroll view containing buttons
   },
 });
 

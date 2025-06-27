@@ -2,62 +2,75 @@ import { category4Names } from "@/data/data";
 import { CategoryKey } from "@/data/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { translate } from "@/translations/translations";
-import React, { useCallback, memo, useMemo } from "react"; // Import useMemo explicitly
-import { Pressable, StyleSheet, Text, View } from "react-native"; // Import View for layout
+import React, { useCallback, memo, useMemo } from "react";
+import { Pressable, StyleSheet, Text, View, Image } from "react-native"; // Import Image
 
 interface CategorySelectorProps {
   selectedCategory: CategoryKey;
   setSelectedCategory: (category: CategoryKey) => void;
 }
 
+// 1. Define your image sources
+// IMPORTANT: Replace these with your actual image paths.
+// You might want to categorize them based on element type (character, body, etc.)
+// For example, you could have a `categoryImages` object in your `@/data/assets`
+// or directly define them here.
+const categoryImageSources: { [key in CategoryKey]: any } = {
+  character: require("@/assets/images/elementsImages/characters/Mario.png"), // Example: path to Mario image
+  body: require("@/assets/images/elementsImages/karts/Standard Kart.png"), // Example: path to Standard Kart image
+  wheel: require("@/assets/images/elementsImages/wheels/Standard.png"), // Example: path to Standard Tire image
+  glider: require("@/assets/images/elementsImages/gliders/Super Glider.png"), // Example: path to Super Glider image
+};
+
 const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, setSelectedCategory }) => {
-  // Destructure theme properties directly to avoid re-rendering if only other theme parts change.
-  // This is a good pattern for optimizing Zustand selectors.
+  // Destructure specific theme properties via a stable selector.
   const theme = useThemeStore((state) => state.theme);
 
   // Memoize the common base styles once.
-  // These styles don't depend on `selectedCategory` or the individual `category`.
   const memoizedCategoryButtonBaseStyle = useMemo(
     () => [styles.categoryButton, { backgroundColor: theme.surface_container_high }],
     [theme.surface_container_high]
-  ); // Only re-create if surface_container_high changes
-
-  const memoizedCategoryButtonTextBaseStyle = useMemo(
-    () => [styles.categoryButtonText, { color: theme.on_surface }],
-    [theme.on_surface]
-  ); // Only re-create if on_surface changes
+  );
 
   // The onPress handler for each button. It's stable because setSelectedCategory is stable.
-  // The 'category' parameter makes it dynamic per button.
   const handlePress = useCallback(
     (category: CategoryKey) => {
       setSelectedCategory(category);
     },
     [setSelectedCategory]
-  ); // setSelectedCategory is typically stable from parent
+  );
+
+  // Define a static style for the category images.
+  const categoryImageStyle = useMemo(() => styles.categoryImage, []);
 
   return (
     <View style={styles.container}>
       {(category4Names as CategoryKey[]).map((category) => {
         const isSelected = selectedCategory === category;
+        const imageSource = categoryImageSources[category];
 
         return (
           <Pressable
             key={category}
-            onPress={() => handlePress(category)} // Use the memoized handler
+            onPress={() => handlePress(category)}
             style={[
-              memoizedCategoryButtonBaseStyle, // Apply base styles
+              memoizedCategoryButtonBaseStyle,
               isSelected && { backgroundColor: theme.primary }, // Apply active background if selected
+              // Add a border to selected items for better visual feedback
             ]}
           >
-            <Text
-              style={[
-                memoizedCategoryButtonTextBaseStyle, // Apply base text styles
-                isSelected && { color: theme.on_primary }, // Apply active text color if selected
-              ]}
-            >
-              {translate(category)}
-            </Text>
+            {imageSource ? (
+              <Image
+                source={imageSource}
+                style={categoryImageStyle}
+                accessibilityLabel={translate(category)} // Important for accessibility
+              />
+            ) : (
+              // Fallback to text if no image source is found for a category
+              <Text style={[styles.categoryButtonText, { color: isSelected ? theme.on_primary : theme.on_surface }]}>
+                {translate(category)}
+              </Text>
+            )}
           </Pressable>
         );
       })}
@@ -69,17 +82,29 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "center",
-    gap: 8,
+    justifyContent: "space-between",
+    flex: 1,
   },
   categoryButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 20,
+    paddingVertical: 3,
+    paddingHorizontal: 5,
+    borderRadius: 10,
+    // Adjust button size to accommodate image if needed
+    width: 50, // Example fixed width
+    height: 50, // Example fixed height
+    alignItems: "center",
+    justifyContent: "center",
   },
+  categoryImage: {
+    width: "100%", // Make image fill button width
+    height: "100%", // Make image fill button height
+    resizeMode: "contain", // Keep aspect ratio, fit within bounds
+  },
+  // Keep categoryButtonText style as a fallback or for other uses
   categoryButtonText: {
-    fontSize: 16,
+    fontSize: 14, // Slightly smaller font for fallback to fit
     fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

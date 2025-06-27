@@ -37,8 +37,6 @@ const ElementsSelector: React.FC<ElementsSelectorProps> = ({ selectionMode = "si
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language); // Language is a primitive (string), so this is fine.
 
-  const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
-
   const [selectedCategory, setSelectedCategory] = useState<CategoryKey>("character");
   const [orderNumber, setOrderNumber] = useState(0);
 
@@ -102,21 +100,12 @@ const ElementsSelector: React.FC<ElementsSelectorProps> = ({ selectionMode = "si
           tooltipText={isOpenFilterView ? "DevelopSliders" : "ReduceSliders"}
         />
         {/* ScrollView for the horizontal options */}
-        <ScrollView
-          horizontal
-          contentContainerStyle={styles.topHorizontalScrollView}
-          showsHorizontalScrollIndicator={false}
-          scrollEnabled={isScrollEnable}
-        >
-          <Pressable>
-            {/* pour capturer le clic pour le scroll*/}
-            {isOpenFilterView ? (
-              <SortModeSelector setOrderNumber={setOrderNumber} />
-            ) : (
-              <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-            )}
-          </Pressable>
-        </ScrollView>
+
+        {isOpenFilterView ? (
+          <SortModeSelector setOrderNumber={setOrderNumber} />
+        ) : (
+          <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+        )}
       </Pressable>
 
       <PaginatedElementsContainer
@@ -137,15 +126,10 @@ const styles = StyleSheet.create({
   controlsContainer: {
     flexDirection: "row",
     alignItems: "center",
+    height: 60,
     borderBottomWidth: 1,
     paddingLeft: 10,
     gap: 10, // Requires React Native 0.71+ for gap property
-  },
-  topHorizontalScrollView: {
-    flexDirection: "row", // Ensure children are laid out horizontally
-    alignItems: "center", // Vertically align items in the scroll view
-    paddingVertical: 10,
-    height: 60, // Fixed height for the scroll view containing buttons
   },
 });
 
