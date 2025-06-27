@@ -722,7 +722,7 @@ export const elementsAllInfosList = [
     category: "body",
     bodyType: "sportBike",
     classId: 20,
-    imageUrl: require("@/assets/images/elementsImages/sport bikes/Comet.png"),
+    imageUrl: require("@/assets/images/elementsImages/sportBikes/Comet.png"),
     ...getElementStats(20),
   } as BodyElement,
   {
@@ -731,7 +731,7 @@ export const elementsAllInfosList = [
     category: "body",
     bodyType: "sportBike",
     classId: 23,
-    imageUrl: require("@/assets/images/elementsImages/sport bikes/Sport Bike.png"),
+    imageUrl: require("@/assets/images/elementsImages/sportBikes/Sport Bike.png"),
     ...getElementStats(23),
   } as BodyElement,
   {
@@ -740,7 +740,7 @@ export const elementsAllInfosList = [
     category: "body",
     bodyType: "sportBike",
     classId: 23,
-    imageUrl: require("@/assets/images/elementsImages/sport bikes/Jet Bike.png"),
+    imageUrl: require("@/assets/images/elementsImages/sportBikes/Jet Bike.png"),
     ...getElementStats(23),
   } as BodyElement,
   {
@@ -749,7 +749,7 @@ export const elementsAllInfosList = [
     category: "body",
     bodyType: "sportBike",
     classId: 20,
-    imageUrl: require("@/assets/images/elementsImages/sport bikes/Yoshi Bike.png"),
+    imageUrl: require("@/assets/images/elementsImages/sportBikes/Yoshi Bike.png"),
     ...getElementStats(20),
   } as BodyElement,
   {
@@ -758,7 +758,7 @@ export const elementsAllInfosList = [
     category: "body",
     bodyType: "sportBike",
     classId: 26,
-    imageUrl: require("@/assets/images/elementsImages/sport bikes/Master Cycle.png"),
+    imageUrl: require("@/assets/images/elementsImages/sportBikes/Master Cycle.png"),
     ...getElementStats(26),
   } as BodyElement,
   {

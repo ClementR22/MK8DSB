@@ -1,95 +1,51 @@
 import { category4Names } from "@/data/data";
 import { CategoryKey } from "@/data/elementsTypes";
-import { useThemeStore } from "@/stores/useThemeStore";
-import React, { useCallback, memo, useMemo } from "react";
-import { Pressable, StyleSheet, Text, View, Image } from "react-native"; // Import Image
+import { useThemeStore } from "@/stores/useThemeStore"; // Assuming theme store is needed for styles
+import React, { useCallback, memo } from "react";
+import ImageButtonSelector, { ImageButtonOption } from "./ImageButtonSelector"; // Import the generic selector
 
 interface CategorySelectorProps {
   selectedCategory: CategoryKey;
   setSelectedCategory: (category: CategoryKey) => void;
 }
 
-// 1. Define your image sources
-// IMPORTANT: Replace these with your actual image paths.
-// You might want to categorize them based on element type (character, body, etc.)
-// For example, you could have a `categoryImages` object in your `@/data/assets`
-// or directly define them here.
 const categoryImageSources: { [key in CategoryKey]: any } = {
-  character: require("@/assets/images/elementsImages/characters/Mario.png"), // Example: path to Mario image
-  body: require("@/assets/images/elementsImages/karts/Standard Kart.png"), // Example: path to Standard Kart image
-  wheel: require("@/assets/images/elementsImages/wheels/Standard.png"), // Example: path to Standard Tire image
-  glider: require("@/assets/images/elementsImages/gliders/Super Glider.png"), // Example: path to Super Glider image
+  character: require("@/assets/images/elementsImages/characters/Mario.png"),
+  body: require("@/assets/images/elementsImages/karts/Standard Kart.png"),
+  wheel: require("@/assets/images/elementsImages/wheels/Standard.png"),
+  glider: require("@/assets/images/elementsImages/gliders/Super Glider.png"),
 };
 
+// Transform your category data into the format expected by ImageButtonSelector
+const categoryOptions: ImageButtonOption[] = (category4Names as CategoryKey[]).map((category) => ({
+  key: category,
+  imageUrl: categoryImageSources[category],
+  label: category, // Optional: add label if you want to display text (e.g., for accessibility or fallback)
+}));
+
 const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, setSelectedCategory }) => {
-  // Destructure specific theme properties via a stable selector.
-  const theme = useThemeStore((state) => state.theme);
+  const theme = useThemeStore((state) => state.theme); // Used for activeColor
 
-  // Memoize the common base styles once.
-  const memoizedCategoryButtonBaseStyle = useMemo(
-    () => [styles.categoryButton, { backgroundColor: theme.surface_container_high }],
-    [theme.surface_container_high]
-  );
-
-  // The onPress handler for each button. It's stable because setSelectedCategory is stable.
-  const handlePress = useCallback(
-    (category: CategoryKey) => {
-      setSelectedCategory(category);
+  const handleSelectionChange = useCallback(
+    (key: string | Set<string>) => {
+      setSelectedCategory(key as CategoryKey); // Cast back to CategoryKey
     },
     [setSelectedCategory]
   );
 
+  // Optionally, you can wrap ImageButtonSelector in a View to apply specific category selector styles
+  // or just return ImageButtonSelector directly if its internal container styles are sufficient.
   return (
-    <View style={styles.container}>
-      {(category4Names as CategoryKey[]).map((category) => {
-        const isSelected = selectedCategory === category;
-        const imageSource = categoryImageSources[category];
-
-        return (
-          <Pressable
-            key={category}
-            onPress={() => handlePress(category)}
-            style={[
-              memoizedCategoryButtonBaseStyle,
-              isSelected && { backgroundColor: theme.primary }, // Apply active background if selected
-              // Add a border to selected items for better visual feedback
-            ]}
-          >
-            <Image source={imageSource} style={styles.categoryImage} resizeMode="contain" />
-          </Pressable>
-        );
-      })}
-    </View>
+    <ImageButtonSelector
+      options={categoryOptions}
+      selectionMode="single"
+      initialSelection={selectedCategory}
+      onSelectionChange={handleSelectionChange}
+      buttonSize={{ width: 50, height: 50 }}
+      activeStyleProperty="backgroundColor" // Based on your original CategorySelector
+      activeColor={theme.primary} // Use theme.primary for active state
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    flex: 1,
-  },
-  categoryButton: {
-    paddingVertical: 3,
-    paddingHorizontal: 5,
-    borderRadius: 10,
-    // Adjust button size to accommodate image if needed
-    width: 50, // Example fixed width
-    height: 50, // Example fixed height
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  categoryImage: {
-    width: "100%",
-    height: "100%",
-  },
-  // Keep categoryButtonText style as a fallback or for other uses
-  categoryButtonText: {
-    fontSize: 14, // Slightly smaller font for fallback to fit
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-});
 
 export default memo(CategorySelector);

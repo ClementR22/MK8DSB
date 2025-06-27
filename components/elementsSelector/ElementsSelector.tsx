@@ -2,8 +2,7 @@
 // to PaginatedElementsContainer, which now handles the item dimension logic.
 
 import React, { useState, memo, useMemo, useEffect, useCallback } from "react";
-import { View, StyleSheet, ScrollView, Pressable } from "react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
+import { View, StyleSheet, Pressable } from "react-native";
 import PaginatedElementsContainer, { ELEMENTS_PER_PAGE } from "./PaginatedElementsContainer";
 import { bodiesList, charactersList, glidersList, wheelsList } from "@/data/elementsData";
 import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
@@ -15,6 +14,7 @@ import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import PagesNavigator from "./PagesNavigator";
+import BodyTypeFilter, { BodyType } from "./BodyTypeSelector";
 
 const allCategoryElements: {
   [key in CategoryKey]: (CharacterElement | BodyElement | WheelElement | GliderElement)[];
@@ -87,13 +87,11 @@ const ElementsSelector: React.FC<ElementsSelectorProps> = ({ selectionMode = "si
 
         <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
       </View>
-
       {isOpenFilterView && (
         <Pressable style={styles.controlsContainer}>
           <SortModeSelector setOrderNumber={setOrderNumber} />
         </Pressable>
       )}
-
       <PaginatedElementsContainer
         selectedCategory={selectedCategory}
         categoryElements={categoryElementsSorted}
@@ -102,7 +100,6 @@ const ElementsSelector: React.FC<ElementsSelectorProps> = ({ selectionMode = "si
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-
       <PagesNavigator currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
     </>
   );

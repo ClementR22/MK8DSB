@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { bodyTypeNames, category4Names, setAllInfos } from "@/data/data";
 import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
@@ -12,18 +12,17 @@ import Button from "../../primitiveComponents/Button";
 import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModalStatSelectorChosenStats";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
+import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
   const [resultsNumber, setResultsNumber] = useState(5);
   const selectedClassIds = usePressableElementsStore((state) => state.multiSelectedClassIds);
-  const [chosenBodyType, setChosenBodyType] = useState(
-    bodyTypeNames.map((bodyTypeName) => ({
-      name: bodyTypeName,
-      checked: true,
-    }))
-  );
+  const [chosenBodyType, setChosenBodyType] = useState(new Set(bodyTypeNames));
+  const handleBodyTypeSelectorChange = useCallback((activeTypes) => {
+    setChosenBodyType(activeTypes);
+  }, []);
 
   const SetFoundTranslated = translate("SetFound");
 
@@ -39,18 +38,13 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
     setSetsListFound(setsFoundWithName);
   };
 
-  const chosenBodyTypeList = useMemo(
-    () => chosenBodyType.filter((bodyType) => bodyType.checked).map((bodyType) => bodyType.name),
-    [chosenBodyType]
-  );
-
   const search = () => {
     const chosenStatsChecked = chosenStats.map((stat) => stat.checked);
     const chosenStatsValue = chosenStats.map((stat) => stat.value);
     const chosenStatsFilterNumber = chosenStats.map((stat) => stat.statFilterNumber);
     const chosenClassIds = selectedClassIds;
 
-    if (!chosenStatsChecked.includes(true) || chosenBodyTypeList.length === 0) {
+    if (!chosenStatsChecked.includes(true) || chosenBodyType.length === 0) {
       updateSetsToShow([]); // Ou gérer l'état de "rien trouvé"
       return; // Sortir si aucun filtre n'est sélectionné
     }
@@ -69,10 +63,16 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
       });
 
       if (
-        !bodyTypes.some((item) => chosenBodyTypeList.includes(item)) ||
         isOneElementNonAccepted // si (le set ne contient aucun type de vehicule choisi OU le set contient au moins un element non choisi)
       ) {
         return acc; // Ignorer si le type de corps ne correspond pas
+      }
+
+      if (chosenBodyType.size !== 0) {
+        const isEveryBodyTypeNonAccepted = !bodyTypes.some((item) => chosenBodyType.has(item));
+        if (isEveryBodyTypeNonAccepted) {
+          return acc;
+        }
       }
 
       let gap = 0;
@@ -130,6 +130,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
           <ButtonIcon tooltipText="ChooseFilters" iconName="pin" iconType={IconType.MaterialCommunityIcons} />
         }
       >
+        <BodyTypeSelector onFilterChange={handleBodyTypeSelectorChange} initialActiveTypes={chosenBodyType} />
         <ElementsSelector selectionMode="multiple" />
       </ButtonAndModal>
 

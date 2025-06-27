@@ -1,7 +1,7 @@
 // usePressableElementsStore.ts
 import { create } from "zustand";
 import { category4Names } from "@/data/data";
-import { CategoryKey } from "@/data/elementsData";
+import { CategoryKey } from "@/data/elementsTypes";
 
 export type SelectedClassIds = {
   character: number;
@@ -25,8 +25,9 @@ export type PressableElementsStore = {
   isSetsListUpdated: boolean;
   setIsSetsListUpdated: (newIsSetsListUpdated: boolean) => void;
 
-  selectElementsByClassId: (category: CategoryKey, classId: number) => void;
   updateSelectionFromSet: (setClassIds: number[]) => void;
+
+  selectElementsByClassId: (category: CategoryKey, classId: number) => void;
   toggleMultiSelectElementsByClassId: (category: CategoryKey, elementId: number) => void;
 };
 
@@ -56,20 +57,6 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
     set({ isSetsListUpdated: newIsSetsListUpdated });
   },
 
-  selectElementsByClassId: (category, classId) => {
-    set((state) => {
-      const currentSelected = state.selectedClassIds;
-
-      return {
-        selectedClassIds: {
-          ...currentSelected,
-          [category]: classId,
-        },
-        isSetsListUpdated: false,
-      };
-    });
-  },
-
   updateSelectionFromSet: (setClassIds) => {
     set(() => {
       const newSelected: SelectedClassIds = {
@@ -85,6 +72,20 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
 
       return {
         selectedClassIds: newSelected,
+        isSetsListUpdated: false,
+      };
+    });
+  },
+
+  selectElementsByClassId: (category, classId) => {
+    set((state) => {
+      const currentSelected = state.selectedClassIds;
+
+      return {
+        selectedClassIds: {
+          ...currentSelected,
+          [category]: classId,
+        },
         isSetsListUpdated: false,
       };
     });
