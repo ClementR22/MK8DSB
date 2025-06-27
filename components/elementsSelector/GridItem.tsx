@@ -1,7 +1,7 @@
-import React, { memo, useCallback, useMemo } from "react";
-import { Text, Image, Pressable, StyleSheet, View } from "react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
+import React, { memo, useCallback } from "react";
+import { Image, StyleSheet } from "react-native";
 import { BodyElement, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
+import TooltipWrapper from "../TooltipWrapper";
 
 interface GridItemProps {
   element: CharacterElement | BodyElement | WheelElement | GliderElement;
@@ -25,12 +25,13 @@ const GridItem: React.FC<GridItemProps> = ({
   }, [onSelectElement, element.classId]);
 
   return (
-    <Pressable
-      style={({ pressed }) => [elementCardDynamicStyle, isSelected && activeBorderStyle, pressed && pressedStateStyle]}
+    <TooltipWrapper
+      tooltipText={element.name}
       onPress={handlePress}
+      innerContainerStyle={[elementCardDynamicStyle, isSelected && activeBorderStyle]}
     >
       <Image source={element.imageUrl} style={styles.elementImage} resizeMode="contain" />
-    </Pressable>
+    </TooltipWrapper>
   );
 };
 

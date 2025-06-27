@@ -32,7 +32,7 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
 
   // Memoize paginationControlsStyle.
   const paginationControlsStyle = useMemo(
-    () => [styles.paginationControls, { backgroundColor: theme.surface_container_high, borderColor: theme.outline }],
+    () => [styles.paginationControls, { backgroundColor: theme.surface_container_high }],
     [theme.surface_container_high, theme.outline]
   );
 
@@ -60,7 +60,6 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
         key={index}
         onPress={() => goToPage(index)}
         style={[styles.dot, { backgroundColor: index === currentPage ? activeDotColor : inactiveDotColorResolved }]}
-        accessibilityLabel={`Go to page ${index + 1}`}
       />
     ));
   }, [totalPages, currentPage, goToPage, activeDotColor, inactiveDotColorResolved]);
@@ -75,7 +74,6 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
           currentPage === 0 && styles.navButtonDisabled,
           pressed && styles.navButtonPressed,
         ]}
-        accessibilityLabel="Previous page"
       >
         <MaterialCommunityIcons
           name="chevron-left"
@@ -96,7 +94,6 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
           currentPage === totalPages - 1 && styles.navButtonDisabled,
           pressed && styles.navButtonPressed,
         ]}
-        accessibilityLabel="Next page"
       >
         <MaterialCommunityIcons
           name="chevron-right"
@@ -115,7 +112,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 3,
     paddingHorizontal: 3,
-    borderTopWidth: 1,
   },
   centerPagination: {
     flex: 1,

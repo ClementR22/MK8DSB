@@ -1,10 +1,11 @@
-import React, { useState, useMemo, useCallback, memo, useEffect } from "react";
-import { View, StyleSheet, ScrollView, ViewStyle, StyleProp, Dimensions } from "react-native"; // Import Dimensions
+import React, { useMemo, useCallback, memo, useEffect } from "react";
+import { StyleSheet, ScrollView, ViewStyle, StyleProp } from "react-native";
 
 import ElementGrid, { ELEMENT_GRID_PADDING_VERTICAL, GAP, ITEM_HEIGHT } from "./ElementGrid";
 import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { ELEMENTS_PER_PAGE } from "./ElementsSelector";
+
+export const ELEMENTS_PER_PAGE = 12;
 
 interface PaginatedElementSelectorProps {
   selectedCategory: CategoryKey;

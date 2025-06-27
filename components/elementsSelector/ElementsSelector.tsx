@@ -4,7 +4,7 @@
 import React, { useState, memo, useMemo, useEffect, useCallback } from "react";
 import { View, StyleSheet, ScrollView, Pressable } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
-import PaginatedElementsContainer from "./PaginatedElementsContainer";
+import PaginatedElementsContainer, { ELEMENTS_PER_PAGE } from "./PaginatedElementsContainer";
 import { bodiesList, charactersList, glidersList, wheelsList } from "@/data/elementsData";
 import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
 import CategorySelector from "./CategorySelector";
@@ -15,9 +15,6 @@ import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import PagesNavigator from "./PagesNavigator";
-import useGeneralStore from "@/stores/useGeneralStore";
-
-export const ELEMENTS_PER_PAGE = 12;
 
 const allCategoryElements: {
   [key in CategoryKey]: (CharacterElement | BodyElement | WheelElement | GliderElement)[];
@@ -33,7 +30,6 @@ interface ElementsSelectorProps {
 }
 
 const ElementsSelector: React.FC<ElementsSelectorProps> = ({ selectionMode = "single" }) => {
-  const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
 
   const [selectedCategory, setSelectedCategory] = useState<CategoryKey>("character");
@@ -81,7 +77,7 @@ const ElementsSelector: React.FC<ElementsSelectorProps> = ({ selectionMode = "si
 
   return (
     <>
-      <Pressable style={[styles.controlsContainer, { borderColor: theme.on_surface_variant }]}>
+      <View style={styles.controlsContainer}>
         <ButtonIcon
           onPress={toggleOpenFilterView}
           iconName={isOpenFilterView ? "chevron-down" : "chevron-up"}
@@ -89,12 +85,14 @@ const ElementsSelector: React.FC<ElementsSelectorProps> = ({ selectionMode = "si
           tooltipText={isOpenFilterView ? "DevelopSliders" : "ReduceSliders"}
         />
 
-        {isOpenFilterView ? (
+        <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+      </View>
+
+      {isOpenFilterView && (
+        <Pressable style={styles.controlsContainer}>
           <SortModeSelector setOrderNumber={setOrderNumber} />
-        ) : (
-          <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-        )}
-      </Pressable>
+        </Pressable>
+      )}
 
       <PaginatedElementsContainer
         selectedCategory={selectedCategory}
@@ -115,7 +113,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 60,
-    borderBottomWidth: 1,
     paddingLeft: 10,
     gap: 10,
   },

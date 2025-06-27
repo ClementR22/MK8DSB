@@ -1,7 +1,6 @@
 import { category4Names } from "@/data/data";
 import { CategoryKey } from "@/data/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { translate } from "@/translations/translations";
 import React, { useCallback, memo, useMemo } from "react";
 import { Pressable, StyleSheet, Text, View, Image } from "react-native"; // Import Image
 
@@ -40,9 +39,6 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, s
     [setSelectedCategory]
   );
 
-  // Define a static style for the category images.
-  const categoryImageStyle = useMemo(() => styles.categoryImage, []);
-
   return (
     <View style={styles.container}>
       {(category4Names as CategoryKey[]).map((category) => {
@@ -59,18 +55,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, s
               // Add a border to selected items for better visual feedback
             ]}
           >
-            {imageSource ? (
-              <Image
-                source={imageSource}
-                style={categoryImageStyle}
-                accessibilityLabel={translate(category)} // Important for accessibility
-              />
-            ) : (
-              // Fallback to text if no image source is found for a category
-              <Text style={[styles.categoryButtonText, { color: isSelected ? theme.on_primary : theme.on_surface }]}>
-                {translate(category)}
-              </Text>
-            )}
+            <Image source={imageSource} style={styles.categoryImage} resizeMode="contain" />
           </Pressable>
         );
       })}
@@ -96,9 +81,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   categoryImage: {
-    width: "100%", // Make image fill button width
-    height: "100%", // Make image fill button height
-    resizeMode: "contain", // Keep aspect ratio, fit within bounds
+    width: "100%",
+    height: "100%",
   },
   // Keep categoryButtonText style as a fallback or for other uses
   categoryButtonText: {

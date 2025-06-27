@@ -288,8 +288,6 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row", // Arrange buttons horizontally
-    flexWrap: "wrap", // Allow buttons to wrap to the next line
-    justifyContent: "center", // Center the buttons
     gap: 8, // Add some spacing between buttons (requires React Native 0.71+)
     // If using older React Native, use margin for spacing:
     // margin: 4,

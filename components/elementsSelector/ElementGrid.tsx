@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     paddingVertical: ELEMENT_GRID_PADDING_VERTICAL,
     paddingHorizontal: ELEMENT_GRID_PADDING_HORIZONTAL, // Keep padding defined here for the grid container
-    justifyContent: "space-around",
     gap: GAP, // Keep gap defined here
   },
 });
