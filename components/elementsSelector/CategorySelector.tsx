@@ -2,8 +2,9 @@ import { category4Names } from "@/data/data";
 import { CategoryKey } from "@/data/elementsData";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { translate } from "@/translations/translations";
-import React, { useCallback, memo } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useCallback, memo, useState } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 
 interface CategorySelectorProps {
   selectedCategory: CategoryKey;
@@ -31,23 +32,20 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, s
   );
 
   return (
-    <View style={[styles.categorySelectorContainer, { borderColor: theme.on_surface_variant }]}>
+    <ScrollView horizontal contentContainerStyle={styles.categorySelectorContainer}>
       {(category4Names as CategoryKey[]).map((category) => (
         <Pressable key={category} onPress={() => setSelectedCategory(category)} style={categoryButtonStyles(category)}>
           <Text style={categoryButtonTextStyles(category)}>{translate(category)}</Text>
         </Pressable>
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   categorySelectorContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
     paddingVertical: 10,
-    borderBottomWidth: 1,
   },
   categoryButton: {
     paddingVertical: 8,
