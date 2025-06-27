@@ -63,7 +63,6 @@ const DisplaySetScreen = () => {
         <StatSliderCompare
           name={selectedStatName}
           setsStats={setsStatsForSelectedStat[selectedStatName]}
-          compareStats={compareStats}
           handleSelectCompareStat={handleSelectCompareStat}
           scrollToSetCard={scrollToSetCard}
         />

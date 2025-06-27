@@ -13,11 +13,10 @@ const BUTTON_SIZE = 40; // égal à ButtonIcon
 const NUMBER_OF_SLOTS = 6;
 
 interface StatSliderCompareSelectorProps {
-  compareStats: ResultStats;
   handleSelectCompareStat: (name: string) => void;
 }
 
-const StatSliderCompareSelector = ({ compareStats, handleSelectCompareStat }: StatSliderCompareSelectorProps) => {
+const StatSliderCompareSelector = ({ handleSelectCompareStat }: StatSliderCompareSelectorProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   const statIconsList = useMemo(

@@ -13,34 +13,57 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
   const theme = useThemeStore((state) => state.theme);
 
   const goToNextPage = useCallback(() => {
+    // No change needed, already optimal.
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
-  }, [totalPages, setCurrentPage]);
+  }, [totalPages, setCurrentPage]); // totalPages dependency is correct.
 
   const goToPrevPage = useCallback(() => {
+    // No change needed, already optimal.
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
-  }, [setCurrentPage]);
+  }, [setCurrentPage]); // setCurrentPage dependency is correct.
 
   const goToPage = useCallback(
+    // No change needed, already optimal.
     (pageIndex: number) => {
       setCurrentPage(pageIndex);
     },
     [setCurrentPage]
   );
 
+  // Memoize paginationControlsStyle.
   const paginationControlsStyle = useMemo(
-    () => [styles.paginationControls, { backgroundColor: theme.surface_container_high, borderColor: theme.outline }], // Ajout de la couleur de la bordure depuis le thème
+    () => [styles.paginationControls, { backgroundColor: theme.surface_container_high, borderColor: theme.outline }],
     [theme.surface_container_high, theme.outline]
   );
 
+  // Memoize pageInfoStyle.
   const pageInfoStyle = useMemo(() => [styles.pageInfo, { color: theme.on_surface }], [theme.on_surface]);
 
+  // Memoize navButtonColor.
   const navButtonColor = useMemo(() => theme.primary, [theme.primary]);
 
+  // Memoize dot colors.
   const activeDotColor = useMemo(() => theme.primary, [theme.primary]);
-  const inactiveDotColor = useMemo(
-    () => theme.inactive_dot || theme.on_surface_variant,
+  const inactiveDotColorResolved = useMemo(
+    () => theme.inactive_dot || theme.on_surface_variant, // Use the destructured values
     [theme.inactive_dot, theme.on_surface_variant]
   );
+
+  // OPTIMIZATION: Memoize the array of dots if totalPages changes, not on every render.
+  // This prevents the map from running if only currentPage changes (though React's diffing is good).
+  // More useful if dot components were themselves complex or memoized.
+  const dots = useMemo(() => {
+    if (totalPages <= 1) return null; // Don't render dots if only one page or less
+
+    return Array.from({ length: totalPages }).map((_, index) => (
+      <Pressable
+        key={index}
+        onPress={() => goToPage(index)}
+        style={[styles.dot, { backgroundColor: index === currentPage ? activeDotColor : inactiveDotColorResolved }]}
+        accessibilityLabel={`Go to page ${index + 1}`}
+      />
+    ));
+  }, [totalPages, currentPage, goToPage, activeDotColor, inactiveDotColorResolved]);
 
   return (
     <View style={paginationControlsStyle}>
@@ -62,20 +85,7 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
       </Pressable>
 
       <View style={styles.centerPagination}>
-        <Text style={pageInfoStyle}>
-          Page {currentPage + 1} / {totalPages}
-        </Text>
-
-        <View style={styles.dotsContainer}>
-          {Array.from({ length: totalPages }).map((_, index) => (
-            <Pressable
-              key={index}
-              onPress={() => goToPage(index)}
-              style={[styles.dot, { backgroundColor: index === currentPage ? activeDotColor : inactiveDotColor }]}
-              accessibilityLabel={`Go to page ${index + 1}`}
-            />
-          ))}
-        </View>
+        <View style={styles.dotsContainer}>{dots}</View>
       </View>
 
       <Pressable
@@ -103,8 +113,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 3,
+    paddingHorizontal: 3,
     borderTopWidth: 1,
   },
   centerPagination: {
@@ -132,9 +142,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     marginHorizontal: 4,
   },
 });

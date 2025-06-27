@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   childrenContainer: {
     maxHeight: 0.6 * vh, // vh must be correctly calculated and stable
-    margin: 24,
+    marginHorizontal: 24,
   },
   title_center: {
     alignSelf: "center",

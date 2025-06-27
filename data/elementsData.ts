@@ -1,39 +1,39 @@
-export type CategoryKey = "character" | "body" | "wheel" | "glider";
+import { baseStatsByClassId } from "./classStats";
+import { CharacterElement, BodyElement, WheelElement, GliderElement, ElementStats } from "./elementsTypes";
 
-export interface ElementBase {
-  id: number;
-  name: string;
-  category: CategoryKey;
-  classId: number;
-  imageUrl: ReturnType<typeof require>;
-}
+function getElementStats(classId: number, overrides?: Partial<ElementStats>): ElementStats {
+  const baseStats = baseStatsByClassId[classId];
 
-export interface CharacterElement extends ElementBase {
-  category: "character";
-}
-
-export interface BodyElement extends ElementBase {
-  category: "body";
-  bodyType: "kart" | "bike" | "sportBike" | "ATV";
-  // statBonus: any;
-}
-
-export interface WheelElement extends ElementBase {
-  category: "wheel";
-  // statBonus: any;
-}
-
-export interface GliderElement extends ElementBase {
-  category: "glider";
+  if (!baseStats) {
+    // Fallback for classIds not yet defined, or if you prefer a strict check
+    console.warn(`Warning: No base stats found for classId: ${classId}. Using default zero stats.`);
+    return {
+      speedGround: 0,
+      speedAntiGravity: 0,
+      speedWater: 0,
+      speedAir: 0,
+      acceleration: 0,
+      weight: 0,
+      handlingGround: 0,
+      handlingAntiGravity: 0,
+      handlingWater: 0,
+      handlingAir: 0,
+      traction: 0,
+      miniTurbo: 0,
+    };
+  }
+  return { ...baseStats, ...overrides };
 }
 
 export const elementsAllInfosList = [
+  // --- Characters ---
   {
     id: 0,
     name: "Mario",
     category: "character",
     classId: 9,
     imageUrl: require("@/assets/images/elementsImages/characters/Mario.png"),
+    ...getElementStats(9),
   } as CharacterElement,
   {
     id: 1,
@@ -41,6 +41,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 10,
     imageUrl: require("@/assets/images/elementsImages/characters/Luigi.png"),
+    ...getElementStats(10),
   } as CharacterElement,
   {
     id: 2,
@@ -48,6 +49,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 7,
     imageUrl: require("@/assets/images/elementsImages/characters/Peach.png"),
+    ...getElementStats(7),
   } as CharacterElement,
   {
     id: 3,
@@ -55,6 +57,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 7,
     imageUrl: require("@/assets/images/elementsImages/characters/Daisy.png"),
+    ...getElementStats(7),
   } as CharacterElement,
   {
     id: 4,
@@ -62,6 +65,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 11,
     imageUrl: require("@/assets/images/elementsImages/characters/Rosalina.png"),
+    ...getElementStats(11),
   } as CharacterElement,
   {
     id: 5,
@@ -69,6 +73,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 8,
     imageUrl: require("@/assets/images/elementsImages/characters/Tanooki Mario.png"),
+    ...getElementStats(8),
   } as CharacterElement,
   {
     id: 6,
@@ -76,6 +81,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 6,
     imageUrl: require("@/assets/images/elementsImages/characters/Cat Peach.png"),
+    ...getElementStats(6),
   } as CharacterElement,
   {
     id: 7,
@@ -83,6 +89,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 7,
     imageUrl: require("@/assets/images/elementsImages/characters/Birdo.png"),
+    ...getElementStats(7),
   } as CharacterElement,
   {
     id: 8,
@@ -90,6 +97,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 7,
     imageUrl: require("@/assets/images/elementsImages/characters/Yoshi.png"),
+    ...getElementStats(7),
   } as CharacterElement,
   {
     id: 9,
@@ -97,6 +105,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 5,
     imageUrl: require("@/assets/images/elementsImages/characters/Toad.png"),
+    ...getElementStats(5),
   } as CharacterElement,
   {
     id: 10,
@@ -104,6 +113,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 4,
     imageUrl: require("@/assets/images/elementsImages/characters/Koopa.png"),
+    ...getElementStats(4),
   } as CharacterElement,
   {
     id: 11,
@@ -111,6 +121,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 5,
     imageUrl: require("@/assets/images/elementsImages/characters/Shy Guy.png"),
+    ...getElementStats(5),
   } as CharacterElement,
   {
     id: 12,
@@ -118,6 +129,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 4,
     imageUrl: require("@/assets/images/elementsImages/characters/Lakitu.png"),
+    ...getElementStats(4),
   } as CharacterElement,
   {
     id: 13,
@@ -125,6 +137,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 3,
     imageUrl: require("@/assets/images/elementsImages/characters/Toadette.png"),
+    ...getElementStats(3),
   } as CharacterElement,
   {
     id: 14,
@@ -132,6 +145,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 11,
     imageUrl: require("@/assets/images/elementsImages/characters/King Boo.png"),
+    ...getElementStats(11),
   } as CharacterElement,
   {
     id: 15,
@@ -139,6 +153,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 12,
     imageUrl: require("@/assets/images/elementsImages/characters/Petey Piranha.png"),
+    ...getElementStats(12),
   } as CharacterElement,
   {
     id: 16,
@@ -146,6 +161,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 2,
     imageUrl: require("@/assets/images/elementsImages/characters/Baby Mario.png"),
+    ...getElementStats(2),
   } as CharacterElement,
   {
     id: 17,
@@ -153,6 +169,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 2,
     imageUrl: require("@/assets/images/elementsImages/characters/Baby Luigi.png"),
+    ...getElementStats(2),
   } as CharacterElement,
   {
     id: 18,
@@ -160,6 +177,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 0,
     imageUrl: require("@/assets/images/elementsImages/characters/Baby Peach.png"),
+    ...getElementStats(0),
   } as CharacterElement,
   {
     id: 19,
@@ -167,6 +185,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 0,
     imageUrl: require("@/assets/images/elementsImages/characters/Baby Daisy.png"),
+    ...getElementStats(0),
   } as CharacterElement,
   {
     id: 20,
@@ -174,6 +193,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 1,
     imageUrl: require("@/assets/images/elementsImages/characters/Baby Rosalina.png"),
+    ...getElementStats(1),
   } as CharacterElement,
   {
     id: 21,
@@ -181,6 +201,8 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 12,
     imageUrl: require("@/assets/images/elementsImages/characters/Metal Mario.png"),
+    // Example of an override if Metal Mario had unique stats compared to other class 12 characters
+    ...getElementStats(12, { speedGround: 5.3, weight: 5.1 }),
   } as CharacterElement,
   {
     id: 22,
@@ -188,6 +210,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 12,
     imageUrl: require("@/assets/images/elementsImages/characters/Pink Gold Peach.png"),
+    ...getElementStats(12),
   } as CharacterElement,
   {
     id: 23,
@@ -195,6 +218,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 13,
     imageUrl: require("@/assets/images/elementsImages/characters/Wiggler.png"),
+    ...getElementStats(13),
   } as CharacterElement,
   {
     id: 24,
@@ -202,6 +226,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 14,
     imageUrl: require("@/assets/images/elementsImages/characters/Wario.png"),
+    ...getElementStats(14),
   } as CharacterElement,
   {
     id: 25,
@@ -209,6 +234,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 13,
     imageUrl: require("@/assets/images/elementsImages/characters/Waluigi.png"),
+    ...getElementStats(13),
   } as CharacterElement,
   {
     id: 26,
@@ -216,6 +242,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 13,
     imageUrl: require("@/assets/images/elementsImages/characters/Donkey Kong.png"),
+    ...getElementStats(13),
   } as CharacterElement,
   {
     id: 27,
@@ -223,6 +250,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 15,
     imageUrl: require("@/assets/images/elementsImages/characters/Bowser.png"),
+    ...getElementStats(15),
   } as CharacterElement,
   {
     id: 28,
@@ -230,6 +258,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 2,
     imageUrl: require("@/assets/images/elementsImages/characters/Dry Bones.png"),
+    ...getElementStats(2),
   } as CharacterElement,
   {
     id: 29,
@@ -237,6 +266,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 4,
     imageUrl: require("@/assets/images/elementsImages/characters/Bowser Jr..png"),
+    ...getElementStats(4),
   } as CharacterElement,
   {
     id: 30,
@@ -244,6 +274,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 14,
     imageUrl: require("@/assets/images/elementsImages/characters/Dry Bowser.png"),
+    ...getElementStats(14),
   } as CharacterElement,
   {
     id: 31,
@@ -251,6 +282,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 10,
     imageUrl: require("@/assets/images/elementsImages/characters/Kamek.png"),
+    ...getElementStats(10),
   } as CharacterElement,
   {
     id: 32,
@@ -258,6 +290,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 1,
     imageUrl: require("@/assets/images/elementsImages/characters/Lemmy.png"),
+    ...getElementStats(1),
   } as CharacterElement,
   {
     id: 33,
@@ -265,6 +298,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 5,
     imageUrl: require("@/assets/images/elementsImages/characters/Larry.png"),
+    ...getElementStats(5),
   } as CharacterElement,
   {
     id: 34,
@@ -272,6 +306,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 3,
     imageUrl: require("@/assets/images/elementsImages/characters/Wendy.png"),
+    ...getElementStats(3),
   } as CharacterElement,
   {
     id: 35,
@@ -279,6 +314,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 9,
     imageUrl: require("@/assets/images/elementsImages/characters/Ludwig.png"),
+    ...getElementStats(9),
   } as CharacterElement,
   {
     id: 36,
@@ -286,6 +322,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 10,
     imageUrl: require("@/assets/images/elementsImages/characters/Iggy.png"),
+    ...getElementStats(10),
   } as CharacterElement,
   {
     id: 37,
@@ -293,6 +330,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 13,
     imageUrl: require("@/assets/images/elementsImages/characters/Roy.png"),
+    ...getElementStats(13),
   } as CharacterElement,
   {
     id: 38,
@@ -300,6 +338,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 15,
     imageUrl: require("@/assets/images/elementsImages/characters/Morton.png"),
+    ...getElementStats(15),
   } as CharacterElement,
   {
     id: 39,
@@ -307,6 +346,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 7,
     imageUrl: require("@/assets/images/elementsImages/characters/Peachette.png"),
+    ...getElementStats(7),
   } as CharacterElement,
   {
     id: 40,
@@ -314,6 +354,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 6,
     imageUrl: require("@/assets/images/elementsImages/characters/Inkling Girl.png"),
+    ...getElementStats(6),
   } as CharacterElement,
   {
     id: 41,
@@ -321,6 +362,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 8,
     imageUrl: require("@/assets/images/elementsImages/characters/Inkling Boy.png"),
+    ...getElementStats(8),
   } as CharacterElement,
   {
     id: 42,
@@ -328,6 +370,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 8,
     imageUrl: require("@/assets/images/elementsImages/characters/Villager Male.png"),
+    ...getElementStats(8),
   } as CharacterElement,
   {
     id: 43,
@@ -335,6 +378,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 6,
     imageUrl: require("@/assets/images/elementsImages/characters/Villager Female.png"),
+    ...getElementStats(6),
   } as CharacterElement,
   {
     id: 44,
@@ -342,6 +386,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 3,
     imageUrl: require("@/assets/images/elementsImages/characters/Isabelle.png"),
+    ...getElementStats(3),
   } as CharacterElement,
   {
     id: 45,
@@ -349,6 +394,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 11,
     imageUrl: require("@/assets/images/elementsImages/characters/Link.png"),
+    ...getElementStats(11),
   } as CharacterElement,
   {
     id: 46,
@@ -356,6 +402,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 6,
     imageUrl: require("@/assets/images/elementsImages/characters/Diddy Kong.png"),
+    ...getElementStats(6),
   } as CharacterElement,
   {
     id: 47,
@@ -363,6 +410,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 14,
     imageUrl: require("@/assets/images/elementsImages/characters/Funky Kong.png"),
+    ...getElementStats(14),
   } as CharacterElement,
   {
     id: 48,
@@ -370,6 +418,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 11,
     imageUrl: require("@/assets/images/elementsImages/characters/Pauline.png"),
+    ...getElementStats(11),
   } as CharacterElement,
   {
     id: 49,
@@ -377,6 +426,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 2,
     imageUrl: require("@/assets/images/elementsImages/characters/Light Mii.png"),
+    ...getElementStats(2),
   } as CharacterElement,
   {
     id: 50,
@@ -384,6 +434,7 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 9,
     imageUrl: require("@/assets/images/elementsImages/characters/Medium Mii.png"),
+    ...getElementStats(9),
   } as CharacterElement,
   {
     id: 51,
@@ -391,7 +442,10 @@ export const elementsAllInfosList = [
     category: "character",
     classId: 14,
     imageUrl: require("@/assets/images/elementsImages/characters/Heavy Mii.png"),
+    ...getElementStats(14),
   } as CharacterElement,
+
+  // --- Bodies (Karts, Bikes, ATVs) ---
   {
     id: 52,
     name: "StandardKart",
@@ -399,6 +453,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 16,
     imageUrl: require("@/assets/images/elementsImages/karts/Standard Kart.png"),
+    ...getElementStats(16),
   } as BodyElement,
   {
     id: 53,
@@ -407,6 +462,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 17,
     imageUrl: require("@/assets/images/elementsImages/karts/Pipe Frame.png"),
+    ...getElementStats(17),
   } as BodyElement,
   {
     id: 54,
@@ -415,6 +471,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 18,
     imageUrl: require("@/assets/images/elementsImages/karts/Mach 8.png"),
+    ...getElementStats(18),
   } as BodyElement,
   {
     id: 55,
@@ -423,6 +480,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 19,
     imageUrl: require("@/assets/images/elementsImages/karts/Steel Driver.png"),
+    ...getElementStats(19),
   } as BodyElement,
   {
     id: 56,
@@ -431,6 +489,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 20,
     imageUrl: require("@/assets/images/elementsImages/karts/Cat Cruiser.png"),
+    ...getElementStats(20),
   } as BodyElement,
   {
     id: 57,
@@ -439,6 +498,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 21,
     imageUrl: require("@/assets/images/elementsImages/karts/Circuit Special.png"),
+    ...getElementStats(21),
   } as BodyElement,
   {
     id: 58,
@@ -447,6 +507,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 19,
     imageUrl: require("@/assets/images/elementsImages/karts/Tri-Speeder.png"),
+    ...getElementStats(19),
   } as BodyElement,
   {
     id: 59,
@@ -455,6 +516,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 22,
     imageUrl: require("@/assets/images/elementsImages/karts/Badwagon.png"),
+    ...getElementStats(22),
   } as BodyElement,
   {
     id: 60,
@@ -463,6 +525,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 23,
     imageUrl: require("@/assets/images/elementsImages/karts/Prancer.png"),
+    ...getElementStats(23),
   } as BodyElement,
   {
     id: 61,
@@ -471,6 +534,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 24,
     imageUrl: require("@/assets/images/elementsImages/karts/Biddybuggy.png"),
+    ...getElementStats(24),
   } as BodyElement,
   {
     id: 62,
@@ -479,6 +543,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 25,
     imageUrl: require("@/assets/images/elementsImages/karts/Landship.png"),
+    ...getElementStats(25),
   } as BodyElement,
   {
     id: 63,
@@ -487,6 +552,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 26,
     imageUrl: require("@/assets/images/elementsImages/karts/Sneaker.png"),
+    ...getElementStats(26),
   } as BodyElement,
   {
     id: 64,
@@ -495,6 +561,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 18,
     imageUrl: require("@/assets/images/elementsImages/karts/Sports Coupe.png"),
+    ...getElementStats(18),
   } as BodyElement,
   {
     id: 65,
@@ -503,6 +570,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 26,
     imageUrl: require("@/assets/images/elementsImages/karts/Gold Kart.png"),
+    ...getElementStats(26),
   } as BodyElement,
   {
     id: 66,
@@ -511,6 +579,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 22,
     imageUrl: require("@/assets/images/elementsImages/karts/GLA.png"),
+    ...getElementStats(22),
   } as BodyElement,
   {
     id: 67,
@@ -519,6 +588,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 27,
     imageUrl: require("@/assets/images/elementsImages/karts/W 25 Silver Arrow.png"),
+    ...getElementStats(27),
   } as BodyElement,
   {
     id: 68,
@@ -527,6 +597,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 16,
     imageUrl: require("@/assets/images/elementsImages/karts/300 SL Roadster.png"),
+    ...getElementStats(16),
   } as BodyElement,
   {
     id: 69,
@@ -535,6 +606,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 28,
     imageUrl: require("@/assets/images/elementsImages/karts/Blue Falcon.png"),
+    ...getElementStats(28),
   } as BodyElement,
   {
     id: 70,
@@ -543,6 +615,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 29,
     imageUrl: require("@/assets/images/elementsImages/karts/Tanooki Buggy.png"),
+    ...getElementStats(29),
   } as BodyElement,
   {
     id: 71,
@@ -551,6 +624,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 21,
     imageUrl: require("@/assets/images/elementsImages/karts/B-Dasher.png"),
+    ...getElementStats(21),
   } as BodyElement,
   {
     id: 72,
@@ -559,6 +633,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 25,
     imageUrl: require("@/assets/images/elementsImages/karts/Streetle.png"),
+    ...getElementStats(25),
   } as BodyElement,
   {
     id: 73,
@@ -567,6 +642,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 21,
     imageUrl: require("@/assets/images/elementsImages/karts/P-Wing.png"),
+    ...getElementStats(21),
   } as BodyElement,
   {
     id: 74,
@@ -575,6 +651,7 @@ export const elementsAllInfosList = [
     bodyType: "kart",
     classId: 29,
     imageUrl: require("@/assets/images/elementsImages/karts/Koopa Clown.png"),
+    ...getElementStats(29),
   } as BodyElement,
   {
     id: 75,
@@ -583,6 +660,7 @@ export const elementsAllInfosList = [
     bodyType: "bike",
     classId: 27,
     imageUrl: require("@/assets/images/elementsImages/bikes/Standard Bike.png"),
+    ...getElementStats(27),
   } as BodyElement,
   {
     id: 76,
@@ -591,6 +669,7 @@ export const elementsAllInfosList = [
     bodyType: "bike",
     classId: 16,
     imageUrl: require("@/assets/images/elementsImages/bikes/The Duke.png"),
+    ...getElementStats(16),
   } as BodyElement,
   {
     id: 77,
@@ -599,6 +678,7 @@ export const elementsAllInfosList = [
     bodyType: "bike",
     classId: 27,
     imageUrl: require("@/assets/images/elementsImages/bikes/Flame Rider.png"),
+    ...getElementStats(27),
   } as BodyElement,
   {
     id: 78,
@@ -607,6 +687,7 @@ export const elementsAllInfosList = [
     bodyType: "bike",
     classId: 17,
     imageUrl: require("@/assets/images/elementsImages/bikes/Varmint.png"),
+    ...getElementStats(17),
   } as BodyElement,
   {
     id: 79,
@@ -615,6 +696,7 @@ export const elementsAllInfosList = [
     bodyType: "bike",
     classId: 24,
     imageUrl: require("@/assets/images/elementsImages/bikes/Mr. Scooty.png"),
+    ...getElementStats(24),
   } as BodyElement,
   {
     id: 80,
@@ -623,6 +705,7 @@ export const elementsAllInfosList = [
     bodyType: "bike",
     classId: 29,
     imageUrl: require("@/assets/images/elementsImages/bikes/Master Cycle Zero.png"),
+    ...getElementStats(29),
   } as BodyElement,
   {
     id: 81,
@@ -631,6 +714,7 @@ export const elementsAllInfosList = [
     bodyType: "bike",
     classId: 17,
     imageUrl: require("@/assets/images/elementsImages/bikes/City Tripper.png"),
+    ...getElementStats(17),
   } as BodyElement,
   {
     id: 82,
@@ -639,6 +723,7 @@ export const elementsAllInfosList = [
     bodyType: "sportBike",
     classId: 20,
     imageUrl: require("@/assets/images/elementsImages/sport bikes/Comet.png"),
+    ...getElementStats(20),
   } as BodyElement,
   {
     id: 83,
@@ -647,6 +732,7 @@ export const elementsAllInfosList = [
     bodyType: "sportBike",
     classId: 23,
     imageUrl: require("@/assets/images/elementsImages/sport bikes/Sport Bike.png"),
+    ...getElementStats(23),
   } as BodyElement,
   {
     id: 84,
@@ -655,6 +741,7 @@ export const elementsAllInfosList = [
     bodyType: "sportBike",
     classId: 23,
     imageUrl: require("@/assets/images/elementsImages/sport bikes/Jet Bike.png"),
+    ...getElementStats(23),
   } as BodyElement,
   {
     id: 85,
@@ -663,6 +750,7 @@ export const elementsAllInfosList = [
     bodyType: "sportBike",
     classId: 20,
     imageUrl: require("@/assets/images/elementsImages/sport bikes/Yoshi Bike.png"),
+    ...getElementStats(20),
   } as BodyElement,
   {
     id: 86,
@@ -671,6 +759,7 @@ export const elementsAllInfosList = [
     bodyType: "sportBike",
     classId: 26,
     imageUrl: require("@/assets/images/elementsImages/sport bikes/Master Cycle.png"),
+    ...getElementStats(26),
   } as BodyElement,
   {
     id: 87,
@@ -679,6 +768,7 @@ export const elementsAllInfosList = [
     bodyType: "ATV",
     classId: 22,
     imageUrl: require("@/assets/images/elementsImages/ATVs/Standard ATV.png"),
+    ...getElementStats(22),
   } as BodyElement,
   {
     id: 88,
@@ -687,6 +777,7 @@ export const elementsAllInfosList = [
     bodyType: "ATV",
     classId: 27,
     imageUrl: require("@/assets/images/elementsImages/ATVs/Wild Wiggler.png"),
+    ...getElementStats(27),
   } as BodyElement,
   {
     id: 89,
@@ -695,6 +786,7 @@ export const elementsAllInfosList = [
     bodyType: "ATV",
     classId: 20,
     imageUrl: require("@/assets/images/elementsImages/ATVs/Teddy Buggy.png"),
+    ...getElementStats(20),
   } as BodyElement,
   {
     id: 90,
@@ -703,6 +795,7 @@ export const elementsAllInfosList = [
     bodyType: "ATV",
     classId: 19,
     imageUrl: require("@/assets/images/elementsImages/ATVs/Bone Rattler.png"),
+    ...getElementStats(19),
   } as BodyElement,
   {
     id: 91,
@@ -711,6 +804,7 @@ export const elementsAllInfosList = [
     bodyType: "ATV",
     classId: 28,
     imageUrl: require("@/assets/images/elementsImages/ATVs/Splat Buggy.png"),
+    ...getElementStats(28),
   } as BodyElement,
   {
     id: 92,
@@ -719,13 +813,17 @@ export const elementsAllInfosList = [
     bodyType: "ATV",
     classId: 18,
     imageUrl: require("@/assets/images/elementsImages/ATVs/Inkstriker.png"),
+    ...getElementStats(18),
   } as BodyElement,
+
+  // --- Wheels ---
   {
     id: 93,
     name: "Standard",
     category: "wheel",
     classId: 30,
     imageUrl: require("@/assets/images/elementsImages/wheels/Standard.png"),
+    ...getElementStats(30),
   } as WheelElement,
   {
     id: 94,
@@ -733,6 +831,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 31,
     imageUrl: require("@/assets/images/elementsImages/wheels/Monster.png"),
+    ...getElementStats(31),
   } as WheelElement,
   {
     id: 95,
@@ -740,6 +839,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 32,
     imageUrl: require("@/assets/images/elementsImages/wheels/Roller.png"),
+    ...getElementStats(32),
   } as WheelElement,
   {
     id: 96,
@@ -747,6 +847,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 33,
     imageUrl: require("@/assets/images/elementsImages/wheels/Slim.png"),
+    ...getElementStats(33),
   } as WheelElement,
   {
     id: 97,
@@ -754,6 +855,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 34,
     imageUrl: require("@/assets/images/elementsImages/wheels/Slick.png"),
+    ...getElementStats(34),
   } as WheelElement,
   {
     id: 98,
@@ -761,6 +863,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 35,
     imageUrl: require("@/assets/images/elementsImages/wheels/Metal.png"),
+    ...getElementStats(35),
   } as WheelElement,
   {
     id: 99,
@@ -768,6 +871,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 36,
     imageUrl: require("@/assets/images/elementsImages/wheels/Button.png"),
+    ...getElementStats(36),
   } as WheelElement,
   {
     id: 100,
@@ -775,6 +879,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 37,
     imageUrl: require("@/assets/images/elementsImages/wheels/Off-Road.png"),
+    ...getElementStats(37),
   } as WheelElement,
   {
     id: 101,
@@ -782,6 +887,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 38,
     imageUrl: require("@/assets/images/elementsImages/wheels/Sponge.png"),
+    ...getElementStats(38),
   } as WheelElement,
   {
     id: 102,
@@ -789,6 +895,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 33,
     imageUrl: require("@/assets/images/elementsImages/wheels/Wood.png"),
+    ...getElementStats(33),
   } as WheelElement,
   {
     id: 103,
@@ -796,6 +903,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 38,
     imageUrl: require("@/assets/images/elementsImages/wheels/Cushion.png"),
+    ...getElementStats(38),
   } as WheelElement,
   {
     id: 104,
@@ -803,6 +911,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 30,
     imageUrl: require("@/assets/images/elementsImages/wheels/Blue Standard.png"),
+    ...getElementStats(30),
   } as WheelElement,
   {
     id: 105,
@@ -810,6 +919,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 31,
     imageUrl: require("@/assets/images/elementsImages/wheels/Hot Monster.png"),
+    ...getElementStats(31),
   } as WheelElement,
   {
     id: 106,
@@ -817,6 +927,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 32,
     imageUrl: require("@/assets/images/elementsImages/wheels/Azure Roller.png"),
+    ...getElementStats(32),
   } as WheelElement,
   {
     id: 107,
@@ -824,6 +935,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 33,
     imageUrl: require("@/assets/images/elementsImages/wheels/Crimson Slim.png"),
+    ...getElementStats(33),
   } as WheelElement,
   {
     id: 108,
@@ -831,6 +943,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 34,
     imageUrl: require("@/assets/images/elementsImages/wheels/Cyber Slick.png"),
+    ...getElementStats(34),
   } as WheelElement,
   {
     id: 109,
@@ -838,6 +951,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 37,
     imageUrl: require("@/assets/images/elementsImages/wheels/Retro Off-Road.png"),
+    ...getElementStats(37),
   } as WheelElement,
   {
     id: 110,
@@ -845,6 +959,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 35,
     imageUrl: require("@/assets/images/elementsImages/wheels/Gold Tires.png"),
+    ...getElementStats(35),
   } as WheelElement,
   {
     id: 111,
@@ -852,6 +967,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 30,
     imageUrl: require("@/assets/images/elementsImages/wheels/GLA Tires.png"),
+    ...getElementStats(30),
   } as WheelElement,
   {
     id: 112,
@@ -859,6 +975,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 37,
     imageUrl: require("@/assets/images/elementsImages/wheels/Triforce Tires.png"),
+    ...getElementStats(37),
   } as WheelElement,
   {
     id: 113,
@@ -866,6 +983,7 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 31,
     imageUrl: require("@/assets/images/elementsImages/wheels/Ancient Tires.png"),
+    ...getElementStats(31),
   } as WheelElement,
   {
     id: 114,
@@ -873,13 +991,17 @@ export const elementsAllInfosList = [
     category: "wheel",
     classId: 36,
     imageUrl: require("@/assets/images/elementsImages/wheels/Leaf Tires.png"),
+    ...getElementStats(36),
   } as WheelElement,
+
+  // --- Gliders ---
   {
     id: 115,
     name: "SuperGlider",
     category: "glider",
     classId: 39,
     imageUrl: require("@/assets/images/elementsImages/gliders/Super Glider.png"),
+    ...getElementStats(39),
   } as GliderElement,
   {
     id: 116,
@@ -887,6 +1009,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 40,
     imageUrl: require("@/assets/images/elementsImages/gliders/Cloud Glider.png"),
+    ...getElementStats(40),
   } as GliderElement,
   {
     id: 117,
@@ -894,6 +1017,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 41,
     imageUrl: require("@/assets/images/elementsImages/gliders/Wario Wing.png"),
+    ...getElementStats(41),
   } as GliderElement,
   {
     id: 118,
@@ -901,6 +1025,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 39,
     imageUrl: require("@/assets/images/elementsImages/gliders/Waddle Wing.png"),
+    ...getElementStats(39),
   } as GliderElement,
   {
     id: 119,
@@ -908,6 +1033,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 42,
     imageUrl: require("@/assets/images/elementsImages/gliders/Peach Parasol.png"),
+    ...getElementStats(42),
   } as GliderElement,
   {
     id: 120,
@@ -915,6 +1041,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 40,
     imageUrl: require("@/assets/images/elementsImages/gliders/Parachute Glider.png"),
+    ...getElementStats(40),
   } as GliderElement,
   {
     id: 121,
@@ -922,6 +1049,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 42,
     imageUrl: require("@/assets/images/elementsImages/gliders/Parafoil Glider.png"),
+    ...getElementStats(42),
   } as GliderElement,
   {
     id: 122,
@@ -929,6 +1057,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 40,
     imageUrl: require("@/assets/images/elementsImages/gliders/Flower Glider.png"),
+    ...getElementStats(40),
   } as GliderElement,
   {
     id: 123,
@@ -936,6 +1065,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 42,
     imageUrl: require("@/assets/images/elementsImages/gliders/Bowser Kite.png"),
+    ...getElementStats(42),
   } as GliderElement,
   {
     id: 124,
@@ -943,6 +1073,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 41,
     imageUrl: require("@/assets/images/elementsImages/gliders/Plane Glider.png"),
+    ...getElementStats(41),
   } as GliderElement,
   {
     id: 125,
@@ -950,6 +1081,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 42,
     imageUrl: require("@/assets/images/elementsImages/gliders/MKTV Parafoil Glider.png"),
+    ...getElementStats(42),
   } as GliderElement,
   {
     id: 126,
@@ -957,6 +1089,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 41,
     imageUrl: require("@/assets/images/elementsImages/gliders/Gold Glider.png"),
+    ...getElementStats(41),
   } as GliderElement,
   {
     id: 127,
@@ -964,6 +1097,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 39,
     imageUrl: require("@/assets/images/elementsImages/gliders/Hylian Kite.png"),
+    ...getElementStats(39),
   } as GliderElement,
   {
     id: 128,
@@ -971,6 +1105,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 41,
     imageUrl: require("@/assets/images/elementsImages/gliders/Paraglider.png"),
+    ...getElementStats(41),
   } as GliderElement,
   {
     id: 129,
@@ -978,6 +1113,7 @@ export const elementsAllInfosList = [
     category: "glider",
     classId: 40,
     imageUrl: require("@/assets/images/elementsImages/gliders/Paper Glider.png"),
+    ...getElementStats(40),
   } as GliderElement,
 ] as (CharacterElement | BodyElement | WheelElement | GliderElement)[];
 

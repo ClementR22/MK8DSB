@@ -127,6 +127,11 @@ const translations = {
     speed: "Speed",
     handling: "Handling",
 
+    // sort
+    id: "Number",
+    name: "Name",
+    classId: "Class",
+
     // stat reduced
     spdG: "Spd G",
     spdAG: "Spd AG",
@@ -396,6 +401,11 @@ const translations = {
     // other stat label
     speed: "Vitesse",
     handling: "Maniabilité",
+
+    // sort
+    id: "Number",
+    name: "Nom",
+    classId: "Classe",
 
     // stat reduced
     spdG: "Vit S",

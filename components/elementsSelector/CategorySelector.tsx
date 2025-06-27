@@ -1,10 +1,9 @@
 import { category4Names } from "@/data/data";
-import { CategoryKey } from "@/data/elementsData";
+import { CategoryKey } from "@/data/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { translate } from "@/translations/translations";
-import React, { useCallback, memo, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
+import React, { useCallback, memo, useMemo } from "react"; // Import useMemo explicitly
+import { Pressable, StyleSheet, Text, View } from "react-native"; // Import View for layout
 
 interface CategorySelectorProps {
   selectedCategory: CategoryKey;
@@ -12,46 +11,71 @@ interface CategorySelectorProps {
 }
 
 const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, setSelectedCategory }) => {
+  // Destructure theme properties directly to avoid re-rendering if only other theme parts change.
+  // This is a good pattern for optimizing Zustand selectors.
   const theme = useThemeStore((state) => state.theme);
 
-  const categoryButtonStyles = useCallback(
-    (category: CategoryKey) => [
-      styles.categoryButton,
-      { backgroundColor: theme.surface_container_high },
-      selectedCategory === category && { backgroundColor: theme.primary },
-    ],
-    [selectedCategory, theme.surface_container_high, theme.primary]
-  );
+  // Memoize the common base styles once.
+  // These styles don't depend on `selectedCategory` or the individual `category`.
+  const memoizedCategoryButtonBaseStyle = useMemo(
+    () => [styles.categoryButton, { backgroundColor: theme.surface_container_high }],
+    [theme.surface_container_high]
+  ); // Only re-create if surface_container_high changes
 
-  const categoryButtonTextStyles = useCallback(
-    (category: CategoryKey) => [
-      styles.categoryButtonText,
-      { color: selectedCategory === category ? theme.on_primary : theme.on_surface },
-    ],
-    [selectedCategory, theme.on_primary, theme.on_surface]
-  );
+  const memoizedCategoryButtonTextBaseStyle = useMemo(
+    () => [styles.categoryButtonText, { color: theme.on_surface }],
+    [theme.on_surface]
+  ); // Only re-create if on_surface changes
+
+  // The onPress handler for each button. It's stable because setSelectedCategory is stable.
+  // The 'category' parameter makes it dynamic per button.
+  const handlePress = useCallback(
+    (category: CategoryKey) => {
+      setSelectedCategory(category);
+    },
+    [setSelectedCategory]
+  ); // setSelectedCategory is typically stable from parent
 
   return (
-    <ScrollView horizontal contentContainerStyle={styles.categorySelectorContainer}>
-      {(category4Names as CategoryKey[]).map((category) => (
-        <Pressable key={category} onPress={() => setSelectedCategory(category)} style={categoryButtonStyles(category)}>
-          <Text style={categoryButtonTextStyles(category)}>{translate(category)}</Text>
-        </Pressable>
-      ))}
-    </ScrollView>
+    <View style={styles.container}>
+      {(category4Names as CategoryKey[]).map((category) => {
+        const isSelected = selectedCategory === category;
+
+        return (
+          <Pressable
+            key={category}
+            onPress={() => handlePress(category)} // Use the memoized handler
+            style={[
+              memoizedCategoryButtonBaseStyle, // Apply base styles
+              isSelected && { backgroundColor: theme.primary }, // Apply active background if selected
+            ]}
+          >
+            <Text
+              style={[
+                memoizedCategoryButtonTextBaseStyle, // Apply base text styles
+                isSelected && { color: theme.on_primary }, // Apply active text color if selected
+              ]}
+            >
+              {translate(category)}
+            </Text>
+          </Pressable>
+        );
+      })}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  categorySelectorContainer: {
+  container: {
     flexDirection: "row",
-    paddingVertical: 10,
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: 8,
   },
   categoryButton: {
     paddingVertical: 8,
     paddingHorizontal: 15,
     borderRadius: 20,
-    marginHorizontal: 5,
   },
   categoryButtonText: {
     fontSize: 16,

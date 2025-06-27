@@ -12,18 +12,11 @@ import { translateToLanguage } from "@/translations/translations";
 interface StatSliderCompareProps {
   name: string;
   setsStats: number[];
-  compareStats?: ResultStats;
-  handleSelectCompareStat?: (name: string) => void;
+  handleSelectCompareStat: (name: string) => void;
   scrollToSetCard?: (index: number) => void;
 }
 
-const StatSliderCompare = ({
-  name,
-  setsStats,
-  compareStats,
-  handleSelectCompareStat,
-  scrollToSetCard,
-}: StatSliderCompareProps) => {
+const StatSliderCompare = ({ name, setsStats, handleSelectCompareStat, scrollToSetCard }: StatSliderCompareProps) => {
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
 
@@ -83,9 +76,7 @@ const StatSliderCompare = ({
         <View style={styles.statBarsContainer}>{memoizedStatBars}</View>
       </TooltipWrapper>
 
-      {compareStats && handleSelectCompareStat && (
-        <StatSliderCompareSelector compareStats={compareStats} handleSelectCompareStat={handleSelectCompareStat} />
-      )}
+      {<StatSliderCompareSelector handleSelectCompareStat={handleSelectCompareStat} />}
     </BoxContainer>
   );
 };
