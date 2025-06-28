@@ -17,6 +17,7 @@ export const useLanguageStore = create<LanguageStore>()((set, get) => ({
   language: "en",
 
   setLanguage: (lang) => {
+    console.log("lang", lang);
     set({ language: lang });
     saveThingInMemory("language", get().language);
   },
