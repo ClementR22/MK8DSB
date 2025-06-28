@@ -24,6 +24,7 @@ const DisplaySetScreen = () => {
 
     setsListDisplayed.forEach((setToShow) => {
       const setToShowStatsList = setToShow.stats;
+
       setToShowStatsList.forEach((statValue, index) => {
         const statName = statNames[index];
         if (statName) {

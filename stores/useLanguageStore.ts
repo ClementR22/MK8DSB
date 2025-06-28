@@ -9,7 +9,7 @@ export const languageList = [
   { label: "System", value: "system" },
 ];
 
-const LANGUAGE_STORAGE_KEY = "userLanguagePreference"; // Renamed for clarity
+const LANGUAGE_STORAGE_KEY = "language"; // Renamed for clarity
 
 // --- Types ---
 type Language = "en" | "fr"; // Represents languages your app actually supports
@@ -32,8 +32,8 @@ export const useLanguageStore = create<LanguageStore>((set, get) => {
         return "fr";
       case "system":
       default:
-        const systemLanguage = getLocales()[0].languageCode as Language;
-        return systemLanguage;
+        const systemLanguage = getLocales()[0]?.languageCode as Language;
+        return systemLanguage === "fr" ? "fr" : "en";
     }
   };
 
