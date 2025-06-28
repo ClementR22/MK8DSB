@@ -3,12 +3,12 @@ import Picker from "../Picker";
 import { useLanguageStore, languageList } from "@/stores/useLanguageStore";
 
 const LanguageSelector = () => {
-  const language = useLanguageStore((state) => state.language);
+  const languageMode = useLanguageStore((state) => state.languageMode);
   const setLanguage = useLanguageStore((state) => state.setLanguage);
 
   return (
     <Picker
-      value={language}
+      value={languageMode}
       setValue={setLanguage}
       itemList={languageList}
       pickerTitle="Language"
