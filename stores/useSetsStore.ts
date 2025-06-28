@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { statNames } from "@/data/data";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import showToast from "@/utils/toast";
-import { getSetStatsFromElementsClassIds } from "@/utils/getSetStatsFromElementsClassIds";
+import { getSetStatsFromClassIds } from "@/utils/getSetStatsFromClassIds";
 import * as Clipboard from "expo-clipboard";
 import {
   deleteAllSavedSetsInMemory,
@@ -277,7 +277,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
         const newSet = {
           ...set,
           classIds,
-          stats: getSetStatsFromElementsClassIds(classIds),
+          stats: getSetStatsFromClassIds(classIds),
         };
         if (screenName === "save") {
           const key = get().setsSavedKeys[setCardEditedIndex];

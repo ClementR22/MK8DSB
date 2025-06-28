@@ -24,7 +24,7 @@ interface ButtonAndModalProps {
   // ou juste ses prps
   secondButtonProps?: { text: string; onPress: () => void; tooltipText: string };
   closeAfterSecondButton?: boolean;
-  secondButtonPosition: "left" | "right";
+  secondButtonPosition?: "left" | "right";
 }
 
 const ButtonAndModal: React.FC<ButtonAndModalProps> = React.memo(

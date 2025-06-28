@@ -1,9 +1,10 @@
 import React, { useMemo } from "react";
 import { Image, StyleSheet, View, ImageStyle, ImageSourcePropType } from "react-native";
 import { category4Names } from "@/data/data";
-import { elementsAllInfosList } from "@/data/elementsData";
+import { elementsData } from "@/data/elementsData";
 import TooltipWrapper from "../TooltipWrapper";
 import { vw } from "../styles/theme";
+import { CategoryKey } from "@/data/elementsTypes";
 
 const MODAL_WIDTH = vw * 0.9;
 const MAX_WIDTH_IN_MODAL = MODAL_WIDTH - 20;
@@ -36,8 +37,8 @@ interface SetImagesContainerProps {
 
 const SetImagesContainer: React.FC<SetImagesContainerProps> = ({ setToShowClassIds, mode, onPress = undefined }) => {
   const data: SetImageCategoryData[] = useMemo(() => {
-    return category4Names.map((category, index) => {
-      const matchedElements = elementsAllInfosList.filter((element) => element.classId === setToShowClassIds[index]);
+    return category4Names.map((category: CategoryKey, index: number) => {
+      const matchedElements = elementsData.filter((element) => element.classId === setToShowClassIds[index]);
 
       return {
         category: category,

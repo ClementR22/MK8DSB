@@ -4,7 +4,7 @@
 import React, { useState, memo, useMemo, useEffect, useCallback } from "react";
 import { View, StyleSheet, Pressable } from "react-native";
 import PaginatedElementsContainer, { ELEMENTS_PER_PAGE } from "./PaginatedElementsContainer";
-import { bodiesList, charactersList, glidersList, wheelsList } from "@/data/elementsData";
+import { elementsDataBody, elementsDataCharacter, elementsDataGlider, elementsDataWheel } from "@/data/elementsData";
 import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
 import CategorySelector from "./CategorySelector";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
@@ -18,10 +18,10 @@ import PagesNavigator from "./PagesNavigator";
 const allCategoryElements: {
   [key in CategoryKey]: (CharacterElement | BodyElement | WheelElement | GliderElement)[];
 } = {
-  character: charactersList,
-  body: bodiesList,
-  wheel: wheelsList,
-  glider: glidersList,
+  character: elementsDataCharacter,
+  body: elementsDataBody,
+  wheel: elementsDataWheel,
+  glider: elementsDataGlider,
 };
 
 interface ElementsSelectorProps {

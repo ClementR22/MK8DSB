@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { bodyTypeNames, category4Names, setsData } from "@/data/data";
+import { bodyTypeNames, category4Names } from "@/data/data";
+import { setsData } from "@/data/setsData";
 import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
 import { translate } from "@/translations/translations";
 import ResultsNumber from "../ResultsNumberSelector";
@@ -13,14 +14,14 @@ import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModa
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
-import { bodiesList, charactersList, glidersList, wheelsList } from "@/data/elementsData";
+import { elementsDataBody, elementsDataCharacter, elementsDataGlider, elementsDataWheel } from "@/data/elementsData";
 import ElementsDeselector from "../elementsSelector/ElementsDeselector";
 
 const allCategoryElements = {
-  character: charactersList,
-  body: bodiesList,
-  wheel: wheelsList,
-  glider: glidersList,
+  character: elementsDataCharacter,
+  body: elementsDataBody,
+  wheel: elementsDataWheel,
+  glider: elementsDataGlider,
 };
 
 // Define a union type for any element

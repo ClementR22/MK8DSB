@@ -25,7 +25,7 @@ function getElementStats(classId: number, overrides?: Partial<ElementStats>): El
   return { ...baseStats, ...overrides };
 }
 
-export const elementsAllInfosList = [
+export const elementsData = [
   // --- Characters ---
   {
     id: 0,
@@ -1117,18 +1117,18 @@ export const elementsAllInfosList = [
   } as GliderElement,
 ] as (CharacterElement | BodyElement | WheelElement | GliderElement)[];
 
-export const charactersList: CharacterElement[] = elementsAllInfosList.filter(
+export const elementsDataCharacter: CharacterElement[] = elementsData.filter(
   (element): element is CharacterElement => element.category === "character"
 );
 
-export const bodiesList: BodyElement[] = elementsAllInfosList.filter(
+export const elementsDataBody: BodyElement[] = elementsData.filter(
   (element): element is BodyElement => element.category === "body"
 );
 
-export const wheelsList: WheelElement[] = elementsAllInfosList.filter(
+export const elementsDataWheel: WheelElement[] = elementsData.filter(
   (element): element is WheelElement => element.category === "wheel"
 );
 
-export const glidersList: GliderElement[] = elementsAllInfosList.filter(
+export const elementsDataGlider: GliderElement[] = elementsData.filter(
   (element): element is GliderElement => element.category === "glider"
 );

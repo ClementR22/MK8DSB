@@ -1,7 +1,10 @@
-import React, { memo, useCallback } from "react";
-import { Image, StyleSheet } from "react-native";
+import React, { memo, useCallback, useMemo, useState } from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { BodyElement, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
 import TooltipWrapper from "../TooltipWrapper";
+import Modal from "@/primitiveComponents/Modal";
+import { classesStatsByCategory } from "@/data/elementsStats";
+import { compactStatNames, statNames } from "@/data/data";
 
 interface GridItemProps {
   element: CharacterElement | BodyElement | WheelElement | GliderElement;
@@ -24,18 +27,41 @@ const GridItem: React.FC<GridItemProps> = ({
     onSelectElement(element.classId);
   }, [onSelectElement, element.classId]);
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const stats = useMemo(() => {
+    const ok = classesStatsByCategory[element.category].get(element.classId);
+    return ok;
+  }, [element]);
+
   return (
-    <TooltipWrapper
-      tooltipText={element.name}
-      onPress={handlePress}
-      innerContainerStyle={[
-        elementCardDynamicStyle,
-        isSelected && activeBorderStyle,
-        size && { width: size, height: size * 1.2 },
-      ]}
-    >
-      <Image source={element.imageUrl} style={styles.elementImage} resizeMode="contain" />
-    </TooltipWrapper>
+    <>
+      <TooltipWrapper
+        tooltipText={element.name}
+        onPress={handlePress} // () => setIsModalVisible(true)
+        innerContainerStyle={[
+          elementCardDynamicStyle,
+          isSelected && activeBorderStyle,
+          size && { width: size, height: size * 1.2 },
+        ]}
+      >
+        <Image source={element.imageUrl} style={styles.elementImage} resizeMode="contain" />
+      </TooltipWrapper>
+      <Modal modalTitle={element.name} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
+        <View style={{ flexDirection: "row", gap: 60 }}>
+          <View key={"names"}>
+            {statNames.map((statName) => (
+              <Text key={statName}>{compactStatNames[statName]}</Text>
+            ))}
+          </View>
+          <View key={"values"}>
+            {stats.map((statValue, index) => (
+              <Text key={index}>{statValue}</Text>
+            ))}
+          </View>
+        </View>
+      </Modal>
+    </>
   );
 };
 

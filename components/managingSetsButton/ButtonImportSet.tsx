@@ -1,6 +1,6 @@
 import React from "react";
 import * as Clipboard from "expo-clipboard";
-import { getSetStatsFromElementsClassIds } from "@/utils/getSetStatsFromElementsClassIds";
+import { getSetStatsFromClassIds } from "@/utils/getSetStatsFromClassIds";
 import { ScreenName } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { translateToLanguage } from "@/translations/translations";
@@ -42,7 +42,7 @@ const ButtonImportSet = ({ screenName, onComplete }: { screenName: ScreenName; o
         throw new Error("IncorrectFormat");
       }
 
-      const stats = getSetStatsFromElementsClassIds(classIds);
+      const stats = getSetStatsFromClassIds(classIds);
       if (!stats || stats.length === 0) {
         throw new Error("ThisSetDoesNotExist");
       }
