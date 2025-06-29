@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   sliderTrack: {
     flex: 1,
     height: 13,
-    borderRadius: 5,
+    borderRadius: 100,
     overflow: "hidden",
   },
   trackSegment: {
