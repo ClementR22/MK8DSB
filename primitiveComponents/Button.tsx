@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
@@ -11,27 +11,41 @@ type IconProps = {
 
 interface ButtonProps {
   children: ReactNode;
+  buttonColor?: string,
+  buttonTextColor?: string,
   onPress: () => void;
   elevation?: 1 | 3 | 6 | 8 | 12;
   tooltipText?: string;
   iconProps?: IconProps;
   minWidth?: number;
+  textStyle?: {key: string};
+
   [key: string]: any;
 }
 
-const Button = ({ children, onPress, elevation, tooltipText, iconProps, minWidth, ...props }: ButtonProps) => {
+const Button = ({
+  children,
+  buttonColor,
+  buttonTextColor,
+  onPress,
+  elevation,
+  tooltipText,
+  iconProps,
+  minWidth,
+  ...props
+}: ButtonProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   const containerStyle = useMemo(
     () => ({
-      backgroundColor: theme.primary,
+      backgroundColor: buttonColor || theme.primary,
       paddingHorizontal: iconProps ? 15 : 10,
       minWidth: minWidth,
     }),
     [theme.primary, iconProps, minWidth]
   );
 
-  const textStyle = useMemo(() => ({ color: theme.on_primary }), [theme.on_primary]);
+  const textStyle = useMemo(() => ({ color: buttonTextColor || theme.on_primary }), [buttonTextColor, theme.on_primary]);
 
   return (
     <ButtonBase
@@ -57,7 +71,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 5,
-    alignSelf: "center",
+    alignSelf: "stretch",
   },
   text: {
     fontWeight: "500",
