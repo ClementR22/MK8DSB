@@ -29,10 +29,7 @@ const GridItem: React.FC<GridItemProps> = ({
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const stats = useMemo(() => {
-    const ok = classesStatsByCategory[element.category].get(element.classId);
-    return ok;
-  }, [element]);
+  const stats = useMemo(() => classesStatsByCategory[element.category].get(element.classId), [element]);
 
   return (
     <>

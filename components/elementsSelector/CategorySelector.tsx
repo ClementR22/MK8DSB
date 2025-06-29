@@ -1,7 +1,7 @@
 import { category4Names } from "@/data/data";
 import { CategoryKey } from "@/data/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore"; // Assuming theme store is needed for styles
-import React, { useCallback, memo } from "react";
+import React, { memo } from "react";
 import ImageButtonSelector, { ImageButtonOption } from "./ImageButtonSelector"; // Import the generic selector
 
 interface CategorySelectorProps {
@@ -26,13 +26,6 @@ const categoryOptions: ImageButtonOption[] = (category4Names as CategoryKey[]).m
 const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, setSelectedCategory }) => {
   const theme = useThemeStore((state) => state.theme); // Used for activeColor
 
-  const handleSelectionChange = useCallback(
-    (key: string | Set<string>) => {
-      setSelectedCategory(key as CategoryKey); // Cast back to CategoryKey
-    },
-    [setSelectedCategory]
-  );
-
   // Optionally, you can wrap ImageButtonSelector in a View to apply specific category selector styles
   // or just return ImageButtonSelector directly if its internal container styles are sufficient.
   return (
@@ -40,8 +33,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, s
       options={categoryOptions}
       selectionMode="single"
       initialSelection={selectedCategory}
-      onSelectionChange={handleSelectionChange}
-      buttonSize={{ width: 50, height: 50 }}
+      onSelectionChange={setSelectedCategory}
       activeStyleProperty="backgroundColor" // Based on your original CategorySelector
       activeColor={theme.primary} // Use theme.primary for active state
     />

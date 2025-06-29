@@ -48,10 +48,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
   const [resultsNumber, setResultsNumber] = useState(5);
   const selectedClassIds = usePressableElementsStore((state) => state.multiSelectedClassIds);
-  const [chosenBodyType, setChosenBodyType] = useState(new Set(bodyTypeNames));
-  const handleBodyTypeSelectorChange = useCallback((activeTypes) => {
-    setChosenBodyType(activeTypes);
-  }, []);
+  const [chosenBodyType, setChosenBodyType] = useState(new Set());
 
   const SetFoundTranslated = translate("SetFound");
 
@@ -156,7 +153,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
           <ButtonIcon tooltipText="ChooseFilters" iconName="pin" iconType={IconType.MaterialCommunityIcons} />
         }
       >
-        <BodyTypeSelector onFilterChange={handleBodyTypeSelectorChange} initialActiveTypes={chosenBodyType} />
+        <BodyTypeSelector selectedBodyTypes={chosenBodyType} setSelectedBodyTypes={setChosenBodyType} />
 
         <ElementsDeselector elementsGroupedByClassId={elementsGroupedByClassId} />
         <ElementsSelector selectionMode="multiple" />

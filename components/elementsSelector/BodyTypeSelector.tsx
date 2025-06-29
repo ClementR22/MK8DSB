@@ -1,7 +1,6 @@
-import React, { memo, useCallback, useMemo } from "react";
-import { View, StyleSheet, Text } from "react-native"; // Add Text for the filter title
+import React from "react";
+import { View, StyleSheet } from "react-native"; // Add Text for the filter title
 import { useThemeStore } from "@/stores/useThemeStore";
-import { translate } from "@/translations/translations"; // If you translate body type names
 
 import ImageButtonSelector, { ImageButtonOption } from "./ImageButtonSelector"; // Import the generic selector
 
@@ -9,8 +8,8 @@ import ImageButtonSelector, { ImageButtonOption } from "./ImageButtonSelector"; 
 export type BodyType = "kart" | "bike" | "sportBike" | "ATV"; // Example types, update if different
 
 interface BodyTypeSelectorProps {
-  onFilterChange: (activeBodyTypes: Set<BodyType>) => void;
-  initialActiveTypes: Set<BodyType>;
+  selectedBodyTypes: Set<BodyType>;
+  setSelectedBodyTypes: (activeBodyTypes: Set<BodyType>) => void;
 }
 
 const bodyTypeImageSources: { [key in BodyType]: any } = {
@@ -27,24 +26,16 @@ const bodyTypeOptions: ImageButtonOption[] = Object.entries(bodyTypeImageSources
   label: key, // Use translate if your body types are translatable
 }));
 
-const BodyTypeSelector: React.FC<BodyTypeSelectorProps> = ({ onFilterChange, initialActiveTypes }) => {
+const BodyTypeSelector: React.FC<BodyTypeSelectorProps> = ({ selectedBodyTypes, setSelectedBodyTypes }) => {
   const theme = useThemeStore((state) => state.theme); // Used for activeColor and container background
-
-  const handleSelectionChange = useCallback(
-    (keys: string | Set<string>) => {
-      onFilterChange(keys as Set<BodyType>); // Cast back to Set<BodyType>
-    },
-    [onFilterChange]
-  );
 
   return (
     <View style={[styles.container, { backgroundColor: "white" }]}>
       <ImageButtonSelector
         options={bodyTypeOptions}
         selectionMode="multiple"
-        initialSelection={initialActiveTypes}
-        onSelectionChange={handleSelectionChange}
-        buttonSize={{ width: 50, height: 50 }} // Consistent size
+        initialSelection={selectedBodyTypes}
+        onSelectionChange={setSelectedBodyTypes}
         activeStyleProperty="borderColor" // Based on your original BodyTypeSelector
         activeColor={theme.primary} // Use theme.primary for active state border
       />
