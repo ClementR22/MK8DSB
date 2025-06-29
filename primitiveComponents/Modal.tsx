@@ -32,7 +32,7 @@ interface ModalProps {
   // on peut donner un composant
   secondButton?: ReactElement<{ onComplete?: () => void }>;
   // ou uniquement ses props
-  secondButtonProps?: { text: string; onPress: () => void; tooltipText?: string };
+  secondButtonProps?: { text: string; onPress: () => void | boolean; tooltipText?: string };
   closeAfterSecondButton?: boolean;
   secondButtonPosition?: "left" | "right";
 }
@@ -80,16 +80,16 @@ const Modal = ({
     }
 
     if (secondButtonProps) {
-      const finalOnPress = () => {
-        secondButtonProps.onPress();
-        if (closeAfterSecondButton) setIsModalVisible(false);
+      const completedOnPress = () => {
+        const isSucces = secondButtonProps.onPress();
+        if (closeAfterSecondButton || isSucces) setIsModalVisible(false);
       };
-      return <ModalButton {...secondButtonProps} onPress={finalOnPress} />;
+      return <ModalButton {...secondButtonProps} onPress={completedOnPress} />;
     }
     return null;
   }, [secondButton, secondButtonProps, closeAfterSecondButton, setIsModalVisible]);
 
-  const finalCloseOnPress = useCallback(() => {
+  const actualOnPressClose = useCallback(() => {
     if (onClose) {
       onClose();
     } else {
@@ -106,7 +106,7 @@ const Modal = ({
       animationType="none" // Animation (slide, fade, none)
       transparent={true} // Fond transparent
       visible={isModalVisible}
-      onRequestClose={finalCloseOnPress} // Ferme le modal
+      onRequestClose={actualOnPressClose} // Ferme le modal
       {...props}
     >
       <Pressable style={styles.background} onPress={handleBackgroundPress}>
@@ -120,7 +120,7 @@ const Modal = ({
 
           <FlexContainer flexDirection={buttonContainerFlexDirection} style={styles.buttonContainer}>
             {renderSecondButton()}
-            {isWithClosePressable && <ModalButton text={closeButtonText} onPress={finalCloseOnPress} />}
+            {isWithClosePressable && <ModalButton text={closeButtonText} onPress={actualOnPressClose} />}
           </FlexContainer>
         </Pressable>
       </Pressable>

@@ -19,6 +19,7 @@ const ModalRenameSet = () => {
       isModalVisible={isRenameSetModalVisible}
       setIsModalVisible={setIsRenameSetModalVisible}
       secondButtonProps={{ text: "Confirm", onPress: saveSetFromFound }}
+      closeAfterSecondButton={false}
     >
       <SetNameInput setToShowName={setFoundName} flex={null} />
       {/* // flex={null} permet d'éviter que SetNameInput soit écrasé */}

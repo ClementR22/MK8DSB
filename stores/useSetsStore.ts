@@ -46,7 +46,7 @@ export interface SetsStoreState {
   updateStatValue: (name: string, newValue: number) => void;
   syncWithChosenStats: (setResultStats: (list: ResultStats) => void) => void;
   setStatFilterNumber: (statName: string, newState: number) => void;
-  getSetsSavedKeys: () => Promise<string[]>;
+  fetchSetsSavedKeys: () => Promise<string[]>;
   fetchSavedSets: () => Promise<void>;
   addNewSetInDisplay: () => void;
   loadSetToDisplay: (setToLoad: SetObject) => void;
@@ -57,10 +57,11 @@ export interface SetsStoreState {
   loadSetDisplayToSearch: (index: number) => void;
   loadSetSaveToDisplay: (index: number) => void;
   loadSetSearchToDisplay: (index: number) => void;
-  saveSet: (setToSave: SetObject) => Promise<boolean>;
+  checkNameUnique: (name: string) => boolean;
+  saveSet: (setToSave: SetObject) => boolean;
   saveSetInMemory: (setToSave: SetObject) => Promise<void>;
-  saveSetFromDisplay: (index: number) => Promise<void>;
-  saveSetFromFound: () => Promise<void>;
+  saveSetFromDisplay: (index: number) => boolean;
+  saveSetFromFound: () => boolean;
   renameSet: (newName: string, screenName: ScreenName, index: number) => void;
   updateSetsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => Promise<void>;
   setSetInMemory: (key: string | number, setObj: SetObject) => Promise<void>;
@@ -118,7 +119,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     }));
   },
 
-  getSetsSavedKeys: async () => {
+  fetchSetsSavedKeys: async () => {
     const setsKeys = await getOnlySetsSavedKeysFromMemory();
     const sorted = setsKeys.sort((a, b) => a.localeCompare(b));
     set({ setsSavedKeys: sorted });
@@ -126,7 +127,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   fetchSavedSets: async () => {
-    const keys = await get().getSetsSavedKeys();
+    const keys = await get().fetchSetsSavedKeys();
     const kvs = await AsyncStorage.multiGet(keys);
     const parsed: SetObject[] = kvs.map(([, value]) => JSON.parse(value ?? "{}"));
     set({ setsListSaved: parsed });
@@ -198,12 +199,25 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     showToast("Succès" + " " + "Le set a été ajouté à l'écran de comparaison");
   },
 
-  saveSet: async (setToSave) => {
+  checkNameUnique: (name) => {
+    const setsSavedNames = get().setsListSaved.map((set) => set.name);
+
+    if (setsSavedNames.includes(name)) {
+      showToast("Erreur" + " " + "Ce nom de set existe déjà");
+      return false;
+    }
+    return true;
+  },
+
+  saveSet: (setToSave) => {
     try {
+      const isNameUnique = get().checkNameUnique(setToSave.name);
+      if (!isNameUnique) return false;
+
       set((state) => ({
         setsListSaved: [...state.setsListSaved, setToSave],
       }));
-      await get().saveSetInMemory(setToSave);
+      get().saveSetInMemory(setToSave);
       showToast("Succès" + " " + "Le set est enregistré");
       return true;
     } catch (e) {
@@ -222,13 +236,14 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     await saveThingInMemory(String(key), setToSave);
   },
 
-  saveSetFromDisplay: async (index) => {
-    await get().saveSet(get().setsListDisplayed[index]);
+  saveSetFromDisplay: (index) => {
+    const setToSave = get().setsListDisplayed[index];
+    return get().saveSet(setToSave);
   },
 
-  saveSetFromFound: async () => {
+  saveSetFromFound: () => {
     const { percentage, ...setWithoutPercentage } = get().setsListFound[get().setCardEditedIndex];
-    await get().saveSet(setWithoutPercentage);
+    return get().saveSet(setWithoutPercentage);
   },
 
   renameSet: (newName, screenName, setCardIndex) => {
@@ -236,7 +251,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     const listName =
       screenName === "search" ? "setsListFound" : screenName === "display" ? "setsListDisplayed" : "setsListSaved";
     if (listName === "setsListFound") {
-      const list = get()[listName] as SetFoundObject[];
+      const list = get().setsListFound as SetFoundObject[];
 
       const updated = list.map((set: SetFoundObject, i: number): SetFoundObject => {
         if (i === index) {
@@ -248,6 +263,9 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       set({ [listName]: updated } as any);
     } else {
       const list = get()[listName] as SetObject[];
+
+      const isNameUnique = get().checkNameUnique(newName);
+      if (!isNameUnique) return false;
 
       const updated = list.map((set: SetObject, i: number): SetObject => {
         if (i === index) {
