@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { Tabs, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Appearance } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
@@ -170,7 +170,7 @@ export default function TabLayout() {
               name="index" // This maps to the default route "/"
               options={{
                 title: translateToLanguage("FindSetTabTitle", language),
-                tabBarIcon: ({ color }) => <MaterialCommunityIcons name="magnify" size={24} color={color} />,
+                tabBarIcon: ({ color }) => <Entypo name={"magnifying-glass"} size={24} color={color} />,
                 header: renderSearchHeader, // Use the memoized header function
               }}
             />
@@ -186,7 +186,7 @@ export default function TabLayout() {
               name="SavedSetScreen"
               options={{
                 title: translateToLanguage("SavedSetTabTitle", language),
-                tabBarIcon: ({ color }) => <MaterialCommunityIcons name="heart-outline" size={24} color={color} />,
+                tabBarIcon: ({ color, focused }) => <MaterialCommunityIcons name={focused ? "heart" : "heart-outline"} size={24} color={color} />,
                 header: renderSavedHeader,
               }}
             />
@@ -194,7 +194,7 @@ export default function TabLayout() {
               name="GalleryScreen"
               options={{
                 title: translateToLanguage("GalleryTabTitle", language),
-                tabBarIcon: ({ color }) => <Ionicons name="image-outline" size={24} color={color} />,
+                tabBarIcon: ({ color, focused }) => <Ionicons name={focused ? "image" : "image-outline"} size={24} color={color} />,
                 header: renderGalleryHeader,
               }}
             />
@@ -202,7 +202,7 @@ export default function TabLayout() {
               name="SettingsScreen"
               options={{
                 title: translateToLanguage("SettingsTabTitle", language),
-                tabBarIcon: ({ color }) => <Ionicons name="settings" size={24} color={color} />,
+                tabBarIcon: ({ color, focused }) => <Ionicons name={focused ? "settings" : "settings-outline"} size={24} color={color} />,
                 header: renderSettingsHeader,
               }}
             />
