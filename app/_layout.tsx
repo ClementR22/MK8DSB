@@ -1,7 +1,8 @@
 // app/_layout_tabs.tsx
-import React, { useEffect, useMemo, useCallback } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Tabs, usePathname } from "expo-router";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"; // MaterialIcons n'est pas utilisé
+import { StatusBar } from "expo-status-bar";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Appearance } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
@@ -17,7 +18,6 @@ import HelpDisplaySetScreen from "@/components/help/HelpDisplaySetScreen";
 import HelpSavedSetScreen from "@/components/help/HelpSavedSetScreen";
 
 // Stores
-import useModalsStore from "@/stores/useModalsStore";
 import useSetsStore from "@/stores/useSetsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
@@ -151,6 +151,7 @@ export default function TabLayout() {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: theme.surface }} edges={["top"]}>
         <PaperProvider>
+          <StatusBar style={theme.surface === "#FEF7FF" ? "dark" : "light"} />
           <Tabs
             screenOptions={{
               tabBarActiveTintColor: theme.primary,
