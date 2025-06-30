@@ -6,7 +6,6 @@ import TooltipWrapper from "../TooltipWrapper";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import StatSliderCompareSelector from "./StatSliderCompareSelector";
-import { ResultStats } from "@/contexts/ResultStatsContext";
 import { translateToLanguage } from "@/translations/translations";
 
 interface StatSliderCompareProps {
@@ -102,7 +101,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
   },
-  statBarsContainer: { width: "100%", gap: 0 },
+  statBarsContainer: {
+    width: "100%",
+    gap: 0,
+  },
 });
 
 export default React.memo(StatSliderCompare);
