@@ -32,12 +32,9 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
 
   // Memoize paginationControlsStyle.
   const paginationControlsStyle = useMemo(
-    () => [styles.paginationControls, { backgroundColor: theme.surface_container_high }],
+    () => [styles.paginationControls, {}],
     [theme.surface_container_high, theme.outline]
   );
-
-  // Memoize pageInfoStyle.
-  const pageInfoStyle = useMemo(() => [styles.pageInfo, { color: theme.on_surface }], [theme.on_surface]);
 
   // Memoize navButtonColor.
   const navButtonColor = useMemo(() => theme.primary, [theme.primary]);
@@ -59,8 +56,12 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
       <Pressable
         key={index}
         onPress={() => goToPage(index)}
-        style={[styles.dot, { backgroundColor: index === currentPage ? activeDotColor : inactiveDotColorResolved }]}
-      />
+        style={{ height: 40, justifyContent: "center", paddingHorizontal: 3 }}
+      >
+        <View
+          style={[styles.dot, { backgroundColor: index === currentPage ? activeDotColor : inactiveDotColorResolved }]}
+        />
+      </Pressable>
     ));
   }, [totalPages, currentPage, goToPage, activeDotColor, inactiveDotColorResolved]);
 
@@ -69,11 +70,7 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
       <Pressable
         onPress={goToPrevPage}
         disabled={currentPage === 0}
-        style={({ pressed }) => [
-          styles.navButton,
-          currentPage === 0 && styles.navButtonDisabled,
-          pressed && styles.navButtonPressed,
-        ]}
+        style={[styles.navButton, currentPage === 0 && styles.navButtonDisabled]}
       >
         <MaterialCommunityIcons
           name="chevron-left"
@@ -82,18 +79,12 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
         />
       </Pressable>
 
-      <View style={styles.centerPagination}>
-        <View style={styles.dotsContainer}>{dots}</View>
-      </View>
+      <View style={styles.dotsContainer}>{dots}</View>
 
       <Pressable
         onPress={goToNextPage}
         disabled={currentPage === totalPages - 1}
-        style={({ pressed }) => [
-          styles.navButton,
-          currentPage === totalPages - 1 && styles.navButtonDisabled,
-          pressed && styles.navButtonPressed,
-        ]}
+        style={[styles.navButton, currentPage === totalPages - 1 && styles.navButtonDisabled]}
       >
         <MaterialCommunityIcons
           name="chevron-right"
@@ -110,38 +101,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 3,
-    paddingHorizontal: 3,
-  },
-  centerPagination: {
-    flex: 1,
-    alignItems: "center",
   },
   navButton: {
-    padding: 8,
-    borderRadius: 8,
+    paddingHorizontal: 8,
   },
   navButtonDisabled: {
     opacity: 0.5,
   },
-  navButtonPressed: {
-    opacity: 0.7,
-  },
-  pageInfo: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
   dotsContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
   },
   dot: {
     width: 30,
-    height: 30,
-    borderRadius: 15,
-    marginHorizontal: 4,
+    height: 10,
+    borderRadius: 5,
   },
 });
 
