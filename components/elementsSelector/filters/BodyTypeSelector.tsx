@@ -30,7 +30,7 @@ const BodyTypeSelector: React.FC<BodyTypeSelectorProps> = ({ selectedBodyTypes, 
   const theme = useThemeStore((state) => state.theme); // Used for activeColor and container background
 
   return (
-    <View style={[styles.container, { backgroundColor: "white" }]}>
+    <View style={styles.container}>
       <ImageButtonSelector
         options={bodyTypeOptions}
         selectionMode="multiple"
@@ -45,7 +45,8 @@ const BodyTypeSelector: React.FC<BodyTypeSelectorProps> = ({ selectedBodyTypes, 
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
+    borderRadius: 3,
+    padding: 4,
     alignItems: "center", // Center content horizontally
   },
   filterTitle: {

@@ -115,10 +115,12 @@ const ElementsDeselector: React.FC = () => {
 
   return (
     <View>
-      {selectedElements.length !== 0 && (
-        <View style={styles.deselectorContainer}>
-          <Text style={[styles.deselectorTitle, { color: theme.on_surface }]}>Selected Elements:</Text>
+      <View style={styles.deselectorContainer}>
+        <Text style={[styles.deselectorTitle, { color: theme.on_surface }]}>Selected Elements:</Text>
 
+        {selectedElements.length === 0 ? (
+          <Text>Aucun</Text>
+        ) : (
           <ScrollView horizontal contentContainerStyle={styles.gridContainer}>
             {selectedElements.map((element) => {
               return (
@@ -134,16 +136,14 @@ const ElementsDeselector: React.FC = () => {
               );
             })}
           </ScrollView>
-        </View>
-      )}
+        )}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  deselectorContainer: {
-    paddingVertical: 10,
-  },
+  deselectorContainer: {},
   deselectorTitle: {
     fontSize: 18,
     fontWeight: "bold",
