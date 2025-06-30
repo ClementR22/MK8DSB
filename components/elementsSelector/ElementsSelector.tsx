@@ -2,7 +2,7 @@
 // to PaginatedElementsContainer, which now handles the item dimension logic.
 
 import React, { useState, memo, useMemo, useEffect, useCallback } from "react";
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable, ScrollView } from "react-native";
 import PaginatedElementsContainer, { ELEMENTS_PER_PAGE } from "./PaginatedElementsContainer";
 import { elementsDataBody, elementsDataCharacter, elementsDataGlider, elementsDataWheel } from "@/data/elementsData";
 import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
@@ -26,9 +26,10 @@ const allCategoryElements: {
 
 interface ElementsSelectorProps {
   selectionMode?: "single" | "multiple";
+  children?: React.ReactNode;
 }
 
-const ElementsSelector: React.FC<ElementsSelectorProps> = ({ selectionMode = "single" }) => {
+const ElementsSelector: React.FC<ElementsSelectorProps> = ({ selectionMode = "single", children }) => {
   const language = useLanguageStore((state) => state.language);
 
   const [selectedCategory, setSelectedCategory] = useState<CategoryKey>("character");
@@ -76,29 +77,33 @@ const ElementsSelector: React.FC<ElementsSelectorProps> = ({ selectionMode = "si
 
   return (
     <>
-      <View style={styles.controlsContainer}>
-        <ButtonIcon
-          onPress={toggleOpenFilterView}
-          iconName={isOpenFilterView ? "chevron-down" : "chevron-up"}
-          iconType={IconType.MaterialCommunityIcons}
-          tooltipText={isOpenFilterView ? "DevelopSliders" : "ReduceSliders"}
-        />
+      <ScrollView>
+        {children}
+        <View style={styles.controlsContainer}>
+          <ButtonIcon
+            onPress={toggleOpenFilterView}
+            iconName={isOpenFilterView ? "chevron-down" : "chevron-up"}
+            iconType={IconType.MaterialCommunityIcons}
+            tooltipText={isOpenFilterView ? "DevelopSliders" : "ReduceSliders"}
+          />
 
-        <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-      </View>
-      {isOpenFilterView && (
-        <Pressable style={styles.controlsContainer}>
-          <SortModeSelector setOrderNumber={setOrderNumber} />
-        </Pressable>
-      )}
-      <PaginatedElementsContainer
-        selectedCategory={selectedCategory}
-        categoryElements={categoryElementsSorted}
-        initialSelectedClassId={selectedClassId}
-        onElementsSelectionChange={handleElementSelectionChange}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+          <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+        </View>
+        {isOpenFilterView && (
+          <Pressable style={styles.controlsContainer}>
+            <SortModeSelector setOrderNumber={setOrderNumber} />
+          </Pressable>
+        )}
+
+        <PaginatedElementsContainer
+          selectedCategory={selectedCategory}
+          categoryElements={categoryElementsSorted}
+          initialSelectedClassId={selectedClassId}
+          onElementsSelectionChange={handleElementSelectionChange}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      </ScrollView>
       <PagesNavigator currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
     </>
   );

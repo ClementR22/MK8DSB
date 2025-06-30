@@ -1,5 +1,5 @@
 import { baseStatsByClassId } from "./classStats";
-import { CharacterElement, BodyElement, WheelElement, GliderElement, ElementStats } from "./elementsTypes";
+import { CharacterElement, BodyElement, WheelElement, GliderElement, ElementStats, CategoryKey } from "./elementsTypes";
 
 function getElementStats(classId: number, overrides?: Partial<ElementStats>): ElementStats {
   const baseStats = baseStatsByClassId[classId];
@@ -1133,7 +1133,9 @@ export const elementsDataGlider: GliderElement[] = elementsData.filter(
   (element): element is GliderElement => element.category === "glider"
 );
 
-export const ElementsDataAllCategory = {
+export const ElementsDataAllCategory: {
+  [key in CategoryKey]: (CharacterElement | BodyElement | WheelElement | GliderElement)[];
+} = {
   character: elementsDataCharacter,
   body: elementsDataBody,
   wheel: elementsDataWheel,

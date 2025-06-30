@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback, memo, useEffect } from "react";
-import { StyleSheet, ScrollView, ViewStyle, StyleProp } from "react-native";
+import { StyleSheet, ViewStyle, StyleProp, View } from "react-native";
 
 import ElementGrid, { ELEMENT_GRID_PADDING_VERTICAL, GAP, ITEM_HEIGHT } from "./ElementGrid";
 import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
@@ -49,23 +49,19 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
   }, [selectedCategory]);
 
   return (
-    <ScrollView style={containerStyle} contentContainerStyle={styles.scrollViewContent}>
+    <View style={containerStyle}>
       <ElementGrid
         elements={currentElements}
         selectedClassId={initialSelectedClassId}
         onSelectElement={handleSelectElement}
       />
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   fixedHeightContainer: {
     height: ITEM_HEIGHT * 3 + GAP * 2 + ELEMENT_GRID_PADDING_VERTICAL * 2,
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    alignItems: "center",
   },
 });
 
