@@ -4,6 +4,8 @@ import { Pressable, StyleSheet, Text, View, Image, ViewStyle } from "react-nativ
 import { useThemeStore } from "@/stores/useThemeStore";
 import TooltipWrapper from "../TooltipWrapper";
 import { translate } from "@/translations/translations";
+import { BodyType } from "./filters/BodyTypeSelector";
+import { CategoryKey } from "@/data/elementsTypes";
 
 export interface ImageButtonOption {
   key: string;
@@ -17,8 +19,8 @@ export type ActiveStyleProperty = "backgroundColor" | "borderColor"; // Renamed 
 interface ImageButtonSelectorProps {
   options: ImageButtonOption[];
   selectionMode: SelectionMode;
-  onSelectionChange: (selectedKeys: string | Set<string>) => void;
-  initialSelection: string | Set<string> | null;
+  onSelectionChange: React.Dispatch<React.SetStateAction<CategoryKey | Set<BodyType>>>;
+  initialSelection: CategoryKey | Set<BodyType> | null;
   buttonSize?: { width: number; height: number };
   activeStyleProperty?: ActiveStyleProperty;
   activeColor?: string;

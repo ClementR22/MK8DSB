@@ -12,36 +12,8 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
 import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModalStatSelectorChosenStats";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import ElementsSelector from "../elementsSelector/ElementsSelector";
-import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
-import { elementsDataBody, elementsDataCharacter, elementsDataGlider, elementsDataWheel } from "@/data/elementsData";
-import ElementsDeselector from "../elementsSelector/ElementsDeselector";
-
-const allCategoryElements = {
-  character: elementsDataCharacter,
-  body: elementsDataBody,
-  wheel: elementsDataWheel,
-  glider: elementsDataGlider,
-};
-
-// Define a union type for any element
-// type AnyElement = CharacterElement | BodyElement | WheelElement | GliderElement;
-
-const elementsGroupedByClassId = new Map(); // new Map<number, AnyElement[]>()
-
-// Parcourir toutes les listes de catégories pour collecter tous les éléments
-Object.values(allCategoryElements).forEach((categoryList) => {
-  categoryList.forEach((element) => {
-    const groupId = element.classId; // Utilisation de 'classId' comme identifiant de groupe
-
-    // Si cette 'groupId' (classId) n'a pas encore de tableau dans la Map, on en crée un
-    if (!elementsGroupedByClassId.has(groupId)) {
-      elementsGroupedByClassId.set(groupId, []);
-    }
-    // Ajouter l'élément actuel au tableau correspondant à ce 'groupId'
-    elementsGroupedByClassId.get(groupId)?.push(element);
-  });
-});
+import ElementsSelectorPannel from "../elementsSelector/ElementsSelectorPannel";
+import FiltersBox from "../elementsSelector/filters/FiltersBox";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
   const chosenStats = useSetsStore((state) => state.chosenStats);
@@ -153,10 +125,9 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
           <ButtonIcon tooltipText="ChooseFilters" iconName="pin" iconType={IconType.MaterialCommunityIcons} />
         }
       >
-        <BodyTypeSelector selectedBodyTypes={chosenBodyType} setSelectedBodyTypes={setChosenBodyType} />
-
-        <ElementsDeselector elementsGroupedByClassId={elementsGroupedByClassId} />
-        <ElementsSelector selectionMode="multiple" />
+        <ElementsSelectorPannel selectionMode="multiple">
+          <FiltersBox selectedBodyTypes={chosenBodyType} setSelectedBodyTypes={setChosenBodyType} />
+        </ElementsSelectorPannel>
       </ButtonAndModal>
 
       <Button onPress={search} iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>

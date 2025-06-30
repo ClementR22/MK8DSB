@@ -5,10 +5,7 @@ import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
 import GridItem from "./GridItem"; // Re-use the existing GridItem component
 import { MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL } from "@/primitiveComponents/Modal";
-
-interface ElementsDeselectorProps {
-  elementsGroupedByClassId: Map<number, CharacterElement | BodyElement | WheelElement | GliderElement>;
-}
+import { elementsGroupedByClassId } from "@/data/elementsData";
 
 const { width: screenWidth } = Dimensions.get("window");
 const NUM_COLUMNS = 4;
@@ -30,7 +27,7 @@ export const ITEM_HEIGHT = ITEM_WIDTH * 1.2;
 const DESELECTOR_ITEM_WIDTH = (screenWidth - PADDING_HORIZONTAL * 2 - GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
 const DESELECTOR_ITEM_HEIGHT = DESELECTOR_ITEM_WIDTH * 1.5; // Assuming the same aspect ratio as GridItem
 
-const ElementsDeselector: React.FC<ElementsDeselectorProps> = ({ elementsGroupedByClassId }) => {
+const ElementsDeselector: React.FC = () => {
   const theme = useThemeStore((state) => state.theme);
 
   // Access selected IDs from the store across all categories

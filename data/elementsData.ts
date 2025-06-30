@@ -1132,3 +1132,29 @@ export const elementsDataWheel: WheelElement[] = elementsData.filter(
 export const elementsDataGlider: GliderElement[] = elementsData.filter(
   (element): element is GliderElement => element.category === "glider"
 );
+
+export const ElementsDataAllCategory = {
+  character: elementsDataCharacter,
+  body: elementsDataBody,
+  wheel: elementsDataWheel,
+  glider: elementsDataGlider,
+};
+
+// Define a union type for any element
+// type AnyElement = CharacterElement | BodyElement | WheelElement | GliderElement;
+
+export const elementsGroupedByClassId = new Map(); // new Map<number, AnyElement[]>()
+
+// Parcourir toutes les listes de catégories pour collecter tous les éléments
+Object.values(ElementsDataAllCategory).forEach((categoryList) => {
+  categoryList.forEach((element) => {
+    const groupId = element.classId; // Utilisation de 'classId' comme identifiant de groupe
+
+    // Si cette 'groupId' (classId) n'a pas encore de tableau dans la Map, on en crée un
+    if (!elementsGroupedByClassId.has(groupId)) {
+      elementsGroupedByClassId.set(groupId, []);
+    }
+    // Ajouter l'élément actuel au tableau correspondant à ce 'groupId'
+    elementsGroupedByClassId.get(groupId)?.push(element);
+  });
+});
