@@ -2,10 +2,12 @@ import React, { memo, useCallback, useMemo } from "react";
 import { View, StyleSheet, Text, Dimensions, ScrollView } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
+import { CategoryKey } from "@/data/elementsTypes";
 import GridItem from "./GridItem"; // Re-use the existing GridItem component
 import { MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL } from "@/primitiveComponents/Modal";
 import { elementsGroupedByClassId } from "@/data/elementsData";
+import { translateToLanguage } from "@/translations/translations";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const { width: screenWidth } = Dimensions.get("window");
 const NUM_COLUMNS = 4;
@@ -21,14 +23,11 @@ const ITEM_WIDTH =
     GAP * (NUM_COLUMNS - 1)) /
   NUM_COLUMNS;
 
-export const ITEM_HEIGHT = ITEM_WIDTH * 1.2;
-
-// Item dimensions need to be consistent with ElementGrid or flexible
-const DESELECTOR_ITEM_WIDTH = (screenWidth - PADDING_HORIZONTAL * 2 - GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
-const DESELECTOR_ITEM_HEIGHT = DESELECTOR_ITEM_WIDTH * 1.5; // Assuming the same aspect ratio as GridItem
+const ITEM_HEIGHT = ITEM_WIDTH * 1.2;
 
 const ElementsDeselector: React.FC = () => {
   const theme = useThemeStore((state) => state.theme);
+  const language = useLanguageStore((state) => state.language);
 
   // Access selected IDs from the store across all categories
   const multiSelectedClassIdsStore = usePressableElementsStore((state) => state.multiSelectedClassIds);
@@ -49,7 +48,7 @@ const ElementsDeselector: React.FC = () => {
         // Good practice for iterating object properties
         const classIdSet = multiSelectedClassIdsStore[key]; // This is a Set of classIds
 
-        classIdSet.forEach((classId) => {
+        classIdSet.forEach((classId: number) => {
           // Correctly get the array of elements from the Map
           const elementsInThisClass = elementsGroupedByClassId.get(classId);
 
@@ -83,26 +82,6 @@ const ElementsDeselector: React.FC = () => {
     [elementsGroupedByClassId, multiSelectedClassIdsStore, selectElementsByClassId, toggleMultiSelectElementsByClassId]
   );
 
-  // Memoize common styles that depend on theme or are constant.
-  const elementCardBaseStyle = useMemo(
-    () => ({
-      width: DESELECTOR_ITEM_WIDTH,
-      height: DESELECTOR_ITEM_HEIGHT,
-      borderRadius: 15,
-      padding: 0, // Padding handled by GridItem's internal styles
-      alignItems: "center",
-      justifyContent: "center",
-      borderWidth: 2, // Default border for GridItem
-      borderColor: "transparent",
-      overflow: "hidden",
-    }),
-    [] // These dimensions are fixed for this component
-  );
-
-  const elementNameStyle = useMemo(
-    () => [stylesDeselectorGridItem.elementName, { color: theme.on_surface }],
-    [theme.on_surface]
-  );
   const activeBorderStyle = useMemo(
     () => [stylesDeselectorGridItem.activeBorder, { borderColor: theme.primary }],
     [theme.primary]
@@ -116,10 +95,12 @@ const ElementsDeselector: React.FC = () => {
   return (
     <View>
       <View style={styles.deselectorContainer}>
-        <Text style={[styles.deselectorTitle, { color: theme.on_surface }]}>Selected Elements:</Text>
+        <Text style={[styles.deselectorTitle, { color: theme.on_surface }]}>
+          {translateToLanguage("SelectedElements", language)}
+        </Text>
 
         {selectedElements.length === 0 ? (
-          <Text>Aucun</Text>
+          <Text>{translateToLanguage("None", language)}</Text>
         ) : (
           <ScrollView horizontal contentContainerStyle={styles.gridContainer}>
             {selectedElements.map((element) => {

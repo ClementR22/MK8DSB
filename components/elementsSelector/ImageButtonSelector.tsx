@@ -59,10 +59,10 @@ const ImageButtonSelector: React.FC<ImageButtonSelectorProps> = ({
 
   const handlePress = useCallback(
     (key: string) => {
-      let newSelection: string | Set<string>;
+      let newSelection: CategoryKey | Set<BodyType>;
 
       if (selectionMode === "single") {
-        newSelection = key;
+        newSelection = key as CategoryKey;
       } else {
         const currentSet = new Set(currentSelection as Set<string>);
         if (currentSet.has(key)) {
@@ -70,7 +70,7 @@ const ImageButtonSelector: React.FC<ImageButtonSelectorProps> = ({
         } else {
           currentSet.add(key);
         }
-        newSelection = currentSet;
+        newSelection = currentSet as Set<BodyType>;
       }
 
       setCurrentSelection(newSelection);

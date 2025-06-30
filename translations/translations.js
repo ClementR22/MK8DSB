@@ -53,8 +53,12 @@ const translations = {
     ThisSetDoesNotExist: "This set does not exist",
     DeleteAllSetsInMemoryText: "Do you really want to delete all saved sets?",
     ResetSettingsText: "Do you really want to reset settings?",
+    SelectedElements: "Selected elements",
+
+    // placeholder
     "NoSetFound...": "No set found...",
     YourFavoriteSetsWillAppearHere: "Your favorite sets will appear here",
+    None: "None",
 
     // button label
     Search: "Search",
@@ -328,8 +332,12 @@ const translations = {
     ThisSetDoesNotExist: "Ce set n'existe pas",
     DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
     ResetSettingsText: "Souhaitez-vous vraiment réinitialiser les préférences ?",
+    SelectedElements: "Éléments sélectionnés",
+
+    // placeholder
     "NoSetFound...": "Aucun set trouvé...",
     YourFavoriteSetsWillAppearHere: "Vos sets favoris apparaîtrons ici",
+    None: "Aucun",
 
     // button label
     Search: "Chercher",
