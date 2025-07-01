@@ -51,8 +51,6 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
     [statFilterNumber, theme]
   );
 
-  const calculatedMaxTrackBorderWidth = useMemo(() => (tempValue / MAX_VALUE) * 230 + 10, [tempValue]);
-
   const innerContainerDynamicStyles = useMemo(
     () => ({
       backgroundColor: theme.surface,
@@ -71,29 +69,48 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
   const minimumTrackDynamicStyle = useMemo(
     () => ({
       backgroundColor: theme.primary,
-      borderColor: theme.surface,
     }),
-    [theme.primary, theme.surface]
+    [theme.primary]
   );
 
   const maximumTrackDynamicStyle = useMemo(
     () => ({
       backgroundColor: theme.secondary_container,
-      borderColor: theme.surface,
-      borderLeftWidth: calculatedMaxTrackBorderWidth,
     }),
-    [theme.secondary_container, theme.surface, calculatedMaxTrackBorderWidth]
+    [theme.secondary_container]
   );
 
-  const thumbDynamicStyle = useMemo(
+  // --- NOUVEAU: Style pour le conteneur du thumb (la partie blanche) ---
+  const thumbWrapperDynamicStyle = useMemo(
     () => ({
-      backgroundColor: theme.primary,
+      backgroundColor: theme.surface, // Ou 'white' si tu veux un blanc fixe
+    }),
+    [theme.surface]
+  );
+
+  // --- NOUVEAU: Style pour le thumb intérieur (la partie violette) ---
+  const innerThumbDynamicStyle = useMemo(
+    () => ({
+      width: 4, // La largeur du thumb violet (comme ton design)
+      height: 36, // La hauteur du thumb violet (comme ton design)
+      borderRadius: 100, // Pour les coins très arrondis
+      backgroundColor: theme.primary, // La couleur du thumb
     }),
     [theme.primary]
   );
 
   const translatedName = useMemo(() => translateToLanguage(name, language), [name, language]);
   const translatedSeparator = useMemo(() => translateToLanguage(":", language), [language]);
+
+  // --- NOUVEAU: Fonction pour rendre un thumb personnalisé ---
+  const renderCustomThumb = useCallback(
+    () => (
+      <View style={[styles.thumbWrapper, thumbWrapperDynamicStyle]}>
+        <View style={innerThumbDynamicStyle} />
+      </View>
+    ),
+    [innerThumbDynamicStyle]
+  );
 
   return (
     <TooltipWrapper
@@ -121,8 +138,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
             maximumValue={MAX_VALUE}
             step={0.25}
             trackStyle={styles.track}
-            thumbTouchSize={styles.thumbTouchSize}
-            thumbStyle={StyleSheet.flatten([styles.thumb, thumbDynamicStyle])}
+            renderThumbComponent={renderCustomThumb}
             minimumTrackStyle={StyleSheet.flatten([styles.minimumTrack, minimumTrackDynamicStyle])}
             maximumTrackStyle={StyleSheet.flatten([styles.maximumTrack, maximumTrackDynamicStyle])}
           />
@@ -166,7 +182,6 @@ const styles = StyleSheet.create({
     marginLeft: 3,
   },
   sliderContainer: {
-    flex: 1,
     marginBottom: 4,
   },
   valueWrapper: {
@@ -178,22 +193,21 @@ const styles = StyleSheet.create({
     height: 16,
     borderRadius: 100,
   },
-  thumb: {
-    borderRadius: 100,
-    width: 4,
-    height: 36,
-  },
   minimumTrack: {
-    borderRightWidth: 8,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
   },
   maximumTrack: {
-    borderLeftWidth: 8,
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
   },
-  thumbTouchSize: { width: 10, height: 10 },
+  thumbWrapper: {
+    width: 16, // Doit être plus large que le thumb intérieur
+    height: 36, // <--- C'EST LA LIGNE MANQUANTE QUI CAUSAIT L'ERREUR
+    justifyContent: "center", // Centrer le thumb intérieur verticalement
+    alignItems: "center", // Centrer le thumb intérieur horizontalement
+    borderRadius: 4, // Coins légèrement arrondis pour le conteneur blanc
+  },
   text: {
     fontSize: 20,
     fontWeight: "600",
