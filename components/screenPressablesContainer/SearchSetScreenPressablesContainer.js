@@ -128,12 +128,15 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
           <ButtonIcon tooltipText="ChooseFilters" iconName="pin" iconType={IconType.MaterialCommunityIcons} />
         }
       >
-        <ElementsSelector selectionMode="multiple">
+        <ElementsSelector
+          selectionMode="multiple"
+          selectedBodytypes={chosenBodytype}
+          setSelectedBodytypes={setChosenBodytype}
+        >
           <FiltersBox>
             <ElementsDeselector />
             <BodytypesDeselector selectedBodytypes={chosenBodytype} setSelectedBodytypes={setChosenBodytype} />
           </FiltersBox>
-          <BodytypesSelector selectedBodytypes={chosenBodytype} setSelectedBodytypes={setChosenBodytype} />
         </ElementsSelector>
       </ButtonAndModal>
 

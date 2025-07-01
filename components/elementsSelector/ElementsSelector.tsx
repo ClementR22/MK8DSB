@@ -19,6 +19,8 @@ import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import PagesNavigator from "./PagesNavigator";
+import { Bodytype } from "@/data/bodytypes/bodytypeTypes";
+import BodytypesSelector from "./BodytypesSelector";
 
 const allCategoryElements: {
   [key in CategoryKey]: (CharacterElement | BodyElement | WheelElement | GliderElement)[];
@@ -31,10 +33,17 @@ const allCategoryElements: {
 
 interface ElementsSelectorProps {
   selectionMode?: "single" | "multiple";
+  selectedBodytypes: Set<Bodytype>;
+  setSelectedBodytypes: React.Dispatch<React.SetStateAction<Set<Bodytype>>>;
   children?: React.ReactNode;
 }
 
-const ElementsSelector: React.FC<ElementsSelectorProps> = ({ selectionMode = "single", children }) => {
+const ElementsSelector: React.FC<ElementsSelectorProps> = ({
+  selectionMode = "single",
+  selectedBodytypes,
+  setSelectedBodytypes,
+  children,
+}) => {
   const language = useLanguageStore((state) => state.language);
 
   const [selectedCategory, setSelectedCategory] = useState<CategoryKey>("character");
@@ -84,20 +93,22 @@ const ElementsSelector: React.FC<ElementsSelectorProps> = ({ selectionMode = "si
     <>
       <ScrollView>
         {children}
-        <View style={styles.controlsContainer}>
-          <ButtonIcon
-            onPress={toggleOpenFilterView}
-            iconName={isOpenFilterView ? "chevron-down" : "chevron-up"}
-            iconType={IconType.MaterialCommunityIcons}
-            tooltipText={isOpenFilterView ? "DevelopSliders" : "ReduceSliders"}
-          />
-        </View>
+        <ScrollView horizontal contentContainerStyle={styles.controlsContainer}>
+          {selectionMode !== "single" && (
+            <ButtonIcon
+              onPress={toggleOpenFilterView}
+              iconName={isOpenFilterView ? "chevron-down" : "chevron-up"}
+              iconType={IconType.MaterialCommunityIcons}
+              tooltipText={isOpenFilterView ? "DevelopSliders" : "ReduceSliders"}
+            />
+          )}
 
-        {isOpenFilterView && (
-          <Pressable style={styles.controlsContainer}>
+          {isOpenFilterView || selectionMode === "single" ? (
             <SortModeSelector setOrderNumber={setOrderNumber} />
-          </Pressable>
-        )}
+          ) : (
+            <BodytypesSelector selectedBodytypes={selectedBodytypes} setSelectedBodytypes={setSelectedBodytypes} />
+          )}
+        </ScrollView>
 
         <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
 
@@ -119,8 +130,6 @@ const styles = StyleSheet.create({
   controlsContainer: {
     flexDirection: "row",
     alignItems: "center",
-    height: 60,
-    paddingLeft: 10,
     gap: 10,
   },
 });
