@@ -2,7 +2,7 @@ import { BodyElement, CharacterElement, GliderElement, WheelElement } from "@/da
 import { useThemeStore } from "@/stores/useThemeStore";
 import React, { memo, useCallback, useMemo } from "react";
 import { View, StyleSheet, Dimensions } from "react-native"; // Removed Dimensions
-import GridItem from "./GridItem";
+import ElementItem from "./ElementItem";
 import { MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL } from "@/primitiveComponents/Modal";
 
 interface ElementGridProps {
@@ -42,7 +42,7 @@ const ElementGrid: React.FC<ElementGridProps> = ({ elements, selectedClassId, on
   );
 
   const elementCardDynamicStyle = useMemo(
-    () => [stylesGridItem.elementCard, { backgroundColor: theme.surface_container_low }],
+    () => [stylesElementItem.elementCard, { backgroundColor: theme.surface_container_low }],
     [theme.surface_container_low]
   );
 
@@ -54,7 +54,7 @@ const ElementGrid: React.FC<ElementGridProps> = ({ elements, selectedClassId, on
     // its purpose should be clear. For a grid of items, a simple View is usually sufficient.
     <View style={styles.gridContainer}>
       {elements.map((element) => (
-        <GridItem
+        <ElementItem
           key={element.id}
           element={element}
           isSelected={calculateIsSelected(element.classId)}
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const stylesGridItem = StyleSheet.create({
+const stylesElementItem = StyleSheet.create({
   elementCard: {
     borderRadius: 15,
     borderWidth: 3,
@@ -89,8 +89,8 @@ const stylesGridItem = StyleSheet.create({
     height: ITEM_HEIGHT,
   },
   // If elementImage relied on ITEM_WIDTH, it would also need to become a dynamic style object
-  // passed via props, or GridItem needs to calculate its own internal image size.
-  // For now, keep it simple, assuming ITEM_WIDTH is not needed directly by GridItem's internal styles.
+  // passed via props, or ElementItem needs to calculate its own internal image size.
+  // For now, keep it simple, assuming ITEM_WIDTH is not needed directly by ElementItem's internal styles.
 });
 
 export default memo(ElementGrid);

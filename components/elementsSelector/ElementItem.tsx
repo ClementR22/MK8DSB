@@ -6,7 +6,7 @@ import Modal from "@/primitiveComponents/Modal";
 import { classesStatsByCategory } from "@/data/elements/elementsStats";
 import { compactStatNames, statNames } from "@/data/data";
 
-interface GridItemProps {
+interface ElementItemProps {
   element: CharacterElement | BodyElement | WheelElement | GliderElement;
   isSelected: boolean;
   onSelectElement: (classId: number) => void;
@@ -15,7 +15,7 @@ interface GridItemProps {
   size?: number;
 }
 
-const GridItem: React.FC<GridItemProps> = ({
+const ElementItem: React.FC<ElementItemProps> = ({
   element,
   isSelected,
   onSelectElement,
@@ -69,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(GridItem);
+export default memo(ElementItem);

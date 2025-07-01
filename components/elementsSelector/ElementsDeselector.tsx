@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Dimensions, ScrollView } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { CategoryKey } from "@/data/elements/elementsTypes";
-import GridItem from "./GridItem"; // Re-use the existing GridItem component
+import ElementItem from "./ElementItem";
 import { MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL } from "@/primitiveComponents/Modal";
 import { elementsGroupedByClassId } from "@/data/elements/elementsData";
 import { translateToLanguage } from "@/translations/translations";
@@ -83,12 +83,12 @@ const ElementsDeselector: React.FC = () => {
   );
 
   const activeBorderStyle = useMemo(
-    () => [stylesDeselectorGridItem.activeBorder, { borderColor: theme.primary }],
+    () => [stylesDeselectorElementItem.activeBorder, { borderColor: theme.primary }],
     [theme.primary]
   );
 
   const elementCardDynamicStyle = useMemo(
-    () => [stylesGridItem.elementCard, { backgroundColor: theme.surface_container_low }],
+    () => [stylesElementItem.elementCard, { backgroundColor: theme.surface_container_low }],
     [theme.surface_container_low]
   );
 
@@ -105,7 +105,7 @@ const ElementsDeselector: React.FC = () => {
           <ScrollView horizontal contentContainerStyle={styles.gridContainer}>
             {selectedElements.map((element) => {
               return (
-                <GridItem
+                <ElementItem
                   key={element.id} // Use element.id for key
                   element={element}
                   isSelected={true} // Always true, as they are "selected" elements in this context
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const stylesGridItem = StyleSheet.create({
+const stylesElementItem = StyleSheet.create({
   elementCard: {
     borderRadius: 15,
     borderWidth: 3,
@@ -159,12 +159,12 @@ const stylesGridItem = StyleSheet.create({
     height: ITEM_HEIGHT,
   },
   // If elementImage relied on ITEM_WIDTH, it would also need to become a dynamic style object
-  // passed via props, or GridItem needs to calculate its own internal image size.
-  // For now, keep it simple, assuming ITEM_WIDTH is not needed directly by GridItem's internal styles.
+  // passed via props, or ElementItem needs to calculate its own internal image size.
+  // For now, keep it simple, assuming ITEM_WIDTH is not needed directly by ElementItem's internal styles.
 });
 
-// Styles for the GridItem components when used in Deselector
-const stylesDeselectorGridItem = StyleSheet.create({
+// Styles for the ElementItem components when used in Deselector
+const stylesDeselectorElementItem = StyleSheet.create({
   // No elementCardBase here, as it's passed dynamically
   elementName: {
     fontSize: 14,

@@ -4,9 +4,11 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { translateToLanguage } from "@/translations/translations";
 import { Bodytype } from "@/data/bodytypes/bodytypeTypes";
+import { bodytypesData } from "@/data/bodytypes/bodytypesData";
+import { Image } from "react-native";
 
 // NOTE: Les constantes ITEM_WIDTH, ITEM_HEIGHT, NUM_COLUMNS, etc. de ElementsDeselector
-// ne sont pas pertinentes ici car nous n'utilisons pas GridItem ni une grille complexe.
+// ne sont pas pertinentes ici car nous n'utilisons pas ElementItem ni une grille complexe.
 // Nous allons utiliser des styles plus simples pour les "pilules" de Bodytype.
 
 interface BodytypesDeselectorProps {
@@ -19,7 +21,10 @@ const BodytypesDeselector: React.FC<BodytypesDeselectorProps> = ({ selectedBodyt
   const language = useLanguageStore((state) => state.language);
 
   // Convertir le Set de Bodytype en tableau pour pouvoir le mapper
-  const bodytypesToDisplay = useMemo(() => Array.from(selectedBodytypes), [selectedBodytypes]);
+  const bodytypesToDisplay = useMemo(
+    () => bodytypesData.filter((bodytype) => selectedBodytypes.has(bodytype.name)),
+    [selectedBodytypes, bodytypesData]
+  );
 
   // Gérer la désélection d'un Bodytype
   const handleDeselectBodytype = useCallback(
@@ -85,13 +90,11 @@ const BodytypesDeselector: React.FC<BodytypesDeselectorProps> = ({ selectedBodyt
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.bodytypesGrid}>
           {bodytypesToDisplay.map((bodytype) => (
             <Pressable
-              key={bodytype} // Les Bodytype (ex: "light", "heavy") sont des chaînes uniques
-              onPress={() => handleDeselectBodytype(bodytype)}
+              key={bodytype.name} // Les Bodytype (ex: "light", "heavy") sont des chaînes uniques
+              onPress={() => handleDeselectBodytype(bodytype.name)}
               style={StyleSheet.flatten([styles.bodytypeItem, itemBackgroundDynamicStyle])}
             >
-              <Text style={StyleSheet.flatten([styles.bodytypeItemText, itemTextDynamicStyle])}>
-                {translateToLanguage(bodytype, language)} {/* Traduire le nom du Bodytype */}
-              </Text>
+              <Image source={bodytype.imageUrl} />
             </Pressable>
           ))}
         </ScrollView>

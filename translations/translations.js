@@ -54,6 +54,7 @@ const translations = {
     DeleteAllSetsInMemoryText: "Do you really want to delete all saved sets?",
     ResetSettingsText: "Do you really want to reset settings?",
     SelectedElements: "Selected elements",
+    SelectedBodytypes: "Selected body types",
 
     // placeholder
     "NoSetFound...": "No set found...",
@@ -333,6 +334,7 @@ const translations = {
     DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
     ResetSettingsText: "Souhaitez-vous vraiment réinitialiser les préférences ?",
     SelectedElements: "Éléments sélectionnés",
+    SelectedBodytypes: "Types sélectionnés",
 
     // placeholder
     "NoSetFound...": "Aucun set trouvé...",
