@@ -264,8 +264,10 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     } else {
       const list = get()[listName] as SetObject[];
 
-      const isNameUnique = get().checkNameUnique(newName);
-      if (!isNameUnique) return false;
+      if (screenName === "save") {
+        const isNameUnique = get().checkNameUnique(newName);
+        if (!isNameUnique) return false;
+      }
 
       const updated = list.map((set: SetObject, i: number): SetObject => {
         if (i === index) {

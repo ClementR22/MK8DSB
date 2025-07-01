@@ -86,10 +86,7 @@ const SetCard: React.FC<SetCardProps> = ({
 
   const setsListSaved = useSetsStore((state) => state.setsListSaved);
   const isSaved = useMemo(
-    () =>
-      setsListSaved.some((setSaved) => {
-        arraysEqual(setSaved.classIds, setToShowClassIds);
-      }),
+    () => setsListSaved.some((setSaved) => arraysEqual(setSaved.classIds, setToShowClassIds)),
     [setsListSaved, setToShowClassIds]
   );
 

@@ -17,10 +17,14 @@ const SetNameInput: React.FC<SetNameInputProps> = ({ setToShowName, setCardIndex
 
   const handleEndEditing = useCallback(() => {
     if (!localName.trim()) {
-      setLocalName(setToShowName); // Évite de mettre un nom vide
+      // si le nouveau nom est vide
+      setLocalName(setToShowName); // on remet le nom initial
       renameSet(setToShowName, screenName, setCardIndex);
     } else {
-      renameSet(localName, screenName, setCardIndex);
+      if (localName !== setToShowName) {
+        // si le nom a bien changé
+        renameSet(localName, screenName, setCardIndex);
+      }
     }
   }, [localName, setToShowName, renameSet, screenName, setCardIndex]);
 
