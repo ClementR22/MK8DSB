@@ -5,7 +5,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import ImageButtonSelector, { ImageButtonOption } from "./ImageButtonSelector"; // Import the generic selector
 import { Bodytype } from "@/data/bodytypes/bodytypeTypes";
 
-interface BodytypeSelectorProps {
+interface BodytypesSelectorProps {
   selectedBodytypes: Set<Bodytype>;
   setSelectedBodytypes: React.Dispatch<React.SetStateAction<Set<Bodytype>>>;
 }
@@ -24,7 +24,7 @@ const bodytypeOptions: ImageButtonOption[] = Object.entries(bodytypeImageSources
   label: key, // Use translate if your body types are translatable
 }));
 
-const BodytypeSelector: React.FC<BodytypeSelectorProps> = ({ selectedBodytypes, setSelectedBodytypes }) => {
+const BodytypesSelector: React.FC<BodytypesSelectorProps> = ({ selectedBodytypes, setSelectedBodytypes }) => {
   const theme = useThemeStore((state) => state.theme); // Used for activeColor and container background
 
   return (
@@ -34,7 +34,7 @@ const BodytypeSelector: React.FC<BodytypeSelectorProps> = ({ selectedBodytypes, 
         selectionMode="multiple"
         initialSelection={selectedBodytypes}
         onSelectionChange={setSelectedBodytypes}
-        activeStyleProperty="borderColor" // Based on your original BodytypeSelector
+        activeStyleProperty="borderColor" // Based on your original BodytypesSelector
         activeColor={theme.primary} // Use theme.primary for active state border
       />
     </View>
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BodytypeSelector;
+export default BodytypesSelector;
