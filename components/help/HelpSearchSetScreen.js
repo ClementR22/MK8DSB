@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import Button from "@/primitiveComponents/Button";
 import { HelpFullWidthContainer, HelpIconAndText, HelpListContainer, HelpText, HelpTitle } from "./HelpModal";
@@ -61,9 +61,12 @@ const slides = [
           </HelpIconAndText>
         </HelpListContainer>
         <HelpText>Une fois tous vos critères définis, lancez la recherche en cliquant sur</HelpText>
-        <Button iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
-          <Text>Search</Text>
-        </Button>
+
+        <View>
+          <Button iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
+            <Text>Search</Text>
+          </Button>
+        </View>
       </>
     ),
     config: { backgroundColor: "#59b2ab" },

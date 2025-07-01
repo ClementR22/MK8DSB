@@ -89,11 +89,8 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
   );
 
   // --- NOUVEAU: Style pour le thumb intérieur (la partie violette) ---
-  const innerThumbDynamicStyle = useMemo(
+  const thumbDynamicStyle = useMemo(
     () => ({
-      width: 4, // La largeur du thumb violet (comme ton design)
-      height: 36, // La hauteur du thumb violet (comme ton design)
-      borderRadius: 100, // Pour les coins très arrondis
       backgroundColor: theme.primary, // La couleur du thumb
     }),
     [theme.primary]
@@ -106,10 +103,10 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
   const renderCustomThumb = useCallback(
     () => (
       <View style={[styles.thumbWrapper, thumbWrapperDynamicStyle]}>
-        <View style={innerThumbDynamicStyle} />
+        <View style={[styles.thumb, thumbDynamicStyle]} />
       </View>
     ),
-    [innerThumbDynamicStyle]
+    [thumbWrapperDynamicStyle, thumbDynamicStyle]
   );
 
   return (
@@ -207,6 +204,11 @@ const styles = StyleSheet.create({
     justifyContent: "center", // Centrer le thumb intérieur verticalement
     alignItems: "center", // Centrer le thumb intérieur horizontalement
     borderRadius: 4, // Coins légèrement arrondis pour le conteneur blanc
+  },
+  thumb: {
+    width: 4, // La largeur du thumb violet (comme ton design)
+    height: 36, // La hauteur du thumb violet (comme ton design)
+    borderRadius: 100, // Pour les coins très arrondis
   },
   text: {
     fontSize: 20,
