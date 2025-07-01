@@ -15,7 +15,7 @@ const ButtonDeleteAllSetsInMemory = ({ deleteAllSavedSets }) => {
       buttonColor={theme.error}
       buttonTextColor={theme.on_error}
     >
-      <Text>{translate("DeleteAllSetsInMemoryText")}</Text>
+      <Text style={{marginBottom: 18, marginTop: 10}}>{translate("DeleteAllSetsInMemoryText")}</Text>
     </ButtonAndModal>
   );
 };

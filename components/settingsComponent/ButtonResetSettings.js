@@ -15,7 +15,7 @@ const ButtonResetSettings = ({ resetSettings }) => {
       buttonColor={theme.error}
       buttonTextColor={theme.on_error}
     >
-      <Text>{translate("ResetSettingsText")}</Text>
+      <Text style={{marginBottom: 18, marginTop: 10}}>{translate("ResetSettingsText")}</Text>
     </ButtonAndModal>
   );
 };
