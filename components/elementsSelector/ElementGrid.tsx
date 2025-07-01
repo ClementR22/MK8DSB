@@ -1,4 +1,4 @@
-import { BodyElement, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
+import { BodyElement, CharacterElement, GliderElement, WheelElement } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
 import React, { memo, useCallback, useMemo } from "react";
 import { View, StyleSheet, Dimensions } from "react-native"; // Removed Dimensions

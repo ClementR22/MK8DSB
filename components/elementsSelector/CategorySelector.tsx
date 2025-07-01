@@ -1,5 +1,5 @@
 import { category4Names } from "@/data/data";
-import { CategoryKey } from "@/data/elementsTypes";
+import { CategoryKey } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore"; // Assuming theme store is needed for styles
 import React, { memo } from "react";
 import ImageButtonSelector, { ImageButtonOption } from "./ImageButtonSelector"; // Import the generic selector

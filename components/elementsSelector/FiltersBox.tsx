@@ -1,7 +1,5 @@
 import React from "react";
-import BodyTypeSelector, { BodyType } from "./BodyTypeSelector";
 import { StyleSheet, View } from "react-native";
-import ElementsDeselector from "./ElementsDeselector";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 interface FiltersBoxProps {

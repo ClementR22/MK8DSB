@@ -4,8 +4,8 @@ import { Pressable, StyleSheet, Text, View, Image, ViewStyle } from "react-nativ
 import { useThemeStore } from "@/stores/useThemeStore";
 import TooltipWrapper from "../TooltipWrapper";
 import { translate } from "@/translations/translations";
-import { BodyType } from "./BodyTypeSelector";
-import { CategoryKey } from "@/data/elementsTypes";
+import { Bodytype } from "@/data/bodytypes/bodytypeTypes";
+import { CategoryKey } from "@/data/elements/elementsTypes";
 
 export interface ImageButtonOption {
   key: string;
@@ -19,8 +19,8 @@ export type ActiveStyleProperty = "backgroundColor" | "borderColor"; // Renamed 
 interface ImageButtonSelectorProps {
   options: ImageButtonOption[];
   selectionMode: SelectionMode;
-  onSelectionChange: React.Dispatch<React.SetStateAction<CategoryKey | Set<BodyType>>>;
-  initialSelection: CategoryKey | Set<BodyType> | null;
+  onSelectionChange: React.Dispatch<React.SetStateAction<CategoryKey | Set<Bodytype>>>;
+  initialSelection: CategoryKey | Set<Bodytype> | null;
   buttonSize?: { width: number; height: number };
   activeStyleProperty?: ActiveStyleProperty;
   activeColor?: string;
@@ -59,7 +59,7 @@ const ImageButtonSelector: React.FC<ImageButtonSelectorProps> = ({
 
   const handlePress = useCallback(
     (key: string) => {
-      let newSelection: CategoryKey | Set<BodyType>;
+      let newSelection: CategoryKey | Set<Bodytype>;
 
       if (selectionMode === "single") {
         newSelection = key as CategoryKey;
@@ -70,7 +70,7 @@ const ImageButtonSelector: React.FC<ImageButtonSelectorProps> = ({
         } else {
           currentSet.add(key);
         }
-        newSelection = currentSet as Set<BodyType>;
+        newSelection = currentSet as Set<Bodytype>;
       }
 
       setCurrentSelection(newSelection);

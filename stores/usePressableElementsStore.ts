@@ -1,7 +1,7 @@
 // usePressableElementsStore.ts
 import { create } from "zustand";
 import { category4Names } from "@/data/data";
-import { CategoryKey } from "@/data/elementsTypes";
+import { CategoryKey } from "@/data/elements/elementsTypes";
 
 export type SelectedClassIds = {
   character: number;

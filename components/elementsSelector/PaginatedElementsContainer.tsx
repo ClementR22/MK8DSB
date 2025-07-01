@@ -2,7 +2,7 @@ import React, { useMemo, useCallback, memo, useEffect } from "react";
 import { StyleSheet, ViewStyle, StyleProp, View } from "react-native";
 
 import ElementGrid, { ELEMENT_GRID_PADDING_VERTICAL, GAP, ITEM_HEIGHT } from "./ElementGrid";
-import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
+import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 export const ELEMENTS_PER_PAGE = 12;

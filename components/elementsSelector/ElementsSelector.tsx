@@ -4,8 +4,13 @@
 import React, { useState, memo, useMemo, useEffect, useCallback } from "react";
 import { View, StyleSheet, Pressable, ScrollView } from "react-native";
 import PaginatedElementsContainer, { ELEMENTS_PER_PAGE } from "./PaginatedElementsContainer";
-import { elementsDataBody, elementsDataCharacter, elementsDataGlider, elementsDataWheel } from "@/data/elementsData";
-import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
+import {
+  elementsDataBody,
+  elementsDataCharacter,
+  elementsDataGlider,
+  elementsDataWheel,
+} from "@/data/elements/elementsData";
+import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elements/elementsTypes";
 import CategorySelector from "./CategorySelector";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import SortModeSelector from "./SortModeSelector";

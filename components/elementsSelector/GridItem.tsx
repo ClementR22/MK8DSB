@@ -1,9 +1,9 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { BodyElement, CharacterElement, GliderElement, WheelElement } from "@/data/elementsTypes";
+import { BodyElement, CharacterElement, GliderElement, WheelElement } from "@/data/elements/elementsTypes";
 import TooltipWrapper from "../TooltipWrapper";
 import Modal from "@/primitiveComponents/Modal";
-import { classesStatsByCategory } from "@/data/elementsStats";
+import { classesStatsByCategory } from "@/data/elements/elementsStats";
 import { compactStatNames, statNames } from "@/data/data";
 
 interface GridItemProps {

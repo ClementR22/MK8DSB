@@ -2,10 +2,10 @@ import React, { memo, useCallback, useMemo } from "react";
 import { View, StyleSheet, Text, Dimensions, ScrollView } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import { CategoryKey } from "@/data/elementsTypes";
+import { CategoryKey } from "@/data/elements/elementsTypes";
 import GridItem from "./GridItem"; // Re-use the existing GridItem component
 import { MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL } from "@/primitiveComponents/Modal";
-import { elementsGroupedByClassId } from "@/data/elementsData";
+import { elementsGroupedByClassId } from "@/data/elements/elementsData";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 

@@ -15,7 +15,7 @@ export interface CharacterElement extends ElementBase {
 
 export interface BodyElement extends ElementBase {
   category: "body";
-  bodyType: "kart" | "bike" | "sportBike" | "ATV";
+  bodytype: "kart" | "bike" | "sportBike" | "ATV";
   // statBonus: any;
 }
 

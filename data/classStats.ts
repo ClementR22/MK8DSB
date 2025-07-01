@@ -1,4 +1,4 @@
-import { ElementStats } from "./elementsTypes";
+import { ElementStats } from "./elements/elementsTypes";
 
 export const baseStatsByClassId: { [key: number]: ElementStats } = {
   // --- Character Class Stats (Example values - you'll need to fill these accurately) ---

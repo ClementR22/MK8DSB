@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import { Image, StyleSheet, View, ImageStyle, ImageSourcePropType } from "react-native";
 import { category4Names } from "@/data/data";
-import { elementsData } from "@/data/elementsData";
+import { elementsData } from "@/data/elements/elementsData";
 import TooltipWrapper from "../TooltipWrapper";
 import { vw } from "../styles/theme";
-import { CategoryKey } from "@/data/elementsTypes";
+import { CategoryKey } from "@/data/elements/elementsTypes";
 
 const MODAL_WIDTH = vw * 0.9;
 const MAX_WIDTH_IN_MODAL = MODAL_WIDTH - 20;

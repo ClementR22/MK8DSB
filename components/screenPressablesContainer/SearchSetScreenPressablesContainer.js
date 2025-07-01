@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { bodyTypeNames, category4Names } from "@/data/data";
+import { bodytypeNames, category4Names } from "@/data/data";
 import { setsData } from "@/data/setsData";
 import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
 import { translate } from "@/translations/translations";
@@ -15,14 +15,14 @@ import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import FiltersBox from "../elementsSelector/FiltersBox";
 import ElementsDeselector from "../elementsSelector/ElementsDeselector";
-import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
+import BodytypeSelector from "../elementsSelector/BodytypeSelector";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
   const [resultsNumber, setResultsNumber] = useState(5);
   const selectedClassIds = usePressableElementsStore((state) => state.multiSelectedClassIds);
-  const [chosenBodyType, setChosenBodyType] = useState(new Set());
+  const [chosenBodytype, setChosenBodytype] = useState(new Set());
 
   const SetFoundTranslated = translate("SetFound");
 
@@ -44,7 +44,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
     const chosenStatsFilterNumber = chosenStats.map((stat) => stat.statFilterNumber);
     const chosenClassIds = selectedClassIds;
 
-    if (!chosenStatsChecked.includes(true) || chosenBodyType.length === 0) {
+    if (!chosenStatsChecked.includes(true) || chosenBodytype.length === 0) {
       updateSetsToShow([]); // Ou gérer l'état de "rien trouvé"
       return; // Sortir si aucun filtre n'est sélectionné
     }
@@ -52,7 +52,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
     const gaps = [];
 
     for (const [setId, setData] of setsData) {
-      const { classIds, stats, bodyTypes } = setData;
+      const { classIds, stats, bodytypes } = setData;
 
       const isOneElementNonAccepted = category4Names.some((categoryKey, index) => {
         if (chosenClassIds[categoryKey].size === 0) {
@@ -66,9 +66,9 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
         continue;
       }
 
-      if (chosenBodyType.size !== 0) {
-        const isEveryBodyTypeNonAccepted = !bodyTypes.some((item) => chosenBodyType.has(item));
-        if (isEveryBodyTypeNonAccepted) {
+      if (chosenBodytype.size !== 0) {
+        const isEveryBodytypeNonAccepted = !bodytypes.some((item) => chosenBodytype.has(item));
+        if (isEveryBodytypeNonAccepted) {
           continue;
         }
       }
@@ -129,7 +129,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
       >
         <ElementsSelector selectionMode="multiple">
           <FiltersBox>
-            <BodyTypeSelector selectedBodyTypes={chosenBodyType} setSelectedBodyTypes={setChosenBodyType} />
+            <BodytypeSelector selectedBodytypes={chosenBodytype} setSelectedBodytypes={setChosenBodytype} />
             <ElementsDeselector />
           </FiltersBox>
         </ElementsSelector>

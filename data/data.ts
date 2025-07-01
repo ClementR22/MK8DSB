@@ -94,4 +94,4 @@ export const compactStatNames = {
 
 export const category4Names = ["character", "body", "wheel", "glider"];
 
-export const bodyTypeNames = ["kart", "bike", "sportBike", "ATV"];
+export const bodytypeNames = ["kart", "bike", "sportBike", "ATV"];
