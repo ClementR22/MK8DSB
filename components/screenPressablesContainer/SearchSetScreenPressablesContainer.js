@@ -14,9 +14,9 @@ import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModa
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import FiltersBox from "../elementsSelector/FiltersBox";
-import ElementsDeselector from "../elementsSelector/ElementsDeselector";
+import ElementsDeselector from "../elementsSelector/element/ElementsDeselector";
 import BodytypesSelector from "../elementsSelector/BodytypesSelector";
-import BodytypesDeselector from "../elementsSelector/BodytypesDeselector";
+import BodytypesDeselector from "../elementsSelector/bodytype/BodytypesDeselector";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
   const chosenStats = useSetsStore((state) => state.chosenStats);

@@ -2,7 +2,7 @@ import { BodyElement, CharacterElement, GliderElement, WheelElement } from "@/da
 import { useThemeStore } from "@/stores/useThemeStore";
 import React, { memo, useCallback, useMemo } from "react";
 import { View, StyleSheet, Dimensions } from "react-native"; // Removed Dimensions
-import ElementItem from "./ElementItem";
+import ElementItem from "./element/ElementItem";
 import { MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL } from "@/primitiveComponents/Modal";
 
 interface ElementGridProps {
