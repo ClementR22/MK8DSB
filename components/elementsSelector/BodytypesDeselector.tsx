@@ -6,6 +6,7 @@ import { translateToLanguage } from "@/translations/translations";
 import { Bodytype } from "@/data/bodytypes/bodytypeTypes";
 import { bodytypesData } from "@/data/bodytypes/bodytypesData";
 import { Image } from "react-native";
+import BodytypeItem from "./BodytypeItem";
 
 // NOTE: Les constantes ITEM_WIDTH, ITEM_HEIGHT, NUM_COLUMNS, etc. de ElementsDeselector
 // ne sont pas pertinentes ici car nous n'utilisons pas ElementItem ni une grille complexe.
@@ -63,11 +64,12 @@ const BodytypesDeselector: React.FC<BodytypesDeselectorProps> = ({ selectedBodyt
 
   const itemBackgroundDynamicStyle = useMemo(
     () => ({
-      backgroundColor: theme.secondary_container, // Couleur de fond des pilules
-      borderColor: theme.secondary, // Bordure des pilules (pour indiquer qu'elles sont "sélectionnées" ici)
+      backgroundColor: theme.surface_container_low, // Couleur de fond des pilules
     }),
-    [theme.secondary_container, theme.secondary]
+    [theme.surface_container_low]
   );
+
+  const activeBorderStyle = useMemo(() => [styles.activeBorder, { borderColor: theme.primary }], [theme.primary]);
 
   const noElementsTextDynamicStyle = useMemo(
     () => ({
@@ -88,14 +90,15 @@ const BodytypesDeselector: React.FC<BodytypesDeselectorProps> = ({ selectedBodyt
         </Text>
       ) : (
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.bodytypesGrid}>
-          {bodytypesToDisplay.map((bodytype) => (
-            <Pressable
-              key={bodytype.name} // Les Bodytype (ex: "light", "heavy") sont des chaînes uniques
-              onPress={() => handleDeselectBodytype(bodytype.name)}
-              style={StyleSheet.flatten([styles.bodytypeItem, itemBackgroundDynamicStyle])}
-            >
-              <Image source={bodytype.imageUrl} />
-            </Pressable>
+          {bodytypesToDisplay.map((bodytypeItem) => (
+            <BodytypeItem
+              bodytype={bodytypeItem}
+              isSelected={true}
+              onSelectBodytype={() => handleDeselectBodytype(bodytypeItem.name)}
+              bodytypeCardDynamicStyle={StyleSheet.flatten([styles.bodytypeItem, itemBackgroundDynamicStyle])}
+              activeBorderStyle={activeBorderStyle}
+              size={40}
+            />
           ))}
         </ScrollView>
       )}
@@ -123,13 +126,11 @@ const styles = StyleSheet.create({
     paddingVertical: 4, // Petit padding si besoin pour le scroll
   },
   bodytypeItem: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 20, // Pour un effet "pilule"
-    borderWidth: 1, // Bordure pour chaque pilule
-    justifyContent: "center",
+    borderRadius: 15,
+    borderWidth: 3,
+    borderColor: "transparent",
+    overflow: "hidden",
     alignItems: "center",
-    // minWidth: 80, // Peut être ajouté si tu veux une largeur minimale
   },
   bodytypeItemText: {
     fontSize: 14,
@@ -140,6 +141,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontStyle: "italic",
     paddingVertical: 10,
+  },
+  activeBorder: {
+    borderWidth: 3,
+    // You might want a different border color for items in the deselector to indicate they are "selected"
+    // For example, make it a distinct 'deselected' color or a clear indicator.
   },
 });
 
