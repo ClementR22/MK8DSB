@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View, Image, ViewStyle } from "react-nativ
 import { useThemeStore } from "@/stores/useThemeStore";
 import TooltipWrapper from "../TooltipWrapper";
 import { translate } from "@/translations/translations";
-import { BodyType } from "./filters/BodyTypeSelector";
+import { BodyType } from "./BodyTypeSelector";
 import { CategoryKey } from "@/data/elementsTypes";
 
 export interface ImageButtonOption {

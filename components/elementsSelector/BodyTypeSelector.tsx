@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native"; // Add Text for the filter title
 import { useThemeStore } from "@/stores/useThemeStore";
 
-import ImageButtonSelector, { ImageButtonOption } from "../ImageButtonSelector"; // Import the generic selector
+import ImageButtonSelector, { ImageButtonOption } from "./ImageButtonSelector"; // Import the generic selector
 
 // Make sure these match the 'bodyType' property in your BodyElement data
 export type BodyType = "kart" | "bike" | "sportBike" | "ATV"; // Example types, update if different
