@@ -130,10 +130,10 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
       >
         <ElementsSelector selectionMode="multiple">
           <FiltersBox>
-            <BodytypesSelector selectedBodytypes={chosenBodytype} setSelectedBodytypes={setChosenBodytype} />
             <ElementsDeselector />
             <BodytypesDeselector selectedBodytypes={chosenBodytype} setSelectedBodytypes={setChosenBodytype} />
           </FiltersBox>
+          <BodytypesSelector selectedBodytypes={chosenBodytype} setSelectedBodytypes={setChosenBodytype} />
         </ElementsSelector>
       </ButtonAndModal>
 

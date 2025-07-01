@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderRadius: 10,
     overflow: "hidden",
+    gap: 4,
   },
 });
 

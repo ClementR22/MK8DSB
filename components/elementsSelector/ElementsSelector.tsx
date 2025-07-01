@@ -91,14 +91,15 @@ const ElementsSelector: React.FC<ElementsSelectorProps> = ({ selectionMode = "si
             iconType={IconType.MaterialCommunityIcons}
             tooltipText={isOpenFilterView ? "DevelopSliders" : "ReduceSliders"}
           />
-
-          <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
         </View>
+
         {isOpenFilterView && (
           <Pressable style={styles.controlsContainer}>
             <SortModeSelector setOrderNumber={setOrderNumber} />
           </Pressable>
         )}
+
+        <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
 
         <PaginatedElementsContainer
           selectedCategory={selectedCategory}

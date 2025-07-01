@@ -71,41 +71,21 @@ const ElementsDeselector: React.FC = () => {
   );
 
   return (
-    <BaseDeselectorContainer
-      titleKey="SelectedElements"
-      isEmpty={selectedElements.length === 0}
-      contentContainerStyle={styles.gridContainer} // Passe ce style au conteneur de BaseDeselectorContainer
-    >
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ flexDirection: "row", gap: 3 }}
-      >
-        {selectedElements.map((element) => (
-          <ElementItem
-            key={element.id}
-            element={element}
-            isSelected={true}
-            onSelectElement={() => handleDeselectElement(element.category, element.classId)}
-            elementCardDynamicStyle={elementCardDynamicStyle}
-            activeBorderStyle={activeBorderStyle}
-            size={40}
-          />
-        ))}
-      </ScrollView>
+    <BaseDeselectorContainer titleKey="SelectedElements" isEmpty={selectedElements.length === 0}>
+      {selectedElements.map((element) => (
+        <ElementItem
+          key={element.id}
+          element={element}
+          isSelected={true}
+          onSelectElement={() => handleDeselectElement(element.category, element.classId)}
+          elementCardDynamicStyle={elementCardDynamicStyle}
+          activeBorderStyle={activeBorderStyle}
+          size={40}
+        />
+      ))}
     </BaseDeselectorContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  // deselectorContainer, deselectorTitle, noElementsText sont maintenant dans BaseDeselectorContainer
-  gridContainer: {
-    // La ScrollView prendra les styles de flexDirection et gap
-    flexDirection: "row",
-    gap: 3,
-  },
-  // noElementsContainer n'est plus pertinent ici car la logique est dans BaseDeselectorContainer
-});
 
 const stylesElementItem = StyleSheet.create({
   elementCard: {

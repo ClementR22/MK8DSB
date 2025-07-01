@@ -46,39 +46,24 @@ const BodytypesDeselector: React.FC<BodytypesDeselectorProps> = ({ selectedBodyt
   const activeBorderStyle = useMemo(() => [styles.activeBorder, { borderColor: theme.primary }], [theme.primary]);
 
   return (
-    <BaseDeselectorContainer
-      titleKey="SelectedBodytypes"
-      isEmpty={bodytypesToDisplay.length === 0}
-      contentContainerStyle={styles.bodytypesGrid} // Passe ce style au conteneur de BaseDeselectorContainer
-    >
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ flexDirection: "row", gap: 8 }}
-      >
-        {bodytypesToDisplay.map((bodytypeItem) => (
-          <BodytypeItem
-            key={bodytypeItem.name}
-            bodytype={bodytypeItem}
-            isSelected={true}
-            onSelectBodytype={() => handleDeselectBodytype(bodytypeItem.name)}
-            bodytypeCardDynamicStyle={StyleSheet.flatten([styles.bodytypeItem, itemBackgroundDynamicStyle])}
-            activeBorderStyle={activeBorderStyle}
-            size={40}
-          />
-        ))}
-      </ScrollView>
+    <BaseDeselectorContainer titleKey="SelectedBodytypes" isEmpty={bodytypesToDisplay.length === 0}>
+      {bodytypesToDisplay.map((bodytypeItem) => (
+        <BodytypeItem
+          key={bodytypeItem.name}
+          bodytype={bodytypeItem}
+          isSelected={true}
+          onSelectBodytype={() => handleDeselectBodytype(bodytypeItem.name)}
+          bodytypeCardDynamicStyle={StyleSheet.flatten([styles.bodytypeItem, itemBackgroundDynamicStyle])}
+          activeBorderStyle={activeBorderStyle}
+          size={40}
+        />
+      ))}
     </BaseDeselectorContainer>
   );
 };
 
 const styles = StyleSheet.create({
   // deselectorContainer, deselectorTitle, noElementsText sont maintenant dans BaseDeselectorContainer
-  bodytypesGrid: {
-    flexDirection: "row",
-    gap: 8,
-    paddingVertical: 4,
-  },
   bodytypeItem: {
     borderRadius: 15,
     borderWidth: 3,
