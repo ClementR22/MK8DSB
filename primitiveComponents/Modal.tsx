@@ -7,15 +7,18 @@ import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 export const MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL = 24;
+
 interface ModalButtonProps {
-  text: string;
-  onPress: () => void;
-  tooltipText?: string;
+  text: string,
+  onPress: () => void,
+  tooltipText?: string,
+  buttonColor?: string,
+  buttonTextColor?: string,
 }
 
-const ModalButton = React.memo(({ text, onPress, tooltipText }: ModalButtonProps) => {
+const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, buttonTextColor }: ModalButtonProps) => {
   return (
-    <Button elevation={12} onPress={onPress} minWidth={100} tooltipText={tooltipText}>
+    <Button buttonColor={buttonColor} buttonTextColor={buttonTextColor} elevation={12} onPress={onPress} minWidth={100} tooltipText={tooltipText}>
       {translate(text)}
     </Button>
   );
@@ -53,6 +56,16 @@ const Modal = ({
 }: ModalProps) => {
   const theme = useThemeStore((state) => state.theme);
 
+  const buttonContainerStyle = useMemo(
+    () => (theme.error),
+    [theme.error],
+  )
+
+  const buttonTextStyle = useMemo(
+    () => (theme.on_error),
+    [theme.on_error],
+  )
+
   const containerBackgroundColorStyle = useMemo(
     () => ({
       backgroundColor: theme.surface_container_high,
@@ -84,7 +97,7 @@ const Modal = ({
         const isSucces = secondButtonProps.onPress();
         if (closeAfterSecondButton || isSucces) setIsModalVisible(false);
       };
-      return <ModalButton {...secondButtonProps} onPress={completedOnPress} />;
+      return <ModalButton buttonColor={buttonContainerStyle} buttonTextColor={buttonTextStyle} {...secondButtonProps} onPress={completedOnPress} />;
     }
     return null;
   }, [secondButton, secondButtonProps, closeAfterSecondButton, setIsModalVisible]);

@@ -11,6 +11,7 @@ const ButtonResetSettings = ({ resetSettings }) => {
     <ButtonAndModal
       triggerButtonText="ResetSettings"
       secondButtonProps={{ text: "Confirm", onPress: resetSettings }}
+      secondButtonType="danger"
       closeButtonText="Cancel"
       buttonColor={theme.error}
       buttonTextColor={theme.on_error}

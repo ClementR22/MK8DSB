@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback, useState } from "react";
-import { GestureResponderEvent, StyleSheet } from "react-native";
+import { GestureResponderEvent } from "react-native";
 import Modal from "@/primitiveComponents/Modal";
 import Button from "../../primitiveComponents/Button";
 import { translate } from "@/translations/translations";
@@ -25,6 +25,8 @@ interface ButtonAndModalProps {
   closeButtonText?: string;
   // Composant pour le deuxieme bouton
   secondButton?: ReactElement;
+  // Type de confirmation demandée
+  secondButtonType?: "danger" | null;
   // ou juste ses prps
   secondButtonProps?: { text: string; onPress: () => void; tooltipText: string };
   closeAfterSecondButton?: boolean;
@@ -104,11 +106,5 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = React.memo(
     );
   }
 );
-
-const styles = StyleSheet.create({
-  previewContainer: {
-    // Styles partagés si nécessaire
-  },
-});
 
 export default ButtonAndModal;

@@ -11,6 +11,7 @@ const ButtonDeleteAllSetsInMemory = ({ deleteAllSavedSets }) => {
     <ButtonAndModal
       triggerButtonText="DeleteAllSetsInMemory"
       secondButtonProps={{ text: "Confirm", onPress: deleteAllSavedSets }}
+      secondButtonType="danger"
       closeButtonText="Cancel"
       buttonColor={theme.error}
       buttonTextColor={theme.on_error}
