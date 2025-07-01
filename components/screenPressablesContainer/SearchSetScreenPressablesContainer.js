@@ -14,6 +14,8 @@ import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModa
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import ElementsSelector from "../elementsSelector/ElementsSelector";
 import FiltersBox from "../elementsSelector/FiltersBox";
+import ElementsDeselector from "../elementsSelector/ElementsDeselector";
+import BodyTypeSelector from "../elementsSelector/BodyTypeSelector";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
   const chosenStats = useSetsStore((state) => state.chosenStats);
@@ -126,7 +128,10 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
         }
       >
         <ElementsSelector selectionMode="multiple">
-          <FiltersBox selectedBodyTypes={chosenBodyType} setSelectedBodyTypes={setChosenBodyType} />
+          <FiltersBox>
+            <BodyTypeSelector selectedBodyTypes={chosenBodyType} setSelectedBodyTypes={setChosenBodyType} />
+            <ElementsDeselector />
+          </FiltersBox>
         </ElementsSelector>
       </ButtonAndModal>
 

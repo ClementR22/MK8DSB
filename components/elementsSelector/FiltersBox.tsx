@@ -5,18 +5,14 @@ import ElementsDeselector from "./ElementsDeselector";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 interface FiltersBoxProps {
-  selectedBodyTypes: Set<BodyType>;
-  setSelectedBodyTypes: React.Dispatch<React.SetStateAction<Set<BodyType>>>;
+  children: React.ReactNode;
 }
 
-const FiltersBox = ({ selectedBodyTypes, setSelectedBodyTypes }: FiltersBoxProps) => {
+const FiltersBox = ({ children }: FiltersBoxProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   return (
-    <View style={[styles.container, { borderColor: theme.primary, backgroundColor: theme.surface }]}>
-      <BodyTypeSelector selectedBodyTypes={selectedBodyTypes} setSelectedBodyTypes={setSelectedBodyTypes} />
-      <ElementsDeselector />
-    </View>
+    <View style={[styles.container, { borderColor: theme.primary, backgroundColor: theme.surface }]}>{children}</View>
   );
 };
 
