@@ -1,7 +1,12 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { useThemeStore } from "@/stores/useThemeStore";
+import ButtonIcon from "../primitiveComponents/ButtonIcon";
+import { IconType } from "react-native-dynamic-vector-icons";
 
-const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
+const ResultsNumberSelector = ({ resultsNumber, setResultsNumber }) => {
+  const theme = useThemeStore((state) => state.theme);
+
   // Fonction pour incrémenter
   const increment = () => {
     setResultsNumber((prevResultsNumber) => prevResultsNumber + 1);
@@ -9,49 +14,34 @@ const ResultsNumber = ({ resultsNumber, setResultsNumber }) => {
 
   // Fonction pour décrémenter
   const decrement = () => {
-    setResultsNumber((prevResultsNumber) =>
-      prevResultsNumber > 0 ? prevResultsNumber - 1 : 0
-    ); // Évite d'aller en dessous de 0
+    setResultsNumber((prevResultsNumber) => (prevResultsNumber > 1 ? prevResultsNumber - 1 : 1)); // Évite d'aller en dessous de 0
   };
+
+  const styles = StyleSheet.create({
+    container: {
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "none",
+      margin: 10,
+      flexDirection: "row",
+      paddingHorizontal: 14,
+    },
+    resultsNumberText: {
+      fontSize: 48,
+      textAlign: "center",
+      width: "auto",
+      flexGrow: 1,
+      color: theme.on_surface,
+    },
+  });
 
   return (
     <View style={styles.container}>
+      <ButtonIcon onPress={decrement} iconName="minus" iconType={IconType.MaterialCommunityIcons} />
       <Text style={styles.resultsNumberText}>{resultsNumber}</Text>
-      <View style={styles.buttonContainer}>
-        <Pressable style={styles.button} onPress={decrement}>
-          <Text style={styles.buttonText}>-</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={increment}>
-          <Text style={styles.buttonText}>+</Text>
-        </Pressable>
-      </View>
+      <ButtonIcon onPress={increment} iconName="plus" iconType={IconType.MaterialCommunityIcons} />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  resultsNumberText: {
-    fontSize: 48,
-    marginBottom: 20,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-  },
-  button: {
-    backgroundColor: "#007BFF",
-    padding: 20,
-    marginHorizontal: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "#FFFFFF",
-    fontSize: 24,
-  },
-});
-
-export default ResultsNumber;
+export default ResultsNumberSelector;

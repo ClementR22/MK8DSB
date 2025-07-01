@@ -1,0 +1,75 @@
+import React, { useMemo } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useThemeStore } from "@/stores/useThemeStore";
+
+interface StatSliderCompareBarProps {
+  value: number;
+  scrollToThisSetCard: () => void;
+}
+
+const MAX_STAT_VALUE = 6;
+
+const StatSliderCompareBar = ({ value, scrollToThisSetCard }: StatSliderCompareBarProps) => {
+  const theme = useThemeStore((state) => state.theme);
+
+  const sliderTrackDynamicBg = useMemo(
+    () => ({
+      backgroundColor: theme.surface_container_low,
+    }),
+    [theme.surface_container_low]
+  );
+
+  const primarySegmentColor = useMemo(
+    () => ({
+      backgroundColor: theme.primary,
+    }),
+    [theme.primary]
+  );
+
+  const innerFillWidth = useMemo(() => {
+    const clampedValue = Math.min(Math.max(value, 0), MAX_STAT_VALUE);
+    return `${(clampedValue / MAX_STAT_VALUE) * 100}%`;
+  }, [value]);
+
+  const textDynamicStyle = useMemo(
+    () => ({
+      color: theme.on_surface,
+    }),
+    [theme.on_surface]
+  );
+
+  return (
+    <Pressable style={styles.container} onPress={scrollToThisSetCard}>
+      <View style={StyleSheet.flatten([styles.sliderTrack, sliderTrackDynamicBg])}>
+        <View
+          style={StyleSheet.flatten([
+            styles.trackSegment,
+            { width: innerFillWidth as `${number}%` | number },
+            primarySegmentColor,
+          ])}
+        />
+      </View>
+      <Text style={StyleSheet.flatten([styles.text, textDynamicStyle])}>{value}</Text>
+    </Pressable>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { width: "100%", flexDirection: "row", alignItems: "center", gap: 10 },
+  sliderTrack: {
+    flex: 1,
+    height: 13,
+    borderRadius: 100,
+    overflow: "hidden",
+  },
+  trackSegment: {
+    height: "100%",
+  },
+  text: {
+    width: 40,
+    fontSize: 20,
+    fontWeight: "600",
+  },
+});
+
+export default React.memo(StatSliderCompareBar);

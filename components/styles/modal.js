@@ -1,0 +1,68 @@
+import { StyleSheet } from "react-native";
+import { vh, vw } from "@/components/styles/theme";
+
+export const modal = (theme) =>
+  StyleSheet.create({
+    background: {
+      ...StyleSheet.absoluteFillObject,
+      cursor: "auto",
+      zIndex: -1,
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+    container: {
+      maxHeight: 0.9 * vh,
+      zIndex: 10,
+      cursor: "auto",
+      //alignSelf: "center",
+      width: 0.9 * vw,
+      maxWidth: 400,
+      borderRadius: 28,
+      paddingVertical: 24,
+      backgroundColor: theme.surface_container_high,
+    },
+    content: {
+      flex: 1,
+      marginBottom: 0,
+      maxHeight: vh * 0.5,
+      paddingVertical: 10,
+      borderTopColor: theme.outline,
+      borderTopWidth: 1,
+      borderBottomColor: theme.outline,
+      borderBottomWidth: 1,
+    },
+    title: {
+      color: theme.on_surface,
+      paddingHorizontal: 24,
+      fontSize: 24,
+      marginBottom: 16,
+    },
+    title_center: {
+      color: theme.on_surface,
+      alignSelf: "center",
+      paddingHorizontal: 24,
+      fontSize: 24,
+      marginBottom: 0,
+    },
+    close_button_center: {
+      alignSelf: "center",
+      width: 100,
+    },
+    close_button_right: {
+      flexGrow: 1,
+      alignSelf: "flex-end",
+      width: 100,
+      marginRight: 24,
+    },
+    pressableStat: {
+      marginBottom: 2,
+      marginHorizontal: 24,
+      alignItems: "center",
+      flexDirection: "row",
+      borderRadius: 24,
+    },
+  });
