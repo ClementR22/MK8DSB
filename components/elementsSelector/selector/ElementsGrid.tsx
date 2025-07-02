@@ -14,7 +14,7 @@ interface ElementsGridProps {
 
 export const ELEMENT_GRID_PADDING_VERTICAL = 10;
 const ELEMENT_GRID_PADDING_HORIZONTAL = 10;
-export const GAP = 10;
+export const GAP = 5;
 const { width: screenWidth } = Dimensions.get("window");
 const NUM_COLUMNS = 4;
 
@@ -25,7 +25,7 @@ const ITEM_WIDTH =
     GAP * (NUM_COLUMNS - 1)) /
   NUM_COLUMNS;
 
-export const ITEM_HEIGHT = ITEM_WIDTH * 1.2;
+export const ITEM_HEIGHT = ITEM_WIDTH * 1.25;
 
 const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, onSelectElement }) => {
   const theme = useThemeStore((state) => state.theme);

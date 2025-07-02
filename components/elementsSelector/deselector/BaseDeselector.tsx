@@ -95,7 +95,6 @@ const BaseDeselector: React.FC<BaseDeselectorProps> = ({ titleKey, isEmpty, item
 const styles = StyleSheet.create({
   deselectorContainer: {
     borderRadius: 12,
-    borderWidth: 1,
   },
   deselectorTitle: {
     fontSize: 16,
