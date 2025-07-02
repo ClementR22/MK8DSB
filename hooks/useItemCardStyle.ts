@@ -3,7 +3,8 @@ import { useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore"; // N'oublie pas d'importer useThemeStore
 
-// Si le style global de la carte dépend de 'size', le hook peut le prendre en prop
+export const ITEM_CARD_BORDER_RADIUS = 15;
+
 interface ItemCardStyleProps {
   size: number;
 }
@@ -16,7 +17,7 @@ export const useItemCardStyle = ({ size }: ItemCardStyleProps) => {
     return StyleSheet.flatten([
       {
         // Styles de base communs à toutes les cartes
-        borderRadius: 15,
+        borderRadius: ITEM_CARD_BORDER_RADIUS,
         borderWidth: 3,
         borderColor: "transparent",
         overflow: "hidden",

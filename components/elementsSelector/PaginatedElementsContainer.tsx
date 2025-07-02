@@ -1,21 +1,17 @@
 import React, { useMemo, useCallback, memo, useEffect } from "react";
 import { StyleSheet, ViewStyle, StyleProp, View } from "react-native";
 
-import ElementsGrid, { ELEMENT_GRID_PADDING_VERTICAL, GAP, ITEM_HEIGHT } from "./selector/ElementsGrid";
-import {
-  BodyElement,
-  CategoryKey,
-  CharacterElement,
-  ElementItem,
-  GliderElement,
-  WheelElement,
-} from "@/data/elements/elementsTypes";
+import ElementsGrid, { PAGINATED_ELEMENTS_CONTAINER_PADDING } from "./selector/ElementsGrid";
+import { CategoryKey, ElementItem } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
+import CategorySelector from "./selector/CategorySelector";
+import { ITEM_CARD_BORDER_RADIUS } from "@/hooks/useItemCardStyle";
 
 export const ELEMENTS_PER_PAGE = 12;
 
 interface PaginatedElementSelectorProps {
   selectedCategory: CategoryKey;
+  setSelectedCategory: (newSelectedCategory: CategoryKey) => void;
   categoryElements: ElementItem[];
   onElementsSelectionChange: (classId: number) => void;
   initialSelectedClassId: number | Set<number>;
@@ -25,6 +21,7 @@ interface PaginatedElementSelectorProps {
 
 const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
   selectedCategory,
+  setSelectedCategory,
   categoryElements,
   onElementsSelectionChange,
   initialSelectedClassId,
@@ -47,7 +44,7 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
   );
 
   const containerStyle = useMemo(
-    () => [styles.fixedHeightContainer, { backgroundColor: themeSurface }] as StyleProp<ViewStyle>,
+    () => [styles.container, { backgroundColor: themeSurface }] as StyleProp<ViewStyle>,
     [themeSurface]
   );
 
@@ -57,6 +54,8 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
 
   return (
     <View style={containerStyle}>
+      <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+
       <ElementsGrid
         elements={currentElements}
         selectedClassId={initialSelectedClassId}
@@ -67,8 +66,11 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
 };
 
 const styles = StyleSheet.create({
-  fixedHeightContainer: {
-    height: ITEM_HEIGHT * 3 + GAP * 2 + ELEMENT_GRID_PADDING_VERTICAL * 2,
+  container: {
+    borderRadius: ITEM_CARD_BORDER_RADIUS + PAGINATED_ELEMENTS_CONTAINER_PADDING,
+    overflow: "hidden",
+    padding: PAGINATED_ELEMENTS_CONTAINER_PADDING,
+    gap: 6,
   },
 });
 

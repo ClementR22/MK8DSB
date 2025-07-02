@@ -8,7 +8,6 @@ import { ElementItem } from "@/data/elements/elementsTypes";
 import { BodytypeItem } from "@/data/bodytypes/bodytypeTypes";
 import { useItemCardStyle } from "@/hooks/useItemCardStyle";
 import ItemCard from "../ItemCard";
-import Button from "@/primitiveComponents/Button";
 
 interface BaseDeselectorProps {
   titleKey: string; // Clé de traduction pour le titre (ex: "SelectedElements", "SelectedBodytypes")
