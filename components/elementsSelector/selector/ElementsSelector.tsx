@@ -3,27 +3,34 @@
 
 import React, { useState, memo, useMemo, useEffect, useCallback } from "react";
 import { View, StyleSheet, Pressable, ScrollView } from "react-native";
-import PaginatedElementsContainer, { ELEMENTS_PER_PAGE } from "./PaginatedElementsContainer";
+import PaginatedElementsContainer, { ELEMENTS_PER_PAGE } from "../PaginatedElementsContainer";
 import {
   elementsDataBody,
   elementsDataCharacter,
   elementsDataGlider,
   elementsDataWheel,
 } from "@/data/elements/elementsData";
-import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elements/elementsTypes";
+import {
+  BodyElement,
+  CategoryKey,
+  CharacterElement,
+  ElementItem,
+  GliderElement,
+  WheelElement,
+} from "@/data/elements/elementsTypes";
 import CategorySelector from "./CategorySelector";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import SortModeSelector from "./SortModeSelector";
+import SortModeSelector from "../SortModeSelector";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import PagesNavigator from "./PagesNavigator";
+import PagesNavigator from "../PagesNavigator";
 import { Bodytype } from "@/data/bodytypes/bodytypeTypes";
 import BodytypesSelector from "./BodytypesSelector";
 
 const allCategoryElements: {
-  [key in CategoryKey]: (CharacterElement | BodyElement | WheelElement | GliderElement)[];
+  [key in CategoryKey]: ElementItem[];
 } = {
   character: elementsDataCharacter,
   body: elementsDataBody,

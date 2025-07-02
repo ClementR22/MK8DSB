@@ -1,5 +1,13 @@
 import { baseStatsByClassId } from "../classStats";
-import { CharacterElement, BodyElement, WheelElement, GliderElement, ElementStats, CategoryKey } from "./elementsTypes";
+import {
+  CharacterElement,
+  BodyElement,
+  WheelElement,
+  GliderElement,
+  ElementStats,
+  ElementItem,
+  CategoryKey,
+} from "./elementsTypes";
 
 function getElementStats(classId: number, overrides?: Partial<ElementStats>): ElementStats {
   const baseStats = baseStatsByClassId[classId];
@@ -1115,7 +1123,7 @@ export const elementsData = [
     imageUrl: require("@/assets/images/elementsImages/gliders/Paper Glider.png"),
     ...getElementStats(40),
   } as GliderElement,
-] as (CharacterElement | BodyElement | WheelElement | GliderElement)[];
+] as ElementItem[];
 
 export const elementsDataCharacter: CharacterElement[] = elementsData.filter(
   (element): element is CharacterElement => element.category === "character"
@@ -1134,7 +1142,7 @@ export const elementsDataGlider: GliderElement[] = elementsData.filter(
 );
 
 export const ElementsDataAllCategory: {
-  [key in CategoryKey]: (CharacterElement | BodyElement | WheelElement | GliderElement)[];
+  [key in CategoryKey]: ElementItem[];
 } = {
   character: elementsDataCharacter,
   body: elementsDataBody,
@@ -1142,10 +1150,7 @@ export const ElementsDataAllCategory: {
   glider: elementsDataGlider,
 };
 
-// Define a union type for any element
-// type AnyElement = CharacterElement | BodyElement | WheelElement | GliderElement;
-
-export const elementsGroupedByClassId = new Map(); // new Map<number, AnyElement[]>()
+export const elementsGroupedByClassId = new Map<number, ElementItem[]>();
 
 // Parcourir toutes les listes de catégories pour collecter tous les éléments
 Object.values(ElementsDataAllCategory).forEach((categoryList) => {

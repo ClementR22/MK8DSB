@@ -1,7 +1,7 @@
 export type CategoryKey = "character" | "body" | "wheel" | "glider";
 
 // Base interface for all elements, now includes ElementStats
-export interface ElementBase {
+interface ElementBase {
   id: number;
   name: string;
   category: CategoryKey;
@@ -27,6 +27,8 @@ export interface WheelElement extends ElementBase {
 export interface GliderElement extends ElementBase {
   category: "glider";
 }
+
+export type ElementItem = CharacterElement | BodyElement | WheelElement | GliderElement;
 
 // Define the structure for all the stats
 export interface ElementStats {

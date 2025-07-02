@@ -1,15 +1,22 @@
 import React, { useMemo, useCallback, memo, useEffect } from "react";
 import { StyleSheet, ViewStyle, StyleProp, View } from "react-native";
 
-import ElementGrid, { ELEMENT_GRID_PADDING_VERTICAL, GAP, ITEM_HEIGHT } from "./ElementGrid";
-import { BodyElement, CategoryKey, CharacterElement, GliderElement, WheelElement } from "@/data/elements/elementsTypes";
+import ElementsGrid, { ELEMENT_GRID_PADDING_VERTICAL, GAP, ITEM_HEIGHT } from "./selector/ElementsGrid";
+import {
+  BodyElement,
+  CategoryKey,
+  CharacterElement,
+  ElementItem,
+  GliderElement,
+  WheelElement,
+} from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 export const ELEMENTS_PER_PAGE = 12;
 
 interface PaginatedElementSelectorProps {
   selectedCategory: CategoryKey;
-  categoryElements: (CharacterElement | BodyElement | WheelElement | GliderElement)[];
+  categoryElements: ElementItem[];
   onElementsSelectionChange: (classId: number) => void;
   initialSelectedClassId: number | Set<number>;
   currentPage: number;
@@ -33,8 +40,8 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
   }, [categoryElements, currentPage]);
 
   const handleSelectElement = useCallback(
-    (classId: number) => {
-      onElementsSelectionChange(classId);
+    (element: ElementItem) => {
+      onElementsSelectionChange(element.classId);
     },
     [onElementsSelectionChange]
   );
@@ -50,7 +57,7 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
 
   return (
     <View style={containerStyle}>
-      <ElementGrid
+      <ElementsGrid
         elements={currentElements}
         selectedClassId={initialSelectedClassId}
         onSelectElement={handleSelectElement}

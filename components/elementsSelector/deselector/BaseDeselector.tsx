@@ -1,20 +1,34 @@
-// components/common/BaseDeselectorContainer.tsx
-import React, { memo, useMemo, ReactNode } from "react";
-import { View, StyleSheet, Text, ScrollViewProps } from "react-native";
+import React, { memo, useEffect, useMemo, useRef } from "react";
+import { View, StyleSheet, Text } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { translateToLanguage } from "@/translations/translations";
 import { ScrollView } from "react-native";
+import { ElementItem } from "@/data/elements/elementsTypes";
+import { BodytypeItem } from "@/data/bodytypes/bodytypeTypes";
+import { useItemCardStyle } from "@/hooks/useItemCardStyle";
+import ItemCard from "../ItemCard";
+import Button from "@/primitiveComponents/Button";
 
-interface BaseDeselectorContainerProps {
+interface BaseDeselectorProps {
   titleKey: string; // Clé de traduction pour le titre (ex: "SelectedElements", "SelectedBodytypes")
   isEmpty: boolean; // Indique si la liste d'éléments est vide
-  children: ReactNode; // Le contenu à afficher (la ScrollView avec les items)
+  itemsToDisplay: ElementItem[] | BodytypeItem[]; // Le contenu à afficher (la ScrollView avec les items)
+  handleDeselect: (item: ElementItem | BodytypeItem) => void;
 }
 
-const BaseDeselectorContainer: React.FC<BaseDeselectorContainerProps> = ({ titleKey, isEmpty, children }) => {
+const BaseDeselector: React.FC<BaseDeselectorProps> = ({ titleKey, isEmpty, itemsToDisplay, handleDeselect }) => {
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
+
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      // besoin d'un delai pour prendre en compte la nouvelle taille de SetCardContainer
+      scrollViewRef?.current?.scrollToEnd();
+    }, 50);
+  }, [itemsToDisplay]);
 
   // Styles dynamiques pour le conteneur et le texte
   const deselectorContainerDynamicStyle = useMemo(
@@ -32,12 +46,14 @@ const BaseDeselectorContainer: React.FC<BaseDeselectorContainerProps> = ({ title
     [theme.on_surface]
   );
 
-  const noElementsTextDynamicStyle = useMemo(
+  const noItemsTextDynamicStyle = useMemo(
     () => ({
       color: theme.on_surface_variant,
     }),
     [theme.on_surface_variant]
   );
+
+  const { itemCardDynamicStyle, activeBorderStyle } = useItemCardStyle({ size: 40 }); // Passe la taille commune ici
 
   return (
     <View style={StyleSheet.flatten([styles.deselectorContainer, deselectorContainerDynamicStyle])}>
@@ -46,7 +62,7 @@ const BaseDeselectorContainer: React.FC<BaseDeselectorContainerProps> = ({ title
       </Text>
 
       {isEmpty ? (
-        <Text style={StyleSheet.flatten([styles.noElementsText, noElementsTextDynamicStyle])}>
+        <Text style={StyleSheet.flatten([styles.noItemsText, noItemsTextDynamicStyle])}>
           {translateToLanguage("None", language)}
         </Text>
       ) : (
@@ -54,11 +70,22 @@ const BaseDeselectorContainer: React.FC<BaseDeselectorContainerProps> = ({ title
         // Note: Tu peux ajuster la ScrollViewProps. L'important est que le contenu soit horizontal.
 
         <ScrollView
+          ref={scrollViewRef}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ flexDirection: "row", gap: 8, paddingHorizontal: 4, paddingVertical: 4 }}
         >
-          {children}
+          {itemsToDisplay.map((item) => (
+            <ItemCard
+              key={item.name}
+              imageUrl={item.imageUrl}
+              name={item.name}
+              isSelected={true}
+              onPress={() => handleDeselect(item)}
+              itemCardDynamicStyle={itemCardDynamicStyle}
+              activeBorderStyle={activeBorderStyle}
+            />
+          ))}
         </ScrollView>
       )}
     </View>
@@ -76,14 +103,12 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginTop: 2,
   },
-  noElementsText: {
+  noItemsText: {
     fontSize: 14,
     textAlign: "center",
     fontStyle: "italic",
     paddingVertical: 10,
   },
-  // Les styles pour la grille (flexDirection, gap) seront gérés par le parent
-  // dans contentContainerStyle
 });
 
-export default memo(BaseDeselectorContainer);
+export default memo(BaseDeselector);

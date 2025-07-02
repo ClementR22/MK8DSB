@@ -1,6 +1,5 @@
 import React, { ReactElement, ReactNode, useCallback, useMemo } from "react";
 import { Modal as NativeModal, Pressable, StyleSheet, Text, View } from "react-native";
-import { vh } from "@/components/styles/theme";
 import { translate } from "@/translations/translations";
 import FlexContainer from "@/primitiveComponents/FlexContainer";
 import Button from "@/primitiveComponents/Button";
@@ -9,16 +8,23 @@ import { useThemeStore } from "@/stores/useThemeStore";
 export const MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL = 24;
 
 interface ModalButtonProps {
-  text: string,
-  onPress: () => void,
-  tooltipText?: string,
-  buttonColor?: string,
-  buttonTextColor?: string,
+  text: string;
+  onPress: () => void;
+  tooltipText?: string;
+  buttonColor?: string;
+  buttonTextColor?: string;
 }
 
 const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, buttonTextColor }: ModalButtonProps) => {
   return (
-    <Button buttonColor={buttonColor} buttonTextColor={buttonTextColor} elevation={12} onPress={onPress} minWidth={100} tooltipText={tooltipText}>
+    <Button
+      buttonColor={buttonColor}
+      buttonTextColor={buttonTextColor}
+      elevation={12}
+      onPress={onPress}
+      minWidth={100}
+      tooltipText={tooltipText}
+    >
       {translate(text)}
     </Button>
   );
@@ -56,15 +62,9 @@ const Modal = ({
 }: ModalProps) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const buttonContainerStyle = useMemo(
-    () => (theme.error),
-    [theme.error],
-  )
+  const buttonContainerStyle = useMemo(() => theme.error, [theme.error]);
 
-  const buttonTextStyle = useMemo(
-    () => (theme.on_error),
-    [theme.on_error],
-  )
+  const buttonTextStyle = useMemo(() => theme.on_error, [theme.on_error]);
 
   const containerBackgroundColorStyle = useMemo(
     () => ({
@@ -97,7 +97,14 @@ const Modal = ({
         const isSucces = secondButtonProps.onPress();
         if (closeAfterSecondButton || isSucces) setIsModalVisible(false);
       };
-      return <ModalButton buttonColor={buttonContainerStyle} buttonTextColor={buttonTextStyle} {...secondButtonProps} onPress={completedOnPress} />;
+      return (
+        <ModalButton
+          buttonColor={buttonContainerStyle}
+          buttonTextColor={buttonTextStyle}
+          {...secondButtonProps}
+          onPress={completedOnPress}
+        />
+      );
     }
     return null;
   }, [secondButton, secondButtonProps, closeAfterSecondButton, setIsModalVisible]);
@@ -127,7 +134,7 @@ const Modal = ({
           style={[styles.container, containerBackgroundColorStyle]}
           onStartShouldSetResponder={handleContainerResponder}
         >
-          {modalTitle && <Text style={styles.title_center}>{translate(modalTitle)}</Text>}
+          {modalTitle && <Text style={[styles.title_center, titleColorStyle]}>{translate(modalTitle)}</Text>}
 
           <View style={styles.childrenContainer}>{children}</View>
 
@@ -161,7 +168,6 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
   },
   childrenContainer: {
-    maxHeight: 0.6 * vh, // vh must be correctly calculated and stable
     paddingHorizontal: MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL,
   },
   title_center: {

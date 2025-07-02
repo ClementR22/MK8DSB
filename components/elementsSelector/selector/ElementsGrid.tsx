@@ -1,14 +1,15 @@
-import { BodyElement, CharacterElement, GliderElement, WheelElement } from "@/data/elements/elementsTypes";
+import { ElementItem } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
-import React, { memo, useCallback, useMemo } from "react";
+import React, { memo, useCallback } from "react";
 import { View, StyleSheet, Dimensions } from "react-native"; // Removed Dimensions
-import ElementItem from "./element/ElementItem";
 import { MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL } from "@/primitiveComponents/Modal";
+import { useItemCardStyle } from "@/hooks/useItemCardStyle";
+import ItemCard from "../ItemCard";
 
-interface ElementGridProps {
-  elements: (CharacterElement | BodyElement | WheelElement | GliderElement)[];
+interface ElementsGridProps {
+  elements: ElementItem[];
   selectedClassId: Set<number> | number | null;
-  onSelectElement: (classId: number) => void;
+  onSelectElement: (element: ElementItem) => void;
 }
 
 export const ELEMENT_GRID_PADDING_VERTICAL = 10;
@@ -26,7 +27,7 @@ const ITEM_WIDTH =
 
 export const ITEM_HEIGHT = ITEM_WIDTH * 1.2;
 
-const ElementGrid: React.FC<ElementGridProps> = ({ elements, selectedClassId, onSelectElement }) => {
+const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, onSelectElement }) => {
   const theme = useThemeStore((state) => state.theme);
 
   const calculateIsSelected = useCallback(
@@ -41,25 +42,21 @@ const ElementGrid: React.FC<ElementGridProps> = ({ elements, selectedClassId, on
     [selectedClassId]
   );
 
-  const elementCardDynamicStyle = useMemo(
-    () => [stylesElementItem.elementCard, { backgroundColor: theme.surface_container_low }],
-    [theme.surface_container_low]
-  );
-
-  const activeBorderStyle = useMemo(() => ({ borderColor: theme.primary }), [theme.primary]);
+  const { itemCardDynamicStyle, activeBorderStyle } = useItemCardStyle({ size: ITEM_WIDTH }); // Passe la taille commune ici
 
   return (
     // Removed Pressable from here, as it's typically for the entire grid to be clickable,
-    // but individual items are clickable. If ElementGrid itself needs to be a Pressable,
+    // but individual items are clickable. If ElementsGrid itself needs to be a Pressable,
     // its purpose should be clear. For a grid of items, a simple View is usually sufficient.
     <View style={styles.gridContainer}>
       {elements.map((element) => (
-        <ElementItem
+        <ItemCard
           key={element.id}
-          element={element}
+          imageUrl={element.imageUrl}
+          name={element.name}
           isSelected={calculateIsSelected(element.classId)}
-          onSelectElement={onSelectElement}
-          elementCardDynamicStyle={elementCardDynamicStyle}
+          onPress={() => onSelectElement(element)}
+          itemCardDynamicStyle={itemCardDynamicStyle}
           activeBorderStyle={activeBorderStyle}
         />
       ))}
@@ -78,19 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const stylesElementItem = StyleSheet.create({
-  elementCard: {
-    borderRadius: 15,
-    borderWidth: 3,
-    borderColor: "transparent",
-    overflow: "hidden",
-    alignItems: "center",
-    width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
-  },
-  // If elementImage relied on ITEM_WIDTH, it would also need to become a dynamic style object
-  // passed via props, or ElementItem needs to calculate its own internal image size.
-  // For now, keep it simple, assuming ITEM_WIDTH is not needed directly by ElementItem's internal styles.
-});
-
-export default memo(ElementGrid);
+export default memo(ElementsGrid);

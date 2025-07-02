@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import ElementsSelector from "@/components/elementsSelector/ElementsSelector";
 
 const GalleryScreen = () => {
   return (

@@ -1,9 +1,9 @@
-// components/common/BaseItem.tsx (ou un dossier approprié)
-import React, { memo, useCallback } from "react";
-import { Image, StyleSheet, View, PressableProps } from "react-native";
-import TooltipWrapper from "../../TooltipWrapper"; // Ajuste le chemin si besoin
+// components/common/Item.tsx (ou un dossier approprié)
+import React, { memo } from "react";
+import { Image, StyleSheet } from "react-native";
+import TooltipWrapper from "../TooltipWrapper"; // Ajuste le chemin si besoin
 
-interface BaseItemProps {
+interface ItemCardProps {
   // Propriétés spécifiques à l'élément affiché
   imageUrl: any; // source de l'image (peut être un number pour require(), ou une URI)
   name: string; // Nom de l'élément pour le tooltip
@@ -13,29 +13,23 @@ interface BaseItemProps {
   onPress: () => void; // L'action à effectuer lors du clic
 
   // Styles dynamiques passés par le parent
-  cardDynamicStyle: any; // Styles du conteneur (ex: elementCardDynamicStyle, bodytypeCardDynamicStyle)
+  itemCardDynamicStyle: any; // Styles du conteneur (ex: elementCardDynamicStyle, bodytypeCardDynamicStyle)
   activeBorderStyle: any; // Styles de la bordure active (quand isSelected est true)
-  size?: number; // Taille facultative pour ajuster width/height
 }
 
-const BaseItem: React.FC<BaseItemProps> = ({
+const ItemCard: React.FC<ItemCardProps> = ({
   imageUrl,
   name,
   isSelected,
   onPress,
-  cardDynamicStyle,
+  itemCardDynamicStyle,
   activeBorderStyle,
-  size,
 }) => {
   return (
     <TooltipWrapper
       tooltipText={name} // Utilise le nom générique
       onPress={onPress} // L'action de presse générique
-      innerContainerStyle={[
-        cardDynamicStyle,
-        isSelected && activeBorderStyle,
-        size && { width: size, height: size * 1.2 }, // Applique la taille si fournie
-      ]}
+      innerContainerStyle={[itemCardDynamicStyle, isSelected && activeBorderStyle]}
     >
       <Image source={imageUrl} style={styles.image} resizeMode="contain" />
     </TooltipWrapper>
@@ -49,4 +43,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(BaseItem);
+export default memo(ItemCard);

@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import useModalsStore from "@/stores/useModalsStore";
 import Modal from "../../primitiveComponents/Modal";
-import ElementsSelector from "../elementsSelector/ElementsSelector";
+import ElementsSelector from "../elementsSelector/selector/ElementsSelector";
 
 const ModalEditSet = () => {
   const isEditModalVisible = useModalsStore((state) => state.isEditModalVisible);

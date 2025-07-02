@@ -8,7 +8,6 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import { statNames } from "@/data/data";
 import StatSliderCompare from "@/components/statSliderCompare/StatSliderCompare";
 import { resultStatsInit } from "@/config/resultStatsInit";
-import ElementsSelector from "@/components/elementsSelector/ElementsSelector";
 
 const DisplaySetScreen = () => {
   const scrollRef = useRef(null);

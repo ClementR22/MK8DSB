@@ -2,7 +2,7 @@
 import React, { memo, useCallback, useMemo, useState, useEffect } from "react";
 import { Pressable, StyleSheet, Text, View, Image, ViewStyle } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
-import TooltipWrapper from "../TooltipWrapper";
+import TooltipWrapper from "../../TooltipWrapper";
 import { translate } from "@/translations/translations";
 import { Bodytype } from "@/data/bodytypes/bodytypeTypes";
 import { CategoryKey } from "@/data/elements/elementsTypes";

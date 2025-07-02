@@ -12,11 +12,11 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
 import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModalStatSelectorChosenStats";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import ElementsSelector from "../elementsSelector/ElementsSelector";
-import FiltersBox from "../elementsSelector/FiltersBox";
-import ElementsDeselector from "../elementsSelector/element/ElementsDeselector";
-import BodytypesSelector from "../elementsSelector/BodytypesSelector";
-import BodytypesDeselector from "../elementsSelector/bodytype/BodytypesDeselector";
+import ElementsSelector from "../elementsSelector/selector/ElementsSelector";
+import FiltersBox from "../elementsSelector/deselector/FiltersBox";
+import ElementsDeselector from "../elementsSelector/deselector/ElementsDeselector";
+import BodytypesSelector from "../elementsSelector/selector/BodytypesSelector";
+import BodytypesDeselector from "../elementsSelector/deselector/BodytypesDeselector";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
   const chosenStats = useSetsStore((state) => state.chosenStats);
