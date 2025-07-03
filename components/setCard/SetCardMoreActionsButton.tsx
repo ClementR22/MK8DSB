@@ -20,7 +20,6 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
   situation,
 }) => {
   const [visible, setVisible] = useState(false);
-  const insets = useSafeAreaInsets(); // Get safe area insets
 
   const actionIconPropsList = useActionIconPropsList(moreActionNamesList, setCardIndex, situation);
 
@@ -28,6 +27,8 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
     setVisible(false);
     onPressAction();
   };
+
+  const insets = useSafeAreaInsets(); // Get safe area insets
 
   const menuVerticalOffset = useMemo(() => {
     let offset = 0;

@@ -127,6 +127,8 @@ const Modal = ({
       transparent={true} // Fond transparent
       visible={isModalVisible}
       onRequestClose={actualOnPressClose} // Ferme le modal
+      navigationBarTranslucent={true}
+      statusBarTranslucent={true}
       {...props}
     >
       <Pressable style={styles.background} onPress={handleBackgroundPress}>
