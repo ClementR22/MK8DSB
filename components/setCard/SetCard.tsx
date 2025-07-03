@@ -23,7 +23,7 @@ export interface SetData {
 export type actionNamesList = string[];
 
 interface SetCardSituationConfig {
-  isEditable: boolean;
+  isNameEditable: boolean;
   showStatSliderResult: boolean;
   actionNamesList: actionNamesList;
   moreActionNamesList?: actionNamesList;
@@ -37,19 +37,19 @@ const MORE_ACTIONS_DISPLAY_COMMON: actionNamesList = ["export"]; // Common actio
 
 const situationConfigs: Record<string, Omit<SetCardSituationConfig, "actionNamesList" | "moreActionNamesList">> = {
   search: {
-    isEditable: false,
+    isNameEditable: true,
     showStatSliderResult: true,
   },
   display: {
-    isEditable: true,
+    isNameEditable: true,
     showStatSliderResult: false,
   },
   save: {
-    isEditable: true,
+    isNameEditable: true,
     showStatSliderResult: true,
   },
   load: {
-    isEditable: false,
+    isNameEditable: false,
     showStatSliderResult: false,
   },
 };
@@ -137,14 +137,14 @@ const SetCard: React.FC<SetCardProps> = ({
 
   const headerProps: SetCardHeaderProps = useMemo(
     () => ({
-      isEditable: config.isEditable,
+      isNameEditable: config.isNameEditable,
       setToShowName,
       setCardIndex,
       setToShowPercentage,
       moreActionNamesList: config.moreActionNamesList,
       situation,
     }),
-    [config.isEditable, setToShowName, setCardIndex, setToShowPercentage, config.moreActionNamesList, situation]
+    [config.isNameEditable, setToShowName, setCardIndex, setToShowPercentage, config.moreActionNamesList, situation]
   );
 
   return (

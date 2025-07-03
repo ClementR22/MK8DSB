@@ -10,7 +10,7 @@ import { actionNamesList } from "./SetCard";
 import SetNameInput from "../textInput/SetNameInput";
 
 export interface SetCardHeaderProps {
-  isEditable: boolean;
+  isNameEditable: boolean;
   setToShowName: string;
   setCardIndex: number;
   setToShowPercentage?: number;
@@ -19,7 +19,7 @@ export interface SetCardHeaderProps {
 }
 
 const SetCardHeader: React.FC<SetCardHeaderProps> = ({
-  isEditable,
+  isNameEditable,
   setToShowName,
   setCardIndex,
   setToShowPercentage,
@@ -45,8 +45,7 @@ const SetCardHeader: React.FC<SetCardHeaderProps> = ({
   return (
     <View style={styles.headerContainer}>
       <View style={StyleSheet.flatten([styles.nameContainer, bottomLineDynamicStyle])}>
-        <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} editable={isEditable} />
-        {isEditable && <MaterialCommunityIcons name="pencil" size={16} color={theme.on_surface_variant} />}
+        <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} editable={isNameEditable} />
       </View>
 
       {setToShowPercentage !== undefined && (
@@ -55,7 +54,7 @@ const SetCardHeader: React.FC<SetCardHeaderProps> = ({
         </Text>
       )}
 
-      {isEditable && (
+      {moreActionNamesList && (
         <SetCardMoreActionsButton
           moreActionNamesList={moreActionNamesList}
           setCardIndex={setCardIndex}
