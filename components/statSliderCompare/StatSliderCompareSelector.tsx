@@ -2,23 +2,32 @@ import React, { useState, useMemo, useCallback, memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import { IconType } from "react-native-dynamic-vector-icons";
-import { ResultStats } from "@/contexts/ResultStatsContext"; // Assure-toi que ce chemin est correct
+import { appIconsConfig, AppButtonName } from "@/config/appIconsConfig"; // Import merged config
 
-// Définir les types pour les noms de statistiques
-type ReducedStatName = "speed" | "acceleration" | "weight" | "handling" | "traction" | "miniTurbo";
-type SpeedStatName = "close" | "speedGround" | "speedAntiGravity" | "speedWater" | "speedAir";
-type HandlingStatName = "close" | "handlingGround" | "handlingAntiGravity" | "handlingWater" | "handlingAir";
+// Redefine types to use AppButtonName
+type ReducedStatName = Exclude<
+  AppButtonName,
+  | "id"
+  | "name"
+  | "classId"
+  | "close"
+  | "speedGround"
+  | "speedAntiGravity"
+  | "speedWater"
+  | "speedAir"
+  | "handlingGround"
+  | "handlingAntiGravity"
+  | "handlingWater"
+  | "handlingAir"
+>;
+type SpeedStatName = Extract<AppButtonName, "close" | "speedGround" | "speedAntiGravity" | "speedWater" | "speedAir">;
+type HandlingStatName = Extract<
+  AppButtonName,
+  "close" | "handlingGround" | "handlingAntiGravity" | "handlingWater" | "handlingAir"
+>;
 
-// Union de tous les noms de stats possibles pour le typage de statIconsList
-export type CompareButtonNames = ReducedStatName | SpeedStatName | HandlingStatName;
-
-// Définir le type pour les propriétés d'une icône de statistique
-interface StatIconProps {
-  iconName: string;
-  iconType: IconType;
-  iconBackgroundColor: string;
-}
+// Use AppButtonName directly for CompareButtonNames
+export type CompareButtonNames = AppButtonName;
 
 const reducedStatNames: ReducedStatName[] = ["speed", "acceleration", "weight", "handling", "traction", "miniTurbo"];
 const speedStatNames: SpeedStatName[] = ["close", "speedGround", "speedAntiGravity", "speedWater", "speedAir"];
@@ -45,98 +54,12 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
     // État pour gérer la liste des noms de stats affichées (réduite, vitesse, maniabilité)
     const [displayedNames, setDisplayedNames] = useState<CompareButtonNames[]>(reducedStatNames);
 
-    // Définition des icônes et de leurs propriétés
-    const statIconsList: { [key in CompareButtonNames]: StatIconProps } = useMemo(
-      // ground :         tan         peru          goldenrod
-      // anti -grav :     indigo      blueviolet
-      // water :          steelblue   deepskyblue   dodgerblue
-      // air :            skyblue     lightblue     powderblue
-
-      () => ({
-        close: {
-          iconName: "close",
-          iconType: IconType.AntDesign,
-          iconBackgroundColor: theme.primary,
-        },
-        speed: {
-          iconName: "speedometer",
-          iconType: IconType.SimpleLineIcons,
-          iconBackgroundColor: theme.primary,
-        },
-        speedGround: {
-          iconName: "speedometer",
-          iconType: IconType.SimpleLineIcons,
-          iconBackgroundColor: "tan",
-        },
-        speedAntiGravity: {
-          iconName: "speedometer",
-          iconType: IconType.SimpleLineIcons,
-          iconBackgroundColor: "blueviolet",
-        },
-        speedWater: {
-          iconName: "speedometer",
-          iconType: IconType.SimpleLineIcons,
-          iconBackgroundColor: "dodgerblue",
-        },
-        speedAir: {
-          iconName: "speedometer",
-          iconType: IconType.SimpleLineIcons,
-          iconBackgroundColor: "powderblue",
-        },
-        acceleration: {
-          iconName: "keyboard-double-arrow-up",
-          iconType: IconType.MaterialIcons,
-          iconBackgroundColor: theme.primary,
-        },
-        weight: {
-          iconName: "weight-gram",
-          iconType: IconType.MaterialCommunityIcons,
-          iconBackgroundColor: theme.primary,
-        },
-        handling: {
-          iconName: "steering",
-          iconType: IconType.MaterialCommunityIcons,
-          iconBackgroundColor: theme.primary,
-        },
-        handlingGround: {
-          iconName: "steering",
-          iconType: IconType.MaterialCommunityIcons,
-          iconBackgroundColor: "tan",
-        },
-        handlingAntiGravity: {
-          iconName: "steering",
-          iconType: IconType.MaterialCommunityIcons,
-          iconBackgroundColor: "blueviolet",
-        },
-        handlingWater: {
-          iconName: "steering",
-          iconType: IconType.MaterialCommunityIcons,
-          iconBackgroundColor: "dodgerblue",
-        },
-        handlingAir: {
-          iconName: "steering",
-          iconType: IconType.MaterialCommunityIcons,
-          iconBackgroundColor: "powderblue",
-        },
-        traction: {
-          iconName: "car-traction-control",
-          iconType: IconType.MaterialCommunityIcons,
-          iconBackgroundColor: theme.primary,
-        },
-        miniTurbo: {
-          iconName: "rocket-launch-outline",
-          iconType: IconType.MaterialCommunityIcons,
-          iconBackgroundColor: theme.primary,
-        },
-      }),
-      [theme.primary] // Dépendances pour useMemo
-    );
+    // No need for a separate useMemo for statIconsList, directly use appIconsConfig
+    // The background colors are now managed directly in appIconsConfig
 
     // Gère le clic sur un bouton
     const handlePress = useCallback(
       (name: CompareButtonNames) => {
-        // Si le bouton cliqué est déjà actif et n'est pas le bouton "close",
-        // on ne fait rien (comportement "quand je reclique, ça change rien").
         if (selectedStatName === name) {
           return;
         }
@@ -160,7 +83,7 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
       [selectedStatName, setSelectedStatName] // Dépendances pour useCallback
     );
 
-    const buttonIconActiveStyle = useMemo(() => ({ borderWidth: 10, borderColor: "cyan" }), [theme.secondary]);
+    const buttonIconActiveStyle = useMemo(() => ({ borderWidth: 10, borderColor: "cyan" }), []);
 
     // Rend les boutons affichés
     const displayedButtons = useMemo(() => {
@@ -168,8 +91,12 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
       for (let i = 0; i < NUMBER_OF_SLOTS; i++) {
         const name = displayedNames[i];
 
-        if (name && statIconsList[name]) {
-          const { iconName, iconType, iconBackgroundColor } = statIconsList[name];
+        if (name && appIconsConfig[name]) {
+          // Use appIconsConfig
+          const iconConfig = appIconsConfig[name];
+          const { iconName, iconType } = iconConfig;
+          // Use the iconBackgroundColor from the config, or default to theme.primary if not specified
+          const iconBackgroundColor = iconConfig.iconBackgroundColor || theme.primary;
           const isActive = selectedStatName === name; // Détermine si ce bouton est actif
 
           // Style de fond pour le bouton actif
@@ -183,8 +110,6 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
               iconName={iconName}
               iconType={iconType}
               style={[buttonIconStyle, isActive && buttonIconActiveStyle]}
-              // Optionnel: tu peux désactiver le Pressable si déjà actif et ce n'est pas "close"
-              // disabled={isActive && name !== "close"}
             />
           );
         } else {
@@ -193,7 +118,7 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
         }
       }
       return buttons;
-    }, [displayedNames, statIconsList, handlePress, selectedStatName, theme.secondary]); // Dépendances pour useMemo
+    }, [displayedNames, handlePress, selectedStatName, buttonIconActiveStyle, theme.primary]); // Added theme.primary dependency
 
     return <View style={styles.buttonRowContainer}>{displayedButtons}</View>;
   }

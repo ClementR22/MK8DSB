@@ -42,7 +42,6 @@ const TooltipWrapper = ({
   const tooltipVerticalOffset = useMemo(() => {
     let offset = 0;
     if (Platform.OS !== "web") {
-      console.log(insets);
       offset = -2 * insets.top;
     }
     return offset;

@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   deselectorTitle: {
-    flex: 1,
     fontSize: 16,
     fontWeight: "bold",
     marginLeft: 5,

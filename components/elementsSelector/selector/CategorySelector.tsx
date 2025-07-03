@@ -36,8 +36,10 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, s
 
   const containerDynamicStyle = useMemo(
     () => [styles.container, { backgroundColor: theme.primary_container }],
-    [theme.primary]
+    [theme.primary_container]
   );
+
+  const buttonActiveStyle = useMemo(() => ({ backgroundColor: theme.primary }), [theme]);
 
   return (
     <View style={containerDynamicStyle}>
@@ -52,7 +54,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, s
             style={styles.buttonWrapper}
             innerContainerStyle={[
               styles.button,
-              isActive && { backgroundColor: theme.primary },
+              isActive && buttonActiveStyle,
               // Optional: pressed state
             ]}
           >
@@ -72,12 +74,11 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: ITEM_CARD_BORDER_RADIUS,
   },
-  buttonWrapper: { width: "22%" },
+  buttonWrapper: { width: "22%", borderRadius: 10, overflow: "hidden" }, // un peu moins que 1/4
   button: {
     alignItems: "center",
     justifyContent: "center",
     height: 50,
-    borderRadius: 10,
   },
   image: { width: "80%", height: "80%" },
 });

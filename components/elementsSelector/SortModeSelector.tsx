@@ -2,18 +2,15 @@ import React, { useState, useMemo, useCallback, memo } from "react";
 import { StyleSheet, ScrollView, Pressable } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import { IconType } from "react-native-dynamic-vector-icons";
+import { IconType } from "react-native-dynamic-vector-icons"; // Keep IconType import
 import useGeneralStore from "@/stores/useGeneralStore";
-// If you need to translate tooltipText or other UI strings, import translateToLanguage
-// import { translateToLanguage } from "@/translations/translations";
-// import { useLanguageStore } from "@/stores/useLanguageStore"; // and use the language store
+import { appIconsConfig, AppButtonName } from "@/config/appIconsConfig"; // Import merged config
 
 // Constants for layout consistency
 const BUTTON_SIZE = 40; // Assumed to match ButtonIcon's default size
 
 // Define the names for different sorting options.
-// These strings will be used as keys for `sortIconsList` and `sortNameMap`.
-const defaultSortNames = [
+const defaultSortNames: AppButtonName[] = [
   "id", // Corresponds to orderNumber 0: Sort by ID
   "name", // Combined for A-Z and Z-A
   "classId", // Corresponds to orderNumber 3: Sort by class ID
@@ -25,7 +22,7 @@ const defaultSortNames = [
   "miniTurbo",
 ];
 
-const speedSortNames = [
+const speedSortNames: AppButtonName[] = [
   "close", // Button to go back to the defaultSortNames view
   "speedGround", // Corresponds to orderNumber 4
   "speedAntiGravity", // Corresponds to orderNumber 5
@@ -33,7 +30,7 @@ const speedSortNames = [
   "speedAir", // Corresponds to orderNumber 7
 ];
 
-const handlingSortNames = [
+const handlingSortNames: AppButtonName[] = [
   "close", // Button to go back to the defaultSortNames view
   "handlingGround", // Corresponds to orderNumber 8
   "handlingAntiGravity", // Corresponds to orderNumber 9
@@ -70,121 +67,30 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   // State to manage which set of sorting buttons is currently displayed (main menu or sub-menus).
-  const [displayedSortNames, setDisplayedSortNames] = useState<string[]>(defaultSortNames);
+  const [displayedSortNames, setDisplayedSortNames] = useState<AppButtonName[]>(defaultSortNames);
 
   // State to track the currently active sort (e.g., 'id', 'name', 'speedGround')
-  const [activeSort, setActiveSort] = useState<string | null>("id");
+  const [activeSort, setActiveSort] = useState<AppButtonName | null>("id");
 
   // State to keep track of the current sort direction for the active sort.
   const [currentDirection, setCurrentDirection] = useState<"asc" | "desc">("asc");
 
-  // Memoized object containing icon configurations for each sort mode.
-  const sortIconsList = useMemo(
-    () => ({
-      // Icons for main sorting categories
-      id: { iconName: "sort-numeric-ascending", iconType: IconType.MaterialCommunityIcons },
-      name: {
-        iconName: "sort-alphabetical",
-        iconType: IconType.MaterialCommunityIcons,
-      },
-      classId: {
-        iconName: "view-gallery-outline",
-        iconType: IconType.MaterialCommunityIcons,
-      }, // Example icon for "by classId"
-
-      // Icons for category buttons that open sub-menus
-      speed: {
-        iconName: "speedometer",
-        iconType: IconType.SimpleLineIcons,
-      },
-      handling: {
-        iconName: "steering",
-        iconType: IconType.MaterialCommunityIcons,
-      },
-
-      // Icon for going back from sub-menus
-      close: { iconName: "close", iconType: IconType.AntDesign },
-
-      // Icons for specific speed stats (using distinct colors like in StatSliderCompareSelector)
-      speedGround: {
-        iconName: "speedometer",
-        iconType: IconType.SimpleLineIcons,
-        iconBackgroundColor: "tan",
-      },
-      speedAntiGravity: {
-        iconName: "speedometer",
-        iconType: IconType.SimpleLineIcons,
-        iconBackgroundColor: "blueviolet",
-      },
-      speedWater: {
-        iconName: "speedometer",
-        iconType: IconType.SimpleLineIcons,
-        iconBackgroundColor: "dodgerblue",
-      },
-      speedAir: {
-        iconName: "speedometer",
-        iconType: IconType.SimpleLineIcons,
-        iconBackgroundColor: "powderblue",
-      },
-
-      // Icons for specific handling stats
-      handlingGround: {
-        iconName: "steering",
-        iconType: IconType.MaterialCommunityIcons,
-        iconBackgroundColor: "tan",
-      },
-      handlingAntiGravity: {
-        iconName: "steering",
-        iconType: IconType.MaterialCommunityIcons,
-        iconBackgroundColor: "blueviolet",
-      },
-      handlingWater: {
-        iconName: "steering",
-        iconType: IconType.MaterialCommunityIcons,
-        iconBackgroundColor: "dodgerblue",
-      },
-      handlingAir: {
-        iconName: "steering",
-        iconType: IconType.MaterialCommunityIcons,
-        iconBackgroundColor: "powderblue",
-      },
-
-      // Icons for other direct stat sorts (if you want buttons for them on the main menu)
-      acceleration: {
-        iconName: "keyboard-double-arrow-up",
-        iconType: IconType.MaterialIcons,
-      },
-      weight: {
-        iconName: "weight-gram",
-        iconType: IconType.MaterialCommunityIcons,
-      },
-      traction: {
-        iconName: "car-traction-control",
-        iconType: IconType.MaterialCommunityIcons,
-      },
-      miniTurbo: {
-        iconName: "rocket-launch-outline",
-        iconType: IconType.MaterialCommunityIcons,
-      },
-    }),
-    [] // Dependencies: no theme dependency here, as colors are handled separately
-  );
-
+  // No need for a separate useMemo for sortIconsList, directly use appIconsConfig
   const getIconNameForDirection = useCallback(
-    (name: string, direction: "asc" | "desc") => {
+    (name: AppButtonName, direction: "asc" | "desc") => {
       if (name === "id") {
         return direction === "asc" ? "sort-numeric-ascending" : "sort-numeric-descending";
       } else if (name === "name") {
         return direction === "asc" ? "sort-alphabetical-ascending" : "sort-alphabetical-descending";
-      } else return sortIconsList[name]?.iconName;
+      }
+      return appIconsConfig[name]?.iconName; // Use appIconsConfig
     },
-    [sortIconsList]
+    [] // No dependencies as appIconsConfig is a constant
   );
 
   // Callback to handle button presses for sorting.
-  // It manages the displayed buttons (menu navigation) and updates the `orderNumber`.
   const handlePress = useCallback(
-    (name: string) => {
+    (name: AppButtonName) => {
       switch (name) {
         case "speed":
           setDisplayedSortNames(speedSortNames); // Switch to speed sub-menu
@@ -224,14 +130,15 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
   // Memoized array of ButtonIcon components to render.
   const displayedButtons = useMemo(() => {
     return displayedSortNames.map((name) => {
-      const iconConfig = sortIconsList[name];
+      const iconConfig = appIconsConfig[name]; // Use appIconsConfig
       if (!iconConfig) {
         return null;
       }
 
       const { iconType } = iconConfig;
       let iconName = iconConfig.iconName;
-      let iconBackgroundColor = iconConfig.iconBackgroundColor || theme.primary; // Default to theme.primary
+      // Use iconBackgroundColor from config if present, otherwise default to theme.primary
+      let iconBackgroundColor = iconConfig.iconBackgroundColor || theme.primary;
 
       // Determine if this button is the currently active sort
       const isActive = activeSort === name;
@@ -265,7 +172,6 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
     });
   }, [
     displayedSortNames,
-    sortIconsList,
     handlePress,
     activeSort, // Dependency for active sort detection
     currentDirection, // Dependency for icon/tooltip of active sort

@@ -88,6 +88,13 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
     return Math.ceil(categoryElementsSorted.length / ELEMENTS_PER_PAGE);
   }, [categoryElementsSorted.length]);
 
+  const { iconName, iconType, tooltipText } = useMemo(() => {
+    if (isOpenFilterView) {
+      return { iconName: "car-sports", iconType: IconType.MaterialCommunityIcons, tooltipText: "FilterBodytypes" };
+    }
+    return { iconName: "sort", iconType: IconType.MaterialCommunityIcons, tooltipText: "SortElements" };
+  }, [isOpenFilterView]);
+
   return (
     <>
       {children}
@@ -95,9 +102,9 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
         {selectionMode !== "single" && (
           <ButtonIcon
             onPress={toggleOpenFilterView}
-            iconName={isOpenFilterView ? "chevron-down" : "chevron-up"}
-            iconType={IconType.MaterialCommunityIcons}
-            tooltipText={isOpenFilterView ? "DevelopSliders" : "ReduceSliders"}
+            iconName={iconName}
+            iconType={iconType}
+            tooltipText={tooltipText}
           />
         )}
 

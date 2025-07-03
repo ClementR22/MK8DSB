@@ -86,7 +86,7 @@ export function useActionIconPropsList(
       remove: {
         title: "Remove",
         name: "close",
-        type: IconType.Ionicons,
+        type: IconType.AntDesign,
         onPress: handleRemovePress,
       },
       save: {
