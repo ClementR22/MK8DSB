@@ -1,6 +1,6 @@
 import { useThemeStore } from "@/stores/useThemeStore";
 import React, { useMemo } from "react";
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 
 interface SetNameInputContentProps {
   value: string;
@@ -19,19 +19,26 @@ const SetNameInputContent: React.FC<SetNameInputContentProps> = ({
 
   const textDynamicStyle = useMemo(
     () => ({
+      backgroundColor: theme.surface_container,
       color: theme.on_surface,
     }),
     [theme.on_surface]
   );
 
   return (
-    <TextInput
-      style={StyleSheet.flatten([styles.textInput, textDynamicStyle])}
-      value={value}
-      onChangeText={onChangeText}
-      onBlur={onEndEditing}
-      editable={editable}
-    />
+    <View
+      style={{
+        flex: 1,
+      }}
+    >
+      <TextInput
+        style={StyleSheet.flatten([styles.textInput, textDynamicStyle])}
+        value={value}
+        onChangeText={onChangeText}
+        onBlur={onEndEditing}
+        editable={editable}
+      />
+    </View>
   );
 };
 
@@ -40,6 +47,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     margin: 0,
     padding: 0,
+    height: 35,
+    paddingLeft: 10,
+    borderRadius: 7,
   },
 });
 

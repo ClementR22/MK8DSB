@@ -35,32 +35,27 @@ const SetCardHeader: React.FC<SetCardHeaderProps> = ({
     [theme.primary]
   );
 
-  const bottomLineDynamicStyle = useMemo(
-    () => ({
-      borderColor: theme.on_surface,
-    }),
-    [theme.on_surface]
-  );
-
   return (
     <View style={styles.headerContainer}>
-      <View style={StyleSheet.flatten([styles.nameContainer, bottomLineDynamicStyle])}>
+      <View style={StyleSheet.flatten(styles.nameContainer)}>
         <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} editable={isNameEditable} />
       </View>
 
-      {setToShowPercentage !== undefined && (
-        <Text style={StyleSheet.flatten([styles.percentageText, percentageTextDynamicStyle])} numberOfLines={1}>
-          {setToShowPercentage}%
-        </Text>
-      )}
+      <View style={{ minWidth: 40 }}>
+        {setToShowPercentage && (
+          <Text style={StyleSheet.flatten([styles.percentageText, percentageTextDynamicStyle])} numberOfLines={1}>
+            {setToShowPercentage}%
+          </Text>
+        )}
 
-      {moreActionNamesList && (
-        <SetCardMoreActionsButton
-          moreActionNamesList={moreActionNamesList}
-          setCardIndex={setCardIndex}
-          situation={situation}
-        />
-      )}
+        {moreActionNamesList && (
+          <SetCardMoreActionsButton
+            moreActionNamesList={moreActionNamesList}
+            setCardIndex={setCardIndex}
+            situation={situation}
+          />
+        )}
+      </View>
     </View>
   );
 };
@@ -78,7 +73,6 @@ const styles = StyleSheet.create({
   nameContainer: {
     flexDirection: "row",
     flex: 1,
-    borderBottomWidth: 1,
     height: "100%",
     alignItems: "center",
     justifyContent: "space-between",
