@@ -2,7 +2,6 @@ import { category4Names } from "@/data/data";
 import { CategoryKey } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore"; // Assuming theme store is needed for styles
 import React, { memo, useMemo } from "react";
-import ImageButtonSelector, { ImageButtonOption } from "../ImageButtonSelector"; // Import the generic selector
 import { Image, StyleSheet, View } from "react-native";
 import TooltipWrapper from "@/components/TooltipWrapper";
 import { ITEM_CARD_BORDER_RADIUS } from "@/hooks/useItemCardStyle";
@@ -35,13 +34,13 @@ const categoryOptions: categoryOption[] = (category4Names as CategoryKey[]).map(
 const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, setSelectedCategory }) => {
   const theme = useThemeStore((state) => state.theme); // Used for activeColor
 
-  const memoizedContainerStyle = useMemo(
+  const containerDynamicStyle = useMemo(
     () => [styles.container, { backgroundColor: theme.primary_container }],
     [theme.primary]
   );
 
   return (
-    <View style={memoizedContainerStyle}>
+    <View style={containerDynamicStyle}>
       {categoryOptions.map((category) => {
         const isActive = selectedCategory === category.name;
 

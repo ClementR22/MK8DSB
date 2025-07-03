@@ -47,17 +47,17 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
     }
   }, [value]);
 
-  const memoizedBorderColor = useMemo(
+  const borderColorDynamicStyle = useMemo(
     () => getStatSliderBorderColor(statFilterNumber, theme),
     [statFilterNumber, theme]
   );
 
-  const innerContainerDynamicStyles = useMemo(
+  const innerContainerDynamicStyle = useMemo(
     () => ({
       backgroundColor: theme.surface,
-      borderColor: memoizedBorderColor,
+      borderColor: borderColorDynamicStyle,
     }),
-    [theme.surface, memoizedBorderColor]
+    [theme.surface, borderColorDynamicStyle]
   );
 
   const textColorStyle = useMemo(
@@ -113,7 +113,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
   return (
     <TooltipWrapper
       tooltipText="DefineAValue"
-      style={StyleSheet.flatten([styles.container, innerContainerDynamicStyles])}
+      style={StyleSheet.flatten([styles.container, innerContainerDynamicStyle])}
       innerContainerStyle={styles.innerContainer}
     >
       <View style={styles.containerLeft}>

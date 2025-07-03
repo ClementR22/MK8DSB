@@ -130,7 +130,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
           selectedBodytypes={chosenBodytype}
           setSelectedBodytypes={setChosenBodytype}
         >
-          <ElementsDeselector selectedBodytypes={chosenBodytype} setSelectedBodytypes={setChosenBodytype} />
+          <ElementsDeselector />
         </ElementsSelectorPannel>
       </ButtonAndModal>
 

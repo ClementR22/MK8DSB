@@ -11,7 +11,6 @@ import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import { translateToLanguage } from "@/translations/translations";
 import ItemCard from "../ItemCard";
-import { Dimensions } from "react-native";
 import { PAGINATED_ELEMENTS_CONTAINER_PADDING } from "../selector/ElementsGrid";
 
 const ITEM_ELEMENT_WIDTH = 40;
