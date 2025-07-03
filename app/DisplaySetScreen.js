@@ -7,7 +7,6 @@ import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { statNames } from "@/data/data";
 import StatSliderCompare from "@/components/statSliderCompare/StatSliderCompare";
-import { resultStatsInit } from "@/config/resultStatsInit";
 
 const DisplaySetScreen = () => {
   const scrollRef = useRef(null);
@@ -34,18 +33,9 @@ const DisplaySetScreen = () => {
     return result;
   }, [setsListDisplayed]);
 
-  const [compareStats, setCompareStats] = useState(resultStatsInit);
-
-  const handleSelectCompareStat = (name) => {
-    const newCompareStats = compareStats.map((stat) => {
-      return { ...stat, checked: stat.name === name };
-    });
-    setCompareStats(newCompareStats);
-  };
+  const [selectedStatName, setSelectedStatName] = useState("speedGround");
 
   const hideRemoveSet = setsListDisplayed.length === 1;
-
-  const selectedStatName = compareStats.find((stat) => stat.checked).name;
 
   const scrollToSetCard = useCallback((index) => {
     if (scrollRef.current && scrollRef.current.scrollToSetCard) {
@@ -63,7 +53,8 @@ const DisplaySetScreen = () => {
         <StatSliderCompare
           name={selectedStatName}
           setsStats={setsStatsForSelectedStat[selectedStatName]}
-          handleSelectCompareStat={handleSelectCompareStat}
+          selectedStatName={selectedStatName}
+          setSelectedStatName={setSelectedStatName}
           scrollToSetCard={scrollToSetCard}
         />
       </ScrollView>

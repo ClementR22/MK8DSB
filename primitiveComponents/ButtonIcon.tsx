@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { StyleSheet, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
 import { useThemeStore } from "@/stores/useThemeStore";
@@ -13,7 +13,7 @@ interface ButtonIconProps {
   iconType: IconType;
   iconSize?: number;
   shape?: "circle" | "rectangle";
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   [key: string]: any;
 }
 
@@ -42,7 +42,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   }, [shape]);
 
   const containerCombinedStyle = useMemo(() => {
-    return StyleSheet.flatten([styles.container, shapeStyle, { backgroundColor: theme.primary }, { ...style }]);
+    return StyleSheet.flatten([styles.container, shapeStyle, { backgroundColor: theme.primary }, style]);
   }, [shapeStyle, theme.primary, style]);
 
   return (

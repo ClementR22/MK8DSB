@@ -21,7 +21,7 @@ const slides = [
         </HelpText>
 
         <HelpFullWidthContainer>
-          <StatSliderCompare name={"speedGround"} setsStats={[4, 5]} handleSelectCompareStat={() => {}} />
+          <StatSliderCompare name={"speedGround"} setsStats={[4, 5]} setSelectedStatName={() => {}} />
         </HelpFullWidthContainer>
 
         <HelpText>Chaque barre de stats représente les performances d’un set distinct</HelpText>

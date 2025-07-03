@@ -5,17 +5,24 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import TooltipWrapper from "../TooltipWrapper";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
-import StatSliderCompareSelector from "./StatSliderCompareSelector";
+import StatSliderCompareSelector, { CompareButtonNames } from "./StatSliderCompareSelector";
 import { translateToLanguage } from "@/translations/translations";
 
 interface StatSliderCompareProps {
   name: string;
   setsStats: number[];
-  handleSelectCompareStat: (name: string) => void;
+  selectedStatName: CompareButtonNames;
+  setSelectedStatName: (name: string) => void;
   scrollToSetCard?: (index: number) => void;
 }
 
-const StatSliderCompare = ({ name, setsStats, handleSelectCompareStat, scrollToSetCard }: StatSliderCompareProps) => {
+const StatSliderCompare = ({
+  name,
+  setsStats,
+  selectedStatName,
+  setSelectedStatName,
+  scrollToSetCard,
+}: StatSliderCompareProps) => {
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
 
@@ -75,7 +82,7 @@ const StatSliderCompare = ({ name, setsStats, handleSelectCompareStat, scrollToS
         <View style={styles.statBarsContainer}>{memoizedStatBars}</View>
       </TooltipWrapper>
 
-      {<StatSliderCompareSelector handleSelectCompareStat={handleSelectCompareStat} />}
+      {<StatSliderCompareSelector selectedStatName={selectedStatName} setSelectedStatName={setSelectedStatName} />}
     </BoxContainer>
   );
 };
