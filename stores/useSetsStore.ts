@@ -50,6 +50,7 @@ export interface SetsStoreState {
   fetchSavedSets: () => Promise<void>;
   addNewSetInDisplay: () => void;
   loadSetToDisplay: (setToLoad: SetObject) => void;
+  loadSetToSave: (setTOLoad: SetObject) => void;
   removeSet: (index: number, screenName: ScreenName) => void;
   removeSetInMemory: (index: number) => Promise<void>;
   loadSetToSearch: (set: SetObject) => void;
@@ -58,10 +59,8 @@ export interface SetsStoreState {
   loadSetSaveToDisplay: (index: number) => void;
   loadSetSearchToDisplay: (index: number) => void;
   checkNameUnique: (name: string) => boolean;
-  saveSet: (setToSave: SetObject) => boolean;
+  saveSet: (screenName: ScreenName, index: number) => boolean;
   saveSetInMemory: (setToSave: SetObject) => Promise<void>;
-  saveSetFromDisplay: (index: number) => boolean;
-  saveSetFromFound: () => boolean;
   renameSet: (newName: string, screenName: ScreenName, index: number) => void;
   updateSetsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => Promise<void>;
   setSetInMemory: (key: string | number, setObj: SetObject) => Promise<void>;
@@ -149,6 +148,12 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     }));
   },
 
+  loadSetToSave: (setToLoad) => {
+    set((state) => ({
+      setsListSaved: [...state.setsListSaved, setToLoad],
+    }));
+  },
+
   removeSet: (index, screenName) => {
     const isSave = screenName === "save";
     const targetList = !isSave ? get().setsListDisplayed : get().setsListSaved;
@@ -209,8 +214,16 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     return true;
   },
 
-  saveSet: (setToSave) => {
+  saveSet: (screenName, index) => {
+    const list = screenName === "search" ? get().setsListFound : (get().setsListDisplayed as SetFoundObject[]);
+
     try {
+      const setSelected = list[index];
+      if (!setSelected) {
+        throw "Le set n'existe pas";
+      }
+      const { percentage, ...setToSave } = setSelected;
+
       const isNameUnique = get().checkNameUnique(setToSave.name);
       if (!isNameUnique) return false;
 
@@ -234,16 +247,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       setsSavedKeys: [...state.setsSavedKeys, String(key)],
     }));
     await saveThingInMemory(String(key), setToSave);
-  },
-
-  saveSetFromDisplay: (index) => {
-    const setToSave = get().setsListDisplayed[index];
-    return get().saveSet(setToSave);
-  },
-
-  saveSetFromFound: () => {
-    const { percentage, ...setWithoutPercentage } = get().setsListFound[get().setCardEditedIndex];
-    return get().saveSet(setWithoutPercentage);
   },
 
   renameSet: (newName, screenName, setCardIndex) => {
@@ -359,7 +362,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
         ? get().loadSetToSearch
         : screenName === "display"
         ? get().loadSetToDisplay
-        : get().saveSet;
+        : get().loadSetToSave;
     loadSet(setCard);
   },
 

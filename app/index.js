@@ -11,7 +11,6 @@ import { ScreenProvider } from "@/contexts/ScreenContext";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import FlexContainer from "@/primitiveComponents/FlexContainer";
-import ModalRenameSet from "@/components/modal/ModalRenameSet";
 import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -92,8 +91,6 @@ const SearchSetScreen = () => {
           </FlexContainer>
 
           <SetCardContainer ref={scrollRef} setsToShow={setsToShow} />
-
-          <ModalRenameSet />
         </ScrollView>
       </ResultStatsProvider>
     </ScreenProvider>

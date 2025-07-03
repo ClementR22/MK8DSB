@@ -29,16 +29,13 @@ export function useActionIconPropsList(
   const removeSet = useSetsStore((state) => state.removeSet);
   const exportSet = useSetsStore((state) => state.exportSet);
   const setsetCardEditedIndex = useSetsStore((state) => state.setsetCardEditedIndex);
-  const saveSetFromDisplay = useSetsStore((state) => state.saveSetFromDisplay);
+  const saveSet = useSetsStore((state) => state.saveSet);
   const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
   const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
 
   const handleSavePress = useCallback(() => {
-    if (setCardIndex !== null && setCardIndex !== undefined) {
-      setsetCardEditedIndex(setCardIndex);
-    }
-    situation === "search" ? setIsRenameSetModalVisible(true) : saveSetFromDisplay(setCardIndex);
-  }, [setsetCardEditedIndex, setCardIndex, situation, setIsRenameSetModalVisible, saveSetFromDisplay]);
+    saveSet(situation as ScreenName, setCardIndex);
+  }, [setsetCardEditedIndex, setCardIndex, situation, setIsRenameSetModalVisible, saveSet]);
 
   const handleRemovePress = useCallback(() => {
     if (situation !== "load") {
