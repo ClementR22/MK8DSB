@@ -20,6 +20,7 @@ interface StatSliderContentProps {
 const MAX_VALUE = 6;
 
 const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber }: StatSliderContentProps) => {
+  value = 5;
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
 
@@ -125,21 +126,20 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
           </Text>
         </View>
 
-        <View style={styles.sliderContainer}>
-          <Slider
-            value={tempValue}
-            onValueChange={onValueChange}
-            onSlidingStart={onSlidingStart}
-            onSlidingComplete={onSlidingComplete}
-            minimumValue={0}
-            maximumValue={MAX_VALUE}
-            step={0.25}
-            trackStyle={styles.track}
-            renderThumbComponent={renderCustomThumb}
-            minimumTrackStyle={StyleSheet.flatten([styles.minimumTrack, minimumTrackDynamicStyle])}
-            maximumTrackStyle={StyleSheet.flatten([styles.maximumTrack, maximumTrackDynamicStyle])}
-          />
-        </View>
+        <Slider
+          containerStyle={styles.sliderContainer}
+          value={tempValue}
+          onValueChange={onValueChange}
+          onSlidingStart={onSlidingStart}
+          onSlidingComplete={onSlidingComplete}
+          minimumValue={0}
+          maximumValue={MAX_VALUE}
+          step={0.25}
+          trackStyle={styles.track}
+          renderThumbComponent={renderCustomThumb}
+          minimumTrackStyle={StyleSheet.flatten(minimumTrackDynamicStyle)}
+          maximumTrackStyle={StyleSheet.flatten(maximumTrackDynamicStyle)}
+        />
       </View>
 
       <View style={styles.containerRight}>
@@ -189,14 +189,6 @@ const styles = StyleSheet.create({
   track: {
     height: 16,
     borderRadius: 100,
-  },
-  minimumTrack: {
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
-  },
-  maximumTrack: {
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
   },
   thumbWrapper: {
     width: 16, // Doit être plus large que le thumb intérieur

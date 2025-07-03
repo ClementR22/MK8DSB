@@ -41,21 +41,19 @@ const SetCardHeader: React.FC<SetCardHeaderProps> = ({
         <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} editable={isNameEditable} />
       </View>
 
-      <View style={{ minWidth: 40 }}>
-        {setToShowPercentage && (
-          <Text style={StyleSheet.flatten([styles.percentageText, percentageTextDynamicStyle])} numberOfLines={1}>
-            {setToShowPercentage}%
-          </Text>
-        )}
+      {setToShowPercentage && (
+        <Text style={StyleSheet.flatten([styles.percentageText, percentageTextDynamicStyle])} numberOfLines={1}>
+          {setToShowPercentage}%
+        </Text>
+      )}
 
-        {moreActionNamesList && (
-          <SetCardMoreActionsButton
-            moreActionNamesList={moreActionNamesList}
-            setCardIndex={setCardIndex}
-            situation={situation}
-          />
-        )}
-      </View>
+      {moreActionNamesList && (
+        <SetCardMoreActionsButton
+          moreActionNamesList={moreActionNamesList}
+          setCardIndex={setCardIndex}
+          situation={situation}
+        />
+      )}
     </View>
   );
 };
