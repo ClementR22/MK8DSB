@@ -18,7 +18,7 @@ const ButtonAndHelpmodal = ({ slides }) => {
         // style={{ backgroundColor: null }}
       />
 
-      <Modal visible={isHelpModalVisible}>
+      <Modal visible={isHelpModalVisible} navigationBarTranslucent={true} statusBarTranslucent={true}>
         <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
           <HelpModal slides={slides} setIsHelpModalVisible={setIsHelpModalVisible} />
         </SafeAreaView>
