@@ -91,7 +91,7 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
   return (
     <>
       {children}
-      <ScrollView horizontal contentContainerStyle={styles.controlsContainer}>
+      <ScrollView horizontal contentContainerStyle={styles.controlsContainer} style={{ margin: 2 }}>
         {selectionMode !== "single" && (
           <ButtonIcon
             onPress={toggleOpenFilterView}
@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
+    height: 54,
   },
 });
 

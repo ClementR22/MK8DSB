@@ -276,7 +276,7 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
   return (
     <ScrollView
       horizontal
-      contentContainerStyle={styles.topHorizontalScrollView}
+      contentContainerStyle={styles.buttonsContainer}
       showsHorizontalScrollIndicator={false}
       scrollEnabled={isScrollEnable}
     >
@@ -292,11 +292,9 @@ const styles = StyleSheet.create({
     // If using older React Native, use margin for spacing:
     // margin: 4,
   },
-  topHorizontalScrollView: {
-    flexDirection: "row", // Ensure children are laid out horizontally
+  buttonsContainer: {
     alignItems: "center", // Vertically align items in the scroll view
-    paddingVertical: 10,
-    height: 60, // Fixed height for the scroll view containing buttons
+    height: 54, // Fixed height for the scroll view containing buttons
   },
 });
 
