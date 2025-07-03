@@ -58,7 +58,7 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
   },
 
   updateSelectionFromSet: (setClassIds) => {
-    set(() => {
+    set((state) => {
       const newSelected: SelectedClassIds = {
         character: null,
         body: null,
@@ -70,10 +70,20 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
         newSelected[catName as CategoryKey] = setClassIds[index];
       });
 
-      return {
-        selectedClassIds: newSelected,
-        isSetsListUpdated: false,
-      };
+      const areEqual =
+        state.selectedClassIds.character === newSelected.character &&
+        state.selectedClassIds.body === newSelected.body &&
+        state.selectedClassIds.wheel === newSelected.wheel &&
+        state.selectedClassIds.glider === newSelected.glider;
+
+      // Mettre à jour l'état UNIQUEMENT si le contenu a changé
+      if (!areEqual) {
+        return {
+          selectedClassIds: newSelected,
+        };
+      } else {
+        return {}; // pour dire qu'il n'y a aucun changement
+      }
     });
   },
 

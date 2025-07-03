@@ -186,7 +186,9 @@ export default function TabLayout() {
               name="SavedSetScreen"
               options={{
                 title: translateToLanguage("SavedSetTabTitle", language),
-                tabBarIcon: ({ color, focused }) => <MaterialCommunityIcons name={focused ? "heart" : "heart-outline"} size={24} color={color} />,
+                tabBarIcon: ({ color, focused }) => (
+                  <MaterialCommunityIcons name={focused ? "heart" : "heart-outline"} size={24} color={color} />
+                ),
                 header: renderSavedHeader,
               }}
             />
@@ -194,7 +196,9 @@ export default function TabLayout() {
               name="GalleryScreen"
               options={{
                 title: translateToLanguage("GalleryTabTitle", language),
-                tabBarIcon: ({ color, focused }) => <Ionicons name={focused ? "image" : "image-outline"} size={24} color={color} />,
+                tabBarIcon: ({ color, focused }) => (
+                  <Ionicons name={focused ? "image" : "image-outline"} size={24} color={color} />
+                ),
                 header: renderGalleryHeader,
               }}
             />
@@ -202,7 +206,9 @@ export default function TabLayout() {
               name="SettingsScreen"
               options={{
                 title: translateToLanguage("SettingsTabTitle", language),
-                tabBarIcon: ({ color, focused }) => <Ionicons name={focused ? "settings" : "settings-outline"} size={24} color={color} />,
+                tabBarIcon: ({ color, focused }) => (
+                  <Ionicons name={focused ? "settings" : "settings-outline"} size={24} color={color} />
+                ),
                 header: renderSettingsHeader,
               }}
             />

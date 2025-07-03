@@ -112,7 +112,7 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
 
       return setsToShow.map((set: SetData, index: number) => (
         <SetCard
-          key={index}
+          key={JSON.stringify(set)}
           setToShowName={set.name}
           setToShowClassIds={set.classIds}
           setToShowStats={set.stats}
