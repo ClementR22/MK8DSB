@@ -13,10 +13,7 @@ import Button from "../../primitiveComponents/Button";
 import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModalStatSelectorChosenStats";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import ElementsSelector from "../elementsSelector/selector/ElementsSelector";
-import FiltersBox from "../elementsSelector/deselector/FiltersBox";
 import ElementsDeselector from "../elementsSelector/deselector/ElementsDeselector";
-import BodytypesSelector from "../elementsSelector/selector/BodytypesSelector";
-import BodytypesDeselector from "../elementsSelector/deselector/BodytypesDeselector";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
   const chosenStats = useSetsStore((state) => state.chosenStats);
@@ -133,10 +130,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
           selectedBodytypes={chosenBodytype}
           setSelectedBodytypes={setChosenBodytype}
         >
-          <FiltersBox>
-            <ElementsDeselector />
-            <BodytypesDeselector selectedBodytypes={chosenBodytype} setSelectedBodytypes={setChosenBodytype} />
-          </FiltersBox>
+          <ElementsDeselector selectedBodytypes={chosenBodytype} setSelectedBodytypes={setChosenBodytype} />
         </ElementsSelector>
       </ButtonAndModal>
 

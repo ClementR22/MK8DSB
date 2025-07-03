@@ -53,8 +53,7 @@ const translations = {
     ThisSetDoesNotExist: "This set does not exist",
     DeleteAllSetsInMemoryText: "Do you really want to delete all saved sets?",
     ResetSettingsText: "Do you really want to reset settings?",
-    SelectedElements: "Selected elements",
-    SelectedBodytypes: "Selected body types",
+    Selected: "Selected",
 
     // placeholder
     "NoSetFound...": "No set found...",
@@ -333,8 +332,7 @@ const translations = {
     ThisSetDoesNotExist: "Ce set n'existe pas",
     DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
     ResetSettingsText: "Souhaitez-vous vraiment réinitialiser les préférences ?",
-    SelectedElements: "Éléments sélectionnés",
-    SelectedBodytypes: "Types sélectionnés",
+    Selected: "Sélectionnés",
 
     // placeholder
     "NoSetFound...": "Aucun set trouvé...",

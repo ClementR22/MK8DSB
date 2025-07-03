@@ -82,8 +82,12 @@ const ImageButtonSelector: React.FC<ImageButtonSelectorProps> = ({
   const memoizedButtonBaseStyle = useMemo(
     () => [
       styles.button,
-      { backgroundColor: theme.surface_container_high },
-      { width: buttonSize.width, height: buttonSize.height },
+      {
+        backgroundColor: theme.surface_container_high,
+        width: buttonSize.width,
+        height: buttonSize.height,
+        borderWidth: buttonSize.width / 20,
+      },
     ],
     [theme.surface_container_high, buttonSize.width, buttonSize.height]
   );
@@ -148,7 +152,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 3,
     borderColor: "transparent", // Default transparent border
   },
   activeButtonCommon: {

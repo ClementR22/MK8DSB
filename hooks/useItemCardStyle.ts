@@ -17,8 +17,8 @@ export const useItemCardStyle = ({ size }: ItemCardStyleProps) => {
     return StyleSheet.flatten([
       {
         // Styles de base communs à toutes les cartes
-        borderRadius: ITEM_CARD_BORDER_RADIUS,
-        borderWidth: 3,
+        borderRadius: size / 4,
+        borderWidth: size / 20,
         borderColor: "transparent",
         overflow: "hidden",
         alignItems: "center",
@@ -30,7 +30,7 @@ export const useItemCardStyle = ({ size }: ItemCardStyleProps) => {
   }, [theme.surface_container_low]); // Dépendances
 
   // Calcule le style de la bordure active une seule fois
-  const activeBorderStyle = useMemo(() => [{ borderWidth: 3, borderColor: theme.primary }], [theme.primary]);
+  const activeBorderStyle = useMemo(() => [{ borderColor: theme.primary }], [theme.primary]);
 
   return {
     itemCardDynamicStyle,
