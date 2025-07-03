@@ -32,7 +32,7 @@ export type AppButtonName =
 export const appIconsConfig: { [key in AppButtonName]: AppIconConfig } = {
   // Sorting specific icons
   id: { iconName: "sort-numeric-ascending", iconType: IconType.MaterialCommunityIcons },
-  name: { iconName: "sort-alphabetical", iconType: IconType.MaterialCommunityIcons },
+  name: { iconName: "sort-alphabetical-ascending", iconType: IconType.MaterialCommunityIcons },
   classId: { iconName: "view-gallery-outline", iconType: IconType.MaterialCommunityIcons },
 
   // General category icons (for sub-menus)

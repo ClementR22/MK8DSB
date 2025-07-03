@@ -1,10 +1,10 @@
 import React, { useState, useMemo, useCallback, memo } from "react";
-import { StyleSheet, ScrollView, Pressable } from "react-native";
+import { StyleSheet, ScrollView, Pressable, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import { IconType } from "react-native-dynamic-vector-icons"; // Keep IconType import
 import useGeneralStore from "@/stores/useGeneralStore";
 import { appIconsConfig, AppButtonName } from "@/config/appIconsConfig"; // Import merged config
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 // Constants for layout consistency
 const BUTTON_SIZE = 40; // Assumed to match ButtonIcon's default size
@@ -70,23 +70,10 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
   const [displayedSortNames, setDisplayedSortNames] = useState<AppButtonName[]>(defaultSortNames);
 
   // State to track the currently active sort (e.g., 'id', 'name', 'speedGround')
-  const [activeSort, setActiveSort] = useState<AppButtonName | null>("id");
+  const [activeSort, setActiveSort] = useState<AppButtonName>("id");
 
   // State to keep track of the current sort direction for the active sort.
   const [currentDirection, setCurrentDirection] = useState<"asc" | "desc">("asc");
-
-  // No need for a separate useMemo for sortIconsList, directly use appIconsConfig
-  const getIconNameForDirection = useCallback(
-    (name: AppButtonName, direction: "asc" | "desc") => {
-      if (name === "id") {
-        return direction === "asc" ? "sort-numeric-ascending" : "sort-numeric-descending";
-      } else if (name === "name") {
-        return direction === "asc" ? "sort-alphabetical-ascending" : "sort-alphabetical-descending";
-      }
-      return appIconsConfig[name]?.iconName; // Use appIconsConfig
-    },
-    [] // No dependencies as appIconsConfig is a constant
-  );
 
   // Callback to handle button presses for sorting.
   const handlePress = useCallback(
@@ -135,39 +122,35 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
         return null;
       }
 
-      const { iconType } = iconConfig;
-      let iconName = iconConfig.iconName;
-      // Use iconBackgroundColor from config if present, otherwise default to theme.primary
-      let iconBackgroundColor = iconConfig.iconBackgroundColor || theme.primary;
-
-      // Determine if this button is the currently active sort
-      const isActive = activeSort === name;
+      const { iconName, iconType } = iconConfig;
+      const iconBackgroundColor = iconConfig.iconBackgroundColor || theme.primary;
 
       // Apply direction-specific icon and tooltip for sortable items IF they are the active sort
-      if (isActive && sortNameMap[name]) {
-        iconName = getIconNameForDirection(name, currentDirection);
-      } else if (sortNameMap[name]) {
-        // For non-active sortable items, show the generic ascending icon and tooltip
-        iconName = getIconNameForDirection(name, "asc");
-      }
+      // Determine the icon and colors for the badge
+      const badgeIconName = currentDirection === "asc" ? "arrow-down" : "arrow-up";
+      const badgeIconType = IconType.MaterialCommunityIcons;
+      const badgeBackgroundColor = "blue"; // Default badge icon color (for contrast)
+      const badgeIconColor = theme.surface; // Default badge icon color (for contrast)
+      const badgeIconInnerSize = 20; // Arrow icon will be 70% of the badge's size
 
       return (
-        <ButtonIcon
+        <View
           key={name} // Unique key for React list rendering
-          onPress={() => handlePress(name)} // Attach the handler
-          tooltipText={name} // Display the name as a tooltip (consider translation)
-          iconName={iconName}
-          iconType={iconType}
-          size={BUTTON_SIZE} // Ensure consistent button size
-          // Dynamically set background color based on active sort and direction
-          style={{
-            backgroundColor: isActive
-              ? currentDirection === "asc"
-                ? "red" // Active and Ascending
-                : "blue" // Active and Descending
-              : iconBackgroundColor, // Default background for inactive buttons
-          }}
-        />
+        >
+          <ButtonIcon
+            onPress={() => handlePress(name)} // Attach the handler
+            tooltipText={name} // Display the name as a tooltip (consider translation)
+            iconName={iconName}
+            iconType={iconType}
+            size={BUTTON_SIZE} // Ensure consistent button size
+            style={{ backgroundColor: iconBackgroundColor }}
+          />
+          {activeSort === name && (
+            <View style={[styles.badgeContainer, { backgroundColor: badgeBackgroundColor }]}>
+              <Icon name={badgeIconName} type={badgeIconType} size={badgeIconInnerSize} color={badgeIconColor} />
+            </View>
+          )}
+        </View>
       );
     });
   }, [
@@ -175,7 +158,6 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
     handlePress,
     activeSort, // Dependency for active sort detection
     currentDirection, // Dependency for icon/tooltip of active sort
-    getIconNameForDirection,
     theme.primary,
   ]);
 
@@ -201,6 +183,15 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     alignItems: "center", // Vertically align items in the scroll view
     height: 54, // Fixed height for the scroll view containing buttons
+  },
+  badgeContainer: {
+    position: "absolute",
+    top: -5,
+    right: -5,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1,
+    borderRadius: 10,
   },
 });
 
