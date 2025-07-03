@@ -1,9 +1,9 @@
-// No changes needed in ElementsSelector as it correctly passes props
+// No changes needed in ElementsSelectorPannel as it correctly passes props
 // to PaginatedElementsContainer, which now handles the item dimension logic.
 
 import React, { useState, memo, useMemo, useEffect, useCallback } from "react";
 import { StyleSheet, ScrollView } from "react-native";
-import PaginatedElementsContainer, { ELEMENTS_PER_PAGE } from "../PaginatedElementsContainer";
+import PaginatedElementsContainer, { ELEMENTS_PER_PAGE } from "./PaginatedElementsContainer";
 import {
   elementsDataBody,
   elementsDataCharacter,
@@ -12,14 +12,14 @@ import {
 } from "@/data/elements/elementsData";
 import { CategoryKey, ElementItem } from "@/data/elements/elementsTypes";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import SortModeSelector from "../SortModeSelector";
+import SortModeSelector from "./SortModeSelector";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import PagesNavigator from "../PagesNavigator";
+import PagesNavigator from "./PagesNavigator";
 import { Bodytype } from "@/data/bodytypes/bodytypeTypes";
-import BodytypesSelector from "./BodytypesSelector";
+import BodytypesSelector from "./selector/BodytypesSelector";
 
 const allCategoryElements: {
   [key in CategoryKey]: ElementItem[];
@@ -37,7 +37,7 @@ interface ElementsSelectorProps {
   children?: React.ReactNode;
 }
 
-const ElementsSelector: React.FC<ElementsSelectorProps> = ({
+const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
   selectionMode = "single",
   selectedBodytypes,
   setSelectedBodytypes,
@@ -130,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(ElementsSelector);
+export default memo(ElementsSelectorPannel);

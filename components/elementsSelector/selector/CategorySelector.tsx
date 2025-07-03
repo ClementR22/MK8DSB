@@ -2,7 +2,7 @@ import { category4Names } from "@/data/data";
 import { CategoryKey } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore"; // Assuming theme store is needed for styles
 import React, { memo, useMemo } from "react";
-import ImageButtonSelector, { ImageButtonOption } from "./ImageButtonSelector"; // Import the generic selector
+import ImageButtonSelector, { ImageButtonOption } from "../ImageButtonSelector"; // Import the generic selector
 import { Image, StyleSheet, View } from "react-native";
 import TooltipWrapper from "@/components/TooltipWrapper";
 import { ITEM_CARD_BORDER_RADIUS } from "@/hooks/useItemCardStyle";

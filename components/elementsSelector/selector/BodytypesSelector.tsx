@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native"; // Add Text for the filter title
 import { useThemeStore } from "@/stores/useThemeStore";
 
-import ImageButtonSelector, { ImageButtonOption } from "./ImageButtonSelector"; // Import the generic selector
+import ImageButtonSelector, { ImageButtonOption } from "../ImageButtonSelector"; // Import the generic selector
 import { Bodytype } from "@/data/bodytypes/bodytypeTypes";
 
 interface BodytypesSelectorProps {

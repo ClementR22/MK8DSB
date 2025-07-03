@@ -12,7 +12,7 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
 import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModalStatSelectorChosenStats";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import ElementsSelector from "../elementsSelector/selector/ElementsSelector";
+import ElementsSelectorPannel from "../elementsSelector/ElementsSelectorPannel";
 import ElementsDeselector from "../elementsSelector/deselector/ElementsDeselector";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
@@ -125,13 +125,13 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
           <ButtonIcon tooltipText="ChooseFilters" iconName="pin" iconType={IconType.MaterialCommunityIcons} />
         }
       >
-        <ElementsSelector
+        <ElementsSelectorPannel
           selectionMode="multiple"
           selectedBodytypes={chosenBodytype}
           setSelectedBodytypes={setChosenBodytype}
         >
           <ElementsDeselector selectedBodytypes={chosenBodytype} setSelectedBodytypes={setChosenBodytype} />
-        </ElementsSelector>
+        </ElementsSelectorPannel>
       </ButtonAndModal>
 
       <Button onPress={search} iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>

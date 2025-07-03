@@ -22,6 +22,8 @@ const { width: screenWidth } = Dimensions.get("window");
 const ITEM_BODYTYPE_WIDTH =
   (screenWidth * 0.9 - MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL * 2 - PAGINATED_ELEMENTS_CONTAINER_PADDING * 2) / 12; /// 2
 const ITEM_ELEMENT_WIDTH = 40;
+const ELEMENTS_CONTAINER_PADDING = 6;
+
 interface ElementsDeselectorProps {
   selectedBodytypes: Set<Bodytype>;
   setSelectedBodytypes: React.Dispatch<React.SetStateAction<Set<Bodytype>>>;
@@ -145,12 +147,7 @@ const ElementsDeselector: React.FC<ElementsDeselectorProps> = ({ selectedBodytyp
       ) : (
         // Les enfants sont la ScrollView avec les items spécifiques (ElementItem ou BodytypeItem)
         // Note: Tu peux ajuster la ScrollViewProps. L'important est que le contenu soit horizontal.
-        <ScrollView
-          ref={scrollViewRef}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.elementsContainer}
-        >
+        <ScrollView ref={scrollViewRef} horizontal persistentScrollbar contentContainerStyle={styles.elementsContainer}>
           {elementsToDisplay.map((item) => (
             <ItemCard
               key={item.name}
@@ -170,12 +167,15 @@ const ElementsDeselector: React.FC<ElementsDeselectorProps> = ({ selectedBodytyp
 
 const styles = StyleSheet.create({
   container: {
-    padding: PAGINATED_ELEMENTS_CONTAINER_PADDING,
     borderRadius: 10,
     overflow: "hidden",
+    padding: 2,
     gap: 2,
   },
-  topContainer: { flexDirection: "row", height: ITEM_BODYTYPE_WIDTH * 1.25 },
+  topContainer: {
+    flexDirection: "row",
+    height: ITEM_BODYTYPE_WIDTH * 1.25,
+  },
   deselectorTitle: {
     flex: 1,
     fontSize: 16,
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   noItemsText: {
-    height: ITEM_ELEMENT_WIDTH * 1.25,
+    height: ITEM_ELEMENT_WIDTH * 1.25 + PAGINATED_ELEMENTS_CONTAINER_PADDING,
     fontSize: 14,
     textAlign: "center",
     textAlignVertical: "center",
@@ -192,11 +192,13 @@ const styles = StyleSheet.create({
   },
   bodytypesContainer: {
     flexDirection: "row",
+    gap: 2,
   },
   elementsContainer: {
     flexDirection: "row",
     gap: 4,
-    paddingHorizontal: 4,
+    paddingHorizontal: ELEMENTS_CONTAINER_PADDING,
+    paddingBottom: ELEMENTS_CONTAINER_PADDING,
   },
 });
 
