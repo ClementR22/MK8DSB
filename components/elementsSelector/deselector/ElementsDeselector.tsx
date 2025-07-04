@@ -5,7 +5,7 @@ import { ElementItem } from "@/data/elements/elementsTypes";
 import { elementsGroupedByClassId } from "@/data/elements/elementsData";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import { ScrollView, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 import { useItemCardStyle } from "@/hooks/useItemCardStyle";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native";
@@ -102,24 +102,20 @@ const ElementsDeselector: React.FC = () => {
           {translateToLanguage("None", language)}
         </Text>
       ) : (
-        <ScrollView
-          ref={scrollViewRef}
-          horizontal
-          persistentScrollbar
-          contentContainerStyle={styles.elementsContainer}
-          scrollEnabled={isScrollEnable}
-        >
-          {elementsToDisplay.map((item) => (
-            <ItemCard
-              key={item.name}
-              imageUrl={item.imageUrl}
-              name={item.name}
-              isSelected={true}
-              onPress={() => handleDeselectElement(item)}
-              itemCardDynamicStyle={elementsCardDynamicStyle}
-              activeBorderStyle={activeBorderStyle}
-            />
-          ))}
+        <ScrollView ref={scrollViewRef} horizontal persistentScrollbar scrollEnabled={isScrollEnable}>
+          <Pressable style={styles.elementsContainer}>
+            {elementsToDisplay.map((item) => (
+              <ItemCard
+                key={item.name}
+                imageUrl={item.imageUrl}
+                name={item.name}
+                isSelected={true}
+                onPress={() => handleDeselectElement(item)}
+                itemCardDynamicStyle={elementsCardDynamicStyle}
+                activeBorderStyle={activeBorderStyle}
+              />
+            ))}
+          </Pressable>
         </ScrollView>
       )}
     </View>
