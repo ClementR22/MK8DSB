@@ -18,6 +18,7 @@ import StatSliderCompact from "@/components/statSlider/StatSliderCompact";
 import { compactStatNames } from "@/data/data";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
+import TabBarHeightUpdater from "@/components/TabBarHeightUpdater";
 
 const SearchSetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -92,6 +93,7 @@ const SearchSetScreen = () => {
 
           <SetCardContainer ref={scrollRef} setsToShow={setsToShow} />
         </ScrollView>
+        <TabBarHeightUpdater />
       </ResultStatsProvider>
     </ScreenProvider>
   );
