@@ -6,6 +6,8 @@ interface GeneralStoreState {
   setIsScrollEnable: (newIsScrollEnable: boolean) => void;
   tabBarHeight: number;
   setTabBarHeight: (height: number) => void;
+  showAllStatSliderCompactBonuses: boolean;
+  toggleAllStatSliderCompactBonuses: () => void;
 }
 
 const useGeneralStore = create<GeneralStoreState>((set, get) => ({
@@ -13,8 +15,11 @@ const useGeneralStore = create<GeneralStoreState>((set, get) => ({
   setIsScrollEnable: (newIsScrollEnable) => set({ isScrollEnable: newIsScrollEnable }),
 
   tabBarHeight: 0,
-
   setTabBarHeight: (height) => set({ tabBarHeight: height }),
+
+  showAllStatSliderCompactBonuses: false,
+  toggleAllStatSliderCompactBonuses: () =>
+    set((state) => ({ showAllStatSliderCompactBonuses: !state.showAllStatSliderCompactBonuses })),
 }));
 
 export default useGeneralStore;

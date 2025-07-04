@@ -1,10 +1,11 @@
-import React, { useState, useRef, useCallback, useMemo } from "react";
-import { View, Text, StyleSheet, Pressable, ViewStyle, TextStyle } from "react-native";
+import React, { useCallback, useMemo } from "react";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { translate } from "@/translations/translations";
 import StatSliderCompactBar from "./StatSliderCompactBar";
 import { getBonusColor } from "@/utils/getBonusColor";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 interface StatSliderCompactProps {
   name: string;
@@ -14,8 +15,6 @@ interface StatSliderCompactProps {
   isInSetCard?: boolean;
 }
 
-const DOUBLE_PRESS_DELAY = 500;
-
 const StatSliderCompact = ({
   name,
   value,
@@ -24,16 +23,13 @@ const StatSliderCompact = ({
   isInSetCard = false,
 }: StatSliderCompactProps) => {
   const theme = useThemeStore((state) => state.theme);
+  const showAllStatSliderCompactBonuses = useGeneralStore((state) => state.showAllStatSliderCompactBonuses);
+  const toggleAllStatSliderCompactBonuses = useGeneralStore((state) => state.toggleAllStatSliderCompactBonuses);
 
   const bonusEnabled = useMemo(() => chosenValue !== undefined, [chosenValue]);
   const actualChosenValue = useMemo(() => chosenValue ?? value, [chosenValue, value]);
   const bonusFound = useMemo(() => value - actualChosenValue, [value, actualChosenValue]);
   const bonusColor = useMemo(() => getBonusColor(bonusFound), [bonusFound]);
-
-  const [showBonusDefault, setShowBonusDefault] = useState(false);
-  const [showBonus, setShowBonus] = useState(false);
-
-  const lastPress = useRef(0);
 
   const containerStyle = useMemo(() => {
     const borderColor = getStatSliderBorderColor(statFilterNumber, theme);
@@ -52,38 +48,16 @@ const StatSliderCompact = ({
   }, [dynamicTextColor]);
 
   const valueStyle = useMemo(() => {
-    return StyleSheet.flatten([styles.text, showBonus && { color: bonusColor }]);
-  }, [dynamicTextColor, showBonus, bonusColor]);
+    return StyleSheet.flatten([styles.text, showAllStatSliderCompactBonuses && { color: bonusColor }]);
+  }, [dynamicTextColor, showAllStatSliderCompactBonuses, bonusColor]);
 
-  const handlePressIn = useCallback(() => {
+  const handlePress = useCallback(() => {
     if (!bonusEnabled) return;
-
-    const now = Date.now();
-    const isDoubleTap = now - lastPress.current < DOUBLE_PRESS_DELAY;
-
-    if (isDoubleTap) {
-      setShowBonusDefault((prev) => {
-        const newDefault = !prev;
-        setShowBonus(newDefault);
-        return newDefault;
-      });
-    } else {
-      setShowBonus(!showBonusDefault);
-    }
-    lastPress.current = now;
-  }, [bonusEnabled, showBonusDefault]);
-
-  const handlePressOut = useCallback(() => {
-    if (!bonusEnabled) return;
-    setShowBonus(showBonusDefault);
-  }, [bonusEnabled, showBonusDefault]);
+    toggleAllStatSliderCompactBonuses();
+  }, [bonusEnabled]);
 
   return (
-    <Pressable
-      style={containerStyle}
-      onPressIn={bonusEnabled ? handlePressIn : undefined}
-      onPressOut={bonusEnabled ? handlePressOut : undefined}
-    >
+    <Pressable style={containerStyle} onPress={handlePress}>
       {!isInSetCard && (
         <View style={styles.nameContainer}>
           <Text style={nameStyle}>{translate(name)}</Text>
@@ -94,7 +68,7 @@ const StatSliderCompact = ({
 
       {isInSetCard && (
         <View style={styles.nameContainer}>
-          <Text style={valueStyle}>{showBonus ? bonusFound : value}</Text>
+          <Text style={valueStyle}>{showAllStatSliderCompactBonuses ? bonusFound : value}</Text>
         </View>
       )}
     </Pressable>
