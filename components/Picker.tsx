@@ -15,22 +15,17 @@ interface PickerProps {
   setValue: (value: string | number) => void;
   itemList: PickerItem[];
   pickerTitle: string;
-  isTranslatedContent?: boolean;
 }
 
-const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle, isTranslatedContent = false }) => {
+const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle }) => {
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
 
   const transformedItems = useMemo(() => {
     return itemList.map((item) => (
-      <NativePicker.Item
-        key={item.value}
-        label={isTranslatedContent ? translateToLanguage(item.label, language) : item.label}
-        value={item.value}
-      />
+      <NativePicker.Item key={item.value} label={translateToLanguage(item.label, language)} value={item.value} />
     ));
-  }, [itemList, isTranslatedContent, language, theme]);
+  }, [itemList, language, theme]);
 
   const pickerInputDynamicStyle = useMemo(
     () => ({

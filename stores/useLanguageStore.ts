@@ -5,7 +5,7 @@ import { getLocales } from "expo-localization";
 // --- Constants ---
 export const languageList = [
   { label: "English", value: "en" },
-  { label: "Français", value: "fr" },
+  { label: "French", value: "fr" },
   { label: "System", value: "system" },
 ];
 

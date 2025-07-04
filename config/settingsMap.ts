@@ -17,7 +17,7 @@ export function useSettingsMap(): Record<SettingKey, SettingsEntry> {
   const setTheme = useThemeStore((state) => state.setTheme);
 
   return {
-    language: { setState: setLanguage, defaultValue: "en" },
+    language: { setState: setLanguage, defaultValue: "system" },
     isResultStatsSync: { setState: setIsResultStatsSync, defaultValue: true },
     resultStatsDefault: { setState: setResultStatsDefault, defaultValue: resultStatsInit },
     theme: { setState: setTheme, defaultValue: "system" },

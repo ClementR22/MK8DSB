@@ -63,9 +63,6 @@ const translations = {
     // button label
     Search: "Search",
     All: "All",
-    Dark: "Dark",
-    Light: "Light",
-    System: "System",
     MatchDesiredStats: "Match desired stats",
     AlwaysSync: "Always match desired stats",
     ConfigureDefaultStats: "Configure default displayed stats",
@@ -132,6 +129,15 @@ const translations = {
     // other stat label
     speed: "Speed",
     handling: "Handling",
+
+    // language
+    English: "English",
+    French: "French",
+
+    // theme
+    Dark: "Dark",
+    Light: "Light",
+    System: "System",
 
     // sort
     id: "Number",
@@ -344,9 +350,6 @@ const translations = {
     // button label
     Search: "Chercher",
     All: "Toutes",
-    Dark: "Sombre",
-    Light: "Clair",
-    System: "Appareil",
     MatchDesiredStats: "Copier les stats souhaitées",
     AlwaysSync: "Toujours copier les stats souhaitées",
     ConfigureDefaultStats: "Configurer les stats affichées par défault",
@@ -413,6 +416,15 @@ const translations = {
     // other stat label
     speed: "Vitesse",
     handling: "Maniabilité",
+
+    // language
+    English: "Anglais",
+    French: "Français",
+
+    // theme
+    Dark: "Sombre",
+    Light: "Clair",
+    System: "Appareil",
 
     // sort
     id: "Number",

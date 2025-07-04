@@ -6,9 +6,7 @@ const ThemeSelector = () => {
   const themeMode = useThemeStore((state) => state.themeMode);
   const setTheme = useThemeStore((state) => state.setTheme);
 
-  return (
-    <Picker value={themeMode} setValue={setTheme} itemList={themeList} pickerTitle="Theme" isTranslatedContent={true} />
-  );
+  return <Picker value={themeMode} setValue={setTheme} itemList={themeList} pickerTitle="Theme" />;
 };
 
 export default ThemeSelector;
