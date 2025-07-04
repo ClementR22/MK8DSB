@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, ImageSourcePropType } from "react-native"; // 
 import { useThemeStore } from "@/stores/useThemeStore";
 import { Bodytype } from "@/data/bodytypes/bodytypeTypes";
 import TooltipWrapper from "@/components/TooltipWrapper";
+import { HALF_GAP } from "../SortModeSelector";
 
 interface BodytypesSelectorProps {
   selectedBodytypes: Set<Bodytype>;
@@ -90,6 +91,7 @@ const BodytypesSelector: React.FC<BodytypesSelectorProps> = memo(({ selectedBody
 
 const styles = StyleSheet.create({
   container: {
+    paddingLeft: HALF_GAP,
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 3,

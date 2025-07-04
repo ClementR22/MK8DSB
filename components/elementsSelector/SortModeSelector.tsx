@@ -8,6 +8,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 // Constants for layout consistency
 const BUTTON_SIZE = 40; // Assumed to match ButtonIcon's default size
+export const HALF_GAP = 7;
 
 // Define the names for different sorting options.
 const defaultSortNames: AppButtonName[] = [
@@ -162,12 +163,7 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
   ]);
 
   return (
-    <ScrollView
-      horizontal
-      contentContainerStyle={styles.buttonsContainer}
-      showsHorizontalScrollIndicator={false}
-      scrollEnabled={isScrollEnable}
-    >
+    <ScrollView horizontal scrollEnabled={isScrollEnable}>
       <Pressable style={styles.container}>{displayedButtons}</Pressable>
     </ScrollView>
   );
@@ -175,18 +171,14 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
 
 const styles = StyleSheet.create({
   container: {
+    marginHorizontal: HALF_GAP,
     flexDirection: "row", // Arrange buttons horizontally
+    alignItems: "center",
     gap: 8, // Add some spacing between buttons (requires React Native 0.71+)
-    // If using older React Native, use margin for spacing:
-    // margin: 4,
-  },
-  buttonsContainer: {
-    alignItems: "center", // Vertically align items in the scroll view
-    height: 54, // Fixed height for the scroll view containing buttons
   },
   badgeContainer: {
     position: "absolute",
-    top: -5,
+    top: -2,
     right: -5,
     alignItems: "center",
     justifyContent: "center",

@@ -33,7 +33,7 @@ const Switch: React.FC<SwitchProps> = ({ value, setValue, onToggleSwitch, disabl
 
   return (
     <View style={styles.switchContainer}>
-      <NativeSwitch value={value} onValueChange={handleToggle} disabled={disabled} />
+      <NativeSwitch value={value} onValueChange={handleToggle} disabled={disabled} style={{ height: 30 }} />
       <Text style={textStyle}>{translate(switchLabel)}</Text>
     </View>
   );

@@ -12,6 +12,7 @@ import { Text } from "react-native";
 import { translateToLanguage } from "@/translations/translations";
 import ItemCard from "../ItemCard";
 import { PAGINATED_ELEMENTS_CONTAINER_PADDING } from "../selector/ElementsGrid";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 const ITEM_ELEMENT_WIDTH = 40;
 const ELEMENTS_CONTAINER_PADDING = 6;
@@ -19,6 +20,8 @@ const ELEMENTS_CONTAINER_PADDING = 6;
 const ElementsDeselector: React.FC = () => {
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
+
+  const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const scrollViewRef = useRef<ScrollView>(null);
 
@@ -99,7 +102,13 @@ const ElementsDeselector: React.FC = () => {
           {translateToLanguage("None", language)}
         </Text>
       ) : (
-        <ScrollView ref={scrollViewRef} horizontal persistentScrollbar contentContainerStyle={styles.elementsContainer}>
+        <ScrollView
+          ref={scrollViewRef}
+          horizontal
+          persistentScrollbar
+          contentContainerStyle={styles.elementsContainer}
+          scrollEnabled={isScrollEnable}
+        >
           {elementsToDisplay.map((item) => (
             <ItemCard
               key={item.name}

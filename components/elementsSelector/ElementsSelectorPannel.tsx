@@ -2,7 +2,7 @@
 // to PaginatedElementsContainer, which now handles the item dimension logic.
 
 import React, { useState, memo, useMemo, useEffect, useCallback } from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, View } from "react-native";
 import PaginatedElementsContainer, { ELEMENTS_PER_PAGE } from "./PaginatedElementsContainer";
 import {
   elementsDataBody,
@@ -12,7 +12,7 @@ import {
 } from "@/data/elements/elementsData";
 import { CategoryKey, ElementItem } from "@/data/elements/elementsTypes";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import SortModeSelector from "./SortModeSelector";
+import SortModeSelector, { HALF_GAP } from "./SortModeSelector";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
@@ -20,6 +20,7 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import PagesNavigator from "./PagesNavigator";
 import { Bodytype } from "@/data/bodytypes/bodytypeTypes";
 import BodytypesSelector from "./selector/BodytypesSelector";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const allCategoryElements: {
   [key in CategoryKey]: ElementItem[];
@@ -43,6 +44,7 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
   setSelectedBodytypes,
   children,
 }) => {
+  const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
 
   const [selectedCategory, setSelectedCategory] = useState<CategoryKey>("character");
@@ -95,25 +97,32 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
     return { iconName: "sort", iconType: IconType.MaterialCommunityIcons, tooltipText: "SortElements" };
   }, [isOpenFilterView]);
 
+  const separatorDynamicStyle = useMemo(() => ({ backgroundColor: theme.outline_variant }), []);
+
   return (
     <>
       {children}
-      <ScrollView horizontal contentContainerStyle={styles.controlsContainer} style={{ margin: 2 }}>
+      <View style={styles.middleContainer}>
         {selectionMode !== "single" && (
-          <ButtonIcon
-            onPress={toggleOpenFilterView}
-            iconName={iconName}
-            iconType={iconType}
-            tooltipText={tooltipText}
-          />
-        )}
+          <>
+            <ButtonIcon
+              onPress={toggleOpenFilterView}
+              iconName={iconName}
+              iconType={iconType}
+              tooltipText={tooltipText}
+            />
 
-        {isOpenFilterView || selectionMode === "single" ? (
-          <SortModeSelector setOrderNumber={setOrderNumber} />
-        ) : (
-          <BodytypesSelector selectedBodytypes={selectedBodytypes} setSelectedBodytypes={setSelectedBodytypes} />
+            <View style={[styles.separator, separatorDynamicStyle]} />
+          </>
         )}
-      </ScrollView>
+        <View style={styles.controlsContainer}>
+          {isOpenFilterView || selectionMode === "single" ? (
+            <SortModeSelector setOrderNumber={setOrderNumber} />
+          ) : (
+            <BodytypesSelector selectedBodytypes={selectedBodytypes} setSelectedBodytypes={setSelectedBodytypes} />
+          )}
+        </View>
+      </View>
 
       <PaginatedElementsContainer
         selectedCategory={selectedCategory}
@@ -130,12 +139,14 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
 };
 
 const styles = StyleSheet.create({
-  controlsContainer: {
+  middleContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    marginVertical: 2,
     height: 54,
   },
+  separator: { width: 2, height: 40, marginLeft: HALF_GAP },
+  controlsContainer: { justifyContent: "center", flexGrow: 1, flexShrink: 1 },
 });
 
 export default memo(ElementsSelectorPannel);
