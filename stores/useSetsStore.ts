@@ -5,9 +5,10 @@ import * as Clipboard from "expo-clipboard";
 import { nanoid } from "nanoid";
 
 // Data and Types
-import { statNames } from "@/data/data";
+import { statNames } from "@/data/stats/statsData";
 import { ScreenName } from "@/contexts/ScreenContext";
 import { ResultStats } from "@/contexts/ResultStatsContext";
+import { Stat } from "@/data/stats/statsTypes";
 
 // Utilities
 import showToast from "@/utils/toast";
@@ -18,12 +19,9 @@ import {
   saveThingInMemory,
 } from "@/utils/asyncStorageOperations";
 
-// Existing type definitions and interfaces
-export type StatName = string;
-
 const MAX_NUMBER_SETS_DISPLAY = 10;
 export interface ChosenStat {
-  name: StatName;
+  name: Stat;
   checked: boolean;
   value: number | null;
   statFilterNumber: number;

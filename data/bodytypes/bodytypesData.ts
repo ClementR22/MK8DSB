@@ -1,4 +1,6 @@
-import { BodytypeItem } from "./bodytypeTypes";
+import { Bodytype, BodytypeItem } from "./bodytypesTypes";
+
+export const bodytypeNames: Bodytype[] = ["kart", "bike", "sportBike", "ATV"];
 
 export const bodytypesData = [
   {

@@ -15,7 +15,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import StatSliderCompact from "@/components/statSlider/StatSliderCompact";
-import { compactStatNames } from "@/data/data";
+import { compactStatNames } from "@/data/stats/statsData";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import TabBarHeightUpdater from "@/components/TabBarHeightUpdater";

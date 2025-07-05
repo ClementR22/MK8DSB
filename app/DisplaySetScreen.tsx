@@ -5,12 +5,10 @@ import { ScreenProvider } from "@/contexts/ScreenContext";
 import DisplaySetScreenPressablesContainer from "@/components/screenPressablesContainer/DisplaySetScreenPressablesContainer";
 import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { statNames } from "@/data/data";
+import { statNames } from "@/data/stats/statsData";
 import StatSliderCompare, { SetIdAndStatValue } from "@/components/statSliderCompare/StatSliderCompare";
-import { useScreen } from "@/contexts/ScreenContext"; // Importez useScreen
 import { SET_CARD_COLOR_PALETTE } from "@/constants/Colors"; // Importez la palette et la fonction de fallback
-import { SetData } from "@/components/setCard/SetCard";
-import { AppButtonName } from "@/config/appIconsConfig";
+import { CompareName } from "@/data/stats/statsTypes";
 
 const DisplaySetScreen = () => {
   const scrollRef = useRef(null); // Ref pour SetCardContainer
@@ -82,7 +80,7 @@ const DisplaySetScreen = () => {
     return result;
   }, [setsListDisplayed]);
 
-  const [selectedStatName, setSelectedStatName] = useState<AppButtonName>("speedGround");
+  const [selectedCompareName, setSelectedCompareName] = useState<CompareName>("speedGround");
 
   const hideRemoveSet = setsListDisplayed.length === 1;
 
@@ -108,10 +106,9 @@ const DisplaySetScreen = () => {
         />
 
         <StatSliderCompare
-          name={selectedStatName}
-          setsIdAndValue={setsIdAndValueByStat[selectedStatName]}
-          selectedStatName={selectedStatName}
-          setSelectedStatName={setSelectedStatName}
+          setsIdAndValue={setsIdAndValueByStat[selectedCompareName]}
+          selectedCompareName={selectedCompareName}
+          setSelectedCompareName={setSelectedCompareName}
           scrollToSetCard={scrollToSetCard}
           setsColorsMap={setsColorsMap} // Passe la map de couleurs calculée
         />

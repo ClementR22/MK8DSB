@@ -1,4 +1,4 @@
-import { category4Names } from "@/data/data";
+import { categories } from "@/data/elements/elementsData";
 import { Category } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore"; // Assuming theme store is needed for styles
 import React, { memo, useMemo } from "react";
@@ -26,7 +26,7 @@ interface categoryOption {
 }
 
 // Transform your category data into the format expected by ImageButtonSelector
-const categoryOptions: categoryOption[] = (category4Names as Category[]).map((category) => ({
+const categoryOptions: categoryOption[] = (categories as Category[]).map((category) => ({
   name: category,
   imageUrl: categoryImageSources[category],
 }));

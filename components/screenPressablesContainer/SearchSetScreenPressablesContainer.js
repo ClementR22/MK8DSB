@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { bodytypeNames, category4Names } from "@/data/data";
+import { categories } from "@/data/elements/elementsData";
+import { statNames } from "@/data/stats/statsData";
 import { setsData } from "@/data/setsData";
 import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
 import { translate } from "@/translations/translations";
@@ -54,7 +55,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
     for (const [setId, setData] of setsData) {
       const { classIds, stats, bodytypes } = setData;
 
-      const isOneElementNonAccepted = category4Names.some((categoryKey, index) => {
+      const isOneElementNonAccepted = categories.some((categoryKey, index) => {
         if (chosenClassIds[categoryKey].size === 0) {
           return false;
         } else {

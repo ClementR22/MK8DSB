@@ -1,35 +1,18 @@
+import { Stat } from "@/data/stats/statsTypes";
 import { IconType } from "react-native-dynamic-vector-icons";
 
 // Define the type for the properties of a statistic icon
-export interface AppIconConfig {
+export interface SortButtonConfig {
   iconName: string;
   iconType: IconType;
   iconBackgroundColor?: string; // Make it optional as some might derive from theme
 }
 
 // Define the union of all possible button names/keys
-export type AppButtonName =
-  | "id"
-  | "name"
-  | "classId"
-  | "speed"
-  | "handling"
-  | "acceleration"
-  | "weight"
-  | "traction"
-  | "miniTurbo"
-  | "close"
-  | "speedGround"
-  | "speedAntiGravity"
-  | "speedWater"
-  | "speedAir"
-  | "handlingGround"
-  | "handlingAntiGravity"
-  | "handlingWater"
-  | "handlingAir";
+export type SortButtonName = "close" | "id" | "name" | "classId" | "speed" | "handling" | Stat;
 
 // Merged configuration for all icons
-export const appIconsConfig: { [key in AppButtonName]: AppIconConfig } = {
+export const sortButtonsConfig: { [key in SortButtonName]: SortButtonConfig } = {
   // Sorting specific icons
   id: { iconName: "sort-numeric-ascending", iconType: IconType.MaterialCommunityIcons },
   name: { iconName: "sort-alphabetical-ascending", iconType: IconType.MaterialCommunityIcons },

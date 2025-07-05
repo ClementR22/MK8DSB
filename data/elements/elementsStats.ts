@@ -1,4 +1,4 @@
-import { category4Names } from "../data";
+import { categories } from "./elementsData";
 
 const classesStatsCharacter = new Map([
   [0, [2.5, 2.25, 2.75, 3, 4, 2, 5, 5, 4.5, 5, 4.25, 4.5]],
@@ -56,8 +56,8 @@ const classesStatsGlider = new Map([
 ]);
 
 export const classesStatsByCategory = {
-  [category4Names[0]]: classesStatsCharacter,
-  [category4Names[1]]: classesStatsBody,
-  [category4Names[2]]: classesStatsWheel,
-  [category4Names[3]]: classesStatsGlider,
+  [categories[0]]: classesStatsCharacter,
+  [categories[1]]: classesStatsBody,
+  [categories[2]]: classesStatsWheel,
+  [categories[3]]: classesStatsGlider,
 };

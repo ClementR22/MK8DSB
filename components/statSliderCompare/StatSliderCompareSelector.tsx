@@ -2,85 +2,77 @@ import React, { useState, useMemo, useCallback, memo, Dispatch, SetStateAction }
 import { StyleSheet, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import { appIconsConfig, AppButtonName } from "@/config/appIconsConfig"; // Import merged config
+import { sortButtonsConfig, SortButtonName } from "@/config/sortButtonsConfig"; // Import merged config
+import { CompareName } from "@/data/stats/statsTypes"; // Import Stat type
 
-// Redefine types to use AppButtonName
-type ReducedStatName = Exclude<
-  AppButtonName,
-  | "id"
-  | "name"
-  | "classId"
-  | "close"
-  | "speedGround"
-  | "speedAntiGravity"
-  | "speedWater"
-  | "speedAir"
-  | "handlingGround"
-  | "handlingAntiGravity"
-  | "handlingWater"
-  | "handlingAir"
->;
-type SpeedStatName = Extract<AppButtonName, "close" | "speedGround" | "speedAntiGravity" | "speedWater" | "speedAir">;
-type HandlingStatName = Extract<
-  AppButtonName,
+// Redefine types to use SortButtonName
+
+type SpeedCompareName = Extract<CompareName, "close" | "speedGround" | "speedAntiGravity" | "speedWater" | "speedAir">;
+type HandlingCompareName = Extract<
+  CompareName,
   "close" | "handlingGround" | "handlingAntiGravity" | "handlingWater" | "handlingAir"
 >;
+type ReducedCompareName = Exclude<CompareName, SpeedCompareName | HandlingCompareName>;
 
-// Use AppButtonName directly for CompareButtonNames
-export type CompareButtonNames = AppButtonName;
-
-const reducedStatNames: ReducedStatName[] = ["speed", "acceleration", "weight", "handling", "traction", "miniTurbo"];
-const speedStatNames: SpeedStatName[] = ["close", "speedGround", "speedAntiGravity", "speedWater", "speedAir"];
-const handlingStatNames: HandlingStatName[] = [
+const speedCompareNames: SpeedCompareName[] = ["close", "speedGround", "speedAntiGravity", "speedWater", "speedAir"];
+const handlingCompareNames: HandlingCompareName[] = [
   "close",
   "handlingGround",
   "handlingAntiGravity",
   "handlingWater",
   "handlingAir",
 ];
+const reducedCompareNames: ReducedCompareName[] = [
+  "speed",
+  "acceleration",
+  "weight",
+  "handling",
+  "traction",
+  "miniTurbo",
+];
 
 const BUTTON_SIZE = 40; // égal à ButtonIcon
 const NUMBER_OF_SLOTS = 6; // Nombre de slots fixes pour les boutons
 
 interface StatSliderCompareSelectorProps {
-  selectedStatName: CompareButtonNames;
-  setSelectedStatName: Dispatch<SetStateAction<AppButtonName>>;
+  selectedCompareName: CompareName;
+  setSelectedCompareName: Dispatch<SetStateAction<CompareName>>;
 }
 
 const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo(
-  ({ selectedStatName, setSelectedStatName }) => {
+  ({ selectedCompareName, setSelectedCompareName }) => {
     const theme = useThemeStore((state) => state.theme);
 
     // État pour gérer la liste des noms de stats affichées (réduite, vitesse, maniabilité)
-    const [displayedNames, setDisplayedNames] = useState<CompareButtonNames[]>(reducedStatNames);
+    const [displayedNames, setDisplayedNames] = useState<CompareName[]>(reducedCompareNames);
 
-    // No need for a separate useMemo for statIconsList, directly use appIconsConfig
-    // The background colors are now managed directly in appIconsConfig
+    // No need for a separate useMemo for statIconsList, directly use sortButtonsConfig
+    // The background colors are now managed directly in sortButtonsConfig
 
     // Gère le clic sur un bouton
     const handlePress = useCallback(
-      (name: CompareButtonNames) => {
-        if (selectedStatName === name) {
+      (name: CompareName) => {
+        if (selectedCompareName === name) {
           return;
         }
 
         // Logique pour changer la liste des noms affichés
         switch (name) {
           case "speed":
-            setDisplayedNames(speedStatNames);
+            setDisplayedNames(speedCompareNames);
             break;
           case "handling":
-            setDisplayedNames(handlingStatNames);
+            setDisplayedNames(handlingCompareNames);
             break;
           case "close":
-            setDisplayedNames(reducedStatNames);
+            setDisplayedNames(reducedCompareNames);
             break;
           default:
-            setSelectedStatName(name); // Appelle le handler parent
+            setSelectedCompareName(name); // Appelle le handler parent
             break;
         }
       },
-      [selectedStatName, setSelectedStatName] // Dépendances pour useCallback
+      [selectedCompareName, setSelectedCompareName] // Dépendances pour useCallback
     );
 
     const buttonIconActiveStyle = useMemo(() => ({ borderWidth: 10, borderColor: "cyan" }), []);
@@ -91,13 +83,13 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
       for (let i = 0; i < NUMBER_OF_SLOTS; i++) {
         const name = displayedNames[i];
 
-        if (name && appIconsConfig[name]) {
-          // Use appIconsConfig
-          const iconConfig = appIconsConfig[name];
+        if (name && sortButtonsConfig[name]) {
+          // Use sortButtonsConfig
+          const iconConfig = sortButtonsConfig[name];
           const { iconName, iconType } = iconConfig;
           // Use the iconBackgroundColor from the config, or default to theme.primary if not specified
           const iconBackgroundColor = iconConfig.iconBackgroundColor || theme.primary;
-          const isActive = selectedStatName === name; // Détermine si ce bouton est actif
+          const isActive = selectedCompareName === name; // Détermine si ce bouton est actif
 
           // Style de fond pour le bouton actif
           const buttonIconStyle = { backgroundColor: iconBackgroundColor };
@@ -118,7 +110,7 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
         }
       }
       return buttons;
-    }, [displayedNames, handlePress, selectedStatName, buttonIconActiveStyle, theme.primary]); // Added theme.primary dependency
+    }, [displayedNames, handlePress, selectedCompareName, buttonIconActiveStyle, theme.primary]); // Added theme.primary dependency
 
     return <View style={styles.buttonRowContainer}>{displayedButtons}</View>;
   }

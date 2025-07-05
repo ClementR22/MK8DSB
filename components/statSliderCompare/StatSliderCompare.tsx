@@ -9,8 +9,8 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import BoxContainer from "@/primitiveComponents/BoxContainer"; // Ajustez le chemin si nécessaire
 import TooltipWrapper from "../TooltipWrapper";
 import StatSliderCompareSelector from "./StatSliderCompareSelector"; // Ajustez le chemin si nécessaire (s'il est dans le même dossier ou un sous-dossier)
-import { AppButtonName } from "@/config/appIconsConfig";
 import StatSliderCompareBar from "./StatSliderCompareBar";
+import { CompareName } from "@/data/stats/statsTypes";
 
 export interface SetIdAndStatValue {
   id: string;
@@ -18,19 +18,17 @@ export interface SetIdAndStatValue {
 }
 
 interface StatSliderCompareProps {
-  name: string;
   setsIdAndValue: SetIdAndStatValue[];
-  selectedStatName: AppButtonName;
-  setSelectedStatName: Dispatch<SetStateAction<AppButtonName>>;
+  selectedCompareName: CompareName;
+  setSelectedCompareName: Dispatch<SetStateAction<CompareName>>;
   scrollToSetCard: (id: string) => void;
   setsColorsMap: Map<string, string>;
 }
 
 const StatSliderCompare: React.FC<StatSliderCompareProps> = ({
-  name,
   setsIdAndValue,
-  selectedStatName,
-  setSelectedStatName,
+  selectedCompareName,
+  setSelectedCompareName,
   scrollToSetCard,
   setsColorsMap,
 }) => {
@@ -38,7 +36,10 @@ const StatSliderCompare: React.FC<StatSliderCompareProps> = ({
   const language = useLanguageStore((state) => state.language);
 
   // Calculez le nom traduit une fois
-  const translatedName = useMemo(() => translateToLanguage(name, language), [name, language]);
+  const translatedName = useMemo(
+    () => translateToLanguage(selectedCompareName, language),
+    [selectedCompareName, language]
+  );
 
   // Styles dynamiques pour le texte du titre
   const textDynamicStyle = useMemo(() => {
@@ -47,33 +48,32 @@ const StatSliderCompare: React.FC<StatSliderCompareProps> = ({
 
   // Les styles pour TooltipWrapper et son conteneur intérieur
   const containerStyles = useMemo(() => {
-    return [
-      styles.container,
-      { backgroundColor: theme.surface_container_high }, // Ou une autre couleur de fond si TooltipWrapper ne le gère pas
-    ];
+    return [styles.container, { backgroundColor: theme.surface_container_high }];
   }, [theme.surface_container_high]);
 
+  // Ajout de theme.surface dans les dépendances pour cohérence
   const innerContainerStyles = useMemo(() => {
     return [styles.innerContainer, { backgroundColor: theme.surface }];
-  }, []);
+  }, [theme.surface]);
 
-  // C'est votre `memoizedSetStats` qui devient `memoizedStatBars`
-  console.log("setsIdAndValue", setsIdAndValue);
-  const memoizedStatBars = useMemo(
-    () =>
-      setsIdAndValue.map(({ id, value }, index) => {
-        const color = setsColorsMap.get(id) || theme.on_surface; // Fallback si couleur non trouvée
-        return (
-          <StatSliderCompareBar
-            key={index}
-            value={value}
-            color={color}
-            scrollToThisSetCard={() => scrollToSetCard(id)}
-          />
-        );
-      }),
-    [setsIdAndValue, setsColorsMap, theme.on_surface, theme.surface, scrollToSetCard]
+  // Suppression du log en prod
+  if (process.env.NODE_ENV === "development") {
+    console.log("setsIdAndValue", setsIdAndValue);
+  }
+
+  // Optimisation: on extrait la fonction de rendu d'une stat bar pour la mémoïser
+  const renderStatBar = useCallback(
+    ({ id, value }, index) => {
+      const color = setsColorsMap.get(id) || theme.on_surface;
+      return (
+        <StatSliderCompareBar key={id} value={value} color={color} scrollToThisSetCard={() => scrollToSetCard(id)} />
+      );
+    },
+    [setsColorsMap, theme.on_surface, scrollToSetCard]
   );
+
+  // Utilisation de useMemo pour le mapping, dépendant de renderStatBar
+  const memoizedStatBars = useMemo(() => setsIdAndValue.map(renderStatBar), [setsIdAndValue, renderStatBar]);
 
   return (
     <BoxContainer marginTop={0} margin={10} padding={15}>
@@ -90,7 +90,10 @@ const StatSliderCompare: React.FC<StatSliderCompareProps> = ({
       </TooltipWrapper>
 
       {/* Assurez-vous que StatSliderCompareSelector est bien importé */}
-      <StatSliderCompareSelector selectedStatName={selectedStatName} setSelectedStatName={setSelectedStatName} />
+      <StatSliderCompareSelector
+        selectedCompareName={selectedCompareName}
+        setSelectedCompareName={setSelectedCompareName}
+      />
     </BoxContainer>
   );
 };

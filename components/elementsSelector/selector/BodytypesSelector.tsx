@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, memo } from "react"; // Import memo
 import { View, StyleSheet, Image, ImageSourcePropType } from "react-native"; // Add ImageSourcePropType
 import { useThemeStore } from "@/stores/useThemeStore";
-import { Bodytype } from "@/data/bodytypes/bodytypeTypes";
+import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import TooltipWrapper from "@/components/TooltipWrapper";
 import { HALF_GAP } from "../SortModeSelector";
 

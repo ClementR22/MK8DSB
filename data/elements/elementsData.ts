@@ -9,6 +9,8 @@ import {
   Category,
 } from "./elementsTypes";
 
+export const categories: Category[] = ["character", "body", "wheel", "glider"];
+
 function getElementStats(classId: number, overrides?: Partial<ElementStats>): ElementStats {
   const baseStats = baseStatsByClassId[classId];
 

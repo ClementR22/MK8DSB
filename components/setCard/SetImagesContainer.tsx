@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
-import { Image, StyleSheet, View, ImageStyle, ImageSourcePropType } from "react-native";
-import { category4Names } from "@/data/data";
+import { Image, StyleSheet, View, ImageStyle } from "react-native";
+import { categories } from "@/data/elements/elementsData";
 import { elementsData } from "@/data/elements/elementsData";
 import TooltipWrapper from "../TooltipWrapper";
 import { vw } from "../styles/theme";
@@ -27,7 +27,7 @@ interface SetImagesContainerProps {
 
 const SetImagesContainer: React.FC<SetImagesContainerProps> = ({ setToShowClassIds, mode, onPress = undefined }) => {
   const data: SetImageCategoryData[] = useMemo(() => {
-    return category4Names.map((category: Category, index: number) => {
+    return categories.map((category: Category, index: number) => {
       const matchedElements = elementsData.filter((element) => element.classId === setToShowClassIds[index]);
 
       return {

@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, Pressable, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { appIconsConfig, AppButtonName } from "@/config/appIconsConfig"; // Import merged config
+import { sortButtonsConfig, SortButtonName } from "@/config/sortButtonsConfig"; // Import merged config
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 // Constants for layout consistency
@@ -11,7 +11,7 @@ const BUTTON_SIZE = 40; // Assumed to match ButtonIcon's default size
 export const HALF_GAP = 7;
 
 // Define the names for different sorting options.
-const defaultSortNames: AppButtonName[] = [
+const defaultSortNames: SortButtonName[] = [
   "id", // Corresponds to orderNumber 0: Sort by ID
   "name", // Combined for A-Z and Z-A
   "classId", // Corresponds to orderNumber 3: Sort by class ID
@@ -23,7 +23,7 @@ const defaultSortNames: AppButtonName[] = [
   "miniTurbo",
 ];
 
-const speedSortNames: AppButtonName[] = [
+const speedSortNames: SortButtonName[] = [
   "close", // Button to go back to the defaultSortNames view
   "speedGround", // Corresponds to orderNumber 4
   "speedAntiGravity", // Corresponds to orderNumber 5
@@ -31,7 +31,7 @@ const speedSortNames: AppButtonName[] = [
   "speedAir", // Corresponds to orderNumber 7
 ];
 
-const handlingSortNames: AppButtonName[] = [
+const handlingSortNames: SortButtonName[] = [
   "close", // Button to go back to the defaultSortNames view
   "handlingGround", // Corresponds to orderNumber 8
   "handlingAntiGravity", // Corresponds to orderNumber 9
@@ -68,17 +68,17 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   // State to manage which set of sorting buttons is currently displayed (main menu or sub-menus).
-  const [displayedSortNames, setDisplayedSortNames] = useState<AppButtonName[]>(defaultSortNames);
+  const [displayedSortNames, setDisplayedSortNames] = useState<SortButtonName[]>(defaultSortNames);
 
   // State to track the currently active sort (e.g., 'id', 'name', 'speedGround')
-  const [activeSort, setActiveSort] = useState<AppButtonName>("id");
+  const [activeSort, setActiveSort] = useState<SortButtonName>("id");
 
   // State to keep track of the current sort direction for the active sort.
   const [currentDirection, setCurrentDirection] = useState<"asc" | "desc">("asc");
 
   // Callback to handle button presses for sorting.
   const handlePress = useCallback(
-    (name: AppButtonName) => {
+    (name: SortButtonName) => {
       switch (name) {
         case "speed":
           setDisplayedSortNames(speedSortNames); // Switch to speed sub-menu
@@ -118,7 +118,7 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
   // Memoized array of ButtonIcon components to render.
   const displayedButtons = useMemo(() => {
     return displayedSortNames.map((name) => {
-      const iconConfig = appIconsConfig[name]; // Use appIconsConfig
+      const iconConfig = sortButtonsConfig[name]; // Use sortButtonsConfig
       if (!iconConfig) {
         return null;
       }

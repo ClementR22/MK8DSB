@@ -18,7 +18,7 @@ import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import PagesNavigator from "./PagesNavigator";
-import { Bodytype } from "@/data/bodytypes/bodytypeTypes";
+import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import BodytypesSelector from "./selector/BodytypesSelector";
 import { useThemeStore } from "@/stores/useThemeStore";
 

@@ -1,6 +1,6 @@
 // usePressableElementsStore.ts
 import { create } from "zustand";
-import { category4Names } from "@/data/data";
+import { categories } from "@/data/elements/elementsData";
 import { Category } from "@/data/elements/elementsTypes";
 
 export type SelectedClassIds = {
@@ -66,7 +66,7 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
         glider: null,
       };
 
-      category4Names.forEach((catName, index) => {
+      categories.forEach((catName, index) => {
         newSelected[catName as Category] = setClassIds[index];
       });
 

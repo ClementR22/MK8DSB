@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { StyleSheet, Text, View, ViewStyle } from "react-native";
-import { compactStatNames } from "@/data/data";
+import { compactStatNames } from "@/data/stats/statsData";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useThemeStore } from "@/stores/useThemeStore";

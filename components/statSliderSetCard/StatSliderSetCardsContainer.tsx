@@ -3,7 +3,7 @@ import { useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import StatSliderCompact from "../statSlider/StatSliderCompact";
-import { compactStatNames } from "@/data/data";
+import { compactStatNames } from "@/data/stats/statsData";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import { useThemeStore } from "@/stores/useThemeStore";
 
