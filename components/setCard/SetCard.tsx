@@ -1,6 +1,5 @@
 import React, { useMemo, useCallback, memo } from "react";
-import { LayoutChangeEvent, View, StyleSheet } from "react-native";
-import BoxContainer from "@/primitiveComponents/BoxContainer";
+import { LayoutChangeEvent, View, StyleSheet, Text } from "react-native";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
 import useModalsStore from "@/stores/useModalsStore";
@@ -13,6 +12,8 @@ import { arraysEqual } from "@/utils/deepCompare";
 import SetCardHeader, { SetCardHeaderProps } from "./SetCardHeader";
 
 export const SET_CARD_WIDTH = 220;
+export const SET_CARD_BORDER_WIDTH = 3;
+
 export interface SetData {
   name: string;
   classIds: number[];
@@ -64,6 +65,7 @@ interface SetCardProps {
   screenNameFromProps?: ScreenName;
   hideRemoveSet?: boolean;
   onLayout?: (event: LayoutChangeEvent) => void;
+  borderColor?: string;
 }
 
 const SetCard: React.FC<SetCardProps> = ({
@@ -76,6 +78,7 @@ const SetCard: React.FC<SetCardProps> = ({
   screenNameFromProps,
   hideRemoveSet = false,
   onLayout,
+  borderColor,
 }) => {
   const contextScreenName = useScreen();
 
@@ -147,9 +150,17 @@ const SetCard: React.FC<SetCardProps> = ({
     [config.isNameEditable, setToShowName, setCardIndex, setToShowPercentage, config.moreActionNamesList, situation]
   );
 
+  const cardContainerDynamicStyle = useMemo(
+    () => ({
+      backgroundColor: theme.surface,
+      borderColor: borderColor,
+    }),
+    [borderColor, theme.surface]
+  );
+
   return (
     <View onLayout={onLayout} style={styles.container}>
-      <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={SET_CARD_WIDTH} gap={0}>
+      <View style={[styles.cardContainer, cardContainerDynamicStyle]}>
         <SetCardHeader {...headerProps} />
 
         <SetImagesModal setToShowClassIds={setToShowClassIds} />
@@ -161,8 +172,7 @@ const SetCard: React.FC<SetCardProps> = ({
           isSaved={isSaved}
           handleEditPress={handleEditPress}
         />
-      </BoxContainer>
-
+      </View>
       {config.showStatSliderResult && setToShowStats !== null && (
         <StatSliderSetCardsContainer setToShowStats={setToShowStats} />
       )}
@@ -171,7 +181,13 @@ const SetCard: React.FC<SetCardProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { borderRadius: 17 },
+  cardContainer: {
+    width: SET_CARD_WIDTH,
+    padding: 10 - SET_CARD_BORDER_WIDTH,
+    borderRadius: 12,
+    borderWidth: SET_CARD_BORDER_WIDTH,
+  },
 });
 
 export default memo(SetCard);

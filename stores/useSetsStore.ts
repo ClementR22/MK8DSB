@@ -14,6 +14,7 @@ import { ResultStats } from "@/contexts/ResultStatsContext";
 
 export type StatName = string;
 
+const MAX_NUMBER_SETS_DISPLAY = 10;
 export interface ChosenStat {
   name: StatName;
   checked: boolean;
@@ -58,10 +59,10 @@ export interface SetsStoreState {
   loadSetDisplayToSearch: (index: number) => void;
   loadSetSaveToDisplay: (index: number) => void;
   loadSetSearchToDisplay: (index: number) => void;
-  checkNameUnique: (name: string) => boolean;
+  checkNameUnique: (name: string, screenName: ScreenName) => boolean;
   saveSet: (screenName: ScreenName, index: number) => boolean;
   saveSetInMemory: (setToSave: SetObject) => Promise<void>;
-  renameSet: (newName: string, screenName: ScreenName, index: number) => void;
+  renameSet: (newName: string, screenName: ScreenName, index: number) => boolean;
   updateSetsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => Promise<void>;
   setSetInMemory: (key: string | number, setObj: SetObject) => Promise<void>;
   sortSetsSavedKeys: () => void;
@@ -133,25 +134,56 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   addNewSetInDisplay: () => {
-    set((state) => {
-      const nextIndex = state.setKeyInDisplay + 1;
-      return {
-        setKeyInDisplay: nextIndex,
-        setsListDisplayed: [...state.setsListDisplayed, { ...setDefault, name: `Set ${nextIndex}` }],
-      };
-    });
+    if (get().setsListDisplayed.length < MAX_NUMBER_SETS_DISPLAY) {
+      let newIndex = get().setKeyInDisplay;
+      let newName: string;
+      do {
+        newIndex++;
+        newName = `Set ${newIndex}`;
+      } while (!get().checkNameUnique(newName, "display"));
+
+      set((state) => {
+        return {
+          setKeyInDisplay: newIndex,
+          setsListDisplayed: [...state.setsListDisplayed, { ...setDefault, name: `Set ${newIndex}` }],
+        };
+      });
+    } else {
+      showToast("Erreur" + " " + "Vous ne pouvez pas comparer plus de " + MAX_NUMBER_SETS_DISPLAY + " sets.");
+    }
   },
 
   loadSetToDisplay: (setToLoad) => {
-    set((state) => ({
-      setsListDisplayed: [...state.setsListDisplayed, setToLoad],
-    }));
+    const isNameUnique = get().checkNameUnique(setToLoad.name, "display");
+    if (!isNameUnique) return false;
+
+    if (get().setsListDisplayed.length < MAX_NUMBER_SETS_DISPLAY) {
+      set((state) => ({
+        setsListDisplayed: [...state.setsListDisplayed, setToLoad],
+      }));
+      showToast("Succès" + " " + "Le set a été ajouté à l'écran de comparaison");
+    } else {
+      showToast("Erreur" + " " + "Vous ne pouvez pas comparer plus de " + MAX_NUMBER_SETS_DISPLAY + " sets.");
+    }
   },
 
   loadSetToSave: (setToLoad) => {
+    const isNameUnique = get().checkNameUnique(setToLoad.name, "save");
+    if (!isNameUnique) {
+      let newIndex = -1;
+      let newName: string;
+      do {
+        newIndex++;
+        newName = setToLoad.name + `(${newIndex})`;
+        console.log("newName", newName);
+      } while (!get().checkNameUnique(newName, "display"));
+      setToLoad = { ...setToLoad, name: newName };
+    }
+
     set((state) => ({
       setsListSaved: [...state.setsListSaved, setToLoad],
     }));
+    showToast("Succès" + " " + "Le set a été chargé dans les favoris");
   },
 
   removeSet: (index, screenName) => {
@@ -196,18 +228,23 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
 
   loadSetSaveToDisplay: (index) => {
     get().loadSetToDisplay(get().setsListSaved[index]);
-    showToast("Succès" + " " + "Le set a été chargé");
   },
 
   loadSetSearchToDisplay: (index) => {
     get().loadSetToDisplay(get().setsListFound[index]);
-    showToast("Succès" + " " + "Le set a été ajouté à l'écran de comparaison");
   },
 
-  checkNameUnique: (name) => {
-    const setsSavedNames = get().setsListSaved.map((set) => set.name);
+  checkNameUnique: (name, screenName) => {
+    const targetList =
+      screenName === "search"
+        ? get().setsListFound
+        : screenName === "display"
+        ? get().setsListDisplayed
+        : get().setsListSaved;
 
-    if (setsSavedNames.includes(name)) {
+    const setsNames = targetList.map((set) => set.name);
+
+    if (setsNames.includes(name)) {
       showToast("Erreur" + " " + "Ce nom de set existe déjà");
       return false;
     }
@@ -224,14 +261,14 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       }
       const { percentage, ...setToSave } = setSelected;
 
-      const isNameUnique = get().checkNameUnique(setToSave.name);
+      const isNameUnique = get().checkNameUnique(setToSave.name, "save");
       if (!isNameUnique) return false;
 
       set((state) => ({
         setsListSaved: [...state.setsListSaved, setToSave],
       }));
       get().saveSetInMemory(setToSave);
-      showToast("Succès" + " " + "Le set est enregistré");
+      showToast("Succès" + " " + "Le set a été enregistré");
       return true;
     } catch (e) {
       alert(e);
@@ -250,43 +287,26 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   renameSet: (newName, screenName, setCardIndex) => {
-    const index = setCardIndex != null ? setCardIndex : get().setCardEditedIndex;
     const listName =
       screenName === "search" ? "setsListFound" : screenName === "display" ? "setsListDisplayed" : "setsListSaved";
-    if (listName === "setsListFound") {
-      const list = get().setsListFound as SetFoundObject[];
 
-      const updated = list.map((set: SetFoundObject, i: number): SetFoundObject => {
-        if (i === index) {
-          const renamed = { ...set, name: newName };
-          return renamed;
+    const list = get()[listName] as SetObject[] | SetFoundObject[];
+
+    const updated = list.map((set: SetObject, i: number): SetObject => {
+      if (i === setCardIndex) {
+        const renamed = { ...set, name: newName };
+
+        if (screenName === "save") {
+          const key = get().setsSavedKeys[setCardIndex];
+          get().setSetInMemory(key, renamed);
         }
-        return set;
-      });
-      set({ [listName]: updated } as any);
-    } else {
-      const list = get()[listName] as SetObject[];
 
-      if (screenName === "save") {
-        const isNameUnique = get().checkNameUnique(newName);
-        if (!isNameUnique) return false;
+        return renamed;
       }
-
-      const updated = list.map((set: SetObject, i: number): SetObject => {
-        if (i === index) {
-          const renamed = { ...set, name: newName };
-
-          if (screenName === "save") {
-            const key = get().setsSavedKeys[index];
-            get().setSetInMemory(key, renamed);
-          }
-
-          return renamed;
-        }
-        return set;
-      });
-      set({ [listName]: updated } as any);
-    }
+      return set;
+    });
+    set({ [listName]: updated } as any);
+    return true;
   },
 
   updateSetsList: async (pressedClassIdsObj, screenName) => {
@@ -353,7 +373,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     const { name, classIds } = list[index];
     const json = JSON.stringify({ name, classIds });
     Clipboard.setStringAsync(json);
-    showToast("Succès" + " " + "Set copié dans le presse-papier !");
+    showToast("Succès" + " " + "le set a été copié dans le presse-papier !");
   },
 
   importSet: (setCard: SetObject, screenName: ScreenName) => {

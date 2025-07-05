@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, memo } from "react";
+import React, { useState, useMemo, useCallback, memo, Dispatch, SetStateAction } from "react";
 import { StyleSheet, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
@@ -44,7 +44,7 @@ const NUMBER_OF_SLOTS = 6; // Nombre de slots fixes pour les boutons
 
 interface StatSliderCompareSelectorProps {
   selectedStatName: CompareButtonNames;
-  setSelectedStatName: (name: string) => void;
+  setSelectedStatName: Dispatch<SetStateAction<AppButtonName>>;
 }
 
 const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo(

@@ -12,6 +12,7 @@ interface SetNameInputProps {
 const SetNameInput: React.FC<SetNameInputProps> = ({ setToShowName, setCardIndex, editable = true }) => {
   const screenName = useScreen();
   const renameSet = useSetsStore((state) => state.renameSet);
+  const checkNameUnique = useSetsStore((state) => state.checkNameUnique);
 
   const [localName, setLocalName] = useState(setToShowName);
 
@@ -23,7 +24,12 @@ const SetNameInput: React.FC<SetNameInputProps> = ({ setToShowName, setCardIndex
     } else {
       if (localName !== setToShowName) {
         // si le nom a bien changé
-        renameSet(localName, screenName, setCardIndex);
+        const isNameUnique = checkNameUnique(localName, screenName);
+        if (isNameUnique) {
+          renameSet(localName, screenName, setCardIndex);
+        } else {
+          setLocalName(setToShowName);
+        }
       }
     }
   }, [localName, setToShowName, renameSet, screenName, setCardIndex]);

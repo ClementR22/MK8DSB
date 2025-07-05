@@ -4,12 +4,13 @@ import { useThemeStore } from "@/stores/useThemeStore";
 
 interface StatSliderCompareBarProps {
   value: number;
+  color?: string;
   scrollToThisSetCard: () => void;
 }
 
 const MAX_STAT_VALUE = 6;
 
-const StatSliderCompareBar = ({ value, scrollToThisSetCard }: StatSliderCompareBarProps) => {
+const StatSliderCompareBar = ({ value, color, scrollToThisSetCard }: StatSliderCompareBarProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   const sliderTrackDynamicBg = useMemo(
@@ -21,9 +22,9 @@ const StatSliderCompareBar = ({ value, scrollToThisSetCard }: StatSliderCompareB
 
   const primarySegmentColor = useMemo(
     () => ({
-      backgroundColor: theme.primary,
+      backgroundColor: color ?? theme.primary,
     }),
-    [theme.primary]
+    [theme.primary, color]
   );
 
   const innerFillWidth = useMemo(() => {
