@@ -3,10 +3,10 @@ import { ScrollView } from "react-native";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import DisplaySetScreenPressablesContainer from "@/components/screenPressablesContainer/DisplaySetScreenPressablesContainer";
-import useSetsStore, { SetObject } from "@/stores/useSetsStore";
+import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { statNames } from "@/data/data";
-import StatSliderCompare from "@/components/statSliderCompare/StatSliderCompare";
+import StatSliderCompare, { SetIdAndStatValue } from "@/components/statSliderCompare/StatSliderCompare";
 import { useScreen } from "@/contexts/ScreenContext"; // Importez useScreen
 import { SET_CARD_COLOR_PALETTE } from "@/constants/Colors"; // Importez la palette et la fonction de fallback
 import { SetData } from "@/components/setCard/SetCard";
@@ -23,18 +23,16 @@ const DisplaySetScreen = () => {
   const availableColorsRef = useRef<string[]>([...SET_CARD_COLOR_PALETTE]);
 
   // --- Logique d'attribution des couleurs déplacée ici ---
-  const numberOfSets = useMemo(() => setsListDisplayed.length, [setsListDisplayed]);
-
   useEffect(() => {
     const newColorsMap = new Map<string, string>();
     const colorsCurrentlyInUse = new Set<string>(); // Garde une trace des couleurs utilisées dans le cycle actuel
 
     // 1. Réutiliser les couleurs pour les sets qui sont toujours présents
-    setsListDisplayed.forEach((set) => {
+    setsListDisplayed.forEach(({ id }) => {
       // Utilisez set.name comme clé, comme dans votre code, mais l'ID est recommandé si le nom n'est pas unique.
-      const existingColor = setsColorsMap.get(set.name);
+      const existingColor = setsColorsMap.get(id);
       if (existingColor && SET_CARD_COLOR_PALETTE.includes(existingColor)) {
-        newColorsMap.set(set.name, existingColor);
+        newColorsMap.set(id, existingColor);
         colorsCurrentlyInUse.add(existingColor);
       }
     });
@@ -44,11 +42,11 @@ const DisplaySetScreen = () => {
 
     // 3. Attribuer de nouvelles couleurs aux sets qui n'en ont pas (nouveaux sets)
     setsListDisplayed.forEach((set) => {
-      if (!newColorsMap.has(set.name)) {
+      if (!newColorsMap.has(set.id)) {
         if (availableColorsRef.current.length > 0) {
           const assignedColor = availableColorsRef.current.shift(); // Prend la première couleur disponible
           if (assignedColor) {
-            newColorsMap.set(set.name, assignedColor);
+            newColorsMap.set(set.id, assignedColor);
             colorsCurrentlyInUse.add(assignedColor); // Marque comme utilisée
           }
         } else {
@@ -60,12 +58,12 @@ const DisplaySetScreen = () => {
     // Mettre à jour l'état du composant avec la nouvelle map de couleurs
     // Cette mise à jour déclenchera un re-render, et les enfants auront la map à jour.
     setSetsColorsMap(newColorsMap);
-  }, [numberOfSets]);
+  }, [setsListDisplayed]);
 
   // --- Fin Logique d'attribution des couleurs ---
 
-  const setsNamesAndStatsForSelectedStat = useMemo(() => {
-    const result: { [key: string]: { setName: string; value: number }[] } = {};
+  const setsIdAndValueByStat = useMemo(() => {
+    const result: { [key: string]: SetIdAndStatValue[] } = {};
 
     statNames.forEach((statName) => {
       result[statName] = [];
@@ -77,7 +75,7 @@ const DisplaySetScreen = () => {
       setToShowStatsList.forEach((statValue, index) => {
         const statName = statNames[index];
         if (statName) {
-          result[statName].push({ setName: setToShow.name, value: statValue });
+          result[statName].push({ id: setToShow.id, value: statValue });
         }
       });
     });
@@ -95,6 +93,8 @@ const DisplaySetScreen = () => {
     }
   }, []);
 
+  console.log("setsColorsMap", setsColorsMap);
+
   return (
     <ScreenProvider screenName="display">
       <ScrollView scrollEnabled={isScrollEnable}>
@@ -104,13 +104,12 @@ const DisplaySetScreen = () => {
           ref={scrollRef}
           setsToShow={setsListDisplayed}
           hideRemoveSet={hideRemoveSet}
-          setsColorsMap={setsColorsMap} // Passe la map de couleurs calculée
-          // setSetsColorsMap n'est plus passé car la logique est ici.
+          setsColorsMap={setsColorsMap}
         />
 
         <StatSliderCompare
           name={selectedStatName}
-          setsNamesAndStats={setsNamesAndStatsForSelectedStat[selectedStatName]}
+          setsIdAndValue={setsIdAndValueByStat[selectedStatName]}
           selectedStatName={selectedStatName}
           setSelectedStatName={setSelectedStatName}
           scrollToSetCard={scrollToSetCard}

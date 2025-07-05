@@ -2,7 +2,7 @@ import React, { useMemo, useCallback, memo, useEffect } from "react";
 import { StyleSheet, ViewStyle, StyleProp, View } from "react-native";
 
 import ElementsGrid, { PAGINATED_ELEMENTS_CONTAINER_PADDING } from "./selector/ElementsGrid";
-import { CategoryKey, ElementItem } from "@/data/elements/elementsTypes";
+import { Category, ElementData } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
 import CategorySelector from "./selector/CategorySelector";
 import { ITEM_CARD_BORDER_RADIUS } from "@/hooks/useItemCardStyle";
@@ -10,9 +10,9 @@ import { ITEM_CARD_BORDER_RADIUS } from "@/hooks/useItemCardStyle";
 export const ELEMENTS_PER_PAGE = 12;
 
 interface PaginatedElementSelectorProps {
-  selectedCategory: CategoryKey;
-  setSelectedCategory: (newSelectedCategory: CategoryKey) => void;
-  categoryElements: ElementItem[];
+  selectedCategory: Category;
+  setSelectedCategory: (newSelectedCategory: Category) => void;
+  categoryElements: ElementData[];
   onElementsSelectionChange: (classId: number) => void;
   initialSelectedClassId: number | Set<number>;
   currentPage: number;
@@ -37,7 +37,7 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
   }, [categoryElements, currentPage]);
 
   const handleSelectElement = useCallback(
-    (element: ElementItem) => {
+    (element: ElementData) => {
       onElementsSelectionChange(element.classId);
     },
     [onElementsSelectionChange]

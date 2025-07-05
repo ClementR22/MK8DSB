@@ -1,4 +1,4 @@
-import { ElementItem } from "@/data/elements/elementsTypes";
+import { ElementData } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
 import React, { memo, useCallback } from "react";
 import { View, StyleSheet, Dimensions } from "react-native"; // Removed Dimensions
@@ -7,9 +7,9 @@ import { useItemCardStyle } from "@/hooks/useItemCardStyle";
 import ItemCard from "../ItemCard";
 
 interface ElementsGridProps {
-  elements: ElementItem[];
+  elements: ElementData[];
   selectedClassId: Set<number> | number | null;
-  onSelectElement: (element: ElementItem) => void;
+  onSelectElement: (element: ElementData) => void;
 }
 
 export const PAGINATED_ELEMENTS_CONTAINER_PADDING = 6;

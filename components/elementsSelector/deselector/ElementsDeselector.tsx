@@ -1,7 +1,7 @@
 // components/elementsSelector/ElementsDeselector.tsx
 import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import { ElementItem } from "@/data/elements/elementsTypes";
+import { ElementData } from "@/data/elements/elementsTypes";
 import { elementsGroupedByClassId } from "@/data/elements/elementsData";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -49,7 +49,7 @@ const ElementsDeselector: React.FC = () => {
   }, [multiSelectedClassIdsStore, elementsGroupedByClassId]);
 
   const handleDeselectElement = useCallback(
-    (element: ElementItem) => {
+    (element: ElementData) => {
       toggleMultiSelectElementsByClassId(element.category, element.classId);
     },
     [toggleMultiSelectElementsByClassId] // Removed elementsGroupedByClassId, multiSelectedClassIdsStore, selectElementsByClassId as they are not needed in this callback's deps

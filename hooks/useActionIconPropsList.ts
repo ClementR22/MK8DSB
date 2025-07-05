@@ -17,7 +17,7 @@ type ActionIconPropsMap = ActionProps[];
 
 export function useActionIconPropsList(
   actionNamesToGenerate: actionNamesList,
-  setCardIndex: number,
+  setToShowId: string,
   situation: ScreenName | "load",
   handleEditPress?: () => void,
   isSaved?: boolean
@@ -28,52 +28,52 @@ export function useActionIconPropsList(
   const loadSetDisplayToSearch = useSetsStore((state) => state.loadSetDisplayToSearch);
   const removeSet = useSetsStore((state) => state.removeSet);
   const exportSet = useSetsStore((state) => state.exportSet);
-  const setsetCardEditedIndex = useSetsStore((state) => state.setsetCardEditedIndex);
+  const setSetCardEditedId = useSetsStore((state) => state.setSetCardEditedId);
   const saveSet = useSetsStore((state) => state.saveSet);
   const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
   const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
 
   const handleSavePress = useCallback(() => {
-    saveSet(situation as ScreenName, setCardIndex);
-  }, [setsetCardEditedIndex, setCardIndex, situation, setIsRenameSetModalVisible, saveSet]);
+    saveSet(situation as ScreenName, setToShowId);
+  }, [setSetCardEditedId, setToShowId, situation, setIsRenameSetModalVisible, saveSet]);
 
   const handleRemovePress = useCallback(() => {
     if (situation !== "load") {
-      removeSet(setCardIndex, situation);
+      removeSet(setToShowId, situation);
     }
-  }, [removeSet, setCardIndex, situation]);
+  }, [removeSet, setToShowId, situation]);
 
   const handleExportPress = useCallback(() => {
     if (situation !== "load") {
-      exportSet(setCardIndex, situation);
+      exportSet(setToShowId, situation);
     }
-  }, [exportSet, setCardIndex, situation]);
+  }, [exportSet, setToShowId, situation]);
 
   const handleLoadSaveToSearchPress = useCallback(() => {
-    if (setCardIndex !== null && setCardIndex !== undefined) {
-      loadSetSaveToSearch(setCardIndex);
+    if (setToShowId !== null && setToShowId !== undefined) {
+      loadSetSaveToSearch(setToShowId);
     }
     setIsLoadSetModalVisible(false);
-  }, [loadSetSaveToSearch, setCardIndex, setIsLoadSetModalVisible]);
+  }, [loadSetSaveToSearch, setToShowId, setIsLoadSetModalVisible]);
 
   const handleLoadSaveToDisplayPress = useCallback(() => {
-    if (setCardIndex !== null && setCardIndex !== undefined) {
-      loadSetSaveToDisplay(setCardIndex);
+    if (setToShowId !== null && setToShowId !== undefined) {
+      loadSetSaveToDisplay(setToShowId);
     }
     setIsLoadSetModalVisible(false);
-  }, [loadSetSaveToDisplay, setCardIndex, setIsLoadSetModalVisible]);
+  }, [loadSetSaveToDisplay, setToShowId, setIsLoadSetModalVisible]);
 
   const handleLoadSearchToDisplayPress = useCallback(() => {
-    if (setCardIndex !== null && setCardIndex !== undefined) {
-      loadSetSearchToDisplay(setCardIndex);
+    if (setToShowId !== null && setToShowId !== undefined) {
+      loadSetSearchToDisplay(setToShowId);
     }
-  }, [loadSetSearchToDisplay, setCardIndex]);
+  }, [loadSetSearchToDisplay, setToShowId]);
 
   const handleLoadDisplayToSearchPress = useCallback(() => {
-    if (setCardIndex !== null && setCardIndex !== undefined) {
-      loadSetDisplayToSearch(setCardIndex);
+    if (setToShowId !== null && setToShowId !== undefined) {
+      loadSetDisplayToSearch(setToShowId);
     }
-  }, [loadSetDisplayToSearch, setCardIndex]);
+  }, [loadSetDisplayToSearch, setToShowId]);
 
   const allPossibleActionDefs = useMemo(
     () => ({
@@ -133,7 +133,7 @@ export function useActionIconPropsList(
       },
     }),
     [
-      setCardIndex,
+      setToShowId,
       situation,
       handleEditPress,
       isSaved,

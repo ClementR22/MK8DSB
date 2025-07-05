@@ -60,7 +60,7 @@ interface SetCardProps {
   setToShowClassIds: number[];
   setToShowStats?: number[] | null;
   setToShowPercentage?: number;
-  setCardIndex: number;
+  setToShowId: string;
   isInLoadSetModal?: boolean;
   screenNameFromProps?: ScreenName;
   hideRemoveSet?: boolean;
@@ -73,7 +73,7 @@ const SetCard: React.FC<SetCardProps> = ({
   setToShowClassIds,
   setToShowStats = null,
   setToShowPercentage = undefined,
-  setCardIndex,
+  setToShowId,
   isInLoadSetModal = false,
   screenNameFromProps,
   hideRemoveSet = false,
@@ -129,25 +129,25 @@ const SetCard: React.FC<SetCardProps> = ({
   }, [situation, hideRemoveSet, screenName]);
 
   const updateSelectionFromSet = usePressableElementsStore((state) => state.updateSelectionFromSet);
-  const setsetCardEditedIndex = useSetsStore((state) => state.setsetCardEditedIndex);
+  const setSetCardEditedId = useSetsStore((state) => state.setSetCardEditedId);
   const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
 
   const handleEditPress = useCallback(() => {
-    setsetCardEditedIndex(setCardIndex);
+    setSetCardEditedId(setToShowId);
     updateSelectionFromSet(setToShowClassIds);
     setIsEditModalVisible(true);
-  }, [setsetCardEditedIndex, updateSelectionFromSet, setIsEditModalVisible, setToShowClassIds, setCardIndex]);
+  }, [setSetCardEditedId, updateSelectionFromSet, setIsEditModalVisible, setToShowClassIds, setToShowId]);
 
   const headerProps: SetCardHeaderProps = useMemo(
     () => ({
       isNameEditable: config.isNameEditable,
       setToShowName,
-      setCardIndex,
+      setToShowId,
       setToShowPercentage,
       moreActionNamesList: config.moreActionNamesList,
       situation,
     }),
-    [config.isNameEditable, setToShowName, setCardIndex, setToShowPercentage, config.moreActionNamesList, situation]
+    [config.isNameEditable, setToShowName, setToShowId, setToShowPercentage, config.moreActionNamesList, situation]
   );
 
   const cardContainerDynamicStyle = useMemo(
@@ -167,7 +167,7 @@ const SetCard: React.FC<SetCardProps> = ({
 
         <SetCardActionButtons
           actionNamesList={config.actionNamesList}
-          setCardIndex={setCardIndex}
+          setToShowId={setToShowId}
           situation={situation}
           isSaved={isSaved}
           handleEditPress={handleEditPress}

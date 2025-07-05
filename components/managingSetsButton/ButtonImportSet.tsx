@@ -21,34 +21,8 @@ const ButtonImportSet = ({ screenName, onComplete }: { screenName: ScreenName; o
         throw new Error("ClipboardIsEmpty");
       }
 
-      let parsedSet;
-      try {
-        parsedSet = JSON.parse(clipboardContent);
-      } catch (err) {
-        throw new Error("IncorrectFormat");
-      }
-
-      if (typeof parsedSet !== "object" || Array.isArray(parsedSet) || parsedSet === null) {
-        throw new Error("IncorrectFormat");
-      }
-
-      const { name, classIds } = parsedSet;
-
-      if (typeof name !== "string" || name.trim() === "") {
-        throw new Error("IncorrectFormat");
-      }
-
-      if (!Array.isArray(classIds) || classIds.some((id) => typeof id !== "number")) {
-        throw new Error("IncorrectFormat");
-      }
-
-      const stats = getSetStatsFromClassIds(classIds);
-      if (!stats || stats.length === 0) {
-        throw new Error("ThisSetDoesNotExist");
-      }
-
-      const set = { ...parsedSet, stats };
-      importSet(set, screenName);
+      // La validation JSON et structure est maintenant dans `importSet` :
+      await importSet(clipboardContent, screenName);
 
       onComplete?.();
     } catch (e) {

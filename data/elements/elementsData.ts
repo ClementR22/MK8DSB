@@ -5,8 +5,8 @@ import {
   WheelElement,
   GliderElement,
   ElementStats,
-  ElementItem,
-  CategoryKey,
+  ElementData,
+  Category,
 } from "./elementsTypes";
 
 function getElementStats(classId: number, overrides?: Partial<ElementStats>): ElementStats {
@@ -1123,7 +1123,7 @@ export const elementsData = [
     imageUrl: require("@/assets/images/elementsImages/gliders/Paper Glider.png"),
     ...getElementStats(40),
   } as GliderElement,
-] as ElementItem[];
+] as ElementData[];
 
 export const elementsDataCharacter: CharacterElement[] = elementsData.filter(
   (element): element is CharacterElement => element.category === "character"
@@ -1142,7 +1142,7 @@ export const elementsDataGlider: GliderElement[] = elementsData.filter(
 );
 
 export const ElementsDataAllCategory: {
-  [key in CategoryKey]: ElementItem[];
+  [key in Category]: ElementData[];
 } = {
   character: elementsDataCharacter,
   body: elementsDataBody,
@@ -1150,7 +1150,7 @@ export const ElementsDataAllCategory: {
   glider: elementsDataGlider,
 };
 
-export const elementsGroupedByClassId = new Map<number, ElementItem[]>();
+export const elementsGroupedByClassId = new Map<number, ElementData[]>();
 
 // Parcourir toutes les listes de catégories pour collecter tous les éléments
 Object.values(ElementsDataAllCategory).forEach((categoryList) => {

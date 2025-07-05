@@ -20,7 +20,6 @@ interface StatSliderContentProps {
 const MAX_VALUE = 6;
 
 const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber }: StatSliderContentProps) => {
-  value = 5;
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
 

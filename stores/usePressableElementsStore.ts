@@ -1,7 +1,7 @@
 // usePressableElementsStore.ts
 import { create } from "zustand";
 import { category4Names } from "@/data/data";
-import { CategoryKey } from "@/data/elements/elementsTypes";
+import { Category } from "@/data/elements/elementsTypes";
 
 export type SelectedClassIds = {
   character: number;
@@ -27,8 +27,8 @@ export type PressableElementsStore = {
 
   updateSelectionFromSet: (setClassIds: number[]) => void;
 
-  selectElementsByClassId: (category: CategoryKey, classId: number) => void;
-  toggleMultiSelectElementsByClassId: (category: CategoryKey, elementId: number) => void;
+  selectElementsByClassId: (category: Category, classId: number) => void;
+  toggleMultiSelectElementsByClassId: (category: Category, elementId: number) => void;
 };
 
 const defaultSingleSelection: SelectedClassIds = { character: 9, body: 16, wheel: 30, glider: 39 };
@@ -67,7 +67,7 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
       };
 
       category4Names.forEach((catName, index) => {
-        newSelected[catName as CategoryKey] = setClassIds[index];
+        newSelected[catName as Category] = setClassIds[index];
       });
 
       const areEqual =

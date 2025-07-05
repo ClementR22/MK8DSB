@@ -12,7 +12,7 @@ import SetNameInput from "../textInput/SetNameInput";
 export interface SetCardHeaderProps {
   isNameEditable: boolean;
   setToShowName: string;
-  setCardIndex: number;
+  setToShowId: string;
   setToShowPercentage?: number;
   moreActionNamesList?: actionNamesList;
   situation: ScreenName | "load";
@@ -21,7 +21,7 @@ export interface SetCardHeaderProps {
 const SetCardHeader: React.FC<SetCardHeaderProps> = ({
   isNameEditable,
   setToShowName,
-  setCardIndex,
+  setToShowId,
   setToShowPercentage,
   moreActionNamesList,
   situation,
@@ -38,7 +38,7 @@ const SetCardHeader: React.FC<SetCardHeaderProps> = ({
   return (
     <View style={styles.headerContainer}>
       <View style={StyleSheet.flatten(styles.nameContainer)}>
-        <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} editable={isNameEditable} />
+        <SetNameInput setToShowName={setToShowName} setToShowId={setToShowId} editable={isNameEditable} />
       </View>
 
       {setToShowPercentage && (
@@ -50,7 +50,7 @@ const SetCardHeader: React.FC<SetCardHeaderProps> = ({
       {moreActionNamesList && (
         <SetCardMoreActionsButton
           moreActionNamesList={moreActionNamesList}
-          setCardIndex={setCardIndex}
+          setToShowId={setToShowId}
           situation={situation}
         />
       )}

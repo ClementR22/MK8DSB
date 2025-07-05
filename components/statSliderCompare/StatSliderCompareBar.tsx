@@ -39,6 +39,8 @@ const StatSliderCompareBar = ({ value, color, scrollToThisSetCard }: StatSliderC
     [theme.on_surface]
   );
 
+  console.log("value", value);
+
   return (
     <Pressable style={styles.container} onPress={scrollToThisSetCard}>
       <View style={StyleSheet.flatten([styles.sliderTrack, sliderTrackDynamicBg])}>

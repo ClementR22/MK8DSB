@@ -12,9 +12,14 @@ import StatSliderCompareSelector from "./StatSliderCompareSelector"; // Ajustez 
 import { AppButtonName } from "@/config/appIconsConfig";
 import StatSliderCompareBar from "./StatSliderCompareBar";
 
+export interface SetIdAndStatValue {
+  id: string;
+  value: number;
+}
+
 interface StatSliderCompareProps {
   name: string;
-  setsNamesAndStats: { setName: string; value: number }[];
+  setsIdAndValue: SetIdAndStatValue[];
   selectedStatName: AppButtonName;
   setSelectedStatName: Dispatch<SetStateAction<AppButtonName>>;
   scrollToSetCard: (id: string) => void;
@@ -23,7 +28,7 @@ interface StatSliderCompareProps {
 
 const StatSliderCompare: React.FC<StatSliderCompareProps> = ({
   name,
-  setsNamesAndStats,
+  setsIdAndValue,
   selectedStatName,
   setSelectedStatName,
   scrollToSetCard,
@@ -52,31 +57,22 @@ const StatSliderCompare: React.FC<StatSliderCompareProps> = ({
     return [styles.innerContainer, { backgroundColor: theme.surface }];
   }, []);
 
-  const createScrollToCardHandler = useCallback(
-    (setName: string) => {
-      if (scrollToSetCard) {
-        return () => scrollToSetCard(setName);
-      }
-      return undefined;
-    },
-    [scrollToSetCard]
-  );
-
   // C'est votre `memoizedSetStats` qui devient `memoizedStatBars`
+  console.log("setsIdAndValue", setsIdAndValue);
   const memoizedStatBars = useMemo(
     () =>
-      setsNamesAndStats.map(({ setName, value }, index) => {
-        const color = setsColorsMap.get(setName) || theme.on_surface; // Fallback si couleur non trouvée
+      setsIdAndValue.map(({ id, value }, index) => {
+        const color = setsColorsMap.get(id) || theme.on_surface; // Fallback si couleur non trouvée
         return (
           <StatSliderCompareBar
             key={index}
             value={value}
             color={color}
-            scrollToThisSetCard={createScrollToCardHandler(setName)}
+            scrollToThisSetCard={() => scrollToSetCard(id)}
           />
         );
       }),
-    [setsColorsMap, theme.on_surface, theme.surface, scrollToSetCard]
+    [setsIdAndValue, setsColorsMap, theme.on_surface, theme.surface, scrollToSetCard]
   );
 
   return (

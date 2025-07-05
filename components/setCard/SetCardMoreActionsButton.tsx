@@ -10,18 +10,18 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface SetCardMoreActionsButtonProps {
   moreActionNamesList: actionNamesList;
-  setCardIndex: number;
+  setToShowId: string;
   situation: ScreenName | "load";
 }
 
 const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
   moreActionNamesList,
-  setCardIndex,
+  setToShowId,
   situation,
 }) => {
   const [visible, setVisible] = useState(false);
 
-  const actionIconPropsList = useActionIconPropsList(moreActionNamesList, setCardIndex, situation);
+  const actionIconPropsList = useActionIconPropsList(moreActionNamesList, setToShowId, situation);
 
   const handleMenuItemPress = (onPressAction: () => void) => {
     setVisible(false);

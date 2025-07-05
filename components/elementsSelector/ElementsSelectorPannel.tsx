@@ -10,7 +10,7 @@ import {
   elementsDataGlider,
   elementsDataWheel,
 } from "@/data/elements/elementsData";
-import { CategoryKey, ElementItem } from "@/data/elements/elementsTypes";
+import { Category, ElementData } from "@/data/elements/elementsTypes";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import SortModeSelector, { HALF_GAP } from "./SortModeSelector";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -23,7 +23,7 @@ import BodytypesSelector from "./selector/BodytypesSelector";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 const allCategoryElements: {
-  [key in CategoryKey]: ElementItem[];
+  [key in Category]: ElementData[];
 } = {
   character: elementsDataCharacter,
   body: elementsDataBody,
@@ -47,7 +47,7 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
 
-  const [selectedCategory, setSelectedCategory] = useState<CategoryKey>("character");
+  const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [orderNumber, setOrderNumber] = useState(0);
 
   const selectedClassId = usePressableElementsStore((state) => {

@@ -1,5 +1,5 @@
 import { category4Names } from "@/data/data";
-import { CategoryKey } from "@/data/elements/elementsTypes";
+import { Category } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore"; // Assuming theme store is needed for styles
 import React, { memo, useMemo } from "react";
 import { Image, StyleSheet, View } from "react-native";
@@ -9,11 +9,11 @@ import { ITEM_CARD_BORDER_RADIUS } from "@/hooks/useItemCardStyle";
 const CATEGORY_SELECTOR_PADDING = 6;
 
 interface CategorySelectorProps {
-  selectedCategory: CategoryKey;
-  setSelectedCategory: (category: CategoryKey) => void;
+  selectedCategory: Category;
+  setSelectedCategory: (category: Category) => void;
 }
 
-const categoryImageSources: { [key in CategoryKey]: any } = {
+const categoryImageSources: { [key in Category]: any } = {
   character: require("@/assets/images/elementsImages/characters/Mario.png"),
   body: require("@/assets/images/elementsImages/karts/Standard Kart.png"),
   wheel: require("@/assets/images/elementsImages/wheels/Standard.png"),
@@ -21,12 +21,12 @@ const categoryImageSources: { [key in CategoryKey]: any } = {
 };
 
 interface categoryOption {
-  name: CategoryKey;
+  name: Category;
   imageUrl: any;
 }
 
 // Transform your category data into the format expected by ImageButtonSelector
-const categoryOptions: categoryOption[] = (category4Names as CategoryKey[]).map((category) => ({
+const categoryOptions: categoryOption[] = (category4Names as Category[]).map((category) => ({
   name: category,
   imageUrl: categoryImageSources[category],
 }));

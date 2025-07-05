@@ -1,34 +1,32 @@
-export type CategoryKey = "character" | "body" | "wheel" | "glider";
+export type Category = "character" | "body" | "wheel" | "glider";
 
 // Base interface for all elements, now includes ElementStats
-interface ElementBase {
+export interface ElementData {
   id: number;
   name: string;
-  category: CategoryKey;
+  category: Category;
   classId: number;
   imageUrl: ReturnType<typeof require>;
 }
 
-export interface CharacterElement extends ElementBase {
+export interface CharacterElement extends ElementData {
   category: "character";
 }
 
-export interface BodyElement extends ElementBase {
+export interface BodyElement extends ElementData {
   category: "body";
   bodytype: "kart" | "bike" | "sportBike" | "ATV";
   // statBonus: any;
 }
 
-export interface WheelElement extends ElementBase {
+export interface WheelElement extends ElementData {
   category: "wheel";
   // statBonus: any;
 }
 
-export interface GliderElement extends ElementBase {
+export interface GliderElement extends ElementData {
   category: "glider";
 }
-
-export type ElementItem = CharacterElement | BodyElement | WheelElement | GliderElement;
 
 // Define the structure for all the stats
 export interface ElementStats {

@@ -14,6 +14,7 @@ import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModa
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import ElementsSelectorPannel from "../elementsSelector/ElementsSelectorPannel";
 import ElementsDeselector from "../elementsSelector/deselector/ElementsDeselector";
+import { nanoid } from "nanoid";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
   const chosenStats = useSetsStore((state) => state.chosenStats);
@@ -26,6 +27,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
 
   const updateSetsToShow = (setsFound) => {
     const setsFoundWithName = setsFound.map((set, index) => ({
+      id: nanoid(8),
       name: `${SetFoundTranslated} ${index + 1}`,
       classIds: set.classIds,
       stats: set.stats,

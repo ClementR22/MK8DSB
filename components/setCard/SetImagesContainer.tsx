@@ -4,23 +4,13 @@ import { category4Names } from "@/data/data";
 import { elementsData } from "@/data/elements/elementsData";
 import TooltipWrapper from "../TooltipWrapper";
 import { vw } from "../styles/theme";
-import { CategoryKey } from "@/data/elements/elementsTypes";
+import { Category } from "@/data/elements/elementsTypes";
 
 const MODAL_WIDTH = vw * 0.9;
 const MAX_WIDTH_IN_MODAL = MODAL_WIDTH - 20;
 const SET_CARD_WIDTH = 220;
 const MAX_WIDTH_IN_SET_CARD = SET_CARD_WIDTH - 20;
 const MAX_NUMBER_OF_IMAGE = 5;
-
-interface ElementInfo {
-  id: number;
-  name: string;
-  category: string;
-  classId: number;
-  image: ImageSourcePropType;
-  width: number;
-  height: number;
-}
 
 interface SetImageCategoryData {
   category: string;
@@ -37,7 +27,7 @@ interface SetImagesContainerProps {
 
 const SetImagesContainer: React.FC<SetImagesContainerProps> = ({ setToShowClassIds, mode, onPress = undefined }) => {
   const data: SetImageCategoryData[] = useMemo(() => {
-    return category4Names.map((category: CategoryKey, index: number) => {
+    return category4Names.map((category: Category, index: number) => {
       const matchedElements = elementsData.filter((element) => element.classId === setToShowClassIds[index]);
 
       return {
