@@ -8,9 +8,12 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import { statNames } from "@/data/stats/statsData";
 import StatSliderCompare, { SetIdAndStatValue } from "@/components/statSliderCompare/StatSliderCompare";
 import { SET_CARD_COLOR_PALETTE } from "@/constants/Colors"; // Importez la palette et la fonction de fallback
-import { CompareName } from "@/data/stats/statsTypes";
+import { Stat } from "@/data/stats/statsTypes";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const DisplaySetScreen = () => {
+  const theme = useThemeStore((state) => state.theme);
+
   const scrollRef = useRef(null); // Ref pour SetCardContainer
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
@@ -60,57 +63,52 @@ const DisplaySetScreen = () => {
 
   // --- Fin Logique d'attribution des couleurs ---
 
-  const setsIdAndValueByStat = useMemo(() => {
-    const result: { [key: string]: SetIdAndStatValue[] } = {};
-
-    statNames.forEach((statName) => {
-      result[statName] = [];
-    });
-
-    setsListDisplayed.forEach((setToShow) => {
-      const setToShowStatsList = setToShow.stats;
-
-      setToShowStatsList.forEach((statValue, index) => {
-        const statName = statNames[index];
-        if (statName) {
-          result[statName].push({ id: setToShow.id, value: statValue });
-        }
-      });
-    });
-    return result;
-  }, [setsListDisplayed]);
-
-  const [selectedCompareName, setSelectedCompareName] = useState<CompareName>("speedGround");
+  const [selectedCompareName, setSelectedCompareName] = useState<Stat>("speedGround");
 
   const hideRemoveSet = setsListDisplayed.length === 1;
 
-  // Modifié pour passer l'ID (ou le nom) du set à scrollToSetCard
+  const setsWithColor = useMemo(
+    () =>
+      setsListDisplayed.map((set) => ({
+        ...set,
+        color: setsColorsMap?.get(set.id) || theme.surface_variant || theme.surface_container_high,
+      })),
+    [setsListDisplayed, setsColorsMap, theme.surface_variant, theme.surface_container_high]
+  );
+
+  // Mémoïsation stricte de la liste pour StatSliderCompare
+  const setsIdAndValueWithColor = useMemo(() => {
+    const statIndex = statNames.indexOf(selectedCompareName);
+    return setsListDisplayed.map((set) => ({
+      id: set.id,
+      value: set.stats[statIndex],
+      color: setsColorsMap.get(set.id) || theme.surface_variant || theme.surface_container_high,
+    }));
+  }, [setsListDisplayed, setsColorsMap, selectedCompareName, theme.surface_variant, theme.surface_container_high]);
+
+  // Mémoïsation du handler scrollToSetCard
   const scrollToSetCard = useCallback((id: string) => {
     if (scrollRef.current && scrollRef.current.scrollToSetCard) {
       scrollRef.current.scrollToSetCard(id);
     }
   }, []);
 
-  console.log("setsColorsMap", setsColorsMap);
+  // Mémoïsation du container de pressables
+  const displaySetScreenPressables = useMemo(
+    () => <DisplaySetScreenPressablesContainer scrollRef={scrollRef} />,
+    [scrollRef]
+  );
 
   return (
     <ScreenProvider screenName="display">
       <ScrollView scrollEnabled={isScrollEnable}>
-        <DisplaySetScreenPressablesContainer scrollRef={scrollRef} />
-
-        <SetCardContainer
-          ref={scrollRef}
-          setsToShow={setsListDisplayed}
-          hideRemoveSet={hideRemoveSet}
-          setsColorsMap={setsColorsMap}
-        />
-
+        {displaySetScreenPressables}
+        <SetCardContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
         <StatSliderCompare
-          setsIdAndValue={setsIdAndValueByStat[selectedCompareName]}
+          setsIdAndValue={setsIdAndValueWithColor}
           selectedCompareName={selectedCompareName}
           setSelectedCompareName={setSelectedCompareName}
           scrollToSetCard={scrollToSetCard}
-          setsColorsMap={setsColorsMap} // Passe la map de couleurs calculée
         />
       </ScrollView>
     </ScreenProvider>

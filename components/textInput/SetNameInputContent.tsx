@@ -17,12 +17,12 @@ const SetNameInputContent: React.FC<SetNameInputContentProps> = ({
 }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const textDynamicStyle = useMemo(
+  const textInputDynamicStyle = useMemo(
     () => ({
       backgroundColor: theme.surface_container,
       color: theme.on_surface,
     }),
-    [theme.on_surface]
+    [theme.surface_container, theme.on_surface]
   );
 
   return (
@@ -32,7 +32,7 @@ const SetNameInputContent: React.FC<SetNameInputContentProps> = ({
       }}
     >
       <TextInput
-        style={StyleSheet.flatten([styles.textInput, textDynamicStyle])}
+        style={StyleSheet.flatten([styles.textInput, textInputDynamicStyle])}
         value={value}
         onChangeText={onChangeText}
         onBlur={onEndEditing}

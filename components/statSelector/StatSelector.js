@@ -17,6 +17,7 @@ const StatSelector = ({
 }) => {
   const externalUpdateRef = useRef(false);
 
+  // Astuce : remplacer ScrollView par FlatList si statList est longue pour virtualiser l'affichage et améliorer les performances
   return (
     <View style={{ height: 420 }}>
       <SelectAllStatsSwitch

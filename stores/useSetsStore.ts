@@ -2,6 +2,7 @@
 import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Clipboard from "expo-clipboard";
+import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 
 // Data and Types

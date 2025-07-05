@@ -26,35 +26,38 @@ const StatSliderCompact = ({
   const showAllStatSliderCompactBonuses = useGeneralStore((state) => state.showAllStatSliderCompactBonuses);
   const toggleAllStatSliderCompactBonuses = useGeneralStore((state) => state.toggleAllStatSliderCompactBonuses);
 
+  // Calcul du bonus activé
   const bonusEnabled = useMemo(() => chosenValue !== undefined, [chosenValue]);
+  // Valeur choisie réelle
   const actualChosenValue = useMemo(() => chosenValue ?? value, [chosenValue, value]);
+  // Bonus trouvé
   const bonusFound = useMemo(() => value - actualChosenValue, [value, actualChosenValue]);
+  // Couleur du bonus
   const bonusColor = useMemo(() => getBonusColor(bonusFound), [bonusFound]);
 
+  // Style du conteneur, dépend du thème et du filtre
   const containerStyle = useMemo(() => {
     const borderColor = getStatSliderBorderColor(statFilterNumber, theme);
     return StyleSheet.flatten([styles.container, { backgroundColor: theme.surface, borderColor: borderColor }]);
   }, [theme, statFilterNumber]);
 
-  const dynamicTextColor = useMemo(
-    () => ({
-      color: theme.on_surface,
-    }),
-    [theme.on_surface]
+  // Couleur dynamique du texte
+  const dynamicTextColor = useMemo(() => ({ color: theme.on_surface }), [theme.on_surface]);
+
+  // Style du nom
+  const nameStyle = useMemo(() => StyleSheet.flatten([styles.text, dynamicTextColor]), [dynamicTextColor]);
+
+  // Style de la valeur
+  const valueStyle = useMemo(
+    () => StyleSheet.flatten([styles.text, showAllStatSliderCompactBonuses && { color: bonusColor }]),
+    [dynamicTextColor, showAllStatSliderCompactBonuses, bonusColor]
   );
 
-  const nameStyle = useMemo(() => {
-    return StyleSheet.flatten([styles.text, dynamicTextColor]);
-  }, [dynamicTextColor]);
-
-  const valueStyle = useMemo(() => {
-    return StyleSheet.flatten([styles.text, showAllStatSliderCompactBonuses && { color: bonusColor }]);
-  }, [dynamicTextColor, showAllStatSliderCompactBonuses, bonusColor]);
-
+  // Handler mémoïsé pour le press
   const handlePress = useCallback(() => {
     if (!bonusEnabled) return;
     toggleAllStatSliderCompactBonuses();
-  }, [bonusEnabled]);
+  }, [bonusEnabled, toggleAllStatSliderCompactBonuses]);
 
   return (
     <Pressable style={containerStyle} onPress={handlePress}>

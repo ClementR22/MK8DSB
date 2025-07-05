@@ -18,45 +18,40 @@ export interface SetCardHeaderProps {
   situation: ScreenName | "load";
 }
 
-const SetCardHeader: React.FC<SetCardHeaderProps> = ({
-  isNameEditable,
-  setToShowName,
-  setToShowId,
-  setToShowPercentage,
-  moreActionNamesList,
-  situation,
-}) => {
-  const theme = useThemeStore((state) => state.theme);
+const SetCardHeader: React.FC<SetCardHeaderProps> = React.memo(
+  ({ isNameEditable, setToShowName, setToShowId, setToShowPercentage, moreActionNamesList, situation }) => {
+    const theme = useThemeStore((state) => state.theme);
 
-  const percentageTextDynamicStyle = useMemo(
-    () => ({
-      color: theme.primary,
-    }),
-    [theme.primary]
-  );
+    const percentageTextDynamicStyle = useMemo(
+      () => ({
+        color: theme.primary,
+      }),
+      [theme.primary]
+    );
 
-  return (
-    <View style={styles.headerContainer}>
-      <View style={StyleSheet.flatten(styles.nameContainer)}>
-        <SetNameInput setToShowName={setToShowName} setToShowId={setToShowId} editable={isNameEditable} />
+    return (
+      <View style={styles.headerContainer}>
+        <View style={StyleSheet.flatten(styles.nameContainer)}>
+          <SetNameInput setToShowName={setToShowName} setToShowId={setToShowId} editable={isNameEditable} />
+        </View>
+
+        {setToShowPercentage && (
+          <Text style={StyleSheet.flatten([styles.percentageText, percentageTextDynamicStyle])} numberOfLines={1}>
+            {setToShowPercentage}%
+          </Text>
+        )}
+
+        {moreActionNamesList && (
+          <SetCardMoreActionsButton
+            moreActionNamesList={moreActionNamesList}
+            setToShowId={setToShowId}
+            situation={situation}
+          />
+        )}
       </View>
-
-      {setToShowPercentage && (
-        <Text style={StyleSheet.flatten([styles.percentageText, percentageTextDynamicStyle])} numberOfLines={1}>
-          {setToShowPercentage}%
-        </Text>
-      )}
-
-      {moreActionNamesList && (
-        <SetCardMoreActionsButton
-          moreActionNamesList={moreActionNamesList}
-          setToShowId={setToShowId}
-          situation={situation}
-        />
-      )}
-    </View>
-  );
-};
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -81,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(SetCardHeader);
+export default SetCardHeader;

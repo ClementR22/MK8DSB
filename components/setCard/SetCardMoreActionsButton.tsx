@@ -23,10 +23,11 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
 
   const actionIconPropsList = useActionIconPropsList(moreActionNamesList, setToShowId, situation);
 
-  const handleMenuItemPress = (onPressAction: () => void) => {
+  // Mémoïsation du handler pour éviter de recréer la fonction à chaque render
+  const handleMenuItemPress = React.useCallback((onPressAction: () => void) => {
     setVisible(false);
     onPressAction();
-  };
+  }, []);
 
   const insets = useSafeAreaInsets(); // Get safe area insets
 

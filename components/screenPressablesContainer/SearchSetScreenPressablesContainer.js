@@ -15,6 +15,7 @@ import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModa
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import ElementsSelectorPannel from "../elementsSelector/ElementsSelectorPannel";
 import ElementsDeselector from "../elementsSelector/deselector/ElementsDeselector";
+import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 
 const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {

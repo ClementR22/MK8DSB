@@ -43,20 +43,13 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
   ({ selectedCompareName, setSelectedCompareName }) => {
     const theme = useThemeStore((state) => state.theme);
 
-    // État pour gérer la liste des noms de stats affichées (réduite, vitesse, maniabilité)
+    // État local pour la liste des stats affichées
     const [displayedNames, setDisplayedNames] = useState<CompareName[]>(reducedCompareNames);
 
-    // No need for a separate useMemo for statIconsList, directly use sortButtonsConfig
-    // The background colors are now managed directly in sortButtonsConfig
-
-    // Gère le clic sur un bouton
+    // Handler mémoïsé pour éviter les recréations inutiles
     const handlePress = useCallback(
       (name: CompareName) => {
-        if (selectedCompareName === name) {
-          return;
-        }
-
-        // Logique pour changer la liste des noms affichés
+        if (selectedCompareName === name) return;
         switch (name) {
           case "speed":
             setDisplayedNames(speedCompareNames);
@@ -68,33 +61,27 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
             setDisplayedNames(reducedCompareNames);
             break;
           default:
-            setSelectedCompareName(name); // Appelle le handler parent
+            setSelectedCompareName(name);
             break;
         }
       },
-      [selectedCompareName, setSelectedCompareName] // Dépendances pour useCallback
+      [selectedCompareName, setSelectedCompareName]
     );
 
+    // Style du contour actif, constant
     const buttonIconActiveStyle = useMemo(() => ({ borderWidth: 10, borderColor: "cyan" }), []);
 
-    // Rend les boutons affichés
+    // Génération mémoïsée des boutons affichés
     const displayedButtons = useMemo(() => {
-      const buttons = [];
-      for (let i = 0; i < NUMBER_OF_SLOTS; i++) {
+      return Array.from({ length: NUMBER_OF_SLOTS }, (_, i) => {
         const name = displayedNames[i];
-
         if (name && sortButtonsConfig[name]) {
-          // Use sortButtonsConfig
           const iconConfig = sortButtonsConfig[name];
           const { iconName, iconType } = iconConfig;
-          // Use the iconBackgroundColor from the config, or default to theme.primary if not specified
           const iconBackgroundColor = iconConfig.iconBackgroundColor || theme.primary;
-          const isActive = selectedCompareName === name; // Détermine si ce bouton est actif
-
-          // Style de fond pour le bouton actif
+          const isActive = selectedCompareName === name;
           const buttonIconStyle = { backgroundColor: iconBackgroundColor };
-
-          buttons.push(
+          return (
             <ButtonIcon
               key={name}
               onPress={() => handlePress(name)}
@@ -104,13 +91,10 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
               style={[buttonIconStyle, isActive && buttonIconActiveStyle]}
             />
           );
-        } else {
-          // Rendre un espace vide pour les slots non utilisés
-          buttons.push(<View key={`empty-${i}`} style={styles.buttonMissing} />);
         }
-      }
-      return buttons;
-    }, [displayedNames, handlePress, selectedCompareName, buttonIconActiveStyle, theme.primary]); // Added theme.primary dependency
+        return <View key={`empty-${i}`} style={styles.buttonMissing} />;
+      });
+    }, [displayedNames, handlePress, selectedCompareName, buttonIconActiveStyle, theme.primary]);
 
     return <View style={styles.buttonRowContainer}>{displayedButtons}</View>;
   }

@@ -20,13 +20,15 @@ import StatNamesFloatingContainer from "../statSliderSetCard/StatNamesFloatingCo
 import { SetData } from "./SetCard"; // Assurez-vous que SetData contient 'id: string' (ou 'name: string' si c'est votre ID stable)
 import { SetFoundObject, SetObject } from "@/stores/useSetsStore";
 
+interface SetWithColor extends SetObject {
+  color?: string;
+}
+
 interface SetCardContainerProps {
-  setsToShow: SetObject[] | SetData[];
+  setsToShow: SetWithColor[];
   isInLoadSetModal?: boolean;
   screenNameFromProps?: ScreenName;
   hideRemoveSet?: boolean;
-  setsColorsMap?: Map<string, string>; // Reçoit la map de couleurs du parent
-  // setSetsColorsMap n'est plus nécessaire ici
 }
 
 export interface SetCardContainerHandles {
@@ -36,10 +38,7 @@ export interface SetCardContainerHandles {
 }
 
 const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerProps>(
-  (
-    { setsToShow, isInLoadSetModal = false, screenNameFromProps, hideRemoveSet, setsColorsMap }, // Retire setSetsColorsMap
-    ref
-  ) => {
+  ({ setsToShow, isInLoadSetModal = false, screenNameFromProps, hideRemoveSet }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
     // Utilisez set.name comme clé pour la map des layouts, cohérent avec setsColorsMap
     const setCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
@@ -53,14 +52,14 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
 
     const scrollToSetCardHandler = useCallback(
       (id: string) => {
-        const layout = setCardLayouts.current.get(id); // Utilisez l'ID/Nom du set
-        console.log("setCardLayouts", setCardLayouts);
+        const layout = setCardLayouts.current.get(id);
+        // Suppression du console.log pour la prod
         if (scrollViewRef.current && layout) {
           const screenWidth = Dimensions.get("window").width;
           const scrollX = layout.x - screenWidth / 2 + layout.width / 2;
           scrollViewRef.current.scrollTo({ x: scrollX, animated: true });
         } else {
-          console.warn(`SetCard layout for ID ${id} not found.`);
+          // Optionnel : garder le warn si besoin de debug
         }
       },
       [] // Dépendances vides car setCardLayouts.current est une ref stable
@@ -138,27 +137,21 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
         return null;
       }
 
-      return setsToShow.map((set: SetObject | SetFoundObject) => {
-        // La couleur est récupérée directement de setsColorsMap reçue en prop
-        const assignedColor = setsColorsMap?.get(set.id) || theme.surface_variant; // Utilisez set.name comme clé
-        const effectiveColor = assignedColor || theme.surface_container_high; // Fallback par défaut
-        console.log("set.id", set.id);
+      return setsToShow.map((set: SetWithColor) => {
+        const effectiveColor = set.color || theme.surface_container_high;
         return (
           <SetCard
-            // Utilisez set.name comme clé pour une stabilité maximale si le nom est unique et stable
-            // Si vos sets ont un `id` unique, utilisez `set.id` ici !
             key={set.id}
             setToShowName={set.name}
             setToShowClassIds={set.classIds}
             setToShowStats={set.stats}
-            setToShowId={set.id} // L'index est toujours utile pour l'ordre d'affichage ou d'autres logiques
+            setToShowId={set.id}
             isInLoadSetModal={isInLoadSetModal}
             screenNameFromProps={screenNameFromProps}
             hideRemoveSet={hideRemoveSet}
-            setToShowPercentage={"percentage" in set ? set.percentage : undefined} // Passe l'ID/Nom du set pour la fonction onSetCardLayout
+            setToShowPercentage={(set as any).percentage ?? undefined}
             onLayout={(event) => onSetCardLayout(set.id, event)}
-            // Passe la couleur attribuée au SetCard via la prop `setCardColor` (renommée pour clarté)
-            borderColor={effectiveColor} // Utilisez le nom de prop setCardColor
+            borderColor={effectiveColor}
           />
         );
       });
@@ -169,7 +162,6 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
       screenNameFromProps,
       hideRemoveSet,
       onSetCardLayout,
-      setsColorsMap, // Ajoutez setsColorsMap comme dépendance ici
       theme.surface_container_high,
     ]);
 
