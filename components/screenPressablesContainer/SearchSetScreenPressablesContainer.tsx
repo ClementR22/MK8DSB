@@ -85,7 +85,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
       });
 
       if (validSet) {
-        gaps.push({ setId: setId, gap });
+        gaps.push({ setId, gap });
       }
     });
 
@@ -99,7 +99,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
       const worstGap = chosenStatsChecked.filter((checked) => checked).length;
 
       const setsFound: SetFoundObject[] = setsFoundIdGap.map(({ setId, gap }, index) => {
-        const percentage = 100 * (1 - gap / worstGap);
+        const percentage = 100 * (1 - Math.sqrt(gap / worstGap));
         const percentageRounded = Number(percentage.toPrecision(3));
         const setFoundData = setsData.get(setId);
         return {
