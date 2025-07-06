@@ -44,7 +44,6 @@ export interface SetsStoreState {
   setsListDisplayed: SetObject[];
   setsListSaved: SetObject[];
   setsListFound: SetFoundObject[];
-  setsSavedKeys: string[];
   setCardEditedId: string;
   setKeyInDisplay: number;
 
@@ -58,9 +57,9 @@ export interface SetsStoreState {
   fetchSavedSets: () => Promise<void>;
   addNewSetInDisplay: () => void;
   loadSetToDisplay: (setToLoad: SetObject) => boolean; // Modifié pour refléter le retour de checkNameUnique
-  loadSetToSave: (setTOLoad: SetObject) => void;
+  loadSetToSave: (setToLoad: SetObject) => void;
   removeSet: (id: string, screenName: ScreenName) => void;
-  removeSetInMemory: (id: string) => Promise<void>;
+  removeSetInMemory: (keyToRemove: string) => Promise<void>;
   loadSetToSearch: (set: SetObject) => void;
   loadSetSaveToSearch: (id: string) => void;
   loadSetDisplayToSearch: (id: string) => void;
@@ -71,8 +70,7 @@ export interface SetsStoreState {
   saveSetInMemory: (setToSave: SetObject) => Promise<void>;
   renameSet: (newName: string, screenName: ScreenName, id: string) => boolean;
   updateSetsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => Promise<void>;
-  setSetInMemory: (key: string | number, setObj: SetObject) => Promise<void>;
-  sortSetsSavedKeys: () => void;
+  setSetInMemory: (setObj: SetObject) => Promise<void>;
   exportSet: (id: string, screenName: ScreenName) => void;
   importSet: (clipboardContent: string, screenName: ScreenName) => void;
   deleteAllSavedSets: () => void;
@@ -96,7 +94,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   setsListDisplayed: [{ ...setDefault }],
   setsListSaved: [],
   setsListFound: [],
-  setsSavedKeys: [],
   setCardEditedId: null,
   setKeyInDisplay: 1,
 
@@ -129,15 +126,13 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
 
   fetchSetsSavedKeys: async () => {
     const setsKeys = await getOnlySetsSavedKeysFromMemory();
-    const sorted = setsKeys.sort((a, b) => a.localeCompare(b));
-    set({ setsSavedKeys: sorted });
-    return sorted;
+    return setsKeys;
   },
 
   fetchSavedSets: async () => {
-    const keys = await get().fetchSetsSavedKeys();
+    const setsKeys = await get().fetchSetsSavedKeys();
     // Utilise Promise.all pour récupérer tous les sets en parallèle
-    const setsData = await AsyncStorage.multiGet(keys);
+    const setsData = await AsyncStorage.multiGet(setsKeys);
     const parsed: SetObject[] = setsData
       .map(([, value]) => {
         try {
@@ -181,8 +176,9 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     }
 
     if (get().setsListDisplayed.length < MAX_NUMBER_SETS_DISPLAY) {
+      const setToLoadWithNewId = { ...setToLoad, id: nanoid(8) };
       set((state) => ({
-        setsListDisplayed: [...state.setsListDisplayed, setToLoad],
+        setsListDisplayed: [...state.setsListDisplayed, setToLoadWithNewId],
       }));
       showToast("Succès" + " " + "Le set a été ajouté à l'écran de comparaison");
       return true;
@@ -193,20 +189,20 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   loadSetToSave: (setToLoad) => {
-    let nameToUse = setToLoad.name;
+    let nameUnique = setToLoad.name;
     let newIndex = 0; // Commencer l'indexation pour les noms dupliqués
     // Vérifier l'unicité du nom en mode 'save'
-    while (!get().checkNameUnique(nameToUse, "save")) {
-      nameToUse = `${setToLoad.name} (${newIndex})`; // Ajouter un suffixe comme "(0)", "(1)"
+    while (!get().checkNameUnique(nameUnique, "save")) {
+      nameUnique = `${setToLoad.name} (${newIndex})`; // Ajouter un suffixe comme "(0)", "(1)"
       newIndex++;
     }
     // Une fois qu'un nom unique est trouvé, utilisez-le
-    const finalSetToLoad = { ...setToLoad, name: nameToUse };
+    const setToLoadWithNewId = { ...setToLoad, name: nameUnique, id: nanoid(8) };
 
     set((state) => ({
-      setsListSaved: [...state.setsListSaved, finalSetToLoad],
+      setsListSaved: [...state.setsListSaved, setToLoadWithNewId],
     }));
-    get().saveSetInMemory(finalSetToLoad); // Sauvegarder immédiatement le set avec le nouveau nom unique
+    get().saveSetInMemory(setToLoadWithNewId); // Sauvegarder immédiatement le set avec le nouveau nom unique
     showToast("Succès" + " " + "Le set a été chargé dans les favoris");
   },
 
@@ -226,15 +222,11 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     } as any); // Le casting `as any` est souvent utilisé avec les noms de clés dynamiques en TypeScript
   },
 
-  removeSetInMemory: async (id) => {
-    const keyToRemove = id;
+  removeSetInMemory: async (keyToRemove) => {
     if (keyToRemove) {
       await AsyncStorage.removeItem(keyToRemove);
-      set((state) => ({
-        setsSavedKeys: state.setsSavedKeys.filter((key) => key !== id), // Filtrer par index pour garder la cohérence
-      }));
     } else {
-      console.warn(`Attempted to remove set ${id}, but no key found.`);
+      console.warn(`Attempted to remove set ${keyToRemove}, but no key found.`);
     }
   },
 
@@ -317,10 +309,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       const isNameUnique = get().checkNameUnique(setToSave.name, "save");
       if (!isNameUnique) return false;
 
-      set((state) => ({
-        setsListSaved: [...state.setsListSaved, setToSave],
-      }));
-      get().saveSetInMemory(setToSave); // Appeler la fonction pour sauvegarder dans AsyncStorage
+      get().loadSetToSave(setToSave);
       showToast("Succès" + " " + "Le set a été enregistré");
       return true;
     } catch (e) {
@@ -331,29 +320,17 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   saveSetInMemory: async (setToSave) => {
-    // Générer une clé unique simple si vous n'avez pas d'ID stable pour le set
-    let key = 0;
-    const existingKeys = await getOnlySetsSavedKeysFromMemory(); // Récupérer les clés actuelles de l'AsyncStorage
-    // Chercher la première clé numérique non utilisée
-    while (existingKeys.includes(String(key))) {
-      key++;
-    }
-    const newKey = String(key);
-    // Mettre à jour l'état `setsSavedKeys` AVANT de sauvegarder
-    set((state) => ({
-      setsSavedKeys: [...state.setsSavedKeys, newKey],
-    }));
-    await saveThingInMemory(newKey, setToSave);
+    await saveThingInMemory(setToSave.id, setToSave);
   },
 
   renameSet: (newName, screenName, setToShowId) => {
     // Assurez-vous que le nouveau nom n'est pas déjà utilisé dans la liste CIBLE (sauf pour le set que l'on renomme)
-    const listName =
+    const setsListName =
       screenName === "search" ? "setsListFound" : screenName === "display" ? "setsListDisplayed" : "setsListSaved";
-    const list = get()[listName] as SetObject[] | SetFoundObject[];
+    const setsList = get()[setsListName] as SetObject[] | SetFoundObject[];
 
     // Vérifier l'unicité du nom en ignorant le set en cours d'édition
-    const isNewNameUniqueExceptCurrent = list.every((set) => {
+    const isNewNameUniqueExceptCurrent = setsList.every((set) => {
       return set.name !== newName;
     });
 
@@ -362,104 +339,51 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       return false;
     }
 
-    const updated = list.map((set: SetObject) => {
+    const setsListUpdated = setsList.map((set: SetObject) => {
       if (set.id === setToShowId) {
-        const renamed = { ...set, name: newName };
+        const newSet = { ...set, name: newName };
 
         if (screenName === "save") {
-          // Si le set est renommé dans la liste sauvegardée, mettez à jour AsyncStorage
-          const key = get().setsSavedKeys[setToShowId];
-          if (key) {
-            get().setSetInMemory(key, renamed);
-          } else {
-            console.warn("Key not found for set to rename in AsyncStorage.");
-          }
+          get().setSetInMemory(newSet);
+        } else {
+          console.warn("Key not found for set to rename in AsyncStorage.");
         }
-        return renamed;
+
+        return newSet;
       }
       return set;
     });
-    set({ [listName]: updated } as any);
+    set({ [setsListName]: setsListUpdated } as any);
     showToast("Succès" + " " + "Set renommé !");
     return true;
   },
 
   updateSetsList: async (pressedClassIdsObj, screenName) => {
-    const listName = screenName === "display" ? "setsListDisplayed" : "setsListSaved";
-    const list = get()[listName as keyof SetsStoreState] as SetObject[];
-    const classIds = Object.values(pressedClassIdsObj);
+    const setsListName = screenName === "display" ? "setsListDisplayed" : "setsListSaved";
+    const setsList = get()[setsListName as keyof SetsStoreState] as SetObject[];
+    const newClassIds = Object.values(pressedClassIdsObj);
     const setCardEditedId = get().setCardEditedId;
 
-    const updated = list.map((set) => {
+    const setsListUpdated = setsList.map((set) => {
       if (set.id === setCardEditedId) {
         const newSet = {
           ...set,
-          classIds,
-          stats: getSetStatsFromClassIds(classIds), // Recalcule les stats
+          classIds: newClassIds,
+          stats: getSetStatsFromClassIds(newClassIds), // Recalcule les stats
         };
         if (screenName === "save") {
-          // Si le set est mis à jour dans la liste sauvegardée, mettez à jour AsyncStorage
-          const key = get().setsSavedKeys[setCardEditedId];
-          if (key) {
-            get().setSetInMemory(key, newSet);
-          } else {
-            console.warn("Key not found for set to update in AsyncStorage.");
-          }
+          get().setSetInMemory(newSet);
         }
         return newSet;
       }
       return set;
     });
 
-    set({ [listName]: updated } as any);
+    set({ [setsListName]: setsListUpdated } as any);
   },
 
-  setSetInMemory: async (key, setObj) => {
-    await saveThingInMemory(String(key), setObj);
-  },
-
-  sortSetsSavedKeys: () => {
-    const keys = get().setsSavedKeys;
-    const sets = get().setsListSaved;
-
-    // Créer une map temporaire pour associer les clés aux noms de set (pour le tri)
-    const keyToNameMap = new Map<string, string>();
-    sets.forEach((setObj, index) => {
-      const key = keys[index]; // Utilisez la clé actuelle à cet index
-      if (key) {
-        keyToNameMap.set(key, setObj.name);
-      }
-    });
-
-    // Trier les clés en fonction des noms de set associés
-    const sortedKeys = [...keys].sort((a, b) => {
-      const nameA = keyToNameMap.get(a) || "";
-      const nameB = keyToNameMap.get(b) || "";
-      return nameA.localeCompare(nameB);
-    });
-
-    // Recréer setsListSaved dans le nouvel ordre
-    const sortedSetsListSaved = sortedKeys
-      .map((key) => sets.find((setObj, index) => keys[index] === key)) // Trouver le set original par sa clé
-      .filter(Boolean) as SetObject[]; // Filtrer les éléments undefined/null et caster
-
-    set({
-      setsSavedKeys: sortedKeys,
-      setsListSaved: sortedSetsListSaved,
-    });
-
-    // Optionnel: Re-sauvegarder les sets si vous voulez garantir que l'ordre des clés dans AsyncStorage correspond à setsSavedKeys
-    // Attention: Si vos clés sont des IDs uniques qui ne changent JAMAIS, cette boucle est inutile.
-    // Si vos clés sont basées sur l'index (comme "0", "1", "2"), alors vous devrez peut-être revoir la logique
-    // de gestion des clés lors de la sauvegarde et suppression pour qu'elles restent contigües et triées.
-    // Pour l'instant, cette boucle met à jour le contenu de la clé existante dans l'AsyncStorage.
-    sortedKeys.forEach((key, i) => {
-      const setObj = sortedSetsListSaved[i];
-      if (setObj) {
-        get().setSetInMemory(key, setObj);
-      }
-    });
-    showToast("Succès" + " " + "Sets triés !");
+  setSetInMemory: async (setObj) => {
+    await saveThingInMemory(String(setObj.id), setObj);
   },
 
   exportSet: (id, screenName) => {
@@ -524,8 +448,8 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   deleteAllSavedSets: () => {
-    // Réini tialiser les listes et les clés dans l'état du store
-    set({ setsListSaved: [], setsSavedKeys: [] });
+    // Réinitialiser les listes dans l'état du store
+    set({ setsListSaved: [] });
     // Appeler la fonction utilitaire pour supprimer de l'AsyncStorage
     deleteAllSavedSetsInMemory();
     showToast("Succès" + " " + "Tous les sets sauvegardés ont été supprimés !");
