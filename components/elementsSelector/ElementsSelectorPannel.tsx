@@ -1,8 +1,5 @@
-// No changes needed in ElementsSelectorPannel as it correctly passes props
-// to PaginatedElementsContainer, which now handles the item dimension logic.
-
 import React, { useState, memo, useMemo, useEffect, useCallback } from "react";
-import { StyleSheet, ScrollView, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import PaginatedElementsContainer, { ELEMENTS_PER_PAGE } from "./PaginatedElementsContainer";
 import {
   elementsDataBody,

@@ -9,14 +9,13 @@ export interface SortButtonConfig {
 }
 
 // Define the union of all possible button names/keys
-export type SortButtonName = "close" | "id" | "name" | "classId" | "speed" | "handling" | Stat;
+export type SortButtonName = "close" | "id" | "name" | "speed" | "handling" | Stat;
 
 // Merged configuration for all icons
 export const sortButtonsConfig: { [key in SortButtonName]: SortButtonConfig } = {
   // Sorting specific icons
   id: { iconName: "sort-numeric-ascending", iconType: IconType.MaterialCommunityIcons },
   name: { iconName: "sort-alphabetical-ascending", iconType: IconType.MaterialCommunityIcons },
-  classId: { iconName: "view-gallery-outline", iconType: IconType.MaterialCommunityIcons },
 
   // General category icons (for sub-menus)
   speed: { iconName: "speedometer", iconType: IconType.SimpleLineIcons },

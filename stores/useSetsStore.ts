@@ -412,7 +412,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     });
 
     set({ [listName]: updated } as any);
-    showToast("Succès" + " " + "Set mis à jour !");
   },
 
   setSetInMemory: async (key, setObj) => {

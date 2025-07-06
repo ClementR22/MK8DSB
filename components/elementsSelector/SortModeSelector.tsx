@@ -14,7 +14,6 @@ export const HALF_GAP = 7;
 const defaultSortNames: SortButtonName[] = [
   "id", // Corresponds to orderNumber 0: Sort by ID
   "name", // Combined for A-Z and Z-A
-  "classId", // Corresponds to orderNumber 3: Sort by class ID
   "speed", // A special button to open the speed-specific sorting sub-menu
   "handling", // A special button to open the handling-specific sorting sub-menu
   "acceleration",
@@ -44,19 +43,18 @@ const handlingSortNames: SortButtonName[] = [
 const sortNameMap: { [key: string]: { asc: number; desc: number } } = {
   id: { asc: 0, desc: 1 },
   name: { asc: 2, desc: 3 }, // Combined name_az and name_za
-  classId: { asc: 4, desc: 5 },
-  speedGround: { asc: 6, desc: 7 },
-  speedAntiGravity: { asc: 8, desc: 9 },
-  speedWater: { asc: 10, desc: 11 },
-  speedAir: { asc: 12, desc: 13 },
-  handlingGround: { asc: 14, desc: 15 },
-  handlingAntiGravity: { asc: 16, desc: 17 },
-  handlingWater: { asc: 18, desc: 19 },
-  handlingAir: { asc: 20, desc: 21 },
-  acceleration: { asc: 22, desc: 23 },
-  weight: { asc: 24, desc: 25 },
-  traction: { asc: 26, desc: 27 },
-  miniTurbo: { asc: 28, desc: 29 },
+  speedGround: { asc: 4, desc: 5 },
+  speedAntiGravity: { asc: 6, desc: 7 },
+  speedWater: { asc: 8, desc: 9 },
+  speedAir: { asc: 10, desc: 11 },
+  handlingGround: { asc: 12, desc: 13 },
+  handlingAntiGravity: { asc: 14, desc: 15 },
+  handlingWater: { asc: 16, desc: 17 },
+  handlingAir: { asc: 18, desc: 19 },
+  acceleration: { asc: 20, desc: 21 },
+  weight: { asc: 22, desc: 23 },
+  traction: { asc: 24, desc: 25 },
+  miniTurbo: { asc: 26, desc: 27 },
 };
 
 interface SortModeSelectorProps {

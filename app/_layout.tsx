@@ -45,16 +45,8 @@ export default function TabLayout() {
 
   // --- Zustand Store Selections ---
   // Select only the parts of the state that are needed
-  const screenNameForLoadModal = useModalLoadSetStore((state) => state.screenNameForLoadModal);
   const setScreenNameForLoadModal = useModalLoadSetStore((state) => state.setScreenNameForLoadModal);
-
-  const isSetsListUpdated = usePressableElementsStore((state) => state.isSetsListUpdated);
-  const selectedClassIdsByCategory = usePressableElementsStore((state) => state.selectedClassIdsByCategory);
-  const setIsSetsListUpdated = usePressableElementsStore((state) => state.setIsSetsListUpdated);
-
-  const updateSetsList = useSetsStore((state) => state.updateSetsList);
   const fetchSavedSets = useSetsStore((state) => state.fetchSavedSets);
-
   const theme = useThemeStore((state) => state.theme);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
 
@@ -67,15 +59,6 @@ export default function TabLayout() {
       setScreenNameForLoadModal(currentScreen);
     }
   }, [pathname, setScreenNameForLoadModal]); // Only re-run if pathname or setter changes
-
-  // Effect to update sets list when relevant state changes
-  useEffect(() => {
-    if (!isSetsListUpdated) {
-      // Ensure updateSetsList is memoized by Zustand or it will trigger endlessly
-      updateSetsList(selectedClassIdsByCategory, screenNameForLoadModal);
-      setIsSetsListUpdated(true);
-    }
-  }, [isSetsListUpdated, updateSetsList, selectedClassIdsByCategory, screenNameForLoadModal, setIsSetsListUpdated]);
 
   // Effect to listen for system theme changes
   useEffect(() => {
