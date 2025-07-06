@@ -1,7 +1,7 @@
 import { useThemeStore } from "@/stores/useThemeStore";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useCallback, useMemo, memo } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 
 interface PagesNavigatorProps {
   currentPage: number;
@@ -21,14 +21,6 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
     // No change needed, already optimal.
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   }, [setCurrentPage]); // setCurrentPage dependency is correct.
-
-  const goToPage = useCallback(
-    // No change needed, already optimal.
-    (pageIndex: number) => {
-      setCurrentPage(pageIndex);
-    },
-    [setCurrentPage]
-  );
 
   // Memoize paginationControlsStyle.
   const paginationControlsStyle = useMemo(
@@ -55,7 +47,7 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
     return Array.from({ length: totalPages }).map((_, index) => (
       <Pressable
         key={index}
-        onPress={() => goToPage(index)}
+        onPress={() => setCurrentPage(index)}
         style={{ height: 40, justifyContent: "center", paddingHorizontal: 3 }}
       >
         <View
@@ -63,7 +55,7 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
         />
       </Pressable>
     ));
-  }, [totalPages, currentPage, goToPage, activeDotColor, inactiveDotColorResolved]);
+  }, [totalPages, currentPage, setCurrentPage, activeDotColor, inactiveDotColorResolved]);
 
   return (
     <View style={paginationControlsStyle}>

@@ -276,9 +276,10 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   loadSetSearchToDisplay: (id) => {
-    const setFromFound = get().setsListFound.find((set) => set.id === id);
-    if (setFromFound) {
-      get().loadSetToDisplay(setFromFound);
+    const setSelected = get().setsListFound.find((set) => set.id === id);
+    if (setSelected) {
+      const { percentage, ...setToLoad } = setSelected; // Destructurer percentage si présent
+      get().loadSetToDisplay(setToLoad);
     } else {
       showToast("Erreur" + " " + "Le set trouvé n'a pas été trouvé.");
     }

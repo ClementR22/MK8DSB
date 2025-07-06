@@ -54,4 +54,6 @@ const styles = StyleSheet.create({
   },
 });
 
+FlexContainer.displayName = "FlexContainer";
+
 export default React.memo(FlexContainer);

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { Platform } from "react-native";
 import { Menu } from "react-native-paper";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
@@ -24,7 +24,7 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
   const actionIconPropsList = useActionIconPropsList(moreActionNamesList, setToShowId, situation);
 
   // Mémoïsation du handler pour éviter de recréer la fonction à chaque render
-  const handleMenuItemPress = React.useCallback((onPressAction: () => void) => {
+  const handleMenuItemPress = useCallback((onPressAction: () => void) => {
     setVisible(false);
     onPressAction();
   }, []);

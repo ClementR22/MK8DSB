@@ -8,9 +8,9 @@ interface ButtonAndModalProps {
   // Le contenu principal du modal. Peut être un composant, du texte, etc.
   children: React.ReactNode;
   // Couleur du bouton
-  buttonColor: string | null;
+  buttonColor?: string | null;
   // Couleur du text du bouton
-  buttonTextColor: string | null;
+  buttonTextColor?: string | null;
   // Permet de passer un titre en dur (string) ou de ne pas avoir de titre (null).
   modalTitle?: string | null;
   // Si fournie, la modale est contrôlée de l'extérieur
@@ -75,12 +75,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = React.memo(
     const triggerElement = customTrigger ? (
       React.cloneElement(customTrigger, { onPress: openModal })
     ) : (
-      <Button
-        buttonColor={buttonColor}
-        buttonTextColor={buttonTextColor}
-        onPress={openModal}
-        tooltipText={undefined}
-      >
+      <Button buttonColor={buttonColor} buttonTextColor={buttonTextColor} onPress={openModal} tooltipText={undefined}>
         {translate(triggerButtonText)}
       </Button>
     );

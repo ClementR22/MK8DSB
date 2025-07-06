@@ -5,7 +5,7 @@ import ButtonBase from "./ButtonBase";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 interface ButtonIconProps {
-  onPress: (event?: Event) => void;
+  onPress?: (event?: Event) => void;
   tooltipText?: string;
   toolTipPlacement?: string;
   elevation?: 1 | 3 | 6 | 8 | 12;
@@ -58,6 +58,8 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
     </ButtonBase>
   );
 };
+
+ButtonIcon.displayName = "ButtonIcon";
 
 const styles = StyleSheet.create({
   container: {

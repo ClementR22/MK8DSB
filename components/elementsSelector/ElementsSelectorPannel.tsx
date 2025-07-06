@@ -52,8 +52,8 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
 
   const selectedClassId = usePressableElementsStore((state) => {
     return selectionMode === "single"
-      ? state.selectedClassIds[selectedCategory]
-      : state.multiSelectedClassIds[selectedCategory];
+      ? state.selectedClassIdsByCategory[selectedCategory]
+      : state.multiSelectedClassIdsByCategory[selectedCategory];
   });
 
   const selectElementsByClassId = usePressableElementsStore((state) => state.selectElementsByClassId);
@@ -61,15 +61,9 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
     (state) => state.toggleMultiSelectElementsByClassId
   );
 
-  const handleElementSelectionChange = useCallback(
-    (classId: number) => {
-      if (selectionMode === "single") {
-        selectElementsByClassId(selectedCategory, classId);
-      } else {
-        toggleMultiSelectElementsByClassId(selectedCategory, classId);
-      }
-    },
-    [selectElementsByClassId, toggleMultiSelectElementsByClassId, selectedCategory, selectionMode]
+  const handleSelectElement = useMemo(
+    () => (selectionMode === "single" ? selectElementsByClassId : toggleMultiSelectElementsByClassId),
+    [selectElementsByClassId, toggleMultiSelectElementsByClassId, selectionMode]
   );
 
   const categoryElementsSorted = useMemo(
@@ -129,7 +123,7 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
         setSelectedCategory={setSelectedCategory}
         categoryElements={categoryElementsSorted}
         initialSelectedClassId={selectedClassId}
-        onElementsSelectionChange={handleElementSelectionChange}
+        handleSelectElement={handleSelectElement}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />

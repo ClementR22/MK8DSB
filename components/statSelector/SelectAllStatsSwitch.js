@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import Switch from "../../primitiveComponents/Switch";
 
 function areAllStatsChecked(statList) {
@@ -20,7 +20,7 @@ const SelectAllStatsSwitch = ({
   const isFirstRender = useRef(true);
 
   // Mémoïsation du handler pour éviter de recréer la fonction à chaque render
-  const onToggleSwitch = React.useCallback(() => {
+  const onToggleSwitch = useCallback(() => {
     internalUpdate.current = true;
     if (!isSwitchOn) {
       setStatListBeforeAll(statList);
@@ -34,7 +34,7 @@ const SelectAllStatsSwitch = ({
   }, [isSwitchOn, statList, setStatList, setStatListBeforeAll, statListBeforeAll]);
 
   // Mémoïsation de la fonction de mise à jour du switch
-  const updateToggleSwitch = React.useCallback(() => {
+  const updateToggleSwitch = useCallback(() => {
     const hasAllChecked = areAllStatsChecked(statList);
     if (isSwitchOn != hasAllChecked) {
       setIsSwitchOn(hasAllChecked);

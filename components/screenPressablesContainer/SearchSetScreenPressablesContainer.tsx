@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { categories } from "@/data/elements/elementsData";
-import { statNames } from "@/data/stats/statsData";
 import { setsData } from "@/data/setsData";
 import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
-import { translate } from "@/translations/translations";
+import { translateToLanguage } from "@/translations/translations";
 import ResultsNumber from "../ResultsNumberSelector";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
@@ -17,43 +16,34 @@ import ElementsSelectorPannel from "../elementsSelector/ElementsSelectorPannel";
 import ElementsDeselector from "../elementsSelector/deselector/ElementsDeselector";
 import "react-native-get-random-values";
 import { nanoid } from "nanoid";
+import { SetFoundObject } from "@/stores/useSetsStore";
+import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
-const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
+interface SearchSetScreenPressablesContainerProps {
+  scrollRef: React.RefObject<any>;
+}
+
+const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesContainerProps> = ({ scrollRef }) => {
+  const language = useLanguageStore((state) => state.language);
+
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
   const [resultsNumber, setResultsNumber] = useState(5);
-  const selectedClassIds = usePressableElementsStore((state) => state.multiSelectedClassIds);
-  const [chosenBodytype, setChosenBodytype] = useState(new Set());
+  const selectedClassIdsByCategory = usePressableElementsStore((state) => state.multiSelectedClassIdsByCategory);
+  const [chosenBodytype, setChosenBodytype] = useState<Set<Bodytype>>(new Set());
 
-  const SetFoundTranslated = translate("SetFound");
+  const SetFoundTranslated = useMemo(() => translateToLanguage("SetFound", language), []);
 
-  const updateSetsToShow = (setsFound) => {
-    const setsFoundWithName = setsFound.map((set, index) => ({
-      id: nanoid(8),
-      name: `${SetFoundTranslated} ${index + 1}`,
-      classIds: set.classIds,
-      stats: set.stats,
-      percentage: set.percentage,
-    }));
-    setSetsToShow(setsFoundWithName);
-
-    setSetsListFound(setsFoundWithName);
-  };
-
-  const search = () => {
+  const search = useCallback(() => {
     const chosenStatsChecked = chosenStats.map((stat) => stat.checked);
     const chosenStatsValue = chosenStats.map((stat) => stat.value);
     const chosenStatsFilterNumber = chosenStats.map((stat) => stat.statFilterNumber);
-    const chosenClassIds = selectedClassIds;
+    const chosenClassIds = selectedClassIdsByCategory;
 
-    if (!chosenStatsChecked.includes(true) || chosenBodytype.length === 0) {
-      updateSetsToShow([]); // Ou gérer l'état de "rien trouvé"
-      return; // Sortir si aucun filtre n'est sélectionné
-    }
+    const gaps: { setId: string; gap: number }[] = [];
 
-    const gaps = [];
-
-    for (const [setId, setData] of setsData) {
+    setsData.forEach((setData, setId) => {
       const { classIds, stats, bodytypes } = setData;
 
       const isOneElementNonAccepted = categories.some((categoryKey, index) => {
@@ -65,13 +55,13 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
       });
 
       if (isOneElementNonAccepted) {
-        continue;
+        return;
       }
 
       if (chosenBodytype.size !== 0) {
-        const isEveryBodytypeNonAccepted = !bodytypes.some((item) => chosenBodytype.has(item));
+        const isEveryBodytypeNonAccepted = !bodytypes.some((item: Bodytype) => chosenBodytype.has(item));
         if (isEveryBodytypeNonAccepted) {
-          continue;
+          return;
         }
       }
 
@@ -97,27 +87,34 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
       if (validSet) {
         gaps.push({ setId: setId, gap });
       }
-    }
+    });
 
     gaps.sort((a, b) => a.gap - b.gap);
 
     if (gaps.length === 0) {
-      updateSetsToShow([]);
+      setSetsListFound([]);
     } else {
       const realResultsNumber = Math.min(resultsNumber, gaps.length);
       const setsFoundIdGap = gaps.slice(0, realResultsNumber);
       const worstGap = chosenStatsChecked.filter((checked) => checked).length;
-      const setsFoundDataPourcentage = setsFoundIdGap.map(({ setId, gap }) => {
+
+      const setsFound: SetFoundObject[] = setsFoundIdGap.map(({ setId, gap }, index) => {
         const percentage = 100 * (1 - gap / worstGap);
         const percentageRounded = Number(percentage.toPrecision(3));
         const setFoundData = setsData.get(setId);
-        return { ...setFoundData, percentage: percentageRounded };
+        return {
+          ...setFoundData,
+          id: nanoid(8),
+          name: `${SetFoundTranslated} ${index + 1}`,
+          percentage: percentageRounded,
+        };
       });
-      updateSetsToShow(setsFoundDataPourcentage);
+
+      setSetsListFound(setsFound);
     }
 
     scrollRef?.current?.scrollToStart();
-  };
+  }, [chosenStats, selectedClassIdsByCategory, chosenBodytype, resultsNumber, setSetsListFound, scrollRef]);
 
   return (
     <View style={styles.pressablesContainer}>
@@ -139,7 +136,7 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
       </ButtonAndModal>
 
       <Button onPress={search} iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
-        <Text>{translate("Search")}</Text>
+        <Text>{translateToLanguage("Search", language)}</Text>
       </Button>
 
       <ButtonAndModal
@@ -158,11 +155,12 @@ const SearchSetScreenPressablesContainer = ({ setSetsToShow, scrollRef }) => {
 
 const styles = StyleSheet.create({
   pressablesContainer: {
-    // width: screenWidth * 0.87 + 20,
     flexDirection: "row",
     gap: 10,
     marginBottom: 10,
   },
 });
 
-export default SearchSetScreenPressablesContainer;
+SearchSetScreenPressablesContainer.displayName = "SearchSetScreenPressablesContainer";
+
+export default React.memo(SearchSetScreenPressablesContainer);

@@ -13,4 +13,6 @@ const SetNameInputPreview: React.FC<SetNameInputPreviewProps> = ({ name }) => {
   return <SetNameInputContent value={localName} onChangeText={setLocalName} onEndEditing={handleEndEditing} />;
 };
 
+SetNameInputPreview.displayName = "SetNameInputPreview";
+
 export default React.memo(SetNameInputPreview);

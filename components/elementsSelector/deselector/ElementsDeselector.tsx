@@ -1,7 +1,7 @@
 // components/elementsSelector/ElementsDeselector.tsx
-import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
+import React, { memo, useEffect, useMemo, useRef } from "react";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import { ElementData } from "@/data/elements/elementsTypes";
+import { Category, ElementData } from "@/data/elements/elementsTypes";
 import { elementsGroupedByClassId } from "@/data/elements/elementsData";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -25,7 +25,7 @@ const ElementsDeselector: React.FC = () => {
 
   const scrollViewRef = useRef<ScrollView>(null);
 
-  const multiSelectedClassIdsStore = usePressableElementsStore((state) => state.multiSelectedClassIds);
+  const multiSelectedClassIdsStore = usePressableElementsStore((state) => state.multiSelectedClassIdsByCategory);
   const toggleMultiSelectElementsByClassId = usePressableElementsStore(
     (state) => state.toggleMultiSelectElementsByClassId
   );
@@ -47,13 +47,6 @@ const ElementsDeselector: React.FC = () => {
     }
     return elementsToDisplayList;
   }, [multiSelectedClassIdsStore, elementsGroupedByClassId]);
-
-  const handleDeselectElement = useCallback(
-    (element: ElementData) => {
-      toggleMultiSelectElementsByClassId(element.category, element.classId);
-    },
-    [toggleMultiSelectElementsByClassId] // Removed elementsGroupedByClassId, multiSelectedClassIdsStore, selectElementsByClassId as they are not needed in this callback's deps
-  );
 
   useEffect(() => {
     setTimeout(() => {
@@ -110,7 +103,7 @@ const ElementsDeselector: React.FC = () => {
                 imageUrl={item.imageUrl}
                 name={item.name}
                 isSelected={true}
-                onPress={() => handleDeselectElement(item)}
+                onPress={() => toggleMultiSelectElementsByClassId(item.category, item.classId)}
                 itemCardDynamicStyle={elementsCardDynamicStyle}
                 activeBorderStyle={activeBorderStyle}
               />

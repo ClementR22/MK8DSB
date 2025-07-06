@@ -53,4 +53,6 @@ const styles = StyleSheet.create({
   },
 });
 
+SetNameInputContent.displayName = "SetNameInputContent";
+
 export default React.memo(SetNameInputContent);

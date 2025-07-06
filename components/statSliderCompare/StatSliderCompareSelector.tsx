@@ -2,7 +2,7 @@ import React, { useState, useMemo, useCallback, memo, Dispatch, SetStateAction }
 import { StyleSheet, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import { sortButtonsConfig, SortButtonName } from "@/config/sortButtonsConfig"; // Import merged config
+import { sortButtonsConfig } from "@/config/sortButtonsConfig"; // Import merged config
 import { CompareName } from "@/data/stats/statsTypes"; // Import Stat type
 
 // Redefine types to use SortButtonName

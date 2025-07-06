@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
 import ButtonImportSet from "../managingSetsButton/ButtonImportSet";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
@@ -6,17 +6,18 @@ import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
 
-const SavedSetScreenPressablesContainer = () => {
+const SavedSetScreenPressablesContainer: React.FC = () => {
   const sortSetsSavedKeys = useSetsStore((state) => state.sortSetsSavedKeys);
+
+  const handleSort = useMemo(() => sortSetsSavedKeys, [sortSetsSavedKeys]);
 
   return (
     <BoxContainer flexDirection="row" justifyContent="space-evenly">
-      {/* Sort set button */}
       <ButtonIcon
         tooltipText="SortSets"
         iconName="sort"
         iconType={IconType.MaterialCommunityIcons}
-        onPress={sortSetsSavedKeys}
+        onPress={handleSort}
       />
       <ButtonImportSet screenName="save" />
       <ButtonAndModalStatSelectorResultStats />
@@ -24,4 +25,6 @@ const SavedSetScreenPressablesContainer = () => {
   );
 };
 
-export default SavedSetScreenPressablesContainer;
+SavedSetScreenPressablesContainer.displayName = "SavedSetScreenPressablesContainer";
+
+export default React.memo(SavedSetScreenPressablesContainer);

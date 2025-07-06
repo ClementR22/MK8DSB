@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback, Dispatch, SetStateAction } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -50,7 +50,7 @@ const StatSliderCompare: React.FC<StatSliderCompareProps> = ({
   }, [theme.surface]);
 
   const renderStatBar = useCallback(
-    ({ id, value, color }, index) => {
+    ({ id, value, color }) => {
       return (
         <StatSliderCompareBar key={id} value={value} color={color} scrollToThisSetCard={() => scrollToSetCard(id)} />
       );

@@ -11,14 +11,14 @@ type IconProps = {
 
 interface ButtonProps {
   children: ReactNode;
-  buttonColor?: string,
-  buttonTextColor?: string,
+  buttonColor?: string;
+  buttonTextColor?: string;
   onPress: () => void;
   elevation?: 1 | 3 | 6 | 8 | 12;
   tooltipText?: string;
   iconProps?: IconProps;
   minWidth?: number;
-  textStyle?: {key: string};
+  textStyle?: { key: string };
 
   [key: string]: any;
 }
@@ -45,7 +45,10 @@ const Button = ({
     [theme.primary, iconProps, minWidth]
   );
 
-  const textStyle = useMemo(() => ({ color: buttonTextColor || theme.on_primary }), [buttonTextColor, theme.on_primary]);
+  const textStyle = useMemo(
+    () => ({ color: buttonTextColor || theme.on_primary }),
+    [buttonTextColor, theme.on_primary]
+  );
 
   return (
     <ButtonBase
@@ -78,5 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
+
+Button.displayName = "Button";
 
 export default React.memo(Button);

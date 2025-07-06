@@ -20,13 +20,13 @@ import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import TabBarHeightUpdater from "@/components/TabBarHeightUpdater";
 
-const SearchSetScreen = () => {
+const SearchSetScreen: React.FC = () => {
   const theme = useThemeStore((state) => state.theme);
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<any>(null);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
   const chosenStats = useSetsStore((state) => state.chosenStats);
+  const setsListFound = useSetsStore((state) => state.setsListFound);
 
-  const [setsToShow, setSetsToShow] = useState([]);
   const [isReduceStatSliders, setIsReduceStatSliders] = useState(false);
   const toggleReduceStatSlider = useCallback(() => {
     setIsReduceStatSliders((prev) => !prev);
@@ -34,14 +34,9 @@ const SearchSetScreen = () => {
 
   const renderedSliders = useMemo(() => {
     const SliderComponent = isReduceStatSliders ? StatSliderCompact : StatSlider;
-
     return chosenStats.map((stat) => {
-      if (!stat.checked) {
-        return null; // Ne rend rien si la stat n'est pas cochée
-      }
-
+      if (!stat.checked) return null;
       const nameProp = isReduceStatSliders ? compactStatNames[stat.name] : stat.name;
-
       return (
         <SliderComponent
           key={`statSlider-${stat.name}-${isReduceStatSliders ? "compact" : "full"}`}
@@ -52,6 +47,8 @@ const SearchSetScreen = () => {
       );
     });
   }, [chosenStats, isReduceStatSliders]);
+
+  const headerTextStyle = useMemo(() => [styles.text, { color: theme.on_surface }], [theme.on_surface]);
 
   return (
     <ScreenProvider screenName="search">
@@ -68,17 +65,7 @@ const SearchSetScreen = () => {
                 />
 
                 <View style={styles.headerTextContainer}>
-                  <Text
-                    style={[
-                      styles.text,
-                      {
-                        alignSelf: "center",
-                        color: theme.on_surface,
-                      },
-                    ]}
-                  >
-                    {translate("DesiredStats")}
-                  </Text>
+                  <Text style={headerTextStyle}>{translate("DesiredStats")}</Text>
                 </View>
 
                 <ButtonLoadSet tooltipText="LoadStatsOfASet" />
@@ -88,16 +75,18 @@ const SearchSetScreen = () => {
               {renderedSliders}
             </BoxContainer>
 
-            <SearchSetScreenPressablesContainer setSetsToShow={setSetsToShow} scrollRef={scrollRef} />
+            <SearchSetScreenPressablesContainer scrollRef={scrollRef} />
           </FlexContainer>
 
-          <SetCardContainer ref={scrollRef} setsToShow={setsToShow} />
+          <SetCardContainer ref={scrollRef} setsToShow={setsListFound} />
         </ScrollView>
         <TabBarHeightUpdater />
       </ResultStatsProvider>
     </ScreenProvider>
   );
 };
+
+SearchSetScreen.displayName = "SearchSetScreen";
 
 export default React.memo(SearchSetScreen);
 
@@ -107,5 +96,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   searchContainer: { flexDirection: "row", width: "100%", alignItems: "center", padding: 3 },
-  headerTextContainer: { flex: 1 },
+  headerTextContainer: { flex: 1, alignItems: "center" },
 });

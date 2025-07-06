@@ -49,7 +49,7 @@ export default function TabLayout() {
   const setScreenNameForLoadModal = useModalLoadSetStore((state) => state.setScreenNameForLoadModal);
 
   const isSetsListUpdated = usePressableElementsStore((state) => state.isSetsListUpdated);
-  const selectedClassIds = usePressableElementsStore((state) => state.selectedClassIds);
+  const selectedClassIdsByCategory = usePressableElementsStore((state) => state.selectedClassIdsByCategory);
   const setIsSetsListUpdated = usePressableElementsStore((state) => state.setIsSetsListUpdated);
 
   const updateSetsList = useSetsStore((state) => state.updateSetsList);
@@ -72,10 +72,10 @@ export default function TabLayout() {
   useEffect(() => {
     if (!isSetsListUpdated) {
       // Ensure updateSetsList is memoized by Zustand or it will trigger endlessly
-      updateSetsList(selectedClassIds, screenNameForLoadModal);
+      updateSetsList(selectedClassIdsByCategory, screenNameForLoadModal);
       setIsSetsListUpdated(true);
     }
-  }, [isSetsListUpdated, updateSetsList, selectedClassIds, screenNameForLoadModal, setIsSetsListUpdated]);
+  }, [isSetsListUpdated, updateSetsList, selectedClassIdsByCategory, screenNameForLoadModal, setIsSetsListUpdated]);
 
   // Effect to listen for system theme changes
   useEffect(() => {

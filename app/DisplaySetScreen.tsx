@@ -6,7 +6,7 @@ import DisplaySetScreenPressablesContainer from "@/components/screenPressablesCo
 import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { statNames } from "@/data/stats/statsData";
-import StatSliderCompare, { SetIdAndStatValue } from "@/components/statSliderCompare/StatSliderCompare";
+import StatSliderCompare from "@/components/statSliderCompare/StatSliderCompare";
 import { SET_CARD_COLOR_PALETTE } from "@/constants/Colors"; // Importez la palette et la fonction de fallback
 import { Stat } from "@/data/stats/statsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";

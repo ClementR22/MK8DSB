@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ScrollView } from "react-native";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import SavedSetScreenPressablesContainer from "@/components/screenPressablesContainer/SavedSetScreenPressablesContainer";
@@ -7,7 +7,7 @@ import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 
-const SavedSetScreen = () => {
+const SavedSetScreen: React.FC = () => {
   const setsListSaved = useSetsStore((state) => state.setsListSaved);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
@@ -23,4 +23,6 @@ const SavedSetScreen = () => {
   );
 };
 
-export default SavedSetScreen;
+SavedSetScreen.displayName = "SavedSetScreen";
+
+export default React.memo(SavedSetScreen);

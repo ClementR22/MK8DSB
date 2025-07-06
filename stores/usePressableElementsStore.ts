@@ -3,14 +3,14 @@ import { create } from "zustand";
 import { categories } from "@/data/elements/elementsData";
 import { Category } from "@/data/elements/elementsTypes";
 
-export type SelectedClassIds = {
+export type selectedClassIdsByCategory = {
   character: number;
   body: number;
   wheel: number;
   glider: number;
 };
 
-export type MultiSelectedClassIds = {
+export type multiSelectedClassIdsByCategory = {
   character: Set<number>;
   body: Set<number>;
   wheel: Set<number>;
@@ -18,9 +18,11 @@ export type MultiSelectedClassIds = {
 };
 
 export type PressableElementsStore = {
-  selectedClassIds: SelectedClassIds;
-  multiSelectedClassIds: MultiSelectedClassIds;
-  getSelectedClassIds: (selectionMode: "single" | "multiple") => SelectedClassIds | MultiSelectedClassIds;
+  selectedClassIdsByCategory: selectedClassIdsByCategory;
+  multiSelectedClassIdsByCategory: multiSelectedClassIdsByCategory;
+  getSelectedClassIds: (
+    selectionMode: "single" | "multiple"
+  ) => selectedClassIdsByCategory | multiSelectedClassIdsByCategory;
 
   isSetsListUpdated: boolean;
   setIsSetsListUpdated: (newIsSetsListUpdated: boolean) => void;
@@ -31,8 +33,8 @@ export type PressableElementsStore = {
   toggleMultiSelectElementsByClassId: (category: Category, elementId: number) => void;
 };
 
-const defaultSingleSelection: SelectedClassIds = { character: 9, body: 16, wheel: 30, glider: 39 };
-const defaultMultiSelection: MultiSelectedClassIds = {
+const defaultSingleSelection: selectedClassIdsByCategory = { character: 9, body: 16, wheel: 30, glider: 39 };
+const defaultMultiSelection: multiSelectedClassIdsByCategory = {
   character: new Set(),
   body: new Set(),
   wheel: new Set(),
@@ -40,14 +42,14 @@ const defaultMultiSelection: MultiSelectedClassIds = {
 };
 
 const usePressableElementsStore = create<PressableElementsStore>((set, get) => ({
-  selectedClassIds: { ...defaultSingleSelection },
-  multiSelectedClassIds: { ...defaultMultiSelection },
+  selectedClassIdsByCategory: { ...defaultSingleSelection },
+  multiSelectedClassIdsByCategory: { ...defaultMultiSelection },
 
   getSelectedClassIds: (selectionMode) => {
     if (selectionMode === "single") {
-      return get().selectedClassIds;
+      return get().selectedClassIdsByCategory;
     } else {
-      return get().multiSelectedClassIds;
+      return get().multiSelectedClassIdsByCategory;
     }
   },
 
@@ -59,7 +61,7 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
 
   updateSelectionFromSet: (setClassIds) => {
     set((state) => {
-      const newSelected: SelectedClassIds = {
+      const newSelected: selectedClassIdsByCategory = {
         character: null,
         body: null,
         wheel: null,
@@ -71,15 +73,15 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
       });
 
       const areEqual =
-        state.selectedClassIds.character === newSelected.character &&
-        state.selectedClassIds.body === newSelected.body &&
-        state.selectedClassIds.wheel === newSelected.wheel &&
-        state.selectedClassIds.glider === newSelected.glider;
+        state.selectedClassIdsByCategory.character === newSelected.character &&
+        state.selectedClassIdsByCategory.body === newSelected.body &&
+        state.selectedClassIdsByCategory.wheel === newSelected.wheel &&
+        state.selectedClassIdsByCategory.glider === newSelected.glider;
 
       // Mettre à jour l'état UNIQUEMENT si le contenu a changé
       if (!areEqual) {
         return {
-          selectedClassIds: newSelected,
+          selectedClassIdsByCategory: newSelected,
         };
       } else {
         return {}; // pour dire qu'il n'y a aucun changement
@@ -89,10 +91,10 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
 
   selectElementsByClassId: (category, classId) => {
     set((state) => {
-      const currentSelected = state.selectedClassIds;
+      const currentSelected = state.selectedClassIdsByCategory;
 
       return {
-        selectedClassIds: {
+        selectedClassIdsByCategory: {
           ...currentSelected,
           [category]: classId,
         },
@@ -103,9 +105,9 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
 
   toggleMultiSelectElementsByClassId: (category, classId) => {
     set((state) => {
-      const newMultiSelectedClassIds = { ...state.multiSelectedClassIds };
+      const newMultiSelectedClassIdsByCategory = { ...state.multiSelectedClassIdsByCategory };
 
-      const newCategorySet = new Set(newMultiSelectedClassIds[category]);
+      const newCategorySet = new Set(newMultiSelectedClassIdsByCategory[category]);
 
       if (newCategorySet.has(classId)) {
         newCategorySet.delete(classId);
@@ -113,10 +115,10 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
         newCategorySet.add(classId);
       }
 
-      newMultiSelectedClassIds[category] = newCategorySet;
+      newMultiSelectedClassIdsByCategory[category] = newCategorySet;
 
       return {
-        multiSelectedClassIds: newMultiSelectedClassIds,
+        multiSelectedClassIdsByCategory: newMultiSelectedClassIdsByCategory,
       };
     });
   },

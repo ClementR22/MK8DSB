@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, memo, useEffect } from "react";
+import React, { useMemo, memo, useEffect } from "react";
 import { StyleSheet, ViewStyle, StyleProp, View } from "react-native";
 
 import ElementsGrid, { PAGINATED_ELEMENTS_CONTAINER_PADDING } from "./selector/ElementsGrid";
@@ -13,7 +13,7 @@ interface PaginatedElementSelectorProps {
   selectedCategory: Category;
   setSelectedCategory: (newSelectedCategory: Category) => void;
   categoryElements: ElementData[];
-  onElementsSelectionChange: (classId: number) => void;
+  handleSelectElement: (category: Category, classId: number) => void;
   initialSelectedClassId: number | Set<number>;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -23,25 +23,18 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
   selectedCategory,
   setSelectedCategory,
   categoryElements,
-  onElementsSelectionChange,
+  handleSelectElement,
   initialSelectedClassId,
   currentPage,
   setCurrentPage,
 }) => {
-  const themeSurface = useThemeStore(useCallback((state) => state.theme.surface, []));
+  const themeSurface = useThemeStore((state) => state.theme.surface);
 
   const currentElements = useMemo(() => {
     const startIndex = currentPage * ELEMENTS_PER_PAGE;
     const endIndex = startIndex + ELEMENTS_PER_PAGE;
     return categoryElements.slice(startIndex, endIndex);
   }, [categoryElements, currentPage]);
-
-  const handleSelectElement = useCallback(
-    (element: ElementData) => {
-      onElementsSelectionChange(element.classId);
-    },
-    [onElementsSelectionChange]
-  );
 
   const containerStyle = useMemo(
     () => [styles.container, { backgroundColor: themeSurface }] as StyleProp<ViewStyle>,
@@ -59,7 +52,7 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
       <ElementsGrid
         elements={currentElements}
         selectedClassId={initialSelectedClassId}
-        onSelectElement={handleSelectElement}
+        handleSelectElement={handleSelectElement}
       />
     </View>
   );

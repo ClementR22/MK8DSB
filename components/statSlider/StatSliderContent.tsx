@@ -28,7 +28,9 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
 
   // Mémoïsation stricte des handlers
   const onValueChange = useCallback(([v]: [number]) => setTempValue(v), []);
-  const onSlidingStart = useCallback(() => setIsScrollEnable(false), [setIsScrollEnable]);
+  const onSlidingStart = useCallback(() => {
+    setIsScrollEnable(false);
+  }, [setIsScrollEnable]);
   const onSlidingComplete = useCallback(
     ([v]: [number]) => {
       if (v !== value) {
@@ -50,7 +52,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
     () => getStatSliderBorderColor(statFilterNumber, theme),
     [statFilterNumber, theme]
   );
-  const innerContainerDynamicStyle = useMemo(
+  const containerDynamicStyle = useMemo(
     () => ({
       backgroundColor: theme.surface,
       borderColor: borderColorDynamicStyle,
@@ -84,7 +86,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
   return (
     <TooltipWrapper
       tooltipText="DefineAValue"
-      style={StyleSheet.flatten([styles.container, innerContainerDynamicStyle])}
+      style={[styles.container, containerDynamicStyle]}
       innerContainerStyle={styles.innerContainer}
     >
       <View style={styles.containerLeft}>

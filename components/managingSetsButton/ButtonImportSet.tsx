@@ -22,7 +22,7 @@ const ButtonImportSet = ({ screenName, onComplete }: { screenName: ScreenName; o
       }
 
       // La validation JSON et structure est maintenant dans `importSet` :
-      await importSet(clipboardContent, screenName);
+      importSet(clipboardContent, screenName);
 
       onComplete?.();
     } catch (e) {

@@ -31,13 +31,8 @@ const StatSliderCompareBar = ({ value, color, scrollToThisSetCard }: StatSliderC
   // Style du texte dépendant du thème
   const textDynamicStyle = useMemo(() => ({ color: theme.on_surface }), [theme.on_surface]);
 
-  // On mémoïse le handler pour éviter de recréer la fonction à chaque render
-  const handlePress = React.useCallback(() => {
-    scrollToThisSetCard();
-  }, [scrollToThisSetCard]);
-
   return (
-    <Pressable style={styles.container} onPress={handlePress}>
+    <Pressable style={styles.container} onPress={scrollToThisSetCard}>
       <View style={StyleSheet.flatten([styles.sliderTrack, sliderTrackDynamicBg])}>
         <View
           style={StyleSheet.flatten([

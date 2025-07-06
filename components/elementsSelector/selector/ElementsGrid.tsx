@@ -1,5 +1,4 @@
-import { ElementData } from "@/data/elements/elementsTypes";
-import { useThemeStore } from "@/stores/useThemeStore";
+import { Category, ElementData } from "@/data/elements/elementsTypes";
 import React, { memo, useCallback } from "react";
 import { View, StyleSheet, Dimensions } from "react-native"; // Removed Dimensions
 import { MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL } from "@/primitiveComponents/Modal";
@@ -9,7 +8,7 @@ import ItemCard from "../ItemCard";
 interface ElementsGridProps {
   elements: ElementData[];
   selectedClassId: Set<number> | number | null;
-  onSelectElement: (element: ElementData) => void;
+  handleSelectElement: (category: Category, classId: number) => void;
 }
 
 export const PAGINATED_ELEMENTS_CONTAINER_PADDING = 6;
@@ -24,7 +23,7 @@ const ITEM_WIDTH =
     GAP * (NUM_COLUMNS - 1)) /
   NUM_COLUMNS;
 
-const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, onSelectElement }) => {
+const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, handleSelectElement }) => {
   const calculateIsSelected = useCallback(
     (classId: number) => {
       if (selectedClassId instanceof Set) {
@@ -50,7 +49,7 @@ const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, 
           imageUrl={element.imageUrl}
           name={element.name}
           isSelected={calculateIsSelected(element.classId)}
-          onPress={() => onSelectElement(element)}
+          onPress={() => handleSelectElement(element.category, element.classId)}
           itemCardDynamicStyle={itemCardDynamicStyle}
           activeBorderStyle={activeBorderStyle}
         />

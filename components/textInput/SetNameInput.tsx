@@ -44,4 +44,6 @@ const SetNameInput: React.FC<SetNameInputProps> = ({ setToShowName, setToShowId,
   );
 };
 
+SetNameInput.displayName = "SetNameInput";
+
 export default React.memo(SetNameInput);

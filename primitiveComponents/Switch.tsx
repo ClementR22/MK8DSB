@@ -47,4 +47,6 @@ const styles = StyleSheet.create({
   },
 });
 
+Switch.displayName = "Switch";
+
 export default React.memo(Switch);

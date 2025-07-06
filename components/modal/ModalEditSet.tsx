@@ -3,7 +3,7 @@ import useModalsStore from "@/stores/useModalsStore";
 import Modal from "../../primitiveComponents/Modal";
 import ElementsSelectorPannel from "../elementsSelector/ElementsSelectorPannel";
 
-const ModalEditSet = () => {
+const ModalEditSet: React.FC = () => {
   const isEditModalVisible = useModalsStore((state) => state.isEditModalVisible);
   const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
 
@@ -13,5 +13,7 @@ const ModalEditSet = () => {
     </Modal>
   );
 };
+
+ModalEditSet.displayName = "ModalEditSet";
 
 export default memo(ModalEditSet);

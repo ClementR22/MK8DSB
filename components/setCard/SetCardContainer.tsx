@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useImperativeHandle, useMemo, useState, useEffect, memo, useCallback } from "react";
+import React, { useRef, forwardRef, useImperativeHandle, useMemo, useState, memo, useCallback } from "react";
 import {
   Pressable,
   ScrollView,

@@ -3,14 +3,19 @@ import ButtonLoadSet from "../managingSetsButton/ButtonLoadSet";
 import ButtonAddSet from "../managingSetsButton/ButtonAddSet";
 import BoxContainer from "../../primitiveComponents/BoxContainer";
 
-const DisplaySetScreenPressablesContainer = ({ scrollRef }) => {
+interface DisplaySetScreenPressablesContainerProps {
+  scrollRef: React.RefObject<any>;
+}
+
+const DisplaySetScreenPressablesContainer: React.FC<DisplaySetScreenPressablesContainerProps> = ({ scrollRef }) => {
   return (
     <BoxContainer flexDirection="row" justifyContent="space-evenly">
       <ButtonAddSet scrollRef={scrollRef} />
-
       <ButtonLoadSet tooltipText="LoadASet" />
     </BoxContainer>
   );
 };
 
-export default DisplaySetScreenPressablesContainer;
+DisplaySetScreenPressablesContainer.displayName = "DisplaySetScreenPressablesContainer";
+
+export default React.memo(DisplaySetScreenPressablesContainer);
