@@ -7,6 +7,8 @@ import { compactStatNames } from "@/data/stats/statsData";
 import { StyleSheet, View } from "react-native";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 
+export const STAT_SLIDER_SET_CARDS_CONTAINER_GAP = 8;
+
 interface StatSliderSetCardsContainerProps {
   setToShowStats: number[];
 }
@@ -59,7 +61,7 @@ const StatSliderSetCardsContainer: React.FC<StatSliderSetCardsContainerProps> = 
 
 const styles = StyleSheet.create({
   container: {
-    gap: 6,
+    gap: STAT_SLIDER_SET_CARDS_CONTAINER_GAP,
   },
 });
 

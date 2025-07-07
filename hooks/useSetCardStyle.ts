@@ -17,7 +17,7 @@ export const useSetCardStyle = () => {
         width: SET_CARD_WIDTH,
         borderRadius: 12,
         borderWidth: SET_CARD_BORDER_WIDTH,
-        padding: 10 - SET_CARD_BORDER_WIDTH,
+        padding: 11 - SET_CARD_BORDER_WIDTH,
         backgroundColor: theme.surface,
         borderColor: theme.surface_container_high,
       },

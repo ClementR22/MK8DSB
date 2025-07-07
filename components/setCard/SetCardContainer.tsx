@@ -20,6 +20,8 @@ import StatNamesFloatingContainer from "../statSliderSetCard/StatNamesFloatingCo
 import { SetData } from "./SetCard"; // Assurez-vous que SetData contient 'id: string' (ou 'name: string' si c'est votre ID stable)
 import { SetFoundObject, SetObject } from "@/stores/useSetsStore";
 
+export const SET_CARD_CONTAINER_PADDING = 20;
+
 interface SetWithColor extends SetObject {
   color?: string;
 }
@@ -196,7 +198,7 @@ const styles = StyleSheet.create({
   setCardContainer: {
     margin: 16,
     marginTop: 0,
-    padding: 20,
+    padding: SET_CARD_CONTAINER_PADDING,
     alignItems: "stretch",
     borderRadius: 22,
     columnGap: 16,

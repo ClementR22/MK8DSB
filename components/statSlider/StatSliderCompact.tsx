@@ -7,6 +7,8 @@ import StatSliderCompactBar from "./StatSliderCompactBar";
 import { getBonusColor } from "@/utils/getBonusColor";
 import useGeneralStore from "@/stores/useGeneralStore";
 
+export const STAT_SLIDER_COMPACT_HEIGHT = 34;
+
 interface StatSliderCompactProps {
   name: string;
   value: number;

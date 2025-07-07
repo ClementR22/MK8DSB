@@ -1,16 +1,18 @@
 import React, { useMemo, useCallback, memo } from "react";
-import { LayoutChangeEvent, View, StyleSheet, Text } from "react-native";
+import { LayoutChangeEvent, View, StyleSheet } from "react-native";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
 import useModalsStore from "@/stores/useModalsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useSetsStore from "@/stores/useSetsStore";
-import { useThemeStore } from "@/stores/useThemeStore";
 import SetImagesModal from "./SetImagesModal";
 import StatSliderSetCardsContainer from "../statSliderSetCard/StatSliderSetCardsContainer";
 import { arraysEqual } from "@/utils/deepCompare";
 import SetCardHeader, { SetCardHeaderProps } from "./SetCardHeader";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
+
+export const SET_CARD_HEIGHT = 343;
+export const SET_CARD_STAT_SLIDER_GAP = 8;
 
 export interface SetData {
   name: string;
@@ -83,8 +85,6 @@ const SetCard: React.FC<SetCardProps> = ({
   const screenName = useMemo(() => screenNameFromProps ?? contextScreenName, [screenNameFromProps, contextScreenName]);
   const situation = useMemo(() => (isInLoadSetModal ? "load" : screenName), [isInLoadSetModal, screenName]);
 
-  const theme = useThemeStore((state) => state.theme);
-
   const setsListSaved = useSetsStore((state) => state.setsListSaved);
   const isSaved = useMemo(
     () => setsListSaved.some((setSaved) => arraysEqual(setSaved.classIds, setToShowClassIds)),
@@ -155,12 +155,8 @@ const SetCard: React.FC<SetCardProps> = ({
     [setCardStyle, borderColor]
   );
 
-  const handleBarLayout = useCallback((e: LayoutChangeEvent) => {
-    console.log(e.nativeEvent.layout.width);
-  }, []);
-
   return (
-    <View onLayout={handleBarLayout} style={styles.outerContainer}>
+    <View onLayout={onLayout} style={styles.outerContainer}>
       <View style={setCardCompleteStyle}>
         <SetCardHeader {...headerProps} />
 
@@ -182,7 +178,7 @@ const SetCard: React.FC<SetCardProps> = ({
 };
 
 const styles = StyleSheet.create({
-  outerContainer: { gap: 8 },
+  outerContainer: { gap: SET_CARD_STAT_SLIDER_GAP },
 });
 
 export default memo(SetCard);
