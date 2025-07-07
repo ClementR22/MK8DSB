@@ -19,8 +19,8 @@ const ModalEditSet: React.FC = () => {
     if (!isSetsListUpdated) {
       updateSetsList(selectedClassIdsByCategory, screenNameForLoadModal);
       setIsSetsListUpdated(true);
-      setIsEditModalVisible(false);
     }
+    setIsEditModalVisible(false);
   }, [
     isSetsListUpdated,
     updateSetsList,

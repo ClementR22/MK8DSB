@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   textContainer: {
-    marginBottom: 10, // Espacement entre le titre et les barres de stat
+    marginBottom: 3, // Espacement entre le titre et les barres de stat
     alignItems: "center", // Centrer le texte
   },
   text: {

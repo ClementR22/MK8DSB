@@ -10,9 +10,7 @@ import SetImagesModal from "./SetImagesModal";
 import StatSliderSetCardsContainer from "../statSliderSetCard/StatSliderSetCardsContainer";
 import { arraysEqual } from "@/utils/deepCompare";
 import SetCardHeader, { SetCardHeaderProps } from "./SetCardHeader";
-
-export const SET_CARD_WIDTH = 220;
-export const SET_CARD_BORDER_WIDTH = 3;
+import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 
 export interface SetData {
   name: string;
@@ -150,17 +148,20 @@ const SetCard: React.FC<SetCardProps> = ({
     [config.isNameEditable, setToShowName, setToShowId, setToShowPercentage, config.moreActionNamesList, situation]
   );
 
-  const cardContainerDynamicStyle = useMemo(
-    () => ({
-      backgroundColor: theme.surface,
-      borderColor: borderColor,
-    }),
-    [borderColor, theme.surface]
+  const { setCardStyle } = useSetCardStyle();
+
+  const setCardCompleteStyle = useMemo(
+    () => ({ ...setCardStyle, borderColor: borderColor }),
+    [setCardStyle, borderColor]
   );
 
+  const handleBarLayout = useCallback((e: LayoutChangeEvent) => {
+    console.log(e.nativeEvent.layout.width);
+  }, []);
+
   return (
-    <View onLayout={onLayout} style={styles.container}>
-      <View style={[styles.cardContainer, cardContainerDynamicStyle]}>
+    <View onLayout={handleBarLayout} style={styles.outerContainer}>
+      <View style={setCardCompleteStyle}>
         <SetCardHeader {...headerProps} />
 
         <SetImagesModal setToShowClassIds={setToShowClassIds} />
@@ -181,13 +182,7 @@ const SetCard: React.FC<SetCardProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: { borderRadius: 17 },
-  cardContainer: {
-    width: SET_CARD_WIDTH,
-    padding: 10 - SET_CARD_BORDER_WIDTH,
-    borderRadius: 12,
-    borderWidth: SET_CARD_BORDER_WIDTH,
-  },
+  outerContainer: { gap: 8 },
 });
 
 export default memo(SetCard);

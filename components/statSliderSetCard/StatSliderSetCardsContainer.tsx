@@ -4,21 +4,21 @@ import useSetsStore from "@/stores/useSetsStore";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import StatSliderCompact from "../statSlider/StatSliderCompact";
 import { compactStatNames } from "@/data/stats/statsData";
-import BoxContainer from "@/primitiveComponents/BoxContainer";
-import { useThemeStore } from "@/stores/useThemeStore";
+import { StyleSheet, View } from "react-native";
+import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 
-const SET_CARD_WIDTH = 220;
 interface StatSliderSetCardsContainerProps {
   setToShowStats: number[];
 }
 
 const StatSliderSetCardsContainer: React.FC<StatSliderSetCardsContainerProps> = ({ setToShowStats }) => {
-  const theme = useThemeStore((state) => state.theme);
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
   const { resultStats } = useResultStats();
 
   const chosenStatsFromStore = useSetsStore((state) => state.chosenStats);
+
+  const { setCardStyle } = useSetCardStyle();
 
   const memoizedSliders = useMemo(() => {
     const filteredResultStats = resultStats.filter((stat) => stat.checked);
@@ -28,7 +28,7 @@ const StatSliderSetCardsContainer: React.FC<StatSliderSetCardsContainerProps> = 
     }
 
     return (
-      <BoxContainer contentBackgroundColor={theme.surface} margin={0} marginTop={8} widthContainer={SET_CARD_WIDTH}>
+      <View style={[styles.container, setCardStyle]}>
         {filteredResultStats.map((stat: ResultStat) => {
           const originalIndex = resultStats.findIndex((item) => item.name === stat.name);
 
@@ -50,11 +50,17 @@ const StatSliderSetCardsContainer: React.FC<StatSliderSetCardsContainerProps> = 
             />
           );
         })}
-      </BoxContainer>
+      </View>
     );
-  }, [resultStats, setToShowStats, isInSearchScreen, chosenStatsFromStore, theme.surface]);
+  }, [resultStats, setToShowStats, isInSearchScreen, chosenStatsFromStore, setCardStyle]);
 
   return <>{memoizedSliders}</>;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 6,
+  },
+});
 
 export default React.memo(StatSliderSetCardsContainer);

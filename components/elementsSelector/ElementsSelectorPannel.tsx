@@ -46,6 +46,14 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
 
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [orderNumber, setOrderNumber] = useState(0);
+  const [isOpenSortView, setIsOpenSortView] = useState(false);
+  const toggleOpenFilterView = useCallback(() => setIsOpenSortView((prev) => !prev), []);
+
+  const [currentPage, setCurrentPage] = useState(0);
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [selectedCategory, orderNumber]);
 
   const selectedClassId = usePressableElementsStore((state) => {
     return selectionMode === "single"
@@ -68,25 +76,16 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
     [selectedCategory, orderNumber, language]
   );
 
-  const [isOpenFilterView, setIsOpenFilterView] = useState(false);
-  const toggleOpenFilterView = useCallback(() => setIsOpenFilterView((prev) => !prev), []);
-
-  const [currentPage, setCurrentPage] = useState(0);
-
-  useEffect(() => {
-    setCurrentPage(0);
-  }, [selectedCategory, orderNumber]);
-
   const totalPages = useMemo(() => {
     return Math.ceil(categoryElementsSorted.length / ELEMENTS_PER_PAGE);
   }, [categoryElementsSorted.length]);
 
   const { iconName, iconType, tooltipText } = useMemo(() => {
-    if (isOpenFilterView) {
+    if (isOpenSortView) {
       return { iconName: "car-sports", iconType: IconType.MaterialCommunityIcons, tooltipText: "FilterBodytypes" };
     }
     return { iconName: "sort", iconType: IconType.MaterialCommunityIcons, tooltipText: "SortElements" };
-  }, [isOpenFilterView]);
+  }, [isOpenSortView]);
 
   const separatorDynamicStyle = useMemo(() => ({ backgroundColor: theme.outline_variant }), []);
 
@@ -107,7 +106,7 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
           </>
         )}
         <View style={styles.controlsContainer}>
-          {isOpenFilterView || selectionMode === "single" ? (
+          {isOpenSortView || selectionMode === "single" ? (
             <SortModeSelector setOrderNumber={setOrderNumber} />
           ) : (
             <BodytypesSelector selectedBodytypes={selectedBodytypes} setSelectedBodytypes={setSelectedBodytypes} />

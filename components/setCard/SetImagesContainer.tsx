@@ -5,10 +5,10 @@ import { elementsData } from "@/data/elements/elementsData";
 import TooltipWrapper from "../TooltipWrapper";
 import { vw } from "../styles/theme";
 import { Category } from "@/data/elements/elementsTypes";
+import { SET_CARD_WIDTH } from "@/hooks/useSetCardStyle";
 
 const MODAL_WIDTH = vw * 0.9;
 const MAX_WIDTH_IN_MODAL = MODAL_WIDTH - 20;
-const SET_CARD_WIDTH = 220;
 const MAX_WIDTH_IN_SET_CARD = SET_CARD_WIDTH - 20;
 const MAX_NUMBER_OF_IMAGE = 5;
 

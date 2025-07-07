@@ -15,9 +15,9 @@ const defaultSortNames: SortButtonName[] = [
   "id", // Corresponds to orderNumber 0: Sort by ID
   "name", // Combined for A-Z and Z-A
   "speed", // A special button to open the speed-specific sorting sub-menu
-  "handling", // A special button to open the handling-specific sorting sub-menu
   "acceleration",
   "weight",
+  "handling", // A special button to open the handling-specific sorting sub-menu
   "traction",
   "miniTurbo",
 ];
