@@ -83,6 +83,13 @@ const setDefault: SetObject = {
   stats: [4, 3.75, 4.25, 4.5, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 4],
 };
 
+const setDefault2: SetObject = {
+  id: nanoid(8),
+  name: "Set 2",
+  classIds: [15, 22, 31, 42],
+  stats: [4, 3.75, 4.25, 4.5, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 4],
+};
+
 const useSetsStore = create<SetsStoreState>((set, get) => ({
   chosenStats: statNames.map((statName, index) => ({
     name: statName,
@@ -91,7 +98,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     statFilterNumber: 0,
   })),
 
-  setsListDisplayed: [{ ...setDefault }],
+  setsListDisplayed: [{ ...setDefault }, { ...setDefault2 }],
   setsListSaved: [],
   setsListFound: [],
   setCardEditedId: null,
