@@ -27,11 +27,11 @@ export interface SortableElement {
  * Sorts an array of elements based on a given order number and language.
  *
  * @param elements The array of elements to sort.
- * @param orderNumber A number representing the sorting strategy (even for ascending, odd for descending).
+ * @param sortNumber A number representing the sorting strategy (even for ascending, odd for descending).
  * @param language The language to use for alphabetical sorting.
  * @returns A new array with the elements sorted according to the specified strategy.
  */
-export const sortElements = <T extends SortableElement>(elements: T[], orderNumber: number, language: string): T[] => {
+export const sortElements = <T extends SortableElement>(elements: T[], sortNumber: number, language: string): T[] => {
   // Always create a shallow copy to ensure the original array is not mutated.
   const sortableElements = [...elements];
 
@@ -117,12 +117,12 @@ export const sortElements = <T extends SortableElement>(elements: T[], orderNumb
     29: (a, b) => (b.miniTurbo || 0) - (a.miniTurbo || 0), // Mini Turbo Descending (29)
   };
 
-  const strategy = sortingStrategies[orderNumber];
+  const strategy = sortingStrategies[sortNumber];
 
   if (!strategy) {
-    // If the orderNumber does not correspond to a defined strategy,
+    // If the sortNumber does not correspond to a defined strategy,
     // log a warning and return the copied, unsorted elements.
-    console.warn(`Unknown orderNumber for sorting: ${orderNumber}. Returning unsorted elements.`);
+    console.warn(`Unknown sortNumber for sorting: ${sortNumber}. Returning unsorted elements.`);
     return sortableElements;
   }
 

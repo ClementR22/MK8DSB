@@ -7,10 +7,10 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import { SET_CARD_HEIGHT, SET_CARD_STAT_SLIDER_GAP } from "../setCard/SetCard";
 import { STAT_SLIDER_SET_CARDS_CONTAINER_GAP } from "./StatSliderSetCardsContainer";
-import { SET_CARD_CONTAINER_PADDING } from "../setCard/SetCardContainer";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 import { STAT_SLIDER_COMPACT_HEIGHT } from "../statSlider/StatSliderCompact";
 
+export const SET_CARD_CONTAINER_PADDING = 20;
 const FIXED_NAME_LABEL_WIDTH = 40;
 
 const StatNamesFloatingContainer: React.FC = () => {

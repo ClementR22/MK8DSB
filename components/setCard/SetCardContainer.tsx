@@ -16,11 +16,10 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import { translateToLanguage } from "@/translations/translations";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import StatNamesFloatingContainer from "../statSliderSetCard/StatNamesFloatingContainer";
-import { SetData } from "./SetCard"; // Assurez-vous que SetData contient 'id: string' (ou 'name: string' si c'est votre ID stable)
-import { SetFoundObject, SetObject } from "@/stores/useSetsStore";
-
-export const SET_CARD_CONTAINER_PADDING = 20;
+import StatNamesFloatingContainer, {
+  SET_CARD_CONTAINER_PADDING,
+} from "../statSliderSetCard/StatNamesFloatingContainer";
+import { SetObject } from "@/stores/useSetsStore";
 
 interface SetWithColor extends SetObject {
   color?: string;

@@ -45,15 +45,15 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
   const language = useLanguageStore((state) => state.language);
 
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
-  const [orderNumber, setOrderNumber] = useState(0);
+  const [sortNumber, setSortNumber] = useState(0);
   const [isOpenSortView, setIsOpenSortView] = useState(false);
-  const toggleOpenFilterView = useCallback(() => setIsOpenSortView((prev) => !prev), []);
+  const toggleOpenSortView = useCallback(() => setIsOpenSortView((prev) => !prev), []);
 
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     setCurrentPage(0);
-  }, [selectedCategory, orderNumber]);
+  }, [selectedCategory, sortNumber]);
 
   const selectedClassId = usePressableElementsStore((state) => {
     return selectionMode === "single"
@@ -72,8 +72,8 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
   );
 
   const categoryElementsSorted = useMemo(
-    () => sortElements(allCategoryElements[selectedCategory], orderNumber, language),
-    [selectedCategory, orderNumber, language]
+    () => sortElements(allCategoryElements[selectedCategory], sortNumber, language),
+    [selectedCategory, sortNumber, language]
   );
 
   const totalPages = useMemo(() => {
@@ -96,7 +96,7 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
         {selectionMode !== "single" && (
           <>
             <ButtonIcon
-              onPress={toggleOpenFilterView}
+              onPress={toggleOpenSortView}
               iconName={iconName}
               iconType={iconType}
               tooltipText={tooltipText}
@@ -107,7 +107,7 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
         )}
         <View style={styles.controlsContainer}>
           {isOpenSortView || selectionMode === "single" ? (
-            <SortModeSelector setOrderNumber={setOrderNumber} />
+            <SortModeSelector defaultSortNumber={sortNumber} setSortNumber={setSortNumber} />
           ) : (
             <BodytypesSelector selectedBodytypes={selectedBodytypes} setSelectedBodytypes={setSelectedBodytypes} />
           )}

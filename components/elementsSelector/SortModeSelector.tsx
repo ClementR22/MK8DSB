@@ -12,7 +12,7 @@ export const HALF_GAP = 7;
 
 // Define the names for different sorting options.
 const defaultSortNames: SortButtonName[] = [
-  "id", // Corresponds to orderNumber 0: Sort by ID
+  "id", // Corresponds to sortNumber 0: Sort by ID
   "name", // Combined for A-Z and Z-A
   "speed", // A special button to open the speed-specific sorting sub-menu
   "acceleration",
@@ -24,21 +24,21 @@ const defaultSortNames: SortButtonName[] = [
 
 const speedSortNames: SortButtonName[] = [
   "close", // Button to go back to the defaultSortNames view
-  "speedGround", // Corresponds to orderNumber 4
-  "speedAntiGravity", // Corresponds to orderNumber 5
-  "speedWater", // Corresponds to orderNumber 6
-  "speedAir", // Corresponds to orderNumber 7
+  "speedGround", // Corresponds to sortNumber 4
+  "speedAntiGravity", // Corresponds to sortNumber 5
+  "speedWater", // Corresponds to sortNumber 6
+  "speedAir", // Corresponds to sortNumber 7
 ];
 
 const handlingSortNames: SortButtonName[] = [
   "close", // Button to go back to the defaultSortNames view
-  "handlingGround", // Corresponds to orderNumber 8
-  "handlingAntiGravity", // Corresponds to orderNumber 9
-  "handlingWater", // Corresponds to orderNumber 10
-  "handlingAir", // Corresponds to orderNumber 11
+  "handlingGround", // Corresponds to sortNumber 8
+  "handlingAntiGravity", // Corresponds to sortNumber 9
+  "handlingWater", // Corresponds to sortNumber 10
+  "handlingAir", // Corresponds to sortNumber 11
 ];
 
-// Mapping string names to the numerical `orderNumber` expected by `sortElements`.
+// Mapping string names to the numerical `sortNumber` expected by `sortElements`.
 // We'll use even numbers for ascending and odd numbers for descending.
 const sortNameMap: { [key: string]: { asc: number; desc: number } } = {
   id: { asc: 0, desc: 1 },
@@ -57,22 +57,39 @@ const sortNameMap: { [key: string]: { asc: number; desc: number } } = {
   miniTurbo: { asc: 26, desc: 27 },
 };
 
-interface SortModeSelectorProps {
-  setOrderNumber: (order: number) => void; // Callback to update the sorting order
+function getSortNameFromSortNumber(sortNumber: number): SortButtonName | undefined {
+  // Itère sur chaque clé (sortName) de la map sortNameMap
+  for (const sortName in sortNameMap) {
+    // Vérifie que la propriété appartient bien à l'objet (bonne pratique TypeScript/JavaScript)
+    if (sortNameMap.hasOwnProperty(sortName)) {
+      const { asc, desc } = sortNameMap[sortName]; // Destructure pour obtenir les valeurs asc et desc
+
+      // Vérifie si le sortNumber donné correspond à la valeur asc ou desc
+      if (sortNumber === asc || sortNumber === desc) {
+        return sortName as SortButtonName; // Retourne le sortName correspondant
+      }
+    }
+  }
+  return undefined; // Si aucun sortName correspondant n'est trouvé après avoir parcouru toute la map
 }
 
-const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
+interface SortModeSelectorProps {
+  defaultSortNumber: number;
+  setSortNumber: (number: number) => void; // Callback to update the sorting order
+}
+
+const SortModeSelector = ({ defaultSortNumber, setSortNumber }: SortModeSelectorProps) => {
   const theme = useThemeStore((state) => state.theme);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   // State to manage which set of sorting buttons is currently displayed (main menu or sub-menus).
   const [displayedSortNames, setDisplayedSortNames] = useState<SortButtonName[]>(defaultSortNames);
 
-  // State to track the currently active sort (e.g., 'id', 'name', 'speedGround')
-  const [activeSort, setActiveSort] = useState<SortButtonName>("id");
-
   // State to keep track of the current sort direction for the active sort.
   const [currentDirection, setCurrentDirection] = useState<"asc" | "desc">("asc");
+
+  // State to track the currently active sort (e.g., 'id', 'name', 'speedGround')
+  const [activeSort, setActiveSort] = useState<SortButtonName>(getSortNameFromSortNumber(defaultSortNumber));
 
   // Callback to handle button presses for sorting.
   const handlePress = useCallback(
@@ -104,17 +121,20 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
 
           const newOrderInfo = sortNameMap[name];
           if (newOrderInfo) {
-            const orderToSend = newDirection === "asc" ? newOrderInfo.asc : newOrderInfo.desc;
-            setOrderNumber(orderToSend); // Update the sorting order in the parent component
+            const newSortNumber = newDirection === "asc" ? newOrderInfo.asc : newOrderInfo.desc;
+            setSortNumber(newSortNumber); // Update the sorting order in the parent component
           }
           break;
       }
     },
-    [setOrderNumber, activeSort, currentDirection] // Dependencies for handlePress
+    [setSortNumber, activeSort, currentDirection] // Dependencies for handlePress
   );
 
   // Memoized array of ButtonIcon components to render.
   const displayedButtons = useMemo(() => {
+    const isSpeedName = speedSortNames.includes(activeSort);
+    const isHandlingName = handlingSortNames.includes(activeSort);
+
     return displayedSortNames.map((name) => {
       const iconConfig = sortButtonsConfig[name]; // Use sortButtonsConfig
       if (!iconConfig) {
@@ -132,6 +152,15 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
       const badgeIconColor = theme.surface; // Default badge icon color (for contrast)
       const badgeIconInnerSize = 20; // Arrow icon will be 70% of the badge's size
 
+      let isBadge = false;
+      if (name === "speed" && isSpeedName) {
+        isBadge = true;
+      } else if (name === "handling" && isHandlingName) {
+        isBadge = true;
+      } else if (name === activeSort) {
+        isBadge = true;
+      }
+
       return (
         <View
           key={name} // Unique key for React list rendering
@@ -144,7 +173,7 @@ const SortModeSelector = ({ setOrderNumber }: SortModeSelectorProps) => {
             size={BUTTON_SIZE} // Ensure consistent button size
             style={{ backgroundColor: iconBackgroundColor }}
           />
-          {activeSort === name && (
+          {isBadge && (
             <View style={[styles.badgeContainer, { backgroundColor: badgeBackgroundColor }]}>
               <Icon name={badgeIconName} type={badgeIconType} size={badgeIconInnerSize} color={badgeIconColor} />
             </View>
