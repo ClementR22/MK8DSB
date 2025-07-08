@@ -5,8 +5,13 @@ import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { sortButtonsConfig } from "@/config/sortButtonsConfig"; // Import merged config
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { StatName, StatNameHandling, StatNameSort, StatNameSpeed } from "@/data/stats/statsTypes";
-import { statNamesHandling, statNamesSortDefault, statNamesSpeed } from "@/data/stats/statsData";
+import { StatNameHandling, StatNameSort, StatNameSpeed } from "@/data/stats/statsTypes";
+import {
+  statNamesHandling,
+  statNamesSortElementDefault,
+  statNamesSortSetCardDefault,
+  statNamesSpeed,
+} from "@/data/stats/statsData";
 
 // Constants for layout consistency
 const BUTTON_SIZE = 40; // Assumed to match ButtonIcon's default size
@@ -50,13 +55,18 @@ function getSortNameFromSortNumber(sortNumber: number): StatNameSort | undefined
 interface SortModeSelectorProps {
   defaultSortNumber: number;
   setSortNumber: (number: number) => void; // Callback to update the sorting order
+  sortCase: "element" | "set";
 }
 
-const SortModeSelector = ({ defaultSortNumber, setSortNumber }: SortModeSelectorProps) => {
+const SortModeSelector = ({ defaultSortNumber, setSortNumber, sortCase }: SortModeSelectorProps) => {
   const theme = useThemeStore((state) => state.theme);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   // State to manage which set of sorting buttons is currently displayed (main menu or sub-menus).
+  const statNamesSortDefault = useMemo(
+    () => (sortCase === "element" ? statNamesSortElementDefault : statNamesSortSetCardDefault),
+    [sortCase]
+  );
   const [displayedSortNames, setDisplayedSortNames] = useState<StatNameSort[]>(statNamesSortDefault);
 
   // State to keep track of the current sort direction for the active sort.
@@ -120,7 +130,7 @@ const SortModeSelector = ({ defaultSortNumber, setSortNumber }: SortModeSelector
 
       // Apply direction-specific icon and tooltip for sortable items IF they are the active sort
       // Determine the icon and colors for the badge
-      const badgeIconName = currentDirection === "asc" ? "arrow-down" : "arrow-up";
+      const badgeIconName = currentDirection === "asc" ? "arrow-up" : "arrow-down";
       const badgeIconType = IconType.MaterialCommunityIcons;
       const badgeBackgroundColor = "blue"; // Default badge icon color (for contrast)
       const badgeIconColor = theme.surface; // Default badge icon color (for contrast)

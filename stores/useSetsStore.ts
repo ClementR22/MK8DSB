@@ -19,7 +19,7 @@ import {
   getOnlySetsSavedKeysFromMemory,
   saveThingInMemory,
 } from "@/utils/asyncStorageOperations";
-import { sortElements } from "@/utils/sortElements";
+import { SortableElement, sortElements } from "@/utils/sortElements";
 
 const MAX_NUMBER_SETS_DISPLAY = 10;
 export interface ChosenStat {
@@ -465,9 +465,37 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   sortSetsList: (screenName, sortNumber) => {
-    console.log("ok");
-    const setsList = screenName === "display" ? get().setsListDisplayed : get().setsListSaved;
-    // sortElements(setsList, sortNumber, 'fr')
+    const isSave = screenName === "save";
+    const setsListName = isSave ? "setsListSaved" : "setsListDisplayed";
+    const setsList: SetObject[] = get()[setsListName as keyof SetsStoreState] as SetObject[];
+
+    const setsListSortable: SortableElement[] = setsList.map((setObj: SetObject) => {
+      const statsArray = setObj.stats;
+
+      const mappedStats: Partial<SortableElement> = {};
+
+      statNames.forEach((statName, index) => {
+        mappedStats[statName] = statsArray[index];
+      });
+
+      return {
+        id: setObj.id,
+        name: setObj.name,
+        classIds: setObj.classIds,
+        stats: setObj.stats,
+        ...mappedStats,
+      } as SortableElement;
+    });
+
+    const setsListSorted = sortElements(setsListSortable, sortNumber);
+    const setsListSortedLight = setsListSorted.map((setSorted) => ({
+      id: setSorted.id,
+      name: setSorted.name,
+      classIds: setSorted.classIds,
+      stats: setSorted.stats,
+    }));
+
+    set({ [setsListName]: setsListSortedLight });
   },
 }));
 

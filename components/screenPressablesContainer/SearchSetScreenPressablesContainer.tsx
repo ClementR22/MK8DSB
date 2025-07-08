@@ -117,7 +117,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
   }, [chosenStats, selectedClassIdsByCategory, chosenBodytype, resultsNumber, setSetsListFound, scrollRef]);
 
   return (
-    <View style={styles.pressablesContainer}>
+    <View style={styles.ScreenPressablesContainer}>
       <ButtonAndModalStatSelectorChosenStats />
 
       <ButtonAndModal
@@ -154,7 +154,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
 };
 
 const styles = StyleSheet.create({
-  pressablesContainer: {
+  ScreenPressablesContainer: {
     flexDirection: "row",
     gap: 10,
     marginBottom: 10,

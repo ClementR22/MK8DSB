@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useMemo, useState, useCallback } from "react"
 import { ScrollView } from "react-native";
 import SetCardContainer from "@/components/setCard/SetCardContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import DisplaySetScreenPressablesContainer from "@/components/screenPressablesContainer/DisplaySetScreenPressablesContainer";
 import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { statNames } from "@/data/stats/statsData";
@@ -10,6 +9,9 @@ import StatSliderCompare from "@/components/statSliderCompare/StatSliderCompare"
 import { SET_CARD_COLOR_PALETTE } from "@/constants/Colors"; // Importez la palette et la fonction de fallback
 import { StatName } from "@/data/stats/statsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
+import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
+import ButtonAddSet from "@/components/managingSetsButton/ButtonAddSet";
+import ButtonLoadSet from "@/components/managingSetsButton/ButtonLoadSet";
 
 const DisplaySetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -17,6 +19,8 @@ const DisplaySetScreen = () => {
   const scrollRef = useRef(null); // Ref pour SetCardContainer
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
+
+  const [sortNumber, setSortNumber] = useState(0);
 
   // État local pour stocker l'association nom du set -> Couleur
   const [setsColorsMap, setSetsColorsMap] = useState<Map<string, string>>(() => new Map());
@@ -93,16 +97,14 @@ const DisplaySetScreen = () => {
     }
   }, []);
 
-  // Mémoïsation du container de pressables
-  const displaySetScreenPressables = useMemo(
-    () => <DisplaySetScreenPressablesContainer scrollRef={scrollRef} />,
-    [scrollRef]
-  );
-
   return (
     <ScreenProvider screenName="display">
       <ScrollView scrollEnabled={isScrollEnable}>
-        {displaySetScreenPressables}
+        <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
+          <ButtonAddSet scrollRef={scrollRef} />
+          <ButtonLoadSet tooltipText="LoadASet" />
+        </ScreenPressablesContainer>
+
         <SetCardContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
         <StatSliderCompare
           setsIdAndValue={setsIdAndValueWithColor}

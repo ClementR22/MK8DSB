@@ -107,7 +107,7 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
         )}
         <View style={styles.controlsContainer}>
           {isOpenSortView || selectionMode === "single" ? (
-            <SortModeSelector defaultSortNumber={sortNumber} setSortNumber={setSortNumber} />
+            <SortModeSelector defaultSortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="element" />
           ) : (
             <BodytypesSelector selectedBodytypes={selectedBodytypes} setSelectedBodytypes={setSelectedBodytypes} />
           )}

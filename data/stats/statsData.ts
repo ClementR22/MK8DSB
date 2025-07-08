@@ -1,4 +1,11 @@
-import { StatName, StatNameCompareDefault, StatNameHandling, StatNameSortDefault, StatNameSpeed } from "./statsTypes";
+import {
+  StatName,
+  StatNameCompareDefault,
+  StatNameHandling,
+  StatNameSortElementDefault,
+  StatNameSortSetCardDefault,
+  StatNameSpeed,
+} from "./statsTypes";
 
 export const statNames: StatName[] = [
   "speedGround",
@@ -39,7 +46,8 @@ export const statNamesCompareDefault: StatNameCompareDefault[] = [
   "miniTurbo",
 ];
 
-export const statNamesSortDefault: StatNameSortDefault[] = ["id", "name", ...statNamesCompareDefault];
+export const statNamesSortSetCardDefault: StatNameSortSetCardDefault[] = ["name", ...statNamesCompareDefault];
+export const statNamesSortElementDefault: StatNameSortElementDefault[] = ["id", ...statNamesSortSetCardDefault];
 
 export const statNamesSpeed: StatNameSpeed[] = ["close", "speedGround", "speedAntiGravity", "speedWater", "speedAir"];
 

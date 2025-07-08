@@ -7,6 +7,8 @@ import { translateToLanguage } from "@/translations/translations";
 export interface SortableElement {
   id: number;
   name: string;
+  classIds?: number[]; // on le conserve pour le tri des sets
+  stats?: number[]; // on le conserve pour le tri des sets
   speedGround?: number;
   speedAntiGravity?: number;
   speedWater?: number;
@@ -30,7 +32,7 @@ export interface SortableElement {
  * @param language The language to use for alphabetical sorting.
  * @returns A new array with the elements sorted according to the specified strategy.
  */
-export const sortElements = <T extends SortableElement>(elements: T[], sortNumber: number, language: string): T[] => {
+export const sortElements = <T extends SortableElement>(elements: T[], sortNumber: number, language?: string): T[] => {
   // Always create a shallow copy to ensure the original array is not mutated.
   const sortableElements = [...elements];
 

@@ -7,6 +7,7 @@ export const translate = (key) => {
 };
 
 export const translateToLanguage = (key, language) => {
+  if (!language) return key;
   if (!translations[language][key]) {
     {
       /* DEBUG */
