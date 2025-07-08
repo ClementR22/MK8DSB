@@ -3,40 +3,14 @@ import { StyleSheet, ScrollView, Pressable, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { sortButtonsConfig, SortButtonName } from "@/config/sortButtonsConfig"; // Import merged config
+import { sortButtonsConfig } from "@/config/sortButtonsConfig"; // Import merged config
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { StatName, StatNameHandling, StatNameSort, StatNameSpeed } from "@/data/stats/statsTypes";
+import { statNamesHandling, statNamesSortDefault, statNamesSpeed } from "@/data/stats/statsData";
 
 // Constants for layout consistency
 const BUTTON_SIZE = 40; // Assumed to match ButtonIcon's default size
 export const HALF_GAP = 7;
-
-// Define the names for different sorting options.
-const defaultSortNames: SortButtonName[] = [
-  "id", // Corresponds to sortNumber 0: Sort by ID
-  "name", // Combined for A-Z and Z-A
-  "speed", // A special button to open the speed-specific sorting sub-menu
-  "acceleration",
-  "weight",
-  "handling", // A special button to open the handling-specific sorting sub-menu
-  "traction",
-  "miniTurbo",
-];
-
-const speedSortNames: SortButtonName[] = [
-  "close", // Button to go back to the defaultSortNames view
-  "speedGround", // Corresponds to sortNumber 4
-  "speedAntiGravity", // Corresponds to sortNumber 5
-  "speedWater", // Corresponds to sortNumber 6
-  "speedAir", // Corresponds to sortNumber 7
-];
-
-const handlingSortNames: SortButtonName[] = [
-  "close", // Button to go back to the defaultSortNames view
-  "handlingGround", // Corresponds to sortNumber 8
-  "handlingAntiGravity", // Corresponds to sortNumber 9
-  "handlingWater", // Corresponds to sortNumber 10
-  "handlingAir", // Corresponds to sortNumber 11
-];
 
 // Mapping string names to the numerical `sortNumber` expected by `sortElements`.
 // We'll use even numbers for ascending and odd numbers for descending.
@@ -57,7 +31,7 @@ const sortNameMap: { [key: string]: { asc: number; desc: number } } = {
   miniTurbo: { asc: 26, desc: 27 },
 };
 
-function getSortNameFromSortNumber(sortNumber: number): SortButtonName | undefined {
+function getSortNameFromSortNumber(sortNumber: number): StatNameSort | undefined {
   // Itère sur chaque clé (sortName) de la map sortNameMap
   for (const sortName in sortNameMap) {
     // Vérifie que la propriété appartient bien à l'objet (bonne pratique TypeScript/JavaScript)
@@ -66,7 +40,7 @@ function getSortNameFromSortNumber(sortNumber: number): SortButtonName | undefin
 
       // Vérifie si le sortNumber donné correspond à la valeur asc ou desc
       if (sortNumber === asc || sortNumber === desc) {
-        return sortName as SortButtonName; // Retourne le sortName correspondant
+        return sortName as StatNameSort; // Retourne le sortName correspondant
       }
     }
   }
@@ -83,26 +57,26 @@ const SortModeSelector = ({ defaultSortNumber, setSortNumber }: SortModeSelector
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   // State to manage which set of sorting buttons is currently displayed (main menu or sub-menus).
-  const [displayedSortNames, setDisplayedSortNames] = useState<SortButtonName[]>(defaultSortNames);
+  const [displayedSortNames, setDisplayedSortNames] = useState<StatNameSort[]>(statNamesSortDefault);
 
   // State to keep track of the current sort direction for the active sort.
   const [currentDirection, setCurrentDirection] = useState<"asc" | "desc">("asc");
 
   // State to track the currently active sort (e.g., 'id', 'name', 'speedGround')
-  const [activeSort, setActiveSort] = useState<SortButtonName>(getSortNameFromSortNumber(defaultSortNumber));
+  const [activeSort, setActiveSort] = useState<StatNameSort>(getSortNameFromSortNumber(defaultSortNumber));
 
   // Callback to handle button presses for sorting.
   const handlePress = useCallback(
-    (name: SortButtonName) => {
+    (name: StatNameSort) => {
       switch (name) {
         case "speed":
-          setDisplayedSortNames(speedSortNames); // Switch to speed sub-menu
+          setDisplayedSortNames(statNamesSpeed); // Switch to speed sub-menu
           break;
         case "handling":
-          setDisplayedSortNames(handlingSortNames); // Switch to handling sub-menu
+          setDisplayedSortNames(statNamesHandling); // Switch to handling sub-menu
           break;
         case "close":
-          setDisplayedSortNames(defaultSortNames); // Go back to main menu
+          setDisplayedSortNames(statNamesSortDefault); // Go back to main menu
           break;
         default:
           // This is a specific sort button (e.g., "id", "speedGround")
@@ -132,8 +106,8 @@ const SortModeSelector = ({ defaultSortNumber, setSortNumber }: SortModeSelector
 
   // Memoized array of ButtonIcon components to render.
   const displayedButtons = useMemo(() => {
-    const isSpeedName = speedSortNames.includes(activeSort);
-    const isHandlingName = handlingSortNames.includes(activeSort);
+    const isSpeedName = statNamesSpeed.includes(activeSort as StatNameSpeed);
+    const isHandlingName = statNamesHandling.includes(activeSort as StatNameHandling);
 
     return displayedSortNames.map((name) => {
       const iconConfig = sortButtonsConfig[name]; // Use sortButtonsConfig

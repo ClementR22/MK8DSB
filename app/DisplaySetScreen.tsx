@@ -8,7 +8,7 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import { statNames } from "@/data/stats/statsData";
 import StatSliderCompare from "@/components/statSliderCompare/StatSliderCompare";
 import { SET_CARD_COLOR_PALETTE } from "@/constants/Colors"; // Importez la palette et la fonction de fallback
-import { Stat } from "@/data/stats/statsTypes";
+import { StatName } from "@/data/stats/statsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 const DisplaySetScreen = () => {
@@ -63,7 +63,7 @@ const DisplaySetScreen = () => {
 
   // --- Fin Logique d'attribution des couleurs ---
 
-  const [selectedCompareName, setSelectedCompareName] = useState<Stat>("speedGround");
+  const [selectedCompareName, setSelectedCompareName] = useState<StatName>("speedGround");
 
   const hideRemoveSet = setsListDisplayed.length === 1;
 

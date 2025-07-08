@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { StyleSheet, Text, View, ViewStyle } from "react-native";
-import { compactStatNames } from "@/data/stats/statsData";
+import { statNamesCompact } from "@/data/stats/statsData";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useThemeStore } from "@/stores/useThemeStore";
@@ -59,7 +59,7 @@ const StatNamesFloatingContainer: React.FC = () => {
 
   const memoizedStatLabels = useMemo(() => {
     return checkedStats.map((stat: ResultStat) => {
-      const compactName = compactStatNames[stat.name];
+      const compactName = statNamesCompact[stat.name];
       return (
         <View key={stat.name} style={styles.nameLabelContainer}>
           <Text style={StyleSheet.flatten([styles.nameLabel, nameLabelDynamicStyle])}>

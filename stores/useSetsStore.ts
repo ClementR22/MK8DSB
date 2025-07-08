@@ -9,7 +9,7 @@ import { nanoid } from "nanoid";
 import { statNames } from "@/data/stats/statsData";
 import { ScreenName } from "@/contexts/ScreenContext";
 import { ResultStats } from "@/contexts/ResultStatsContext";
-import { Stat } from "@/data/stats/statsTypes";
+import { StatName } from "@/data/stats/statsTypes";
 
 // Utilities
 import showToast from "@/utils/toast";
@@ -19,10 +19,11 @@ import {
   getOnlySetsSavedKeysFromMemory,
   saveThingInMemory,
 } from "@/utils/asyncStorageOperations";
+import { sortElements } from "@/utils/sortElements";
 
 const MAX_NUMBER_SETS_DISPLAY = 10;
 export interface ChosenStat {
-  name: Stat;
+  name: StatName;
   checked: boolean;
   value: number | null;
   statFilterNumber: number;
@@ -74,6 +75,7 @@ export interface SetsStoreState {
   exportSet: (id: string, screenName: ScreenName) => void;
   importSet: (clipboardContent: string, screenName: ScreenName) => void;
   deleteAllSavedSets: () => void;
+  sortSetsList: (screenName: ScreenName, sortNumber: number) => void;
 }
 
 const setDefault: SetObject = {
@@ -460,6 +462,12 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     // Appeler la fonction utilitaire pour supprimer de l'AsyncStorage
     deleteAllSavedSetsInMemory();
     showToast("Succès" + " " + "Tous les sets sauvegardés ont été supprimés !");
+  },
+
+  sortSetsList: (screenName, sortNumber) => {
+    console.log("ok");
+    const setsList = screenName === "display" ? get().setsListDisplayed : get().setsListSaved;
+    // sortElements(setsList, sortNumber, 'fr')
   },
 }));
 

@@ -15,7 +15,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import StatSliderCompact from "@/components/statSlider/StatSliderCompact";
-import { compactStatNames } from "@/data/stats/statsData";
+import { statNamesCompact } from "@/data/stats/statsData";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import TabBarHeightUpdater from "@/components/TabBarHeightUpdater";
@@ -36,7 +36,7 @@ const SearchSetScreen: React.FC = () => {
     const SliderComponent = isReduceStatSliders ? StatSliderCompact : StatSlider;
     return chosenStats.map((stat) => {
       if (!stat.checked) return null;
-      const nameProp = isReduceStatSliders ? compactStatNames[stat.name] : stat.name;
+      const nameProp = isReduceStatSliders ? statNamesCompact[stat.name] : stat.name;
       return (
         <SliderComponent
           key={`statSlider-${stat.name}-${isReduceStatSliders ? "compact" : "full"}`}

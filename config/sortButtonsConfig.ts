@@ -1,4 +1,4 @@
-import { Stat } from "@/data/stats/statsTypes";
+import { StatNameSort } from "@/data/stats/statsTypes";
 import { IconType } from "react-native-dynamic-vector-icons";
 
 // Define the type for the properties of a statistic icon
@@ -8,11 +8,8 @@ export interface SortButtonConfig {
   iconBackgroundColor?: string; // Make it optional as some might derive from theme
 }
 
-// Define the union of all possible button names/keys
-export type SortButtonName = "close" | "id" | "name" | "speed" | "handling" | Stat;
-
 // Merged configuration for all icons
-export const sortButtonsConfig: { [key in SortButtonName]: SortButtonConfig } = {
+export const sortButtonsConfig: { [key in StatNameSort]: SortButtonConfig } = {
   // Sorting specific icons
   id: { iconName: "sort-numeric-ascending", iconType: IconType.MaterialCommunityIcons },
   name: { iconName: "sort-alphabetical-ascending", iconType: IconType.MaterialCommunityIcons },

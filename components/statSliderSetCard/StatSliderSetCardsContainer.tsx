@@ -3,7 +3,7 @@ import { useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import StatSliderCompact from "../statSlider/StatSliderCompact";
-import { compactStatNames } from "@/data/stats/statsData";
+import { statNamesCompact } from "@/data/stats/statsData";
 import { StyleSheet, View } from "react-native";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 
@@ -34,7 +34,7 @@ const StatSliderSetCardsContainer: React.FC<StatSliderSetCardsContainerProps> = 
         {filteredResultStats.map((stat: ResultStat) => {
           const originalIndex = resultStats.findIndex((item) => item.name === stat.name);
 
-          const compactName = compactStatNames[stat.name];
+          const compactName = statNamesCompact[stat.name];
           const statValue = setToShowStats[originalIndex];
 
           let chosenValue: number | undefined = undefined;

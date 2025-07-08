@@ -1,6 +1,6 @@
-import { Stat } from "./statsTypes";
+import { StatName, StatNameCompareDefault, StatNameHandling, StatNameSortDefault, StatNameSpeed } from "./statsTypes";
 
-export const statNames: Stat[] = [
+export const statNames: StatName[] = [
   "speedGround",
   "speedAntiGravity",
   "speedWater",
@@ -15,7 +15,7 @@ export const statNames: Stat[] = [
   "miniTurbo",
 ];
 
-export const compactStatNames = {
+export const statNamesCompact = {
   speedGround: "spdG",
   speedAntiGravity: "spdAG",
   speedWater: "spdW",
@@ -29,3 +29,24 @@ export const compactStatNames = {
   traction: "tra",
   miniTurbo: "mtu",
 };
+
+export const statNamesCompareDefault: StatNameCompareDefault[] = [
+  "speed", // A special button to open the speed-specific sorting sub-menu
+  "acceleration",
+  "weight",
+  "handling", // A special button to open the handling-specific sorting sub-menu
+  "traction",
+  "miniTurbo",
+];
+
+export const statNamesSortDefault: StatNameSortDefault[] = ["id", "name", ...statNamesCompareDefault];
+
+export const statNamesSpeed: StatNameSpeed[] = ["close", "speedGround", "speedAntiGravity", "speedWater", "speedAir"];
+
+export const statNamesHandling: StatNameHandling[] = [
+  "close",
+  "handlingGround",
+  "handlingAntiGravity",
+  "handlingWater",
+  "handlingAir",
+];

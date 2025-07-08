@@ -3,40 +3,15 @@ import { StyleSheet, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { sortButtonsConfig } from "@/config/sortButtonsConfig"; // Import merged config
-import { CompareName } from "@/data/stats/statsTypes"; // Import Stat type
-
-// Redefine types to use SortButtonName
-
-type SpeedCompareName = Extract<CompareName, "close" | "speedGround" | "speedAntiGravity" | "speedWater" | "speedAir">;
-type HandlingCompareName = Extract<
-  CompareName,
-  "close" | "handlingGround" | "handlingAntiGravity" | "handlingWater" | "handlingAir"
->;
-type ReducedCompareName = Exclude<CompareName, SpeedCompareName | HandlingCompareName>;
-
-const speedCompareNames: SpeedCompareName[] = ["close", "speedGround", "speedAntiGravity", "speedWater", "speedAir"];
-const handlingCompareNames: HandlingCompareName[] = [
-  "close",
-  "handlingGround",
-  "handlingAntiGravity",
-  "handlingWater",
-  "handlingAir",
-];
-const reducedCompareNames: ReducedCompareName[] = [
-  "speed",
-  "acceleration",
-  "weight",
-  "handling",
-  "traction",
-  "miniTurbo",
-];
+import { StatNameCompare } from "@/data/stats/statsTypes"; // Import StatName type
+import { statNamesHandling, statNamesSpeed, statNamesCompareDefault } from "@/data/stats/statsData";
 
 const BUTTON_SIZE = 40; // égal à ButtonIcon
 const NUMBER_OF_SLOTS = 6; // Nombre de slots fixes pour les boutons
 
 interface StatSliderCompareSelectorProps {
-  selectedCompareName: CompareName;
-  setSelectedCompareName: Dispatch<SetStateAction<CompareName>>;
+  selectedCompareName: StatNameCompare;
+  setSelectedCompareName: Dispatch<SetStateAction<StatNameCompare>>;
 }
 
 const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo(
@@ -44,21 +19,21 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
     const theme = useThemeStore((state) => state.theme);
 
     // État local pour la liste des stats affichées
-    const [displayedNames, setDisplayedNames] = useState<CompareName[]>(reducedCompareNames);
+    const [displayedNames, setDisplayedNames] = useState<StatNameCompare[]>(statNamesCompareDefault);
 
     // Handler mémoïsé pour éviter les recréations inutiles
     const handlePress = useCallback(
-      (name: CompareName) => {
+      (name: StatNameCompare) => {
         if (selectedCompareName === name) return;
         switch (name) {
           case "speed":
-            setDisplayedNames(speedCompareNames);
+            setDisplayedNames(statNamesSpeed);
             break;
           case "handling":
-            setDisplayedNames(handlingCompareNames);
+            setDisplayedNames(statNamesHandling);
             break;
           case "close":
-            setDisplayedNames(reducedCompareNames);
+            setDisplayedNames(statNamesCompareDefault);
             break;
           default:
             setSelectedCompareName(name);

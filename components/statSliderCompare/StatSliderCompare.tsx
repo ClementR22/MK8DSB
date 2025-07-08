@@ -8,7 +8,7 @@ import BoxContainer from "@/primitiveComponents/BoxContainer";
 import TooltipWrapper from "../TooltipWrapper";
 import StatSliderCompareSelector from "./StatSliderCompareSelector";
 import StatSliderCompareBar from "./StatSliderCompareBar";
-import { CompareName } from "@/data/stats/statsTypes";
+import { StatNameCompare } from "@/data/stats/statsTypes";
 
 export interface SetIdAndStatValue {
   id: string;
@@ -18,8 +18,8 @@ export interface SetIdAndStatValue {
 
 interface StatSliderCompareProps {
   setsIdAndValue: SetIdAndStatValue[];
-  selectedCompareName: CompareName;
-  setSelectedCompareName: Dispatch<SetStateAction<CompareName>>;
+  selectedCompareName: StatNameCompare;
+  setSelectedCompareName: Dispatch<SetStateAction<StatNameCompare>>;
   scrollToSetCard: (id: string) => void;
 }
 

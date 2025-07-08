@@ -7,8 +7,15 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import SortModeSelector from "../elementsSelector/SortModeSelector";
 import { View } from "react-native";
 
-const SavedSetScreenPressablesContainer: React.FC = () => {
-  const [sortNumber, setSortNumber] = useState(0);
+interface SavedSetScreenPressablesContainerProps {
+  sortNumber: number;
+  setSortNumber: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const SavedSetScreenPressablesContainer: React.FC<SavedSetScreenPressablesContainerProps> = ({
+  sortNumber,
+  setSortNumber,
+}) => {
   const [isOpenSortView, setIsOpenSortView] = useState(false);
   const toggleOpenSortView = useCallback(() => setIsOpenSortView((prev) => !prev), []);
 
