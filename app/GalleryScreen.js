@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { ScreenProvider } from "@/contexts/ScreenContext";
+import GalleryScreenok from "@/components/Test";
 
 const GalleryScreen = () => {
   return (
     <ScreenProvider screenName="gallery">
-      <View style={styles.container}></View>
+      <GalleryScreenok></GalleryScreenok>
     </ScreenProvider>
   );
 };
@@ -13,11 +14,6 @@ const GalleryScreen = () => {
 export default GalleryScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   title: {
     fontSize: 20,
     fontWeight: "bold",

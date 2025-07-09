@@ -1,61 +1,58 @@
-import { categories } from "@/data/elements/elementsData";
+// elementsSelector/selector/CategorySelector.tsx
+import { categories } from "@/data/elements/elementsData"; // Assumed to be a stable reference or memoized
 import { Category } from "@/data/elements/elementsTypes";
-import { useThemeStore } from "@/stores/useThemeStore"; // Assuming theme store is needed for styles
-import React, { memo, useMemo } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import React, { memo, useMemo, useCallback } from "react"; // Import useCallback
+import { Image, View } from "react-native";
 import TooltipWrapper from "@/components/TooltipWrapper";
-import { ITEM_CARD_BORDER_RADIUS } from "@/hooks/useItemCardStyle";
-
-const CATEGORY_SELECTOR_PADDING = 6;
+import { useCategorySelectorStyles } from "@/hooks/useCategorySelectorStyles";
+import { categoryImageSources } from "@/data/categories/categoryImageSources";
 
 interface CategorySelectorProps {
   selectedCategory: Category;
   setSelectedCategory: (category: Category) => void;
 }
 
-const categoryImageSources: { [key in Category]: any } = {
-  character: require("@/assets/images/elementsImages/characters/Mario.png"),
-  body: require("@/assets/images/elementsImages/karts/Standard Kart.png"),
-  wheel: require("@/assets/images/elementsImages/wheels/Standard.png"),
-  glider: require("@/assets/images/elementsImages/gliders/Super Glider.png"),
-};
-
-interface categoryOption {
+// Interface for memoized category options
+interface MemoizedCategoryOption {
   name: Category;
   imageUrl: any;
 }
 
-// Transform your category data into the format expected by ImageButtonSelector
-const categoryOptions: categoryOption[] = (categories as Category[]).map((category) => ({
-  name: category,
-  imageUrl: categoryImageSources[category],
-}));
-
 const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, setSelectedCategory }) => {
-  const theme = useThemeStore((state) => state.theme); // Used for activeColor
+  const styles = useCategorySelectorStyles();
 
-  const containerDynamicStyle = useMemo(
-    () => [styles.container, { backgroundColor: theme.primary_container }],
-    [theme.primary_container]
+  // Memoize categoryOptions to prevent re-creation on every render
+  // Assumes 'categories' array and 'categoryImageSources' object are stable references
+  const memoizedCategoryOptions: MemoizedCategoryOption[] = useMemo(() => {
+    return (categories as Category[]).map((category) => ({
+      name: category,
+      imageUrl: categoryImageSources[category],
+    }));
+  }, [categories, categoryImageSources]); // Dependencies for memoization
+
+  // Use useCallback for the onPress handler to provide a stable function reference
+  const handleCategoryPress = useCallback(
+    (categoryName: Category) => {
+      setSelectedCategory(categoryName);
+    },
+    [setSelectedCategory] // Dependency array: recreate if setSelectedCategory changes
   );
 
-  const buttonActiveStyle = useMemo(() => ({ backgroundColor: theme.primary }), [theme]);
-
   return (
-    <View style={containerDynamicStyle}>
-      {categoryOptions.map((category) => {
+    <View style={styles.container}>
+      {/* Use specific expanded style */}
+      {memoizedCategoryOptions.map((category) => {
         const isActive = selectedCategory === category.name;
 
         return (
           <TooltipWrapper
             key={category.name}
             tooltipText={category.name}
-            onPress={() => setSelectedCategory(category.name)}
+            onPress={() => handleCategoryPress(category.name)} // Use the memoized handler
             style={styles.buttonWrapper}
             innerContainerStyle={[
               styles.button,
-              isActive && buttonActiveStyle,
-              // Optional: pressed state
+              isActive && styles.buttonActive, // Use active style from hook
             ]}
           >
             <Image source={category.imageUrl} style={styles.image} resizeMode="contain" />
@@ -65,22 +62,5 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, s
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: CATEGORY_SELECTOR_PADDING,
-    width: "100%",
-    borderRadius: ITEM_CARD_BORDER_RADIUS,
-  },
-  buttonWrapper: { width: "22%", borderRadius: 10, overflow: "hidden" }, // un peu moins que 1/4
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: 50,
-  },
-  image: { width: "80%", height: "80%" },
-});
 
 export default memo(CategorySelector);
