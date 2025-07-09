@@ -65,7 +65,14 @@ const StatSliderCompact = ({
   return (
     <Pressable style={containerStyle} onPress={handlePress}>
       {!isInSetCard && (
-        <View style={styles.nameContainer}>
+        <View
+          style={[
+            styles.nameContainer,
+            {
+              width: (vw / 360) * 66,
+            },
+          ]}
+        >
           <Text style={nameStyle}>{translate(name)}</Text>
         </View>
       )}
@@ -73,7 +80,14 @@ const StatSliderCompact = ({
       <StatSliderCompactBar value={value} chosenValue={actualChosenValue} isInSetCard={isInSetCard} />
 
       {isInSetCard && (
-        <View style={styles.nameContainer}>
+        <View
+          style={[
+            styles.nameContainer,
+            {
+              width: (vw / 360) * 40,
+            },
+          ]}
+        >
           <Text style={valueStyle}>{showAllStatSliderCompactBonuses ? bonusFound : value}</Text>
         </View>
       )}
@@ -92,7 +106,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   nameContainer: {
-    width: (vw / 360) * 66,
     alignItems: "center",
     justifyContent: "center",
     height: "100%",

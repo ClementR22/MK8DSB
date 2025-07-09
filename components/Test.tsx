@@ -120,9 +120,13 @@ const GalleryScreenok = () => {
 
   const handleLeftColumnPress = (id) => {
     setSelectedElementId(id);
-    if (id === selectedElementId) {
-      // Toggle expansion only if the same item is selected again
-      setIsLeftColumnExpanded(!isLeftColumnExpanded);
+    if (isLeftColumnExpanded) {
+      setIsLeftColumnExpanded(false);
+    } else {
+      if (id === selectedElementId) {
+        // Toggle expansion only if the same item is selected again
+        setIsLeftColumnExpanded(true);
+      }
     }
   };
 
