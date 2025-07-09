@@ -53,12 +53,12 @@ function getSortNameFromSortNumber(sortNumber: number): StatNameSort | undefined
 }
 
 interface SortModeSelectorProps {
-  defaultSortNumber: number;
+  sortNumber: number;
   setSortNumber: (number: number) => void; // Callback to update the sorting order
   sortCase: "element" | "set";
 }
 
-const SortModeSelector = ({ defaultSortNumber, setSortNumber, sortCase }: SortModeSelectorProps) => {
+const SortModeSelector = ({ sortNumber, setSortNumber, sortCase }: SortModeSelectorProps) => {
   const theme = useThemeStore((state) => state.theme);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
@@ -73,7 +73,7 @@ const SortModeSelector = ({ defaultSortNumber, setSortNumber, sortCase }: SortMo
   const [currentDirection, setCurrentDirection] = useState<"asc" | "desc">("asc");
 
   // State to track the currently active sort (e.g., 'id', 'name', 'speedGround')
-  const [activeSort, setActiveSort] = useState<StatNameSort>(getSortNameFromSortNumber(defaultSortNumber));
+  const [activeSort, setActiveSort] = useState<StatNameSort>(getSortNameFromSortNumber(sortNumber));
 
   // Callback to handle button presses for sorting.
   const handlePress = useCallback(

@@ -6,6 +6,7 @@ import { useThemeStore } from "@/stores/useThemeStore"; // Import your theme sto
 import { ITEM_CARD_BORDER_RADIUS } from "@/hooks/useItemCardStyle"; // Assuming this is a constant
 
 const CATEGORY_SELECTOR_PADDING = 6;
+const IMAGE_HEIGHT = 50;
 
 export const useCategorySelectorStyles = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -29,14 +30,13 @@ export const useCategorySelectorStyles = () => {
       button: {
         justifyContent: "center" as "center",
         alignItems: "center" as "center",
-        height: 50, // Standard height for expanded buttons
+        height: IMAGE_HEIGHT, // Standard height for expanded buttons
       },
       buttonActive: {
         backgroundColor: theme.primary, // Active theme color
       },
       image: {
-        width: "80%",
-        height: "80%",
+        width: IMAGE_HEIGHT * 0.8,
       },
     });
   }, [theme]); // Re-create styles only if theme changes

@@ -6,6 +6,7 @@ import { translate } from "@/translations/translations";
 import StatSliderCompactBar from "./StatSliderCompactBar";
 import { getBonusColor } from "@/utils/getBonusColor";
 import useGeneralStore from "@/stores/useGeneralStore";
+import { vw } from "../styles/theme";
 
 export const STAT_SLIDER_COMPACT_HEIGHT = 34;
 
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   nameContainer: {
-    width: "22%",
+    width: (vw / 360) * 66,
     alignItems: "center",
     justifyContent: "center",
     height: "100%",

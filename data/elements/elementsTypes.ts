@@ -9,22 +9,22 @@ export interface ElementData {
   imageUrl: ReturnType<typeof require>;
 }
 
-export interface CharacterElement extends ElementData {
+export interface ElementDataCharacter extends ElementData {
   category: "character";
 }
 
-export interface BodyElement extends ElementData {
+export interface ElementDataBody extends ElementData {
   category: "body";
   bodytype: "kart" | "bike" | "sportBike" | "ATV";
   // statBonus: any;
 }
 
-export interface WheelElement extends ElementData {
+export interface ElementDataWheel extends ElementData {
   category: "wheel";
   // statBonus: any;
 }
 
-export interface GliderElement extends ElementData {
+export interface ElementDataGlider extends ElementData {
   category: "glider";
 }
 

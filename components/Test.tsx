@@ -1,40 +1,35 @@
 // GalleryScreenok.tsx
-import React, { useState, useRef, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Animated, Dimensions, Pressable } from "react-native";
+import React, { useState, useRef, useEffect, useMemo } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  Animated,
+  Dimensions,
+  Pressable,
+  Image,
+} from "react-native";
 import CategorySelector from "./elementsSelector/selector/CategorySelector"; // The expanded version
 import CategorySelectorCollapsed from "./elementsSelector/selector/CategorySelectorCollapsed"; // The collapsed version
-import { Category } from "@/data/elements/elementsTypes";
+import { Category, ElementData } from "@/data/elements/elementsTypes";
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import {
+  elementsData,
+  elementsDataBody,
+  elementsDataCharacter,
+  elementsDataGlider,
+  elementsDataWheel,
+} from "@/data/elements/elementsData";
+import { sortElements } from "@/utils/sortElements";
+import SortModeSelector from "./elementsSelector/SortModeSelector";
+import { classesStatsByCategory } from "@/data/elements/elementsStats";
+import { statNames, statNamesCompact } from "@/data/stats/statsData";
+import StatSliderCompact from "./statSlider/StatSliderCompact";
 
 // Obtenir les dimensions de l'écran pour la réactivité
 const { width: screenWidth } = Dimensions.get("window");
-
-// Données fictives pour les ElementItem
-const ELEMENT_DATA = [
-  { id: "1", name: "Mario", image: "https://placehold.co/40x40/cccccc/333333?text=M" },
-  { id: "2", name: "Luigi", image: "https://placehold.co/40x40/cccccc/333333?text=L" },
-  { id: "3", name: "Peach", image: "https://placehold.co/40x40/cccccc/333333?text=P" },
-  { id: "4", name: "Yoshi", image: "https://placehold.co/40x40/cccccc/333333?text=Y" },
-  { id: "5", name: "Toad", image: "https://placehold.co/40x40/cccccc/333333?text=T" },
-  { id: "6", name: "Bowser", image: "https://placehold.co/40x40/cccccc/333333?text=B" },
-  { id: "7", name: "Donkey Kong", image: "https://placehold.co/40x40/cccccc/333333?text=DK" },
-  { id: "8", name: "Link", image: "https://placehold.co/40x40/cccccc/333333?text=Li" },
-  { id: "9", name: "Zelda", image: "https://placehold.co/40x40/cccccc/333333?text=Z" },
-  { id: "10", name: "Samus", image: "https://placehold.co/40x40/cccccc/333333?text=S" },
-];
-
-// Données fictives pour les StatSlider (représentés comme de simples vues)
-const STAT_SLIDER_DATA = [
-  { id: "s1", value: "5.5" },
-  { id: "s2", value: "7.2" },
-  { id: "s3", value: "3.1" },
-  { id: "s4", value: "9.0" },
-  { id: "s5", value: "4.8" },
-  { id: "s6", value: "6.5" },
-  { id: "s7", value: "2.9" },
-  { id: "s8", value: "8.1" },
-  { id: "s9", value: "1.7" },
-  { id: "s10", value: "9.9" },
-];
 
 // Largeurs définies pour la colonne de gauche
 // La colonne étendue recouvre une grande partie de l'écran
@@ -53,7 +48,14 @@ const ElementItem = ({ item, isSelected, onPress, isCollapsed }) => {
       onPress={() => onPress(item.id)}
     >
       <View style={styles.elementItemImagePlaceholder}>
-        <Text style={styles.elementItemImageText}>{item.image.slice(-1)}</Text>
+        <Image
+          style={{
+            flex: 1,
+            width: "90%",
+          }}
+          source={item.imageUrl}
+          resizeMode="contain"
+        />
       </View>
       {!isCollapsed && (
         <Text style={[styles.elementItemText, isSelected && styles.elementItemTextSelected]} numberOfLines={1}>
@@ -64,20 +66,29 @@ const ElementItem = ({ item, isSelected, onPress, isCollapsed }) => {
   );
 };
 
-// Composant StatSlider (no change needed here, assuming it's fine)
-const StatSlider = ({ value, isDimmed }) => {
-  return (
-    <View style={[styles.statSliderContainer, isDimmed && styles.statSliderDimmed]}>
-      <Text style={styles.statSliderText}>{value}</Text>
-    </View>
-  );
+const allCategoryElements: {
+  [key in Category]: ElementData[];
+} = {
+  character: elementsDataCharacter,
+  body: elementsDataBody,
+  wheel: elementsDataWheel,
+  glider: elementsDataGlider,
 };
 
 // Composant principal GalleryScreenok
 const GalleryScreenok = () => {
-  const [selectedElementId, setSelectedElementId] = useState(ELEMENT_DATA[0].id);
+  const [selectedElementId, setSelectedElementId] = useState(0);
   const [isLeftColumnExpanded, setIsLeftColumnExpanded] = useState(true);
+
+  const language = useLanguageStore((state) => state.language);
+
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
+  const [sortNumber, setSortNumber] = useState(0);
+
+  const categoryElementsSorted = useMemo(
+    () => sortElements(allCategoryElements[selectedCategory], sortNumber, language),
+    [selectedCategory, sortNumber, language]
+  );
 
   const animatedLeftColumnWidth = useRef(new Animated.Value(LEFT_COLUMN_WIDTH_EXPANDED)).current;
   const animatedRightColumnOverlayOpacity = useRef(new Animated.Value(0)).current;
@@ -123,15 +134,32 @@ const GalleryScreenok = () => {
     setIsLeftColumnExpanded(true); // This will be called by CategorySelectorCollapsed
   };
 
+  const { selectedElementName, selectedElementStats } = useMemo(() => {
+    const selectedElementData = elementsData.find((element: ElementData) => element.id === selectedElementId);
+
+    const selectedElementName = selectedElementData.name;
+    const selectedElementClassId = selectedElementData.classId;
+
+    const selectedElementStats = [];
+
+    const selectedElementStatsArray = classesStatsByCategory[selectedCategory].get(selectedElementClassId);
+    statNames.map((statName, index) => {
+      const statNameCompact = statNamesCompact[statName];
+      selectedElementStats.push({ name: statNameCompact, value: selectedElementStatsArray[index] });
+    });
+    return { selectedElementName, selectedElementStats };
+  }, [selectedElementId]);
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         {/* Colonne de droite - StatSliderList */}
         <View style={[styles.rightColumn, { marginLeft: LEFT_COLUMN_WIDTH_COLLAPSED }]}>
+          <Text>{selectedElementName}</Text>
           <FlatList
-            data={STAT_SLIDER_DATA}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <StatSlider value={item.value} isDimmed={isLeftColumnExpanded} />}
+            data={selectedElementStats}
+            keyExtractor={(item) => item.name}
+            renderItem={({ item }) => <StatSliderCompact name={item.name} value={item.value} />}
             contentContainerStyle={styles.flatListContent}
           />
           <Animated.View style={[styles.rightColumnOverlay, { opacity: animatedRightColumnOverlayOpacity }]}>
@@ -141,6 +169,9 @@ const GalleryScreenok = () => {
 
         {/* Colonne de gauche - ElementList */}
         <Animated.View style={[styles.leftColumn, { width: animatedLeftColumnWidth }]}>
+          <View style={styles.controlsContainer}>
+            <SortModeSelector sortNumber={4} setSortNumber={setSortNumber} sortCase="element" />
+          </View>
           {/* Conditional rendering based on expansion state */}
           {isLeftColumnExpanded ? (
             <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
@@ -152,8 +183,8 @@ const GalleryScreenok = () => {
           )}
 
           <FlatList
-            data={ELEMENT_DATA}
-            keyExtractor={(item) => item.id}
+            data={categoryElementsSorted}
+            keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <ElementItem
                 item={item}
@@ -192,6 +223,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: 10,
   },
+  controlsContainer: { justifyContent: "center", flexGrow: 1, height: 50 },
   elementItemContainer: {
     flexDirection: "row",
     alignItems: "center",

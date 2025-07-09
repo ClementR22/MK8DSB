@@ -2,7 +2,7 @@
 import { translateToLanguage } from "@/translations/translations";
 
 // Define a common interface for elements that can be sorted.
-// This interface should reflect the properties available on your actual CharacterElement, BodyElement, etc.
+// This interface should reflect the properties available on your actual ElementDataCharacter, ElementDataBody, etc.
 // Add all properties you might need for sorting (like various speed/handling stats).
 export interface SortableElement {
   id: number;

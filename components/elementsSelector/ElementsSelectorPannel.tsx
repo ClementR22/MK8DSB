@@ -46,8 +46,11 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
 
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [sortNumber, setSortNumber] = useState(0);
-  const [isOpenSortView, setIsOpenSortView] = useState(false);
-  const toggleOpenSortView = useCallback(() => setIsOpenSortView((prev) => !prev), []);
+
+  const categoryElementsSorted = useMemo(
+    () => sortElements(allCategoryElements[selectedCategory], sortNumber, language),
+    [selectedCategory, sortNumber, language]
+  );
 
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -61,6 +64,10 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
       : state.multiSelectedClassIdsByCategory[selectedCategory];
   });
 
+  const totalPages = useMemo(() => {
+    return Math.ceil(categoryElementsSorted.length / ELEMENTS_PER_PAGE);
+  }, [categoryElementsSorted.length]);
+
   const selectElementsByClassId = usePressableElementsStore((state) => state.selectElementsByClassId);
   const toggleMultiSelectElementsByClassId = usePressableElementsStore(
     (state) => state.toggleMultiSelectElementsByClassId
@@ -71,14 +78,8 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
     [selectElementsByClassId, toggleMultiSelectElementsByClassId, selectionMode]
   );
 
-  const categoryElementsSorted = useMemo(
-    () => sortElements(allCategoryElements[selectedCategory], sortNumber, language),
-    [selectedCategory, sortNumber, language]
-  );
-
-  const totalPages = useMemo(() => {
-    return Math.ceil(categoryElementsSorted.length / ELEMENTS_PER_PAGE);
-  }, [categoryElementsSorted.length]);
+  const [isOpenSortView, setIsOpenSortView] = useState(false);
+  const toggleOpenSortView = useCallback(() => setIsOpenSortView((prev) => !prev), []);
 
   const { iconName, iconType, tooltipText } = useMemo(() => {
     if (isOpenSortView) {
@@ -107,7 +108,7 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
         )}
         <View style={styles.controlsContainer}>
           {isOpenSortView || selectionMode === "single" ? (
-            <SortModeSelector defaultSortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="element" />
+            <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="element" />
           ) : (
             <BodytypesSelector selectedBodytypes={selectedBodytypes} setSelectedBodytypes={setSelectedBodytypes} />
           )}

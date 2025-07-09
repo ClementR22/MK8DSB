@@ -45,7 +45,7 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
         <>
           <View style={[styles.separator, separatorDynamicStyle]} />
 
-          <SortModeSelector defaultSortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="set" />
+          <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="set" />
         </>
       )}
     </BoxContainer>
