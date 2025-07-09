@@ -3,8 +3,6 @@ import { useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore"; // N'oublie pas d'importer useThemeStore
 
-export const ITEM_CARD_BORDER_RADIUS = 15;
-
 interface ItemCardStyleProps {
   size: number;
 }

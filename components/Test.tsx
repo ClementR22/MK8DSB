@@ -1,5 +1,5 @@
 // GalleryScreenok.tsx
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useRef, useEffect, useMemo, memo } from "react"; // Add memo
 import {
   View,
   Text,
@@ -26,45 +26,88 @@ import { sortElements } from "@/utils/sortElements";
 import SortModeSelector from "./elementsSelector/SortModeSelector";
 import { classesStatsByCategory } from "@/data/elements/elementsStats";
 import { statNames, statNamesCompact } from "@/data/stats/statsData";
-import StatSliderCompact from "./statSlider/StatSliderCompact";
+import StatSliderCompact from "./statSlider/StatSliderCompact"; // Ensure this component also looks good
+import { useThemeStore } from "@/stores/useThemeStore"; // Import theme store for main component styling
+import {
+  PADDING_HORIZONTAL,
+  BORDER_RADIUS_18,
+  BORDER_RADIUS_12,
+  CARD_SPACING,
+  LIST_ITEM_SPACING,
+  SHADOW_STYLE,
+  SHADOW_STYLE_LIGHT,
+} from "@/utils/designTokens"; // Import design tokens
+
+const ELEMENT_ITEM_PADDING = 3;
+const IMAGE_SIZE = 50;
+const LEFT_COLUMN_PADDING_HORIZONTAL = 10;
 
 // Obtenir les dimensions de l'écran pour la réactivité
 const { width: screenWidth } = Dimensions.get("window");
 
 // Largeurs définies pour la colonne de gauche
-// La colonne étendue recouvre une grande partie de l'écran
 const LEFT_COLUMN_WIDTH_EXPANDED = screenWidth * 0.7; // 70% de la largeur de l'écran
-const LEFT_COLUMN_WIDTH_COLLAPSED = 80; // Largeur fixe quand réduite
+const LEFT_COLUMN_WIDTH_COLLAPSED = IMAGE_SIZE + 2 * ELEMENT_ITEM_PADDING + 2 * LEFT_COLUMN_PADDING_HORIZONTAL; // Slightly wider for the new design
 
-// Composant ElementItem (no change needed here, assuming it's fine)
-const ElementItem = ({ item, isSelected, onPress, isCollapsed }) => {
+// --- Memoized ElementItem Component ---
+// This helps prevent unnecessary re-renders of list items
+const MemoizedElementItem = memo(({ item, isSelected, onPress, isCollapsed, theme }) => {
+  // Pass theme to element item for consistent styling
   return (
     <TouchableOpacity
       style={[
-        styles.elementItemContainer,
-        isSelected && styles.elementItemSelected,
-        isCollapsed && styles.elementItemCollapsed,
+        elementItemStyles.container,
+        isSelected && { backgroundColor: theme.primary, ...SHADOW_STYLE_LIGHT }, // Active state with primary color and subtle shadow
+        !isSelected && { backgroundColor: theme.surface, ...SHADOW_STYLE_LIGHT }, // Inactive state with surface color and subtle shadow
       ]}
       onPress={() => onPress(item.id)}
+      activeOpacity={0.7} // Add a visual feedback for press
     >
-      <View style={styles.elementItemImagePlaceholder}>
-        <Image
-          style={{
-            flex: 1,
-            width: "90%",
-          }}
-          source={item.imageUrl}
-          resizeMode="contain"
-        />
+      <View style={elementItemStyles.imagePlaceholder}>
+        {/* Placeholder background */}
+        <Image style={elementItemStyles.image} source={item.imageUrl} resizeMode="contain" />
       </View>
       {!isCollapsed && (
-        <Text style={[styles.elementItemText, isSelected && styles.elementItemTextSelected]} numberOfLines={1}>
+        <Text
+          style={[
+            elementItemStyles.text,
+            isSelected ? { color: theme.on_primary } : { color: theme.on_surface }, // Text color based on selection
+          ]}
+          numberOfLines={1}
+        >
           {item.name}
         </Text>
       )}
     </TouchableOpacity>
   );
-};
+});
+
+const elementItemStyles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: LIST_ITEM_SPACING / 2, // Half spacing for vertical rhythm
+    paddingHorizontal: ELEMENT_ITEM_PADDING,
+    borderRadius: BORDER_RADIUS_12, // Medium rounded corners
+    overflow: "hidden", // Ensures shadow works nicely
+  },
+  imagePlaceholder: {
+    width: IMAGE_SIZE, // Slightly larger image placeholder
+    height: IMAGE_SIZE * 1.25,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    flex: 1,
+    width: "90%",
+  },
+  text: {
+    marginLeft: LIST_ITEM_SPACING,
+    flex: 1,
+    fontSize: 16, // Slightly larger font
+    fontWeight: "500", // Medium font weight
+  },
+});
 
 const allCategoryElements: {
   [key in Category]: ElementData[];
@@ -75,24 +118,30 @@ const allCategoryElements: {
   glider: elementsDataGlider,
 };
 
-// Composant principal GalleryScreenok
+// --- Main GalleryScreenok Component ---
 const GalleryScreenok = () => {
-  const [selectedElementId, setSelectedElementId] = useState(0);
+  const [selectedElementId, setSelectedElementId] = useState(0); // Initialize with a default ID if possible
   const [isLeftColumnExpanded, setIsLeftColumnExpanded] = useState(true);
-
-  const language = useLanguageStore((state) => state.language);
-
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [sortNumber, setSortNumber] = useState(0);
+
+  const theme = useThemeStore((state) => state.theme); // Get theme for main component
+  const language = useLanguageStore((state) => state.language); // Moved up to be a dependency
 
   const categoryElementsSorted = useMemo(
     () => sortElements(allCategoryElements[selectedCategory], sortNumber, language),
     [selectedCategory, sortNumber, language]
   );
 
+  // Initialize selectedElementId to the first element of the initial category
+  useEffect(() => {
+    if (categoryElementsSorted.length > 0 && selectedElementId === 0) {
+      setSelectedElementId(categoryElementsSorted[0].id);
+    }
+  }, [categoryElementsSorted, selectedElementId]);
+
   const animatedLeftColumnWidth = useRef(new Animated.Value(LEFT_COLUMN_WIDTH_EXPANDED)).current;
   const animatedRightColumnOverlayOpacity = useRef(new Animated.Value(0)).current;
-  const animatedRightColumnMarginLeft = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (isLeftColumnExpanded) {
@@ -102,8 +151,7 @@ const GalleryScreenok = () => {
           duration: 300,
           useNativeDriver: false,
         }),
-        Animated.timing(animatedRightColumnOverlayOpacity, { toValue: 1, duration: 300, useNativeDriver: false }),
-        Animated.timing(animatedRightColumnMarginLeft, { toValue: 0, duration: 300, useNativeDriver: false }),
+        Animated.timing(animatedRightColumnOverlayOpacity, { toValue: 1, duration: 300, useNativeDriver: false }), // Overlay fades OUT when expanded
       ]).start();
     } else {
       Animated.parallel([
@@ -112,92 +160,116 @@ const GalleryScreenok = () => {
           duration: 300,
           useNativeDriver: false,
         }),
-        Animated.timing(animatedRightColumnOverlayOpacity, { toValue: 0, duration: 300, useNativeDriver: false }),
-        Animated.timing(animatedRightColumnMarginLeft, { toValue: 50, duration: 300, useNativeDriver: false }), // Changed to 50 to match column width
+        Animated.timing(animatedRightColumnOverlayOpacity, { toValue: 0, duration: 300, useNativeDriver: false }), // Overlay fades IN when collapsed
       ]).start();
     }
-  }, [isLeftColumnExpanded]);
+  }, [isLeftColumnExpanded, animatedLeftColumnWidth, animatedRightColumnOverlayOpacity]); // Add dependencies
 
-  const handleLeftColumnPress = (id) => {
-    setSelectedElementId(id);
-    if (isLeftColumnExpanded) {
-      setIsLeftColumnExpanded(false);
+  // Handle left column item press
+  const handleLeftColumnPress = (id: number) => {
+    if (id === selectedElementId && isLeftColumnExpanded) {
+      setIsLeftColumnExpanded(false); // Collapse if same item is pressed and currently expanded
     } else {
-      if (id === selectedElementId) {
-        // Toggle expansion only if the same item is selected again
-        setIsLeftColumnExpanded(true);
-      }
+      setSelectedElementId(id); // Select the new item
+      setIsLeftColumnExpanded(true); // Always expand if a new item is selected or if currently collapsed
     }
   };
 
+  // Handle right column press (to expand left column)
   const handleRightColumnPress = () => {
-    setIsLeftColumnExpanded(false); // Expand left column on right column press
+    setIsLeftColumnExpanded(false);
   };
 
+  // Handle category selector press (when collapsed, to expand left column)
   const handleCategoryPress = () => {
-    setIsLeftColumnExpanded(true); // This will be called by CategorySelectorCollapsed
+    setIsLeftColumnExpanded(true);
   };
 
   const { selectedElementName, selectedElementStats } = useMemo(() => {
-    const selectedElementData = elementsData.find((element: ElementData) => element.id === selectedElementId);
+    // Find the currently selected element data
+    const currentElement = categoryElementsSorted.find((element: ElementData) => element.id === selectedElementId);
 
-    const selectedElementName = selectedElementData.name;
-    const selectedElementClassId = selectedElementData.classId;
+    // Provide a default or handle case where currentElement is undefined (e.g., initial state before data loads)
+    if (!currentElement) {
+      return { selectedElementName: "N/A", selectedElementStats: [] };
+    }
 
-    const selectedElementStats = [];
+    const name = currentElement.name;
+    const classId = currentElement.classId;
 
-    const selectedElementStatsArray = classesStatsByCategory[selectedCategory].get(selectedElementClassId);
-    statNames.map((statName, index) => {
-      const statNameCompact = statNamesCompact[statName];
-      selectedElementStats.push({ name: statNameCompact, value: selectedElementStatsArray[index] });
-    });
-    return { selectedElementName, selectedElementStats };
-  }, [selectedElementId]);
+    const statsArray = classesStatsByCategory[selectedCategory].get(classId);
+
+    // Ensure statsArray exists before mapping
+    const stats = statsArray
+      ? statNames.map((statName, index) => {
+          const statNameCompact = statNamesCompact[statName];
+          return { name: statNameCompact, value: statsArray[index] };
+        })
+      : [];
+
+    return { selectedElementName: name, selectedElementStats: stats };
+  }, [selectedElementId, selectedCategory, categoryElementsSorted]); // Add selectedCategory and categoryElementsSorted as dependencies
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.surface }]}>
+      {/* Apply background theme color */}
       <View style={styles.contentContainer}>
-        {/* Colonne de droite - StatSliderList */}
-        <View style={[styles.rightColumn, { marginLeft: LEFT_COLUMN_WIDTH_COLLAPSED }]}>
-          <Text>{selectedElementName}</Text>
+        {/* Right Column - StatSliderList */}
+        <Animated.View
+          style={[
+            styles.rightColumn,
+            { backgroundColor: theme.surface_container_lowest },
+            { marginLeft: LEFT_COLUMN_WIDTH_COLLAPSED },
+          ]}
+        >
+          <View style={styles.rightColumnHeader}>
+            <Text style={[styles.selectedElementName, { color: theme.on_surface }]}>{selectedElementName}</Text>
+          </View>
           <FlatList
             data={selectedElementStats}
             keyExtractor={(item) => item.name}
-            renderItem={({ item }) => <StatSliderCompact name={item.name} value={item.value} />}
+            renderItem={({ item }) => (
+              <StatSliderCompact
+                name={item.name}
+                value={item.value}
+                // isDimmed={isLeftColumnExpanded} // Pass isDimmed for visual feedback
+              />
+            )}
             contentContainerStyle={styles.flatListContent}
           />
           <Animated.View style={[styles.rightColumnOverlay, { opacity: animatedRightColumnOverlayOpacity }]}>
-            <Pressable style={{ flex: 1 }} onPress={handleRightColumnPress} />
+            {/* Themed overlay */}
+            <Pressable style={styles.container} onPress={handleRightColumnPress} />
           </Animated.View>
-        </View>
+        </Animated.View>
 
-        {/* Colonne de gauche - ElementList */}
-        <Animated.View style={[styles.leftColumn, { width: animatedLeftColumnWidth }]}>
-          <View style={styles.controlsContainer}>
-            <SortModeSelector sortNumber={4} setSortNumber={setSortNumber} sortCase="element" />
+        {/* Left Column - ElementList */}
+        <Animated.View style={[styles.leftColumn, { width: animatedLeftColumnWidth, backgroundColor: theme.surface }]}>
+          {/* Themed background */}
+          <View style={styles.controlsAndCategoryContainer}>
+            {/* New container for controls and category */}
+            <View style={styles.sortSelectorContainer}>
+              <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="element" />
+            </View>
+            {isLeftColumnExpanded ? (
+              <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+            ) : (
+              <CategorySelectorCollapsed selectedCategory={selectedCategory} onPress={handleCategoryPress} />
+            )}
           </View>
-          {/* Conditional rendering based on expansion state */}
-          {isLeftColumnExpanded ? (
-            <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-          ) : (
-            <CategorySelectorCollapsed
-              selectedCategory={selectedCategory}
-              onPress={handleCategoryPress} // Pass the expand function
-            />
-          )}
-
           <FlatList
             data={categoryElementsSorted}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <ElementItem
+              <MemoizedElementItem // Use Memoized version
                 item={item}
                 isSelected={item.id === selectedElementId}
                 onPress={handleLeftColumnPress}
                 isCollapsed={!isLeftColumnExpanded}
+                theme={theme} // Pass theme
               />
             )}
-            contentContainerStyle={styles.flatListContent}
+            contentContainerStyle={{ paddingHorizontal: LEFT_COLUMN_PADDING_HORIZONTAL }}
           />
         </Animated.View>
       </View>
@@ -208,94 +280,61 @@ const GalleryScreenok = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F0F2F5",
+    // Background color from theme applied in JSX
   },
   contentContainer: {
     flex: 1,
     flexDirection: "row",
-    position: "relative",
+    // position: "relative",
   },
   leftColumn: {
-    backgroundColor: "#FFFFFF",
-    borderTopEndRadius: 10,
-    borderEndEndRadius: 10,
-    marginVertical: 10,
+    borderTopEndRadius: BORDER_RADIUS_18, // Consistent radius
+    borderEndEndRadius: BORDER_RADIUS_18,
+    marginVertical: CARD_SPACING, // Consistent margin
     overflow: "hidden",
     position: "absolute",
     left: 0,
     top: 0,
     bottom: 0,
     zIndex: 10,
+    ...SHADOW_STYLE, // Apply shadow to the column
   },
-  controlsContainer: { justifyContent: "center", flexGrow: 1, height: 50 },
-  elementItemContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-    marginVertical: 5,
-    marginHorizontal: 10,
-    borderRadius: 10,
-    backgroundColor: "#E0E0E0",
+  controlsAndCategoryContainer: {
+    paddingVertical: CARD_SPACING / 2, // Small internal padding
+    marginBottom: CARD_SPACING / 2, // Space before the list
   },
-  elementItemSelected: {
-    backgroundColor: "#6200EE",
-  },
-  elementItemCollapsed: {
-    justifyContent: "center",
-    marginHorizontal: 5,
-    padding: 5,
-  },
-  elementItemImagePlaceholder: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "#CCCCCC",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  elementItemImageText: {
-    color: "#333333",
-    fontWeight: "bold",
-  },
-  elementItemText: {
-    marginLeft: 10,
-    flex: 1,
-    color: "#333333",
-  },
-  elementItemTextSelected: {
-    color: "#FFFFFF",
+  sortSelectorContainer: {
+    marginHorizontal: CARD_SPACING, // Match padding of CategorySelector
+    marginBottom: CARD_SPACING, // Space between sort selector and category selector
   },
   rightColumn: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
-    marginVertical: 10,
-    marginRight: 10,
-    position: "relative",
+    marginVertical: CARD_SPACING,
+    marginRight: CARD_SPACING, // Consistent margin
+    borderRadius: BORDER_RADIUS_18, // Apply border radius to right column
+    overflow: "hidden",
     zIndex: 5,
+    ...SHADOW_STYLE, // Apply shadow to the column
+  },
+  rightColumnHeader: {
+    padding: PADDING_HORIZONTAL,
+    paddingBottom: CARD_SPACING / 2,
+    borderBottomWidth: 1,
+    borderBottomColor: "#EEE", // Light separator line
+    marginBottom: LIST_ITEM_SPACING, // Space before stats list
+  },
+  selectedElementName: {
+    fontSize: 24, // Larger, more prominent name
+    fontWeight: "bold",
+    // color: theme.on_surface, // Color applied in JSX
   },
   rightColumnOverlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
-  statSliderContainer: {
-    backgroundColor: "#D1C4E9",
-    padding: 20,
-    marginVertical: 5,
-    marginHorizontal: 10,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    height: 80,
-  },
-  statSliderDimmed: {
-    opacity: 0.5,
-  },
-  statSliderText: {
-    color: "#333333",
-    fontWeight: "bold",
-  },
   flatListContent: {
-    paddingVertical: 10,
+    paddingVertical: LIST_ITEM_SPACING, // Padding for lists
+    paddingHorizontal: CARD_SPACING, // Consistent padding
   },
 });
 

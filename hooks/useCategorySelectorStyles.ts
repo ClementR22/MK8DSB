@@ -2,44 +2,59 @@
 
 import { StyleSheet } from "react-native";
 import { useMemo } from "react";
-import { useThemeStore } from "@/stores/useThemeStore"; // Import your theme store
-import { ITEM_CARD_BORDER_RADIUS } from "@/hooks/useItemCardStyle"; // Assuming this is a constant
+import { useThemeStore } from "@/stores/useThemeStore";
+// Assuming you have a central place for common constants like a new theme/design system hook or file
+import {
+  BORDER_RADIUS_18,
+  CARD_SPACING,
+  SHADOW_STYLE,
+  CATEGORY_SELECTOR_PADDING,
+  BORDER_RADIUS_15,
+} from "@/utils/designTokens";
 
-const CATEGORY_SELECTOR_PADDING = 6;
-const IMAGE_HEIGHT = 50;
+// Instead of a fixed padding, let's use a design token for consistency
 
 export const useCategorySelectorStyles = () => {
   const theme = useThemeStore((state) => state.theme);
 
   const styles = useMemo(() => {
     return StyleSheet.create({
+      // --- Styles for the Expanded CategorySelector ---
       container: {
-        flexDirection: "row" as "row", // Explicitly type to avoid inference issues
+        flexDirection: "row" as "row",
         width: "100%",
-        borderRadius: ITEM_CARD_BORDER_RADIUS,
-        overflow: "hidden",
-        padding: CATEGORY_SELECTOR_PADDING, // Use the constant defined in this file
-        justifyContent: "space-between", // For multiple items in a row
-        backgroundColor: theme.primary_container, // Theme color
+        borderRadius: BORDER_RADIUS_15, // Use a larger, more prominent radius
+        overflow: "hidden" as "hidden",
+        backgroundColor: theme.surface_container, // Use surface color for card-like elements
+        ...SHADOW_STYLE, // Apply shadow
+        padding: CATEGORY_SELECTOR_PADDING, // Use consistent spacing token
+        justifyContent: "space-around", // Distribute items more evenly, possibly with padding around them
       },
       buttonWrapper: {
-        flex: 1, // Each button takes equal space
-        overflow: "hidden",
-        borderRadius: 10,
+        flex: 1,
       },
       button: {
         justifyContent: "center" as "center",
         alignItems: "center" as "center",
-        height: IMAGE_HEIGHT, // Standard height for expanded buttons
+        borderRadius: BORDER_RADIUS_18 / 2, // Slightly less rounded than container
+        overflow: "hidden" as "hidden",
+        height: 50, // Slightly larger buttons for better touch target
+        //    backgroundColor: theme.surface, // A subtle background for non-selected buttons
       },
       buttonActive: {
-        backgroundColor: theme.primary, // Active theme color
+        backgroundColor: theme.primary, // Primary color for active button
+        // Add a subtle border or heavier shadow for active state if desired
+        // borderWidth: 2,
+        // borderColor: theme.outline,
       },
+
+      // --- Common Styles (Applied directly to the Image) ---
       image: {
-        width: IMAGE_HEIGHT * 0.8,
+        width: "80%",
+        height: "80%",
       },
     });
-  }, [theme]); // Re-create styles only if theme changes
+  }, [theme]);
 
   return styles;
 };

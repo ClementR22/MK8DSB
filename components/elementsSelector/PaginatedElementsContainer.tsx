@@ -5,7 +5,7 @@ import ElementsGrid, { PAGINATED_ELEMENTS_CONTAINER_PADDING } from "./selector/E
 import { Category, ElementData } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
 import CategorySelector from "./selector/CategorySelector";
-import { ITEM_CARD_BORDER_RADIUS } from "@/hooks/useItemCardStyle";
+import { BORDER_RADIUS_15 } from "@/utils/designTokens";
 
 export const ELEMENTS_PER_PAGE = 12;
 
@@ -60,7 +60,7 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: ITEM_CARD_BORDER_RADIUS + PAGINATED_ELEMENTS_CONTAINER_PADDING,
+    borderRadius: BORDER_RADIUS_15 + PAGINATED_ELEMENTS_CONTAINER_PADDING,
     overflow: "hidden",
     padding: PAGINATED_ELEMENTS_CONTAINER_PADDING,
     gap: 6,
