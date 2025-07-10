@@ -36,7 +36,9 @@ import {
   LIST_ITEM_SPACING,
   SHADOW_STYLE,
   SHADOW_STYLE_LIGHT,
+  BORDER_RADIUS_15,
 } from "@/utils/designTokens"; // Import design tokens
+import { SET_CARD_CONTAINER_PADDING } from "./statSliderSetCard/StatNamesFloatingContainer";
 
 const ELEMENT_ITEM_PADDING = 3;
 const IMAGE_SIZE = 50;
@@ -213,66 +215,59 @@ const GalleryScreenok = () => {
   return (
     <View style={[styles.container, { backgroundColor: theme.surface }]}>
       {/* Apply background theme color */}
-      <View style={styles.contentContainer}>
-        {/* Right Column - StatSliderList */}
-        <Animated.View
-          style={[
-            styles.rightColumn,
-            { backgroundColor: theme.surface_container_lowest },
-            { marginLeft: LEFT_COLUMN_WIDTH_COLLAPSED },
-          ]}
-        >
-          <View style={styles.rightColumnHeader}>
-            <Text style={[styles.selectedElementName, { color: theme.on_surface }]}>{selectedElementName}</Text>
-          </View>
-          <FlatList
-            data={selectedElementStats}
-            keyExtractor={(item) => item.name}
-            renderItem={({ item }) => (
-              <StatSliderCompact
-                name={item.name}
-                value={item.value}
-                // isDimmed={isLeftColumnExpanded} // Pass isDimmed for visual feedback
-              />
-            )}
-            contentContainerStyle={styles.flatListContent}
-          />
-          <Animated.View style={[styles.rightColumnOverlay, { opacity: animatedRightColumnOverlayOpacity }]}>
-            {/* Themed overlay */}
-            <Pressable style={styles.container} onPress={handleRightColumnPress} />
-          </Animated.View>
-        </Animated.View>
-
-        {/* Left Column - ElementList */}
-        <Animated.View style={[styles.leftColumn, { width: animatedLeftColumnWidth, backgroundColor: theme.surface }]}>
-          {/* Themed background */}
-          <View style={styles.controlsAndCategoryContainer}>
-            {/* New container for controls and category */}
-            <View style={styles.sortSelectorContainer}>
-              <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="element" />
-            </View>
-            {isLeftColumnExpanded ? (
-              <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-            ) : (
-              <CategorySelectorCollapsed selectedCategory={selectedCategory} onPress={handleCategoryPress} />
-            )}
-          </View>
-          <FlatList
-            data={categoryElementsSorted}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <MemoizedElementItem // Use Memoized version
-                item={item}
-                isSelected={item.id === selectedElementId}
-                onPress={handleLeftColumnPress}
-                isCollapsed={!isLeftColumnExpanded}
-                theme={theme} // Pass theme
-              />
-            )}
-            contentContainerStyle={{ paddingHorizontal: LEFT_COLUMN_PADDING_HORIZONTAL }}
-          />
-        </Animated.View>
+      {/* Right Column - StatSliderList */}
+      <View style={[styles.galleryCard, { borderColor: theme.surface_container, backgroundColor: theme.surface }]}>
+        <View style={styles.galleryCardHeader}>
+          <Text style={[styles.selectedElementName, { color: theme.on_surface }]}>{selectedElementName}</Text>
+        </View>
+        <FlatList
+          data={selectedElementStats}
+          keyExtractor={(item) => item.name}
+          renderItem={({ item }) => (
+            <StatSliderCompact
+              name={item.name}
+              value={item.value}
+              // isDimmed={isLeftColumnExpanded} // Pass isDimmed for visual feedback
+            />
+          )}
+          contentContainerStyle={styles.flatListContent}
+        />
       </View>
+
+      <Animated.View style={[styles.rightColumnOverlay, { opacity: animatedRightColumnOverlayOpacity }]}>
+        {/* Themed overlay */}
+        <Pressable style={styles.container} onPress={handleRightColumnPress} />
+      </Animated.View>
+
+      {/* Left Column - ElementList */}
+      <Animated.View style={[styles.leftColumn, { width: animatedLeftColumnWidth, backgroundColor: theme.surface }]}>
+        {/* Themed background */}
+        <View style={styles.controlsAndCategoryContainer}>
+          {/* New container for controls and category */}
+          <View style={styles.sortSelectorContainer}>
+            <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="element" />
+          </View>
+          {isLeftColumnExpanded ? (
+            <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+          ) : (
+            <CategorySelectorCollapsed selectedCategory={selectedCategory} onPress={handleCategoryPress} />
+          )}
+        </View>
+        <FlatList
+          data={categoryElementsSorted}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <MemoizedElementItem // Use Memoized version
+              item={item}
+              isSelected={item.id === selectedElementId}
+              onPress={handleLeftColumnPress}
+              isCollapsed={!isLeftColumnExpanded}
+              theme={theme} // Pass theme
+            />
+          )}
+          contentContainerStyle={{ paddingHorizontal: LEFT_COLUMN_PADDING_HORIZONTAL }}
+        />
+      </Animated.View>
     </View>
   );
 };
@@ -280,23 +275,18 @@ const GalleryScreenok = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
     // Background color from theme applied in JSX
-  },
-  contentContainer: {
-    flex: 1,
-    flexDirection: "row",
-    // position: "relative",
   },
   leftColumn: {
     borderTopEndRadius: BORDER_RADIUS_18, // Consistent radius
     borderEndEndRadius: BORDER_RADIUS_18,
-    marginVertical: CARD_SPACING, // Consistent margin
     overflow: "hidden",
     position: "absolute",
     left: 0,
     top: 0,
     bottom: 0,
-    zIndex: 10,
+    marginVertical: CARD_SPACING / 2,
     ...SHADOW_STYLE, // Apply shadow to the column
   },
   controlsAndCategoryContainer: {
@@ -307,21 +297,17 @@ const styles = StyleSheet.create({
     marginHorizontal: CARD_SPACING, // Match padding of CategorySelector
     marginBottom: CARD_SPACING, // Space between sort selector and category selector
   },
-  rightColumn: {
-    flex: 1,
-    marginVertical: CARD_SPACING,
-    marginRight: CARD_SPACING, // Consistent margin
-    borderRadius: BORDER_RADIUS_18, // Apply border radius to right column
-    overflow: "hidden",
-    zIndex: 5,
-    ...SHADOW_STYLE, // Apply shadow to the column
+  galleryCard: {
+    marginLeft: LEFT_COLUMN_WIDTH_COLLAPSED + CARD_SPACING,
+    marginRight: CARD_SPACING,
+    borderRadius: BORDER_RADIUS_18,
+    borderWidth: 5,
   },
-  rightColumnHeader: {
+  galleryCardHeader: {
     padding: PADDING_HORIZONTAL,
-    paddingBottom: CARD_SPACING / 2,
+    paddingBottom: 0,
     borderBottomWidth: 1,
     borderBottomColor: "#EEE", // Light separator line
-    marginBottom: LIST_ITEM_SPACING, // Space before stats list
   },
   selectedElementName: {
     fontSize: 24, // Larger, more prominent name
