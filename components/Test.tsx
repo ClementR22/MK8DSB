@@ -169,11 +169,11 @@ const GalleryScreenok = () => {
 
   // Handle left column item press
   const handleLeftColumnPress = (id: number) => {
-    if (id === selectedElementId && isLeftColumnExpanded) {
-      setIsLeftColumnExpanded(false); // Collapse if same item is pressed and currently expanded
+    if (id === selectedElementId) {
+      setIsLeftColumnExpanded(!isLeftColumnExpanded);
     } else {
       setSelectedElementId(id); // Select the new item
-      setIsLeftColumnExpanded(true); // Always expand if a new item is selected or if currently collapsed
+      setIsLeftColumnExpanded(false);
     }
   };
 
@@ -223,13 +223,7 @@ const GalleryScreenok = () => {
         <FlatList
           data={selectedElementStats}
           keyExtractor={(item) => item.name}
-          renderItem={({ item }) => (
-            <StatSliderCompact
-              name={item.name}
-              value={item.value}
-              // isDimmed={isLeftColumnExpanded} // Pass isDimmed for visual feedback
-            />
-          )}
+          renderItem={({ item }) => <StatSliderCompact name={item.name} value={item.value} maxValue={2} />}
           contentContainerStyle={styles.flatListContent}
         />
       </View>
@@ -320,7 +314,8 @@ const styles = StyleSheet.create({
   },
   flatListContent: {
     paddingVertical: LIST_ITEM_SPACING, // Padding for lists
-    paddingHorizontal: CARD_SPACING, // Consistent padding
+    paddingHorizontal: LIST_ITEM_SPACING, // Consistent padding
+    gap: 1,
   },
 });
 

@@ -7,18 +7,17 @@ interface StatSliderCompactBarProps {
   value: number;
   chosenValue: number | false;
   isInSetCard: boolean;
+  maxValue?: number;
 }
 
-const MAX_VALUE = 6;
-
-const StatSliderCompactBar = ({ value, chosenValue, isInSetCard }: StatSliderCompactBarProps) => {
+const StatSliderCompactBar = ({ value, chosenValue, isInSetCard, maxValue = 6 }: StatSliderCompactBarProps) => {
   const theme = useThemeStore((state) => state.theme);
   const [barWidth, setBarWidth] = useState(0);
 
   const actualChosenValue = useMemo(() => (chosenValue === false ? value : chosenValue), [chosenValue, value]);
   const bonus = useMemo(() => value - actualChosenValue, [value, actualChosenValue]);
 
-  const getWidth = useCallback((val: number) => (barWidth * val) / MAX_VALUE, [barWidth]);
+  const getWidth = useCallback((val: number) => (barWidth * val) / maxValue, [barWidth]);
 
   const fillWidth = useMemo(
     () => (bonus >= 0 ? getWidth(value) : getWidth(actualChosenValue)),

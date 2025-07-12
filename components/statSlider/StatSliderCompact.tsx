@@ -16,6 +16,7 @@ interface StatSliderCompactProps {
   statFilterNumber?: number;
   chosenValue?: number | undefined;
   isInSetCard?: boolean;
+  maxValue?: number;
 }
 
 const StatSliderCompact = ({
@@ -24,6 +25,7 @@ const StatSliderCompact = ({
   statFilterNumber = 0,
   chosenValue = undefined,
   isInSetCard = false,
+  maxValue = 6,
 }: StatSliderCompactProps) => {
   const theme = useThemeStore((state) => state.theme);
   const showAllStatSliderCompactBonuses = useGeneralStore((state) => state.showAllStatSliderCompactBonuses);
@@ -77,7 +79,12 @@ const StatSliderCompact = ({
         </View>
       )}
 
-      <StatSliderCompactBar value={value} chosenValue={actualChosenValue} isInSetCard={isInSetCard} />
+      <StatSliderCompactBar
+        value={value}
+        chosenValue={actualChosenValue}
+        isInSetCard={isInSetCard}
+        maxValue={maxValue}
+      />
 
       {isInSetCard && (
         <View
