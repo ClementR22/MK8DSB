@@ -13,6 +13,8 @@ interface ModalButtonProps {
   buttonTextColor?: string;
 }
 
+export const MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL = 24;
+
 const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, buttonTextColor }: ModalButtonProps) => {
   return (
     <Button
