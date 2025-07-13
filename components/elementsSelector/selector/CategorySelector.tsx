@@ -74,13 +74,20 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: ITEM_CARD_BORDER_RADIUS,
   },
-  buttonWrapper: { width: "22%", borderRadius: 10, overflow: "hidden" }, // un peu moins que 1/4
+  buttonWrapper: {
+    width: "22%", // un peu moins que 1/4
+    borderRadius: 10,
+    overflow: "hidden"
+  },
   button: {
     alignItems: "center",
     justifyContent: "center",
     height: 50,
   },
-  image: { width: "80%", height: "80%" },
+  image: {
+    width: "80%",
+    height: "80%"
+  },
 });
 
 export default memo(CategorySelector);

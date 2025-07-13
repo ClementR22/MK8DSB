@@ -1,5 +1,5 @@
-import React, { useState, useMemo, useCallback, memo } from "react";
-import { StyleSheet, ScrollView, Pressable, View } from "react-native";
+import React, { memo, useCallback, useMemo, useState } from "react";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -132,8 +132,8 @@ const SortModeSelector = ({ defaultSortNumber, setSortNumber, sortCase }: SortMo
       // Determine the icon and colors for the badge
       const badgeIconName = currentDirection === "asc" ? "arrow-up" : "arrow-down";
       const badgeIconType = IconType.MaterialCommunityIcons;
-      const badgeBackgroundColor = "blue"; // Default badge icon color (for contrast)
-      const badgeIconColor = theme.surface; // Default badge icon color (for contrast)
+      const badgeBackgroundColor = theme.primary_container; // Default badge icon color (for contrast)
+      const badgeIconColor = theme.primary; // Default badge icon color (for contrast)
       const badgeIconInnerSize = 20; // Arrow icon will be 70% of the badge's size
 
       let isBadge = false;
