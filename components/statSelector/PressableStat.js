@@ -25,6 +25,8 @@ const PressableStat = ({ stat, toggleCheck, disabled }) => {
 
 const styles = StyleSheet.create({
   container: {
+    marginLeft: 24,
+    marginRight: 14,
     borderRadius: 24,
   },
   text: {

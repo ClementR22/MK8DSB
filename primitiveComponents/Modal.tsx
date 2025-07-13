@@ -5,8 +5,6 @@ import FlexContainer from "@/primitiveComponents/FlexContainer";
 import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-export const MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL = 24;
-
 interface ModalButtonProps {
   text: string;
   onPress: () => void;
@@ -14,6 +12,8 @@ interface ModalButtonProps {
   buttonColor?: string;
   buttonTextColor?: string;
 }
+
+export const MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL = 24;
 
 const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, buttonTextColor }: ModalButtonProps) => {
   return (
@@ -68,9 +68,16 @@ const Modal = ({
 
   const containerBackgroundColorStyle = useMemo(
     () => ({
-      backgroundColor: theme.surface_container_high,
+      backgroundColor: theme.surface_container_highest,
     }),
-    [theme.surface_container_high]
+    [theme.surface_container_highest]
+  );
+
+  const contentColorStyle = useMemo(
+    () => ({
+      backgroundColor: theme.surface_container,
+    }),
+    [theme.surface_container]
   );
 
   const titleColorStyle = useMemo(
@@ -138,7 +145,7 @@ const Modal = ({
         >
           {modalTitle && <Text style={[styles.title_center, titleColorStyle]}>{translate(modalTitle)}</Text>}
 
-          <View style={styles.childrenContainer}>{children}</View>
+          <View style={[styles.childrenContainer, contentColorStyle]}>{children}</View>
 
           <FlexContainer flexDirection={buttonContainerFlexDirection} style={styles.buttonContainer}>
             {renderSecondButton()}
@@ -166,11 +173,14 @@ const styles = StyleSheet.create({
     zIndex: 10,
     // cursor: "auto", // Web-specific. RN ignores.
     width: "90%",
+    maxWidth: 360,
     borderRadius: 28,
-    paddingVertical: 24,
+    paddingVertical: 12,
   },
   childrenContainer: {
-    paddingHorizontal: MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL,
+    paddingHorizontal: 0,
+    marginHorizontal: 10,
+    borderRadius: 28
   },
   title_center: {
     alignSelf: "center",
@@ -178,11 +188,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     fontSize: 22,
     fontWeight: "400", // fontWeight should be a string in RN
-    marginBottom: 0,
+    marginBottom: 12,
     // fontFamily: "Roboto", // Ensure this font is loaded. If not, it falls back to default.
   },
   buttonContainer: {
-    // marginTop: 10, // Consider adding this dynamically if needed
+    marginTop: 10, // Consider adding this dynamically if needed
   },
 });
 

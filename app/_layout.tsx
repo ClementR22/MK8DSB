@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { Tabs, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import * as NavigationBar from "expo-navigation-bar";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Appearance } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -19,7 +20,6 @@ import HelpSavedSetScreen from "@/components/help/HelpSavedSetScreen";
 
 // Stores
 import useSetsStore from "@/stores/useSetsStore";
-import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 // Utils & Hooks
@@ -70,6 +70,10 @@ export default function TabLayout() {
   useEffect(() => {
     fetchSavedSets();
   }, [fetchSavedSets]); // Only re-run if fetchSavedSets function identity changes
+
+  useEffect(() => {
+    NavigationBar.setBackgroundColorAsync(theme.surface)
+  })
 
   // Custom hook for loading settings (assuming it has its own internal effects)
   useLoadSettings();
@@ -134,7 +138,7 @@ export default function TabLayout() {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: theme.surface }} edges={["top"]}>
         <PaperProvider>
-          <StatusBar style={theme.surface === "#FEF7FF" ? "dark" : "light"} />
+          <StatusBar backgroundColor={theme.surface_container} style={theme.theme === "light" ? "dark" : "light"} />
           <Tabs
             screenOptions={{
               tabBarActiveTintColor: theme.primary,

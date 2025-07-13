@@ -75,7 +75,13 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = React.memo(
     const triggerElement = customTrigger ? (
       React.cloneElement(customTrigger, { onPress: openModal })
     ) : (
-      <Button buttonColor={buttonColor} buttonTextColor={buttonTextColor} onPress={openModal} tooltipText={undefined}>
+      <Button
+        key={"ModalButton"}
+        buttonColor={buttonColor}
+        buttonTextColor={buttonTextColor}
+        onPress={openModal}
+        tooltipText={undefined}
+      >
         {translate(triggerButtonText)}
       </Button>
     );
@@ -85,6 +91,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = React.memo(
         {triggerElement}
 
         <Modal
+          key={"Modal-ButtonAndModal"}
           modalTitle={modalTitle}
           isModalVisible={currentIsModalVisible}
           setIsModalVisible={currentSetIsModalVisible}

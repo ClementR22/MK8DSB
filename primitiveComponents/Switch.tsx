@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import { Switch as NativeSwitch } from "react-native-paper";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleProp, StyleSheet, Text, ViewStyle } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { translate } from "@/translations/translations";
 
@@ -11,9 +11,17 @@ interface SwitchProps {
   onToggleSwitch?: () => void;
   disabled?: boolean;
   switchLabel: string;
+  style?: StyleProp<ViewStyle>;
 }
 
-const Switch: React.FC<SwitchProps> = ({ value, setValue, onToggleSwitch, disabled = false, switchLabel }) => {
+const Switch: React.FC<SwitchProps> = ({
+  value,
+  setValue,
+  onToggleSwitch,
+  disabled = false,
+  switchLabel,
+  style
+}) => {
   const theme = useThemeStore((state) => state.theme);
 
   const handleToggle = useCallback(() => {
@@ -32,10 +40,10 @@ const Switch: React.FC<SwitchProps> = ({ value, setValue, onToggleSwitch, disabl
   );
 
   return (
-    <View style={styles.switchContainer}>
+    <Pressable onPress={handleToggle} style={[styles.switchContainer, style]}>
       <NativeSwitch value={value} onValueChange={handleToggle} disabled={disabled} style={{ height: 30 }} />
       <Text style={textStyle}>{translate(switchLabel)}</Text>
-    </View>
+    </Pressable>
   );
 };
 

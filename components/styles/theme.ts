@@ -19,6 +19,8 @@ export const vw: number = Dimensions.get("screen").width;
 //*/
 
 export const light_theme: ThemeColor = {
+  theme: "light",
+
   primary: "#6750A4",
   on_primary: "#FFFFFF",
   primary_container: "#EADDFF",
@@ -64,6 +66,8 @@ export const light_theme: ThemeColor = {
 };
 
 export const dark_theme: ThemeColor = {
+  theme: "dark",
+
   primary: "#D0BCFF",
   on_primary: "#381E72",
   primary_container: "#4F378B",

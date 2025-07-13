@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Switch from "../../primitiveComponents/Switch";
 
 function areAllStatsChecked(statList) {
@@ -41,7 +41,6 @@ const SelectAllStatsSwitch = ({
       if (hasAllChecked) {
         if (externalUpdateRef.current) {
           externalUpdateRef.current = false;
-          return;
         } else {
           setStatListBeforeAll(statList);
         }
@@ -64,7 +63,18 @@ const SelectAllStatsSwitch = ({
     updateToggleSwitch();
   }, [statList]);
 
-  return <Switch value={isSwitchOn} onToggleSwitch={onToggleSwitch} disabled={disabled} switchLabel="All" />;
+  return (
+    <Switch
+      style={{
+        paddingHorizontal: 24,
+        paddingTop: 10,
+      }}
+      value={isSwitchOn}
+      onToggleSwitch={onToggleSwitch}
+      disabled={disabled}
+      switchLabel="All"
+    />
+  );
 };
 
 export default SelectAllStatsSwitch;

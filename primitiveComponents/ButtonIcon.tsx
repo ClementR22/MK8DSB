@@ -13,7 +13,7 @@ interface ButtonIconProps {
   iconType: IconType;
   iconSize?: number;
   shape?: "circle" | "rectangle";
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle> | any;
   [key: string]: any;
 }
 
@@ -54,7 +54,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
       containerStyle={containerCombinedStyle}
       {...props}
     >
-      <Icon type={iconType} name={iconName} size={iconSize} color={theme.on_primary} />
+      <Icon type={iconType} name={iconName} size={iconSize} color={style?.color || theme.on_primary} />
     </ButtonBase>
   );
 };

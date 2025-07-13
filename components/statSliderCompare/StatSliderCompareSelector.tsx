@@ -1,10 +1,10 @@
-import React, { useState, useMemo, useCallback, memo, Dispatch, SetStateAction } from "react";
+import React, { Dispatch, memo, SetStateAction, useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { sortButtonsConfig } from "@/config/sortButtonsConfig"; // Import merged config
 import { StatNameCompare } from "@/data/stats/statsTypes"; // Import StatName type
-import { statNamesHandling, statNamesSpeed, statNamesCompareDefault } from "@/data/stats/statsData";
+import { statNamesCompareDefault, statNamesHandling, statNamesSpeed } from "@/data/stats/statsData";
 
 const BUTTON_SIZE = 40; // égal à ButtonIcon
 const NUMBER_OF_SLOTS = 6; // Nombre de slots fixes pour les boutons
@@ -44,7 +44,11 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
     );
 
     // Style du contour actif, constant
-    const buttonIconActiveStyle = useMemo(() => ({ borderWidth: 10, borderColor: "cyan" }), []);
+    const buttonIconActiveStyle = useMemo(() => ({
+      // borderWidth: 10,
+      backgroundColor: theme.primary_container,
+      color: theme.on_primary_container,
+    }), []);
 
     // Génération mémoïsée des boutons affichés
     const displayedButtons = useMemo(() => {
@@ -56,6 +60,8 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
           const iconBackgroundColor = iconConfig.iconBackgroundColor || theme.primary;
           const isActive = selectedCompareName === name;
           const buttonIconStyle = { backgroundColor: iconBackgroundColor };
+
+          const finalStyle = StyleSheet.flatten([buttonIconStyle, isActive && buttonIconActiveStyle])
           return (
             <ButtonIcon
               key={name}
@@ -63,7 +69,7 @@ const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo
               tooltipText={name}
               iconName={iconName}
               iconType={iconType}
-              style={[buttonIconStyle, isActive && buttonIconActiveStyle]}
+              style={finalStyle}
             />
           );
         }
