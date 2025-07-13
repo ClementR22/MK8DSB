@@ -57,6 +57,9 @@ const translations = {
     Selected: "Selected",
 
     // placeholder
+    SearchEmpty: "Search your dream set",
+    SearchNotFound: "Not set found with theses stats",
+    SavedEmpty: "Find here your favorite sets",
     "NoSetFound...": "No set found...",
     YourFavoriteSetsWillAppearHere: "Your favorite sets will appear here",
     None: "None",
@@ -81,8 +84,8 @@ const translations = {
     // tooltip text
     ChooseStats: "Choose some stats",
     ChooseFilters: "Choose some filters",
-    DisplayedStatsInSets: "Displayed stats in sets",
-    DisplayedStats: "Displayed stats",
+    // DisplayedStatsInSets: "Displayed stats in sets",
+    // DisplayedStats: "Displayed stats",
     DisabledBecauseMatchDesiredStats: "Match desired stats",
     ChangeCondition: "Fix a condition",
     SortSets: "Sort sets",
@@ -344,6 +347,9 @@ const translations = {
     Selected: "Sélectionnés",
 
     // placeholder
+    SearchEmpty: "Recherchez le set de vos rêves",
+    SearchNotFound: "Aucun set trouvé correspondant à ces stats",
+    SavedEmpty: "Retrouvez vos sets favoris ici",
     "NoSetFound...": "Aucun set trouvé...",
     YourFavoriteSetsWillAppearHere: "Vos sets favoris apparaîtrons ici",
     None: "Aucun",
@@ -368,8 +374,8 @@ const translations = {
     // tooltip text
     ChooseStats: "Choisissez des stats",
     ChooseFilters: "Choisissez des filtres",
-    DisplayedStatsInSets: "Stats affichées dans les sets",
-    DisplayedStats: "Stats affichées",
+    // DisplayedStatsInSets: "Stats affichées dans les sets",
+    // DisplayedStats: "Stats affichées",
     DisabledBecauseMatchDesiredStats: "Copie les stats souhaitées",
     ChangeCondition: "Fixer une condition",
     SortSets: "Trier les sets",

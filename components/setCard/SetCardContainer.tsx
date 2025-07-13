@@ -1,25 +1,15 @@
-import React, { useRef, forwardRef, useImperativeHandle, useMemo, useState, memo, useCallback } from "react";
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  DimensionValue,
-  LayoutChangeEvent,
-  Dimensions,
-} from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React, { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { Dimensions, DimensionValue, LayoutChangeEvent, Pressable, ScrollView, StyleSheet, View, } from "react-native";
 import SetCard from "./SetCard";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { translateToLanguage } from "@/translations/translations";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import StatNamesFloatingContainer, {
   SET_CARD_CONTAINER_PADDING,
 } from "../statSliderSetCard/StatNamesFloatingContainer";
 import { SetObject } from "@/stores/useSetsStore";
+import { Placeholder } from "@/components/Placeholder";
 
 interface SetWithColor extends SetObject {
   color?: string;
@@ -122,15 +112,11 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
 
       if (isInSearchScreen) {
         if (!hasShownSearchQuestionIcon) {
-          return <MaterialCommunityIcons name="chat-question" size={72} color={theme.on_surface} />;
-        } else {
-          return <Text style={placeholderTextStyle}>{translateToLanguage("NoSetFound...", language)}</Text>;
+          return <Placeholder type={"SearchEmpty"} />
         }
-      } else {
-        return (
-          <Text style={placeholderTextStyle}>{translateToLanguage("YourFavoriteSetsWillAppearHere", language)}</Text>
-        );
+        return <Placeholder type={"SearchNotFound"} />
       }
+      return <Placeholder type={"SavedEmpty"} />
     }, [noSetToShow, isInSearchScreen, language, theme.on_surface, hasShownSearchQuestionIcon, placeholderTextStyle]);
 
     const memoizedSetCards = useMemo(() => {
