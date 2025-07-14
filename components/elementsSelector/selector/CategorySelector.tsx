@@ -63,28 +63,4 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, s
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: CATEGORY_SELECTOR_PADDING,
-    width: "100%",
-    borderRadius: ITEM_CARD_BORDER_RADIUS,
-  },
-  buttonWrapper: {
-    width: "22%", // un peu moins que 1/4
-    borderRadius: 10,
-    overflow: "hidden",
-  },
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: 50,
-  },
-  image: {
-    width: "80%",
-    height: "80%",
-  },
-});
-
 export default memo(CategorySelector);

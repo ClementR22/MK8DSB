@@ -96,12 +96,14 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
       <View style={styles.middleContainer}>
         {selectionMode !== "single" && (
           <>
-            <ButtonIcon
-              onPress={toggleOpenSortView}
-              iconName={iconName}
-              iconType={iconType}
-              tooltipText={tooltipText}
-            />
+            <View style={styles.buttonToggleWrapper}>
+              <ButtonIcon
+                onPress={toggleOpenSortView}
+                iconName={iconName}
+                iconType={iconType}
+                tooltipText={tooltipText}
+              />
+            </View>
 
             <View style={[styles.separator, separatorDynamicStyle]} />
           </>
@@ -110,7 +112,9 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
           {isOpenSortView || selectionMode === "single" ? (
             <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="element" />
           ) : (
-            <BodytypesSelector selectedBodytypes={selectedBodytypes} setSelectedBodytypes={setSelectedBodytypes} />
+            <View style={styles.bodytypeSelectorWrapper}>
+              <BodytypesSelector selectedBodytypes={selectedBodytypes} setSelectedBodytypes={setSelectedBodytypes} />
+            </View>
           )}
         </View>
       </View>
@@ -136,8 +140,10 @@ const styles = StyleSheet.create({
     marginVertical: 2,
     height: 54,
   },
-  separator: { width: 2, height: 40, marginLeft: HALF_GAP },
+  buttonToggleWrapper: { marginHorizontal: HALF_GAP },
+  separator: { width: 2, height: 40 },
   controlsContainer: { justifyContent: "center", flexGrow: 1, flexShrink: 1 },
+  bodytypeSelectorWrapper: { marginHorizontal: HALF_GAP },
 });
 
 export default memo(ElementsSelectorPannel);

@@ -16,7 +16,6 @@ import CategorySelectorCollapsed from "./elementsSelector/selector/CategorySelec
 import { Category, ElementData } from "@/data/elements/elementsTypes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import {
-  elementsData,
   elementsDataBody,
   elementsDataCharacter,
   elementsDataGlider,
@@ -39,6 +38,7 @@ import {
   BORDER_RADIUS_15,
 } from "@/utils/designTokens"; // Import design tokens
 import { SET_CARD_CONTAINER_PADDING } from "./statSliderSetCard/StatNamesFloatingContainer";
+import { maxValues } from "@/data/classStats";
 
 const ELEMENT_ITEM_PADDING = 3;
 const IMAGE_SIZE = 50;
@@ -137,13 +137,13 @@ const GalleryScreenok = () => {
 
   // Initialize selectedElementId to the first element of the initial category
   useEffect(() => {
-    if (categoryElementsSorted.length > 0 && selectedElementId === 0) {
-      setSelectedElementId(categoryElementsSorted[0].id);
-    }
-  }, [categoryElementsSorted, selectedElementId]);
+    setSelectedElementId(categoryElementsSorted[0].id);
+  }, [categoryElementsSorted]);
 
   const animatedLeftColumnWidth = useRef(new Animated.Value(LEFT_COLUMN_WIDTH_EXPANDED)).current;
   const animatedRightColumnOverlayOpacity = useRef(new Animated.Value(0)).current;
+
+  const maxValue = useMemo(() => maxValues[selectedCategory], [selectedCategory]);
 
   useEffect(() => {
     if (isLeftColumnExpanded) {
@@ -223,7 +223,14 @@ const GalleryScreenok = () => {
         <FlatList
           data={selectedElementStats}
           keyExtractor={(item) => item.name}
-          renderItem={({ item }) => <StatSliderCompact name={item.name} value={item.value} maxValue={2} />}
+          renderItem={({ item }) => (
+            <StatSliderCompact
+              name={item.name}
+              value={item.value}
+              isRelativeValue={selectedCategory !== "character"}
+              maxValue={maxValue}
+            />
+          )}
           contentContainerStyle={styles.flatListContent}
         />
       </View>

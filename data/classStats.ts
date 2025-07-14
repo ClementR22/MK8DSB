@@ -1,4 +1,11 @@
-import { ElementStats } from "./elements/elementsTypes";
+import { Category, ElementStats } from "./elements/elementsTypes";
+
+export const maxValues: Record<Category, number> = {
+  character: 5,
+  body: 1,
+  wheel: 1,
+  glider: 1,
+};
 
 export const baseStatsByClassId: { [key: number]: ElementStats } = {
   // --- Character Class Stats ---

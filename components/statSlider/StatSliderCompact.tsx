@@ -7,6 +7,7 @@ import StatSliderCompactBar from "./StatSliderCompactBar";
 import { getBonusColor } from "@/utils/getBonusColor";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { vw } from "../styles/theme";
+import StatSliderCompactBarRelativeValue from "./StatSliderCompactBarRelativeValue";
 
 export const STAT_SLIDER_COMPACT_HEIGHT = 34;
 
@@ -14,8 +15,9 @@ interface StatSliderCompactProps {
   name: string;
   value: number;
   statFilterNumber?: number;
-  chosenValue?: number | undefined;
+  chosenValue?: number;
   isInSetCard?: boolean;
+  isRelativeValue?: boolean;
   maxValue?: number;
 }
 
@@ -23,9 +25,10 @@ const StatSliderCompact = ({
   name,
   value,
   statFilterNumber = 0,
-  chosenValue = undefined,
+  chosenValue,
   isInSetCard = false,
-  maxValue = 6,
+  isRelativeValue = false,
+  maxValue,
 }: StatSliderCompactProps) => {
   const theme = useThemeStore((state) => state.theme);
   const showAllStatSliderCompactBonuses = useGeneralStore((state) => state.showAllStatSliderCompactBonuses);
@@ -33,10 +36,8 @@ const StatSliderCompact = ({
 
   // Calcul du bonus activé
   const bonusEnabled = useMemo(() => chosenValue !== undefined, [chosenValue]);
-  // Valeur choisie réelle
-  const actualChosenValue = useMemo(() => chosenValue ?? value, [chosenValue, value]);
   // Bonus trouvé
-  const bonusFound = useMemo(() => value - actualChosenValue, [value, actualChosenValue]);
+  const bonusFound = useMemo(() => (chosenValue ? value - chosenValue : 0), [value, chosenValue]);
   // Couleur du bonus
   const bonusColor = useMemo(() => getBonusColor(bonusFound), [bonusFound]);
 
@@ -79,12 +80,11 @@ const StatSliderCompact = ({
         </View>
       )}
 
-      <StatSliderCompactBar
-        value={value}
-        chosenValue={actualChosenValue}
-        isInSetCard={isInSetCard}
-        maxValue={maxValue}
-      />
+      {isRelativeValue ? (
+        <StatSliderCompactBarRelativeValue value={value} maxValue={maxValue} />
+      ) : (
+        <StatSliderCompactBar value={value} chosenValue={chosenValue} isInSetCard={isInSetCard} />
+      )}
 
       {isInSetCard && (
         <View
@@ -95,7 +95,9 @@ const StatSliderCompact = ({
             },
           ]}
         >
-          <Text style={valueStyle}>{showAllStatSliderCompactBonuses ? bonusFound : value}</Text>
+          <Text style={valueStyle}>
+            {showAllStatSliderCompactBonuses ? (bonusFound > 0 ? `+${bonusFound}` : bonusFound) : value}
+          </Text>
         </View>
       )}
     </Pressable>
