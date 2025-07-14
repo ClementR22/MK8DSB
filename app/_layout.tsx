@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { Tabs, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import * as NavigationBar from "expo-navigation-bar";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Appearance } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -19,7 +20,6 @@ import HelpSavedSetScreen from "@/components/help/HelpSavedSetScreen";
 
 // Stores
 import useSetsStore from "@/stores/useSetsStore";
-import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 // Utils & Hooks
@@ -45,16 +45,8 @@ export default function TabLayout() {
 
   // --- Zustand Store Selections ---
   // Select only the parts of the state that are needed
-  const screenNameForLoadModal = useModalLoadSetStore((state) => state.screenNameForLoadModal);
   const setScreenNameForLoadModal = useModalLoadSetStore((state) => state.setScreenNameForLoadModal);
-
-  const isSetsListUpdated = usePressableElementsStore((state) => state.isSetsListUpdated);
-  const selectedClassIds = usePressableElementsStore((state) => state.selectedClassIds);
-  const setIsSetsListUpdated = usePressableElementsStore((state) => state.setIsSetsListUpdated);
-
-  const updateSetsList = useSetsStore((state) => state.updateSetsList);
   const fetchSavedSets = useSetsStore((state) => state.fetchSavedSets);
-
   const theme = useThemeStore((state) => state.theme);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
 
@@ -68,15 +60,6 @@ export default function TabLayout() {
     }
   }, [pathname, setScreenNameForLoadModal]); // Only re-run if pathname or setter changes
 
-  // Effect to update sets list when relevant state changes
-  useEffect(() => {
-    if (!isSetsListUpdated) {
-      // Ensure updateSetsList is memoized by Zustand or it will trigger endlessly
-      updateSetsList(selectedClassIds, screenNameForLoadModal);
-      setIsSetsListUpdated(true);
-    }
-  }, [isSetsListUpdated, updateSetsList, selectedClassIds, screenNameForLoadModal, setIsSetsListUpdated]);
-
   // Effect to listen for system theme changes
   useEffect(() => {
     const listener = Appearance.addChangeListener(updateSystemTheme);
@@ -87,6 +70,10 @@ export default function TabLayout() {
   useEffect(() => {
     fetchSavedSets();
   }, [fetchSavedSets]); // Only re-run if fetchSavedSets function identity changes
+
+  useEffect(() => {
+    NavigationBar.setBackgroundColorAsync(theme.surface)
+  })
 
   // Custom hook for loading settings (assuming it has its own internal effects)
   useLoadSettings();
@@ -151,7 +138,7 @@ export default function TabLayout() {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: theme.surface }} edges={["top"]}>
         <PaperProvider>
-          <StatusBar style={theme.surface === "#FEF7FF" ? "dark" : "light"} />
+          <StatusBar backgroundColor={theme.surface_container} style={theme.theme === "light" ? "dark" : "light"} />
           <Tabs
             screenOptions={{
               tabBarActiveTintColor: theme.primary,
@@ -186,7 +173,9 @@ export default function TabLayout() {
               name="SavedSetScreen"
               options={{
                 title: translateToLanguage("SavedSetTabTitle", language),
-                tabBarIcon: ({ color, focused }) => <MaterialCommunityIcons name={focused ? "heart" : "heart-outline"} size={24} color={color} />,
+                tabBarIcon: ({ color, focused }) => (
+                  <MaterialCommunityIcons name={focused ? "heart" : "heart-outline"} size={24} color={color} />
+                ),
                 header: renderSavedHeader,
               }}
             />
@@ -194,7 +183,9 @@ export default function TabLayout() {
               name="GalleryScreen"
               options={{
                 title: translateToLanguage("GalleryTabTitle", language),
-                tabBarIcon: ({ color, focused }) => <Ionicons name={focused ? "image" : "image-outline"} size={24} color={color} />,
+                tabBarIcon: ({ color, focused }) => (
+                  <Ionicons name={focused ? "image" : "image-outline"} size={24} color={color} />
+                ),
                 header: renderGalleryHeader,
               }}
             />
@@ -202,7 +193,9 @@ export default function TabLayout() {
               name="SettingsScreen"
               options={{
                 title: translateToLanguage("SettingsTabTitle", language),
-                tabBarIcon: ({ color, focused }) => <Ionicons name={focused ? "settings" : "settings-outline"} size={24} color={color} />,
+                tabBarIcon: ({ color, focused }) => (
+                  <Ionicons name={focused ? "settings" : "settings-outline"} size={24} color={color} />
+                ),
                 header: renderSettingsHeader,
               }}
             />

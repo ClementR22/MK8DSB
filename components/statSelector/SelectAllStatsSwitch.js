@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Switch from "../../primitiveComponents/Switch";
 
 function areAllStatsChecked(statList) {
@@ -19,49 +19,34 @@ const SelectAllStatsSwitch = ({
 
   const isFirstRender = useRef(true);
 
-  const onToggleSwitch = () => {
-    // on déclare que le changement est provoqué par le switch, pour bloquer le useEffect
+  // Mémoïsation du handler pour éviter de recréer la fonction à chaque render
+  const onToggleSwitch = useCallback(() => {
     internalUpdate.current = true;
-
     if (!isSwitchOn) {
-      // si l'utilisateur vient active le switch
-      // Sauvegarde l’état courant avant modification
       setStatListBeforeAll(statList);
-
-      // coche tous les stat
       const newList = statList.map((stat) => ({ ...stat, checked: true }));
       setStatList(newList);
       setIsSwitchOn(true);
-
-      // si l'utilisateur veut restaurer la liste précédente et qu'elle existe
     } else if (statListBeforeAll) {
-      // on restaure la liste précédente
       setStatList(statListBeforeAll);
       setIsSwitchOn(false);
     }
-  };
+  }, [isSwitchOn, statList, setStatList, setStatListBeforeAll, statListBeforeAll]);
 
-  const updateToggleSwitch = () => {
+  // Mémoïsation de la fonction de mise à jour du switch
+  const updateToggleSwitch = useCallback(() => {
     const hasAllChecked = areAllStatsChecked(statList);
-
-    // si le switch n'est pas à jour
     if (isSwitchOn != hasAllChecked) {
-      // on le met à jour
       setIsSwitchOn(hasAllChecked);
-
-      // si tout est checké
       if (hasAllChecked) {
         if (externalUpdateRef.current) {
-          externalUpdateRef.current = false; // reset le flag
-          return; // skip la mise à jour de statListBeforeAll si le changement vient de ResultStatsSyncSwitch
+          externalUpdateRef.current = false;
         } else {
-          // sinon, on est dans le cas : l'utilisateur vient de cocher le dernier élément manuellement
-          // on MAJ statListBeforeAll avec tous les checked à true
-          setStatListBeforeAll(statList); // nouvelle référence avec tous cochés
+          setStatListBeforeAll(statList);
         }
       }
     }
-  };
+  }, [isSwitchOn, statList, setStatListBeforeAll, externalUpdateRef]);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -78,7 +63,18 @@ const SelectAllStatsSwitch = ({
     updateToggleSwitch();
   }, [statList]);
 
-  return <Switch value={isSwitchOn} onToggleSwitch={onToggleSwitch} disabled={disabled} switchLabel="All" />;
+  return (
+    <Switch
+      style={{
+        paddingHorizontal: 24,
+        paddingTop: 10,
+      }}
+      value={isSwitchOn}
+      onToggleSwitch={onToggleSwitch}
+      disabled={disabled}
+      switchLabel="All"
+    />
+  );
 };
 
 export default SelectAllStatsSwitch;

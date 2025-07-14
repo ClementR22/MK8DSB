@@ -17,35 +17,34 @@ const StatSelector = ({
 }) => {
   const externalUpdateRef = useRef(false);
 
+  // Astuce : remplacer ScrollView par FlatList si statList est longue pour virtualiser l'affichage et améliorer les performances
   return (
-    <>
-      <View style={{ gap: 8 }}>
-        <SelectAllStatsSwitch
+    <View style={{ height: 420 }}>
+      <SelectAllStatsSwitch
+        statList={statList}
+        setStatList={setStatList}
+        statListBeforeAll={statListBeforeAll}
+        setStatListBeforeAll={setStatListBeforeAll}
+        disabled={disabled}
+        externalUpdateRef={externalUpdateRef}
+      />
+
+      {isResultStatsInSearchScreen && (
+        <ResultStatsSyncSwitch
           statList={statList}
           setStatList={setStatList}
-          statListBeforeAll={statListBeforeAll}
-          setStatListBeforeAll={setStatListBeforeAll}
-          disabled={disabled}
+          statListBeforeSync={statListBeforeSync}
+          setStatListBeforeSync={setStatListBeforeSync}
           externalUpdateRef={externalUpdateRef}
         />
-
-        {isResultStatsInSearchScreen && (
-          <ResultStatsSyncSwitch
-            statList={statList}
-            setStatList={setStatList}
-            statListBeforeSync={statListBeforeSync}
-            setStatListBeforeSync={setStatListBeforeSync}
-            externalUpdateRef={externalUpdateRef}
-          />
-        )}
-      </View>
+      )}
 
       <ScrollView>
         {statList.map((stat) => (
           <PressableStat key={stat.name} stat={stat} toggleCheck={toggleCheck} disabled={disabled} />
         ))}
       </ScrollView>
-    </>
+    </View>
   );
 };
 

@@ -7,6 +7,7 @@ export const translate = (key) => {
 };
 
 export const translateToLanguage = (key, language) => {
+  if (!language) return key;
   if (!translations[language][key]) {
     {
       /* DEBUG */
@@ -53,9 +54,12 @@ const translations = {
     ThisSetDoesNotExist: "This set does not exist",
     DeleteAllSetsInMemoryText: "Do you really want to delete all saved sets?",
     ResetSettingsText: "Do you really want to reset settings?",
-    SelectedElements: "Selected elements",
+    Selected: "Selected",
 
     // placeholder
+    SearchEmpty: "Search your dream set",
+    SearchNotFound: "Not set found with theses stats",
+    SavedEmpty: "Find here your favorite sets",
     "NoSetFound...": "No set found...",
     YourFavoriteSetsWillAppearHere: "Your favorite sets will appear here",
     None: "None",
@@ -63,9 +67,6 @@ const translations = {
     // button label
     Search: "Search",
     All: "All",
-    Dark: "Dark",
-    Light: "Light",
-    System: "System",
     MatchDesiredStats: "Match desired stats",
     AlwaysSync: "Always match desired stats",
     ConfigureDefaultStats: "Configure default displayed stats",
@@ -83,11 +84,13 @@ const translations = {
     // tooltip text
     ChooseStats: "Choose some stats",
     ChooseFilters: "Choose some filters",
-    DisplayedStatsInSets: "Displayed stats in sets",
-    DisplayedStats: "Displayed stats",
+    // DisplayedStatsInSets: "Displayed stats in sets",
+    // DisplayedStats: "Displayed stats",
     DisabledBecauseMatchDesiredStats: "Match desired stats",
     ChangeCondition: "Fix a condition",
-    Sort: "Sort",
+    SortSets: "Sort sets",
+    SortElements: "Sort elements",
+    FilterBodytypes: "Filter body types",
     AddASet: "Add a set",
     LoadStatsOfASet: "Load a set's stats",
     LoadASet: "Load a set",
@@ -130,6 +133,15 @@ const translations = {
     // other stat label
     speed: "Speed",
     handling: "Handling",
+
+    // language
+    English: "English",
+    French: "French",
+
+    // theme
+    Dark: "Dark",
+    Light: "Light",
+    System: "System",
 
     // sort
     id: "Number",
@@ -332,9 +344,12 @@ const translations = {
     ThisSetDoesNotExist: "Ce set n'existe pas",
     DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
     ResetSettingsText: "Souhaitez-vous vraiment réinitialiser les préférences ?",
-    SelectedElements: "Éléments sélectionnés",
+    Selected: "Sélectionnés",
 
     // placeholder
+    SearchEmpty: "Recherchez le set de vos rêves",
+    SearchNotFound: "Aucun set trouvé correspondant à ces stats",
+    SavedEmpty: "Retrouvez vos sets favoris ici",
     "NoSetFound...": "Aucun set trouvé...",
     YourFavoriteSetsWillAppearHere: "Vos sets favoris apparaîtrons ici",
     None: "Aucun",
@@ -342,9 +357,6 @@ const translations = {
     // button label
     Search: "Chercher",
     All: "Toutes",
-    Dark: "Sombre",
-    Light: "Clair",
-    System: "Appareil",
     MatchDesiredStats: "Copier les stats souhaitées",
     AlwaysSync: "Toujours copier les stats souhaitées",
     ConfigureDefaultStats: "Configurer les stats affichées par défault",
@@ -362,11 +374,13 @@ const translations = {
     // tooltip text
     ChooseStats: "Choisissez des stats",
     ChooseFilters: "Choisissez des filtres",
-    DisplayedStatsInSets: "Stats affichées dans les sets",
-    DisplayedStats: "Stats affichées",
+    // DisplayedStatsInSets: "Stats affichées dans les sets",
+    // DisplayedStats: "Stats affichées",
     DisabledBecauseMatchDesiredStats: "Copie les stats souhaitées",
     ChangeCondition: "Fixer une condition",
-    Sort: "Trier",
+    SortSets: "Trier les sets",
+    SortElements: "Trier les éléments",
+    FilterBodytypes: "Filtrer des types de carroseries",
     AddASet: "Ajouter un set",
     LoadStatsOfASet: "Charger les stats d'un set",
     LoadASet: "Charger un set",
@@ -409,6 +423,15 @@ const translations = {
     // other stat label
     speed: "Vitesse",
     handling: "Maniabilité",
+
+    // language
+    English: "Anglais",
+    French: "Français",
+
+    // theme
+    Dark: "Sombre",
+    Light: "Clair",
+    System: "Appareil",
 
     // sort
     id: "Number",

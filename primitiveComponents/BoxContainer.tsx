@@ -97,4 +97,6 @@ const styles = StyleSheet.create({
   content: {},
 });
 
+BoxContainer.displayName = "BoxContainer";
+
 export default React.memo(BoxContainer);

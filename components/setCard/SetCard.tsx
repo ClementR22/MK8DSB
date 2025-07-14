@@ -1,18 +1,19 @@
 import React, { useMemo, useCallback, memo } from "react";
 import { LayoutChangeEvent, View, StyleSheet } from "react-native";
-import BoxContainer from "@/primitiveComponents/BoxContainer";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
 import useModalsStore from "@/stores/useModalsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useSetsStore from "@/stores/useSetsStore";
-import { useThemeStore } from "@/stores/useThemeStore";
 import SetImagesModal from "./SetImagesModal";
 import StatSliderSetCardsContainer from "../statSliderSetCard/StatSliderSetCardsContainer";
 import { arraysEqual } from "@/utils/deepCompare";
 import SetCardHeader, { SetCardHeaderProps } from "./SetCardHeader";
+import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 
-export const SET_CARD_WIDTH = 220;
+export const SET_CARD_HEIGHT = 343;
+export const SET_CARD_STAT_SLIDER_GAP = 8;
+
 export interface SetData {
   name: string;
   classIds: number[];
@@ -23,7 +24,7 @@ export interface SetData {
 export type actionNamesList = string[];
 
 interface SetCardSituationConfig {
-  isEditable: boolean;
+  isNameEditable: boolean;
   showStatSliderResult: boolean;
   actionNamesList: actionNamesList;
   moreActionNamesList?: actionNamesList;
@@ -37,19 +38,19 @@ const MORE_ACTIONS_DISPLAY_COMMON: actionNamesList = ["export"]; // Common actio
 
 const situationConfigs: Record<string, Omit<SetCardSituationConfig, "actionNamesList" | "moreActionNamesList">> = {
   search: {
-    isEditable: false,
+    isNameEditable: true,
     showStatSliderResult: true,
   },
   display: {
-    isEditable: true,
+    isNameEditable: true,
     showStatSliderResult: false,
   },
   save: {
-    isEditable: true,
+    isNameEditable: true,
     showStatSliderResult: true,
   },
   load: {
-    isEditable: false,
+    isNameEditable: false,
     showStatSliderResult: false,
   },
 };
@@ -59,11 +60,12 @@ interface SetCardProps {
   setToShowClassIds: number[];
   setToShowStats?: number[] | null;
   setToShowPercentage?: number;
-  setCardIndex: number;
+  setToShowId: string;
   isInLoadSetModal?: boolean;
   screenNameFromProps?: ScreenName;
   hideRemoveSet?: boolean;
   onLayout?: (event: LayoutChangeEvent) => void;
+  borderColor?: string;
 }
 
 const SetCard: React.FC<SetCardProps> = ({
@@ -71,18 +73,17 @@ const SetCard: React.FC<SetCardProps> = ({
   setToShowClassIds,
   setToShowStats = null,
   setToShowPercentage = undefined,
-  setCardIndex,
+  setToShowId,
   isInLoadSetModal = false,
   screenNameFromProps,
   hideRemoveSet = false,
   onLayout,
+  borderColor,
 }) => {
   const contextScreenName = useScreen();
 
   const screenName = useMemo(() => screenNameFromProps ?? contextScreenName, [screenNameFromProps, contextScreenName]);
   const situation = useMemo(() => (isInLoadSetModal ? "load" : screenName), [isInLoadSetModal, screenName]);
-
-  const theme = useThemeStore((state) => state.theme);
 
   const setsListSaved = useSetsStore((state) => state.setsListSaved);
   const isSaved = useMemo(
@@ -126,43 +127,49 @@ const SetCard: React.FC<SetCardProps> = ({
   }, [situation, hideRemoveSet, screenName]);
 
   const updateSelectionFromSet = usePressableElementsStore((state) => state.updateSelectionFromSet);
-  const setsetCardEditedIndex = useSetsStore((state) => state.setsetCardEditedIndex);
+  const setSetCardEditedId = useSetsStore((state) => state.setSetCardEditedId);
   const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
 
   const handleEditPress = useCallback(() => {
-    setsetCardEditedIndex(setCardIndex);
+    setSetCardEditedId(setToShowId);
     updateSelectionFromSet(setToShowClassIds);
     setIsEditModalVisible(true);
-  }, [setsetCardEditedIndex, updateSelectionFromSet, setIsEditModalVisible, setToShowClassIds, setCardIndex]);
+  }, [setSetCardEditedId, updateSelectionFromSet, setIsEditModalVisible, setToShowClassIds, setToShowId]);
 
   const headerProps: SetCardHeaderProps = useMemo(
     () => ({
-      isEditable: config.isEditable,
+      isNameEditable: config.isNameEditable,
       setToShowName,
-      setCardIndex,
+      setToShowId,
       setToShowPercentage,
       moreActionNamesList: config.moreActionNamesList,
       situation,
     }),
-    [config.isEditable, setToShowName, setCardIndex, setToShowPercentage, config.moreActionNamesList, situation]
+    [config.isNameEditable, setToShowName, setToShowId, setToShowPercentage, config.moreActionNamesList, situation]
+  );
+
+  const { setCardStyle } = useSetCardStyle();
+
+  const setCardCompleteStyle = useMemo(
+    () => ({ ...setCardStyle, borderColor: borderColor }),
+    [setCardStyle, borderColor]
   );
 
   return (
-    <View onLayout={onLayout} style={styles.container}>
-      <BoxContainer contentBackgroundColor={theme.surface} margin={0} widthContainer={SET_CARD_WIDTH} gap={0}>
+    <View onLayout={onLayout} style={styles.outerContainer}>
+      <View style={setCardCompleteStyle}>
         <SetCardHeader {...headerProps} />
 
         <SetImagesModal setToShowClassIds={setToShowClassIds} />
 
         <SetCardActionButtons
           actionNamesList={config.actionNamesList}
-          setCardIndex={setCardIndex}
+          setToShowId={setToShowId}
           situation={situation}
           isSaved={isSaved}
           handleEditPress={handleEditPress}
         />
-      </BoxContainer>
-
+      </View>
       {config.showStatSliderResult && setToShowStats !== null && (
         <StatSliderSetCardsContainer setToShowStats={setToShowStats} />
       )}
@@ -171,7 +178,7 @@ const SetCard: React.FC<SetCardProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  outerContainer: { gap: SET_CARD_STAT_SLIDER_GAP },
 });
 
 export default memo(SetCard);

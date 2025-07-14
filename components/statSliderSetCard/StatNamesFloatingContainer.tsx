@@ -1,33 +1,36 @@
 import React, { useMemo } from "react";
 import { StyleSheet, Text, View, ViewStyle } from "react-native";
-import { compactStatNames } from "@/data/data";
+import { statNamesCompact } from "@/data/stats/statsData";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
+import { SET_CARD_HEIGHT, SET_CARD_STAT_SLIDER_GAP } from "../setCard/SetCard";
+import { STAT_SLIDER_SET_CARDS_CONTAINER_GAP } from "./StatSliderSetCardsContainer";
+import { useSetCardStyle } from "@/hooks/useSetCardStyle";
+import { STAT_SLIDER_COMPACT_HEIGHT } from "../statSlider/StatSliderCompact";
 
-const PADDING = 10;
-const TAILLE_STAT_SLIDER_RESULT = 34;
-const GAP = 10;
-const BORDER_WIDTH = 2;
-const TAILLE_SET_CARD = 360;
-const PADDING_AVANT_SET_CARD = 20;
-const GAP_TOP_STAT_SLIDER_RESULT_CONTAINER = 8;
-const FIXED_NAME_LABEL_WIDTH = 50;
+export const SET_CARD_CONTAINER_PADDING = 20;
+const FIXED_NAME_LABEL_WIDTH = 40;
 
 const StatNamesFloatingContainer: React.FC = () => {
   const language = useLanguageStore((state) => state.language);
   const theme = useThemeStore((state) => state.theme);
   const { resultStats } = useResultStats();
 
+  const { setCardStyle } = useSetCardStyle();
+
   const { checkedStats, nbSlider, height, topPosition } = useMemo(() => {
     const filteredStats = resultStats?.filter((stat: ResultStat) => stat.checked) ?? [];
     const count = filteredStats.length;
 
-    const calculatedHeight =
-      2 * PADDING + TAILLE_STAT_SLIDER_RESULT * count + (count > 0 ? (count - 1) * GAP : 0) + 2 * BORDER_WIDTH;
+    const calculatedTopPosition = SET_CARD_CONTAINER_PADDING + +SET_CARD_HEIGHT + SET_CARD_STAT_SLIDER_GAP;
 
-    const calculatedTopPosition = TAILLE_SET_CARD + PADDING_AVANT_SET_CARD + GAP_TOP_STAT_SLIDER_RESULT_CONTAINER - 2;
+    const calculatedHeight =
+      2 * setCardStyle.padding +
+      count * STAT_SLIDER_COMPACT_HEIGHT +
+      (count - 1) * STAT_SLIDER_SET_CARDS_CONTAINER_GAP +
+      2 * setCardStyle.borderWidth;
 
     return {
       checkedStats: filteredStats,
@@ -56,7 +59,7 @@ const StatNamesFloatingContainer: React.FC = () => {
 
   const memoizedStatLabels = useMemo(() => {
     return checkedStats.map((stat: ResultStat) => {
-      const compactName = compactStatNames[stat.name];
+      const compactName = statNamesCompact[stat.name];
       return (
         <View key={stat.name} style={styles.nameLabelContainer}>
           <Text style={StyleSheet.flatten([styles.nameLabel, nameLabelDynamicStyle])}>
@@ -82,21 +85,20 @@ const styles = StyleSheet.create({
   container: {
     position: "absolute",
     left: 0,
-    borderWidth: BORDER_WIDTH,
+    borderWidth: 1,
     borderTopRightRadius: 12,
     borderBottomRightRadius: 12,
-    paddingVertical: 8,
     zIndex: 10,
-    gap: GAP,
+    justifyContent: "center",
   },
   nameLabelContainer: {
-    height: TAILLE_STAT_SLIDER_RESULT,
+    height: STAT_SLIDER_COMPACT_HEIGHT + STAT_SLIDER_SET_CARDS_CONTAINER_GAP,
     justifyContent: "center",
     alignItems: "center",
     width: FIXED_NAME_LABEL_WIDTH,
   },
   nameLabel: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "bold",
   },
 });

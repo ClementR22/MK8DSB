@@ -1,17 +1,22 @@
-import React, { useRef, forwardRef, useImperativeHandle, useMemo, useState, useEffect, memo, useCallback } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View, DimensionValue, LayoutChangeEvent } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React, { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { Dimensions, DimensionValue, LayoutChangeEvent, Pressable, ScrollView, StyleSheet, View, } from "react-native";
 import SetCard from "./SetCard";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { translateToLanguage } from "@/translations/translations";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import StatNamesFloatingContainer from "../statSliderSetCard/StatNamesFloatingContainer";
-import { SetData } from "./SetCard";
+import StatNamesFloatingContainer, {
+  SET_CARD_CONTAINER_PADDING,
+} from "../statSliderSetCard/StatNamesFloatingContainer";
+import { SetObject } from "@/stores/useSetsStore";
+import { Placeholder } from "@/components/Placeholder";
+
+interface SetWithColor extends SetObject {
+  color?: string;
+}
 
 interface SetCardContainerProps {
-  setsToShow: SetData[];
+  setsToShow: SetWithColor[];
   isInLoadSetModal?: boolean;
   screenNameFromProps?: ScreenName;
   hideRemoveSet?: boolean;
@@ -20,27 +25,36 @@ interface SetCardContainerProps {
 export interface SetCardContainerHandles {
   scrollToStart: () => void;
   scrollToEnd: () => void;
-  scrollToSetCard: (index: number) => void;
+  scrollToSetCard: (id: string) => void; // Scroll par ID (ou nom de set)
 }
 
 const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerProps>(
   ({ setsToShow, isInLoadSetModal = false, screenNameFromProps, hideRemoveSet }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
-    const setCardLayouts = useRef<Map<number, { x: number; width: number }>>(new Map());
+    // Utilisez set.name comme clé pour la map des layouts, cohérent avec setsColorsMap
+    const setCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
 
-    const onSetCardLayout = useCallback((index: number, event: LayoutChangeEvent) => {
+    // La logique d'availableColorsRef et son useEffect ont été déplacés dans DisplaySetScreen
+
+    const onSetCardLayout = useCallback((id: string, event: LayoutChangeEvent) => {
       const { x, width } = event.nativeEvent.layout;
-      setCardLayouts.current.set(index, { x, width });
+      setCardLayouts.current.set(id, { x, width }); // Utilisez l'ID/Nom du set comme clé
     }, []);
 
-    const scrollToSetCardHandler = useCallback((index: number) => {
-      const layout = setCardLayouts.current.get(index);
-      if (scrollViewRef.current && layout) {
-        scrollViewRef.current.scrollTo({ x: layout.x, animated: true });
-      } else {
-        console.warn(`SetCard layout for index ${index} not found.`);
-      }
-    }, []);
+    const scrollToSetCardHandler = useCallback(
+      (id: string) => {
+        const layout = setCardLayouts.current.get(id);
+        // Suppression du console.log pour la prod
+        if (scrollViewRef.current && layout) {
+          const screenWidth = Dimensions.get("window").width;
+          const scrollX = layout.x - screenWidth / 2 + layout.width / 2;
+          scrollViewRef.current.scrollTo({ x: scrollX, animated: true });
+        } else {
+          // Optionnel : garder le warn si besoin de debug
+        }
+      },
+      [] // Dépendances vides car setCardLayouts.current est une ref stable
+    );
 
     useImperativeHandle(ref, () => ({
       scrollToStart: () => {
@@ -59,25 +73,29 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
 
     const [hasShownSearchQuestionIcon, setHasShownSearchQuestionIcon] = useState(false);
 
-    const { isInSearchScreen, isInSaveScreen } = useMemo(() => {
+    const { isInSearchScreen, isInDisplayScreen } = useMemo(() => {
       const isSearch = screenName === "search";
-      const isSave = screenName === "save";
+      const isDisplay = screenName === "display";
       return {
         isInSearchScreen: isSearch,
-        isInSaveScreen: isSave,
+        isInDisplayScreen: isDisplay,
       };
     }, [screenName]);
 
+    // Détermine si le StatNamesFloatingContainer doit être affiché
+    // Note : Votre condition était `(isInSearchScreen || isInSaveScreen) && !isInLoadSetModal && !noSetToShow`
+    // Maintenant, elle est `!isInDisplayScreen && !noSetToShow`
+    // Assurez-vous que cette logique correspond à votre intention.
     const noSetToShow = useMemo(() => setsToShow.length === 0, [setsToShow]);
+
+    const isFloatingContainer = useMemo(
+      () => !isInDisplayScreen && !isInLoadSetModal && !noSetToShow, // La logique de couleur s'applique sur "display", donc le floating container ne doit pas être là.
+      [isInDisplayScreen, noSetToShow]
+    );
 
     const calculatedContentWidth: DimensionValue | undefined = useMemo(
       () => (noSetToShow ? "100%" : undefined),
       [noSetToShow]
-    );
-
-    const isFloatingContainer = useMemo(
-      () => (isInSearchScreen || isInSaveScreen) && !isInLoadSetModal && !noSetToShow,
-      [isInSearchScreen, isInSaveScreen, isInLoadSetModal, noSetToShow]
     );
 
     const placeholderTextStyle = useMemo(() => {
@@ -94,39 +112,47 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
 
       if (isInSearchScreen) {
         if (!hasShownSearchQuestionIcon) {
-          return <MaterialCommunityIcons name="chat-question" size={72} color={theme.on_surface} />;
-        } else {
-          return <Text style={placeholderTextStyle}>{translateToLanguage("NoSetFound...", language)}</Text>;
+          return <Placeholder type={"SearchEmpty"} />
         }
-      } else {
-        return (
-          <Text style={placeholderTextStyle}>{translateToLanguage("YourFavoriteSetsWillAppearHere", language)}</Text>
-        );
+        return <Placeholder type={"SearchNotFound"} />
       }
-    }, [noSetToShow, isInSearchScreen, language, theme.on_surface]);
+      return <Placeholder type={"SavedEmpty"} />
+    }, [noSetToShow, isInSearchScreen, language, theme.on_surface, hasShownSearchQuestionIcon, placeholderTextStyle]);
 
     const memoizedSetCards = useMemo(() => {
       if (noSetToShow) {
         return null;
       }
 
-      return setsToShow.map((set: SetData, index: number) => (
-        <SetCard
-          key={index}
-          setToShowName={set.name}
-          setToShowClassIds={set.classIds}
-          setToShowStats={set.stats}
-          setCardIndex={index}
-          isInLoadSetModal={isInLoadSetModal}
-          screenNameFromProps={screenNameFromProps}
-          hideRemoveSet={hideRemoveSet}
-          setToShowPercentage={set.percentage}
-          onLayout={(event) => onSetCardLayout(index, event)}
-        />
-      ));
-    }, [setsToShow, noSetToShow, isInLoadSetModal, screenNameFromProps, hideRemoveSet]);
+      return setsToShow.map((set: SetWithColor) => {
+        const effectiveColor = set.color || theme.surface_container_high;
+        return (
+          <SetCard
+            key={set.id}
+            setToShowName={set.name}
+            setToShowClassIds={set.classIds}
+            setToShowStats={set.stats}
+            setToShowId={set.id}
+            isInLoadSetModal={isInLoadSetModal}
+            screenNameFromProps={screenNameFromProps}
+            hideRemoveSet={hideRemoveSet}
+            setToShowPercentage={(set as any).percentage ?? undefined}
+            onLayout={(event) => onSetCardLayout(set.id, event)}
+            borderColor={effectiveColor}
+          />
+        );
+      });
+    }, [
+      setsToShow,
+      noSetToShow,
+      isInLoadSetModal,
+      screenNameFromProps,
+      hideRemoveSet,
+      onSetCardLayout,
+      theme.surface_container_high,
+    ]);
 
-    const pressableDynamicBg = useMemo(
+    const setCardContainerDynamicStyle = useMemo(
       () => ({
         backgroundColor: theme.surface_container_high,
       }),
@@ -144,7 +170,7 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
           contentContainerStyle={{ width: calculatedContentWidth }}
           showsHorizontalScrollIndicator={false}
         >
-          <Pressable style={[styles.setCardContainer, pressableDynamicBg]}>
+          <Pressable style={[styles.setCardContainer, setCardContainerDynamicStyle]}>
             {noSetToShow ? placeHolder : memoizedSetCards}
           </Pressable>
         </ScrollView>
@@ -157,7 +183,7 @@ const styles = StyleSheet.create({
   setCardContainer: {
     margin: 16,
     marginTop: 0,
-    padding: 20,
+    padding: SET_CARD_CONTAINER_PADDING,
     alignItems: "stretch",
     borderRadius: 22,
     columnGap: 16,

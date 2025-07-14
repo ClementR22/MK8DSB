@@ -10,61 +10,48 @@ import { actionNamesList } from "./SetCard";
 import SetNameInput from "../textInput/SetNameInput";
 
 export interface SetCardHeaderProps {
-  isEditable: boolean;
+  isNameEditable: boolean;
   setToShowName: string;
-  setCardIndex: number;
+  setToShowId: string;
   setToShowPercentage?: number;
   moreActionNamesList?: actionNamesList;
   situation: ScreenName | "load";
 }
 
-const SetCardHeader: React.FC<SetCardHeaderProps> = ({
-  isEditable,
-  setToShowName,
-  setCardIndex,
-  setToShowPercentage,
-  moreActionNamesList,
-  situation,
-}) => {
-  const theme = useThemeStore((state) => state.theme);
+const SetCardHeader: React.FC<SetCardHeaderProps> = React.memo(
+  ({ isNameEditable, setToShowName, setToShowId, setToShowPercentage, moreActionNamesList, situation }) => {
+    const theme = useThemeStore((state) => state.theme);
 
-  const percentageTextDynamicStyle = useMemo(
-    () => ({
-      color: theme.primary,
-    }),
-    [theme.primary]
-  );
+    const percentageTextDynamicStyle = useMemo(
+      () => ({
+        color: theme.primary,
+      }),
+      [theme.primary]
+    );
 
-  const bottomLineDynamicStyle = useMemo(
-    () => ({
-      borderColor: theme.on_surface,
-    }),
-    [theme.on_surface]
-  );
+    return (
+      <View style={styles.headerContainer}>
+        <View style={StyleSheet.flatten(styles.nameContainer)}>
+          <SetNameInput setToShowName={setToShowName} setToShowId={setToShowId} editable={isNameEditable} />
+        </View>
 
-  return (
-    <View style={styles.headerContainer}>
-      <View style={StyleSheet.flatten([styles.nameContainer, bottomLineDynamicStyle])}>
-        <SetNameInput setToShowName={setToShowName} setCardIndex={setCardIndex} editable={isEditable} />
-        {isEditable && <MaterialCommunityIcons name="pencil" size={16} color={theme.on_surface_variant} />}
+        {setToShowPercentage && (
+          <Text style={StyleSheet.flatten([styles.percentageText, percentageTextDynamicStyle])} numberOfLines={1}>
+            {setToShowPercentage}%
+          </Text>
+        )}
+
+        {moreActionNamesList && (
+          <SetCardMoreActionsButton
+            moreActionNamesList={moreActionNamesList}
+            setToShowId={setToShowId}
+            situation={situation}
+          />
+        )}
       </View>
-
-      {setToShowPercentage !== undefined && (
-        <Text style={StyleSheet.flatten([styles.percentageText, percentageTextDynamicStyle])} numberOfLines={1}>
-          {setToShowPercentage}%
-        </Text>
-      )}
-
-      {isEditable && (
-        <SetCardMoreActionsButton
-          moreActionNamesList={moreActionNamesList}
-          setCardIndex={setCardIndex}
-          situation={situation}
-        />
-      )}
-    </View>
-  );
-};
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -79,7 +66,6 @@ const styles = StyleSheet.create({
   nameContainer: {
     flexDirection: "row",
     flex: 1,
-    borderBottomWidth: 1,
     height: "100%",
     alignItems: "center",
     justifyContent: "space-between",
@@ -90,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(SetCardHeader);
+export default SetCardHeader;

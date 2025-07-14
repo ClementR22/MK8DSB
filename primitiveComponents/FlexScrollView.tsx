@@ -18,7 +18,7 @@ const FlexScrollView = ({
   justifyContent = "center",
   gap = 10,
   style,
-}) => {
+}: FlexScrollViewProps) => {
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const dynamicContentContainerStyle = useMemo(
@@ -42,6 +42,8 @@ const FlexScrollView = ({
     </ScrollView>
   );
 };
+
+FlexScrollView.displayName = "FlexScrollView";
 
 const styles = StyleSheet.create({
   container: {

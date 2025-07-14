@@ -5,13 +5,13 @@ import { getBonusColor } from "@/utils/getBonusColor";
 
 interface StatSliderCompactBarProps {
   value: number;
-  chosenValue: number | false;
-  isInSetCard: boolean;
+  chosenValue?: number | false;
+  isInSetCard?: boolean;
 }
 
 const MAX_VALUE = 6;
 
-const StatSliderCompactBar = ({ value, chosenValue, isInSetCard }: StatSliderCompactBarProps) => {
+const StatSliderCompactBar = ({ value, chosenValue = false, isInSetCard = false }: StatSliderCompactBarProps) => {
   const theme = useThemeStore((state) => state.theme);
   const [barWidth, setBarWidth] = useState(0);
 
@@ -28,8 +28,8 @@ const StatSliderCompactBar = ({ value, chosenValue, isInSetCard }: StatSliderCom
     () => (bonus > 0 ? getWidth(actualChosenValue) : getWidth(value)),
     [bonus, value, actualChosenValue, getWidth]
   );
-
-  const showValueInside = useMemo(() => value >= 1.5 && !isInSetCard, [value, isInSetCard]);
+  const showValueInside = useMemo(() => value >= MAX_VALUE / 4 && !isInSetCard, [value, isInSetCard]);
+  const showValueOutside = useMemo(() => !showValueInside && !isInSetCard, [showValueInside, isInSetCard]);
 
   const barDynamicStyles = useMemo(
     () => ({
@@ -72,7 +72,7 @@ const StatSliderCompactBar = ({ value, chosenValue, isInSetCard }: StatSliderCom
           },
         ]}
       >
-        {isInSetCard ? (
+        {chosenValue ? (
           <View
             style={[
               styles.fill,
@@ -94,7 +94,7 @@ const StatSliderCompactBar = ({ value, chosenValue, isInSetCard }: StatSliderCom
       </View>
 
       {/* Valeur en dehors de la barre */}
-      {!showValueInside && !isInSetCard && (
+      {showValueOutside && (
         <Text style={StyleSheet.flatten([styles.valueLabel, styles.valueLabelOutsidePosition, valueLabelOutsideColor])}>
           {value}
         </Text>
@@ -105,7 +105,7 @@ const StatSliderCompactBar = ({ value, chosenValue, isInSetCard }: StatSliderCom
 
 const styles = StyleSheet.create({
   bar: {
-    width: "78%",
+    flex: 1,
     height: "100%",
     flexDirection: "row",
     borderRadius: 12,

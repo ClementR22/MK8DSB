@@ -2,11 +2,10 @@ import React, { useCallback } from "react";
 import { Checkbox } from "react-native-paper";
 import { translate } from "@/translations/translations";
 import { useThemeStore } from "@/stores/useThemeStore";
-import checkbox from "../styles/checkbox";
+import { StyleSheet } from "react-native";
 
 const PressableStat = ({ stat, toggleCheck, disabled }) => {
   const theme = useThemeStore((state) => state.theme);
-  const { text, container } = checkbox(theme);
 
   const toggleCheckWithName = useCallback(() => {
     toggleCheck(stat.name);
@@ -17,11 +16,23 @@ const PressableStat = ({ stat, toggleCheck, disabled }) => {
       label={translate(stat.name)}
       status={stat.checked ? "checked" : "unchecked"}
       onPress={toggleCheckWithName}
-      labelStyle={text}
-      style={container}
+      labelStyle={[styles.text, { color: theme.on_surface }]}
+      style={styles.container}
       disabled={disabled}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginLeft: 24,
+    marginRight: 14,
+    borderRadius: 24,
+  },
+  text: {
+    fontSize: 18,
+    marginVertical: 10,
+  },
+});
 
 export default React.memo(PressableStat);

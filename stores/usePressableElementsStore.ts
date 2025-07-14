@@ -1,16 +1,16 @@
 // usePressableElementsStore.ts
 import { create } from "zustand";
-import { category4Names } from "@/data/data";
-import { CategoryKey } from "@/data/elementsTypes";
+import { categories } from "@/data/elements/elementsData";
+import { Category } from "@/data/elements/elementsTypes";
 
-export type SelectedClassIds = {
+export type selectedClassIdsByCategory = {
   character: number;
   body: number;
   wheel: number;
   glider: number;
 };
 
-export type MultiSelectedClassIds = {
+export type multiSelectedClassIdsByCategory = {
   character: Set<number>;
   body: Set<number>;
   wheel: Set<number>;
@@ -18,21 +18,23 @@ export type MultiSelectedClassIds = {
 };
 
 export type PressableElementsStore = {
-  selectedClassIds: SelectedClassIds;
-  multiSelectedClassIds: MultiSelectedClassIds;
-  getSelectedClassIds: (selectionMode: "single" | "multiple") => SelectedClassIds | MultiSelectedClassIds;
+  selectedClassIdsByCategory: selectedClassIdsByCategory;
+  multiSelectedClassIdsByCategory: multiSelectedClassIdsByCategory;
+  getSelectedClassIds: (
+    selectionMode: "single" | "multiple"
+  ) => selectedClassIdsByCategory | multiSelectedClassIdsByCategory;
 
   isSetsListUpdated: boolean;
   setIsSetsListUpdated: (newIsSetsListUpdated: boolean) => void;
 
   updateSelectionFromSet: (setClassIds: number[]) => void;
 
-  selectElementsByClassId: (category: CategoryKey, classId: number) => void;
-  toggleMultiSelectElementsByClassId: (category: CategoryKey, elementId: number) => void;
+  selectElementsByClassId: (category: Category, classId: number) => void;
+  toggleMultiSelectElementsByClassId: (category: Category, elementId: number) => void;
 };
 
-const defaultSingleSelection: SelectedClassIds = { character: 9, body: 16, wheel: 30, glider: 39 };
-const defaultMultiSelection: MultiSelectedClassIds = {
+const defaultSingleSelection: selectedClassIdsByCategory = { character: 9, body: 16, wheel: 30, glider: 39 };
+const defaultMultiSelection: multiSelectedClassIdsByCategory = {
   character: new Set(),
   body: new Set(),
   wheel: new Set(),
@@ -40,14 +42,14 @@ const defaultMultiSelection: MultiSelectedClassIds = {
 };
 
 const usePressableElementsStore = create<PressableElementsStore>((set, get) => ({
-  selectedClassIds: { ...defaultSingleSelection },
-  multiSelectedClassIds: { ...defaultMultiSelection },
+  selectedClassIdsByCategory: { ...defaultSingleSelection },
+  multiSelectedClassIdsByCategory: { ...defaultMultiSelection },
 
   getSelectedClassIds: (selectionMode) => {
     if (selectionMode === "single") {
-      return get().selectedClassIds;
+      return get().selectedClassIdsByCategory;
     } else {
-      return get().multiSelectedClassIds;
+      return get().multiSelectedClassIdsByCategory;
     }
   },
 
@@ -58,31 +60,41 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
   },
 
   updateSelectionFromSet: (setClassIds) => {
-    set(() => {
-      const newSelected: SelectedClassIds = {
+    set((state) => {
+      const newSelected: selectedClassIdsByCategory = {
         character: null,
         body: null,
         wheel: null,
         glider: null,
       };
 
-      category4Names.forEach((catName, index) => {
-        newSelected[catName as CategoryKey] = setClassIds[index];
+      categories.forEach((catName, index) => {
+        newSelected[catName as Category] = setClassIds[index];
       });
 
-      return {
-        selectedClassIds: newSelected,
-        isSetsListUpdated: false,
-      };
+      const areEqual =
+        state.selectedClassIdsByCategory.character === newSelected.character &&
+        state.selectedClassIdsByCategory.body === newSelected.body &&
+        state.selectedClassIdsByCategory.wheel === newSelected.wheel &&
+        state.selectedClassIdsByCategory.glider === newSelected.glider;
+
+      // Mettre à jour l'état UNIQUEMENT si le contenu a changé
+      if (!areEqual) {
+        return {
+          selectedClassIdsByCategory: newSelected,
+        };
+      } else {
+        return {}; // pour dire qu'il n'y a aucun changement
+      }
     });
   },
 
   selectElementsByClassId: (category, classId) => {
     set((state) => {
-      const currentSelected = state.selectedClassIds;
+      const currentSelected = state.selectedClassIdsByCategory;
 
       return {
-        selectedClassIds: {
+        selectedClassIdsByCategory: {
           ...currentSelected,
           [category]: classId,
         },
@@ -93,9 +105,9 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
 
   toggleMultiSelectElementsByClassId: (category, classId) => {
     set((state) => {
-      const newMultiSelectedClassIds = { ...state.multiSelectedClassIds };
+      const newMultiSelectedClassIdsByCategory = { ...state.multiSelectedClassIdsByCategory };
 
-      const newCategorySet = new Set(newMultiSelectedClassIds[category]);
+      const newCategorySet = new Set(newMultiSelectedClassIdsByCategory[category]);
 
       if (newCategorySet.has(classId)) {
         newCategorySet.delete(classId);
@@ -103,10 +115,10 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
         newCategorySet.add(classId);
       }
 
-      newMultiSelectedClassIds[category] = newCategorySet;
+      newMultiSelectedClassIdsByCategory[category] = newCategorySet;
 
       return {
-        multiSelectedClassIds: newMultiSelectedClassIds,
+        multiSelectedClassIdsByCategory: newMultiSelectedClassIdsByCategory,
       };
     });
   },

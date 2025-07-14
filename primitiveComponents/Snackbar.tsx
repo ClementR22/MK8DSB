@@ -3,11 +3,10 @@
  */
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { StyleSheet } from "react-native";
 import { Snackbar as PaperSnackbar } from "react-native-paper";
-
 import SnackbarManager from "@/utils/SnackbarManager";
 import { useThemeStore } from "@/stores/useThemeStore";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 type State = {
   visible: boolean;
@@ -18,6 +17,7 @@ type State = {
 
 const Snackbar = () => {
   const theme = useThemeStore((state) => state.theme);
+  const tabBarHeight = useGeneralStore((state) => state.tabBarHeight);
   const [state, setState] = useState<State>({ visible: false, key: 0 });
 
   const snackbarContentStyle = useMemo(
@@ -54,6 +54,7 @@ const Snackbar = () => {
       visible={state.visible}
       onDismiss={handleDismiss}
       duration={2000}
+      wrapperStyle={{ paddingBottom: tabBarHeight }}
     >
       {state.title}
     </PaperSnackbar>

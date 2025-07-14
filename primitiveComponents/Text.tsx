@@ -28,4 +28,6 @@ const Text = ({ children, style, ...props }) => {
   );
 };
 
+Text.displayName = "Text";
+
 export default React.memo(Text);

@@ -24,3 +24,16 @@ export const Colors = {
     tabIconSelected: tintColorDark,
   },
 };
+
+export const SET_CARD_COLOR_PALETTE = [
+  "#E74C3C", // Rouge Écarlate
+  "#3498DB", // Bleu Ciel Profond
+  "#2ECC71", // Vert Émeraude
+  "#9B59B6", // Violet Améthyste
+  "#F1C40F", // Jaune Vif
+  "#1ABC9C", // Turquoise
+  "#E67E22", // Orange Cuivré
+  "#E84393", // Rose Fuschia
+  "#27AE60", // Vert Forêt
+  "#2C3E50", // Bleu Nuit
+];

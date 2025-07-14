@@ -22,14 +22,15 @@ const MAX_VALUE = 6;
 const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber }: StatSliderContentProps) => {
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
-
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
   const updateStatValue = useSetsStore((state) => state.updateStatValue);
-
   const [tempValue, setTempValue] = useState(value);
 
+  // Mémoïsation stricte des handlers
   const onValueChange = useCallback(([v]: [number]) => setTempValue(v), []);
-  const onSlidingStart = useCallback(() => setIsScrollEnable(false), [setIsScrollEnable]);
+  const onSlidingStart = useCallback(() => {
+    setIsScrollEnable(false);
+  }, [setIsScrollEnable]);
   const onSlidingComplete = useCallback(
     ([v]: [number]) => {
       if (v !== value) {
@@ -37,7 +38,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
       }
       setIsScrollEnable(true);
     },
-    [updateStatValue, name, setIsScrollEnable]
+    [updateStatValue, name, setIsScrollEnable, value]
   );
 
   useEffect(() => {
@@ -46,60 +47,33 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
     }
   }, [value]);
 
-  const memoizedBorderColor = useMemo(
+  // Mémoïsation stricte des styles
+  const borderColorDynamicStyle = useMemo(
     () => getStatSliderBorderColor(statFilterNumber, theme),
     [statFilterNumber, theme]
   );
-
-  const innerContainerDynamicStyles = useMemo(
+  const containerDynamicStyle = useMemo(
     () => ({
       backgroundColor: theme.surface,
-      borderColor: memoizedBorderColor,
+      borderColor: borderColorDynamicStyle,
     }),
-    [theme.surface, memoizedBorderColor]
+    [theme.surface, borderColorDynamicStyle]
   );
-
-  const textColorStyle = useMemo(
-    () => ({
-      color: theme.on_surface,
-    }),
-    [theme.on_surface]
-  );
-
-  const minimumTrackDynamicStyle = useMemo(
-    () => ({
-      backgroundColor: theme.primary,
-    }),
-    [theme.primary]
-  );
-
+  const textColorStyle = useMemo(() => ({ color: theme.on_surface }), [theme.on_surface]);
+  const minimumTrackDynamicStyle = useMemo(() => ({ backgroundColor: theme.primary }), [theme.primary]);
   const maximumTrackDynamicStyle = useMemo(
-    () => ({
-      backgroundColor: theme.secondary_container,
-    }),
+    () => ({ backgroundColor: theme.secondary_container }),
     [theme.secondary_container]
   );
 
-  // --- NOUVEAU: Style pour le conteneur du thumb (la partie blanche) ---
-  const thumbWrapperDynamicStyle = useMemo(
-    () => ({
-      backgroundColor: theme.surface, // Ou 'white' si tu veux un blanc fixe
-    }),
-    [theme.surface]
-  );
-
-  // --- NOUVEAU: Style pour le thumb intérieur (la partie violette) ---
-  const thumbDynamicStyle = useMemo(
-    () => ({
-      backgroundColor: theme.primary, // La couleur du thumb
-    }),
-    [theme.primary]
-  );
-
+  // Mémoïsation du label traduit
   const translatedName = useMemo(() => translateToLanguage(name, language), [name, language]);
   const translatedSeparator = useMemo(() => translateToLanguage(":", language), [language]);
 
-  // --- NOUVEAU: Fonction pour rendre un thumb personnalisé ---
+  // Styles dynamiques pour le thumb du slider
+  const thumbWrapperDynamicStyle = useMemo(() => ({ backgroundColor: theme.surface }), [theme.surface, theme.primary]);
+  const thumbDynamicStyle = useMemo(() => ({ backgroundColor: theme.primary }), [theme.primary]);
+
   const renderCustomThumb = useCallback(
     () => (
       <View style={[styles.thumbWrapper, thumbWrapperDynamicStyle]}>
@@ -112,7 +86,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
   return (
     <TooltipWrapper
       tooltipText="DefineAValue"
-      style={StyleSheet.flatten([styles.container, innerContainerDynamicStyles])}
+      style={[styles.container, containerDynamicStyle]}
       innerContainerStyle={styles.innerContainer}
     >
       <View style={styles.containerLeft}>
@@ -125,21 +99,20 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
           </Text>
         </View>
 
-        <View style={styles.sliderContainer}>
-          <Slider
-            value={tempValue}
-            onValueChange={onValueChange}
-            onSlidingStart={onSlidingStart}
-            onSlidingComplete={onSlidingComplete}
-            minimumValue={0}
-            maximumValue={MAX_VALUE}
-            step={0.25}
-            trackStyle={styles.track}
-            renderThumbComponent={renderCustomThumb}
-            minimumTrackStyle={StyleSheet.flatten([styles.minimumTrack, minimumTrackDynamicStyle])}
-            maximumTrackStyle={StyleSheet.flatten([styles.maximumTrack, maximumTrackDynamicStyle])}
-          />
-        </View>
+        <Slider
+          containerStyle={styles.sliderContainer}
+          value={tempValue}
+          onValueChange={onValueChange}
+          onSlidingStart={onSlidingStart}
+          onSlidingComplete={onSlidingComplete}
+          minimumValue={0}
+          maximumValue={MAX_VALUE}
+          step={0.25}
+          trackStyle={styles.track}
+          renderThumbComponent={renderCustomThumb}
+          minimumTrackStyle={StyleSheet.flatten(minimumTrackDynamicStyle)}
+          maximumTrackStyle={StyleSheet.flatten(maximumTrackDynamicStyle)}
+        />
       </View>
 
       <View style={styles.containerRight}>
@@ -190,25 +163,16 @@ const styles = StyleSheet.create({
     height: 16,
     borderRadius: 100,
   },
-  minimumTrack: {
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
-  },
-  maximumTrack: {
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-  },
   thumbWrapper: {
-    width: 16, // Doit être plus large que le thumb intérieur
-    height: 36, // <--- C'EST LA LIGNE MANQUANTE QUI CAUSAIT L'ERREUR
-    justifyContent: "center", // Centrer le thumb intérieur verticalement
-    alignItems: "center", // Centrer le thumb intérieur horizontalement
-    borderRadius: 4, // Coins légèrement arrondis pour le conteneur blanc
+    width: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 4,
   },
   thumb: {
-    width: 4, // La largeur du thumb violet (comme ton design)
-    height: 36, // La hauteur du thumb violet (comme ton design)
-    borderRadius: 100, // Pour les coins très arrondis
+    width: 4,
+    height: 36,
+    borderRadius: 100,
   },
   text: {
     fontSize: 20,

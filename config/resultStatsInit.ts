@@ -1,4 +1,4 @@
-import { statNames } from "@/data/data";
+import { statNames } from "@/data/stats/statsData";
 import { ResultStats } from "@/contexts/ResultStatsContext";
 
 const resultStatsConfig: Record<string, boolean> = {

@@ -7,7 +7,7 @@ import { ScreenName } from "@/contexts/ScreenContext";
 
 interface SetCardActionButtonsProps {
   actionNamesList: actionNamesList;
-  setCardIndex: number;
+  setToShowId: string;
   situation: ScreenName | "load";
   isSaved: boolean;
   handleEditPress: () => void;
@@ -15,18 +15,12 @@ interface SetCardActionButtonsProps {
 
 const SetCardActionButtons: React.FC<SetCardActionButtonsProps> = ({
   actionNamesList,
-  setCardIndex,
+  setToShowId,
   situation,
   isSaved,
   handleEditPress,
 }) => {
-  const actionIconPropsList = useActionIconPropsList(
-    actionNamesList,
-    setCardIndex,
-    situation,
-    handleEditPress,
-    isSaved
-  );
+  const actionIconPropsList = useActionIconPropsList(actionNamesList, setToShowId, situation, handleEditPress, isSaved);
 
   return (
     <BoxContainer flexDirection="row" key="displaySetActionButtonContainer" margin={0} justifyContent={"space-around"}>

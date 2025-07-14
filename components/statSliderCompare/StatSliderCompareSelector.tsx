@@ -1,143 +1,99 @@
-import React, { useState, useMemo, useCallback, memo } from "react";
+import React, { Dispatch, memo, SetStateAction, useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import { IconType } from "react-native-dynamic-vector-icons";
-import { ResultStats } from "@/contexts/ResultStatsContext";
-
-const reducedStatNames = ["speed", "acceleration", "weight", "handling", "traction", "miniTurbo"];
-const speedStatNames = ["close", "speedGround", "speedAntiGravity", "speedWater", "speedAir"];
-const handlingStatNames = ["close", "handlingGround", "handlingAntiGravity", "handlingWater", "handlingAir"];
+import { sortButtonsConfig } from "@/config/sortButtonsConfig"; // Import merged config
+import { StatNameCompare } from "@/data/stats/statsTypes"; // Import StatName type
+import { statNamesCompareDefault, statNamesHandling, statNamesSpeed } from "@/data/stats/statsData";
 
 const BUTTON_SIZE = 40; // égal à ButtonIcon
-const NUMBER_OF_SLOTS = 6;
+const NUMBER_OF_SLOTS = 6; // Nombre de slots fixes pour les boutons
 
 interface StatSliderCompareSelectorProps {
-  handleSelectCompareStat: (name: string) => void;
+  selectedCompareName: StatNameCompare;
+  setSelectedCompareName: Dispatch<SetStateAction<StatNameCompare>>;
 }
 
-const StatSliderCompareSelector = ({ handleSelectCompareStat }: StatSliderCompareSelectorProps) => {
-  const theme = useThemeStore((state) => state.theme);
+const StatSliderCompareSelector: React.FC<StatSliderCompareSelectorProps> = memo(
+  ({ selectedCompareName, setSelectedCompareName }) => {
+    const theme = useThemeStore((state) => state.theme);
 
-  const statIconsList = useMemo(
-    () => ({
-      // ground :         tan         peru          goldenrod
-      // anti -grav :     indigo      blueviolet
-      // water :          steelblue   deepskyblue   dodgerblue
-      // air :            skyblue     lightblue     powderblue
-      close: { iconName: "close", iconType: IconType.AntDesign, iconBackgroundColor: theme.primary },
-      speed: { iconName: "speedometer", iconType: IconType.SimpleLineIcons, iconBackgroundColor: theme.primary },
-      speedGround: { iconName: "speedometer", iconType: IconType.SimpleLineIcons, iconBackgroundColor: "tan" },
-      speedAntiGravity: {
-        iconName: "speedometer",
-        iconType: IconType.SimpleLineIcons,
-        iconBackgroundColor: "blueviolet",
-      },
-      speedWater: { iconName: "speedometer", iconType: IconType.SimpleLineIcons, iconBackgroundColor: "dodgerblue" },
-      speedAir: { iconName: "speedometer", iconType: IconType.SimpleLineIcons, iconBackgroundColor: "powderblue" },
-      acceleration: {
-        iconName: "keyboard-double-arrow-up",
-        iconType: IconType.MaterialIcons,
-        iconBackgroundColor: theme.primary,
-      },
-      weight: {
-        iconName: "weight-gram",
-        iconType: IconType.MaterialCommunityIcons,
-        iconBackgroundColor: theme.primary,
-      },
-      handling: { iconName: "steering", iconType: IconType.MaterialCommunityIcons, iconBackgroundColor: theme.primary },
-      handlingGround: {
-        iconName: "steering",
-        iconType: IconType.MaterialCommunityIcons,
-        iconBackgroundColor: "tan",
-      },
-      handlingAntiGravity: {
-        iconName: "steering",
-        iconType: IconType.MaterialCommunityIcons,
-        iconBackgroundColor: "blueviolet",
-      },
-      handlingWater: {
-        iconName: "steering",
-        iconType: IconType.MaterialCommunityIcons,
-        iconBackgroundColor: "dodgerblue",
-      },
-      handlingAir: {
-        iconName: "steering",
-        iconType: IconType.MaterialCommunityIcons,
-        iconBackgroundColor: "powderblue",
-      },
-      traction: {
-        iconName: "car-traction-control",
-        iconType: IconType.MaterialCommunityIcons,
-        iconBackgroundColor: theme.primary,
-      },
-      miniTurbo: {
-        iconName: "rocket-launch-outline",
-        iconType: IconType.MaterialCommunityIcons,
-        iconBackgroundColor: theme.primary,
-      },
-    }),
-    [theme.primary]
-  );
+    // État local pour la liste des stats affichées
+    const [displayedNames, setDisplayedNames] = useState<StatNameCompare[]>(statNamesCompareDefault);
 
-  const [displayedNames, setDisplayedNames] = useState(reducedStatNames);
+    // Handler mémoïsé pour éviter les recréations inutiles
+    const handlePress = useCallback(
+      (name: StatNameCompare) => {
+        if (selectedCompareName === name) return;
+        switch (name) {
+          case "speed":
+            setDisplayedNames(statNamesSpeed);
+            break;
+          case "handling":
+            setDisplayedNames(statNamesHandling);
+            break;
+          case "close":
+            setDisplayedNames(statNamesCompareDefault);
+            break;
+          default:
+            setSelectedCompareName(name);
+            break;
+        }
+      },
+      [selectedCompareName, setSelectedCompareName]
+    );
 
-  const handlePress = useCallback(
-    (name: string) => {
-      switch (name) {
-        case "speed":
-          setDisplayedNames(speedStatNames);
-          break;
-        case "handling":
-          setDisplayedNames(handlingStatNames);
-          break;
-        case "close":
-          setDisplayedNames(reducedStatNames);
-          break;
-        default:
-          handleSelectCompareStat(name);
-          break;
-      }
-    },
-    [handleSelectCompareStat]
-  );
+    // Style du contour actif, constant
+    const buttonIconActiveStyle = useMemo(() => ({
+      // borderWidth: 10,
+      backgroundColor: theme.primary_container,
+      color: theme.on_primary_container,
+    }), []);
 
-  const displayedButtons = useMemo(() => {
-    const slots = Array.from({ length: NUMBER_OF_SLOTS });
+    // Génération mémoïsée des boutons affichés
+    const displayedButtons = useMemo(() => {
+      return Array.from({ length: NUMBER_OF_SLOTS }, (_, i) => {
+        const name = displayedNames[i];
+        if (name && sortButtonsConfig[name]) {
+          const iconConfig = sortButtonsConfig[name];
+          const { iconName, iconType } = iconConfig;
+          const iconBackgroundColor = iconConfig.iconBackgroundColor || theme.primary;
+          const isActive = selectedCompareName === name;
+          const buttonIconStyle = { backgroundColor: iconBackgroundColor };
 
-    return slots.map((_, index) => {
-      const name = displayedNames[index];
+          const finalStyle = StyleSheet.flatten([buttonIconStyle, isActive && buttonIconActiveStyle])
+          return (
+            <ButtonIcon
+              key={name}
+              onPress={() => handlePress(name)}
+              tooltipText={name}
+              iconName={iconName}
+              iconType={iconType}
+              style={finalStyle}
+            />
+          );
+        }
+        return <View key={`empty-${i}`} style={styles.buttonMissing} />;
+      });
+    }, [displayedNames, handlePress, selectedCompareName, buttonIconActiveStyle, theme.primary]);
 
-      if (name) {
-        const { iconName, iconType, iconBackgroundColor } = statIconsList[name];
-        return (
-          <ButtonIcon
-            key={name}
-            onPress={() => handlePress(name)}
-            tooltipText={name}
-            iconName={iconName}
-            iconType={iconType}
-            style={{ backgroundColor: iconBackgroundColor }}
-          />
-        );
-      } else {
-        return <View key={`empty-${index}`} style={styles.buttonMissing} />;
-      }
-    });
-  }, [displayedNames, statIconsList, handlePress]);
-
-  return <View style={styles.buttonRowContainer}>{displayedButtons}</View>;
-};
+    return <View style={styles.buttonRowContainer}>{displayedButtons}</View>;
+  }
+);
 
 const styles = StyleSheet.create({
   buttonRowContainer: {
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingHorizontal: 3, // Ajoute un peu de padding pour les bords
   },
   buttonMissing: {
     width: BUTTON_SIZE,
+    // Optionnel: ajouter un style de fond pour visualiser les slots manquants si besoin
+    // backgroundColor: 'rgba(0,0,0,0.1)',
+    // borderRadius: 5,
   },
 });
 
-export default memo(StatSliderCompareSelector);
+export default StatSliderCompareSelector;

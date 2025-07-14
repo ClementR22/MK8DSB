@@ -1,4 +1,5 @@
 export interface ThemeColor {
+  theme: string;
   primary: string;
   on_primary: string;
   primary_container: string;

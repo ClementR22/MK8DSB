@@ -5,13 +5,14 @@ import SetNameInputContent from "./SetNameInputContent";
 
 interface SetNameInputProps {
   setToShowName: string;
-  setCardIndex: number;
+  setToShowId: string;
   editable?: boolean;
 }
 
-const SetNameInput: React.FC<SetNameInputProps> = ({ setToShowName, setCardIndex, editable = true }) => {
+const SetNameInput: React.FC<SetNameInputProps> = ({ setToShowName, setToShowId, editable = true }) => {
   const screenName = useScreen();
   const renameSet = useSetsStore((state) => state.renameSet);
+  const checkNameUnique = useSetsStore((state) => state.checkNameUnique);
 
   const [localName, setLocalName] = useState(setToShowName);
 
@@ -19,14 +20,19 @@ const SetNameInput: React.FC<SetNameInputProps> = ({ setToShowName, setCardIndex
     if (!localName.trim()) {
       // si le nouveau nom est vide
       setLocalName(setToShowName); // on remet le nom initial
-      renameSet(setToShowName, screenName, setCardIndex);
+      renameSet(setToShowName, screenName, setToShowId);
     } else {
       if (localName !== setToShowName) {
         // si le nom a bien changé
-        renameSet(localName, screenName, setCardIndex);
+        const isNameUnique = checkNameUnique(localName, screenName);
+        if (isNameUnique) {
+          renameSet(localName, screenName, setToShowId);
+        } else {
+          setLocalName(setToShowName);
+        }
       }
     }
-  }, [localName, setToShowName, renameSet, screenName, setCardIndex]);
+  }, [localName, setToShowName, renameSet, screenName, setToShowId]);
 
   return (
     <SetNameInputContent
@@ -37,5 +43,7 @@ const SetNameInput: React.FC<SetNameInputProps> = ({ setToShowName, setCardIndex
     />
   );
 };
+
+SetNameInput.displayName = "SetNameInput";
 
 export default React.memo(SetNameInput);

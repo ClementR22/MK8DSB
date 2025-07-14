@@ -4,39 +4,32 @@ import { useThemeStore } from "@/stores/useThemeStore";
 
 interface StatSliderCompareBarProps {
   value: number;
+  color?: string;
   scrollToThisSetCard: () => void;
 }
 
 const MAX_STAT_VALUE = 6;
 
-const StatSliderCompareBar = ({ value, scrollToThisSetCard }: StatSliderCompareBarProps) => {
+const StatSliderCompareBar = ({ value, color, scrollToThisSetCard }: StatSliderCompareBarProps) => {
   const theme = useThemeStore((state) => state.theme);
 
+  // Style du fond de la piste, dépendant du thème
   const sliderTrackDynamicBg = useMemo(
-    () => ({
-      backgroundColor: theme.surface_container_low,
-    }),
+    () => ({ backgroundColor: theme.surface_container_low }),
     [theme.surface_container_low]
   );
 
-  const primarySegmentColor = useMemo(
-    () => ({
-      backgroundColor: theme.primary,
-    }),
-    [theme.primary]
-  );
+  // Couleur principale du segment, dépend du color passé ou du thème
+  const primarySegmentColor = useMemo(() => ({ backgroundColor: color ?? theme.primary }), [theme.primary, color]);
 
+  // Largeur du segment intérieur, clampée et calculée une seule fois par changement de value
   const innerFillWidth = useMemo(() => {
     const clampedValue = Math.min(Math.max(value, 0), MAX_STAT_VALUE);
     return `${(clampedValue / MAX_STAT_VALUE) * 100}%`;
   }, [value]);
 
-  const textDynamicStyle = useMemo(
-    () => ({
-      color: theme.on_surface,
-    }),
-    [theme.on_surface]
-  );
+  // Style du texte dépendant du thème
+  const textDynamicStyle = useMemo(() => ({ color: theme.on_surface }), [theme.on_surface]);
 
   return (
     <Pressable style={styles.container} onPress={scrollToThisSetCard}>

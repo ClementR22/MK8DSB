@@ -1,24 +1,30 @@
 import React, { ReactElement, ReactNode, useCallback, useMemo } from "react";
 import { Modal as NativeModal, Pressable, StyleSheet, Text, View } from "react-native";
-import { vh } from "@/components/styles/theme";
 import { translate } from "@/translations/translations";
 import FlexContainer from "@/primitiveComponents/FlexContainer";
 import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-export const MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL = 24;
-
 interface ModalButtonProps {
-  text: string,
-  onPress: () => void,
-  tooltipText?: string,
-  buttonColor?: string,
-  buttonTextColor?: string,
+  text: string;
+  onPress: () => void;
+  tooltipText?: string;
+  buttonColor?: string;
+  buttonTextColor?: string;
 }
+
+export const MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL = 24;
 
 const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, buttonTextColor }: ModalButtonProps) => {
   return (
-    <Button buttonColor={buttonColor} buttonTextColor={buttonTextColor} elevation={12} onPress={onPress} minWidth={100} tooltipText={tooltipText}>
+    <Button
+      buttonColor={buttonColor}
+      buttonTextColor={buttonTextColor}
+      elevation={12}
+      onPress={onPress}
+      minWidth={100}
+      tooltipText={tooltipText}
+    >
       {translate(text)}
     </Button>
   );
@@ -56,21 +62,22 @@ const Modal = ({
 }: ModalProps) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const buttonContainerStyle = useMemo(
-    () => (theme.error),
-    [theme.error],
-  )
+  const buttonContainerStyle = useMemo(() => theme.error, [theme.error]);
 
-  const buttonTextStyle = useMemo(
-    () => (theme.on_error),
-    [theme.on_error],
-  )
+  const buttonTextStyle = useMemo(() => theme.on_error, [theme.on_error]);
 
   const containerBackgroundColorStyle = useMemo(
     () => ({
-      backgroundColor: theme.surface_container_high,
+      backgroundColor: theme.surface_container_highest,
     }),
-    [theme.surface_container_high]
+    [theme.surface_container_highest]
+  );
+
+  const contentColorStyle = useMemo(
+    () => ({
+      backgroundColor: theme.surface_container,
+    }),
+    [theme.surface_container]
   );
 
   const titleColorStyle = useMemo(
@@ -97,7 +104,14 @@ const Modal = ({
         const isSucces = secondButtonProps.onPress();
         if (closeAfterSecondButton || isSucces) setIsModalVisible(false);
       };
-      return <ModalButton buttonColor={buttonContainerStyle} buttonTextColor={buttonTextStyle} {...secondButtonProps} onPress={completedOnPress} />;
+      return (
+        <ModalButton
+          buttonColor={buttonContainerStyle}
+          buttonTextColor={buttonTextStyle}
+          {...secondButtonProps}
+          onPress={completedOnPress}
+        />
+      );
     }
     return null;
   }, [secondButton, secondButtonProps, closeAfterSecondButton, setIsModalVisible]);
@@ -120,6 +134,8 @@ const Modal = ({
       transparent={true} // Fond transparent
       visible={isModalVisible}
       onRequestClose={actualOnPressClose} // Ferme le modal
+      navigationBarTranslucent={true}
+      statusBarTranslucent={true}
       {...props}
     >
       <Pressable style={styles.background} onPress={handleBackgroundPress}>
@@ -127,9 +143,9 @@ const Modal = ({
           style={[styles.container, containerBackgroundColorStyle]}
           onStartShouldSetResponder={handleContainerResponder}
         >
-          {modalTitle && <Text style={styles.title_center}>{translate(modalTitle)}</Text>}
+          {modalTitle && <Text style={[styles.title_center, titleColorStyle]}>{translate(modalTitle)}</Text>}
 
-          <View style={styles.childrenContainer}>{children}</View>
+          <View style={[styles.childrenContainer, contentColorStyle]}>{children}</View>
 
           <FlexContainer flexDirection={buttonContainerFlexDirection} style={styles.buttonContainer}>
             {renderSecondButton()}
@@ -157,12 +173,14 @@ const styles = StyleSheet.create({
     zIndex: 10,
     // cursor: "auto", // Web-specific. RN ignores.
     width: "90%",
+    maxWidth: 360,
     borderRadius: 28,
-    paddingVertical: 24,
+    paddingVertical: 12,
   },
   childrenContainer: {
-    maxHeight: 0.6 * vh, // vh must be correctly calculated and stable
-    paddingHorizontal: MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL,
+    paddingHorizontal: 0,
+    marginHorizontal: 10,
+    borderRadius: 28
   },
   title_center: {
     alignSelf: "center",
@@ -170,11 +188,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     fontSize: 22,
     fontWeight: "400", // fontWeight should be a string in RN
-    marginBottom: 0,
+    marginBottom: 12,
     // fontFamily: "Roboto", // Ensure this font is loaded. If not, it falls back to default.
   },
   buttonContainer: {
-    // marginTop: 10, // Consider adding this dynamically if needed
+    marginTop: 10, // Consider adding this dynamically if needed
   },
 });
 
