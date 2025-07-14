@@ -51,56 +51,52 @@ const StatSliderCompactBarRelativeValue = ({ value, maxValue = 6 }: StatSliderCo
       {/* Ligne noire centrale */}
       <View style={[styles.zeroLine, { left: barWidth / 2 - 1 }]} />
       {/* Fill principal */}
-      {true && (
-        <>
-          <View
-            style={[
-              styles.fill,
-              {
-                backgroundColor: fillBackgroundColor,
-                width: fillWidth,
+      <View
+        style={[
+          styles.fill,
+          {
+            backgroundColor: fillBackgroundColor,
+            width: fillWidth,
+          },
+          value > 0
+            ? { left: barWidth / 2, borderTopRightRadius: 12, borderBottomRightRadius: 12 }
+            : {
+                right: barWidth / 2,
+                borderTopLeftRadius: 12,
+                borderBottomLeftRadius: 12,
               },
-              value > 0
-                ? { left: barWidth / 2, borderTopRightRadius: 12, borderBottomRightRadius: 12 }
-                : {
-                    right: barWidth / 2,
-                    borderTopLeftRadius: 12,
-                    borderBottomLeftRadius: 12,
-                  },
-            ]}
+        ]}
+      >
+        {/* Valeur à l'intérieur de la barre */}
+        {showValueInside && (
+          <Text
+            style={StyleSheet.flatten([
+              styles.valueLabel,
+              valueLabelInsideColor,
+              value > 0 ? { right: -5 } : { left: 5 },
+            ])}
           >
-            {/* Valeur à l'intérieur de la barre */}
-            {showValueInside && (
-              <Text
-                style={StyleSheet.flatten([
-                  styles.valueLabel,
-                  valueLabelInsideColor,
-                  value > 0 ? { right: -5 } : { left: 5 },
-                ])}
-              >
-                {value > 0 ? `+${value}` : value}
-              </Text>
-            )}
-          </View>
+            {value > 0 ? `+${value}` : value}
+          </Text>
+        )}
+      </View>
 
-          {/* Valeur en dehors de la barre */}
-          {showValueOutside && (
-            <Text
-              style={StyleSheet.flatten([
-                styles.valueLabel,
-                valueLabelOutsideColor,
-                { position: "absolute" },
-                value > 0
-                  ? { left: barWidth / 2 + fillWidth + 2 }
-                  : value < 0
-                  ? { right: barWidth / 2 + fillWidth + 4 }
-                  : { left: barWidth / 2 + fillWidth + 6 },
-              ])}
-            >
-              {value > 0 ? `+${value}` : value}
-            </Text>
-          )}
-        </>
+      {/* Valeur en dehors de la barre */}
+      {showValueOutside && (
+        <Text
+          style={StyleSheet.flatten([
+            styles.valueLabel,
+            valueLabelOutsideColor,
+            { position: "absolute" },
+            value > 0
+              ? { left: barWidth / 2 + fillWidth + 2 }
+              : value < 0
+              ? { right: barWidth / 2 + fillWidth + 4 }
+              : { left: barWidth / 2 + fillWidth + 6 },
+          ])}
+        >
+          {value > 0 ? `+${value}` : value}
+        </Text>
       )}
     </View>
   );

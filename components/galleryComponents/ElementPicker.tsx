@@ -1,13 +1,12 @@
-import { ElementData } from "@/data/elements/elementsTypes";
-import { translateToLanguage } from "@/translations/translations";
 import {
   BORDER_RADIUS_12,
   ELEMENT_PICKER_LIST_IMAGE_SIZE,
   ELEMENT_PICKER_LIST_PADDING,
   LIST_ITEM_SPACING,
 } from "@/utils/designTokens";
-import React, { memo } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { memo, useMemo } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 interface ElementPickerProps {
   name: string;
@@ -20,28 +19,41 @@ interface ElementPickerProps {
 
 const ElementPicker: React.FC<ElementPickerProps> = memo(
   ({ name, imageUrl, onPress, isSelected, isCollapsed, style }) => {
+    const theme = useThemeStore((state) => state.theme);
+
+    const styles = useMemo(
+      () => ({
+        container: {
+          backgroundColor: isSelected ? theme.primary : theme.surface_container,
+          borderColor: theme.outline,
+        },
+        text: {
+          color: isSelected ? theme.on_primary : theme.on_surface,
+        },
+      }),
+      [theme, isSelected]
+    );
+
     // Pass theme to element item for consistent styling
     return (
-      <TouchableOpacity
-        style={[styles.container, style.containerDynamic]}
-        onPress={onPress}
-        activeOpacity={0.7} // Add a visual feedback for press
-      >
-        <View style={styles.imagePlaceholder}>
+      <Pressable style={[defaultStyles.container, styles.container, style.containerDynamic]} onPress={onPress}>
+        <View style={defaultStyles.imagePlaceholder}>
           {/* Placeholder background */}
-          <Image style={styles.image} source={imageUrl} resizeMode="contain" />
+          <Image style={defaultStyles.image} source={imageUrl} resizeMode="contain" />
         </View>
         {!isCollapsed && (
           <Text style={[styles.text, style.textDynamic]} numberOfLines={1}>
             {name}
           </Text>
         )}
-      </TouchableOpacity>
+      </Pressable>
     );
   }
 );
 
-const styles = StyleSheet.create({
+ElementPicker.displayName = "ElementPicker";
+
+const defaultStyles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",

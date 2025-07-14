@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useRef } from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { Animated, FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import StatSliderCompact from "../statSlider/StatSliderCompact";
 import { maxValues } from "@/data/classStats";
@@ -32,37 +32,41 @@ const ElementCard: React.FC<ElementCardProps> = memo(
     const maxValue = useMemo(() => maxValues[category], [category]);
     const isRelativeValue = useMemo(() => category !== "character", [category]);
 
-    const { containerDynamicStyle, textDynamicStyle } = useMemo(
+    const stylesDynamic = useMemo(
       () => ({
-        containerDynamicStyle: { borderColor: theme.surface_container, backgroundColor: theme.surface },
+        containerDynamicStyle: {
+          borderColor: theme.surface_container,
+          backgroundColor: theme.surface,
+        },
         textDynamicStyle: { color: theme.on_surface },
+        overlayStyle: {
+          backgroundColor: theme.surface_container,
+        },
       }),
       [theme]
     );
 
+    const renderStat = useCallback(
+      ({ name, value }: ElementStat) => (
+        <StatSliderCompact key={name} name={name} value={value} maxValue={maxValue} isRelativeValue={isRelativeValue} />
+      ),
+      [maxValue, isRelativeValue]
+    );
+
     return (
       <>
-        <View style={[styles.container, containerDynamicStyle]}>
+        <View style={[styles.container, stylesDynamic.containerDynamicStyle]}>
           <View style={styles.textWrapper}>
-            <Text style={[styles.text, textDynamicStyle]}>{name}</Text>
+            <Text style={[styles.text, stylesDynamic.textDynamicStyle]}>{name}</Text>
           </View>
           <FlatList
             data={stats}
             keyExtractor={(item) => item.name}
-            renderItem={({ item }) => (
-              <StatSliderCompact
-                name={item.name}
-                value={item.value}
-                isRelativeValue={isRelativeValue}
-                maxValue={maxValue}
-              />
-            )}
+            renderItem={({ item }) => renderStat(item)}
             contentContainerStyle={styles.flatListContent}
           />
         </View>
-
         <Animated.View style={[styles.overlay, { opacity: animatedOverlayOpacity }]}>
-          {/* Themed overlay */}
           <Pressable style={styles.flex} onPress={handleBackgroundPress} />
         </Animated.View>
       </>
@@ -99,5 +103,7 @@ const styles = StyleSheet.create({
   },
   flex: { flex: 1 },
 });
+
+ElementCard.displayName = "ElementCard";
 
 export default ElementCard;

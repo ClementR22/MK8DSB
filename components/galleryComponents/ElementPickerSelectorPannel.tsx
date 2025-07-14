@@ -1,34 +1,39 @@
-import React, { memo, useEffect, useRef } from "react";
+import React, { memo, useMemo } from "react";
 import { Animated, StyleSheet } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
-import {
-  BORDER_RADIUS_18,
-  CARD_SPACING,
-  LEFT_PANNEL_WIDTH_COLLAPSED,
-  LEFT_PANNEL_WIDTH_EXPANDED,
-  SHADOW_STYLE,
-} from "@/utils/designTokens";
+import { BORDER_RADIUS_18, CARD_SPACING, SHADOW_STYLE } from "@/utils/designTokens";
 
 interface ElementPickerSelectorPannelProps {
   animatedLeftPannelWidth: Animated.Value;
   children?: React.ReactNode;
 }
 
-const ElementPickerSelectorPannel: React.FC<ElementPickerSelectorPannelProps> = ({
-  animatedLeftPannelWidth,
-  children,
-}) => {
-  const theme = useThemeStore((state) => state.theme);
+const ElementPickerSelectorPannel: React.FC<ElementPickerSelectorPannelProps> = memo(
+  ({ animatedLeftPannelWidth, children }) => {
+    const theme = useThemeStore((state) => state.theme);
 
-  return (
-    <Animated.View style={[styles.leftPannel, { width: animatedLeftPannelWidth, backgroundColor: theme.surface }]}>
-      {children}
-    </Animated.View>
-  );
-};
+    const styles = useMemo(
+      () => ({
+        container: {
+          backgroundColor: theme.surface,
+          borderColor: theme.outline,
+        },
+      }),
+      [theme]
+    );
 
-const styles = StyleSheet.create({
-  leftPannel: {
+    return (
+      <Animated.View style={[defaultStyles.container, styles.container, { width: animatedLeftPannelWidth }]}>
+        {children}
+      </Animated.View>
+    );
+  }
+);
+
+ElementPickerSelectorPannel.displayName = "ElementPickerSelectorPannel";
+
+const defaultStyles = StyleSheet.create({
+  container: {
     borderTopEndRadius: BORDER_RADIUS_18, // Consistent radius
     borderEndEndRadius: BORDER_RADIUS_18,
     overflow: "hidden",
@@ -43,4 +48,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(ElementPickerSelectorPannel);
+export default ElementPickerSelectorPannel;

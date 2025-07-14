@@ -2,9 +2,9 @@ import { Category, ElementStats } from "./elements/elementsTypes";
 
 export const maxValues: Record<Category, number> = {
   character: 5,
-  body: 1,
-  wheel: 1,
-  glider: 1,
+  body: 2.5,
+  wheel: 2.5,
+  glider: 2.5,
 };
 
 export const baseStatsByClassId: { [key: number]: ElementStats } = {

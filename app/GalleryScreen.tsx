@@ -10,8 +10,7 @@ import { sortElements } from "@/utils/sortElements";
 import SortModeSelector from "@/components/elementCompactSelector/SortModeSelector";
 import { classesStatsByCategory } from "@/data/elements/elementsStats";
 import { statNames, statNamesCompact } from "@/data/stats/statsData";
-import { useThemeStore } from "@/stores/useThemeStore"; // Import theme store for main component styling
-import { CARD_SPACING, LEFT_PANNEL_WIDTH_COLLAPSED, LEFT_PANNEL_WIDTH_EXPANDED } from "@/utils/designTokens"; // Import design tokens
+import { LEFT_PANNEL_WIDTH_COLLAPSED, LEFT_PANNEL_WIDTH_EXPANDED } from "@/utils/designTokens"; // Import design tokens
 import { translateToLanguage } from "@/translations/translations";
 import ElementCard from "@/components/galleryComponents/ElementCard";
 import ElementPickerSelector from "@/components/galleryComponents/ElementPickerSelector";
@@ -26,7 +25,6 @@ const GalleryScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [sortNumber, setSortNumber] = useState(0);
 
-  const theme = useThemeStore((state) => state.theme); // Get theme for main component
   const language = useLanguageStore((state) => state.language); // Moved up to be a dependency
 
   const categoryElementsSorted = useMemo(
@@ -37,7 +35,7 @@ const GalleryScreen = () => {
   // Initialize selectedElementId to the first element of the initial category
   useEffect(() => {
     setSelectedElementId(categoryElementsSorted[0].id);
-  }, [categoryElementsSorted]);
+  }, [selectedCategory]);
 
   // Handle left pannel item press
   const handleElementPickerPress = (id: number) => {
