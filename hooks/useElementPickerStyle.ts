@@ -1,17 +1,17 @@
-// hooks/useItemCardStyles.ts
+// hooks/useElementPickerStyle.ts
 import { useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore"; // N'oublie pas d'importer useThemeStore
 
-interface ItemCardStyleProps {
+interface ElementPickerStyleProps {
   size: number;
 }
 
-export const useItemCardStyle = ({ size }: ItemCardStyleProps) => {
+export const useElementPickerStyle = ({ size }: ElementPickerStyleProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   // Calcule le style de la carte une seule fois
-  const itemCardDynamicStyle = useMemo(() => {
+  const elementPickerDynamicStyle = useMemo(() => {
     return StyleSheet.flatten([
       {
         // Styles de base communs à toutes les cartes
@@ -31,7 +31,7 @@ export const useItemCardStyle = ({ size }: ItemCardStyleProps) => {
   const activeBorderStyle = useMemo(() => [{ borderColor: theme.primary }], [theme.primary]);
 
   return {
-    itemCardDynamicStyle,
+    elementPickerDynamicStyle,
     activeBorderStyle,
   };
 };

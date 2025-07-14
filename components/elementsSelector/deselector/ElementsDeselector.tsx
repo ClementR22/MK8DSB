@@ -6,11 +6,11 @@ import { elementsGroupedByClassId } from "@/data/elements/elementsData";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { Pressable, ScrollView, View } from "react-native";
-import { useItemCardStyle } from "@/hooks/useItemCardStyle";
+import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import { translateToLanguage } from "@/translations/translations";
-import ItemCard from "../ItemCard";
+import ElementPicker from "../ElementPicker";
 import { PAGINATED_ELEMENTS_CONTAINER_PADDING } from "../selector/ElementsGrid";
 import useGeneralStore from "@/stores/useGeneralStore";
 
@@ -78,7 +78,7 @@ const ElementsDeselector: React.FC = () => {
     [theme.on_surface_variant]
   );
 
-  const { itemCardDynamicStyle: elementsCardDynamicStyle, activeBorderStyle } = useItemCardStyle({
+  const { elementPickerDynamicStyle: elementsCardDynamicStyle, activeBorderStyle } = useElementPickerStyle({
     size: ITEM_ELEMENT_WIDTH,
   }); // Passe la taille commune ici
 
@@ -98,13 +98,13 @@ const ElementsDeselector: React.FC = () => {
         <ScrollView ref={scrollViewRef} horizontal persistentScrollbar scrollEnabled={isScrollEnable}>
           <Pressable style={styles.elementsContainer}>
             {elementsToDisplay.map((item) => (
-              <ItemCard
+              <ElementPicker
                 key={item.name}
                 imageUrl={item.imageUrl}
                 name={item.name}
                 isSelected={true}
                 onPress={() => toggleMultiSelectElementsByClassId(item.category, item.classId)}
-                itemCardDynamicStyle={elementsCardDynamicStyle}
+                elementPickerDynamicStyle={elementsCardDynamicStyle}
                 activeBorderStyle={activeBorderStyle}
               />
             ))}

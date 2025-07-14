@@ -2,8 +2,8 @@ import { Category, ElementData } from "@/data/elements/elementsTypes";
 import React, { memo, useCallback } from "react";
 import { View, StyleSheet, Dimensions } from "react-native"; // Removed Dimensions
 import { MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL } from "@/primitiveComponents/Modal";
-import { useItemCardStyle } from "@/hooks/useItemCardStyle";
-import ItemCard from "../ItemCard";
+import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
+import ElementPicker from "../ElementPicker";
 
 interface ElementsGridProps {
   elements: ElementData[];
@@ -36,7 +36,7 @@ const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, 
     [selectedClassId]
   );
 
-  const { itemCardDynamicStyle, activeBorderStyle } = useItemCardStyle({ size: ITEM_WIDTH }); // Passe la taille commune ici
+  const { elementPickerDynamicStyle, activeBorderStyle } = useElementPickerStyle({ size: ITEM_WIDTH }); // Passe la taille commune ici
 
   return (
     // Removed Pressable from here, as it's typically for the entire grid to be clickable,
@@ -44,13 +44,13 @@ const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, 
     // its purpose should be clear. For a grid of items, a simple View is usually sufficient.
     <View style={styles.container}>
       {elements.map((element) => (
-        <ItemCard
+        <ElementPicker
           key={element.id}
           imageUrl={element.imageUrl}
           name={element.name}
           isSelected={calculateIsSelected(element.classId)}
           onPress={() => handleSelectElement(element.category, element.classId)}
-          itemCardDynamicStyle={itemCardDynamicStyle}
+          elementPickerDynamicStyle={elementPickerDynamicStyle}
           activeBorderStyle={activeBorderStyle}
         />
       ))}

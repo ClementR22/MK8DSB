@@ -1,6 +1,8 @@
 // utils/designTokens.ts
 
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+
+const { width: screenWidth } = Dimensions.get("window");
 
 // Spacing
 export const CARD_SPACING = 16;
@@ -40,3 +42,12 @@ export const SHADOW_STYLE_LIGHT = StyleSheet.create({
     elevation: 2,
   },
 }).shadow;
+
+export const ELEMENT_PICKER_LIST_PADDING = 3;
+export const ELEMENT_PICKER_LIST_IMAGE_SIZE = 50;
+
+// Largeurs définies pour la colonne de gauche
+export const LEFT_COLUMN_PADDING_HORIZONTAL = 10;
+export const LEFT_COLUMN_WIDTH_EXPANDED = screenWidth * 0.7; // 70% de la largeur de l'écran
+export const LEFT_COLUMN_WIDTH_COLLAPSED =
+  ELEMENT_PICKER_LIST_IMAGE_SIZE + 2 * ELEMENT_PICKER_LIST_PADDING + 2 * LEFT_COLUMN_PADDING_HORIZONTAL; // Slightly wider for the new design
