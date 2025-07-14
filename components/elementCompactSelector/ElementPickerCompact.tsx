@@ -3,7 +3,7 @@ import React, { memo } from "react";
 import { Image, StyleSheet } from "react-native";
 import TooltipWrapper from "../TooltipWrapper"; // Ajuste le chemin si besoin
 
-interface ElementPickerProps {
+interface ElementPickerCompactProps {
   // Propriétés spécifiques à l'élément affiché
   imageUrl: any; // source de l'image (peut être un number pour require(), ou une URI)
   name: string; // Nom de l'élément pour le tooltip
@@ -17,7 +17,7 @@ interface ElementPickerProps {
   activeBorderStyle: any; // Styles de la bordure active (quand isSelected est true)
 }
 
-const ElementPicker: React.FC<ElementPickerProps> = ({
+const ElementPickerCompact: React.FC<ElementPickerCompactProps> = ({
   imageUrl,
   name,
   isSelected,
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(ElementPicker);
+export default memo(ElementPickerCompact);

@@ -9,7 +9,7 @@ import {
 import React, { memo } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-interface ElementPickerListProps {
+interface ElementPickerProps {
   name: string;
   imageUrl: ReturnType<typeof require>;
   onPress: () => void;
@@ -18,7 +18,7 @@ interface ElementPickerListProps {
   style: any;
 }
 
-const ElementPickerList: React.FC<ElementPickerListProps> = memo(
+const ElementPicker: React.FC<ElementPickerProps> = memo(
   ({ name, imageUrl, onPress, isSelected, isCollapsed, style }) => {
     // Pass theme to element item for consistent styling
     return (
@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ElementPickerList;
+export default ElementPicker;

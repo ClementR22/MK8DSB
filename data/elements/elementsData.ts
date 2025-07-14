@@ -1127,23 +1127,23 @@ export const elementsData = [
   } as ElementDataGlider,
 ] as ElementData[];
 
-export const elementsDataCharacter: ElementDataCharacter[] = elementsData.filter(
+const elementsDataCharacter: ElementDataCharacter[] = elementsData.filter(
   (element): element is ElementDataCharacter => element.category === "character"
 );
 
-export const elementsDataBody: ElementDataBody[] = elementsData.filter(
+const elementsDataBody: ElementDataBody[] = elementsData.filter(
   (element): element is ElementDataBody => element.category === "body"
 );
 
-export const elementsDataWheel: ElementDataWheel[] = elementsData.filter(
+const elementsDataWheel: ElementDataWheel[] = elementsData.filter(
   (element): element is ElementDataWheel => element.category === "wheel"
 );
 
-export const elementsDataGlider: ElementDataGlider[] = elementsData.filter(
+const elementsDataGlider: ElementDataGlider[] = elementsData.filter(
   (element): element is ElementDataGlider => element.category === "glider"
 );
 
-export const ElementsDataAllCategory: {
+export const elementsDataByCategory: {
   [key in Category]: ElementData[];
 } = {
   character: elementsDataCharacter,
@@ -1152,18 +1152,18 @@ export const ElementsDataAllCategory: {
   glider: elementsDataGlider,
 };
 
-export const elementsGroupedByClassId = new Map<number, ElementData[]>();
+export const elementsDataByClassId = new Map<number, ElementData[]>();
 
 // Parcourir toutes les listes de catégories pour collecter tous les éléments
-Object.values(ElementsDataAllCategory).forEach((categoryList) => {
+Object.values(elementsDataByCategory).forEach((categoryList) => {
   categoryList.forEach((element) => {
     const groupId = element.classId; // Utilisation de 'classId' comme identifiant de groupe
 
     // Si cette 'groupId' (classId) n'a pas encore de tableau dans la Map, on en crée un
-    if (!elementsGroupedByClassId.has(groupId)) {
-      elementsGroupedByClassId.set(groupId, []);
+    if (!elementsDataByClassId.has(groupId)) {
+      elementsDataByClassId.set(groupId, []);
     }
     // Ajouter l'élément actuel au tableau correspondant à ce 'groupId'
-    elementsGroupedByClassId.get(groupId)?.push(element);
+    elementsDataByClassId.get(groupId)?.push(element);
   });
 });

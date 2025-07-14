@@ -6,10 +6,11 @@ import { Category } from "@/data/elements/elementsTypes";
 import {
   BORDER_RADIUS_18,
   CARD_SPACING,
-  LEFT_COLUMN_WIDTH_COLLAPSED,
+  LEFT_PANNEL_WIDTH_COLLAPSED,
   LIST_ITEM_SPACING,
   PADDING_HORIZONTAL,
 } from "@/utils/designTokens";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 type ElementStat = {
   name: string;
@@ -20,39 +21,30 @@ interface ElementCardProps {
   name: string;
   stats: ElementStat[];
   category: Category;
-  isLeftColumnExpanded: boolean;
+  animatedOverlayOpacity: Animated.Value;
   handleBackgroundPress: () => void;
-  style: any;
 }
 
 const ElementCard: React.FC<ElementCardProps> = memo(
-  ({ name, stats, category, isLeftColumnExpanded, handleBackgroundPress, style }) => {
+  ({ name, stats, category, animatedOverlayOpacity, handleBackgroundPress }) => {
+    const theme = useThemeStore((state) => state.theme);
+
     const maxValue = useMemo(() => maxValues[category], [category]);
     const isRelativeValue = useMemo(() => category !== "character", [category]);
 
-    const animatedOverlayOpacity = useRef(new Animated.Value(0)).current;
-
-    useEffect(() => {
-      if (isLeftColumnExpanded) {
-        Animated.timing(animatedOverlayOpacity, {
-          toValue: 1,
-          duration: 300,
-          useNativeDriver: false,
-        }).start(); // Overlay fades OUT when expanded
-      } else {
-        Animated.timing(animatedOverlayOpacity, {
-          toValue: 0,
-          duration: 300,
-          useNativeDriver: false,
-        }).start(); // Overlay fades IN when collapsed
-      }
-    }, [isLeftColumnExpanded, animatedOverlayOpacity]); // Add dependencies
+    const { containerDynamicStyle, textDynamicStyle } = useMemo(
+      () => ({
+        containerDynamicStyle: { borderColor: theme.surface_container, backgroundColor: theme.surface },
+        textDynamicStyle: { color: theme.on_surface },
+      }),
+      [theme]
+    );
 
     return (
       <>
-        <View style={[styles.container, style.containerDynamic]}>
+        <View style={[styles.container, containerDynamicStyle]}>
           <View style={styles.textWrapper}>
-            <Text style={[styles.text, style.textDynamic]}>{name}</Text>
+            <Text style={[styles.text, textDynamicStyle]}>{name}</Text>
           </View>
           <FlatList
             data={stats}
@@ -80,7 +72,7 @@ const ElementCard: React.FC<ElementCardProps> = memo(
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: LEFT_COLUMN_WIDTH_COLLAPSED + CARD_SPACING,
+    marginLeft: LEFT_PANNEL_WIDTH_COLLAPSED + CARD_SPACING,
     marginRight: CARD_SPACING,
     borderRadius: BORDER_RADIUS_18,
     borderWidth: 5,

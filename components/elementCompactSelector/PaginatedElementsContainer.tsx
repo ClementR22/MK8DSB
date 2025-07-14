@@ -11,9 +11,9 @@ export const ELEMENTS_PER_PAGE = 12;
 
 interface PaginatedElementSelectorProps {
   selectedCategory: Category;
-  setSelectedCategory: (newSelectedCategory: Category) => void;
+  onCategoryPress: (newSelectedCategory: Category) => void;
   categoryElements: ElementData[];
-  handleSelectElement: (category: Category, classId: number) => void;
+  onSelectElement: (category: Category, classId: number) => void;
   initialSelectedClassId: number | Set<number>;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -21,9 +21,9 @@ interface PaginatedElementSelectorProps {
 
 const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
   selectedCategory,
-  setSelectedCategory,
+  onCategoryPress,
   categoryElements,
-  handleSelectElement,
+  onSelectElement,
   initialSelectedClassId,
   currentPage,
   setCurrentPage,
@@ -47,12 +47,12 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
 
   return (
     <View style={containerStyle}>
-      <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+      <CategorySelector selectedCategory={selectedCategory} onCategoryPress={onCategoryPress} />
 
       <ElementsGrid
         elements={currentElements}
         selectedClassId={initialSelectedClassId}
-        handleSelectElement={handleSelectElement}
+        onSelectElement={onSelectElement}
       />
     </View>
   );

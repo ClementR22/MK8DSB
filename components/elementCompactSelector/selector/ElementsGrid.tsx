@@ -3,12 +3,12 @@ import React, { memo, useCallback } from "react";
 import { View, StyleSheet, Dimensions } from "react-native"; // Removed Dimensions
 import { MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL } from "@/primitiveComponents/Modal";
 import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
-import ElementPicker from "../ElementPicker";
+import ElementPicker from "../ElementPickerCompact";
 
 interface ElementsGridProps {
   elements: ElementData[];
   selectedClassId: Set<number> | number | null;
-  handleSelectElement: (category: Category, classId: number) => void;
+  onSelectElement: (category: Category, classId: number) => void;
 }
 
 export const PAGINATED_ELEMENTS_CONTAINER_PADDING = 6;
@@ -23,7 +23,7 @@ const ITEM_WIDTH =
     GAP * (NUM_COLUMNS - 1)) /
   NUM_COLUMNS;
 
-const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, handleSelectElement }) => {
+const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, onSelectElement }) => {
   const calculateIsSelected = useCallback(
     (classId: number) => {
       if (selectedClassId instanceof Set) {
@@ -49,7 +49,7 @@ const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, 
           imageUrl={element.imageUrl}
           name={element.name}
           isSelected={calculateIsSelected(element.classId)}
-          onPress={() => handleSelectElement(element.category, element.classId)}
+          onPress={() => onSelectElement(element.category, element.classId)}
           elementPickerDynamicStyle={elementPickerDynamicStyle}
           activeBorderStyle={activeBorderStyle}
         />

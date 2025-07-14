@@ -1,4 +1,4 @@
-// elementsSelector/selector/useCategorySelectorStyles.ts
+// elementCompactSelector/selector/useCategorySelectorStyles.ts
 
 import { StyleSheet } from "react-native";
 import { useMemo } from "react";

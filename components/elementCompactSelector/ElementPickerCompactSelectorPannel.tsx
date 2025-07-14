@@ -1,13 +1,8 @@
 import React, { useState, memo, useMemo, useEffect, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import PaginatedElementsContainer, { ELEMENTS_PER_PAGE } from "./PaginatedElementsContainer";
-import {
-  elementsDataBody,
-  elementsDataCharacter,
-  elementsDataGlider,
-  elementsDataWheel,
-} from "@/data/elements/elementsData";
-import { Category, ElementData } from "@/data/elements/elementsTypes";
+import { elementsDataByCategory } from "@/data/elements/elementsData";
+import { Category } from "@/data/elements/elementsTypes";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import SortModeSelector, { HALF_GAP } from "./SortModeSelector";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -19,23 +14,14 @@ import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import BodytypesSelector from "./selector/BodytypesSelector";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-const allCategoryElements: {
-  [key in Category]: ElementData[];
-} = {
-  character: elementsDataCharacter,
-  body: elementsDataBody,
-  wheel: elementsDataWheel,
-  glider: elementsDataGlider,
-};
-
-interface ElementsSelectorProps {
+interface ElementPickerCompactSelectorPannelProps {
   selectionMode?: "single" | "multiple";
   selectedBodytypes?: Set<Bodytype>;
   setSelectedBodytypes?: React.Dispatch<React.SetStateAction<Set<Bodytype>>>;
   children?: React.ReactNode;
 }
 
-const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
+const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorPannelProps> = ({
   selectionMode = "single",
   selectedBodytypes,
   setSelectedBodytypes,
@@ -48,7 +34,7 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
   const [sortNumber, setSortNumber] = useState(0);
 
   const categoryElementsSorted = useMemo(
-    () => sortElements(allCategoryElements[selectedCategory], sortNumber, language),
+    () => sortElements(elementsDataByCategory[selectedCategory], sortNumber, language),
     [selectedCategory, sortNumber, language]
   );
 
@@ -121,10 +107,10 @@ const ElementsSelectorPannel: React.FC<ElementsSelectorProps> = ({
 
       <PaginatedElementsContainer
         selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        onCategoryPress={setSelectedCategory}
         categoryElements={categoryElementsSorted}
         initialSelectedClassId={selectedClassId}
-        handleSelectElement={handleSelectElement}
+        onSelectElement={handleSelectElement}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
@@ -146,4 +132,4 @@ const styles = StyleSheet.create({
   bodytypeSelectorWrapper: { marginHorizontal: HALF_GAP },
 });
 
-export default memo(ElementsSelectorPannel);
+export default memo(ElementPickerCompactSelectorPannel);

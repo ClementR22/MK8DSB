@@ -1,4 +1,4 @@
-// elementsSelector/selector/CategorySelector.tsx
+// elementCompactSelector/selector/CategorySelector.tsx
 import { categories } from "@/data/elements/elementsData"; // Assumed to be a stable reference or memoized
 import { Category } from "@/data/elements/elementsTypes";
 import React, { memo, useMemo, useCallback } from "react"; // Import useCallback
@@ -9,7 +9,7 @@ import { categoryImageSources } from "@/data/categories/categoryImageSources";
 
 interface CategorySelectorProps {
   selectedCategory: Category;
-  setSelectedCategory: (category: Category) => void;
+  onCategoryPress: (category: Category) => void;
 }
 
 // Interface for memoized category options
@@ -18,7 +18,7 @@ interface MemoizedCategoryOption {
   imageUrl: any;
 }
 
-const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, setSelectedCategory }) => {
+const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, onCategoryPress }) => {
   const styles = useCategorySelectorStyles();
 
   // Memoize categoryOptions to prevent re-creation on every render
@@ -30,14 +30,6 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, s
     }));
   }, [categories, categoryImageSources]); // Dependencies for memoization
 
-  // Use useCallback for the onPress handler to provide a stable function reference
-  const handleCategoryPress = useCallback(
-    (categoryName: Category) => {
-      setSelectedCategory(categoryName);
-    },
-    [setSelectedCategory] // Dependency array: recreate if setSelectedCategory changes
-  );
-
   return (
     <View style={styles.container}>
       {/* Use specific expanded style */}
@@ -48,7 +40,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, s
           <TooltipWrapper
             key={category.name}
             tooltipText={category.name}
-            onPress={() => handleCategoryPress(category.name)} // Use the memoized handler
+            onPress={() => onCategoryPress(category.name)} // Use the memoized handler
             style={styles.buttonWrapper}
             innerContainerStyle={[
               styles.button,

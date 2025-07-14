@@ -12,8 +12,8 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
 import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModalStatSelectorChosenStats";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import ElementsSelectorPannel from "../elementsSelector/ElementsSelectorPannel";
-import ElementsDeselector from "../elementsSelector/deselector/ElementsDeselector";
+import ElementPickerCompactSelectorPannel from "../elementCompactSelector/ElementPickerCompactSelectorPannel";
+import ElementsDeselector from "../elementCompactSelector/deselector/ElementsDeselector";
 import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 import { SetFoundObject } from "@/stores/useSetsStore";
@@ -126,13 +126,13 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
           <ButtonIcon tooltipText="ChooseFilters" iconName="pin" iconType={IconType.MaterialCommunityIcons} />
         }
       >
-        <ElementsSelectorPannel
+        <ElementPickerCompactSelectorPannel
           selectionMode="multiple"
           selectedBodytypes={chosenBodytype}
           setSelectedBodytypes={setChosenBodytype}
         >
           <ElementsDeselector />
-        </ElementsSelectorPannel>
+        </ElementPickerCompactSelectorPannel>
       </ButtonAndModal>
 
       <Button onPress={search} iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>

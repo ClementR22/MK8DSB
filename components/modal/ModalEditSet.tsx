@@ -1,7 +1,7 @@
 import React, { memo, useCallback } from "react";
 import useModalsStore from "@/stores/useModalsStore";
 import Modal from "../../primitiveComponents/Modal";
-import ElementsSelectorPannel from "../elementsSelector/ElementsSelectorPannel";
+import ElementPickerCompactSelectorPannel from "../elementCompactSelector/ElementPickerCompactSelectorPannel";
 import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useSetsStore from "@/stores/useSetsStore";
@@ -37,7 +37,7 @@ const ModalEditSet: React.FC = () => {
       setIsModalVisible={setIsEditModalVisible}
       onClose={handleCloseEditModal}
     >
-      <ElementsSelectorPannel />
+      <ElementPickerCompactSelectorPannel />
     </Modal>
   );
 };

@@ -1,8 +1,8 @@
-// components/elementsSelector/ElementsDeselector.tsx
+// components/elementCompactSelector/ElementsDeselector.tsx
 import React, { memo, useEffect, useMemo, useRef } from "react";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { Category, ElementData } from "@/data/elements/elementsTypes";
-import { elementsGroupedByClassId } from "@/data/elements/elementsData";
+import { elementsDataByClassId } from "@/data/elements/elementsData";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { Pressable, ScrollView, View } from "react-native";
@@ -10,7 +10,7 @@ import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import { translateToLanguage } from "@/translations/translations";
-import ElementPicker from "../ElementPicker";
+import ElementPicker from "../ElementPickerCompact";
 import { PAGINATED_ELEMENTS_CONTAINER_PADDING } from "../selector/ElementsGrid";
 import useGeneralStore from "@/stores/useGeneralStore";
 
@@ -36,17 +36,17 @@ const ElementsDeselector: React.FC = () => {
       if (Object.prototype.hasOwnProperty.call(multiSelectedClassIdsStore, key)) {
         const classIdSet = multiSelectedClassIdsStore[key];
         classIdSet.forEach((classId: number) => {
-          const elementsInThisClass = elementsGroupedByClassId.get(classId);
+          const elementsInThisClass = elementsDataByClassId.get(classId);
           if (Array.isArray(elementsInThisClass)) {
             elementsToDisplayList = elementsToDisplayList.concat(elementsInThisClass);
           } else {
-            console.warn(`No array found for classId: ${classId} in elementsGroupedByClassId.`);
+            console.warn(`No array found for classId: ${classId} in elementsDataByClassId.`);
           }
         });
       }
     }
     return elementsToDisplayList;
-  }, [multiSelectedClassIdsStore, elementsGroupedByClassId]);
+  }, [multiSelectedClassIdsStore, elementsDataByClassId]);
 
   useEffect(() => {
     setTimeout(() => {
