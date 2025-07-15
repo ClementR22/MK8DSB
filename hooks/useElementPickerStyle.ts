@@ -22,7 +22,7 @@ export const useElementPickerStyle = ({ size }: ElementPickerStyleProps) => {
         alignItems: "center",
         backgroundColor: theme.surface_container_low,
         width: size,
-        height: size * 1.25,
+        height: size * 1.1,
       },
     ]);
   }, [theme.surface_container_low]); // Dépendances

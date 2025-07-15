@@ -1,9 +1,9 @@
 import { Category, ElementData } from "@/data/elements/elementsTypes";
 import React, { memo, useCallback } from "react";
 import { View, StyleSheet, Dimensions } from "react-native"; // Removed Dimensions
-import { MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL } from "@/primitiveComponents/Modal";
+import { MODAL_CHILDREN_CONTAINER_MARGIN_HORIZONTAL } from "@/primitiveComponents/Modal";
 import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
-import ElementPicker from "../ElementPickerCompact";
+import ElementPickerCompact from "../ElementPickerCompact";
 
 interface ElementsGridProps {
   elements: ElementData[];
@@ -18,7 +18,7 @@ const NUM_COLUMNS = 4;
 
 const ITEM_WIDTH =
   (screenWidth * 0.9 -
-    MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL * 2 -
+    MODAL_CHILDREN_CONTAINER_MARGIN_HORIZONTAL * 2 -
     PAGINATED_ELEMENTS_CONTAINER_PADDING * 2 -
     GAP * (NUM_COLUMNS - 1)) /
   NUM_COLUMNS;
@@ -44,7 +44,7 @@ const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, 
     // its purpose should be clear. For a grid of items, a simple View is usually sufficient.
     <View style={styles.container}>
       {elements.map((element) => (
-        <ElementPicker
+        <ElementPickerCompact
           key={element.id}
           imageUrl={element.imageUrl}
           name={element.name}

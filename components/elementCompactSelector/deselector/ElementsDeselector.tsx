@@ -1,7 +1,6 @@
 // components/elementCompactSelector/ElementsDeselector.tsx
 import React, { memo, useEffect, useMemo, useRef } from "react";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import { Category, ElementData } from "@/data/elements/elementsTypes";
 import { elementsDataByClassId } from "@/data/elements/elementsData";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -11,7 +10,6 @@ import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import { translateToLanguage } from "@/translations/translations";
 import ElementPicker from "../ElementPickerCompact";
-import { PAGINATED_ELEMENTS_CONTAINER_PADDING } from "../selector/ElementsGrid";
 import useGeneralStore from "@/stores/useGeneralStore";
 
 const ITEM_ELEMENT_WIDTH = 40;
@@ -119,17 +117,17 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
     overflow: "hidden",
-    padding: 2,
     gap: 2,
+    paddingBottom: ELEMENTS_CONTAINER_PADDING,
   },
   deselectorTitle: {
     fontSize: 16,
     fontWeight: "bold",
-    marginLeft: 5,
+    marginLeft: ELEMENTS_CONTAINER_PADDING,
     marginTop: 2,
   },
   noItemsText: {
-    height: ITEM_ELEMENT_WIDTH * 1.25 + PAGINATED_ELEMENTS_CONTAINER_PADDING,
+    height: ITEM_ELEMENT_WIDTH * 1.1,
     fontSize: 14,
     textAlign: "center",
     fontStyle: "italic",
@@ -138,7 +136,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 4,
     paddingHorizontal: ELEMENTS_CONTAINER_PADDING,
-    paddingBottom: ELEMENTS_CONTAINER_PADDING,
   },
 });
 

@@ -13,7 +13,7 @@ interface ModalButtonProps {
   buttonTextColor?: string;
 }
 
-export const MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL = 24;
+export const MODAL_CHILDREN_CONTAINER_MARGIN_HORIZONTAL = 10;
 
 const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, buttonTextColor }: ModalButtonProps) => {
   return (
@@ -179,8 +179,8 @@ const styles = StyleSheet.create({
   },
   childrenContainer: {
     paddingHorizontal: 0,
-    marginHorizontal: 10,
-    borderRadius: 28
+    marginHorizontal: MODAL_CHILDREN_CONTAINER_MARGIN_HORIZONTAL,
+    borderRadius: 28,
   },
   title_center: {
     alignSelf: "center",

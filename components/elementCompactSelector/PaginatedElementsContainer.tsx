@@ -1,6 +1,5 @@
 import React, { useMemo, memo, useEffect } from "react";
 import { StyleSheet, ViewStyle, StyleProp, View } from "react-native";
-
 import ElementsGrid, { PAGINATED_ELEMENTS_CONTAINER_PADDING } from "./selector/ElementsGrid";
 import { Category, ElementData } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
