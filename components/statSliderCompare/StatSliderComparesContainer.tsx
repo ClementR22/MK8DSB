@@ -1,15 +1,12 @@
-import React, { useMemo, useCallback, Dispatch, SetStateAction } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useMemo } from "react";
+import { StyleSheet } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-
-import BoxContainer from "@/primitiveComponents/BoxContainer";
 import HorizontalScrollContainer from "../setCard/HorizontalScrollContainer";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import { statNames } from "@/data/stats/statsData";
 import useSetsStore from "@/stores/useSetsStore";
 import StatSliderCompare from "./StatSliderCompare";
-import { SET_CARD_CONTAINER_PADDING } from "@/utils/designTokens";
 
 interface StatSliderComparesContainerProps {
   setsColorsMap: Map<string, string>;
@@ -22,7 +19,6 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
   scrollToSetCard,
 }) => {
   const theme = useThemeStore((state) => state.theme);
-  const language = useLanguageStore((state) => state.language);
   const { resultStats } = useResultStats();
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
 
@@ -51,8 +47,10 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
 
   return (
     <HorizontalScrollContainer
-      outerContainerStyle={{ margin: 10, borderRadius: 12 }}
-      innerContainerStyle={{ padding: 14 }}
+      outerContainerStyle={styles.outerContainerStyle}
+      defaultStyle={styles.defaultStyle}
+      middleContainerStyle={styles.middleContainerStyle}
+      innerContainerStyle={styles.innerContainerStyle}
       isScrollInside={true}
     >
       {memoizedStatSliderCompares}
@@ -61,28 +59,10 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    marginBottom: 10, // Espacement entre le tooltip et le sélecteur
-  },
-  innerContainer: {
-    alignItems: "flex-start",
-    padding: 10,
-    borderRadius: 12,
-  },
-  textContainer: {
-    marginBottom: 3, // Espacement entre le titre et les barres de stat
-    alignItems: "center", // Centrer le texte
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  statBarsContainer: {
-    width: "100%",
-    gap: 0,
-  },
+  outerContainerStyle: { margin: 10, marginTop: 0 },
+  defaultStyle: { borderRadius: 12 },
+  middleContainerStyle: { borderRadius: 12 },
+  innerContainerStyle: { padding: 12 },
 });
 
 export default React.memo(StatSliderComparesContainer);

@@ -104,7 +104,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   setsListSaved: [],
   setsListFound: [],
   setCardEditedId: null,
-  setKeyInDisplay: 1,
+  setKeyInDisplay: 2,
 
   setChosenStats: (newChosenStats) => {
     set({ chosenStats: newChosenStats });
@@ -295,7 +295,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
         : get().setsListSaved;
 
     const setsNames = targetList.map((set) => set.name);
-
     if (setsNames.includes(name)) {
       showToast("Erreur" + " " + "Ce nom de set existe déjà");
       return false;

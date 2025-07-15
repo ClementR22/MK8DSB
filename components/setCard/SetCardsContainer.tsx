@@ -158,7 +158,7 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
         <HorizontalScrollContainer
           ref={scrollViewRef}
           scrollEnabled={isScrollEnable}
-          outerContainerStyle={{ marginBottom: 10 }}
+          outerContainerStyle={{ marginBottom: 18 }}
           innerContainerStyle={{ marginHorizontal: 18, padding: SET_CARD_CONTAINER_PADDING, gap: 12, borderRadius: 22 }}
           defaultStyle={{ width: calculatedContentWidth }}
         >
