@@ -1,6 +1,14 @@
-import React, { useMemo, memo, useEffect, useRef } from "react";
-import { StyleSheet, ViewStyle, StyleProp, View, FlatList, Dimensions } from "react-native";
-import ElementsGrid, { PAGINATED_ELEMENTS_CONTAINER_PADDING } from "./selector/ElementsGrid";
+import React, { useMemo, memo, useEffect, useRef, useCallback } from "react";
+import {
+  StyleSheet,
+  ViewStyle,
+  StyleProp,
+  View,
+  FlatList,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from "react-native";
+import ElementsGrid, { ELEMENTS_GRID_WIDTH, PAGINATED_ELEMENTS_CONTAINER_PADDING } from "./selector/ElementsGrid";
 import { Category, ElementData } from "@/data/elements/elementsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
 import CategorySelector from "./selector/CategorySelector";
@@ -20,9 +28,6 @@ interface PaginatedElementSelectorProps {
   totalPages: number;
 }
 
-const { width: screenWidth } = Dimensions.get("window");
-const MODAL_WIDTH = screenWidth * 0.9; // Ou ta largeur réelle
-
 const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
   selectedCategory,
   onCategoryPress,
@@ -36,13 +41,10 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
   const themeSurface = useThemeStore((state) => state.theme.surface);
 
   const pages = useMemo(() => {
-    const allPages = [];
-    for (let i = 0; i < totalPages; i++) {
+    return Array.from({ length: totalPages }, (_, i) => {
       const start = i * ELEMENTS_PER_PAGE;
-      const end = start + ELEMENTS_PER_PAGE;
-      allPages.push(categoryElements.slice(start, end));
-    }
-    return allPages;
+      return categoryElements.slice(start, start + ELEMENTS_PER_PAGE);
+    });
   }, [categoryElements, totalPages]);
 
   const containerStyle = useMemo(
@@ -52,6 +54,10 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
 
   // Reset page si la catégorie change
   useEffect(() => {
+    flatListRef.current?.scrollToIndex({
+      index: 0,
+      animated: false,
+    });
     setCurrentPage(0);
   }, [selectedCategory]);
 
@@ -67,8 +73,8 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
     });
   }, [currentPage]);
 
-  const handleMomentumScrollEnd = (e: any) => {
-    const pageIndex = Math.round(e.nativeEvent.contentOffset.x / MODAL_WIDTH);
+  const handleMomentumScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const pageIndex = Math.round(e.nativeEvent.contentOffset.x / ELEMENTS_GRID_WIDTH);
 
     if (isManuallyScrolling.current) {
       // On ignore ce callback car on est en scroll programmé
@@ -79,6 +85,15 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
     }
   };
 
+  const getItemLayout = useCallback(
+    (data: unknown, index: number) => ({
+      length: ELEMENTS_GRID_WIDTH,
+      offset: ELEMENTS_GRID_WIDTH * index,
+      index,
+    }),
+    []
+  );
+
   return (
     <View style={containerStyle}>
       <CategorySelector selectedCategory={selectedCategory} onCategoryPress={onCategoryPress} />
@@ -86,15 +101,19 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
       <FlatList
         ref={flatListRef}
         data={pages}
+        getItemLayout={getItemLayout}
+        initialNumToRender={1} // Ne rendre que la première page initialement
+        maxToRenderPerBatch={2} // Limiter le nombre de pages rendues par batch
+        windowSize={3} // Garder +1 page en mémoire de chaque côté
+        removeClippedSubviews={true} // Recycler les vues hors écran (à tester)
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(_, index) => `page-${index}`}
+        keyExtractor={(_, index) => `${selectedCategory}-${index}`} // Ajouter la catégorie pour éviter des conflits
         renderItem={({ item }) => (
           <ElementsGrid elements={item} selectedClassId={initialSelectedClassId} onSelectElement={onSelectElement} />
         )}
         onMomentumScrollEnd={handleMomentumScrollEnd}
-        extraData={initialSelectedClassId}
       />
 
       <PagesNavigator currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />

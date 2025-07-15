@@ -17,7 +17,7 @@ const GAP = 5;
 const { width: screenWidth } = Dimensions.get("window");
 const NUM_COLUMNS = 4;
 
-const ELEMENTS_GRID_WIDTH =
+export const ELEMENTS_GRID_WIDTH =
   screenWidth * 0.9 - MODAL_CHILDREN_CONTAINER_MARGIN_HORIZONTAL * 2 - PAGINATED_ELEMENTS_CONTAINER_PADDING * 2;
 
 const ITEM_WIDTH = (ELEMENTS_GRID_WIDTH - GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
