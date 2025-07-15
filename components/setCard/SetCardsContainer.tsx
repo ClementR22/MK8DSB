@@ -1,34 +1,34 @@
 import React, { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
-import { Dimensions, DimensionValue, LayoutChangeEvent, Pressable, ScrollView, StyleSheet, View, } from "react-native";
+import { Dimensions, DimensionValue, LayoutChangeEvent, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import SetCard from "./SetCard";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import StatNamesFloatingContainer, {
-  SET_CARD_CONTAINER_PADDING,
-} from "../statSliderSetCard/StatNamesFloatingContainer";
+import StatNamesFloatingContainer from "../statSliderSetCard/StatNamesFloatingContainer";
 import { SetObject } from "@/stores/useSetsStore";
 import { Placeholder } from "@/components/Placeholder";
+import HorizontalScrollContainer from "./HorizontalScrollContainer";
+import { SET_CARD_CONTAINER_PADDING } from "@/utils/designTokens";
 
 interface SetWithColor extends SetObject {
   color?: string;
 }
 
-interface SetCardContainerProps {
+interface SetCardsContainerProps {
   setsToShow: SetWithColor[];
   isInLoadSetModal?: boolean;
   screenNameFromProps?: ScreenName;
   hideRemoveSet?: boolean;
 }
 
-export interface SetCardContainerHandles {
+export interface SetCardsContainerHandles {
   scrollToStart: () => void;
   scrollToEnd: () => void;
   scrollToSetCard: (id: string) => void; // Scroll par ID (ou nom de set)
 }
 
-const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerProps>(
+const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainerProps>(
   ({ setsToShow, isInLoadSetModal = false, screenNameFromProps, hideRemoveSet }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
     // Utilisez set.name comme clé pour la map des layouts, cohérent avec setsColorsMap
@@ -44,7 +44,6 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
     const scrollToSetCardHandler = useCallback(
       (id: string) => {
         const layout = setCardLayouts.current.get(id);
-        // Suppression du console.log pour la prod
         if (scrollViewRef.current && layout) {
           const screenWidth = Dimensions.get("window").width;
           const scrollX = layout.x - screenWidth / 2 + layout.width / 2;
@@ -112,11 +111,11 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
 
       if (isInSearchScreen) {
         if (!hasShownSearchQuestionIcon) {
-          return <Placeholder type={"SearchEmpty"} />
+          return <Placeholder type={"SearchEmpty"} />;
         }
-        return <Placeholder type={"SearchNotFound"} />
+        return <Placeholder type={"SearchNotFound"} />;
       }
-      return <Placeholder type={"SavedEmpty"} />
+      return <Placeholder type={"SavedEmpty"} />;
     }, [noSetToShow, isInSearchScreen, language, theme.on_surface, hasShownSearchQuestionIcon, placeholderTextStyle]);
 
     const memoizedSetCards = useMemo(() => {
@@ -152,49 +151,29 @@ const SetCardContainer = forwardRef<SetCardContainerHandles, SetCardContainerPro
       theme.surface_container_high,
     ]);
 
-    const setCardContainerDynamicStyle = useMemo(
-      () => ({
-        backgroundColor: theme.surface_container_high,
-      }),
-      [theme.surface_container_high]
-    );
-
     return (
       <View>
         {isFloatingContainer && <StatNamesFloatingContainer />}
 
-        <ScrollView
+        <HorizontalScrollContainer
           ref={scrollViewRef}
           scrollEnabled={isScrollEnable}
-          horizontal={true}
-          contentContainerStyle={{ width: calculatedContentWidth }}
-          showsHorizontalScrollIndicator={false}
+          outerContainerStyle={{ marginBottom: 10 }}
+          innerContainerStyle={{ marginHorizontal: 18, padding: SET_CARD_CONTAINER_PADDING, gap: 12, borderRadius: 22 }}
+          defaultStyle={{ width: calculatedContentWidth }}
         >
-          <Pressable style={[styles.setCardContainer, setCardContainerDynamicStyle]}>
-            {noSetToShow ? placeHolder : memoizedSetCards}
-          </Pressable>
-        </ScrollView>
+          {noSetToShow ? placeHolder : memoizedSetCards}
+        </HorizontalScrollContainer>
       </View>
     );
   }
 );
 
 const styles = StyleSheet.create({
-  setCardContainer: {
-    margin: 16,
-    marginTop: 0,
-    padding: SET_CARD_CONTAINER_PADDING,
-    alignItems: "stretch",
-    borderRadius: 22,
-    columnGap: 16,
-    flexDirection: "row",
-    flexGrow: 1,
-    justifyContent: "center",
-  },
   placeholderText: {
     fontSize: 18,
     textAlign: "center",
   },
 });
 
-export default memo(SetCardContainer);
+export default memo(SetCardsContainer);

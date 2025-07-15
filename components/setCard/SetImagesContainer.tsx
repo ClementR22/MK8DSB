@@ -5,7 +5,7 @@ import { elementsData } from "@/data/elements/elementsData";
 import TooltipWrapper from "../TooltipWrapper";
 import { vw } from "../styles/theme";
 import { Category } from "@/data/elements/elementsTypes";
-import { SET_CARD_WIDTH } from "@/hooks/useSetCardStyle";
+import { SET_CARD_WIDTH } from "@/utils/designTokens";
 
 const MODAL_WIDTH = vw * 0.9;
 const MAX_WIDTH_IN_MODAL = MODAL_WIDTH - 20;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ScrollView } from "react-native";
-import SetCardContainer from "@/components/setCard/SetCardContainer";
+import SetCardsContainer from "@/components/setCard/SetCardsContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import useSetsStore from "@/stores/useSetsStore";
@@ -24,7 +24,7 @@ const SavedSetScreen: React.FC = () => {
             <ButtonAndModalStatSelectorResultStats />
           </ScreenPressablesContainer>
 
-          <SetCardContainer setsToShow={setsListSaved} />
+          <SetCardsContainer setsToShow={setsListSaved} />
         </ScrollView>
       </ResultStatsProvider>
     </ScreenProvider>

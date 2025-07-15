@@ -48,7 +48,7 @@ const ElementsDeselector: React.FC = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      // besoin d'un delai pour prendre en compte la nouvelle taille de SetCardContainer
+      // besoin d'un delai pour prendre en compte la nouvelle taille de SetCardsContainer
       scrollViewRef?.current?.scrollToEnd();
     }, 50);
   }, [elementsToDisplay]);

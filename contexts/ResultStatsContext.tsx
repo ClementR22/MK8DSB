@@ -3,9 +3,10 @@ import { toggleCheckList } from "@/utils/toggleCheck";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import { resultStatsInit } from "@/config/resultStatsInit";
 import { deepCompareStatArrays } from "@/utils/deepCompare";
+import { StatName } from "@/data/stats/statsTypes";
 
 export type ResultStat = {
-  name: string;
+  name: StatName;
   checked: boolean;
 };
 

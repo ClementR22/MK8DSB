@@ -10,6 +10,7 @@ import StatSliderSetCardsContainer from "../statSliderSetCard/StatSliderSetCards
 import { arraysEqual } from "@/utils/deepCompare";
 import SetCardHeader, { SetCardHeaderProps } from "./SetCardHeader";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
+import { SET_CARD_WIDTH } from "@/utils/designTokens";
 
 export const SET_CARD_HEIGHT = 343;
 export const SET_CARD_STAT_SLIDER_GAP = 8;
@@ -148,7 +149,7 @@ const SetCard: React.FC<SetCardProps> = ({
     [config.isNameEditable, setToShowName, setToShowId, setToShowPercentage, config.moreActionNamesList, situation]
   );
 
-  const { setCardStyle } = useSetCardStyle();
+  const { setCardStyle } = useSetCardStyle(SET_CARD_WIDTH);
 
   const setCardCompleteStyle = useMemo(
     () => ({ ...setCardStyle, borderColor: borderColor }),

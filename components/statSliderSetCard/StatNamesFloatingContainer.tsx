@@ -9,8 +9,8 @@ import { SET_CARD_HEIGHT, SET_CARD_STAT_SLIDER_GAP } from "../setCard/SetCard";
 import { STAT_SLIDER_SET_CARDS_CONTAINER_GAP } from "./StatSliderSetCardsContainer";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 import { STAT_SLIDER_COMPACT_HEIGHT } from "../statSlider/StatSliderCompact";
+import { SET_CARD_CONTAINER_PADDING } from "@/utils/designTokens";
 
-export const SET_CARD_CONTAINER_PADDING = 20;
 const FIXED_NAME_LABEL_WIDTH = 40;
 
 const StatNamesFloatingContainer: React.FC = () => {
@@ -24,7 +24,7 @@ const StatNamesFloatingContainer: React.FC = () => {
     const filteredStats = resultStats?.filter((stat: ResultStat) => stat.checked) ?? [];
     const count = filteredStats.length;
 
-    const calculatedTopPosition = SET_CARD_CONTAINER_PADDING + +SET_CARD_HEIGHT + SET_CARD_STAT_SLIDER_GAP;
+    const calculatedTopPosition = SET_CARD_CONTAINER_PADDING + SET_CARD_HEIGHT + SET_CARD_STAT_SLIDER_GAP;
 
     const calculatedHeight =
       2 * setCardStyle.padding +
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     borderWidth: 1,
+    borderLeftWidth: 0,
     borderTopRightRadius: 12,
     borderBottomRightRadius: 12,
     zIndex: 10,

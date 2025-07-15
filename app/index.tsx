@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 // Components import
 import StatSlider from "@/components/statSlider/StatSlider";
 import { translate } from "@/translations/translations";
-import SetCardContainer from "@/components/setCard/SetCardContainer";
+import SetCardsContainer, { SetCardsContainerHandles } from "@/components/setCard/SetCardsContainer";
 import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
 import ButtonLoadSet from "@/components/managingSetsButton/ButtonLoadSet";
 import { ScreenProvider } from "@/contexts/ScreenContext";
@@ -22,7 +22,7 @@ import TabBarHeightUpdater from "@/components/TabBarHeightUpdater";
 
 const SearchSetScreen: React.FC = () => {
   const theme = useThemeStore((state) => state.theme);
-  const scrollRef = useRef<any>(null);
+  const scrollRef = useRef<SetCardsContainerHandles>(null);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const setsListFound = useSetsStore((state) => state.setsListFound);
@@ -78,7 +78,7 @@ const SearchSetScreen: React.FC = () => {
             <SearchSetScreenPressablesContainer scrollRef={scrollRef} />
           </FlexContainer>
 
-          <SetCardContainer ref={scrollRef} setsToShow={setsListFound} />
+          <SetCardsContainer ref={scrollRef} setsToShow={setsListFound} />
         </ScrollView>
         <TabBarHeightUpdater />
       </ResultStatsProvider>
