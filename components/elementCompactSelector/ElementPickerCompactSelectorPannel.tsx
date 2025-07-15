@@ -113,8 +113,8 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
         onSelectElement={handleSelectElement}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
       />
-      <PagesNavigator currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
     </>
   );
 };
