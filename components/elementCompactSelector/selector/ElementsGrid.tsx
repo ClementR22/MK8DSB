@@ -1,9 +1,10 @@
 import { Category, ElementData } from "@/data/elements/elementsTypes";
-import React, { memo, useCallback } from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { View, StyleSheet, Dimensions } from "react-native"; // Removed Dimensions
 import { MODAL_CHILDREN_CONTAINER_MARGIN_HORIZONTAL } from "@/primitiveComponents/Modal";
 import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
 import ElementPickerCompact from "../ElementPickerCompact";
+import { ELEMENTS_PER_PAGE } from "../PaginatedElementsContainer";
 
 interface ElementsGridProps {
   elements: ElementData[];
@@ -36,7 +37,10 @@ const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, 
     [selectedClassId]
   );
 
+  const fillingElements = Array.from({ length: ELEMENTS_PER_PAGE - elements.length });
+
   const { elementPickerDynamicStyle, activeBorderStyle } = useElementPickerStyle({ size: ITEM_WIDTH }); // Passe la taille commune ici
+  const fillingElementDimensions = useMemo(() => ({ width: ITEM_WIDTH, height: ITEM_WIDTH * 1.1 }), [ITEM_WIDTH]);
 
   return (
     // Removed Pressable from here, as it's typically for the entire grid to be clickable,
@@ -53,6 +57,9 @@ const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, 
           elementPickerDynamicStyle={elementPickerDynamicStyle}
           activeBorderStyle={activeBorderStyle}
         />
+      ))}
+      {fillingElements.map((_, i) => (
+        <View key={`empty${i}`} style={fillingElementDimensions} />
       ))}
     </View>
   );
