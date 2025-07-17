@@ -91,19 +91,6 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
     [themeSurface]
   );
 
-  const [currentPage, setCurrentPage] = useState(0);
-
-  const flatListRef = useRef<FlatList>(null);
-
-  // Reset page si la catégorie change
-  useEffect(() => {
-    flatListRef.current?.scrollToIndex({
-      index: 0,
-      animated: false,
-    });
-    setCurrentPage(0);
-  }, [selectedCategory, sortNumber]);
-
   return (
     <>
       {children}
@@ -137,15 +124,12 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
         <CategorySelector selectedCategory={selectedCategory} onCategoryPress={setSelectedCategory} />
 
         <PaginatedWrapper
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
           pageWidth={ELEMENTS_GRID_WIDTH}
           data={pages}
           renderItem={({ item }) => (
             <ElementsGrid elements={item} selectedClassId={selectedClassId} onSelectElement={handleSelectElement} />
           )}
           totalPages={totalPages}
-          flatlistRefProps={flatListRef}
         />
       </View>
     </>

@@ -1,52 +1,59 @@
-import React, { useEffect, useRef } from "react";
-import { FlatList, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
+import React, { useEffect, useRef, useCallback, useState } from "react";
+import { FlatList, NativeScrollEvent, NativeSyntheticEvent, ViewToken } from "react-native";
 import PagesNavigator from "./elementCompactSelector/PagesNavigator";
 
 interface PaginatedWrapperProps {
-  currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  data: any;
+  data: any[];
   pageWidth: number;
-  renderItem: any;
+  renderItem: ({ item, index }: { item: any; index: number }) => React.ReactElement;
   totalPages: number;
-  flatlistRefProps?: any;
 }
 
-const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
-  currentPage,
-  setCurrentPage,
-  data,
-  pageWidth,
-  renderItem,
-  totalPages,
-  flatlistRefProps,
-}) => {
-  const flatlistRefAct = flatlistRefProps ?? useRef<FlatList>(null);
-  const scrollInProgress = useRef(false);
+const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({ data, pageWidth, renderItem, totalPages }) => {
+  // Mémoïsation de la fonction de rendu pour éviter des recréations inutiles
+  const memoizedRenderItem = useCallback(
+    ({ item, index }: { item: any; index: number }) => renderItem({ item, index }),
+    [renderItem]
+  );
 
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const flatlistRef = useRef<FlatList>(null);
+
+  // Reset page si la catégorie change
   useEffect(() => {
-    scrollInProgress.current = true;
+    flatlistRef.current?.scrollToIndex({
+      index: 0,
+      animated: false,
+    });
+    setCurrentPage(0);
+  }, [data]);
 
-    flatlistRefAct.current?.scrollToIndex({
+  // Gestion du scroll vers la page courante
+  useEffect(() => {
+    flatlistRef.current?.scrollToIndex({
       index: currentPage,
       animated: true,
     });
   }, [currentPage]);
 
-  const handleMomentumScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    // quand le scroll se finit
-    const pageIndex = e.nativeEvent.contentOffset.x / pageWidth;
-    // si on est bien arrivé sur une nouvelle page
-    if (Number.isInteger(pageIndex)) {
-      // on met à jour currentPage
-      if (pageIndex != currentPage) setCurrentPage(pageIndex);
-    }
-  };
+  // Gestion de la fin du scroll
+  const handleMomentumScrollEnd = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const pageIndex = e.nativeEvent.contentOffset.x / pageWidth;
+      // si on est bien arrivé sur une nouvelle page
+      if (Number.isInteger(pageIndex)) {
+        // on met à jour currentPage
+        if (pageIndex != currentPage) setCurrentPage(pageIndex);
+      }
+    },
+    [currentPage, pageWidth, setCurrentPage]
+  );
 
   return (
     <>
       <FlatList
-        ref={flatlistRefAct}
+        ref={flatlistRef}
         data={data}
         initialNumToRender={1}
         maxToRenderPerBatch={2}
@@ -55,14 +62,14 @@ const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(_, index) => `${index}`}
-        renderItem={renderItem}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={memoizedRenderItem}
         onMomentumScrollEnd={handleMomentumScrollEnd}
-        /*     getItemLayout={(data, index) => ({
+        getItemLayout={(_, index) => ({
           length: pageWidth,
           offset: pageWidth * index,
           index,
-        })} */
+        })}
       />
 
       <PagesNavigator currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
@@ -70,4 +77,4 @@ const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
   );
 };
 
-export default PaginatedWrapper;
+export default React.memo(PaginatedWrapper);
