@@ -29,7 +29,6 @@ export const ResultStatsProvider: React.FC<ResultStatsProviderProps> = ({ childr
   const [resultStats, setResultStats] = useState<ResultStats>(resultStatsInit);
 
   useEffect(() => {
-    console.log("defaukt");
     if (!deepCompareStatArrays(resultStatsDefault, resultStats)) {
       setResultStats(resultStatsDefault);
     }

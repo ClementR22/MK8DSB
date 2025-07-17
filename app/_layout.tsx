@@ -46,7 +46,7 @@ export default function TabLayout() {
   // --- Zustand Store Selections ---
   // Select only the parts of the state that are needed
   const setScreenNameForLoadModal = useModalLoadSetStore((state) => state.setScreenNameForLoadModal);
-  const fetchSavedSets = useSetsStore((state) => state.fetchSavedSets);
+  const fetchSetsSaved = useSetsStore((state) => state.fetchSetsSaved);
   const theme = useThemeStore((state) => state.theme);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
 
@@ -68,12 +68,12 @@ export default function TabLayout() {
 
   // Effect to fetch saved sets on mount
   useEffect(() => {
-    fetchSavedSets();
-  }, [fetchSavedSets]); // Only re-run if fetchSavedSets function identity changes
+    fetchSetsSaved();
+  }, [fetchSetsSaved]); // Only re-run if fetchSetsSaved function identity changes
 
   useEffect(() => {
-    NavigationBar.setBackgroundColorAsync(theme.surface)
-  })
+    NavigationBar.setBackgroundColorAsync(theme.surface);
+  });
 
   // Custom hook for loading settings (assuming it has its own internal effects)
   useLoadSettings();

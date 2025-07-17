@@ -15,7 +15,6 @@ const ButtonAndModalStatSelectorChosenStats = () => {
 
   useEffect(() => {
     // s'il le faut on synchronise resultStats
-    console.log("h", isResultStatsSync, chosenStats);
     if (isResultStatsSync) {
       syncWithChosenStats(setResultStats);
     }
