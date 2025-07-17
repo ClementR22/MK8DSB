@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import StatSelector from "./StatSelector";
+import { toggleAndGetChecks } from "@/utils/toggleCheck";
 
 const ButtonAndModalStatSelector = ({
   statList,
   setStatList,
-  toggleCheck,
+  keepOneSelected = false,
   customTrigger,
   triggerButtonText,
   modalTitle,
@@ -13,13 +14,34 @@ const ButtonAndModalStatSelector = ({
   isResultStatsInSearchScreen = false,
   disabled = false,
   includeBeforeSync = false,
-  // Si fournie, la modale est contrôlée de l'extérieur
-  isModalVisibleProp = undefined,
-  // Setter pour le contrôle externe
-  setIsModalVisibleProp = undefined,
 }) => {
   const [statListBeforeAll, setStatListBeforeAll] = useState(null);
   const [statListBeforeSync, setStatListBeforeSync] = useState(statList);
+
+  const [statListInModal, setStatListInModal] = useState(statList);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => {
+    if (isModalVisible) {
+      // à l'ouverture, on récupère le state global chosenStats dans le state local chosenStatsInModal
+      setStatListInModal(statList);
+    } else {
+      // à la fermeture, on donne met à jour le state global
+      setStatList(statListInModal);
+    }
+  }, [isModalVisible]);
+
+  const toggleCheck = (name) => {
+    const newList = toggleAndGetChecks(statListInModal, name);
+    const hasChecked = newList.some((item) => item.checked);
+    if (keepOneSelected && !hasChecked) {
+      // Ici tu peux aussi déclencher un toast si tu veux,
+      // ou faire ça dans le composant après l'appel
+      return; // annule la modif si pas de checked
+    }
+    setStatListInModal(newList);
+  };
 
   return (
     <ButtonAndModal
@@ -28,12 +50,12 @@ const ButtonAndModalStatSelector = ({
       modalTitle={modalTitle}
       secondButtonProps={secondButtonProps}
       closeAfterSecondButton={false}
-      isModalVisibleProp={isModalVisibleProp}
-      setIsModalVisibleProp={setIsModalVisibleProp}
+      isModalVisibleProp={isModalVisible}
+      setIsModalVisibleProp={setIsModalVisible}
     >
       <StatSelector
-        statList={statList}
-        setStatList={setStatList}
+        statList={statListInModal}
+        setStatList={setStatListInModal}
         toggleCheck={toggleCheck}
         statListBeforeAll={statListBeforeAll}
         setStatListBeforeAll={setStatListBeforeAll}
@@ -48,4 +70,4 @@ const ButtonAndModalStatSelector = ({
   );
 };
 
-export default ButtonAndModalStatSelector;
+export default React.memo(ButtonAndModalStatSelector);

@@ -15,7 +15,6 @@ export type ResultStats = ResultStat[];
 interface ResultStatsContextType {
   resultStats: ResultStats;
   setResultStats: React.Dispatch<React.SetStateAction<ResultStats>>;
-  toggleCheckResultStats: (name: string) => void;
 }
 
 const ResultStatsContext = createContext<ResultStatsContextType | undefined>(undefined);
@@ -30,22 +29,18 @@ export const ResultStatsProvider: React.FC<ResultStatsProviderProps> = ({ childr
   const [resultStats, setResultStats] = useState<ResultStats>(resultStatsInit);
 
   useEffect(() => {
+    console.log("defaukt");
     if (!deepCompareStatArrays(resultStatsDefault, resultStats)) {
       setResultStats(resultStatsDefault);
     }
   }, [resultStatsDefault]);
 
-  const toggleCheckResultStats = useCallback((name: string) => {
-    toggleCheckList(setResultStats, name);
-  }, []);
-
   const contextValue = useMemo<ResultStatsContextType>(
     () => ({
       resultStats,
       setResultStats,
-      toggleCheckResultStats,
     }),
-    [resultStats, toggleCheckResultStats]
+    [resultStats]
   );
 
   return <ResultStatsContext.Provider value={contextValue}>{children}</ResultStatsContext.Provider>;

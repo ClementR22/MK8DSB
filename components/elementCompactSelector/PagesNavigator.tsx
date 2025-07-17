@@ -42,8 +42,6 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
   // This prevents the map from running if only currentPage changes (though React's diffing is good).
   // More useful if dot components were themselves complex or memoized.
   const dots = useMemo(() => {
-    if (totalPages <= 1) return null; // Don't render dots if only one page or less
-
     return Array.from({ length: totalPages }).map((_, index) => (
       <Pressable
         key={index}
@@ -58,33 +56,37 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
   }, [totalPages, currentPage, setCurrentPage, activeDotColor, inactiveDotColorResolved]);
 
   return (
-    <View style={paginationControlsStyle}>
-      <Pressable
-        onPress={goToPrevPage}
-        disabled={currentPage === 0}
-        style={[styles.navButton, currentPage === 0 && styles.navButtonDisabled]}
-      >
-        <MaterialCommunityIcons
-          name="chevron-left"
-          size={30}
-          color={currentPage === 0 ? theme.on_surface_variant : navButtonColor}
-        />
-      </Pressable>
+    <>
+      {totalPages > 1 && (
+        <View style={paginationControlsStyle}>
+          <Pressable
+            onPress={goToPrevPage}
+            disabled={currentPage === 0}
+            style={[styles.navButton, currentPage === 0 && styles.navButtonDisabled]}
+          >
+            <MaterialCommunityIcons
+              name="chevron-left"
+              size={30}
+              color={currentPage === 0 ? theme.on_surface_variant : navButtonColor}
+            />
+          </Pressable>
 
-      <View style={styles.dotsContainer}>{dots}</View>
+          <View style={styles.dotsContainer}>{dots}</View>
 
-      <Pressable
-        onPress={goToNextPage}
-        disabled={currentPage === totalPages - 1}
-        style={[styles.navButton, currentPage === totalPages - 1 && styles.navButtonDisabled]}
-      >
-        <MaterialCommunityIcons
-          name="chevron-right"
-          size={30}
-          color={currentPage === totalPages - 1 ? theme.on_surface_variant : navButtonColor}
-        />
-      </Pressable>
-    </View>
+          <Pressable
+            onPress={goToNextPage}
+            disabled={currentPage === totalPages - 1}
+            style={[styles.navButton, currentPage === totalPages - 1 && styles.navButtonDisabled]}
+          >
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={30}
+              color={currentPage === totalPages - 1 ? theme.on_surface_variant : navButtonColor}
+            />
+          </Pressable>
+        </View>
+      )}
+    </>
   );
 };
 

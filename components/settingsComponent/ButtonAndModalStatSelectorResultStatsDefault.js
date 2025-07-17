@@ -5,13 +5,11 @@ import ButtonAndModalStatSelector from "../statSelector/ButtonAndModalStatSelect
 const ButtonAndModalStatSelectorResultStatsDefault = () => {
   const resultStatsDefault = useResultStatsDefaultStore((state) => state.resultStatsDefault);
   const setResultStatsDefault = useResultStatsDefaultStore((state) => state.setResultStatsDefault);
-  const toggleCheck = useResultStatsDefaultStore((state) => state.toggleCheckListResultStatsDefault);
 
   return (
     <ButtonAndModalStatSelector
       statList={resultStatsDefault}
       setStatList={setResultStatsDefault}
-      toggleCheck={toggleCheck}
       triggerButtonText="ConfigureDefaultStats"
       modalTitle="DefaultDisplayedStats"
     />
