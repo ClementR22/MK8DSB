@@ -9,6 +9,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import StatSliderCompare, { STAT_SLIDER_COMPARE_WIDTH } from "./StatSliderCompare";
 import PagesNavigator from "../elementCompactSelector/PagesNavigator";
 import { vw } from "../styles/theme";
+import PaginatedWrapper from "../PaginatedWrapper";
 
 interface StatSliderComparesContainerProps {
   setsColorsMap: Map<string, string>;
@@ -48,50 +49,14 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
 
   const [currentPage, setCurrentPage] = useState(0);
 
-  // permet de scroller automatiquement quand currentPage change
-  const flatListRef = useRef<FlatList>(null);
-  const isManuallyScrolling = useRef(false);
-
-  useEffect(() => {
-    try {
-      flatListRef.current?.scrollToIndex({ index: currentPage, animated: true });
-    } catch (error) {
-      console.warn("scrollToIndex failed:", error);
-      // Attendre un peu puis re-tenter
-      setTimeout(() => {
-        flatListRef.current?.scrollToIndex({ index: currentPage, animated: true });
-      }, 100);
-    }
-  }, [currentPage, data]);
-
-  console.log("setsIdAndValueWithColor", data);
-
-  const handleMomentumScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const pageIndex = Math.round(e.nativeEvent.contentOffset.x / STAT_SLIDER_COMPARE_WIDTH);
-
-    if (isManuallyScrolling.current) {
-      // On ignore ce callback car on est en scroll programmé
-      isManuallyScrolling.current = false;
-    } else {
-      // Scroll utilisateur → on MAJ le state
-      setCurrentPage(pageIndex);
-    }
-  };
-
   return (
     <>
       <View style={{ padding: 15, backgroundColor: theme.surface_container_high }}>
-        <FlatList
-          ref={flatListRef}
+        <PaginatedWrapper
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          pageWidth={STAT_SLIDER_COMPARE_WIDTH}
           data={data}
-          initialNumToRender={1} // Ne rendre que la première page initialement
-          maxToRenderPerBatch={2} // Limiter le nombre de pages rendues par batch
-          windowSize={3} // Garder +1 page en mémoire de chaque côté
-          removeClippedSubviews={true} // Recycler les vues hors écran (à tester)
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item, index) => `${item.name}-${index}`} // Ajouter la catégorie pour éviter des conflits
           renderItem={({ item }) => (
             <StatSliderCompare
               key={item.name}
@@ -100,11 +65,9 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
               scrollToSetCard={scrollToSetCard}
             />
           )}
-          onMomentumScrollEnd={handleMomentumScrollEnd}
+          totalPages={totalPages}
         />
       </View>
-
-      <PagesNavigator currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
     </>
   );
 };
