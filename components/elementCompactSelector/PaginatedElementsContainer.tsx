@@ -101,7 +101,6 @@ const PaginatedElementsContainer: React.FC<PaginatedElementSelectorProps> = ({
       <FlatList
         ref={flatListRef}
         data={pages}
-        getItemLayout={getItemLayout}
         initialNumToRender={1} // Ne rendre que la première page initialement
         maxToRenderPerBatch={2} // Limiter le nombre de pages rendues par batch
         windowSize={3} // Garder +1 page en mémoire de chaque côté

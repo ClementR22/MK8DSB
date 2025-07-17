@@ -9,6 +9,8 @@ import { StatName } from "@/data/stats/statsTypes";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 import { vw } from "../styles/theme";
 
+export const STAT_SLIDER_COMPARE_WIDTH = vw - 30;
+
 export interface SetIdAndStatValue {
   id: string;
   value: number;
@@ -41,7 +43,7 @@ const StatSliderCompare: React.FC<StatSliderCompareProps> = ({ setsIdAndValue, n
   );
 
   const memoizedStatBars = useMemo(() => setsIdAndValue.map(renderStatBar), [setsIdAndValue, renderStatBar]);
-  const { setCardStyle } = useSetCardStyle(vw - 60);
+  const { setCardStyle } = useSetCardStyle(STAT_SLIDER_COMPARE_WIDTH);
 
   return (
     <View style={setCardStyle}>
