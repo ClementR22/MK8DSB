@@ -6,7 +6,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 
 const ButtonDeleteAllSetsInMemory = ({ deleteAllSavedSets }) => {
   const theme = useThemeStore((state) => state.theme);
-  
+
   return (
     <ButtonAndModal
       triggerButtonText="DeleteAllSetsInMemory"
@@ -16,7 +16,7 @@ const ButtonDeleteAllSetsInMemory = ({ deleteAllSavedSets }) => {
       buttonColor={theme.error}
       buttonTextColor={theme.on_error}
     >
-      <Text style={{marginBottom: 18, marginTop: 10}}>{translate("DeleteAllSetsInMemoryText")}</Text>
+      <Text style={{ margin: 24, fontSize: 16, fontWeight: 500 }}>{translate("DeleteAllSetsInMemoryText")}</Text>
     </ButtonAndModal>
   );
 };
