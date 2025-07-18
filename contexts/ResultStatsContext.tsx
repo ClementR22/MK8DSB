@@ -3,9 +3,10 @@ import { toggleCheckList } from "@/utils/toggleCheck";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import { resultStatsInit } from "@/config/resultStatsInit";
 import { deepCompareStatArrays } from "@/utils/deepCompare";
+import { StatName } from "@/data/stats/statsTypes";
 
 export type ResultStat = {
-  name: string;
+  name: StatName;
   checked: boolean;
 };
 
@@ -14,7 +15,6 @@ export type ResultStats = ResultStat[];
 interface ResultStatsContextType {
   resultStats: ResultStats;
   setResultStats: React.Dispatch<React.SetStateAction<ResultStats>>;
-  toggleCheckResultStats: (name: string) => void;
 }
 
 const ResultStatsContext = createContext<ResultStatsContextType | undefined>(undefined);
@@ -34,17 +34,12 @@ export const ResultStatsProvider: React.FC<ResultStatsProviderProps> = ({ childr
     }
   }, [resultStatsDefault]);
 
-  const toggleCheckResultStats = useCallback((name: string) => {
-    toggleCheckList(setResultStats, name);
-  }, []);
-
   const contextValue = useMemo<ResultStatsContextType>(
     () => ({
       resultStats,
       setResultStats,
-      toggleCheckResultStats,
     }),
-    [resultStats, toggleCheckResultStats]
+    [resultStats]
   );
 
   return <ResultStatsContext.Provider value={contextValue}>{children}</ResultStatsContext.Provider>;

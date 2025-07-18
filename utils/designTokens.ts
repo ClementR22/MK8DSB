@@ -9,6 +9,7 @@ export const CARD_SPACING = 16;
 export const LIST_ITEM_SPACING = 8;
 export const PADDING_HORIZONTAL = 20; // For screen-level padding
 export const CATEGORY_SELECTOR_PADDING = 6;
+export const SET_CARD_CONTAINER_PADDING = 16;
 
 // Border Radius
 export const BORDER_RADIUS_8 = 8;
@@ -51,3 +52,5 @@ export const LEFT_COLUMN_PADDING_HORIZONTAL = 10;
 export const LEFT_PANNEL_WIDTH_EXPANDED = screenWidth * 0.7; // 70% de la largeur de l'écran
 export const LEFT_PANNEL_WIDTH_COLLAPSED =
   ELEMENT_PICKER_LIST_IMAGE_SIZE + 2 * ELEMENT_PICKER_LIST_PADDING + 2 * LEFT_COLUMN_PADDING_HORIZONTAL; // Slightly wider for the new design
+
+export const SET_CARD_WIDTH = 220;

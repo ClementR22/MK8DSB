@@ -17,7 +17,6 @@ export const sortButtonsConfig: { [key in StatNameSort]: SortButtonConfig } = {
   // General category icons (for sub-menus)
   speed: { iconName: "speedometer", iconType: IconType.SimpleLineIcons },
   handling: { iconName: "steering", iconType: IconType.MaterialCommunityIcons },
-  close: { iconName: "close", iconType: IconType.AntDesign },
 
   // Speed-related icons with specific background colors
   speedGround: {

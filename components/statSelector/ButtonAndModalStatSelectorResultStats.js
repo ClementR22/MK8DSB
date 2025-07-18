@@ -12,7 +12,7 @@ const ButtonAndModalStatSelectorResultStats = () => {
   const isInSearchScreen = screenName === "search";
   const isInDisplayScreen = screenName === "display";
 
-  const { resultStats, setResultStats, toggleCheckResultStats } = useResultStats();
+  const { resultStats, setResultStats } = useResultStats();
   const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
   const isResultStatsSync = useResultStatsDefaultStore((state) => state.isResultStatsSync);
 
@@ -27,7 +27,6 @@ const ButtonAndModalStatSelectorResultStats = () => {
     <ButtonAndModalStatSelector
       statList={resultStats}
       setStatList={setResultStats}
-      toggleCheck={toggleCheckResultStats}
       customTrigger={
         <ButtonIcon
           tooltipText={isInDisplayScreen ? "DisplayedStats" : "DisplayedStatsInSets"}
@@ -39,6 +38,7 @@ const ButtonAndModalStatSelectorResultStats = () => {
       secondButtonProps={secondButtonProps}
       isResultStatsInSearchScreen={isInSearchScreen}
       disabled={isInSearchScreen && isResultStatsSync}
+      keepOneSelected={isInDisplayScreen}
       includeBeforeSync
     />
   );

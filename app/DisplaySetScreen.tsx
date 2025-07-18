@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useMemo, useState, useCallback } from "react";
 import { ScrollView } from "react-native";
-import SetCardContainer from "@/components/setCard/SetCardContainer";
+import SetCardsContainer from "@/components/setCard/SetCardsContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -12,11 +12,14 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
 import ButtonAddSet from "@/components/managingSetsButton/ButtonAddSet";
 import ButtonLoadSet from "@/components/managingSetsButton/ButtonLoadSet";
+import { ResultStatsProvider, useResultStats } from "@/contexts/ResultStatsContext";
+import ButtonAndModalStatSelectorResultStats from "@/components/statSelector/ButtonAndModalStatSelectorResultStats";
+import StatSliderComparesContainer from "@/components/statSliderCompare/StatSliderComparesContainer";
 
 const DisplaySetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
 
-  const scrollRef = useRef(null); // Ref pour SetCardContainer
+  const scrollRef = useRef(null); // Ref pour SetCardsContainer
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
@@ -80,16 +83,6 @@ const DisplaySetScreen = () => {
     [setsListDisplayed, setsColorsMap, theme.surface_variant, theme.surface_container_high]
   );
 
-  // Mémoïsation stricte de la liste pour StatSliderCompare
-  const setsIdAndValueWithColor = useMemo(() => {
-    const statIndex = statNames.indexOf(selectedCompareName);
-    return setsListDisplayed.map((set) => ({
-      id: set.id,
-      value: set.stats[statIndex],
-      color: setsColorsMap.get(set.id) || theme.surface_variant || theme.surface_container_high,
-    }));
-  }, [setsListDisplayed, setsColorsMap, selectedCompareName, theme.surface_variant, theme.surface_container_high]);
-
   // Mémoïsation du handler scrollToSetCard
   const scrollToSetCard = useCallback((id: string) => {
     if (scrollRef.current && scrollRef.current.scrollToSetCard) {
@@ -99,20 +92,19 @@ const DisplaySetScreen = () => {
 
   return (
     <ScreenProvider screenName="display">
-      <ScrollView scrollEnabled={isScrollEnable}>
-        <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
-          <ButtonAddSet scrollRef={scrollRef} />
-          <ButtonLoadSet tooltipText="LoadASet" />
-        </ScreenPressablesContainer>
+      <ResultStatsProvider>
+        <ScrollView scrollEnabled={isScrollEnable}>
+          <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
+            <ButtonAddSet scrollRef={scrollRef} />
+            <ButtonLoadSet tooltipText="LoadASet" />
+            <ButtonAndModalStatSelectorResultStats />
+          </ScreenPressablesContainer>
 
-        <SetCardContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
-        <StatSliderCompare
-          setsIdAndValue={setsIdAndValueWithColor}
-          selectedCompareName={selectedCompareName}
-          setSelectedCompareName={setSelectedCompareName}
-          scrollToSetCard={scrollToSetCard}
-        />
-      </ScrollView>
+          <SetCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
+
+          <StatSliderComparesContainer setsColorsMap={setsColorsMap} scrollToSetCard={scrollToSetCard} />
+        </ScrollView>
+      </ResultStatsProvider>
     </ScreenProvider>
   );
 };

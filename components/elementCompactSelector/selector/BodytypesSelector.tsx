@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, memo } from "react"; // Import memo
 import { View, StyleSheet, Image, ImageSourcePropType } from "react-native"; // Add ImageSourcePropType
 import { useThemeStore } from "@/stores/useThemeStore";
 import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
-import TooltipWrapper from "@/components/TooltipWrapper";
+import Tooltip from "@/components/Tooltip";
 
 interface BodytypesSelectorProps {
   selectedBodytypes: Set<Bodytype>;
@@ -69,18 +69,18 @@ const BodytypesSelector: React.FC<BodytypesSelectorProps> = memo(({ selectedBody
       const isActive = selectedBodytypes.has(option.name);
 
       return (
-        <TooltipWrapper
+        <Tooltip
           key={option.name}
           tooltipText={option.name} // Assumes option.name is suitable for tooltip
           onPress={() => handlePress(option.name)}
-          innerContainerStyle={[
+          style={StyleSheet.flatten([
             styles.button, // Static styles from StyleSheet.create
             buttonBaseDynamicStyle, // Dynamic background/border color based on theme
             isActive && { borderColor: theme.primary }, // Active state border color
-          ]}
+          ])}
         >
           <Image source={option.imageUrl} style={styles.image} resizeMode="contain" />
-        </TooltipWrapper>
+        </Tooltip>
       );
     });
   }, [bodytypeOptions, selectedBodytypes, handlePress, buttonBaseDynamicStyle, theme.primary]); // Explicit dependencies

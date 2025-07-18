@@ -1,14 +1,14 @@
 import React from "react";
-import { Pressable, StyleProp, ViewStyle } from "react-native";
-import TooltipWrapper from "@/components/TooltipWrapper";
+import { Pressable, ViewStyle } from "react-native";
+import Tooltip, { TooltipPlacementType } from "@/components/Tooltip";
 
 type ButtonBaseProps = {
   children: React.ReactNode;
   onPress: () => void;
   tooltipText?: string;
-  placement?: string;
+  placement?: TooltipPlacementType;
   elevation?: 1 | 3 | 6 | 8 | 12;
-  containerStyle: StyleProp<ViewStyle>;
+  containerStyle: ViewStyle;
   [key: string]: any; // autres props à passer
 };
 
@@ -21,7 +21,7 @@ const ButtonBase = ({
   containerStyle,
   ...props
 }: ButtonBaseProps) => {
-  const Wrapper = tooltipText ? TooltipWrapper : Pressable;
+  const Wrapper = tooltipText ? Tooltip : Pressable;
 
   return (
     <Wrapper onPress={onPress} style={containerStyle} tooltipText={tooltipText} placement={placement} {...props}>

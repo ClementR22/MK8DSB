@@ -1,9 +1,9 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
-import ButtonIcon from "@/primitiveComponents/ButtonIcon";
+import ButtonIcon, { ButtonIconProps } from "@/primitiveComponents/ButtonIcon";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { sortButtonsConfig } from "@/config/sortButtonsConfig"; // Import merged config
+import { sortButtonsConfig } from "@/config/sortButtonsConfig";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { StatNameHandling, StatNameSort, StatNameSpeed } from "@/data/stats/statsTypes";
 import {
@@ -12,16 +12,14 @@ import {
   statNamesSortSetCardDefault,
   statNamesSpeed,
 } from "@/data/stats/statsData";
+import TooltipMenu from "../TooltipMenu";
 
-// Constants for layout consistency
-const BUTTON_SIZE = 40; // Assumed to match ButtonIcon's default size
+// Constants
 export const HALF_GAP = 7;
 
-// Mapping string names to the numerical `sortNumber` expected by `sortElements`.
-// We'll use even numbers for ascending and odd numbers for descending.
 const sortNameMap: { [key: string]: { asc: number; desc: number } } = {
   id: { asc: 0, desc: 1 },
-  name: { asc: 2, desc: 3 }, // Combined name_az and name_za
+  name: { asc: 2, desc: 3 },
   speedGround: { asc: 4, desc: 5 },
   speedAntiGravity: { asc: 6, desc: 7 },
   speedWater: { asc: 8, desc: 9 },
@@ -37,155 +35,213 @@ const sortNameMap: { [key: string]: { asc: number; desc: number } } = {
 };
 
 function getSortNameFromSortNumber(sortNumber: number): StatNameSort | undefined {
-  // Itère sur chaque clé (sortName) de la map sortNameMap
   for (const sortName in sortNameMap) {
-    // Vérifie que la propriété appartient bien à l'objet (bonne pratique TypeScript/JavaScript)
     if (sortNameMap.hasOwnProperty(sortName)) {
-      const { asc, desc } = sortNameMap[sortName]; // Destructure pour obtenir les valeurs asc et desc
-
-      // Vérifie si le sortNumber donné correspond à la valeur asc ou desc
+      const { asc, desc } = sortNameMap[sortName];
       if (sortNumber === asc || sortNumber === desc) {
-        return sortName as StatNameSort; // Retourne le sortName correspondant
+        return sortName as StatNameSort;
       }
     }
   }
-  return undefined; // Si aucun sortName correspondant n'est trouvé après avoir parcouru toute la map
+  return undefined;
 }
+
+interface ButtonIconSortProps extends ButtonIconProps {
+  iconBackgroundColor?: string;
+  direction?: "asc" | "desc";
+  isBadge?: boolean;
+}
+
+const ButtonIconSort: React.FC<ButtonIconSortProps> = memo(
+  ({
+    onPress,
+    tooltipText,
+    iconName,
+    iconType,
+    iconBackgroundColor,
+    direction = "asc",
+    isBadge = false,
+
+    style,
+    ...props
+  }) => {
+    const theme = useThemeStore((state) => state.theme);
+
+    const badgeIconName = direction === "asc" ? "arrow-up" : "arrow-down";
+    const badgeBackgroundColor = theme.primary_container;
+    const badgeIconColor = theme.primary;
+    const badgeIconInnerSize = 20;
+
+    return (
+      <View>
+        <ButtonIcon
+          onPress={onPress}
+          tooltipText={tooltipText}
+          iconName={iconName}
+          iconType={iconType}
+          style={[{ backgroundColor: iconBackgroundColor || theme.primary }, style]}
+          {...props}
+        />
+        {isBadge && (
+          <View style={[styles.badgeContainer, { backgroundColor: badgeBackgroundColor }]}>
+            <Icon
+              name={badgeIconName}
+              type={IconType.MaterialCommunityIcons}
+              size={badgeIconInnerSize}
+              color={badgeIconColor}
+            />
+          </View>
+        )}
+      </View>
+    );
+  }
+);
 
 interface SortModeSelectorProps {
   sortNumber: number;
-  setSortNumber: (number: number) => void; // Callback to update the sorting order
+  setSortNumber: (number: number) => void;
   sortCase: "element" | "set";
 }
 
-const SortModeSelector = ({ sortNumber, setSortNumber, sortCase }: SortModeSelectorProps) => {
+const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortModeSelectorProps) => {
   const theme = useThemeStore((state) => state.theme);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
-  // State to manage which set of sorting buttons is currently displayed (main menu or sub-menus).
   const statNamesSortDefault = useMemo(
     () => (sortCase === "element" ? statNamesSortElementDefault : statNamesSortSetCardDefault),
     [sortCase]
   );
-  const [displayedSortNames, setDisplayedSortNames] = useState<StatNameSort[]>(statNamesSortDefault);
 
-  // State to keep track of the current sort direction for the active sort.
-  const [currentDirection, setCurrentDirection] = useState<"asc" | "desc">("asc");
+  const getCurrentDirection = (sortNum: number) => {
+    return sortNum % 2 === 0 ? "asc" : "desc";
+  };
 
-  // State to track the currently active sort (e.g., 'id', 'name', 'speedGround')
-  const [activeSort, setActiveSort] = useState<StatNameSort>(getSortNameFromSortNumber(sortNumber));
-
-  // Callback to handle button presses for sorting.
-  const handlePress = useCallback(
-    (name: StatNameSort) => {
-      switch (name) {
-        case "speed":
-          setDisplayedSortNames(statNamesSpeed); // Switch to speed sub-menu
-          break;
-        case "handling":
-          setDisplayedSortNames(statNamesHandling); // Switch to handling sub-menu
-          break;
-        case "close":
-          setDisplayedSortNames(statNamesSortDefault); // Go back to main menu
-          break;
-        default:
-          // This is a specific sort button (e.g., "id", "speedGround")
-          let newDirection: "asc" | "desc";
-
-          if (activeSort === name) {
-            // If the same sort button is clicked again, toggle its direction
-            newDirection = currentDirection === "asc" ? "desc" : "asc";
-          } else {
-            // If a different sort button is clicked, reset to ascending
-            newDirection = "asc";
-          }
-
-          setActiveSort(name); // Set this sort as the active one
-          setCurrentDirection(newDirection); // Set its direction
-
-          const newOrderInfo = sortNameMap[name];
-          if (newOrderInfo) {
-            const newSortNumber = newDirection === "asc" ? newOrderInfo.asc : newOrderInfo.desc;
-            setSortNumber(newSortNumber); // Update the sorting order in the parent component
-          }
-          break;
-      }
-    },
-    [setSortNumber, activeSort, currentDirection] // Dependencies for handlePress
+  const [currentDirection, setCurrentDirection] = useState<"asc" | "desc">(getCurrentDirection(sortNumber));
+  const [activeSort, setActiveSort] = useState<StatNameSort>(
+    getSortNameFromSortNumber(sortNumber) || statNamesSortDefault[0]
   );
 
-  // Memoized array of ButtonIcon components to render.
-  const displayedButtons = useMemo(() => {
-    const isSpeedName = statNamesSpeed.includes(activeSort as StatNameSpeed);
-    const isHandlingName = statNamesHandling.includes(activeSort as StatNameHandling);
+  const handlePress = useCallback(
+    (name: StatNameSort) => {
+      const isActive = activeSort === name;
+      const newDirection = isActive ? (currentDirection === "asc" ? "desc" : "asc") : "asc";
 
-    return displayedSortNames.map((name) => {
-      const iconConfig = sortButtonsConfig[name]; // Use sortButtonsConfig
-      if (!iconConfig) {
-        return null;
+      setActiveSort(name);
+      setCurrentDirection(newDirection);
+
+      const newOrderInfo = sortNameMap[name];
+      if (newOrderInfo) {
+        const newSortNumber = newDirection === "asc" ? newOrderInfo.asc : newOrderInfo.desc;
+        setSortNumber(newSortNumber);
       }
+    },
+    [activeSort, currentDirection, setSortNumber]
+  );
 
-      const { iconName, iconType } = iconConfig;
-      const iconBackgroundColor = iconConfig.iconBackgroundColor || theme.primary;
-
-      // Apply direction-specific icon and tooltip for sortable items IF they are the active sort
-      // Determine the icon and colors for the badge
-      const badgeIconName = currentDirection === "asc" ? "arrow-up" : "arrow-down";
-      const badgeIconType = IconType.MaterialCommunityIcons;
-      const badgeBackgroundColor = theme.primary_container; // Default badge icon color (for contrast)
-      const badgeIconColor = theme.primary; // Default badge icon color (for contrast)
-      const badgeIconInnerSize = 20; // Arrow icon will be 70% of the badge's size
-
-      let isBadge = false;
-      if (name === "speed" && isSpeedName) {
-        isBadge = true;
-      } else if (name === "handling" && isHandlingName) {
-        isBadge = true;
-      } else if (name === activeSort) {
-        isBadge = true;
-      }
-
-      return (
-        <View
-          key={name} // Unique key for React list rendering
-        >
-          <ButtonIcon
-            onPress={() => handlePress(name)} // Attach the handler
-            tooltipText={name} // Display the name as a tooltip (consider translation)
-            iconName={iconName}
-            iconType={iconType}
-            size={BUTTON_SIZE} // Ensure consistent button size
-            style={{ backgroundColor: iconBackgroundColor }}
+  const renderSpeedMenu = useMemo(
+    () => (
+      <TooltipMenu
+        key="speed"
+        trigger={
+          <ButtonIconSort
+            tooltipText="Speed"
+            iconName={sortButtonsConfig.speed.iconName}
+            iconType={sortButtonsConfig.speed.iconType}
+            direction={statNamesSpeed.includes(activeSort as StatNameSpeed) ? currentDirection : undefined}
+            isBadge={statNamesSpeed.includes(activeSort as StatNameSpeed)}
           />
-          {isBadge && (
-            <View style={[styles.badgeContainer, { backgroundColor: badgeBackgroundColor }]}>
-              <Icon name={badgeIconName} type={badgeIconType} size={badgeIconInnerSize} color={badgeIconColor} />
-            </View>
-          )}
-        </View>
+        }
+      >
+        {statNamesSpeed.map((speedName) => {
+          const isActive = speedName === activeSort;
+          return (
+            <ButtonIconSort
+              key={speedName}
+              onPress={() => handlePress(speedName)}
+              tooltipText={speedName}
+              iconName={sortButtonsConfig[speedName].iconName}
+              iconType={sortButtonsConfig[speedName].iconType}
+              iconBackgroundColor={sortButtonsConfig[speedName].iconBackgroundColor}
+              direction={isActive ? currentDirection : undefined}
+              isBadge={isActive}
+            />
+          );
+        })}
+      </TooltipMenu>
+    ),
+    [activeSort, currentDirection, handlePress]
+  );
+
+  const renderHandlingMenu = useMemo(
+    () => (
+      <TooltipMenu
+        key="handling"
+        trigger={
+          <ButtonIconSort
+            tooltipText="Handling"
+            iconName={sortButtonsConfig.handling.iconName}
+            iconType={sortButtonsConfig.handling.iconType}
+            direction={statNamesHandling.includes(activeSort as StatNameHandling) ? currentDirection : undefined}
+            isBadge={statNamesHandling.includes(activeSort as StatNameHandling)}
+          />
+        }
+      >
+        {statNamesHandling.map((handlingName) => {
+          const isActive = handlingName === activeSort;
+          return (
+            <ButtonIconSort
+              key={handlingName}
+              onPress={() => handlePress(handlingName)}
+              tooltipText={handlingName}
+              iconName={sortButtonsConfig[handlingName].iconName}
+              iconType={sortButtonsConfig[handlingName].iconType}
+              iconBackgroundColor={sortButtonsConfig[handlingName].iconBackgroundColor}
+              direction={isActive ? currentDirection : undefined}
+              isBadge={isActive}
+            />
+          );
+        })}
+      </TooltipMenu>
+    ),
+    [activeSort, currentDirection, handlePress]
+  );
+
+  const mainButtons = useMemo(() => {
+    return statNamesSortDefault.map((name) => {
+      const iconConfig = sortButtonsConfig[name];
+      if (!iconConfig) return null;
+
+      if (name === "speed") return renderSpeedMenu;
+      if (name === "handling") return renderHandlingMenu;
+
+      const isActive = name === activeSort;
+      return (
+        <ButtonIconSort
+          key={name}
+          onPress={() => handlePress(name)}
+          tooltipText={name}
+          iconName={iconConfig.iconName}
+          iconType={iconConfig.iconType}
+          direction={isActive ? currentDirection : undefined}
+          isBadge={isActive}
+        />
       );
     });
-  }, [
-    displayedSortNames,
-    handlePress,
-    activeSort, // Dependency for active sort detection
-    currentDirection, // Dependency for icon/tooltip of active sort
-    theme.primary,
-  ]);
+  }, [statNamesSortDefault, activeSort, currentDirection, handlePress, renderSpeedMenu, renderHandlingMenu]);
 
   return (
     <ScrollView horizontal scrollEnabled={isScrollEnable}>
-      <Pressable style={styles.container}>{displayedButtons}</Pressable>
+      <Pressable style={styles.container}>{mainButtons}</Pressable>
     </ScrollView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: HALF_GAP,
-    flexDirection: "row", // Arrange buttons horizontally
+    flexDirection: "row",
     alignItems: "center",
-    gap: 8, // Add some spacing between buttons (requires React Native 0.71+)
+    gap: 8,
   },
   badgeContainer: {
     position: "absolute",
@@ -195,7 +251,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     zIndex: 1,
     borderRadius: 10,
+    width: 20,
+    height: 20,
   },
 });
 
-export default memo(SortModeSelector);
+export default SortModeSelector;

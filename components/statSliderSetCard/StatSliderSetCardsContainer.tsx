@@ -20,7 +20,7 @@ const StatSliderSetCardsContainer: React.FC<StatSliderSetCardsContainerProps> = 
 
   const chosenStatsFromStore = useSetsStore((state) => state.chosenStats);
 
-  const { setCardStyle } = useSetCardStyle();
+  const { setCardStyle } = useSetCardStyle(); // la prop SET_CARD_WIDTH n'est pas nécessaire ici
 
   const memoizedSliders = useMemo(() => {
     const filteredResultStats = resultStats.filter((stat) => stat.checked);

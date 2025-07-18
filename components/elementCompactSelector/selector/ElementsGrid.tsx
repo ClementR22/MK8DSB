@@ -1,9 +1,9 @@
 import { Category, ElementData } from "@/data/elements/elementsTypes";
-import React, { memo, useCallback } from "react";
-import { View, StyleSheet, Dimensions } from "react-native"; // Removed Dimensions
-import { MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL } from "@/primitiveComponents/Modal";
+import React, { memo, useCallback, useMemo } from "react";
+import { View, StyleSheet, Dimensions, Pressable } from "react-native"; // Removed Dimensions
+import { MODAL_CHILDREN_CONTAINER_MARGIN_HORIZONTAL } from "@/primitiveComponents/Modal";
 import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
-import ElementPicker from "../ElementPickerCompact";
+import ElementPickerCompact from "../ElementPickerCompact";
 
 interface ElementsGridProps {
   elements: ElementData[];
@@ -15,13 +15,12 @@ export const PAGINATED_ELEMENTS_CONTAINER_PADDING = 6;
 const GAP = 5;
 const { width: screenWidth } = Dimensions.get("window");
 const NUM_COLUMNS = 4;
+export const ELEMENTS_PER_PAGE = 12;
 
-const ITEM_WIDTH =
-  (screenWidth * 0.9 -
-    MODAL_CHILDREN_CONTAINER_PADDING_HORIZONTAL * 2 -
-    PAGINATED_ELEMENTS_CONTAINER_PADDING * 2 -
-    GAP * (NUM_COLUMNS - 1)) /
-  NUM_COLUMNS;
+export const ELEMENTS_GRID_WIDTH =
+  screenWidth * 0.9 - MODAL_CHILDREN_CONTAINER_MARGIN_HORIZONTAL * 2 - PAGINATED_ELEMENTS_CONTAINER_PADDING * 2;
+
+const ITEM_WIDTH = (ELEMENTS_GRID_WIDTH - GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
 
 const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, onSelectElement }) => {
   const calculateIsSelected = useCallback(
@@ -36,15 +35,19 @@ const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, 
     [selectedClassId]
   );
 
+  const fillingElements = Array.from({ length: ELEMENTS_PER_PAGE - elements.length });
+
   const { elementPickerDynamicStyle, activeBorderStyle } = useElementPickerStyle({ size: ITEM_WIDTH }); // Passe la taille commune ici
+  const fillingElementDimensions = useMemo(() => ({ width: ITEM_WIDTH, height: ITEM_WIDTH * 1.1 }), [ITEM_WIDTH]);
 
   return (
     // Removed Pressable from here, as it's typically for the entire grid to be clickable,
     // but individual items are clickable. If ElementsGrid itself needs to be a Pressable,
     // its purpose should be clear. For a grid of items, a simple View is usually sufficient.
-    <View style={styles.container}>
+    <Pressable style={styles.container}>
+      {/* pour capturer le scroll */}
       {elements.map((element) => (
-        <ElementPicker
+        <ElementPickerCompact
           key={element.id}
           imageUrl={element.imageUrl}
           name={element.name}
@@ -54,13 +57,17 @@ const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, 
           activeBorderStyle={activeBorderStyle}
         />
       ))}
-    </View>
+      {fillingElements.map((_, i) => (
+        <View key={`empty${i}`} style={fillingElementDimensions} />
+      ))}
+    </Pressable>
   );
 };
 
 // --- StyleSheet definitions ---
 const styles = StyleSheet.create({
   container: {
+    width: ELEMENTS_GRID_WIDTH,
     flexDirection: "row",
     flexWrap: "wrap",
     gap: GAP, // Keep gap defined here

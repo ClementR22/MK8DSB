@@ -2,10 +2,10 @@ import React, { useMemo } from "react";
 import { Image, StyleSheet, View, ImageStyle } from "react-native";
 import { categories } from "@/data/elements/elementsData";
 import { elementsData } from "@/data/elements/elementsData";
-import TooltipWrapper from "../TooltipWrapper";
 import { vw } from "../styles/theme";
 import { Category } from "@/data/elements/elementsTypes";
-import { SET_CARD_WIDTH } from "@/hooks/useSetCardStyle";
+import { SET_CARD_WIDTH } from "@/utils/designTokens";
+import Tooltip from "../Tooltip";
 
 const MODAL_WIDTH = vw * 0.9;
 const MAX_WIDTH_IN_MODAL = MODAL_WIDTH - 20;
@@ -59,14 +59,11 @@ const SetImagesContainer: React.FC<SetImagesContainerProps> = ({ setToShowClassI
       {data.map((item) => (
         <View key={item.category} style={styles.category}>
           {item.elements.map(({ name, image }, index) => (
-            <TooltipWrapper
-              key={`${item.category}-${index}`}
-              tooltipText={name}
-              onPress={onPress}
-              style={styles.tooltip}
-            >
-              <Image source={image} style={dynamicImageStyle} resizeMode="contain" />
-            </TooltipWrapper>
+            <Tooltip key={`${item.category}-${index}`} tooltipText={name} onPress={onPress} style={styles.tooltip}>
+              <View>
+                <Image source={image} style={dynamicImageStyle} resizeMode="contain" />
+              </View>
+            </Tooltip>
           ))}
         </View>
       ))}

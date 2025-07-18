@@ -1,6 +1,6 @@
 // components/modal/ModalLoadSet.tsx
 import React, { memo } from "react"; // Import 'memo'
-import SetCardContainer from "../setCard/SetCardContainer"; // Assuming correct path
+import SetCardsContainer from "../setCard/SetCardsContainer"; // Assuming correct path
 import ButtonImportSet from "../managingSetsButton/ButtonImportSet"; // Assuming correct path
 import Modal from "@/primitiveComponents/Modal"; // Assuming correct path
 import useSetsStore from "@/stores/useSetsStore";
@@ -27,7 +27,7 @@ const ModalLoadSet = () => {
       setIsModalVisible={setIsLoadSetModalVisible}
       secondButton={<ButtonImportSet screenName={screenNameForLoadModal} />} // Pass the screen name to the import button
     >
-      <SetCardContainer
+      <SetCardsContainer
         setsToShow={setsListSaved} // Use setsListSaved directly
         isInLoadSetModal={true} // Boolean prop for context
         screenNameFromProps={screenNameForLoadModal} // Pass the screen name for context

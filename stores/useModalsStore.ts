@@ -6,8 +6,6 @@ interface ModalsStoreState {
   setIsRenameSetModalVisible: (newVisible: boolean) => void;
   isEditModalVisible: boolean;
   setIsEditModalVisible: (newVisible: boolean) => void;
-  isChosenStatsModalVisible: boolean;
-  setIsChosenStatsModalVisible: (newVisible: boolean) => void;
 }
 
 const useModalsStore = create<ModalsStoreState>((set, get) => ({
@@ -16,9 +14,6 @@ const useModalsStore = create<ModalsStoreState>((set, get) => ({
 
   isEditModalVisible: false,
   setIsEditModalVisible: (newVisible) => set({ isEditModalVisible: newVisible }),
-
-  isChosenStatsModalVisible: false,
-  setIsChosenStatsModalVisible: (newVisible) => set({ isChosenStatsModalVisible: newVisible }),
 }));
 
 export default useModalsStore;

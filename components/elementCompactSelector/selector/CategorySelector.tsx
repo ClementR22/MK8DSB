@@ -2,10 +2,10 @@
 import { categories } from "@/data/elements/elementsData"; // Assumed to be a stable reference or memoized
 import { Category } from "@/data/elements/elementsTypes";
 import React, { memo, useMemo, useCallback } from "react"; // Import useCallback
-import { Image, View } from "react-native";
-import TooltipWrapper from "@/components/TooltipWrapper";
+import { Image, StyleSheet, View } from "react-native";
 import { useCategorySelectorStyles } from "@/hooks/useCategorySelectorStyles";
 import { categoryImageSources } from "@/data/categories/categoryImageSources";
+import Tooltip from "@/components/Tooltip";
 
 interface CategorySelectorProps {
   selectedCategory: Category;
@@ -37,18 +37,18 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, o
         const isActive = selectedCategory === category.name;
 
         return (
-          <TooltipWrapper
+          <Tooltip
             key={category.name}
             tooltipText={category.name}
             onPress={() => onCategoryPress(category.name)} // Use the memoized handler
-            style={styles.buttonWrapper}
-            innerContainerStyle={[
+            style={StyleSheet.flatten([
+              styles.buttonWrapper,
               styles.button,
               isActive && styles.buttonActive, // Use active style from hook
-            ]}
+            ])}
           >
             <Image source={category.imageUrl} style={styles.image} resizeMode="contain" />
-          </TooltipWrapper>
+          </Tooltip>
         );
       })}
     </View>

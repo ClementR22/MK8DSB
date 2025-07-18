@@ -1,6 +1,5 @@
-import React, { useState, memo, useMemo, useEffect, useCallback } from "react";
-import { StyleSheet, View } from "react-native";
-import PaginatedElementsContainer, { ELEMENTS_PER_PAGE } from "./PaginatedElementsContainer";
+import React, { useState, memo, useMemo, useEffect, useCallback, useRef } from "react";
+import { FlatList, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { Category } from "@/data/elements/elementsTypes";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
@@ -13,6 +12,14 @@ import PagesNavigator from "./PagesNavigator";
 import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import BodytypesSelector from "./selector/BodytypesSelector";
 import { useThemeStore } from "@/stores/useThemeStore";
+import CategorySelector from "./selector/CategorySelector";
+import PaginatedWrapper from "../PaginatedWrapper";
+import ElementsGrid, {
+  ELEMENTS_GRID_WIDTH,
+  ELEMENTS_PER_PAGE,
+  PAGINATED_ELEMENTS_CONTAINER_PADDING,
+} from "./selector/ElementsGrid";
+import { BORDER_RADIUS_15 } from "@/utils/designTokens";
 
 interface ElementPickerCompactSelectorPannelProps {
   selectionMode?: "single" | "multiple";
@@ -37,12 +44,6 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
     () => sortElements(elementsDataByCategory[selectedCategory], sortNumber, language),
     [selectedCategory, sortNumber, language]
   );
-
-  const [currentPage, setCurrentPage] = useState(0);
-
-  useEffect(() => {
-    setCurrentPage(0);
-  }, [selectedCategory, sortNumber]);
 
   const selectedClassId = usePressableElementsStore((state) => {
     return selectionMode === "single"
@@ -76,6 +77,20 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
 
   const separatorDynamicStyle = useMemo(() => ({ backgroundColor: theme.outline_variant }), []);
 
+  const themeSurface = useThemeStore((state) => state.theme.surface);
+
+  const pages = useMemo(() => {
+    return Array.from({ length: totalPages }, (_, i) => {
+      const start = i * ELEMENTS_PER_PAGE;
+      return categoryElementsSorted.slice(start, start + ELEMENTS_PER_PAGE);
+    });
+  }, [categoryElementsSorted, totalPages]);
+
+  const containerStyle = useMemo(
+    () => [styles.paginatedWrapperContainer, { backgroundColor: themeSurface }] as StyleProp<ViewStyle>,
+    [themeSurface]
+  );
+
   return (
     <>
       {children}
@@ -105,16 +120,18 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
         </View>
       </View>
 
-      <PaginatedElementsContainer
-        selectedCategory={selectedCategory}
-        onCategoryPress={setSelectedCategory}
-        categoryElements={categoryElementsSorted}
-        initialSelectedClassId={selectedClassId}
-        onSelectElement={handleSelectElement}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
-      <PagesNavigator currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
+      <View style={containerStyle}>
+        <CategorySelector selectedCategory={selectedCategory} onCategoryPress={setSelectedCategory} />
+
+        <PaginatedWrapper
+          pageWidth={ELEMENTS_GRID_WIDTH}
+          data={pages}
+          renderItem={({ item }) => (
+            <ElementsGrid elements={item} selectedClassId={selectedClassId} onSelectElement={handleSelectElement} />
+          )}
+          totalPages={totalPages}
+        />
+      </View>
     </>
   );
 };
@@ -130,6 +147,12 @@ const styles = StyleSheet.create({
   separator: { width: 2, height: 40 },
   controlsContainer: { justifyContent: "center", flexGrow: 1, flexShrink: 1 },
   bodytypeSelectorWrapper: { marginHorizontal: HALF_GAP },
+  paginatedWrapperContainer: {
+    borderRadius: BORDER_RADIUS_15 + PAGINATED_ELEMENTS_CONTAINER_PADDING,
+    overflow: "hidden",
+    padding: PAGINATED_ELEMENTS_CONTAINER_PADDING,
+    gap: 6,
+  },
 });
 
 export default memo(ElementPickerCompactSelectorPannel);
