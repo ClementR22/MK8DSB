@@ -4,13 +4,13 @@ import { Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import Popover, { PopoverMode, PopoverPlacement } from "react-native-popover-view";
 import { Placement } from "react-native-popover-view/dist/Types";
 
-type PlacementString = "top" | "right" | "bottom" | "left" | "auto" | "floating" | "center";
+export type TooltipPlacementType = Placement | "top" | "right" | "bottom" | "left" | "auto" | "floating" | "center";
 
 interface TooltipProps {
   tooltipText: string;
   onPress?: () => void;
   style: ViewStyle;
-  placement?: Placement | PlacementString;
+  placement?: TooltipPlacementType;
   children: React.ReactNode;
 }
 

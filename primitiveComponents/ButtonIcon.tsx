@@ -3,11 +3,12 @@ import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { TooltipPlacementType } from "@/components/Tooltip";
 
-interface ButtonIconProps {
+export interface ButtonIconProps {
   onPress?: (event?: Event) => void;
   tooltipText?: string;
-  toolTipPlacement?: string;
+  toolTipPlacement?: TooltipPlacementType;
   elevation?: 1 | 3 | 6 | 8 | 12;
   iconName: string;
   iconType: IconType;
@@ -20,7 +21,7 @@ interface ButtonIconProps {
 const ButtonIcon: React.FC<ButtonIconProps> = ({
   onPress,
   tooltipText,
-  toolTipPlacement = "top",
+  toolTipPlacement,
   elevation,
   iconName,
   iconType,

@@ -60,7 +60,9 @@ const SetImagesContainer: React.FC<SetImagesContainerProps> = ({ setToShowClassI
         <View key={item.category} style={styles.category}>
           {item.elements.map(({ name, image }, index) => (
             <Tooltip key={`${item.category}-${index}`} tooltipText={name} onPress={onPress} style={styles.tooltip}>
-              <Image source={image} style={dynamicImageStyle} resizeMode="contain" />
+              <View>
+                <Image source={image} style={dynamicImageStyle} resizeMode="contain" />
+              </View>
             </Tooltip>
           ))}
         </View>

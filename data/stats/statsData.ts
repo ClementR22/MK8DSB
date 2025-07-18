@@ -49,10 +49,9 @@ export const statNamesCompareDefault: StatNameCompareDefault[] = [
 export const statNamesSortSetCardDefault: StatNameSortSetCardDefault[] = ["name", ...statNamesCompareDefault];
 export const statNamesSortElementDefault: StatNameSortElementDefault[] = ["id", ...statNamesSortSetCardDefault];
 
-export const statNamesSpeed: StatNameSpeed[] = ["close", "speedGround", "speedAntiGravity", "speedWater", "speedAir"];
+export const statNamesSpeed: StatNameSpeed[] = ["speedGround", "speedAntiGravity", "speedWater", "speedAir"];
 
 export const statNamesHandling: StatNameHandling[] = [
-  "close",
   "handlingGround",
   "handlingAntiGravity",
   "handlingWater",

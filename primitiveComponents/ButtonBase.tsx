@@ -1,12 +1,12 @@
 import React from "react";
 import { Pressable, ViewStyle } from "react-native";
-import Tooltip from "@/components/Tooltip";
+import Tooltip, { TooltipPlacementType } from "@/components/Tooltip";
 
 type ButtonBaseProps = {
   children: React.ReactNode;
   onPress: () => void;
   tooltipText?: string;
-  placement?: string;
+  placement?: TooltipPlacementType;
   elevation?: 1 | 3 | 6 | 8 | 12;
   containerStyle: ViewStyle;
   [key: string]: any; // autres props à passer
