@@ -6,9 +6,9 @@ import { Slider } from "@miblanchard/react-native-slider";
 import useGeneralStore from "@/stores/useGeneralStore";
 import useSetsStore from "@/stores/useSetsStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
-import TooltipWrapper from "../TooltipWrapper";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import Tooltip from "../Tooltip";
 
 interface StatSliderContentProps {
   name: string;
@@ -84,10 +84,9 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
   );
 
   return (
-    <TooltipWrapper
+    <Tooltip
       tooltipText="DefineAValue"
-      style={[styles.container, containerDynamicStyle]}
-      innerContainerStyle={styles.innerContainer}
+      style={StyleSheet.flatten([styles.container, containerDynamicStyle, styles.innerContainer])}
     >
       <View style={styles.containerLeft}>
         <View style={styles.textWrapper}>
@@ -129,7 +128,7 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
           />
         </View>
       </View>
-    </TooltipWrapper>
+    </Tooltip>
   );
 };
 

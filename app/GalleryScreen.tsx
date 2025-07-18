@@ -18,6 +18,7 @@ import ElementPickerSelectorPannel from "@/components/galleryComponents/ElementP
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { useSelectedElementData } from "@/hooks/useSelectedElementData";
 import { useGalleryAnimation } from "@/hooks/useGalleryAnimation";
+import Tooltip from "@/components/Tooltip";
 
 // --- Main GalleryScreen Component ---
 const GalleryScreen = () => {
@@ -80,7 +81,6 @@ const GalleryScreen = () => {
           animatedOverlayOpacity={animatedOverlayOpacity}
           handleBackgroundPress={handleBackgroundPress}
         />
-
         <ElementPickerSelectorPannel animatedLeftPannelWidth={animatedLeftPannelWidth}>
           <View>
             <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="element" />
