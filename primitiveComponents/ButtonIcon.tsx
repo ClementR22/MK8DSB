@@ -33,14 +33,15 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   const theme = useThemeStore((state) => state.theme);
 
   const shapeStyle = useMemo(() => {
+    const buttonSize = (40 / 24) * iconSize;
     return shape === "circle"
       ? {
-          height: 40,
-          width: 40,
-          borderRadius: 20,
+          height: buttonSize,
+          width: buttonSize,
+          borderRadius: buttonSize / 2,
         }
       : { height: 30, width: 46, borderRadius: 10 };
-  }, [shape]);
+  }, [shape, iconSize]);
 
   const containerCombinedStyle = useMemo(() => {
     return StyleSheet.flatten([styles.container, shapeStyle, { backgroundColor: theme.primary }, style]);

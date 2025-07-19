@@ -20,7 +20,7 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
   const { resultStats } = useResultStats();
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
 
-  const { data, totalPages } = useMemo(() => {
+  const { data, numberOfPages, filteredResultStats } = useMemo(() => {
     const filteredResultStats = resultStats.filter((stat) => stat.checked);
 
     const data = filteredResultStats.map((stat: ResultStat) => {
@@ -39,7 +39,8 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
 
     return {
       data,
-      totalPages: filteredResultStats.length,
+      numberOfPages: filteredResultStats.length,
+      filteredResultStats: filteredResultStats,
     };
   }, [resultStats, setsListDisplayed, setsColorsMap, theme.surface_variant]);
 
@@ -47,9 +48,9 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
     return {
       padding: 15,
       backgroundColor: theme.surface_container_high,
-      paddingBottom: totalPages >= 2 ? 0 : undefined,
+      paddingBottom: numberOfPages >= 2 ? 0 : undefined,
     };
-  }, [totalPages, theme.surface_container_high]);
+  }, [numberOfPages, theme.surface_container_high]);
 
   return (
     <PaginatedWrapper
@@ -63,7 +64,8 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
           scrollToSetCard={scrollToSetCard}
         />
       )}
-      totalPages={totalPages}
+      dotsList={filteredResultStats}
+      numberOfPages={numberOfPages}
       containerStyle={containerStyleDynamic}
     />
   );

@@ -51,7 +51,7 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
       : state.multiSelectedClassIdsByCategory[selectedCategory];
   });
 
-  const totalPages = useMemo(() => {
+  const numberOfPages = useMemo(() => {
     return Math.ceil(categoryElementsSorted.length / ELEMENTS_PER_PAGE);
   }, [categoryElementsSorted.length]);
 
@@ -80,11 +80,11 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
   const themeSurface = useThemeStore((state) => state.theme.surface);
 
   const pages = useMemo(() => {
-    return Array.from({ length: totalPages }, (_, i) => {
+    return Array.from({ length: numberOfPages }, (_, i) => {
       const start = i * ELEMENTS_PER_PAGE;
       return categoryElementsSorted.slice(start, start + ELEMENTS_PER_PAGE);
     });
-  }, [categoryElementsSorted, totalPages]);
+  }, [categoryElementsSorted, numberOfPages]);
 
   const containerStyle = useMemo(
     () => [styles.paginatedWrapperContainer, { backgroundColor: themeSurface }] as StyleProp<ViewStyle>,
@@ -129,7 +129,7 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
           renderItem={({ item }) => (
             <ElementsGrid elements={item} selectedClassId={selectedClassId} onSelectElement={handleSelectElement} />
           )}
-          totalPages={totalPages}
+          numberOfPages={numberOfPages}
         />
       </View>
     </>

@@ -1,94 +1,132 @@
+import { sortButtonsConfig } from "@/config/sortButtonsConfig";
+import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
+import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useCallback, useMemo, memo } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 interface PagesNavigatorProps {
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  totalPages: number;
+  // permet de personnaliser les dots avec des icons de stat
+  dotsList?: ResultStat[];
+  // numberOfPages (= dotsList.length) est obligatoire même si dotsList est déjà fournit
+  numberOfPages: number;
 }
 
-const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrentPage, totalPages }) => {
+const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrentPage, dotsList, numberOfPages }) => {
   const theme = useThemeStore((state) => state.theme);
 
+  // Navigation handlers
   const goToNextPage = useCallback(() => {
-    // No change needed, already optimal.
-    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
-  }, [totalPages, setCurrentPage]); // totalPages dependency is correct.
+    setCurrentPage((prev) => Math.min(prev + 1, numberOfPages - 1));
+  }, [numberOfPages]);
 
   const goToPrevPage = useCallback(() => {
-    // No change needed, already optimal.
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
-  }, [setCurrentPage]); // setCurrentPage dependency is correct.
+    setCurrentPage((prev) => Math.max(prev - 1, 0));
+  }, []);
 
-  // Memoize paginationControlsStyle.
-  const paginationControlsStyle = useMemo(
-    () => [styles.paginationControls, {}],
-    [theme.surface_container_high, theme.outline]
+  // Memoized styles and colors
+  const { paginationControlsStyle, navButtonColor, activeDotColor, inactiveDotColor, activeDotIconColor } = useMemo(
+    () => ({
+      paginationControlsStyle: [styles.paginationControls],
+      navButtonColor: theme.primary,
+      activeDotColor: theme.primary,
+      inactiveDotColor: theme.inactive_dot || theme.on_surface_variant,
+      activeDotIconColor: "black",
+    }),
+    [theme]
   );
 
-  // Memoize navButtonColor.
-  const navButtonColor = useMemo(() => theme.primary, [theme.primary]);
-
-  // Memoize dot colors.
-  const activeDotColor = useMemo(() => theme.primary, [theme.primary]);
-  const inactiveDotColorResolved = useMemo(
-    () => theme.inactive_dot || theme.on_surface_variant, // Use the destructured values
-    [theme.inactive_dot, theme.on_surface_variant]
+  // Navigation buttons disabled state
+  const { isLeftButtonDisabled, isRightButtonDisabled } = useMemo(
+    () => ({
+      isLeftButtonDisabled: currentPage === 0,
+      isRightButtonDisabled: currentPage === numberOfPages - 1,
+    }),
+    [currentPage, numberOfPages]
   );
 
-  // OPTIMIZATION: Memoize the array of dots if totalPages changes, not on every render.
-  // This prevents the map from running if only currentPage changes (though React's diffing is good).
-  // More useful if dot components were themselves complex or memoized.
-  const dots = useMemo(() => {
-    return Array.from({ length: totalPages }).map((_, index) => (
-      <Pressable
-        key={index}
-        onPress={() => setCurrentPage(index)}
-        style={{ height: 40, justifyContent: "center", paddingHorizontal: 3 }}
-      >
-        <View
-          style={[styles.dot, { backgroundColor: index === currentPage ? activeDotColor : inactiveDotColorResolved }]}
-        />
+  // Memoized dots rendering
+  const renderDots = useMemo(() => {
+    if (dotsList) {
+      return dotsList
+        .map((stat, index) => {
+          if (!stat.checked) return null;
+
+          const { name } = stat;
+          const isActive = index === currentPage;
+          const { iconName, iconType, iconBackgroundColor } = sortButtonsConfig[name];
+
+          return (
+            <Pressable key={name} onPress={() => setCurrentPage(index)} style={styles.dotPressable}>
+              <ButtonIcon
+                onPress={() => setCurrentPage(index)}
+                tooltipText={name}
+                iconName={iconName}
+                iconType={iconType}
+                iconSize={16}
+                style={{
+                  backgroundColor: isActive ? activeDotIconColor : iconBackgroundColor ?? theme.primary,
+                }}
+              />
+            </Pressable>
+          );
+        })
+        .filter(Boolean);
+    }
+
+    return Array.from({ length: numberOfPages }).map((_, index) => (
+      <Pressable key={index} onPress={() => setCurrentPage(index)} style={styles.dotPressable}>
+        <View style={[styles.dot, { backgroundColor: index === currentPage ? activeDotColor : inactiveDotColor }]} />
       </Pressable>
     ));
-  }, [totalPages, currentPage, setCurrentPage, activeDotColor, inactiveDotColorResolved]);
+  }, [dotsList, currentPage, numberOfPages, activeDotColor, inactiveDotColor, activeDotIconColor]);
+
+  if (numberOfPages <= 1) return null;
 
   return (
-    <>
-      {totalPages > 1 && (
-        <View style={paginationControlsStyle}>
-          <Pressable
-            onPress={goToPrevPage}
-            disabled={currentPage === 0}
-            style={[styles.navButton, currentPage === 0 && styles.navButtonDisabled]}
-          >
-            <MaterialCommunityIcons
-              name="chevron-left"
-              size={30}
-              color={currentPage === 0 ? theme.on_surface_variant : navButtonColor}
-            />
-          </Pressable>
+    <View style={paginationControlsStyle}>
+      <NavButton
+        icon="chevron-left"
+        onPress={goToPrevPage}
+        disabled={isLeftButtonDisabled}
+        color={isLeftButtonDisabled ? theme.on_surface_variant : navButtonColor}
+      />
 
-          <View style={styles.dotsContainer}>{dots}</View>
+      <ScrollView horizontal contentContainerStyle={styles.dotsContainer}>
+        {renderDots}
+      </ScrollView>
 
-          <Pressable
-            onPress={goToNextPage}
-            disabled={currentPage === totalPages - 1}
-            style={[styles.navButton, currentPage === totalPages - 1 && styles.navButtonDisabled]}
-          >
-            <MaterialCommunityIcons
-              name="chevron-right"
-              size={30}
-              color={currentPage === totalPages - 1 ? theme.on_surface_variant : navButtonColor}
-            />
-          </Pressable>
-        </View>
-      )}
-    </>
+      <NavButton
+        icon="chevron-right"
+        onPress={goToNextPage}
+        disabled={isRightButtonDisabled}
+        color={isRightButtonDisabled ? theme.on_surface_variant : navButtonColor}
+      />
+    </View>
   );
 };
+
+// Extracted NavButton component for better readability and reusability
+const NavButton = memo(
+  ({
+    icon,
+    onPress,
+    disabled,
+    color,
+  }: {
+    icon: "chevron-left" | "chevron-right";
+    onPress: () => void;
+    disabled: boolean;
+    color: string;
+  }) => (
+    <Pressable onPress={onPress} disabled={disabled} style={[styles.navButton, disabled && styles.navButtonDisabled]}>
+      <MaterialCommunityIcons name={icon} size={30} color={color} />
+    </Pressable>
+  )
+);
 
 const styles = StyleSheet.create({
   paginationControls: {
@@ -104,7 +142,13 @@ const styles = StyleSheet.create({
   },
   dotsContainer: {
     flexDirection: "row",
+    flex: 1,
     justifyContent: "center",
+  },
+  dotPressable: {
+    height: 40,
+    justifyContent: "center",
+    paddingHorizontal: 3,
   },
   dot: {
     width: 30,

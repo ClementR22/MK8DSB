@@ -53,18 +53,7 @@ interface ButtonIconSortProps extends ButtonIconProps {
 }
 
 const ButtonIconSort: React.FC<ButtonIconSortProps> = memo(
-  ({
-    onPress,
-    tooltipText,
-    iconName,
-    iconType,
-    iconBackgroundColor,
-    direction = "asc",
-    isBadge = false,
-
-    style,
-    ...props
-  }) => {
+  ({ onPress, tooltipText, iconName, iconType, iconBackgroundColor, direction = "asc", isBadge = false }) => {
     const theme = useThemeStore((state) => state.theme);
 
     const badgeIconName = direction === "asc" ? "arrow-up" : "arrow-down";
@@ -79,8 +68,7 @@ const ButtonIconSort: React.FC<ButtonIconSortProps> = memo(
           tooltipText={tooltipText}
           iconName={iconName}
           iconType={iconType}
-          style={[{ backgroundColor: iconBackgroundColor || theme.primary }, style]}
-          {...props}
+          style={{ backgroundColor: iconBackgroundColor ?? theme.primary }}
         />
         {isBadge && (
           <View style={[styles.badgeContainer, { backgroundColor: badgeBackgroundColor }]}>
