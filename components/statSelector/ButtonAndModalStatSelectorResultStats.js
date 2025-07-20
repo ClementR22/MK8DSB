@@ -6,7 +6,7 @@ import { useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import ButtonAndModalStatSelector from "./ButtonAndModalStatSelector";
-import { PAGES_NAVIGATOR_DOTS_ICONS_SIZE } from "../paginatedWrapper/PagesNavigator";
+import { PAGES_NAVIGATOR_DOTS_BUTTON_SIZE } from "../paginatedWrapper/PagesNavigator";
 
 const ButtonAndModalStatSelectorResultStats = () => {
   const screenName = useScreen();
@@ -25,13 +25,12 @@ const ButtonAndModalStatSelectorResultStats = () => {
     : undefined;
 
   const buttonIconProps = useMemo(() => {
-    console.log("calc");
     if (isInDisplayScreen) {
       return {
         tooltipText: "DisplayedStats",
         iconName: "plus",
         iconType: IconType.MaterialCommunityIcons,
-        buttonSize: PAGES_NAVIGATOR_DOTS_ICONS_SIZE,
+        buttonSize: PAGES_NAVIGATOR_DOTS_BUTTON_SIZE,
       };
     } else {
       return {

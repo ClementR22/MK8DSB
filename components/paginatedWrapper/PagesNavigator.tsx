@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, memo } from "react";
+import React, { useCallback, useMemo, memo, useEffect, useRef } from "react";
 import { Pressable, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
@@ -9,9 +9,10 @@ import { HALF_GAP } from "../sortModeSelector/SortModeSelector";
 
 // Constants
 const HEIGHT = 30;
-export const PAGES_NAVIGATOR_DOTS_ICONS_SIZE = HEIGHT * 0.8;
+export const PAGES_NAVIGATOR_DOTS_BUTTON_SIZE = HEIGHT * 0.8;
 const NAV_BUTTON_WIDTH = 46;
 const DOTS_CONTAINER_MAX_WIDTH = STAT_SLIDER_COMPARE_WIDTH - 2 * NAV_BUTTON_WIDTH;
+const CENTERED_OFFSET = DOTS_CONTAINER_MAX_WIDTH / 2 - PAGES_NAVIGATOR_DOTS_BUTTON_SIZE / 2;
 
 export type ButtonName = string;
 
@@ -73,6 +74,28 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({
     [currentPage, numberOfPages]
   );
 
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  // Fonction pour scroller vers la page active
+  const scrollToActiveDot = useCallback(() => {
+    if (!scrollViewRef.current) return;
+
+    // Calculer la position x pour centrer le dot actif
+    const dotWidth = PAGES_NAVIGATOR_DOTS_BUTTON_SIZE;
+    const gap = HALF_GAP; // Espace entre les dots
+    const offset = (dotWidth + gap) * currentPage - CENTERED_OFFSET; // - (STAT_SLIDER_COMPARE_WIDTH / 2 - dotWidth / 2);
+
+    scrollViewRef.current.scrollTo({
+      x: Math.max(0, offset),
+      animated: true,
+    });
+  }, [currentPage]);
+
+  // Appeler scrollToActiveDot quand currentPage change
+  useEffect(() => {
+    scrollToActiveDot();
+  }, [currentPage, scrollToActiveDot]);
+
   // Dots rendering
   const renderDots = useMemo(() => {
     if (dotsNamesList) {
@@ -87,7 +110,7 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({
             tooltipText={buttonName}
             iconName={iconName}
             iconType={iconType}
-            buttonSize={PAGES_NAVIGATOR_DOTS_ICONS_SIZE}
+            buttonSize={PAGES_NAVIGATOR_DOTS_BUTTON_SIZE}
             style={{
               backgroundColor: isActive ? activeDotIconColor : iconBackgroundColor ?? theme.primary,
             }}
@@ -123,9 +146,10 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({
 
       <View style={styles.dotsContainer}>
         <ScrollView
+          ref={scrollViewRef}
           horizontal
-          contentContainerStyle={styles.scrollViewContent}
           showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scrollViewContent}
           style={scrollViewStyle}
         >
           {renderDots}
@@ -195,7 +219,7 @@ const styles = StyleSheet.create({
   },
   separator: {
     width: 2,
-    height: PAGES_NAVIGATOR_DOTS_ICONS_SIZE,
+    height: PAGES_NAVIGATOR_DOTS_BUTTON_SIZE,
   },
   moreDotsContainer: {
     flexDirection: "row",
