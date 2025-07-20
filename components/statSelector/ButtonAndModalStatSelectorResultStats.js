@@ -6,7 +6,7 @@ import { useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import ButtonAndModalStatSelector from "./ButtonAndModalStatSelector";
-import { PAGES_NAVIGATOR_DOTS_ICONS_SIZE } from "../elementCompactSelector/PagesNavigator";
+import { PAGES_NAVIGATOR_DOTS_ICONS_SIZE } from "../paginatedWrapper/PagesNavigator";
 
 const ButtonAndModalStatSelectorResultStats = () => {
   const screenName = useScreen();

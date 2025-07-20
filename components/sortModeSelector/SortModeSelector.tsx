@@ -13,6 +13,7 @@ import {
   statNamesSpeed,
 } from "@/data/stats/statsData";
 import TooltipMenu from "../TooltipMenu";
+import ButtonIconSort from "./ButtonIconSort";
 
 // Constants
 export const HALF_GAP = 7;
@@ -45,45 +46,6 @@ function getSortNameFromSortNumber(sortNumber: number): StatNameSort | undefined
   }
   return undefined;
 }
-
-interface ButtonIconSortProps extends ButtonIconProps {
-  iconBackgroundColor?: string;
-  direction?: "asc" | "desc";
-  isBadge?: boolean;
-}
-
-const ButtonIconSort: React.FC<ButtonIconSortProps> = memo(
-  ({ onPress, tooltipText, iconName, iconType, iconBackgroundColor, direction = "asc", isBadge = false }) => {
-    const theme = useThemeStore((state) => state.theme);
-
-    const badgeIconName = direction === "asc" ? "arrow-up" : "arrow-down";
-    const badgeBackgroundColor = theme.primary_container;
-    const badgeIconColor = theme.primary;
-    const badgeIconInnerSize = 20;
-
-    return (
-      <View>
-        <ButtonIcon
-          onPress={onPress}
-          tooltipText={tooltipText}
-          iconName={iconName}
-          iconType={iconType}
-          style={{ backgroundColor: iconBackgroundColor ?? theme.primary }}
-        />
-        {isBadge && (
-          <View style={[styles.badgeContainer, { backgroundColor: badgeBackgroundColor }]}>
-            <Icon
-              name={badgeIconName}
-              type={IconType.MaterialCommunityIcons}
-              size={badgeIconInnerSize}
-              color={badgeIconColor}
-            />
-          </View>
-        )}
-      </View>
-    );
-  }
-);
 
 interface SortModeSelectorProps {
   sortNumber: number;
@@ -136,6 +98,7 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
             iconType={sortButtonsConfig.speed.iconType}
             direction={statNamesSpeed.includes(activeSort as StatNameSpeed) ? currentDirection : undefined}
             isBadge={statNamesSpeed.includes(activeSort as StatNameSpeed)}
+            badgeContainerStyle={styles.badgeContainer}
           />
         }
       >
@@ -151,6 +114,7 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
               iconBackgroundColor={sortButtonsConfig[speedName].iconBackgroundColor}
               direction={isActive ? currentDirection : undefined}
               isBadge={isActive}
+              badgeContainerStyle={styles.badgeContainer}
             />
           );
         })}
@@ -170,6 +134,7 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
             iconType={sortButtonsConfig.handling.iconType}
             direction={statNamesHandling.includes(activeSort as StatNameHandling) ? currentDirection : undefined}
             isBadge={statNamesHandling.includes(activeSort as StatNameHandling)}
+            badgeContainerStyle={styles.badgeContainer}
           />
         }
       >
@@ -185,6 +150,7 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
               iconBackgroundColor={sortButtonsConfig[handlingName].iconBackgroundColor}
               direction={isActive ? currentDirection : undefined}
               isBadge={isActive}
+              badgeContainerStyle={styles.badgeContainer}
             />
           );
         })}
@@ -211,6 +177,7 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
           iconType={iconConfig.iconType}
           direction={isActive ? currentDirection : undefined}
           isBadge={isActive}
+          badgeContainerStyle={styles.badgeContainer}
         />
       );
     });

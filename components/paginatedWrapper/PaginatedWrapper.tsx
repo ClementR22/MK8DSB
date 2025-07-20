@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback, useState } from "react";
 import { FlatList, NativeScrollEvent, NativeSyntheticEvent, View, ViewStyle, ViewToken } from "react-native";
-import PagesNavigator, { ButtonName } from "./elementCompactSelector/PagesNavigator";
+import PagesNavigator, { ButtonName } from "./PagesNavigator";
 
 interface PaginatedWrapperProps {
   data: any[];

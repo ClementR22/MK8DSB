@@ -5,7 +5,7 @@ import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { sortButtonsConfig } from "@/config/sortButtonsConfig";
 import { STAT_SLIDER_COMPARE_WIDTH } from "../statSliderCompare/StatSliderCompare";
-import { HALF_GAP } from "./SortModeSelector";
+import { HALF_GAP } from "../sortModeSelector/SortModeSelector";
 
 // Constants
 const HEIGHT = 30;

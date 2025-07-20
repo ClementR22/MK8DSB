@@ -3,7 +3,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { Category } from "@/data/elements/elementsTypes";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import SortModeSelector, { HALF_GAP } from "./SortModeSelector";
+import SortModeSelector, { HALF_GAP } from "../sortModeSelector/SortModeSelector";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
@@ -12,7 +12,7 @@ import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import BodytypesSelector from "./selector/BodytypesSelector";
 import { useThemeStore } from "@/stores/useThemeStore";
 import CategorySelector from "./selector/CategorySelector";
-import PaginatedWrapper from "../PaginatedWrapper";
+import PaginatedWrapper from "../paginatedWrapper/PaginatedWrapper";
 import ElementsGrid, {
   ELEMENTS_GRID_WIDTH,
   ELEMENTS_PER_PAGE,

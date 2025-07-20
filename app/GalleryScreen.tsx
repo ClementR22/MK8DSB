@@ -7,7 +7,7 @@ import { Category, ElementData } from "@/data/elements/elementsTypes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { sortElements } from "@/utils/sortElements";
-import SortModeSelector from "@/components/elementCompactSelector/SortModeSelector";
+import SortModeSelector from "@/components/sortModeSelector/SortModeSelector";
 import { classesStatsByCategory } from "@/data/elements/elementsStats";
 import { statNames, statNamesCompact } from "@/data/stats/statsData";
 import { LEFT_PANNEL_WIDTH_COLLAPSED, LEFT_PANNEL_WIDTH_EXPANDED } from "@/utils/designTokens"; // Import design tokens

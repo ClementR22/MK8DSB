@@ -5,8 +5,8 @@ import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import { statNames } from "@/data/stats/statsData";
 import useSetsStore from "@/stores/useSetsStore";
 import StatSliderCompare, { STAT_SLIDER_COMPARE_WIDTH } from "./StatSliderCompare";
-import PaginatedWrapper from "../PaginatedWrapper";
-import { ButtonName } from "../elementCompactSelector/PagesNavigator";
+import PaginatedWrapper from "../paginatedWrapper/PaginatedWrapper";
+import { ButtonName } from "../paginatedWrapper/PagesNavigator";
 import { StatName } from "@/data/stats/statsTypes";
 import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
 
