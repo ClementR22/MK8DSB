@@ -28,7 +28,7 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
   const sortSetsList = useSetsStore((state) => state.sortSetsList);
   useEffect(() => sortSetsList(screenName, sortNumber), [sortNumber]);
 
-  const separatorDynamicStyle = useMemo(() => ({ backgroundColor: theme.outline_variant }), []);
+  const separatorDynamicStyle = useMemo(() => ({ backgroundColor: theme.outline_variant }), [theme.outline_variant]);
 
   return (
     <BoxContainer alignItems={null} gap={0}>

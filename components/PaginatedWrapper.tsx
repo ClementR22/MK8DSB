@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useCallback, useState } from "react";
 import { FlatList, NativeScrollEvent, NativeSyntheticEvent, View, ViewStyle, ViewToken } from "react-native";
-import PagesNavigator from "./elementCompactSelector/PagesNavigator";
-import { ResultStat } from "@/contexts/ResultStatsContext";
+import PagesNavigator, { ButtonName } from "./elementCompactSelector/PagesNavigator";
 
 interface PaginatedWrapperProps {
   data: any[];
   pageWidth: number;
   renderItem: ({ item, index }: { item: any; index: number }) => React.ReactElement;
-  dotsList?: ResultStat[];
+  dotsNamesList?: ButtonName[];
+  moreDots?: React.ReactElement[];
   numberOfPages?: number;
   containerStyle?: ViewStyle;
 }
@@ -16,7 +16,8 @@ const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
   data,
   pageWidth,
   renderItem,
-  dotsList,
+  dotsNamesList,
+  moreDots,
   numberOfPages,
   containerStyle = null,
 }) => {
@@ -81,11 +82,11 @@ const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
           index,
         })}
       />
-
       <PagesNavigator
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-        dotsList={dotsList}
+        dotsNamesList={dotsNamesList}
+        moreDots={moreDots}
         numberOfPages={numberOfPages}
       />
     </View>

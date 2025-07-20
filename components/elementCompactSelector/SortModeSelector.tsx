@@ -92,7 +92,6 @@ interface SortModeSelectorProps {
 }
 
 const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortModeSelectorProps) => {
-  const theme = useThemeStore((state) => state.theme);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const statNamesSortDefault = useMemo(

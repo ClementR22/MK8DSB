@@ -12,7 +12,7 @@ export interface ButtonIconProps {
   elevation?: 1 | 3 | 6 | 8 | 12;
   iconName: string;
   iconType: IconType;
-  iconSize?: number;
+  buttonSize?: number;
   shape?: "circle" | "rectangle";
   style?: StyleProp<ViewStyle> | any;
   [key: string]: any;
@@ -25,7 +25,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   elevation,
   iconName,
   iconType,
-  iconSize = 24,
+  buttonSize = 40,
   shape = "circle",
   style = null,
   ...props
@@ -33,7 +33,6 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   const theme = useThemeStore((state) => state.theme);
 
   const shapeStyle = useMemo(() => {
-    const buttonSize = (40 / 24) * iconSize;
     return shape === "circle"
       ? {
           height: buttonSize,
@@ -41,7 +40,9 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
           borderRadius: buttonSize / 2,
         }
       : { height: 30, width: 46, borderRadius: 10 };
-  }, [shape, iconSize]);
+  }, [shape, buttonSize]);
+
+  const iconSize = useMemo(() => (24 / 40) * buttonSize, [buttonSize]);
 
   const containerCombinedStyle = useMemo(() => {
     return StyleSheet.flatten([styles.container, shapeStyle, { backgroundColor: theme.primary }, style]);

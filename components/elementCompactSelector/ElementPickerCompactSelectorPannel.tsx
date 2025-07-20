@@ -1,5 +1,5 @@
-import React, { useState, memo, useMemo, useEffect, useCallback, useRef } from "react";
-import { FlatList, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import React, { useState, memo, useMemo, useCallback } from "react";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { Category } from "@/data/elements/elementsTypes";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
@@ -8,7 +8,6 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import PagesNavigator from "./PagesNavigator";
 import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import BodytypesSelector from "./selector/BodytypesSelector";
 import { useThemeStore } from "@/stores/useThemeStore";
@@ -75,7 +74,7 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
     return { iconName: "sort", iconType: IconType.MaterialCommunityIcons, tooltipText: "SortElements" };
   }, [isOpenSortView]);
 
-  const separatorDynamicStyle = useMemo(() => ({ backgroundColor: theme.outline_variant }), []);
+  const separatorDynamicStyle = useMemo(() => ({ backgroundColor: theme.outline_variant }), [theme.outline_variant]);
 
   const themeSurface = useThemeStore((state) => state.theme.surface);
 

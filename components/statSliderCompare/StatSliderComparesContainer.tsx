@@ -6,6 +6,9 @@ import { statNames } from "@/data/stats/statsData";
 import useSetsStore from "@/stores/useSetsStore";
 import StatSliderCompare, { STAT_SLIDER_COMPARE_WIDTH } from "./StatSliderCompare";
 import PaginatedWrapper from "../PaginatedWrapper";
+import { ButtonName } from "../elementCompactSelector/PagesNavigator";
+import { StatName } from "@/data/stats/statsTypes";
+import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
 
 interface StatSliderComparesContainerProps {
   setsColorsMap: Map<string, string>;
@@ -20,11 +23,11 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
   const { resultStats } = useResultStats();
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
 
-  const { data, numberOfPages, filteredResultStats } = useMemo(() => {
-    const filteredResultStats = resultStats.filter((stat) => stat.checked);
+  const { data, numberOfPages, statsChecked } = useMemo(() => {
+    const statsChecked = resultStats.filter((stat) => stat.checked).map((stat) => stat.name);
 
-    const data = filteredResultStats.map((stat: ResultStat) => {
-      const statIndex = statNames.indexOf(stat.name);
+    const data = statsChecked.map((stat: StatName) => {
+      const statIndex = statNames.indexOf(stat);
       const setsData = setsListDisplayed.map((set) => ({
         id: set.id,
         value: set.stats[statIndex],
@@ -32,23 +35,23 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
       }));
 
       return {
-        name: stat.name,
+        name: stat,
         setsIdAndValueWithColor: setsData,
       };
     });
 
     return {
       data,
-      numberOfPages: filteredResultStats.length,
-      filteredResultStats: filteredResultStats,
+      numberOfPages: statsChecked.length,
+      statsChecked: statsChecked,
     };
   }, [resultStats, setsListDisplayed, setsColorsMap, theme.surface_variant]);
 
   const containerStyleDynamic: ViewStyle = useMemo(() => {
     return {
       padding: 15,
+      paddingBottom: 0,
       backgroundColor: theme.surface_container_high,
-      paddingBottom: numberOfPages >= 2 ? 0 : undefined,
     };
   }, [numberOfPages, theme.surface_container_high]);
 
@@ -64,7 +67,8 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
           scrollToSetCard={scrollToSetCard}
         />
       )}
-      dotsList={filteredResultStats}
+      dotsNamesList={statsChecked}
+      moreDots={[<ButtonAndModalStatSelectorResultStats />]}
       numberOfPages={numberOfPages}
       containerStyle={containerStyleDynamic}
     />
