@@ -72,36 +72,34 @@ const GalleryScreen = () => {
   }, [selectedCategory, categoryElementsSorted]);
 
   return (
-    <ScreenProvider screenName="gallery">
-      <View style={styles.container}>
-        <ElementCard
-          name={selectedElementName}
-          stats={selectedElementStats}
-          category={selectedCategory}
-          animatedOverlayOpacity={animatedOverlayOpacity}
-          handleBackgroundPress={handleBackgroundPress}
-        />
-        <ElementPickerSelectorPannel animatedLeftPannelWidth={animatedLeftPannelWidth}>
-          <View>
-            <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="element" />
-          </View>
-          {isCategorySelectorExpanded ? (
-            <CategorySelector selectedCategory={selectedCategory} onCategoryPress={setSelectedCategory} />
-          ) : (
-            <CategorySelectorCollapsed
-              selectedCategory={selectedCategory}
-              onCollapsedCategoryPress={handleCollapsedCategoryPress}
-            />
-          )}
-          <ElementPickerSelector
-            categoryElementsSorted={categoryElementsSorted}
-            selectedElementId={selectedElementId}
-            isLeftPannelExpanded={isLeftPannelExpanded}
-            onElementPickerPress={handleElementPickerPress}
+    <View style={styles.container}>
+      <ElementCard
+        name={selectedElementName}
+        stats={selectedElementStats}
+        category={selectedCategory}
+        animatedOverlayOpacity={animatedOverlayOpacity}
+        handleBackgroundPress={handleBackgroundPress}
+      />
+      <ElementPickerSelectorPannel animatedLeftPannelWidth={animatedLeftPannelWidth}>
+        <View>
+          <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="element" />
+        </View>
+        {isCategorySelectorExpanded ? (
+          <CategorySelector selectedCategory={selectedCategory} onCategoryPress={setSelectedCategory} />
+        ) : (
+          <CategorySelectorCollapsed
+            selectedCategory={selectedCategory}
+            onCollapsedCategoryPress={handleCollapsedCategoryPress}
           />
-        </ElementPickerSelectorPannel>
-      </View>
-    </ScreenProvider>
+        )}
+        <ElementPickerSelector
+          categoryElementsSorted={categoryElementsSorted}
+          selectedElementId={selectedElementId}
+          isLeftPannelExpanded={isLeftPannelExpanded}
+          onElementPickerPress={handleElementPickerPress}
+        />
+      </ElementPickerSelectorPannel>
+    </View>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { createContext, useContext, ReactNode } from "react";
 
 const ScreenContext = createContext<ScreenName | undefined>(undefined);
 
-export type ScreenName = "search" | "display" | "save" | "gallery";
+export type ScreenName = "search" | "display" | "save";
 
 interface ScreenProviderProps {
   screenName: ScreenName;

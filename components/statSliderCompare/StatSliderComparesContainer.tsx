@@ -68,7 +68,7 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
         />
       )}
       dotsNamesList={statsChecked}
-      moreDots={[<ButtonAndModalStatSelectorResultStats />]}
+      moreDots={[<ButtonAndModalStatSelectorResultStats key="button'+'" />]}
       numberOfPages={numberOfPages}
       containerStyle={containerStyleDynamic}
     />

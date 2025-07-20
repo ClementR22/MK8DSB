@@ -43,14 +43,19 @@ export interface SetFoundObject extends SetObject {
 
 export interface SetsStoreState {
   chosenStats: ChosenStat[];
+  setsListFound: SetFoundObject[];
   setsListDisplayed: SetObject[];
   setsListSaved: SetObject[];
-  setsListFound: SetFoundObject[];
   setCardEditedId: string;
   setKeyInDisplay: number;
   sortNumberSavedSets: number;
 
   setChosenStats: (newChosenStats: ChosenStat[]) => void;
+  getSetsListFromScreenName: (screenName: ScreenName) => {
+    setsList: SetObject[] | SetFoundObject[];
+    setsListName: string;
+    isSaveScreen: boolean;
+  };
   setSetsListFound: (newSetsList: SetFoundObject[]) => void;
   setSetCardEditedId: (id: string) => void;
   updateStatValue: (name: string, newValue: number) => void;
@@ -103,9 +108,10 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     statFilterNumber: 0,
   })),
 
+  setsListFound: [],
   setsListDisplayed: [{ ...setDefault }, { ...setDefault2 }],
   setsListSaved: [],
-  setsListFound: [],
+
   setCardEditedId: null,
   setKeyInDisplay: 2,
 
@@ -113,6 +119,28 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
 
   setChosenStats: (newChosenStats) => {
     set({ chosenStats: newChosenStats });
+  },
+
+  getSetsListFromScreenName: (screenName) => {
+    let setsListName: string;
+    let isSaveScreen = false;
+
+    switch (screenName) {
+      case "search":
+        setsListName = "setsListFound";
+        break;
+      case "display":
+        setsListName = "setsListDisplayed";
+        break;
+      case "save":
+        setsListName = "setsListSaved";
+        isSaveScreen = true;
+        break;
+    }
+
+    const setsList = get()[setsListName];
+
+    return { setsList, setsListName, isSaveScreen };
   },
 
   setSetsListFound: (newSetsList) => set({ setsListFound: newSetsList }),
@@ -227,18 +255,16 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   removeSet: (id, screenName) => {
-    const isSave = screenName === "save";
-    const targetList = !isSave ? get().setsListDisplayed : get().setsListSaved;
-    const listName = !isSave ? "setsListDisplayed" : "setsListSaved";
+    const { setsList, setsListName, isSaveScreen } = get().getSetsListFromScreenName(screenName);
 
-    if (isSave) {
+    if (isSaveScreen) {
       get().removeSetInMemory(id); // Supprime de AsyncStorage
     }
 
     // Filtrer la liste en mémoire
-    const newList = targetList.filter((set) => set.id !== id);
+    const newList = setsList.filter((set) => set.id !== id);
     set({
-      [listName]: newList,
+      [setsListName]: newList,
     } as any); // Le casting `as any` est souvent utilisé avec les noms de clés dynamiques en TypeScript
   },
 
@@ -298,14 +324,9 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   checkNameUnique: (name, screenName) => {
-    const targetList =
-      screenName === "search"
-        ? get().setsListFound
-        : screenName === "display"
-        ? get().setsListDisplayed
-        : get().setsListSaved;
+    const { setsList } = get().getSetsListFromScreenName(screenName);
 
-    const setsNames = targetList.map((set) => set.name);
+    const setsNames = setsList.map((set) => set.name);
     if (setsNames.includes(name)) {
       showToast("Erreur" + " " + "Ce nom de set existe déjà");
       return false;
@@ -314,15 +335,15 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   saveSet: (screenName, id) => {
-    const list = screenName === "search" ? get().setsListFound : (get().setsListDisplayed as SetFoundObject[]);
+    const { setsList } = get().getSetsListFromScreenName(screenName);
 
     try {
-      const setSelected = list.find((set) => set.id === id);
+      const setSelected = setsList.find((set) => set.id === id);
       if (!setSelected) {
         showToast("Erreur" + " " + "Le set n'existe pas"); // Utilisez showToast au lieu de throw
         return false;
       }
-      const { percentage, ...setToSave } = setSelected; // Destructurer percentage si présent
+      const { percentage, ...setToSave } = setSelected as SetFoundObject; // Destructurer percentage si présent
 
       // checkNameUnique affichera un toast si le nom n'est pas unique
       const isNameUnique = get().checkNameUnique(setToSave.name, "save");
@@ -343,10 +364,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   renameSet: (newName, screenName, setToShowId) => {
-    // Assurez-vous que le nouveau nom n'est pas déjà utilisé dans la liste CIBLE (sauf pour le set que l'on renomme)
-    const setsListName =
-      screenName === "search" ? "setsListFound" : screenName === "display" ? "setsListDisplayed" : "setsListSaved";
-    const setsList = get()[setsListName] as SetObject[] | SetFoundObject[];
+    const { setsList, setsListName, isSaveScreen } = get().getSetsListFromScreenName(screenName);
 
     // Vérifier l'unicité du nom en ignorant le set en cours d'édition
     const isNewNameUniqueExceptCurrent = setsList.every((set) => {
@@ -362,7 +380,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       if (set.id === setToShowId) {
         const newSet = { ...set, name: newName };
 
-        if (screenName === "save") {
+        if (isSaveScreen) {
           get().setSetInMemory(newSet);
         } else {
           console.warn("Key not found for set to rename in AsyncStorage.");
@@ -378,8 +396,8 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   updateSetsList: async (pressedClassIdsObj, screenName) => {
-    const setsListName = screenName === "display" ? "setsListDisplayed" : "setsListSaved";
-    const setsList = get()[setsListName as keyof SetsStoreState] as SetObject[];
+    const { setsList, setsListName, isSaveScreen } = get().getSetsListFromScreenName(screenName);
+
     const newClassIds = Object.values(pressedClassIdsObj);
     const setCardEditedId = get().setCardEditedId;
 
@@ -390,7 +408,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
           classIds: newClassIds,
           stats: getSetStatsFromClassIds(newClassIds), // Recalcule les stats
         };
-        if (screenName === "save") {
+        if (isSaveScreen) {
           get().setSetInMemory(newSet);
         }
         return newSet;
@@ -406,14 +424,9 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   exportSet: (id, screenName) => {
-    const list =
-      screenName === "search"
-        ? get().setsListFound
-        : screenName === "display"
-        ? get().setsListDisplayed
-        : get().setsListSaved;
+    const { setsList } = get().getSetsListFromScreenName(screenName);
 
-    const setObjToExport = list.find((set) => set.id === id);
+    const setObjToExport = setsList.find((set) => set.id === id);
     if (!setObjToExport) {
       showToast("Erreur" + " " + "Le set à exporter n'existe pas.");
       return;
@@ -456,7 +469,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
 
     const set = { ...parsedSet, id: nanoid(8), stats };
 
-    // Ici, fais ce que tu veux : addToStore, update, etc.
     const loadSet =
       screenName === "search"
         ? get().loadSetToSearch
@@ -475,9 +487,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   sortSetsList: (screenName, sortNumber) => {
-    const isSave = screenName === "save";
-    const setsListName = isSave ? "setsListSaved" : "setsListDisplayed";
-    const setsList: SetObject[] = get()[setsListName as keyof SetsStoreState] as SetObject[];
+    const { setsList, setsListName } = get().getSetsListFromScreenName(screenName);
 
     const setsListSortable: SortableElement[] = setsList.map((setObj: SetObject) => {
       const statsArray = setObj.stats;
