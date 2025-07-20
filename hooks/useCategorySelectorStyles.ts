@@ -12,7 +12,7 @@ import {
   BORDER_RADIUS_15,
 } from "@/utils/designTokens";
 
-// Instead of a fixed padding, let's use a design token for consistency
+const imageSize = 50;
 
 export const useCategorySelectorStyles = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -29,6 +29,7 @@ export const useCategorySelectorStyles = () => {
         ...SHADOW_STYLE, // Apply shadow
         padding: CATEGORY_SELECTOR_PADDING, // Use consistent spacing token
         justifyContent: "space-around", // Distribute items more evenly, possibly with padding around them
+        gap: 2,
       },
       buttonWrapper: {
         flex: 1,
@@ -38,7 +39,7 @@ export const useCategorySelectorStyles = () => {
         alignItems: "center" as "center",
         borderRadius: BORDER_RADIUS_18 / 2, // Slightly less rounded than container
         overflow: "hidden" as "hidden",
-        height: 50, // Slightly larger buttons for better touch target
+        height: imageSize, // Slightly larger buttons for better touch target
         //    backgroundColor: theme.surface, // A subtle background for non-selected buttons
       },
       buttonActive: {
@@ -50,8 +51,8 @@ export const useCategorySelectorStyles = () => {
 
       // --- Common Styles (Applied directly to the Image) ---
       image: {
-        width: "80%",
-        height: "80%",
+        width: imageSize,
+        height: imageSize * 0.8,
       },
     });
   }, [theme]);

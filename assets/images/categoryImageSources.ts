@@ -1,6 +1,7 @@
-import { Category } from "../elements/elementsTypes";
+import { Category } from "@/data/elements/elementsTypes";
+import { ImageSourcePropType } from "react-native";
 
-export const categoryImageSources: { [key in Category]: any } = {
+export const categoryImageSources: { [key in Category]: ImageSourcePropType } = {
   character: require("@/assets/images/elementsImages/characters/Mario.png"),
   body: require("@/assets/images/elementsImages/karts/Standard Kart.png"),
   wheel: require("@/assets/images/elementsImages/wheels/Standard.png"),

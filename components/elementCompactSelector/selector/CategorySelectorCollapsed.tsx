@@ -2,7 +2,7 @@
 import React, { memo } from "react";
 import { Image, View, Pressable } from "react-native"; // No need for Text if not used
 import { Category } from "@/data/elements/elementsTypes"; // For Category type
-import { categoryImageSources } from "@/data/categories/categoryImageSources";
+import { categoryImageSources } from "@/assets/images/categoryImageSources";
 import { useCategorySelectorStyles } from "@/hooks/useCategorySelectorStyles"; // Import the hook
 
 interface CategorySelectorCollapsedProps {
