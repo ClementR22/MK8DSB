@@ -62,10 +62,6 @@ const Modal = ({
 }: ModalProps) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const buttonContainerStyle = useMemo(() => theme.error, [theme.error]);
-
-  const buttonTextStyle = useMemo(() => theme.on_error, [theme.on_error]);
-
   const containerBackgroundColorStyle = useMemo(
     () => ({
       backgroundColor: theme.surface_container_highest,
@@ -104,14 +100,7 @@ const Modal = ({
         const isSucces = secondButtonProps.onPress();
         if (closeAfterSecondButton || isSucces) setIsModalVisible(false);
       };
-      return (
-        <ModalButton
-          buttonColor={buttonContainerStyle}
-          buttonTextColor={buttonTextStyle}
-          {...secondButtonProps}
-          onPress={completedOnPress}
-        />
-      );
+      return <ModalButton {...secondButtonProps} onPress={completedOnPress} />;
     }
     return null;
   }, [secondButton, secondButtonProps, closeAfterSecondButton, setIsModalVisible]);
