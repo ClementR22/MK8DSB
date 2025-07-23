@@ -6,6 +6,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import { sortButtonsConfig } from "@/config/sortButtonsConfig";
 import { STAT_SLIDER_COMPARE_WIDTH } from "../statSliderCompare/StatSliderCompare";
 import { HALF_GAP } from "../sortModeSelector/SortModeSelector";
+import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 
 // Constants
 const HEIGHT = 30;
@@ -43,12 +44,12 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({
   }, [setCurrentPage]);
 
   // Theme colors
-  const { navButtonColor, activeDotColor, inactiveDotColor, activeDotIconColor } = useMemo(
+  const { navButtonColor, activeDotColor, inactiveDotColor, activeDotIconStyle } = useMemo(
     () => ({
       navButtonColor: theme.primary,
       activeDotColor: theme.primary,
       inactiveDotColor: theme.inactive_dot || theme.on_surface_variant,
-      activeDotIconColor: "black",
+      activeDotIconStyle: { backgroundColor: "black", borderWidth: 3, borderColor: "grey" },
     }),
     [theme]
   );
@@ -111,9 +112,12 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({
             iconName={iconName}
             iconType={iconType}
             buttonSize={PAGES_NAVIGATOR_DOTS_BUTTON_SIZE}
-            style={{
-              backgroundColor: isActive ? activeDotIconColor : iconBackgroundColor ?? theme.primary,
-            }}
+            style={[
+              {
+                backgroundColor: iconBackgroundColor ?? theme.primary,
+              },
+              isActive && activeDotIconStyle,
+            ]}
           />
         );
       });
@@ -130,7 +134,7 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({
     numberOfPages,
     activeDotColor,
     inactiveDotColor,
-    activeDotIconColor,
+    activeDotIconStyle,
     theme.primary,
     setCurrentPage,
   ]);
