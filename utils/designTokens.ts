@@ -1,14 +1,12 @@
 // utils/designTokens.ts
 
-import { Dimensions, StyleSheet } from "react-native";
-
-const { width: screenWidth } = Dimensions.get("window");
+import { StyleSheet } from "react-native";
 
 // Spacing
 export const CARD_SPACING = 16;
 export const LIST_ITEM_SPACING = 8;
 export const PADDING_HORIZONTAL = 20; // For screen-level padding
-export const CATEGORY_SELECTOR_PADDING = 6;
+export const CATEGORY_SELECTOR_BORDER_WIDTH = 6;
 export const SET_CARD_CONTAINER_PADDING = 16;
 
 // Border Radius
@@ -44,13 +42,13 @@ export const SHADOW_STYLE_LIGHT = StyleSheet.create({
   },
 }).shadow;
 
-export const ELEMENT_PICKER_LIST_PADDING = 3;
-export const ELEMENT_PICKER_LIST_IMAGE_SIZE = 50;
+export const CATEGORY_BUTTON_GALLERY_WIDTH = 60;
+export const ELEMENT_PICKER_LIST_IMAGE_SIZE = CATEGORY_BUTTON_GALLERY_WIDTH;
+export const ELEMENT_PICKER_LIST_IMAGE_RATIO = 1.1;
 
 // Largeurs définies pour la colonne de gauche
-export const LEFT_COLUMN_PADDING_HORIZONTAL = 10;
-export const LEFT_PANNEL_WIDTH_EXPANDED = screenWidth * 0.7; // 70% de la largeur de l'écran
-export const LEFT_PANNEL_WIDTH_COLLAPSED =
-  ELEMENT_PICKER_LIST_IMAGE_SIZE + 2 * ELEMENT_PICKER_LIST_PADDING + 2 * LEFT_COLUMN_PADDING_HORIZONTAL; // Slightly wider for the new design
+export const LEFT_COLUMN_PADDING_HORIZONTAL = CATEGORY_SELECTOR_BORDER_WIDTH;
+export const LEFT_PANNEL_WIDTH_EXPANDED = CATEGORY_BUTTON_GALLERY_WIDTH * 4 + CATEGORY_SELECTOR_BORDER_WIDTH * 2;
+export const LEFT_PANNEL_WIDTH_COLLAPSED = CATEGORY_BUTTON_GALLERY_WIDTH + CATEGORY_SELECTOR_BORDER_WIDTH * 2;
 
 export const SET_CARD_WIDTH = 220;

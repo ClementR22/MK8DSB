@@ -9,7 +9,7 @@ import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import { translateToLanguage } from "@/translations/translations";
-import ElementPicker from "../ElementPickerCompact";
+import ElementPickerCompact from "../ElementPickerCompact";
 import useGeneralStore from "@/stores/useGeneralStore";
 
 const ITEM_ELEMENT_WIDTH = 40;
@@ -96,7 +96,7 @@ const ElementsDeselector: React.FC = () => {
         <ScrollView ref={scrollViewRef} horizontal persistentScrollbar scrollEnabled={isScrollEnable}>
           <Pressable style={styles.elementsContainer}>
             {elementsToDisplay.map((item) => (
-              <ElementPicker
+              <ElementPickerCompact
                 key={item.name}
                 imageUrl={item.imageUrl}
                 name={item.name}

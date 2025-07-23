@@ -1,6 +1,10 @@
 import { useRef, useEffect } from "react";
 import { Animated } from "react-native";
-import { LEFT_PANNEL_WIDTH_COLLAPSED, LEFT_PANNEL_WIDTH_EXPANDED } from "@/utils/designTokens";
+import {
+  CATEGORY_BUTTON_GALLERY_WIDTH,
+  LEFT_PANNEL_WIDTH_COLLAPSED,
+  LEFT_PANNEL_WIDTH_EXPANDED,
+} from "@/utils/designTokens";
 
 export const useGalleryAnimation = (
   isLeftPannelExpanded: boolean,
@@ -8,6 +12,7 @@ export const useGalleryAnimation = (
 ) => {
   const animatedLeftPannelWidth = useRef(new Animated.Value(LEFT_PANNEL_WIDTH_EXPANDED)).current;
   const animatedOverlayOpacity = useRef(new Animated.Value(0)).current;
+  const animatedCategoryMarginLeft = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (isLeftPannelExpanded) {
@@ -20,6 +25,11 @@ export const useGalleryAnimation = (
         }),
         Animated.timing(animatedOverlayOpacity, {
           toValue: 1,
+          duration: 300,
+          useNativeDriver: false,
+        }),
+        Animated.timing(animatedCategoryMarginLeft, {
+          toValue: 0,
           duration: 300,
           useNativeDriver: false,
         }),
@@ -37,9 +47,14 @@ export const useGalleryAnimation = (
           duration: 300,
           useNativeDriver: false,
         }),
+        Animated.timing(animatedCategoryMarginLeft, {
+          toValue: -CATEGORY_BUTTON_GALLERY_WIDTH,
+          duration: 300,
+          useNativeDriver: false,
+        }),
       ]).start();
     }
   }, [isLeftPannelExpanded, setIsCategorySelectorExpanded]);
 
-  return { animatedLeftPannelWidth, animatedOverlayOpacity };
+  return { animatedLeftPannelWidth, animatedOverlayOpacity, animatedCategoryMarginLeft };
 };

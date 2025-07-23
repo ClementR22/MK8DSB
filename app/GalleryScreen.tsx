@@ -1,24 +1,17 @@
 // GalleryScreen.tsx
-import React, { useState, useEffect, useMemo, useRef, useCallback, memo } from "react";
-import { View, StyleSheet, Animated } from "react-native";
+import React, { useState, useEffect, useMemo, useCallback, memo } from "react";
+import { View, StyleSheet } from "react-native";
 import CategorySelector from "@/components/elementCompactSelector/selector/CategorySelector";
-import CategorySelectorCollapsed from "@/components/elementCompactSelector/selector/CategorySelectorCollapsed";
-import { Category, ElementData } from "@/data/elements/elementsTypes";
+import { Category } from "@/data/elements/elementsTypes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { sortElements } from "@/utils/sortElements";
 import SortModeSelector from "@/components/sortModeSelector/SortModeSelector";
-import { classesStatsByCategory } from "@/data/elements/elementsStats";
-import { statNames, statNamesCompact } from "@/data/stats/statsData";
-import { LEFT_PANNEL_WIDTH_COLLAPSED, LEFT_PANNEL_WIDTH_EXPANDED } from "@/utils/designTokens"; // Import design tokens
-import { translateToLanguage } from "@/translations/translations";
 import ElementCard from "@/components/galleryComponents/ElementCard";
 import ElementPickerSelector from "@/components/galleryComponents/ElementPickerSelector";
 import ElementPickerSelectorPannel from "@/components/galleryComponents/ElementPickerSelectorPannel";
-import { ScreenProvider } from "@/contexts/ScreenContext";
 import { useSelectedElementData } from "@/hooks/useSelectedElementData";
 import { useGalleryAnimation } from "@/hooks/useGalleryAnimation";
-import Tooltip from "@/components/Tooltip";
 
 // --- Main GalleryScreen Component ---
 const GalleryScreen = () => {
@@ -35,7 +28,7 @@ const GalleryScreen = () => {
     [selectedCategory, sortNumber, language]
   );
 
-  const { animatedLeftPannelWidth, animatedOverlayOpacity } = useGalleryAnimation(
+  const { animatedLeftPannelWidth, animatedOverlayOpacity, animatedCategoryMarginLeft } = useGalleryAnimation(
     isLeftPannelExpanded,
     setIsCategorySelectorExpanded
   );
@@ -80,18 +73,17 @@ const GalleryScreen = () => {
         animatedOverlayOpacity={animatedOverlayOpacity}
         handleBackgroundPress={handleBackgroundPress}
       />
+
       <ElementPickerSelectorPannel animatedLeftPannelWidth={animatedLeftPannelWidth}>
         <View>
           <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="element" />
         </View>
-        {isCategorySelectorExpanded ? (
-          <CategorySelector selectedCategory={selectedCategory} onCategoryPress={setSelectedCategory} />
-        ) : (
-          <CategorySelectorCollapsed
-            selectedCategory={selectedCategory}
-            onCollapsedCategoryPress={handleCollapsedCategoryPress}
-          />
-        )}
+        <CategorySelector
+          selectedCategory={selectedCategory}
+          onCategoryPress={setSelectedCategory}
+          isInGalleryPannel={true}
+          animatedCategoryMarginLeft={animatedCategoryMarginLeft}
+        />
         <ElementPickerSelector
           categoryElementsSorted={categoryElementsSorted}
           selectedElementId={selectedElementId}

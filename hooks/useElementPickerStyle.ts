@@ -1,6 +1,6 @@
 // hooks/useElementPickerStyle.ts
 import { useMemo } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ViewStyle } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore"; // N'oublie pas d'importer useThemeStore
 
 interface ElementPickerStyleProps {
@@ -24,11 +24,11 @@ export const useElementPickerStyle = ({ size }: ElementPickerStyleProps) => {
         width: size,
         height: size * 1.1,
       },
-    ]);
+    ]) as ViewStyle;
   }, [theme.surface_container_low]); // Dépendances
 
   // Calcule le style de la bordure active une seule fois
-  const activeBorderStyle = useMemo(() => [{ borderColor: theme.primary }], [theme.primary]);
+  const activeBorderStyle = useMemo(() => ({ borderColor: theme.primary } as ViewStyle), [theme.primary]);
 
   return {
     elementPickerDynamicStyle,

@@ -6,15 +6,15 @@ import { useThemeStore } from "@/stores/useThemeStore";
 // Assuming you have a central place for common constants like a new theme/design system hook or file
 import {
   BORDER_RADIUS_18,
-  CARD_SPACING,
   SHADOW_STYLE,
-  CATEGORY_SELECTOR_PADDING,
+  CATEGORY_SELECTOR_BORDER_WIDTH,
   BORDER_RADIUS_15,
+  CATEGORY_BUTTON_GALLERY_WIDTH,
 } from "@/utils/designTokens";
 
 const imageSize = 50;
 
-export const useCategorySelectorStyles = () => {
+export const useCategorySelectorStyles = (isInGalleryPannel = false) => {
   const theme = useThemeStore((state) => state.theme);
 
   const styles = useMemo(() => {
@@ -23,20 +23,21 @@ export const useCategorySelectorStyles = () => {
       container: {
         flexDirection: "row" as "row",
         width: "100%",
-        borderRadius: BORDER_RADIUS_15, // Use a larger, more prominent radius
+        justifyContent: "space-between", // Distribute items more evenly, possibly with padding around them
         overflow: "hidden" as "hidden",
+        borderRadius: BORDER_RADIUS_15, // Use a larger, more prominent radius
         backgroundColor: theme.surface_container, // Use surface color for card-like elements
         ...SHADOW_STYLE, // Apply shadow
-        padding: CATEGORY_SELECTOR_PADDING, // Use consistent spacing token
-        justifyContent: "space-around", // Distribute items more evenly, possibly with padding around them
-        gap: 2,
+        borderWidth: CATEGORY_SELECTOR_BORDER_WIDTH, // Use consistent spacing token
+        borderColor: "transparent",
       },
       buttonWrapper: {
-        flex: 1,
+        width: isInGalleryPannel ? CATEGORY_BUTTON_GALLERY_WIDTH : "25%",
       },
       button: {
         justifyContent: "center" as "center",
         alignItems: "center" as "center",
+        width: "100%",
         borderRadius: BORDER_RADIUS_18 / 2, // Slightly less rounded than container
         overflow: "hidden" as "hidden",
         height: imageSize, // Slightly larger buttons for better touch target
