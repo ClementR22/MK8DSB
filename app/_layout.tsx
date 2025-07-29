@@ -80,6 +80,7 @@ export default function TabLayout() {
 
   useEffect(() => {
     NavigationBar.setBackgroundColorAsync(theme.surface);
+    NavigationBar.setButtonStyleAsync(theme.theme === "light" ? "dark" : "light");
   });
 
   // Custom hook for loading settings (assuming it has its own internal effects)
