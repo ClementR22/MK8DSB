@@ -2,9 +2,10 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { Tabs, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { StatusBar as RNStatusBar } from "react-native";
 import * as NavigationBar from "expo-navigation-bar";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { Appearance } from "react-native";
+import { Appearance, Platform } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
 
@@ -28,6 +29,7 @@ import { ScreenName } from "@/contexts/ScreenContext"; // Assurez-vous que Scree
 import { useLoadSettings } from "@/hooks/useLoadSettings";
 import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 // Helper function to derive screen name from pathname
 // This can be extracted to a separate utility file if used elsewhere
@@ -49,8 +51,13 @@ export default function TabLayout() {
   const fetchSetsSaved = useSetsStore((state) => state.fetchSetsSaved);
   const theme = useThemeStore((state) => state.theme);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
+  const setStatusBarHeight = useGeneralStore((state) => state.setStatusBarHeight);
 
   // --- Effects ---
+
+  useEffect(() => {
+    setStatusBarHeight(RNStatusBar.currentHeight);
+  }, []);
 
   // Effect to update screenNameForLoadModal based on current path
   useEffect(() => {

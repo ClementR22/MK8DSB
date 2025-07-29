@@ -6,7 +6,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { actionNamesList } from "./SetCard";
 import { ScreenName } from "@/contexts/ScreenContext";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 interface SetCardMoreActionsButtonProps {
   moreActionNamesList: actionNamesList;
@@ -29,15 +29,7 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
     onPressAction();
   }, []);
 
-  const insets = useSafeAreaInsets(); // Get safe area insets
-
-  const menuVerticalOffset = useMemo(() => {
-    let offset = 0;
-    if (Platform.OS !== "web") {
-      offset = -insets.top;
-    }
-    return offset;
-  }, [insets]);
+  const menuVerticalOffset = useGeneralStore((state) => state.statusBarHeight);
 
   return (
     <Menu

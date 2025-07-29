@@ -1,9 +1,10 @@
-import React, { ReactElement, ReactNode, useCallback, useMemo } from "react";
+import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo } from "react";
 import { Modal as NativeModal, Pressable, StyleSheet, Text, View } from "react-native";
 import { translate } from "@/translations/translations";
 import FlexContainer from "@/primitiveComponents/FlexContainer";
 import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 interface ModalButtonProps {
   text: string;
@@ -117,6 +118,10 @@ const Modal = ({
 
   const handleContainerResponder = useCallback(() => true, []);
 
+  const setIsAnyModalVisible = useGeneralStore((state) => state.setIsAnyModalVisible);
+
+  useEffect(() => setIsAnyModalVisible(isModalVisible), [isModalVisible]);
+
   return (
     <NativeModal
       animationType="none" // Animation (slide, fade, none)
@@ -129,7 +134,7 @@ const Modal = ({
     >
       <Pressable style={styles.background} onPress={handleBackgroundPress}>
         <Pressable
-          style={[styles.container, containerBackgroundColorStyle]}
+          style={[styles.container, containerBackgroundColorStyle, { marginTop: 0 }]}
           onStartShouldSetResponder={handleContainerResponder}
         >
           {modalTitle && <Text style={[styles.title_center, titleColorStyle]}>{translate(modalTitle)}</Text>}

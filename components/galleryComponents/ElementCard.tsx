@@ -59,12 +59,8 @@ const ElementCard: React.FC<ElementCardProps> = memo(
           <View style={styles.textWrapper}>
             <Text style={[styles.text, stylesDynamic.textDynamicStyle]}>{name}</Text>
           </View>
-          <FlatList
-            data={stats}
-            keyExtractor={(item) => item.name}
-            renderItem={({ item }) => renderStat(item)}
-            contentContainerStyle={styles.flatListContent}
-          />
+
+          <View style={styles.flatListContent}>{stats.map((stat) => renderStat(stat))}</View>
         </View>
         <Animated.View style={[styles.overlay, { opacity: animatedOverlayOpacity }]}>
           <Pressable style={styles.flex} onPress={handleBackgroundPress} />

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useCallback, useState } from "react";
 import { FlatList, NativeScrollEvent, NativeSyntheticEvent, View, ViewStyle, ViewToken } from "react-native";
 import PagesNavigator, { ButtonName } from "./PagesNavigator";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 interface PaginatedWrapperProps {
   data: any[];
@@ -61,6 +62,8 @@ const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
     [currentPage, pageWidth, setCurrentPage]
   );
 
+  const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
+
   return (
     <View style={containerStyle}>
       <FlatList
@@ -81,6 +84,7 @@ const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
           offset: pageWidth * index,
           index,
         })}
+        scrollEnabled={isScrollEnable}
       />
       <PagesNavigator
         currentPage={currentPage}
