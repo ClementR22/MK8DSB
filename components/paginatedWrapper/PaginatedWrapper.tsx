@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useCallback, useState } from "react";
-import { FlatList, NativeScrollEvent, NativeSyntheticEvent, View, ViewStyle, ViewToken } from "react-native";
+import { FlatList, NativeScrollEvent, NativeSyntheticEvent, View, ViewStyle } from "react-native";
 import PagesNavigator, { ButtonName } from "./PagesNavigator";
 import useGeneralStore from "@/stores/useGeneralStore";
 
@@ -22,45 +22,62 @@ const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
   numberOfPages,
   containerStyle = null,
 }) => {
-  // Mémoïsation de la fonction de rendu pour éviter des recréations inutiles
-  const memoizedRenderItem = useCallback(
-    ({ item, index }: { item: any; index: number }) => renderItem({ item, index }),
-    [renderItem]
-  );
-
   const [currentPage, setCurrentPage] = useState(0);
-
   const flatlistRef = useRef<FlatList>(null);
+  const scrollStartX = useRef<number>(0);
+  const isScrolling = useRef<boolean>(false);
+  const isManualScroll = useRef(false);
 
-  // Reset page si la catégorie change
+  // Reset à la première page quand les données changent
   useEffect(() => {
-    flatlistRef.current?.scrollToIndex({
-      index: 0,
-      animated: false,
-    });
-    setCurrentPage(0);
+    if (currentPage !== 0) {
+      flatlistRef.current?.scrollToIndex({ index: 0, animated: false });
+      setCurrentPage(0);
+    }
   }, [data]);
 
-  // Gestion du scroll vers la page courante
+  // Scroll programmatique vers la page courante
   useEffect(() => {
-    flatlistRef.current?.scrollToIndex({
-      index: currentPage,
-      animated: true,
-    });
+    if (!isManualScroll.current) {
+      flatlistRef.current?.scrollToIndex({ index: currentPage, animated: true });
+    }
   }, [currentPage]);
 
-  // Gestion de la fin du scroll
-  const handleMomentumScrollEnd = useCallback(
-    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-      const pageIndex = e.nativeEvent.contentOffset.x / pageWidth;
-      // si on est bien arrivé sur une nouvelle page
-      if (Number.isInteger(pageIndex)) {
-        // on met à jour currentPage
-        if (pageIndex != currentPage) setCurrentPage(pageIndex);
+  // Début du scroll manuel
+  const handleScrollBeginDrag = useCallback(() => {
+    isManualScroll.current = true;
+  }, []);
+
+  const handleMomentumScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const pageIndex = Math.round(e.nativeEvent.contentOffset.x / pageWidth);
+
+    if (e.nativeEvent.contentOffset.x / pageWidth === pageIndex) {
+      isScrolling.current = false;
+      isManualScroll.current = false;
+
+      if (pageIndex != currentPage) {
+        setCurrentPage(pageIndex);
       }
-    },
-    [currentPage, pageWidth, setCurrentPage]
-  );
+    }
+  };
+
+  const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (!isScrolling.current) {
+      isScrolling.current = true;
+      scrollStartX.current = e.nativeEvent.contentOffset.x;
+    }
+
+    const currentX = e.nativeEvent.contentOffset.x;
+    const distanceDiff = currentX - scrollStartX.current;
+
+    const pageIndex = Math.round(e.nativeEvent.contentOffset.x / pageWidth);
+
+    if (Math.abs(distanceDiff) > pageWidth / 2) {
+      if (pageIndex != currentPage && isManualScroll.current) {
+        setCurrentPage(pageIndex);
+      }
+    }
+  };
 
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
@@ -69,22 +86,28 @@ const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
       <FlatList
         ref={flatlistRef}
         data={data}
-        initialNumToRender={1}
-        maxToRenderPerBatch={2}
-        windowSize={3}
-        removeClippedSubviews={true}
+        renderItem={renderItem}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={memoizedRenderItem}
+        scrollEnabled={isScrollEnable}
+        onScrollBeginDrag={handleScrollBeginDrag}
         onMomentumScrollEnd={handleMomentumScrollEnd}
+        onScroll={handleScroll}
+        // Optimisations de performance
+        keyExtractor={(_, index) => index.toString()}
         getItemLayout={(_, index) => ({
           length: pageWidth,
           offset: pageWidth * index,
           index,
         })}
-        scrollEnabled={isScrollEnable}
+        initialNumToRender={1}
+        maxToRenderPerBatch={1}
+        windowSize={3}
+        removeClippedSubviews={true}
+        // Performance de scroll
+        scrollEventThrottle={16}
+        decelerationRate="normal"
       />
       <PagesNavigator
         currentPage={currentPage}
