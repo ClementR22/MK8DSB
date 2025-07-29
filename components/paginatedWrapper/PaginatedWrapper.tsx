@@ -41,14 +41,14 @@ const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
     if (!isManualScroll.current) {
       flatlistRef.current?.scrollToIndex({ index: currentPage, animated: true });
     }
-  }, [currentPage]);
+  }, [flatlistRef, currentPage]);
 
   // Début du scroll manuel
   const handleScrollBeginDrag = useCallback(() => {
     isManualScroll.current = true;
   }, []);
 
-  const handleMomentumScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+  const handleMomentumScrollEnd = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const pageIndex = Math.round(e.nativeEvent.contentOffset.x / pageWidth);
 
     if (e.nativeEvent.contentOffset.x / pageWidth === pageIndex) {
@@ -59,9 +59,9 @@ const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
         setCurrentPage(pageIndex);
       }
     }
-  };
+  }, []);
 
-  const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+  const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (!isScrolling.current) {
       isScrolling.current = true;
       scrollStartX.current = e.nativeEvent.contentOffset.x;
@@ -77,7 +77,7 @@ const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
         setCurrentPage(pageIndex);
       }
     }
-  };
+  }, []);
 
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
