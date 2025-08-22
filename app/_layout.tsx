@@ -5,7 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import { StatusBar as RNStatusBar } from "react-native";
 import * as NavigationBar from "expo-navigation-bar";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { Appearance, Platform } from "react-native";
+import { Appearance } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
 
@@ -15,9 +15,9 @@ import ModalEditSet from "@/components/modal/ModalEditSet";
 import ModalLoadSet from "@/components/modal/ModalLoadSet";
 import Snackbar from "@/primitiveComponents/Snackbar";
 // Help Components - Memoized for performance
-import HelpSearchSetScreen from "@/components/help/HelpSearchSetScreen";
-import HelpDisplaySetScreen from "@/components/help/HelpDisplaySetScreen";
-import HelpSavedSetScreen from "@/components/help/HelpSavedSetScreen";
+import HelpSearchSetScreen from "@/components/helpScreens/HelpSearchSetScreen";
+import HelpDisplaySetScreen from "@/components/helpScreens/HelpDisplaySetScreen";
+import HelpSavedSetScreen from "@/components/helpScreens/HelpSavedSetScreen";
 
 // Stores
 import useSetsStore from "@/stores/useSetsStore";
@@ -103,7 +103,7 @@ export default function TabLayout() {
         {translateToLanguage("FindSetTitle", language)}
       </CustomHeader>
     ),
-    [memoizedHelpSearchSetScreen]
+    [memoizedHelpSearchSetScreen, language]
   ); // Dependencies for useCallback
 
   const renderDisplayHeader = useCallback(
@@ -112,7 +112,7 @@ export default function TabLayout() {
         {translateToLanguage("DisplaySetTitle", language)}
       </CustomHeader>
     ),
-    [memoizedHelpDisplaySetScreen]
+    [memoizedHelpDisplaySetScreen, language]
   );
 
   const renderSavedHeader = useCallback(
@@ -121,7 +121,7 @@ export default function TabLayout() {
         {translateToLanguage("SavedSetTitle", language)}
       </CustomHeader>
     ),
-    [memoizedHelpSavedSetScreen]
+    [memoizedHelpSavedSetScreen, language]
   );
 
   const renderGalleryHeader = useCallback(
@@ -130,7 +130,7 @@ export default function TabLayout() {
         {translateToLanguage("GalleryTitle", language)}
       </CustomHeader>
     ),
-    [memoizedHelpSearchSetScreen]
+    [memoizedHelpSearchSetScreen, language]
   );
 
   const renderSettingsHeader = useCallback(

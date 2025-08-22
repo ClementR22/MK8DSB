@@ -15,11 +15,18 @@ interface StatSliderContentProps {
   value: number;
   statFilterNumber: number;
   setStatFilterNumber: (num: number) => void;
+  disabled?: boolean;
 }
 
 const MAX_VALUE = 6;
 
-const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber }: StatSliderContentProps) => {
+const StatSliderContent = ({
+  name,
+  value,
+  statFilterNumber,
+  setStatFilterNumber,
+  disabled = false,
+}: StatSliderContentProps) => {
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
@@ -33,8 +40,10 @@ const StatSliderContent = ({ name, value, statFilterNumber, setStatFilterNumber 
   }, [setIsScrollEnable]);
   const onSlidingComplete = useCallback(
     ([v]: [number]) => {
-      if (v !== value) {
-        updateStatValue(name, v);
+      if (!disabled) {
+        if (v !== value) {
+          updateStatValue(name, v);
+        }
       }
       setIsScrollEnable(true);
     },

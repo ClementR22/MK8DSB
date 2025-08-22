@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
-import { Modal, SafeAreaView } from "react-native";
+import { Modal } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { IconType } from "react-native-dynamic-vector-icons";
-import HelpModal from "./HelpModal";
+import HelpModal from "../helpComponents/HelpModal";
 
-const ButtonAndHelpmodal = ({ slides }) => {
+interface ButtonAndHelpmodalProps {
+  slides: React.JSX.Element[];
+}
+
+const ButtonAndHelpmodal = ({ slides }: ButtonAndHelpmodalProps) => {
   const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
 
   return (
@@ -15,7 +20,6 @@ const ButtonAndHelpmodal = ({ slides }) => {
         iconName="help-circle"
         iconType={IconType.Feather}
         onPress={() => setIsHelpModalVisible(true)}
-        // style={{ backgroundColor: null }}
       />
 
       <Modal visible={isHelpModalVisible} navigationBarTranslucent={true} statusBarTranslucent={true}>

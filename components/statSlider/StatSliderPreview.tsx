@@ -10,6 +10,7 @@ const StatSliderPreview = ({ name }: { name: string }) => {
       value={4}
       statFilterNumber={statFilterNumber}
       setStatFilterNumber={setStatFilterNumber}
+      disabled={true}
     />
   );
 };

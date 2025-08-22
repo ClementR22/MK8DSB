@@ -37,3 +37,9 @@ export const SET_CARD_COLOR_PALETTE = [
   "#27AE60", // Vert Forêt
   "#2C3E50", // Bleu Nuit
 ];
+
+export const HELP_HIGHLIGHT_BOX_COLORS = {
+  info: { backgroundColor: "#f0f4ff", borderColor: "#4f46e5", textColor: "#3730a3" },
+  result: { backgroundColor: "#ecfdf5", borderColor: "#10b981", textColor: "#047857" },
+  tips: { backgroundColor: "#fef3c7", borderColor: "#f59e0b", textColor: "#92400e" },
+};

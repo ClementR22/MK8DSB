@@ -136,7 +136,7 @@ const translations = {
 
     // language
     English: "English",
-    French: "French",
+    French: "Français",
 
     // theme
     Dark: "Dark",
@@ -425,7 +425,7 @@ const translations = {
     handling: "Maniabilité",
 
     // language
-    English: "Anglais",
+    English: "English",
     French: "Français",
 
     // theme
