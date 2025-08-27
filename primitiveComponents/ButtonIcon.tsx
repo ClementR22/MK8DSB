@@ -4,6 +4,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { TooltipPlacementType } from "@/components/Tooltip";
+import IconContainer from "./IconContainer";
 
 export interface ButtonIconProps {
   onPress?: (event?: Event) => void;
@@ -42,8 +43,6 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
       : { height: 30, width: 46, borderRadius: 10 };
   }, [shape, buttonSize]);
 
-  const iconSize = useMemo(() => (24 / 40) * buttonSize, [buttonSize]);
-
   const containerCombinedStyle = useMemo(() => {
     return StyleSheet.flatten([styles.container, shapeStyle, { backgroundColor: theme.primary }, style]);
   }, [shapeStyle, theme.primary, style]);
@@ -54,10 +53,14 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
       tooltipText={tooltipText}
       placement={toolTipPlacement}
       elevation={elevation}
-      containerStyle={containerCombinedStyle}
       {...props}
     >
-      <Icon type={iconType} name={iconName} size={iconSize} color={style?.color || theme.on_primary} />
+      <IconContainer
+        iconName={iconName}
+        iconType={iconType}
+        containerSize={buttonSize}
+        containerStyle={containerCombinedStyle}
+      />
     </ButtonBase>
   );
 };

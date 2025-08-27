@@ -1,103 +1,179 @@
 import React from "react";
+import { Text } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonAndHelpmodal from "./ButtonAndHelpmodal";
 import StatSliderCompare from "../statSliderCompare/StatSliderCompare";
 import HelpTitle from "../helpComponents/HelpTitle";
+import HelpListContainer from "../helpComponents/HelpListContainer";
 import HelpText from "../helpComponents/HelpText";
 import HelpFullWidthContainer from "../helpComponents/HelpFullWidthContainer";
-import HelpListContainer from "../helpComponents/HelpListContainer";
-import HelpIconAndText from "../helpComponents/HelpIconAndText";
+import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
+import HelpStepItem from "../helpComponents/HelpStepItem";
+import HelpFeatureItem from "../helpComponents/HelpFeatureItem";
+import HelpBoldText from "../helpComponents/HelpBoldText";
+import { PAGES_NAVIGATOR_DOTS_BUTTON_SIZE } from "../paginatedWrapper/PagesNavigator";
 
 const HelpDisplaySetScreen = () => {
   return <ButtonAndHelpmodal slides={slides} />;
 };
 
 const slides = [
-  {
-    content: (
-      <>
-        <HelpTitle>Explorer vos Sets</HelpTitle>
+  <>
+    <HelpTitle>Le Comparateur de Sets</HelpTitle>
 
-        <HelpText>L'écran Display vous permet de visualiser et comparer vos sets en détail.</HelpText>
-        <HelpText>
-          Ajoutez autant de sets que vous voulez et comparez facilement leurs performances grâce aux barres de stats
-          interactives
-        </HelpText>
+    <HelpHighlightBox type="info">
+      <HelpBoldText>Visualisez et comparez</HelpBoldText> tous vos sets en un seul écran. Analysez leurs performances
+      côte à côte pour faire le meilleur choix.
+    </HelpHighlightBox>
 
-        <HelpFullWidthContainer>
-          <StatSliderCompare name={"speedGround"} setsStats={[4, 5]} setSelectedCompareName={() => {}} />
-        </HelpFullWidthContainer>
+    <HelpFullWidthContainer>
+      <StatSliderCompare
+        name="speedGround"
+        setsIdAndValue={[{ id: "1", value: 5, color: "red" }]}
+        scrollToSetCard={() => {}}
+      />
+    </HelpFullWidthContainer>
 
-        <HelpText>Chaque barre de stats représente les performances d’un set distinct</HelpText>
-      </>
-    ),
-    config: { backgroundColor: "#5d8aa8" },
-  },
-  {
-    content: (
-      <>
-        <HelpTitle>Modifier et Comparer</HelpTitle>
+    <HelpText style={{ fontStyle: "italic", color: "#6b7280", fontSize: 12 }}>
+      💡 Chaque barre représente un set différent
+    </HelpText>
+  </>,
 
-        <HelpListContainer>
-          <HelpIconAndText name="edit" type={IconType.MaterialIcons} isButton={true}>
-            Modifier les éléments d'un set (personnage, roues, aile, ...) tout est personnalisable
-          </HelpIconAndText>
+  <>
+    <HelpTitle>🎮 Les fonctionnalités</HelpTitle>
 
-          <HelpIconAndText name="plus" type={IconType.MaterialCommunityIcons} isButton={true}>
-            Ajoutez de nouveaux sets à comparer en un clic
-          </HelpIconAndText>
+    <HelpListContainer>
+      <HelpFeatureItem
+        iconName="plus"
+        iconType={IconType.MaterialCommunityIcons}
+        title="Ajouter des sets"
+        description="Créez jusqu'à 12 sets différents pour les comparer ensemble"
+      />
+      <HelpFeatureItem
+        iconName="pencil"
+        iconType={IconType.MaterialCommunityIcons}
+        title="Modifier facilement"
+        description="Changez personnage, véhicule, roues... et voyez l'impact sur les stats"
+      />
+      <HelpFeatureItem
+        iconName="cards-outline"
+        iconType={IconType.MaterialCommunityIcons}
+        title="Charger des favoris"
+        description="Importez vos sets sauvegardés pour les modifier ou comparer"
+      />
+      <HelpFeatureItem
+        iconName="plus"
+        iconType={IconType.MaterialCommunityIcons}
+        containerSize={PAGES_NAVIGATOR_DOTS_BUTTON_SIZE}
+        title="Choisir les stats à comparer"
+        description="Sélectionnez les statistiques à afficher puis naviguez avec les flèches"
+      />
+    </HelpListContainer>
+  </>,
 
-          <HelpIconAndText name="checkbox-multiple-marked" type={IconType.MaterialCommunityIcons} isButton={true}>
-            Choisir les statistiques à afficher : affichez uniquement celles qui comptent pour vous
-          </HelpIconAndText>
+  <>
+    <HelpTitle>🔧 Comment personnaliser</HelpTitle>
 
-          <HelpIconAndText name="cards-outline" type={IconType.MaterialCommunityIcons} isButton={true}>
-            Charger un set depuis vos favoris pour le modifier, le comparer ou vous en inspirer
-          </HelpIconAndText>
-        </HelpListContainer>
-      </>
-    ),
-    config: { backgroundColor: "#5d8aa8" },
-  },
-  {
-    content: (
-      <>
-        <HelpTitle>Et ensuite ?</HelpTitle>
+    <HelpListContainer>
+      <HelpStepItem
+        stepChar="1"
+        title="Ajoutez vos sets"
+        description="Créez ou chargez les combinaisons que vous voulez comparer"
+      />
 
-        <HelpText> Pour chaque set affiché, vous pouvez :</HelpText>
+      <HelpStepItem
+        stepChar="2"
+        title="Modifiez les éléments"
+        description="Cliquez sur le crayon d'un set pour modifier ses éléments"
+      />
 
-        <HelpListContainer>
-          <HelpIconAndText name="heart-outline" type={IconType.MaterialCommunityIcons}>
-            L'ajouter à vos favoris pour le retrouver plus tard
-          </HelpIconAndText>
+      <HelpStepItem
+        stepChar="3"
+        title="Filtrez les stats"
+        description="Sélectionnez uniquement les statistiques importantes pour vous"
+      />
 
-          <HelpIconAndText name="magnify" type={IconType.MaterialCommunityIcons}>
-            Réutilisez ses stats dans l'écran de recherche pour trouver des variantes similaires
-          </HelpIconAndText>
+      <HelpStepItem
+        stepChar="4"
+        title="Analysez et comparez"
+        description="Observez les différences et trouvez le set optimal"
+      />
+    </HelpListContainer>
+  </>,
 
-          <HelpIconAndText name="clipboard-outline" type={IconType.MaterialCommunityIcons}>
-            L’exporter au format texte pour le partager facilement
-          </HelpIconAndText>
-        </HelpListContainer>
+  <>
+    <HelpTitle>📊 Interpréter les barres</HelpTitle>
 
-        {/* <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <SetNameInputPreview name="Le renommer" />
-        </View> */}
+    <HelpText>
+      Chaque couleur représente un set différent. Analysez facilement les différences entre vos combinaisons.
+    </HelpText>
 
-        <HelpText>Gérez vos sets comme un pro !</HelpText>
+    <HelpFullWidthContainer>
+      <StatSliderCompare
+        name="speedGround"
+        setsIdAndValue={[{ id: "1", value: 5, color: "red" }]}
+        scrollToSetCard={() => {}}
+      />
+    </HelpFullWidthContainer>
 
-        <HelpText>
-          Comparez, personnalisez, sauvegardez : tout est fait pour vous aider à trouver le meilleur set selon votre
-          style de jeu.
-        </HelpText>
+    <HelpHighlightBox type="tips" title="🎯 Astuce de lecture">
+      <Text style={{ color: "#92400e", fontSize: 12, marginTop: 8, lineHeight: 16 }}>
+        • Rouge = Set 1, Bleu = Set 2, Vert = Set 3...{"\n"}• Appuyez sur une barre pour naviguer vers la carte du set
+        {"\n"}• Masquez les stats moins importantes pour plus de clarté
+      </Text>
+    </HelpHighlightBox>
+  </>,
 
-        <HelpIconAndText name="chart-bar" type={IconType.MaterialCommunityIcons}>
-          Pourquoi pas cette icone.
-        </HelpIconAndText>
-      </>
-    ),
-    config: { backgroundColor: "#5d8aa8" },
-  },
+  <>
+    <HelpTitle>⭐ Gérer vos sets</HelpTitle>
+
+    <HelpText>Une fois vos sets comparés, vous pouvez :</HelpText>
+
+    <HelpListContainer>
+      <HelpFeatureItem
+        iconName="heart-outline"
+        iconType={IconType.MaterialCommunityIcons}
+        title="Sauvegarder en favoris"
+        description="Gardez vos meilleures combinaisons pour plus tard"
+        withBackground={false}
+      />
+
+      <HelpFeatureItem
+        iconName="magnify"
+        iconType={IconType.MaterialCommunityIcons}
+        title="Rechercher des variantes"
+        description="Utilisez les stats d'un set pour trouver des alternatives similaires"
+        withBackground={false}
+      />
+
+      <HelpFeatureItem
+        iconName="clipboard-outline"
+        iconType={IconType.MaterialCommunityIcons}
+        title="Partager facilement"
+        description="Exportez vos sets optimaux pour vos amis coureurs"
+        withBackground={false}
+      />
+    </HelpListContainer>
+
+    <HelpHighlightBox type="tips" title="🏆 Conseils de comparaison">
+      <Text style={{ color: "#92400e", fontSize: 12, marginTop: 8, lineHeight: 16 }}>
+        • Comparez 2-3 sets maximum pour une lecture claire{"\n"}• Concentrez-vous sur vos stats prioritaires{"\n"}•
+        N'hésitez pas à modifier en temps réel pour tester
+      </Text>
+    </HelpHighlightBox>
+
+    <HelpText
+      style={{
+        marginTop: 16,
+        fontWeight: "600",
+        textAlign: "center",
+        color: "#059669",
+        fontSize: 14,
+      }}
+    >
+      🏁 Trouvez votre combinaison gagnante !
+    </HelpText>
+  </>,
 ];
 
 export default HelpDisplaySetScreen;

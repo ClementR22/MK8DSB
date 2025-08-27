@@ -55,7 +55,7 @@ const Button = ({
       onPress={onPress}
       tooltipText={tooltipText}
       elevation={elevation}
-      containerStyle={[styles.container, containerStyle]}
+      containerStyle={StyleSheet.flatten([styles.container, containerStyle])}
       {...props}
     >
       <>

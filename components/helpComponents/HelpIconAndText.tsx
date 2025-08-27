@@ -29,7 +29,7 @@ const HelpIconAndText = ({ icon, title, description, withBackground = true }: He
 
   return (
     <View style={containerStyle}>
-      {icon}
+      <View style={styles.iconWrapper}>{icon}</View>
 
       <View style={styles.textWrapper}>
         <Text style={titleStyle}>{title}</Text>
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     borderRadius: 8,
   },
+  iconWrapper: { width: 40, alignItems: "center" },
   textWrapper: { flex: 1, marginLeft: 10 },
 });
 

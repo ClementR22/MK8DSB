@@ -8,7 +8,7 @@ type ButtonBaseProps = {
   tooltipText?: string;
   placement?: TooltipPlacementType;
   elevation?: 1 | 3 | 6 | 8 | 12;
-  containerStyle: ViewStyle;
+  containerStyle?: ViewStyle;
   [key: string]: any; // autres props à passer
 };
 
