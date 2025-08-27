@@ -1,43 +1,42 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
-import HelpIconAndText from "./HelpIconAndText";
 import IconContainer from "@/primitiveComponents/IconContainer";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 interface HelpFeatureItemProps {
   iconName: string;
   iconType: IconType;
   containerSize?: number;
   title: string;
-  description: string;
-  withBackground?: boolean;
 }
 
-const HelpFeatureItem = ({
-  iconName,
-  iconType,
-  containerSize = 40,
-  title,
-  description,
-  withBackground = true,
-}: HelpFeatureItemProps) => {
+const HelpFeatureItem = ({ iconName, iconType, containerSize = 40, title }: HelpFeatureItemProps) => {
+  const theme = useThemeStore((state) => state.theme);
+
   return (
-    <HelpIconAndText
-      icon={<IconContainer iconName={iconName} iconType={iconType} containerSize={containerSize} />}
-      title={title}
-      description={description}
-      withBackground={withBackground}
-    />
+    <View style={styles.container}>
+      <View style={styles.iconWrapper}>
+        <IconContainer iconName={iconName} iconType={iconType} containerSize={containerSize} />
+      </View>
+
+      <View style={{ flex: 1, gap: 10, justifyContent: "center" }}>
+        <Text style={[styles.title, { color: theme.on_surface_variant }]}>{title}</Text>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  buttonIconContainer: {
-    height: 40,
-    width: 40,
-    borderRadius: 100,
-    justifyContent: "center",
+  container: {
+    flexDirection: "row",
+    gap: 10,
+    alignSelf: "flex-start",
     alignItems: "center",
+  },
+  iconWrapper: { width: 40 },
+  title: {
+    fontSize: 14,
   },
 });
 

@@ -1,39 +1,51 @@
 import { useThemeStore } from "@/stores/useThemeStore";
 import React, { ReactElement, useMemo } from "react";
-import { StyleSheet, Text, TextStyle } from "react-native";
+import { StyleSheet, Text, TextStyle, ViewStyle } from "react-native";
 import { View } from "react-native";
 
 interface HelpIconAndTextProps {
   icon: ReactElement;
   title: string;
-  description: string;
-  withBackground: boolean;
+  isFeature?: boolean;
+  children?: React.ReactNode;
 }
 
-const HelpIconAndText = ({ icon, title, description, withBackground = true }: HelpIconAndTextProps) => {
+const HelpIconAndText = ({ icon, title, isFeature = false, children }: HelpIconAndTextProps) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const containerStyle = useMemo(
-    () => [styles.container, withBackground && { backgroundColor: theme.surface_container, padding: 12 }],
-    [withBackground, theme.surface_container]
-  );
+  const containerStyle = useMemo(() => {
+    if (isFeature) {
+      return { ...styles.container, alignSelf: "flex-start", alignItems: "center" } as ViewStyle;
+    } else {
+      return { ...styles.container, backgroundColor: theme.surface_container, padding: 12 } as ViewStyle;
+    }
+  }, [isFeature, theme.surface_container]);
 
-  const titleStyle = useMemo(
-    () => ({ fontWeight: "600", fontSize: 14, color: theme.on_surface } as TextStyle),
-    [theme.on_surface]
-  );
-  const descriptionStyle = useMemo(
-    () => ({ fontSize: 13, color: theme.on_surface_variant }),
-    [theme.on_surface_variant]
-  );
+  const titleStyle = useMemo(() => {
+    if (isFeature) {
+      return {
+        fontSize: 14,
+        color: theme.on_surface_variant,
+      } as TextStyle;
+    } else {
+      return {
+        fontWeight: "600",
+        fontSize: 14,
+        color: theme.on_surface,
+      } as TextStyle;
+    }
+  }, [theme.on_surface]);
+
+  console.log("children", children);
 
   return (
     <View style={containerStyle}>
       <View style={styles.iconWrapper}>{icon}</View>
 
-      <View style={styles.textWrapper}>
+      <View style={{ flex: 1, gap: 10, justifyContent: "center" }}>
         <Text style={titleStyle}>{title}</Text>
-        <Text style={descriptionStyle}>{description}</Text>
+
+        {children && <View style={{ gap: 10 }}>{children}</View>}
       </View>
     </View>
   );
@@ -42,11 +54,14 @@ const HelpIconAndText = ({ icon, title, description, withBackground = true }: He
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    alignItems: "flex-start",
     borderRadius: 8,
+    gap: 10,
+  },
+  topContainer: {
+    flexDirection: "row",
+    alignItems: "flex-start",
   },
   iconWrapper: { width: 40, alignItems: "center" },
-  textWrapper: { flex: 1, marginLeft: 10 },
 });
 
 export default HelpIconAndText;

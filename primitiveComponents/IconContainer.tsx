@@ -6,7 +6,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 interface IconContainerProps {
   iconName: string;
   iconType: IconType;
-  containerSize: number;
+  containerSize?: number;
   backgroundColor?: string;
   iconColor?: string;
   containerStyle?: ViewStyle;
