@@ -80,7 +80,16 @@ const HelpSearchSetScreen = () => {
 
             <HelpListContainer>
               {/* Option 1 */}
-              <HelpStepItem stepChar="A" title="Filtres">
+              <HelpStepItem stepChar="A" title="Personnalisation de l'affichage">
+                <HelpFeatureItem
+                  iconName="checkbox-multiple-marked"
+                  iconType={IconType.MaterialCommunityIcons}
+                  title="Choisissez quelles statistiques afficher dans les résultats"
+                />
+              </HelpStepItem>
+
+              {/* Option 2 */}
+              <HelpStepItem stepChar="B" title="Filtres (option)">
                 <HelpFeatureItem
                   iconName="pin"
                   iconType={IconType.MaterialCommunityIcons}
@@ -88,12 +97,17 @@ const HelpSearchSetScreen = () => {
                 />
               </HelpStepItem>
 
-              {/* Option 2 */}
-              <HelpStepItem stepChar="B" title="Personnalisation de l'affichage">
+              {/* Option 3 */}
+              <HelpStepItem stepChar="C" title="Réutiliser les stats d'un set">
                 <HelpFeatureItem
-                  iconName="checkbox-multiple-marked"
+                  iconName="cards-outline"
                   iconType={IconType.MaterialCommunityIcons}
-                  title="Choisissez quelles statistiques afficher dans les résultats"
+                  title="Ouvrez votre collection de sets favoris"
+                />
+                <HelpFeatureItem
+                  iconName="download"
+                  iconType={IconType.MaterialCommunityIcons}
+                  title="Importer les stats d'un set pour chercher des variantes"
                 />
               </HelpStepItem>
             </HelpListContainer>
@@ -114,7 +128,7 @@ const HelpSearchSetScreen = () => {
               <HelpFeatureItem
                 iconName="clipboard-outline"
                 iconType={IconType.MaterialCommunityIcons}
-                title="Exporter un set"
+                title="Exporter le set"
               />
             </HelpListContainer>
 

@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     alignItems: "center",
   },
-  iconWrapper: { width: 40 },
+  iconWrapper: { width: 40, alignItems: "center" },
   title: {
     fontSize: 14,
   },

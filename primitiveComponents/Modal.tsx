@@ -5,6 +5,7 @@ import FlexContainer from "@/primitiveComponents/FlexContainer";
 import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
+import Snackbar from "./Snackbar";
 
 interface ModalButtonProps {
   text: string;
@@ -146,6 +147,7 @@ const Modal = ({
             {isWithClosePressable && <ModalButton text={closeButtonText} onPress={actualOnPressClose} />}
           </FlexContainer>
         </Pressable>
+        <Snackbar />
       </Pressable>
     </NativeModal>
   );

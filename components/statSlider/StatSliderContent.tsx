@@ -132,7 +132,6 @@ const StatSliderContent = ({
           <ButtonMultiStateToggle
             number={statFilterNumber}
             setNumber={setStatFilterNumber}
-            filterCase={true}
             tooltipText="ChangeCondition"
           />
         </View>

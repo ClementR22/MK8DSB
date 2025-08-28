@@ -36,7 +36,12 @@ const ButtonImportSet = ({ screenName, onComplete }: { screenName: ScreenName; o
   };
 
   return (
-    <ButtonIcon onPress={handlePaste} tooltipText="ImportACopiedSet" iconName="download" iconType={IconType.Feather} />
+    <ButtonIcon
+      onPress={handlePaste}
+      tooltipText="ImportACopiedSet"
+      iconName="paste"
+      iconType={IconType.FontAwesome5}
+    />
   );
 };
 

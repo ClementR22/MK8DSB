@@ -21,9 +21,15 @@ interface StatSliderCompareProps {
   name: StatName;
   setsIdAndValue: SetIdAndStatValue[];
   scrollToSetCard: (id: string) => void;
+  width?: number;
 }
 
-const StatSliderCompare: React.FC<StatSliderCompareProps> = ({ setsIdAndValue, name, scrollToSetCard }) => {
+const StatSliderCompare: React.FC<StatSliderCompareProps> = ({
+  setsIdAndValue,
+  name,
+  scrollToSetCard,
+  width = STAT_SLIDER_COMPARE_WIDTH,
+}) => {
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
 
@@ -43,7 +49,7 @@ const StatSliderCompare: React.FC<StatSliderCompareProps> = ({ setsIdAndValue, n
   );
 
   const memoizedStatBars = useMemo(() => setsIdAndValue.map(renderStatBar), [setsIdAndValue, renderStatBar]);
-  const { setCardStyle } = useSetCardStyle(STAT_SLIDER_COMPARE_WIDTH);
+  const { setCardStyle } = useSetCardStyle(width);
 
   return (
     <View style={setCardStyle}>

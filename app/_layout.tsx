@@ -117,7 +117,7 @@ export default function TabLayout() {
 
   const renderSavedHeader = useCallback(
     () => (
-      <CustomHeader icon="heart-outline" helpComponent={memoizedHelpSavedSetScreen}>
+      <CustomHeader icon="cards-outline" helpComponent={memoizedHelpSavedSetScreen}>
         {translateToLanguage("SavedSetTitle", language)}
       </CustomHeader>
     ),
@@ -182,7 +182,7 @@ export default function TabLayout() {
               options={{
                 title: translateToLanguage("SavedSetTabTitle", language),
                 tabBarIcon: ({ color, focused }) => (
-                  <MaterialCommunityIcons name={focused ? "heart" : "heart-outline"} size={24} color={color} />
+                  <MaterialCommunityIcons name={focused ? "cards" : "cards-outline"} size={24} color={color} />
                 ),
                 header: renderSavedHeader,
               }}
