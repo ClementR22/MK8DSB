@@ -12,9 +12,6 @@ import SetCardHeader, { SetCardHeaderProps } from "./SetCardHeader";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 import { SET_CARD_WIDTH } from "@/utils/designTokens";
 
-export const SET_CARD_HEIGHT = 343;
-export const SET_CARD_STAT_SLIDER_GAP = 8;
-
 export interface SetData {
   name: string;
   classIds: number[];
@@ -179,7 +176,7 @@ const SetCard: React.FC<SetCardProps> = ({
 };
 
 const styles = StyleSheet.create({
-  outerContainer: { gap: SET_CARD_STAT_SLIDER_GAP },
+  outerContainer: { gap: 4 },
 });
 
 export default memo(SetCard);

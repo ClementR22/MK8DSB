@@ -23,18 +23,18 @@ export const statNames: StatName[] = [
 ];
 
 export const statNamesCompact = {
-  speedGround: "spdG",
-  speedAntiGravity: "spdAG",
-  speedWater: "spdW",
-  speedAir: "spdA",
-  acceleration: "acc",
-  weight: "wgt",
-  handlingGround: "hanG",
-  handlingAntiGravity: "hanAG",
-  handlingWater: "hanW",
-  handlingAir: "hanA",
-  traction: "tra",
-  miniTurbo: "mtu",
+  speedGround: "SG",
+  speedAntiGravity: "SAG",
+  speedWater: "SW",
+  speedAir: "SA",
+  acceleration: "Acc",
+  weight: "Wei",
+  handlingGround: "HG",
+  handlingAntiGravity: "HAG",
+  handlingWater: "HW",
+  handlingAir: "HA",
+  traction: "Tra",
+  miniTurbo: "MT",
 };
 
 export const statNamesCompareDefault: StatNameCompareDefault[] = [

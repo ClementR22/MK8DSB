@@ -7,7 +7,6 @@ export const CARD_SPACING = 16;
 export const LIST_ITEM_SPACING = 8;
 export const PADDING_HORIZONTAL = 20; // For screen-level padding
 export const CATEGORY_SELECTOR_BORDER_WIDTH = 6;
-export const SET_CARD_CONTAINER_PADDING = 16;
 
 // Border Radius
 export const BORDER_RADIUS_8 = 8;

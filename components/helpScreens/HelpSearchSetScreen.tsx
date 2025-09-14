@@ -68,7 +68,7 @@ const HelpSearchSetScreen = () => {
               props: { stepChar: "4", title: "Analysez les résultats", alignItems: "center" },
               content: (
                 <>
-                  <HelpText>Les sets sont classés par pourcentage de correspondance</HelpText>
+                  <HelpText>Les sets sont classés par score de correspondance</HelpText>
                   <View style={{ width: SET_CARD_WIDTH - 11 }}>
                     <StatSliderCompact name="spdG" value={4} isInSetCard={true} chosenValue={5} />
                   </View>

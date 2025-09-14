@@ -9,8 +9,6 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import { vw } from "../styles/theme";
 import StatSliderCompactBarRelativeValue from "./StatSliderCompactBarRelativeValue";
 
-export const STAT_SLIDER_COMPACT_HEIGHT = 34;
-
 interface StatSliderCompactProps {
   name: string;
   value: number;
@@ -67,18 +65,16 @@ const StatSliderCompact = ({
 
   return (
     <Pressable style={containerStyle} onPress={handlePress}>
-      {!isInSetCard && (
-        <View
-          style={[
-            styles.nameContainer,
-            {
-              width: (vw / 360) * 66,
-            },
-          ]}
-        >
-          <Text style={nameStyle}>{translate(name)}</Text>
-        </View>
-      )}
+      <View
+        style={[
+          styles.nameContainer,
+          {
+            width: (vw / 360) * 43,
+          },
+        ]}
+      >
+        <Text style={nameStyle}>{translate(name)}</Text>
+      </View>
 
       {isRelativeValue ? (
         <StatSliderCompactBarRelativeValue value={value} maxValue={maxValue} />

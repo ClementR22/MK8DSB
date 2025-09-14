@@ -5,11 +5,9 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import StatNamesFloatingContainer from "../statSliderSetCard/StatNamesFloatingContainer";
 import { SetObject } from "@/stores/useSetsStore";
 import { Placeholder } from "@/components/Placeholder";
 import HorizontalScrollContainer from "./HorizontalScrollContainer";
-import { SET_CARD_CONTAINER_PADDING } from "@/utils/designTokens";
 
 interface SetWithColor extends SetObject {
   color?: string;
@@ -81,16 +79,7 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
       };
     }, [screenName]);
 
-    // Détermine si le StatNamesFloatingContainer doit être affiché
-    // Note : Votre condition était `(isInSearchScreen || isInSaveScreen) && !isInLoadSetModal && !noSetToShow`
-    // Maintenant, elle est `!isInDisplayScreen && !noSetToShow`
-    // Assurez-vous que cette logique correspond à votre intention.
     const noSetToShow = useMemo(() => setsToShow.length === 0, [setsToShow]);
-
-    const isFloatingContainer = useMemo(
-      () => !isInDisplayScreen && !isInLoadSetModal && !noSetToShow, // La logique de couleur s'applique sur "display", donc le floating container ne doit pas être là.
-      [isInDisplayScreen, noSetToShow]
-    );
 
     const calculatedContentWidth: DimensionValue | undefined = useMemo(
       () => (noSetToShow ? "100%" : undefined),
@@ -153,13 +142,11 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
 
     return (
       <View>
-        {isFloatingContainer && <StatNamesFloatingContainer />}
-
         <HorizontalScrollContainer
           ref={scrollViewRef}
           scrollEnabled={isScrollEnable}
-          outerContainerStyle={{ marginBottom: 18 }}
-          innerContainerStyle={{ marginHorizontal: 18, padding: SET_CARD_CONTAINER_PADDING, gap: 12, borderRadius: 22 }}
+          outerContainerStyle={{ marginBottom: 18, marginLeft: 16 }}
+          innerContainerStyle={{ marginHorizontal: 0, padding: 16, gap: 12, borderRadius: 22 }}
           defaultStyle={{ width: calculatedContentWidth }}
         >
           {noSetToShow ? placeHolder : memoizedSetCards}
