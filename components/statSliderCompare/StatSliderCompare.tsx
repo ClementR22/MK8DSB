@@ -21,7 +21,7 @@ interface StatSliderCompareProps {
   name: StatName;
   setsIdAndValue: SetIdAndStatValue[];
   scrollToSetCard: (id: string) => void;
-  width?: number;
+  width?: number | string;
 }
 
 const StatSliderCompare: React.FC<StatSliderCompareProps> = ({

@@ -4,14 +4,14 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import IconContainer from "@/primitiveComponents/IconContainer";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-interface HelpFeatureItemProps {
+interface HelpButtonDescriptionProps {
   iconName: string;
   iconType: IconType;
   containerSize?: number;
-  title: string;
+  description: string;
 }
 
-const HelpFeatureItem = ({ iconName, iconType, containerSize = 40, title }: HelpFeatureItemProps) => {
+const HelpButtonDescription = ({ iconName, iconType, containerSize = 40, description }: HelpButtonDescriptionProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   return (
@@ -21,7 +21,7 @@ const HelpFeatureItem = ({ iconName, iconType, containerSize = 40, title }: Help
       </View>
 
       <View style={{ flex: 1, gap: 10, justifyContent: "center" }}>
-        <Text style={[styles.title, { color: theme.on_surface_variant }]}>{title}</Text>
+        <Text style={[styles.description, { color: theme.on_surface_variant }]}>{description}</Text>
       </View>
     </View>
   );
@@ -35,9 +35,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   iconWrapper: { width: 40, alignItems: "center" },
-  title: {
+  description: {
     fontSize: 14,
   },
 });
 
-export default HelpFeatureItem;
+export default HelpButtonDescription;

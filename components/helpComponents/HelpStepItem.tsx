@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, ViewStyle } from "react-native";
 import StepCircle from "./StepCircle";
-import HelpIconAndText from "./HelpIconAndText";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 interface HelpStepItemProps {

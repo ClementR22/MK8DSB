@@ -2,7 +2,7 @@ import React, { ReactNode, useCallback, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { HELP_HIGHLIGHT_BOX_COLORS } from "@/constants/Colors";
 
-type BoxType = "info" | "result" | "tips";
+export type BoxType = "info" | "result" | "tips";
 
 interface HelpHighlightBoxProps {
   type: BoxType;
@@ -40,6 +40,8 @@ const HelpHighlightBox = ({ children, type, title, fontSize = 13, lineHeight = 1
       return;
     }
   }, [title, textStyle]);
+
+  if (!children) return;
 
   return (
     <View style={containerStyle}>
