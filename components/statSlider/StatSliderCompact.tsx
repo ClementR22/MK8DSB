@@ -35,7 +35,7 @@ const StatSliderCompact = ({
   // Calcul du bonus activé
   const bonusEnabled = useMemo(() => chosenValue !== undefined, [chosenValue]);
   // Bonus trouvé
-  const bonusFound = useMemo(() => (chosenValue ? value - chosenValue : 0), [value, chosenValue]);
+  const bonusFound = useMemo(() => (chosenValue != undefined ? value - chosenValue : 0), [value, chosenValue]);
   // Couleur du bonus
   const bonusColor = useMemo(() => getBonusColor(bonusFound), [bonusFound]);
 
@@ -92,7 +92,13 @@ const StatSliderCompact = ({
           ]}
         >
           <Text style={valueStyle}>
-            {showAllStatSliderCompactBonuses ? (bonusFound > 0 ? `+${bonusFound}` : bonusFound) : value}
+            {showAllStatSliderCompactBonuses
+              ? bonusFound > 0
+                ? `+${bonusFound}`
+                : bonusFound === 0
+                ? "*"
+                : bonusFound
+              : value}
           </Text>
         </View>
       )}
