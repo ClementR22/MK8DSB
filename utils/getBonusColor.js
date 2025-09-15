@@ -1,3 +1,5 @@
+import { BONUS_COLOR, MALUS_COLOR } from "@/constants/Colors";
+
 export const getBonusColor = (bonusFound) => {
-  return bonusFound > 0 ? "#34be4d" : bonusFound < 0 ? "#ff6240" : undefined;
+  return bonusFound > 0 ? BONUS_COLOR : bonusFound < 0 ? MALUS_COLOR : undefined;
 };

@@ -43,3 +43,7 @@ export const HELP_HIGHLIGHT_BOX_COLORS = {
   result: { backgroundColor: "#ecfdf5", borderColor: "#10b981", textColor: "#047857" },
   tips: { backgroundColor: "#fef3c7", borderColor: "#f59e0b", textColor: "#92400e" },
 };
+
+export const BONUS_COLOR = "#34be4d";
+
+export const MALUS_COLOR = "#ff6240";

@@ -6,7 +6,7 @@ import useModalsStore from "@/stores/useModalsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useSetsStore from "@/stores/useSetsStore";
 import SetImagesModal from "./SetImagesModal";
-import StatSliderSetCardsContainer from "../statSliderSetCard/StatSliderSetCardsContainer";
+import StatGaugeSetCardsContainer from "../statGauge/StatGaugeSetCardsContainer";
 import { arraysEqual } from "@/utils/deepCompare";
 import SetCardHeader, { SetCardHeaderProps } from "./SetCardHeader";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
@@ -169,7 +169,7 @@ const SetCard: React.FC<SetCardProps> = ({
         />
       </View>
       {config.showStatSliderResult && setToShowStats !== null && (
-        <StatSliderSetCardsContainer setToShowStats={setToShowStats} />
+        <StatGaugeSetCardsContainer setToShowStats={setToShowStats} />
       )}
     </View>
   );

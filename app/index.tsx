@@ -14,11 +14,12 @@ import FlexContainer from "@/primitiveComponents/FlexContainer";
 import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
-import StatSliderCompact from "@/components/statSlider/StatSliderCompact";
 import { statNamesCompact } from "@/data/stats/statsData";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import TabBarHeightUpdater from "@/components/TabBarHeightUpdater";
+import StatGaugeContainer from "@/components/statGauge/StatGaugeContainer";
+import StatGaugeBar from "@/components/statGauge/StatGaugeBar";
 
 const SearchSetScreen: React.FC = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -33,18 +34,31 @@ const SearchSetScreen: React.FC = () => {
   }, []);
 
   const renderedSliders = useMemo(() => {
-    const SliderComponent = isReduceStatSliders ? StatSliderCompact : StatSlider;
+    const SliderComponent = isReduceStatSliders ? StatGaugeContainer : StatSlider;
     return chosenStats.map((stat) => {
       if (!stat.checked) return null;
       const nameProp = isReduceStatSliders ? statNamesCompact[stat.name] : stat.name;
-      return (
-        <SliderComponent
-          key={`statSlider-${stat.name}-${isReduceStatSliders ? "compact" : "full"}`}
-          name={nameProp}
-          value={stat.value}
-          statFilterNumber={stat.statFilterNumber}
-        />
-      );
+
+      if (isReduceStatSliders) {
+        return (
+          <StatGaugeContainer
+            key={`statSlider-${stat.name}-${isReduceStatSliders ? "compact" : "full"}`}
+            name={nameProp}
+            value={stat.value}
+            statFilterNumber={stat.statFilterNumber}
+          >
+            <StatGaugeBar value={stat.value} />
+          </StatGaugeContainer>
+        );
+      } else
+        return (
+          <StatSlider
+            key={`statSlider-${stat.name}-${isReduceStatSliders ? "compact" : "full"}`}
+            name={nameProp}
+            value={stat.value}
+            statFilterNumber={stat.statFilterNumber}
+          />
+        );
     });
   }, [chosenStats, isReduceStatSliders]);
 

@@ -2,16 +2,17 @@ import React, { useMemo } from "react";
 import { useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
-import StatSliderCompact from "../statSlider/StatSliderCompact";
 import { statNamesCompact } from "@/data/stats/statsData";
 import { StyleSheet, View } from "react-native";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
+import StatGaugeContainer from "./StatGaugeContainer";
+import StatGaugeSetCardBar from "./StatGaugeSetCardBar";
 
-interface StatSliderSetCardsContainerProps {
+interface StatGaugeSetCardsContainerProps {
   setToShowStats: number[];
 }
 
-const StatSliderSetCardsContainer: React.FC<StatSliderSetCardsContainerProps> = ({ setToShowStats }) => {
+const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({ setToShowStats }) => {
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
   const { resultStats } = useResultStats();
@@ -41,13 +42,19 @@ const StatSliderSetCardsContainer: React.FC<StatSliderSetCardsContainerProps> = 
           }
 
           return (
-            <StatSliderCompact
+            <StatGaugeContainer
               key={stat.name}
               name={compactName}
               value={statValue}
               isInSetCard={true}
               chosenValue={chosenValue}
-            />
+            >
+              <StatGaugeSetCardBar
+                obtainedValue={statValue}
+                chosenValue={chosenValue}
+                isInSearchScreen={isInSearchScreen}
+              />
+            </StatGaugeContainer>
           );
         })}
       </View>
@@ -63,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(StatSliderSetCardsContainer);
+export default React.memo(StatGaugeSetCardsContainer);

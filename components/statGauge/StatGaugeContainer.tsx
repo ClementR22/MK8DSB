@@ -3,34 +3,30 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { translate } from "@/translations/translations";
-import StatSliderCompactBar from "./StatSliderCompactBar";
 import { getBonusColor } from "@/utils/getBonusColor";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { vw } from "../styles/theme";
-import StatSliderCompactBarRelativeValue from "./StatSliderCompactBarRelativeValue";
 
-interface StatSliderCompactProps {
+interface StatGaugeContainerProps {
   name: string;
   value: number;
   statFilterNumber?: number;
   chosenValue?: number;
   isInSetCard?: boolean;
-  isRelativeValue?: boolean;
-  maxValue?: number;
+  children: React.ReactElement;
 }
 
-const StatSliderCompact = ({
+const StatGaugeContainer = ({
   name,
   value,
   statFilterNumber = 0,
   chosenValue,
   isInSetCard = false,
-  isRelativeValue = false,
-  maxValue,
-}: StatSliderCompactProps) => {
+  children,
+}: StatGaugeContainerProps) => {
   const theme = useThemeStore((state) => state.theme);
-  const showAllStatSliderCompactBonuses = useGeneralStore((state) => state.showAllStatSliderCompactBonuses);
-  const toggleAllStatSliderCompactBonuses = useGeneralStore((state) => state.toggleAllStatSliderCompactBonuses);
+  const showAllStatGaugeBonuses = useGeneralStore((state) => state.showAllStatGaugeBonuses);
+  const toggleAllStatGaugeBonuses = useGeneralStore((state) => state.toggleAllStatGaugeBonuses);
 
   // Calcul du bonus activé
   const bonusEnabled = useMemo(() => chosenValue !== undefined, [chosenValue]);
@@ -53,15 +49,15 @@ const StatSliderCompact = ({
 
   // Style de la valeur
   const valueStyle = useMemo(
-    () => StyleSheet.flatten([styles.text, showAllStatSliderCompactBonuses && { color: bonusColor }]),
-    [dynamicTextColor, showAllStatSliderCompactBonuses, bonusColor]
+    () => StyleSheet.flatten([styles.text, showAllStatGaugeBonuses && { color: bonusColor }]),
+    [dynamicTextColor, showAllStatGaugeBonuses, bonusColor]
   );
 
   // Handler mémoïsé pour le press
   const handlePress = useCallback(() => {
     if (!bonusEnabled) return;
-    toggleAllStatSliderCompactBonuses();
-  }, [bonusEnabled, toggleAllStatSliderCompactBonuses]);
+    toggleAllStatGaugeBonuses();
+  }, [bonusEnabled, toggleAllStatGaugeBonuses]);
 
   return (
     <Pressable style={containerStyle} onPress={handlePress}>
@@ -76,11 +72,7 @@ const StatSliderCompact = ({
         <Text style={nameStyle}>{translate(name)}</Text>
       </View>
 
-      {isRelativeValue ? (
-        <StatSliderCompactBarRelativeValue value={value} maxValue={maxValue} />
-      ) : (
-        <StatSliderCompactBar value={value} chosenValue={chosenValue} isInSetCard={isInSetCard} />
-      )}
+      {children}
 
       {isInSetCard && (
         <View
@@ -92,7 +84,7 @@ const StatSliderCompact = ({
           ]}
         >
           <Text style={valueStyle}>
-            {showAllStatSliderCompactBonuses
+            {showAllStatGaugeBonuses
               ? bonusFound > 0
                 ? `+${bonusFound}`
                 : bonusFound === 0
@@ -128,4 +120,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(StatSliderCompact);
+export default React.memo(StatGaugeContainer);

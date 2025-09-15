@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { Animated, FlatList, Pressable, StyleSheet, Text, View } from "react-native";
-import StatSliderCompact from "../statSlider/StatSliderCompact";
+import StatSliderCompact from "../statGauge/StatGaugeContainer";
 import { maxValues } from "@/data/classStats";
 import { Category } from "@/data/elements/elementsTypes";
 import {
@@ -11,6 +11,9 @@ import {
   PADDING_HORIZONTAL,
 } from "@/utils/designTokens";
 import { useThemeStore } from "@/stores/useThemeStore";
+import StatGaugeRelativeBar from "../statGauge/StatGaugeRelativeBar";
+import StatGaugeContainer from "../statGauge/StatGaugeContainer";
+import StatGaugeBar from "../statGauge/StatGaugeBar";
 
 type ElementStat = {
   name: string;
@@ -48,7 +51,13 @@ const ElementCard: React.FC<ElementCardProps> = memo(
 
     const renderStat = useCallback(
       ({ name, value }: ElementStat) => (
-        <StatSliderCompact key={name} name={name} value={value} maxValue={maxValue} isRelativeValue={isRelativeValue} />
+        <StatGaugeContainer key={name} name={name} value={value}>
+          {isRelativeValue ? (
+            <StatGaugeRelativeBar value={value} maxValue={maxValue} />
+          ) : (
+            <StatGaugeBar value={value} />
+          )}
+        </StatGaugeContainer>
       ),
       [maxValue, isRelativeValue]
     );

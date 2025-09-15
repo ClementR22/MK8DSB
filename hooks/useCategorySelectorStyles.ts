@@ -1,5 +1,3 @@
-// elementCompactSelector/selector/useCategorySelectorStyles.ts
-
 import { StyleSheet } from "react-native";
 import { useMemo } from "react";
 import { useThemeStore } from "@/stores/useThemeStore";

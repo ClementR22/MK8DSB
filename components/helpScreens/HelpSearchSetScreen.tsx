@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonAndHelpmodal from "./ButtonAndHelpmodal";
 import StatSliderPreview from "../statSlider/StatSliderPreview";
-import StatSliderCompact from "../statSlider/StatSliderCompact";
+import StatSliderCompact from "../statGauge/StatGaugeContainer";
 import { SET_CARD_WIDTH } from "@/utils/designTokens";
 import Button from "@/primitiveComponents/Button";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -12,6 +12,8 @@ import HelpBoldText from "../helpComponents/HelpBoldText";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
 import HelpText from "../helpComponents/HelpText";
 import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
+import StatGaugeContainer from "../statGauge/StatGaugeContainer";
+import StatGaugeSetCardBar from "../statGauge/StatGaugeSetCardBar";
 
 const HelpSearchSetScreen = () => {
   const language = useLanguageStore((state) => state.language);
@@ -70,7 +72,9 @@ const HelpSearchSetScreen = () => {
                 <>
                   <HelpText>Les sets sont classés par score de correspondance</HelpText>
                   <View style={{ width: SET_CARD_WIDTH - 11 }}>
-                    <StatSliderCompact name="spdG" value={4} isInSetCard={true} chosenValue={5} />
+                    <StatGaugeContainer name="SG" value={4} isInSetCard={true} chosenValue={5}>
+                      <StatGaugeSetCardBar obtainedValue={4} chosenValue={5} isInSearchScreen={true} />
+                    </StatGaugeContainer>
                   </View>
                   <HelpText style={{ fontSize: 12 }}>
                     Appuyez sur une barre pour voir l'écart avec votre critère
