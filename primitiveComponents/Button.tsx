@@ -18,8 +18,7 @@ interface ButtonProps {
   tooltipText?: string;
   iconProps?: IconProps;
   minWidth?: number;
-  textStyle?: { key: string };
-
+  disabled?: boolean;
   [key: string]: any;
 }
 
@@ -32,6 +31,7 @@ const Button = ({
   tooltipText,
   iconProps,
   minWidth,
+  disabled = false,
   ...props
 }: ButtonProps) => {
   const theme = useThemeStore((state) => state.theme);
@@ -55,7 +55,7 @@ const Button = ({
       onPress={onPress}
       tooltipText={tooltipText}
       elevation={elevation}
-      containerStyle={StyleSheet.flatten([styles.container, containerStyle])}
+      containerStyle={StyleSheet.flatten([styles.container, containerStyle, disabled && { backgroundColor: "grey" }])}
       {...props}
     >
       <>

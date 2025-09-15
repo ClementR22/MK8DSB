@@ -1,6 +1,7 @@
 import React, { memo, useMemo } from "react";
-import { View, StyleSheet, Image, ImageSourcePropType, ViewStyle, ImageStyle, Animated } from "react-native";
+import { View, StyleSheet, Image, ImageSourcePropType, ViewStyle, Animated } from "react-native";
 import Tooltip from "@/components/Tooltip";
+import { BORDER_RADIUS_18 } from "@/utils/designTokens";
 
 interface IconSelectorProps<T extends string> {
   options: {
@@ -10,30 +11,25 @@ interface IconSelectorProps<T extends string> {
   selectedValues: Set<T> | T;
   onSelect: (value: T) => void;
   buttonSize?: number;
-  buttonStyle?: ViewStyle;
-  buttonWrapperStyle?: ViewStyle;
+  buttonWrapperWidth?: number | string;
   activeStyle?: ViewStyle;
-  imageStyle?: ImageStyle;
   containerStyle?: ViewStyle;
   overlapAmount?: Animated.Value | number;
 }
+
+const BUTTON_SIZE = 50;
 
 const IconSelector = <T extends string>({
   options,
   selectedValues,
   onSelect,
-  buttonSize = 50,
-  buttonStyle,
-  buttonWrapperStyle,
+  buttonSize = BUTTON_SIZE,
+  buttonWrapperWidth,
   activeStyle,
-  imageStyle,
   containerStyle,
   overlapAmount = 0,
 }: IconSelectorProps<T>) => {
-  const mergedButtonStyle = useMemo(
-    () => [{ width: buttonSize, height: buttonSize }, styles.button, buttonStyle],
-    [buttonSize, buttonStyle]
-  );
+  const mergedButtonStyle = useMemo(() => [{ width: buttonSize, height: buttonSize }, styles.button], [buttonSize]);
 
   return (
     <View style={[styles.container, containerStyle]}>
@@ -52,14 +48,14 @@ const IconSelector = <T extends string>({
         return (
           <Animated.View
             key={option.name}
-            style={[buttonWrapperStyle, { zIndex: isActive ? 10 : 0, marginLeft: marginLeft }]}
+            style={{ width: buttonWrapperWidth, zIndex: isActive ? 10 : 0, marginLeft: marginLeft } as ViewStyle}
           >
             <Tooltip
               tooltipText={option.name}
               onPress={() => onSelect(option.name)}
               style={StyleSheet.flatten([...mergedButtonStyle, isActive && activeStyle])}
             >
-              <Image source={option.imageUrl} style={[styles.image, imageStyle]} resizeMode="contain" />
+              <Image source={option.imageUrl} style={[styles.image]} resizeMode="contain" />
             </Tooltip>
           </Animated.View>
         );
@@ -73,13 +69,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   button: {
-    borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
+    borderRadius: BORDER_RADIUS_18 / 2,
+    overflow: "hidden",
+    borderWidth: 3,
+    borderColor: "transparent",
   },
   image: {
-    width: "100%",
-    height: "100%",
+    width: BUTTON_SIZE,
+    height: BUTTON_SIZE * 0.8,
   },
 });
 

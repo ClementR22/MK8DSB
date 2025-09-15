@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { categories } from "@/data/elements/elementsData";
 import { setsData } from "@/data/setsData";
@@ -32,6 +32,18 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
   const [resultsNumber, setResultsNumber] = useState(5);
   const selectedClassIdsByCategory = usePressableElementsStore((state) => state.multiSelectedClassIdsByCategory);
   const [chosenBodytype, setChosenBodytype] = useState<Set<Bodytype>>(new Set());
+  const [isResultsUpdated, setIsResultUpdated] = useState(false);
+
+  const handleSearch = useCallback(() => {
+    setIsResultUpdated(true);
+    search();
+  }, []);
+
+  useEffect(() => {
+    if (isResultsUpdated) {
+      setIsResultUpdated(false);
+    }
+  }, [chosenStats, chosenBodytype, selectedClassIdsByCategory]);
 
   const SetFoundTranslated = useMemo(() => translateToLanguage("SetFound", language), []);
 
@@ -135,7 +147,11 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
         </ElementPickerCompactSelectorPannel>
       </ButtonAndModal>
 
-      <Button onPress={search} iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
+      <Button
+        onPress={handleSearch}
+        iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}
+        disabled={isResultsUpdated}
+      >
         <Text>{translateToLanguage("Search", language)}</Text>
       </Button>
 

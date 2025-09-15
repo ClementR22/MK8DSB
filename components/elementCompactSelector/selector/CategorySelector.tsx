@@ -1,11 +1,16 @@
 // components/CategorySelector.tsx
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import { Category } from "@/data/elements/elementsTypes";
 import IconSelector from "./IconSelector";
 import { categoryImageSources } from "@/assets/images/categoryImageSources";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { useCategorySelectorStyles } from "@/hooks/useCategorySelectorStyles";
 import { Animated, StyleSheet } from "react-native";
+import {
+  BORDER_RADIUS_15,
+  CATEGORY_BUTTON_GALLERY_WIDTH,
+  CATEGORY_SELECTOR_BORDER_WIDTH,
+  SHADOW_STYLE,
+} from "@/utils/designTokens";
 
 interface CategorySelectorProps {
   selectedCategory: Category;
@@ -26,22 +31,35 @@ const CategorySelector: React.FC<CategorySelectorProps> = memo(
     isInGalleryPannel = false,
     animatedCategoryMarginLeft = new Animated.Value(0),
   }) => {
-    const styles = useCategorySelectorStyles(isInGalleryPannel);
+    const theme = useThemeStore((state) => state.theme);
+
+    const activeStyle = useMemo(() => ({ backgroundColor: theme.primary }), [theme.primary]);
 
     return (
       <IconSelector<Category>
         options={categoryOptions}
         selectedValues={selectedCategory}
         onSelect={onCategoryPress}
-        buttonStyle={styles.button}
-        buttonWrapperStyle={styles.buttonWrapper}
-        activeStyle={styles.buttonActive}
-        containerStyle={styles.container}
-        imageStyle={styles.image}
+        buttonWrapperWidth={isInGalleryPannel ? CATEGORY_BUTTON_GALLERY_WIDTH : "25%"}
+        activeStyle={activeStyle}
+        containerStyle={{ ...styles.container, backgroundColor: theme.surface_container }}
         overlapAmount={animatedCategoryMarginLeft}
       />
     );
   }
 );
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between", // Distribute items more evenly, possibly with padding around them
+    overflow: "hidden",
+    borderRadius: BORDER_RADIUS_15, // Use a larger, more prominent radius
+    ...SHADOW_STYLE, // Apply shadow
+    borderWidth: CATEGORY_SELECTOR_BORDER_WIDTH, // Use consistent spacing token
+    borderColor: "transparent",
+  },
+});
 
 export default CategorySelector;
