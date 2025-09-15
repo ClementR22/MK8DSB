@@ -2,8 +2,8 @@ import { BONUS_COLOR, MALUS_COLOR } from "@/constants/Colors";
 import { useGaugeMetrics } from "@/hooks/useGaugeMetrics";
 import { useStatGaugeStyles } from "@/hooks/useStatGaugeStyles";
 import { useThemeStore } from "@/stores/useThemeStore";
-import React, { useCallback, useMemo, useState } from "react";
-import { StyleSheet, View, LayoutChangeEvent } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
 interface StatGaugeSetCardBarProps {
   obtainedValue: number;
@@ -19,7 +19,7 @@ const StatGaugeSetCardBar = ({ obtainedValue, chosenValue, isInSearchScreen = fa
   const stylesDynamic = useStatGaugeStyles();
 
   const obtainedWidth = getWidth(obtainedValue);
-  const chosenWidth = getWidth(chosenValue);
+  const chosenWidth = getWidth(chosenValue) || obtainedWidth; // si chosenValue n'est pas defini, on recopie obtainedWidth
 
   return (
     <View style={stylesDynamic.emptyContainer} onLayout={handleGaugeLayout}>
