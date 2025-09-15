@@ -17,7 +17,7 @@ const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({
   const isInSearchScreen = screenName === "search";
   const { resultStats } = useResultStats();
 
-  const chosenStatsFromStore = useSetsStore((state) => state.chosenStats);
+  const chosenStats = useSetsStore((state) => state.chosenStats);
 
   const { setCardStyle } = useSetCardStyle(); // la prop SET_CARD_WIDTH n'est pas nécessaire ici
 
@@ -37,8 +37,8 @@ const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({
           const statValue = setToShowStats[originalIndex];
 
           let chosenValue: number | undefined = undefined;
-          if (isInSearchScreen && chosenStatsFromStore[originalIndex]?.checked) {
-            chosenValue = chosenStatsFromStore[originalIndex].value;
+          if (isInSearchScreen && chosenStats[originalIndex]?.checked) {
+            chosenValue = chosenStats[originalIndex].value;
           }
 
           return (
@@ -59,7 +59,7 @@ const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({
         })}
       </View>
     );
-  }, [resultStats, setToShowStats, isInSearchScreen, chosenStatsFromStore, setCardStyle]);
+  }, [resultStats, setToShowStats, isInSearchScreen, setCardStyle]);
 
   return <>{memoizedSliders}</>;
 };
