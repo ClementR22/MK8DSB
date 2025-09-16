@@ -3,6 +3,7 @@ import { StyleSheet, Text } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
+import { BORDER_RADIUS_INF } from "@/utils/designTokens";
 
 type IconProps = {
   name: string;
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     height: 40,
-    borderRadius: 100,
+    borderRadius: BORDER_RADIUS_INF,
     justifyContent: "center",
     alignItems: "center",
     gap: 5,

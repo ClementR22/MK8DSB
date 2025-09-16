@@ -6,6 +6,12 @@ import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import Snackbar from "./Snackbar";
+import {
+  BORDER_RADIUS_12,
+  BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,
+  BORDER_RADIUS_MODAL_CONTAINER,
+  MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER,
+} from "@/utils/designTokens";
 
 interface ModalButtonProps {
   text: string;
@@ -14,8 +20,6 @@ interface ModalButtonProps {
   buttonColor?: string;
   buttonTextColor?: string;
 }
-
-export const MODAL_CHILDREN_CONTAINER_MARGIN_HORIZONTAL = 10;
 
 const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, buttonTextColor }: ModalButtonProps) => {
   return (
@@ -142,10 +146,10 @@ const Modal = ({
 
           <View style={[styles.childrenContainer, contentColorStyle]}>{children}</View>
 
-          <FlexContainer flexDirection={buttonContainerFlexDirection} style={styles.buttonContainer}>
+          <View style={{ flexDirection: buttonContainerFlexDirection, ...styles.buttonContainer }}>
             {renderSecondButton()}
             {isWithClosePressable && <ModalButton text={closeButtonText} onPress={actualOnPressClose} />}
-          </FlexContainer>
+          </View>
         </Pressable>
         <Snackbar />
       </Pressable>
@@ -170,13 +174,14 @@ const styles = StyleSheet.create({
     // cursor: "auto", // Web-specific. RN ignores.
     width: "90%",
     maxWidth: 360,
-    borderRadius: 28,
+    borderRadius: BORDER_RADIUS_MODAL_CONTAINER,
     paddingVertical: 12,
   },
   childrenContainer: {
     paddingHorizontal: 0,
-    marginHorizontal: MODAL_CHILDREN_CONTAINER_MARGIN_HORIZONTAL,
-    borderRadius: 28,
+    marginHorizontal: MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER,
+    borderRadius: BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,
+    overflow: "hidden",
   },
   title_center: {
     alignSelf: "center",
@@ -189,6 +194,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 10, // Consider adding this dynamically if needed
+    flexDirection: "row",
+    gap: 10,
+    justifyContent: "center",
   },
 });
 

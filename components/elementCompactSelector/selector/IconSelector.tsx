@@ -1,7 +1,6 @@
 import React, { memo, useMemo } from "react";
 import { View, StyleSheet, Image, ImageSourcePropType, ViewStyle, Animated } from "react-native";
 import Tooltip from "@/components/Tooltip";
-import { BORDER_RADIUS_18 } from "@/utils/designTokens";
 
 interface IconSelectorProps<T extends string> {
   options: {
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    borderRadius: BORDER_RADIUS_18 / 2,
+    borderRadius: 10,
     overflow: "hidden",
     borderWidth: 3,
     borderColor: "transparent",

@@ -11,6 +11,7 @@ import { Text } from "react-native";
 import { translateToLanguage } from "@/translations/translations";
 import ElementPickerCompact from "../ElementPickerCompact";
 import useGeneralStore from "@/stores/useGeneralStore";
+import { BORDER_RADIUS_MODAL_CHILDREN_CONTAINER } from "@/utils/designTokens";
 
 const ITEM_ELEMENT_WIDTH = 40;
 const ELEMENTS_CONTAINER_PADDING = 6;
@@ -115,10 +116,10 @@ const ElementsDeselector: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 10,
     overflow: "hidden",
     gap: 2,
     paddingBottom: ELEMENTS_CONTAINER_PADDING,
+    borderRadius: BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,
   },
   deselectorTitle: {
     fontSize: 16,

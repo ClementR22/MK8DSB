@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import StatSelector from "./StatSelector";
 import { toggleAndGetChecks } from "@/utils/toggleCheck";
+import DoubleEntryTable from "../DoubleEntryTable";
+import useSetsStore from "@/stores/useSetsStore";
+import { useResultStats } from "@/contexts/ResultStatsContext";
+import { View } from "react-native";
 
 const ButtonAndModalStatSelector = ({
   statList,
@@ -43,6 +47,10 @@ const ButtonAndModalStatSelector = ({
     setStatListInModal(newList);
   };
 
+  const chosenStats = useSetsStore((state) => state.chosenStats);
+  const setChosenStats = useSetsStore((state) => state.setChosenStats);
+  const { resultStats, setResultStats } = useResultStats();
+
   return (
     <ButtonAndModal
       customTrigger={customTrigger}
@@ -53,19 +61,14 @@ const ButtonAndModalStatSelector = ({
       isModalVisibleProp={isModalVisible}
       setIsModalVisibleProp={setIsModalVisible}
     >
-      <StatSelector
-        statList={statListInModal}
-        setStatList={setStatListInModal}
-        toggleCheck={toggleCheck}
-        statListBeforeAll={statListBeforeAll}
-        setStatListBeforeAll={setStatListBeforeAll}
-        {...(includeBeforeSync && {
-          statListBeforeSync,
-          setStatListBeforeSync,
-        })}
-        isResultStatsInSearchScreen={isResultStatsInSearchScreen}
-        disabled={disabled}
-      />
+      <View>
+        <DoubleEntryTable
+          columns={[
+            { columnName: "Colonne A", checkList: chosenStats, setCheckList: setChosenStats },
+            { columnName: "Colonne B", checkList: resultStats, setCheckList: setResultStats },
+          ]}
+        />
+      </View>
     </ButtonAndModal>
   );
 };

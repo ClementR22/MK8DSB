@@ -7,7 +7,7 @@ import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { SetObject } from "@/stores/useSetsStore";
 import { Placeholder } from "@/components/Placeholder";
-import HorizontalScrollContainer from "./HorizontalScrollContainer";
+import { BORDER_RADIUS_BIG, MARGIN_CONTAINER_LOWEST, PADDING_SET_CARDS_CONTAINER } from "@/utils/designTokens";
 
 interface SetWithColor extends SetObject {
   color?: string;
@@ -142,15 +142,29 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
 
     return (
       <View>
-        <HorizontalScrollContainer
+        <ScrollView
           ref={scrollViewRef}
+          horizontal
           scrollEnabled={isScrollEnable}
-          outerContainerStyle={{ marginBottom: 18, marginLeft: 16 }}
-          innerContainerStyle={{ marginHorizontal: 0, padding: 16, gap: 12, borderRadius: 22 }}
-          defaultStyle={{ width: calculatedContentWidth }}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ width: calculatedContentWidth }}
+          style={{ marginLeft: MARGIN_CONTAINER_LOWEST }}
         >
-          {noSetToShow ? placeHolder : memoizedSetCards}
-        </HorizontalScrollContainer>
+          <Pressable
+            style={[
+              {
+                flexDirection: "row",
+                marginHorizontal: 0,
+                padding: PADDING_SET_CARDS_CONTAINER,
+                gap: PADDING_SET_CARDS_CONTAINER / 2,
+                borderRadius: BORDER_RADIUS_BIG,
+                backgroundColor: theme.surface_container_high,
+              },
+            ]}
+          >
+            {noSetToShow ? placeHolder : memoizedSetCards}
+          </Pressable>
+        </ScrollView>
       </View>
     );
   }

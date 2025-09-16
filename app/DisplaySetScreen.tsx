@@ -17,6 +17,7 @@ import ButtonAndModalStatSelectorResultStats from "@/components/statSelector/But
 import StatSliderComparesContainer from "@/components/statSliderCompare/StatSliderComparesContainer";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
+import ScrollViewScreen from "@/components/ScrollViewScreen";
 
 const DisplaySetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -95,16 +96,15 @@ const DisplaySetScreen = () => {
   return (
     <ScreenProvider screenName="display">
       <ResultStatsProvider>
-        <ScrollView scrollEnabled={isScrollEnable}>
+        <ScrollViewScreen scrollEnabled={isScrollEnable}>
           <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
             <ButtonAddSet scrollRef={scrollRef} />
             <ButtonLoadSet tooltipText="LoadASet" />
           </ScreenPressablesContainer>
-
           <SetCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
 
           <StatSliderComparesContainer setsColorsMap={setsColorsMap} scrollToSetCard={scrollToSetCard} />
-        </ScrollView>
+        </ScrollViewScreen>
       </ResultStatsProvider>
     </ScreenProvider>
   );

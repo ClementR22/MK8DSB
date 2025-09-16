@@ -2,6 +2,7 @@
 import { useMemo } from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { BORDER_RADIUS_12 } from "@/utils/designTokens";
 
 const SET_CARD_BORDER_WIDTH = 3;
 
@@ -14,7 +15,7 @@ export const useSetCardStyle = (width?: number | string) => {
       {
         // Styles de base communs à toutes les cartes
         width: width,
-        borderRadius: 12,
+        borderRadius: BORDER_RADIUS_12,
         borderWidth: SET_CARD_BORDER_WIDTH,
         padding: 11 - SET_CARD_BORDER_WIDTH,
         backgroundColor: theme.surface,

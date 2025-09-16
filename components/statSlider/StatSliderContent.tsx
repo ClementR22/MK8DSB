@@ -9,6 +9,7 @@ import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { StatName } from "@/data/stats/statsTypes";
+import { BORDER_RADIUS_INF, BORDER_RADIUS_STAT_GAUGE_CONTAINER } from "@/utils/designTokens";
 
 interface StatSliderContentProps {
   name: StatName;
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     borderWidth: 2,
-    borderRadius: 17,
+    borderRadius: BORDER_RADIUS_STAT_GAUGE_CONTAINER,
     flexDirection: "row",
     paddingTop: 3,
     paddingHorizontal: 13,
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
   buttonWrapper: { position: "absolute", bottom: 8 },
   track: {
     height: 16,
-    borderRadius: 100,
+    borderRadius: BORDER_RADIUS_INF,
   },
   thumbWrapper: {
     width: 16,
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
   thumb: {
     width: 4,
     height: 36,
-    borderRadius: 100,
+    borderRadius: BORDER_RADIUS_INF,
   },
   text: {
     fontSize: 20,

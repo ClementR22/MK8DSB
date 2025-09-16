@@ -5,6 +5,7 @@ import { Text, View, StyleSheet, Platform } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import Icon from "react-native-vector-icons/MaterialIcons"; // Assure-toi d’avoir installé react-native-vector-icons
+import { BORDER_RADIUS_12 } from "@/utils/designTokens";
 
 interface PickerItem {
   label: string;
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
   },
   pickerWrapper: {
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: BORDER_RADIUS_12,
     position: "relative",
     justifyContent: "center",
   },

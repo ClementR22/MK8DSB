@@ -6,7 +6,6 @@ import ButtonResetSettings from "@/components/settingsComponent/ButtonResetSetti
 import ButtonSendFeedback from "@/components/settingsComponent/ButtonSendFeedbackButton";
 import ButtonLicenses from "@/components/settingsComponent/ButtonLicenses";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
-import FlexScrollView from "@/primitiveComponents/FlexScrollView";
 import Button from "@/primitiveComponents/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import useSetsStore from "@/stores/useSetsStore";
@@ -15,6 +14,7 @@ import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import ButtonDeleteAllSetsInMemory from "@/components/settingsComponent/ButtonDeleteAllSetsInMemory";
 import ButtonAndModalStatSelectorResultStatsDefault from "@/components/settingsComponent/ButtonAndModalStatSelectorResultStatsDefault";
 import { Text } from "react-native";
+import { ScrollView } from "react-native";
 
 const SettingsScreen: React.FC = () => {
   const resetSettings = useResetSettings();
@@ -37,7 +37,7 @@ const SettingsScreen: React.FC = () => {
 
   return (
     <ResultStatsProvider>
-      <FlexScrollView>
+      <ScrollView>
         <BoxContainer alignItems={"stretch"}>
           <LanguageSelector />
 
@@ -58,7 +58,7 @@ const SettingsScreen: React.FC = () => {
 
           <Button onPress={handleRemoveMemory}>remvove memory</Button>
         </BoxContainer>
-      </FlexScrollView>
+      </ScrollView>
     </ResultStatsProvider>
   );
 };

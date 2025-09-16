@@ -1,9 +1,9 @@
 import { Category, ElementData } from "@/data/elements/elementsTypes";
 import React, { memo, useCallback, useMemo } from "react";
 import { View, StyleSheet, Dimensions, Pressable } from "react-native"; // Removed Dimensions
-import { MODAL_CHILDREN_CONTAINER_MARGIN_HORIZONTAL } from "@/primitiveComponents/Modal";
 import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
 import ElementPickerCompact from "../ElementPickerCompact";
+import { MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER, PADDING_PAGINATED_WRAPPER_CONTAINER } from "@/utils/designTokens";
 
 interface ElementsGridProps {
   elements: ElementData[];
@@ -11,14 +11,13 @@ interface ElementsGridProps {
   onSelectElement: (category: Category, classId: number) => void;
 }
 
-export const PAGINATED_ELEMENTS_CONTAINER_PADDING = 6;
 const GAP = 5;
 const { width: screenWidth } = Dimensions.get("window");
 const NUM_COLUMNS = 4;
 export const ELEMENTS_PER_PAGE = 12;
 
 export const ELEMENTS_GRID_WIDTH =
-  screenWidth * 0.9 - MODAL_CHILDREN_CONTAINER_MARGIN_HORIZONTAL * 2 - PAGINATED_ELEMENTS_CONTAINER_PADDING * 2;
+  screenWidth * 0.9 - MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER * 2 - PADDING_PAGINATED_WRAPPER_CONTAINER * 2;
 
 const ITEM_WIDTH = (ELEMENTS_GRID_WIDTH - GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
 

@@ -20,6 +20,8 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import TabBarHeightUpdater from "@/components/TabBarHeightUpdater";
 import StatGaugeContainer from "@/components/statGauge/StatGaugeContainer";
 import StatGaugeBar from "@/components/statGauge/StatGaugeBar";
+import { BORDER_RADIUS_BIG, PADDING_SEARCH_CONTAINER } from "@/utils/designTokens";
+import ScrollViewScreen from "@/components/ScrollViewScreen";
 
 const SearchSetScreen: React.FC = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -65,33 +67,34 @@ const SearchSetScreen: React.FC = () => {
   return (
     <ScreenProvider screenName="search">
       <ResultStatsProvider>
-        <ScrollView scrollEnabled={isScrollEnable}>
-          <FlexContainer>
-            <BoxContainer contentBackgroundColor={theme.surface_container_high} borderRadius={27}>
-              <View style={styles.searchContainer}>
-                <ButtonIcon
-                  onPress={toggleReduceStatSlider}
-                  iconName={isReduceStatSliders ? "chevron-down" : "chevron-up"}
-                  iconType={IconType.MaterialCommunityIcons}
-                  tooltipText={isReduceStatSliders ? "DevelopSliders" : "ReduceSliders"}
-                />
+        <ScrollViewScreen scrollEnabled={isScrollEnable}>
+          <BoxContainer
+            contentBackgroundColor={theme.surface_container_high}
+            borderRadius={BORDER_RADIUS_BIG}
+            padding={PADDING_SEARCH_CONTAINER}
+          >
+            <View style={styles.searchContainer}>
+              <ButtonIcon
+                onPress={toggleReduceStatSlider}
+                iconName={isReduceStatSliders ? "chevron-down" : "chevron-up"}
+                iconType={IconType.MaterialCommunityIcons}
+                tooltipText={isReduceStatSliders ? "DevelopSliders" : "ReduceSliders"}
+              />
 
-                <View style={styles.headerTextContainer}>
-                  <Text style={headerTextStyle}>{translate("DesiredStats")}</Text>
-                </View>
-
-                <ButtonLoadSet tooltipText="LoadStatsOfASet" />
+              <View style={styles.headerTextContainer}>
+                <Text style={headerTextStyle}>{translate("DesiredStats")}</Text>
               </View>
 
-              {/* Afficher les sliders memoisés */}
-              {renderedSliders}
-            </BoxContainer>
+              <ButtonLoadSet tooltipText="LoadStatsOfASet" />
+            </View>
 
-            <SearchSetScreenPressablesContainer scrollRef={scrollRef} />
-          </FlexContainer>
+            {/* Afficher les sliders memoisés */}
+            {renderedSliders}
+          </BoxContainer>
+          <SearchSetScreenPressablesContainer scrollRef={scrollRef} />
 
           <SetCardsContainer ref={scrollRef} setsToShow={setsListFound} />
-        </ScrollView>
+        </ScrollViewScreen>
         <TabBarHeightUpdater />
       </ResultStatsProvider>
     </ScreenProvider>

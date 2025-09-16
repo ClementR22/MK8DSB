@@ -6,6 +6,7 @@ import { translate } from "@/translations/translations";
 import { getBonusColor } from "@/utils/getBonusColor";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { vw } from "../styles/theme";
+import { BORDER_RADIUS_STAT_GAUGE_CONTAINER, HEIGHT_STAT_GAUGE_CONTAINER } from "@/utils/designTokens";
 
 interface StatGaugeContainerProps {
   name: string;
@@ -100,11 +101,11 @@ const StatGaugeContainer = ({
 
 const styles = StyleSheet.create({
   container: {
-    height: 34,
+    height: HEIGHT_STAT_GAUGE_CONTAINER,
     width: "100%",
     flexDirection: "row",
     padding: 3,
-    borderRadius: 17,
+    borderRadius: BORDER_RADIUS_STAT_GAUGE_CONTAINER,
     borderWidth: 2,
     alignItems: "center",
   },

@@ -13,12 +13,8 @@ import BodytypesSelector from "./selector/BodytypesSelector";
 import { useThemeStore } from "@/stores/useThemeStore";
 import CategorySelector from "./selector/CategorySelector";
 import PaginatedWrapper from "../paginatedWrapper/PaginatedWrapper";
-import ElementsGrid, {
-  ELEMENTS_GRID_WIDTH,
-  ELEMENTS_PER_PAGE,
-  PAGINATED_ELEMENTS_CONTAINER_PADDING,
-} from "./selector/ElementsGrid";
-import { BORDER_RADIUS_15 } from "@/utils/designTokens";
+import ElementsGrid, { ELEMENTS_GRID_WIDTH, ELEMENTS_PER_PAGE } from "./selector/ElementsGrid";
+import { BORDER_RADIUS_12, PADDING_PAGINATED_WRAPPER_CONTAINER } from "@/utils/designTokens";
 
 interface ElementPickerCompactSelectorPannelProps {
   selectionMode?: "single" | "multiple";
@@ -76,7 +72,7 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
 
   const separatorDynamicStyle = useMemo(() => ({ backgroundColor: theme.outline_variant }), [theme.outline_variant]);
 
-  const themeSurface = useThemeStore((state) => state.theme.surface);
+  const themeSurface = useThemeStore((state) => state.theme);
 
   const pages = useMemo(() => {
     return Array.from({ length: numberOfPages }, (_, i) => {
@@ -85,9 +81,9 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
     });
   }, [categoryElementsSorted, numberOfPages]);
 
-  const containerStyle = useMemo(
-    () => [styles.paginatedWrapperContainer, { backgroundColor: themeSurface }] as StyleProp<ViewStyle>,
-    [themeSurface]
+  const paginatedWrapperContainerStyle = useMemo(
+    () => ({ ...styles.paginatedWrapperContainer, backgroundColor: theme.surface }),
+    [theme.surface]
   );
 
   return (
@@ -119,7 +115,7 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
         </View>
       </View>
 
-      <View style={containerStyle}>
+      <View style={paginatedWrapperContainerStyle}>
         <CategorySelector selectedCategory={selectedCategory} onCategoryPress={setSelectedCategory} />
 
         <PaginatedWrapper
@@ -129,6 +125,7 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
             <ElementsGrid elements={item} selectedClassId={selectedClassId} onSelectElement={handleSelectElement} />
           )}
           numberOfPages={numberOfPages}
+          containerStyle={{ gap: PADDING_PAGINATED_WRAPPER_CONTAINER }}
         />
       </View>
     </>
@@ -147,10 +144,10 @@ const styles = StyleSheet.create({
   controlsContainer: { justifyContent: "center", flexGrow: 1, flexShrink: 1 },
   bodytypeSelectorWrapper: { marginHorizontal: HALF_GAP },
   paginatedWrapperContainer: {
-    borderRadius: BORDER_RADIUS_15 + PAGINATED_ELEMENTS_CONTAINER_PADDING,
+    borderRadius: BORDER_RADIUS_12,
     overflow: "hidden",
-    padding: PAGINATED_ELEMENTS_CONTAINER_PADDING,
-    gap: 6,
+    padding: PADDING_PAGINATED_WRAPPER_CONTAINER,
+    gap: PADDING_PAGINATED_WRAPPER_CONTAINER,
   },
 });
 

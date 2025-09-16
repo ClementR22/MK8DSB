@@ -7,6 +7,7 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
 import { useScreen } from "@/contexts/ScreenContext";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { BORDER_RADIUS_BIG } from "@/utils/designTokens";
 
 interface ScreenPressablesContainerProps {
   sortNumber: number;
@@ -31,7 +32,7 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
   const separatorDynamicStyle = useMemo(() => ({ backgroundColor: theme.outline_variant }), [theme.outline_variant]);
 
   return (
-    <BoxContainer alignItems={null} gap={0}>
+    <BoxContainer alignItems={null} gap={0} borderRadius={BORDER_RADIUS_BIG}>
       <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
         {children}
         <ButtonIcon

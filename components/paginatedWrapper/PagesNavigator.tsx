@@ -7,6 +7,7 @@ import { sortButtonsConfig } from "@/config/sortButtonsConfig";
 import { STAT_SLIDER_COMPARE_WIDTH } from "../statSliderCompare/StatSliderCompare";
 import { HALF_GAP } from "../sortModeSelector/SortModeSelector";
 import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
+import { BORDER_RADIUS_INF } from "@/utils/designTokens";
 
 // Constants
 const HEIGHT = 30;
@@ -237,7 +238,7 @@ const styles = StyleSheet.create({
   dot: {
     width: 30,
     height: 10,
-    borderRadius: 5,
+    borderRadius: BORDER_RADIUS_INF,
   },
 });
 

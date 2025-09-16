@@ -14,6 +14,7 @@ import {
 } from "@/data/stats/statsData";
 import TooltipMenu from "../TooltipMenu";
 import ButtonIconSort from "./ButtonIconSort";
+import { BORDER_RADIUS_INF } from "@/utils/designTokens";
 
 // Constants
 export const HALF_GAP = 7;
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     zIndex: 1,
-    borderRadius: 10,
+    borderRadius: BORDER_RADIUS_INF,
     width: 20,
     height: 20,
   },

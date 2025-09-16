@@ -23,7 +23,12 @@ const SetCardActionButtons: React.FC<SetCardActionButtonsProps> = ({
   const actionIconPropsList = useActionIconPropsList(actionNamesList, setToShowId, situation, handleEditPress, isSaved);
 
   return (
-    <BoxContainer flexDirection="row" key="displaySetActionButtonContainer" margin={0} justifyContent={"space-around"}>
+    <BoxContainer
+      flexDirection="row"
+      key="displaySetActionButtonContainer"
+      marginHorizontal={0}
+      justifyContent={"space-around"}
+    >
       {actionIconPropsList.map((actionProps) => {
         const { title, name, type, onPress } = actionProps;
         return <ButtonIcon key={name} tooltipText={title} iconName={name} iconType={type} onPress={onPress} />;

@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { BORDER_RADIUS_INF } from "@/utils/designTokens";
 
 interface StatSliderCompareBarProps {
   value: number;
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   sliderTrack: {
     flex: 1,
     height: 13,
-    borderRadius: 100,
+    borderRadius: BORDER_RADIUS_INF,
     overflow: "hidden",
   },
   trackSegment: {

@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { DimensionValue, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 
 interface BoxContainerProps {
   children: React.ReactNode;
@@ -10,7 +11,7 @@ interface BoxContainerProps {
   flexDirection?: ViewStyle["flexDirection"];
   alignItems?: ViewStyle["alignItems"];
   gap?: number;
-  margin?: number;
+  marginHorizontal?: number;
   marginTop?: number;
   inputStyles?: StyleProp<ViewStyle>;
   widthContainer?: DimensionValue;
@@ -27,7 +28,7 @@ const BoxContainer = ({
   flexDirection = "column",
   alignItems = "center",
   gap = 10,
-  margin = 16,
+  marginHorizontal = MARGIN_CONTAINER_LOWEST,
   marginTop,
   inputStyles,
   widthContainer = "100%",
@@ -50,7 +51,7 @@ const BoxContainer = ({
     return {
       backgroundColor: finalContentBackgroundColor,
       justifyContent: justifyContent,
-      margin: margin,
+      marginHorizontal: marginHorizontal,
       marginTop: marginTop,
       borderRadius: borderRadius,
       gap: gap,
@@ -63,7 +64,7 @@ const BoxContainer = ({
     contentBackgroundColor,
     theme.surface_container_high,
     justifyContent,
-    margin,
+    marginHorizontal,
     marginTop,
     borderRadius,
     gap,

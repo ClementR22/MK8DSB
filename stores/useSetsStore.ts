@@ -160,11 +160,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       const newChosenStats = state.chosenStats.map((stat) =>
         stat.name === name ? { ...stat, checked: false, value: null, statFilterNumber: 0 } : stat
       );
-
       const hasChecked = newChosenStats.some((stat) => stat.checked);
-      console.log("new", newChosenStats);
-      console.log("has", hasChecked);
-
       return hasChecked ? { ...state, chosenStats: newChosenStats } : state;
     });
   },

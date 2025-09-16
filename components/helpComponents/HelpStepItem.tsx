@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, ViewStyle } from "react-native";
 import StepCircle from "./StepCircle";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { BORDER_RADIUS_12 } from "@/utils/designTokens";
 
 interface HelpStepItemProps {
   stepChar: number | string;
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 10,
     padding: 12,
-    borderRadius: 12,
+    borderRadius: BORDER_RADIUS_12,
   },
   iconWrapper: { width: 40, alignItems: "center" },
   title: {

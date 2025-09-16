@@ -1,4 +1,5 @@
 import { useThemeStore } from "@/stores/useThemeStore";
+import { BORDER_RADIUS_INF } from "@/utils/designTokens";
 import { useMemo } from "react";
 import { StyleSheet } from "react-native";
 
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: "100%",
     flexDirection: "row",
-    borderRadius: 12,
+    borderRadius: BORDER_RADIUS_INF,
     alignItems: "center",
     overflow: "hidden",
   },

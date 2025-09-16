@@ -8,8 +8,9 @@ import { Animated, StyleSheet } from "react-native";
 import {
   BORDER_RADIUS_15,
   CATEGORY_BUTTON_GALLERY_WIDTH,
-  CATEGORY_SELECTOR_BORDER_WIDTH,
+  BORDER_WIDTH_CATEGORY_SELECTOR,
   SHADOW_STYLE,
+  BORDER_RADIUS_CATEGORY_SELECTOR,
 } from "@/utils/designTokens";
 
 interface CategorySelectorProps {
@@ -55,9 +56,9 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-between", // Distribute items more evenly, possibly with padding around them
     overflow: "hidden",
-    borderRadius: BORDER_RADIUS_15, // Use a larger, more prominent radius
+    borderRadius: BORDER_RADIUS_CATEGORY_SELECTOR, // Use a larger, more prominent radius
     ...SHADOW_STYLE, // Apply shadow
-    borderWidth: CATEGORY_SELECTOR_BORDER_WIDTH, // Use consistent spacing token
+    borderWidth: BORDER_WIDTH_CATEGORY_SELECTOR, // Use consistent spacing token
     borderColor: "transparent",
   },
 });

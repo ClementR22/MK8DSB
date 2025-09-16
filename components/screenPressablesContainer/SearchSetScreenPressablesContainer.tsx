@@ -19,6 +19,7 @@ import { nanoid } from "nanoid";
 import { SetFoundObject } from "@/stores/useSetsStore";
 import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 
 interface SearchSetScreenPressablesContainerProps {
   scrollRef: React.RefObject<any>;
@@ -172,8 +173,8 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
 const styles = StyleSheet.create({
   screenPressablesContainer: {
     flexDirection: "row",
-    gap: 10,
-    marginBottom: 10,
+    justifyContent: "space-between",
+    marginHorizontal: MARGIN_CONTAINER_LOWEST * 1.5,
   },
 });
 
