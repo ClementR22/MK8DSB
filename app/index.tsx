@@ -34,16 +34,14 @@ const SearchSetScreen: React.FC = () => {
   }, []);
 
   const renderedSliders = useMemo(() => {
-    const SliderComponent = isReduceStatSliders ? StatGaugeContainer : StatSlider;
     return chosenStats.map((stat) => {
       if (!stat.checked) return null;
-      const nameProp = isReduceStatSliders ? statNamesCompact[stat.name] : stat.name;
 
       if (isReduceStatSliders) {
         return (
           <StatGaugeContainer
-            key={`statSlider-${stat.name}-${isReduceStatSliders ? "compact" : "full"}`}
-            name={nameProp}
+            key={`statSlider-${stat.name}-compact`}
+            name={statNamesCompact[stat.name]}
             value={stat.value}
             statFilterNumber={stat.statFilterNumber}
           >
@@ -53,8 +51,8 @@ const SearchSetScreen: React.FC = () => {
       } else
         return (
           <StatSlider
-            key={`statSlider-${stat.name}-${isReduceStatSliders ? "compact" : "full"}`}
-            name={nameProp}
+            key={`statSlider-${stat.name}-full`}
+            name={stat.name}
             value={stat.value}
             statFilterNumber={stat.statFilterNumber}
           />

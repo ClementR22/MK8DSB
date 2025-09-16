@@ -58,7 +58,8 @@ export interface SetsStoreState {
   };
   setSetsListFound: (newSetsList: SetFoundObject[]) => void;
   setSetCardEditedId: (id: string) => void;
-  updateStatValue: (name: string, newValue: number) => void;
+  updateStatValue: (name: StatName, newValue: number) => void;
+  removeStat: (name: StatName) => void;
   syncWithChosenStats: (setResultStats: (list: ResultStats) => void) => void;
   setStatFilterNumber: (statName: string, newState: number) => void;
   setSortNumberSavedSets: (newSortNumberSavedSets: number) => void;
@@ -153,6 +154,20 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     set((state) => ({
       chosenStats: state.chosenStats.map((stat) => (stat.name === name ? { ...stat, value: newValue } : stat)),
     })),
+
+  removeStat: (name) => {
+    set((state) => {
+      const newChosenStats = state.chosenStats.map((stat) =>
+        stat.name === name ? { ...stat, checked: false, value: null, statFilterNumber: 0 } : stat
+      );
+
+      const hasChecked = newChosenStats.some((stat) => stat.checked);
+      console.log("new", newChosenStats);
+      console.log("has", hasChecked);
+
+      return hasChecked ? { ...state, chosenStats: newChosenStats } : state;
+    });
+  },
 
   syncWithChosenStats: (setResultStats) => {
     setResultStats(get().chosenStats);

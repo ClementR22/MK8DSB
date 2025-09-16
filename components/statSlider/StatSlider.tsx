@@ -1,9 +1,10 @@
 import React, { useCallback } from "react";
 import useSetsStore from "@/stores/useSetsStore";
 import StatSliderContent from "./StatSliderContent";
+import { StatName } from "@/data/stats/statsTypes";
 
 interface StatSliderProps {
-  name: string;
+  name: StatName;
   value: number;
   statFilterNumber: number;
 }

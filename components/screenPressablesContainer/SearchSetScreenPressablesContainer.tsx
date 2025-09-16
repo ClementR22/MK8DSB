@@ -34,11 +34,6 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
   const [chosenBodytype, setChosenBodytype] = useState<Set<Bodytype>>(new Set());
   const [isResultsUpdated, setIsResultUpdated] = useState(false);
 
-  const handleSearch = useCallback(() => {
-    setIsResultUpdated(true);
-    search();
-  }, []);
-
   useEffect(() => {
     if (isResultsUpdated) {
       setIsResultUpdated(false);
@@ -127,6 +122,11 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
 
     scrollRef?.current?.scrollToStart();
   }, [chosenStats, selectedClassIdsByCategory, chosenBodytype, resultsNumber, setSetsListFound, scrollRef]);
+
+  const handleSearch = useCallback(() => {
+    setIsResultUpdated(true);
+    search();
+  }, [search]);
 
   return (
     <View style={styles.screenPressablesContainer}>

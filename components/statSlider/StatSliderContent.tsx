@@ -1,6 +1,6 @@
 import { translateToLanguage } from "@/translations/translations";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import { Slider } from "@miblanchard/react-native-slider";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -8,10 +8,10 @@ import useSetsStore from "@/stores/useSetsStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import Tooltip from "../Tooltip";
+import { StatName } from "@/data/stats/statsTypes";
 
 interface StatSliderContentProps {
-  name: string;
+  name: StatName;
   value: number;
   statFilterNumber: number;
   setStatFilterNumber: (num: number) => void;
@@ -31,6 +31,7 @@ const StatSliderContent = ({
   const language = useLanguageStore((state) => state.language);
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
   const updateStatValue = useSetsStore((state) => state.updateStatValue);
+  const removeStat = useSetsStore((state) => state.removeStat);
   const [tempValue, setTempValue] = useState(value);
 
   // Mémoïsation stricte des handlers
@@ -92,11 +93,12 @@ const StatSliderContent = ({
     [thumbWrapperDynamicStyle, thumbDynamicStyle]
   );
 
+  const handleRemove = useCallback(() => {
+    removeStat(name);
+  }, [removeStat, name]);
+
   return (
-    <Tooltip
-      tooltipText="DefineAValue"
-      style={StyleSheet.flatten([styles.container, containerDynamicStyle, styles.innerContainer])}
-    >
+    <Pressable style={StyleSheet.flatten([styles.container, containerDynamicStyle])} onLongPress={handleRemove}>
       <View style={styles.containerLeft}>
         <View style={styles.textWrapper}>
           <Text style={StyleSheet.flatten([styles.text, textColorStyle])} numberOfLines={1} ellipsizeMode="tail">
@@ -122,7 +124,6 @@ const StatSliderContent = ({
           maximumTrackStyle={StyleSheet.flatten(maximumTrackDynamicStyle)}
         />
       </View>
-
       <View style={styles.containerRight}>
         <View style={styles.valueWrapper}>
           <Text style={[styles.text, textColorStyle]}>{tempValue}</Text>
@@ -136,7 +137,7 @@ const StatSliderContent = ({
           />
         </View>
       </View>
-    </Tooltip>
+    </Pressable>
   );
 };
 
@@ -145,8 +146,6 @@ const styles = StyleSheet.create({
     width: "100%",
     borderWidth: 2,
     borderRadius: 17,
-  },
-  innerContainer: {
     flexDirection: "row",
     paddingTop: 3,
     paddingHorizontal: 13,
