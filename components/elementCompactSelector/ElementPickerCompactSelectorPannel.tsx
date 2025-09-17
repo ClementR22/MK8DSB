@@ -15,6 +15,7 @@ import CategorySelector from "./selector/CategorySelector";
 import PaginatedWrapper from "../paginatedWrapper/PaginatedWrapper";
 import ElementsGrid, { ELEMENTS_GRID_WIDTH, ELEMENTS_PER_PAGE } from "./selector/ElementsGrid";
 import { BORDER_RADIUS_12, PADDING_PAGINATED_WRAPPER_CONTAINER } from "@/utils/designTokens";
+import Separator from "../Separator";
 
 interface ElementPickerCompactSelectorPannelProps {
   selectionMode?: "single" | "multiple";
@@ -70,10 +71,6 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
     return { iconName: "sort", iconType: IconType.MaterialCommunityIcons, tooltipText: "SortElements" };
   }, [isOpenSortView]);
 
-  const separatorDynamicStyle = useMemo(() => ({ backgroundColor: theme.outline_variant }), [theme.outline_variant]);
-
-  const themeSurface = useThemeStore((state) => state.theme);
-
   const pages = useMemo(() => {
     return Array.from({ length: numberOfPages }, (_, i) => {
       const start = i * ELEMENTS_PER_PAGE;
@@ -100,8 +97,7 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
                 tooltipText={tooltipText}
               />
             </View>
-
-            <View style={[styles.separator, separatorDynamicStyle]} />
+            <Separator direction="vertical" length={40} />
           </>
         )}
         <View style={styles.controlsContainer}>
@@ -116,7 +112,9 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
       </View>
 
       <View style={paginatedWrapperContainerStyle}>
-        <CategorySelector selectedCategory={selectedCategory} onCategoryPress={setSelectedCategory} />
+        <View style={styles.categorySelectorWrapper}>
+          <CategorySelector selectedCategory={selectedCategory} onCategoryPress={setSelectedCategory} />
+        </View>
 
         <PaginatedWrapper
           pageWidth={ELEMENTS_GRID_WIDTH}
@@ -140,14 +138,16 @@ const styles = StyleSheet.create({
     height: 54,
   },
   buttonToggleWrapper: { marginHorizontal: HALF_GAP },
-  separator: { width: 2, height: 40 },
   controlsContainer: { justifyContent: "center", flexGrow: 1, flexShrink: 1 },
   bodytypeSelectorWrapper: { marginHorizontal: HALF_GAP },
   paginatedWrapperContainer: {
     borderRadius: BORDER_RADIUS_12,
     overflow: "hidden",
-    padding: PADDING_PAGINATED_WRAPPER_CONTAINER,
+    paddingVertical: PADDING_PAGINATED_WRAPPER_CONTAINER,
     gap: PADDING_PAGINATED_WRAPPER_CONTAINER,
+  },
+  categorySelectorWrapper: {
+    paddingHorizontal: PADDING_PAGINATED_WRAPPER_CONTAINER,
   },
 });
 

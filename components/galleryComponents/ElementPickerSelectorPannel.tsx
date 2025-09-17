@@ -12,18 +12,15 @@ const ElementPickerSelectorPannel: React.FC<ElementPickerSelectorPannelProps> = 
   ({ animatedLeftPannelWidth, children }) => {
     const theme = useThemeStore((state) => state.theme);
 
-    const styles = useMemo(
+    const containerDynamicStyle = useMemo(
       () => ({
-        container: {
-          backgroundColor: theme.surface,
-          borderColor: theme.outline,
-        },
+        backgroundColor: theme.surface,
       }),
-      [theme]
+      [theme.surface]
     );
 
     return (
-      <Animated.View style={[defaultStyles.container, styles.container, { width: animatedLeftPannelWidth }]}>
+      <Animated.View style={[styles.container, containerDynamicStyle, { width: animatedLeftPannelWidth }]}>
         {children}
       </Animated.View>
     );
@@ -32,7 +29,7 @@ const ElementPickerSelectorPannel: React.FC<ElementPickerSelectorPannelProps> = 
 
 ElementPickerSelectorPannel.displayName = "ElementPickerSelectorPannel";
 
-const defaultStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     borderTopEndRadius: BORDER_RADIUS_18, // Consistent radius
     borderEndEndRadius: BORDER_RADIUS_18,

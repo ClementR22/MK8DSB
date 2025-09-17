@@ -58,9 +58,8 @@ const ElementsDeselector: React.FC = () => {
   const containerDynamicStyle = useMemo(
     () => ({
       backgroundColor: theme.surface,
-      borderColor: theme.outline,
     }),
-    [theme.surface, theme.outline]
+    [theme.surface]
   );
 
   const titleTextDynamicStyle = useMemo(

@@ -8,6 +8,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import { useScreen } from "@/contexts/ScreenContext";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { BORDER_RADIUS_BIG } from "@/utils/designTokens";
+import Separator from "../Separator";
 
 interface ScreenPressablesContainerProps {
   sortNumber: number;
@@ -29,8 +30,6 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
   const sortSetsList = useSetsStore((state) => state.sortSetsList);
   useEffect(() => sortSetsList(screenName, sortNumber), [sortNumber]);
 
-  const separatorDynamicStyle = useMemo(() => ({ backgroundColor: theme.outline_variant }), [theme.outline_variant]);
-
   return (
     <BoxContainer alignItems={null} gap={0} borderRadius={BORDER_RADIUS_BIG}>
       <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
@@ -44,17 +43,12 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
       </View>
       {isOpenSortView && (
         <>
-          <View style={[styles.separator, separatorDynamicStyle]} />
-
+          <Separator direction="horizontal" />
           <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="set" />
         </>
       )}
     </BoxContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  separator: { height: 2, width: "90%", backgroundColor: "black", alignSelf: "center", marginVertical: 10 },
-});
 
 export default ScreenPressablesContainer;

@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import Switch from "../../primitiveComponents/Switch";
-import useSetsStore from "@/stores/useSetsStore";
 import { ResultStats } from "@/contexts/ResultStatsContext";
 import { ChosenStat } from "@/stores/useSetsStore";
 
@@ -23,22 +22,41 @@ const ResultStatsSyncSwitch: React.FC<ResultStatsSyncSwitchProps> = ({
   const isResultStatsSync = useResultStatsDefaultStore((state) => state.isResultStatsSync);
   const setIsResultStatsSync = useResultStatsDefaultStore((state) => state.setIsResultStatsSync);
 
-  const onToggleSwitch = () => {
-    if (!isResultStatsSync) {
-      // on entre dans le mode synchronisé
-      setResultStatsBeforeSync(resultStats); // on mémorise l'état courant (B ou A)
+  // Synchronisation des stats avec les stats choisies
+  const syncStats = useCallback(() => {
+    setResultStats(chosenStats);
+  }, [chosenStats]);
 
-      setResultStats(chosenStats);
+  // Gestion du toggle du switch
+  const handleToggleSwitch = useCallback(() => {
+    if (!isResultStatsSync) {
+      // Activation du mode synchronisé
+      setResultStatsBeforeSync(resultStats);
+      syncStats();
       setIsResultStatsSync(true);
     } else {
-      // on quitte le mode synchronisé
-      // on déclare que le changement vient de ResultStatsSyncSwitch, pour bloquer la MAJ de statListBeforeAll
+      // Désactivation du mode synchronisé
       setResultStats(resultStatsBeforeSync);
       setIsResultStatsSync(false);
     }
-  };
+  }, [
+    isResultStatsSync,
+    resultStats,
+    resultStatsBeforeSync,
+    syncStats,
+    setResultStatsBeforeSync,
+    setResultStats,
+    setIsResultStatsSync,
+  ]);
 
-  return <Switch value={isResultStatsSync} onToggleSwitch={onToggleSwitch} switchLabel="MatchDesiredStats" />;
+  // Auto-sync quand les chosenStats changent et que le mode sync est actif
+  useEffect(() => {
+    if (isResultStatsSync) {
+      syncStats();
+    }
+  }, [chosenStats, isResultStatsSync]);
+
+  return <Switch value={isResultStatsSync} onToggleSwitch={handleToggleSwitch} switchLabel="MatchDesiredStats" />;
 };
 
 export default React.memo(ResultStatsSyncSwitch);

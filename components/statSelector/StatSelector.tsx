@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import ButtonAndModal from "../modal/ButtonAndModal";
-import DoubleEntryTable, { ColumnName } from "../DoubleEntryTable";
+import DoubleEntryTable, { ColumnName } from "./DoubleEntryTable";
 import useSetsStore, { ChosenStat } from "@/stores/useSetsStore";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import { useScreen } from "@/contexts/ScreenContext";
@@ -9,6 +9,7 @@ import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import { View } from "react-native";
 import ResultStatsSyncSwitch from "./ResultStatsSyncSwitch";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 export type StatList = ChosenStat[] | ResultStat[];
 export type SetStatList = React.Dispatch<React.SetStateAction<StatList>>;
@@ -25,7 +26,10 @@ interface StatSelectorProps {
 }
 
 const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondButtonProps }) => {
+  const theme = useThemeStore((state) => state.theme);
+
   const screenName = useScreen();
+  const isInSearchScreen = screenName === "search";
 
   const { resultStats, setResultStats } = useResultStats();
 
@@ -34,7 +38,6 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondBu
 
   const [resultStatsBeforeSync, setResultStatsBeforeSync] = useState(resultStats);
 
-  const syncWithChosenStats = useSetsStore((state) => state.syncWithChosenStats);
   const isResultStatsSync = useResultStatsDefaultStore((state) => state.isResultStatsSync);
 
   const { columns, customTrigger, modalTitle } = useMemo(() => {
@@ -42,7 +45,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondBu
     let customTrigger: React.ReactElement;
     let modalTitle: string;
 
-    if (screenName === "search") {
+    if (isInSearchScreen) {
       columns = [
         {
           columnName: "chosenStats",
@@ -67,7 +70,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondBu
       );
 
       modalTitle = "DisplayedStatsInSets";
-    } else if (screenName === "display" || screenName === "save") {
+    } else {
       columns = [
         {
           columnName: "resultStats",
@@ -153,6 +156,8 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondBu
     });
   };
 
+  const disabled = useMemo(() => isResultStatsSync && isInSearchScreen, [isResultStatsSync, isInSearchScreen]);
+
   return (
     <ButtonAndModal
       customTrigger={customTrigger}
@@ -163,18 +168,20 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondBu
       isModalVisibleProp={isModalVisible}
       setIsModalVisibleProp={setIsModalVisible}
     >
-      {screenName === "search" && (
-        <View style={{ padding: 20 }}>
-          <ResultStatsSyncSwitch
-            resultStats={statListsInModal.resultStats || []}
-            setResultStats={(newStatList) => setStatListsInModal({ ...statListsInModal, resultStats: newStatList })}
-            resultStatsBeforeSync={resultStatsBeforeSync}
-            setResultStatsBeforeSync={setResultStatsBeforeSync}
-            chosenStats={(statListsInModal.chosenStats || []) as ChosenStat[]}
-          />
-        </View>
-      )}
-      <DoubleEntryTable columns={columnsInModal} onToggleStat={handleStatToggle} />
+      <View style={{ backgroundColor: theme.surface, padding: 16 }}>
+        {isInSearchScreen && (
+          <View style={{}}>
+            <ResultStatsSyncSwitch
+              resultStats={statListsInModal.resultStats || []}
+              setResultStats={(newStatList) => setStatListsInModal({ ...statListsInModal, resultStats: newStatList })}
+              resultStatsBeforeSync={resultStatsBeforeSync}
+              setResultStatsBeforeSync={setResultStatsBeforeSync}
+              chosenStats={(statListsInModal.chosenStats || []) as ChosenStat[]}
+            />
+          </View>
+        )}
+        <DoubleEntryTable columns={columnsInModal} onToggleStat={handleStatToggle} disabled={disabled} />
+      </View>
     </ButtonAndModal>
   );
 };

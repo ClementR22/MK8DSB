@@ -8,6 +8,7 @@ import { STAT_SLIDER_COMPARE_WIDTH } from "../statSliderCompare/StatSliderCompar
 import { HALF_GAP } from "../sortModeSelector/SortModeSelector";
 import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 import { BORDER_RADIUS_INF } from "@/utils/designTokens";
+import Separator from "../Separator";
 
 // Constants
 const HEIGHT = 30;
@@ -53,13 +54,6 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({
       activeDotIconStyle: { backgroundColor: "black", borderWidth: 3, borderColor: "grey" },
     }),
     [theme]
-  );
-
-  const separatorDynamicStyle = useMemo(
-    () => ({
-      backgroundColor: theme.outline_variant,
-    }),
-    [theme.outline_variant]
   );
 
   const scrollViewStyle = useMemo(
@@ -162,7 +156,7 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({
 
         {moreDots && (
           <>
-            <View style={[styles.separator, separatorDynamicStyle]} />
+            <Separator direction="vertical" />
             <View style={styles.moreDotsContainer}>{moreDots}</View>
           </>
         )}
@@ -221,10 +215,6 @@ const styles = StyleSheet.create({
   },
   navButtonDisabled: {
     opacity: 0.5,
-  },
-  separator: {
-    width: 2,
-    height: PAGES_NAVIGATOR_DOTS_BUTTON_SIZE,
   },
   moreDotsContainer: {
     flexDirection: "row",

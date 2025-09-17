@@ -55,6 +55,8 @@ const translations = {
     DeleteAllSetsInMemoryText: "Do you really want to delete all saved sets?",
     ResetSettingsText: "Do you really want to reset settings?",
     Selected: "Selected",
+    chosenStats: "param.",
+    resultStats: "disp.",
 
     // placeholder
     SearchEmpty: "Search your dream set",
@@ -85,7 +87,6 @@ const translations = {
     ChooseFilters: "Choose some filters",
     // DisplayedStatsInSets: "Displayed stats in sets",
     // DisplayedStats: "Displayed stats",
-    DisabledBecauseMatchDesiredStats: "Match desired stats",
     ChangeCondition: "Fix a condition",
     SortSets: "Sort sets",
     SortElements: "Sort elements",
@@ -344,6 +345,8 @@ const translations = {
     DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
     ResetSettingsText: "Souhaitez-vous vraiment réinitialiser les préférences ?",
     Selected: "Sélectionnés",
+    chosenStats: "param.",
+    resultStats: "affich.",
 
     // placeholder
     SearchEmpty: "Recherchez le set de vos rêves",
@@ -356,7 +359,7 @@ const translations = {
     // button label
     Search: "Chercher",
     All: "Toutes",
-    MatchDesiredStats: "Copier les stats souhaitées",
+    MatchDesiredStats: "Copier les stats paramétrées",
     ConfigureDefaultStats: "Configurer les stats affichées par défault",
     SendFeedback: "Faire un retour",
     OpenSourceLicenses: "Licences Open Source",
@@ -374,7 +377,6 @@ const translations = {
     ChooseFilters: "Choisissez des filtres",
     // DisplayedStatsInSets: "Stats affichées dans les sets",
     // DisplayedStats: "Stats affichées",
-    DisabledBecauseMatchDesiredStats: "Copie les stats souhaitées",
     ChangeCondition: "Fixer une condition",
     SortSets: "Trier les sets",
     SortElements: "Trier les éléments",

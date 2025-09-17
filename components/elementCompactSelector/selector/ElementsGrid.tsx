@@ -16,8 +16,9 @@ const { width: screenWidth } = Dimensions.get("window");
 const NUM_COLUMNS = 4;
 export const ELEMENTS_PER_PAGE = 12;
 
+const MARGIN_ELEMENTS_GRID = GAP;
 export const ELEMENTS_GRID_WIDTH =
-  screenWidth * 0.9 - MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER * 2 - PADDING_PAGINATED_WRAPPER_CONTAINER * 2;
+  screenWidth * 0.9 - MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER * 2 - MARGIN_ELEMENTS_GRID * 2;
 
 const ITEM_WIDTH = (ELEMENTS_GRID_WIDTH - GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
 
@@ -40,9 +41,6 @@ const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, 
   const fillingElementDimensions = useMemo(() => ({ width: ITEM_WIDTH, height: ITEM_WIDTH * 1.1 }), [ITEM_WIDTH]);
 
   return (
-    // Removed Pressable from here, as it's typically for the entire grid to be clickable,
-    // but individual items are clickable. If ElementsGrid itself needs to be a Pressable,
-    // its purpose should be clear. For a grid of items, a simple View is usually sufficient.
     <Pressable style={styles.container}>
       {/* pour capturer le scroll */}
       {elements.map((element) => (
@@ -70,6 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: GAP, // Keep gap defined here
+    marginHorizontal: MARGIN_ELEMENTS_GRID,
   },
 });
 

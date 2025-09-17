@@ -60,7 +60,6 @@ export interface SetsStoreState {
   setSetCardEditedId: (id: string) => void;
   updateStatValue: (name: StatName, newValue: number) => void;
   removeStat: (name: StatName) => void;
-  syncWithChosenStats: (setResultStats: (list: ResultStats) => void) => void;
   setStatFilterNumber: (statName: string, newState: number) => void;
   setSortNumberSavedSets: (newSortNumberSavedSets: number) => void;
   fetchSetsSavedKeys: () => Promise<string[]>;
@@ -163,10 +162,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       const hasChecked = newChosenStats.some((stat) => stat.checked);
       return hasChecked ? { ...state, chosenStats: newChosenStats } : state;
     });
-  },
-
-  syncWithChosenStats: (setResultStats) => {
-    setResultStats(get().chosenStats);
   },
 
   setStatFilterNumber: (statName, newState) => {

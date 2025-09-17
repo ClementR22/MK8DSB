@@ -68,7 +68,6 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = React.memo(
 
     // Fonction pour fermer le modal
     const closeModal = useCallback(() => {
-      console.log("cloes");
       currentSetIsModalVisible(false);
     }, [currentSetIsModalVisible]);
 
