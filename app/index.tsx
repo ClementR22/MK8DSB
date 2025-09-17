@@ -31,7 +31,7 @@ const SearchSetScreen: React.FC = () => {
   const setsListFound = useSetsStore((state) => state.setsListFound);
 
   const [isReduceStatSliders, setIsReduceStatSliders] = useState(false);
-  const toggleReduceStatSlider = useCallback(() => {
+  const toggleReduceStatSliders = useCallback(() => {
     setIsReduceStatSliders((prev) => !prev);
   }, []);
 
@@ -75,7 +75,7 @@ const SearchSetScreen: React.FC = () => {
           >
             <View style={styles.searchContainer}>
               <ButtonIcon
-                onPress={toggleReduceStatSlider}
+                onPress={toggleReduceStatSliders}
                 iconName={isReduceStatSliders ? "chevron-down" : "chevron-up"}
                 iconType={IconType.MaterialCommunityIcons}
                 tooltipText={isReduceStatSliders ? "DevelopSliders" : "ReduceSliders"}

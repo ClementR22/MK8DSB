@@ -4,32 +4,22 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
-import StatSliderCompareBar from "./StatSliderCompareBar";
+import StatGaugeCompareBar from "./StatGaugeCompareBar";
 import { StatName } from "@/data/stats/statsTypes";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
-import { vw } from "../styles/theme";
-
-export const STAT_SLIDER_COMPARE_WIDTH = vw - 30;
-
 export interface SetIdAndStatValue {
   id: string;
   value: number;
   color: string;
 }
 
-interface StatSliderCompareProps {
+interface StatGaugeCompareProps {
   name: StatName;
   setsIdAndValue: SetIdAndStatValue[];
   scrollToSetCard: (id: string) => void;
-  width?: number | string;
 }
 
-const StatSliderCompare: React.FC<StatSliderCompareProps> = ({
-  setsIdAndValue,
-  name,
-  scrollToSetCard,
-  width = STAT_SLIDER_COMPARE_WIDTH,
-}) => {
+const StatGaugeCompare: React.FC<StatGaugeCompareProps> = ({ setsIdAndValue, name, scrollToSetCard }) => {
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
 
@@ -42,14 +32,14 @@ const StatSliderCompare: React.FC<StatSliderCompareProps> = ({
   const renderStatBar = useCallback(
     ({ id, value, color }) => {
       return (
-        <StatSliderCompareBar key={id} value={value} color={color} scrollToThisSetCard={() => scrollToSetCard(id)} />
+        <StatGaugeCompareBar key={id} value={value} color={color} scrollToThisSetCard={() => scrollToSetCard(id)} />
       );
     },
     [scrollToSetCard]
   );
 
   const memoizedStatBars = useMemo(() => setsIdAndValue.map(renderStatBar), [setsIdAndValue, renderStatBar]);
-  const { setCardStyle } = useSetCardStyle(width);
+  const { setCardStyle } = useSetCardStyle("100%");
 
   return (
     <View style={setCardStyle}>
@@ -76,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(StatSliderCompare);
+export default React.memo(StatGaugeCompare);

@@ -147,8 +147,7 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
           horizontal
           scrollEnabled={isScrollEnable}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ width: calculatedContentWidth }}
-          style={{ marginLeft: MARGIN_CONTAINER_LOWEST }}
+          contentContainerStyle={{ width: calculatedContentWidth, marginHorizontal: MARGIN_CONTAINER_LOWEST }}
         >
           <Pressable
             style={[

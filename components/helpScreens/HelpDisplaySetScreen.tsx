@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonAndHelpmodal from "./ButtonAndHelpmodal";
-import StatSliderCompare from "../statSliderCompare/StatSliderCompare";
+import StatGaugeCompare from "../statGaugeCompare/StatGaugeCompare";
 import HelpText from "../helpComponents/HelpText";
 import { PAGES_NAVIGATOR_DOTS_BUTTON_SIZE } from "../paginatedWrapper/PagesNavigator";
 import HelpBoldText from "../helpComponents/HelpBoldText";
@@ -51,7 +51,7 @@ const HelpDisplaySetScreen = () => {
               props: { stepChar: "3", title: "Visualisez les différences" },
               content: (
                 <>
-                  <StatSliderCompare
+                  <StatGaugeCompare
                     name="speedGround"
                     setsIdAndValue={[
                       { id: "1", value: 5, color: "#E74C3C" },
@@ -59,7 +59,6 @@ const HelpDisplaySetScreen = () => {
                       { id: "3", value: 7, color: "#2ECC71" },
                     ]}
                     scrollToSetCard={() => {}}
-                    width="100%"
                   />
                   <HelpText style={{ fontSize: 12, fontStyle: "italic" }}>
                     Chaque couleur = un set différent. Appuyez sur une barre pour naviguer vers le set correspondant.

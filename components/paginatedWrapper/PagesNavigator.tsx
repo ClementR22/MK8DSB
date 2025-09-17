@@ -4,7 +4,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { sortButtonsConfig } from "@/config/sortButtonsConfig";
-import { STAT_SLIDER_COMPARE_WIDTH } from "../statSliderCompare/StatSliderCompare";
 import { HALF_GAP } from "../sortModeSelector/SortModeSelector";
 import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 import { BORDER_RADIUS_INF } from "@/utils/designTokens";
@@ -14,8 +13,6 @@ import Separator from "../Separator";
 const HEIGHT = 30;
 export const PAGES_NAVIGATOR_DOTS_BUTTON_SIZE = HEIGHT * 0.8;
 const NAV_BUTTON_WIDTH = 46;
-const DOTS_CONTAINER_MAX_WIDTH = STAT_SLIDER_COMPARE_WIDTH - 2 * NAV_BUTTON_WIDTH;
-const CENTERED_OFFSET = DOTS_CONTAINER_MAX_WIDTH / 2 - PAGES_NAVIGATOR_DOTS_BUTTON_SIZE / 2;
 
 export type ButtonName = string;
 
@@ -79,7 +76,7 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({
     // Calculer la position x pour centrer le dot actif
     const dotWidth = PAGES_NAVIGATOR_DOTS_BUTTON_SIZE;
     const gap = HALF_GAP; // Espace entre les dots
-    const offset = (dotWidth + gap) * currentPage - CENTERED_OFFSET; // - (STAT_SLIDER_COMPARE_WIDTH / 2 - dotWidth / 2);
+    const offset = (dotWidth + gap) * currentPage; // - (STAT_SLIDER_COMPARE_WIDTH / 2 - dotWidth / 2);
 
     scrollViewRef.current.scrollTo({
       x: Math.max(0, offset),
@@ -201,7 +198,6 @@ const styles = StyleSheet.create({
   dotsContainer: {
     flexDirection: "row",
     alignItems: "center",
-    maxWidth: DOTS_CONTAINER_MAX_WIDTH,
     height: "100%",
   },
   scrollViewContent: {

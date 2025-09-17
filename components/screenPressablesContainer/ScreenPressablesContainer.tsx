@@ -31,14 +31,14 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
   useEffect(() => sortSetsList(screenName, sortNumber), [sortNumber]);
 
   return (
-    <BoxContainer alignItems={null} gap={0} borderRadius={BORDER_RADIUS_BIG}>
+    <BoxContainer alignItems={null} borderRadius={BORDER_RADIUS_BIG}>
       <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
         {children}
         <ButtonIcon
           onPress={toggleOpenSortView}
           iconName="sort"
           iconType={IconType.MaterialCommunityIcons}
-          tooltipText="SortElements"
+          tooltipText="SortSets"
         />
       </View>
       {isOpenSortView && (

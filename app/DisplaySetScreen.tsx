@@ -1,23 +1,20 @@
 import React, { useEffect, useRef, useMemo, useState, useCallback } from "react";
-import { ScrollView } from "react-native";
 import SetCardsContainer from "@/components/setCard/SetCardsContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { statNames } from "@/data/stats/statsData";
-import StatSliderCompare from "@/components/statSliderCompare/StatSliderCompare";
 import { SET_CARD_COLOR_PALETTE } from "@/constants/Colors"; // Importez la palette et la fonction de fallback
 import { StatName } from "@/data/stats/statsTypes";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
 import ButtonAddSet from "@/components/managingSetsButton/ButtonAddSet";
 import ButtonLoadSet from "@/components/managingSetsButton/ButtonLoadSet";
-import { ResultStatsProvider, useResultStats } from "@/contexts/ResultStatsContext";
-import StatSliderComparesContainer from "@/components/statSliderCompare/StatSliderComparesContainer";
-import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import { IconType } from "react-native-dynamic-vector-icons";
+import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
+import StatGaugeComparesContainer from "@/components/statGaugeCompare/StatGaugeComparesContainer";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
 import StatSelector from "@/components/statSelector/StatSelector";
+import ButtonIcon from "@/primitiveComponents/ButtonIcon";
+import { IconType } from "react-native-dynamic-vector-icons";
 
 const DisplaySetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -27,6 +24,11 @@ const DisplaySetScreen = () => {
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const [sortNumber, setSortNumber] = useState(0);
+
+  const [isReduceSetCards, setIsReduceSetCards] = useState(false);
+  const toggleReduceSetCards = useCallback(() => {
+    setIsReduceSetCards((prev) => !prev);
+  }, []);
 
   // État local pour stocker l'association nom du set -> Couleur
   const [setsColorsMap, setSetsColorsMap] = useState<Map<string, string>>(() => new Map());
@@ -73,8 +75,6 @@ const DisplaySetScreen = () => {
 
   // --- Fin Logique d'attribution des couleurs ---
 
-  const [selectedCompareName, setSelectedCompareName] = useState<StatName>("speedGround");
-
   const hideRemoveSet = setsListDisplayed.length === 1;
 
   const setsWithColor = useMemo(
@@ -100,12 +100,20 @@ const DisplaySetScreen = () => {
           <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
             <ButtonAddSet scrollRef={scrollRef} />
             <ButtonLoadSet tooltipText="LoadASet" />
+            <ButtonIcon
+              onPress={toggleReduceSetCards}
+              iconName={isReduceSetCards ? "chevron-down" : "chevron-up"}
+              iconType={IconType.MaterialCommunityIcons}
+              tooltipText={isReduceSetCards ? "DevelopSets" : "ReduceSets"}
+            />
           </ScreenPressablesContainer>
-          <SetCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
 
+          {!isReduceSetCards && (
+            <SetCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
+          )}
           <StatSelector triggerButtonText="DisplayedStats" />
 
-          <StatSliderComparesContainer setsColorsMap={setsColorsMap} scrollToSetCard={scrollToSetCard} />
+          <StatGaugeComparesContainer setsColorsMap={setsColorsMap} scrollToSetCard={scrollToSetCard} />
         </ScrollViewScreen>
       </ResultStatsProvider>
     </ScreenProvider>

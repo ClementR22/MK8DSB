@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { BORDER_RADIUS_INF } from "@/utils/designTokens";
 
-interface StatSliderCompareBarProps {
+interface StatGaugeCompareBarProps {
   value: number;
   color?: string;
   scrollToThisSetCard: () => void;
@@ -11,7 +11,7 @@ interface StatSliderCompareBarProps {
 
 const MAX_STAT_VALUE = 6;
 
-const StatSliderCompareBar = ({ value, color, scrollToThisSetCard }: StatSliderCompareBarProps) => {
+const StatGaugeCompareBar = ({ value, color, scrollToThisSetCard }: StatGaugeCompareBarProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   // Style du fond de la piste, dépendant du thème
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(StatSliderCompareBar);
+export default React.memo(StatGaugeCompareBar);
