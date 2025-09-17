@@ -13,11 +13,11 @@ import ScreenPressablesContainer from "@/components/screenPressablesContainer/Sc
 import ButtonAddSet from "@/components/managingSetsButton/ButtonAddSet";
 import ButtonLoadSet from "@/components/managingSetsButton/ButtonLoadSet";
 import { ResultStatsProvider, useResultStats } from "@/contexts/ResultStatsContext";
-import ButtonAndModalStatSelectorResultStats from "@/components/statSelector/ButtonAndModalStatSelectorResultStats";
 import StatSliderComparesContainer from "@/components/statSliderCompare/StatSliderComparesContainer";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
+import StatSelector from "@/components/statSelector/StatSelector";
 
 const DisplaySetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -102,6 +102,8 @@ const DisplaySetScreen = () => {
             <ButtonLoadSet tooltipText="LoadASet" />
           </ScreenPressablesContainer>
           <SetCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
+
+          <StatSelector />
 
           <StatSliderComparesContainer setsColorsMap={setsColorsMap} scrollToSetCard={scrollToSetCard} />
         </ScrollViewScreen>

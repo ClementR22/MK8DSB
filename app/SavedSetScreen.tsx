@@ -6,9 +6,9 @@ import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import ButtonImportSet from "@/components/managingSetsButton/ButtonImportSet";
-import ButtonAndModalStatSelectorResultStats from "@/components/statSelector/ButtonAndModalStatSelectorResultStats";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
+import StatSelector from "@/components/statSelector/StatSelector";
 
 const SavedSetScreen: React.FC = () => {
   const setsListSaved = useSetsStore((state) => state.setsListSaved);
@@ -23,7 +23,7 @@ const SavedSetScreen: React.FC = () => {
         <ScrollViewScreen scrollEnabled={isScrollEnable}>
           <ScreenPressablesContainer sortNumber={sortNumberSavedSets} setSortNumber={setSortNumberSavedSets}>
             <ButtonImportSet screenName="save" />
-            <ButtonAndModalStatSelectorResultStats />
+            <StatSelector />
           </ScreenPressablesContainer>
 
           <SetCardsContainer setsToShow={setsListSaved} />

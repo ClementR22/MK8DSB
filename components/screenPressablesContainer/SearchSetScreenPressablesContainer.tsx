@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { categories } from "@/data/elements/elementsData";
 import { setsData } from "@/data/setsData";
-import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
 import { translateToLanguage } from "@/translations/translations";
 import ResultsNumber from "../ResultsNumberSelector";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
@@ -10,7 +9,6 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
-import ButtonAndModalStatSelectorChosenStats from "../statSelector/ButtonAndModalStatSelectorChosenStats";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import ElementPickerCompactSelectorPannel from "../elementCompactSelector/ElementPickerCompactSelectorPannel";
 import ElementsDeselector from "../elementCompactSelector/deselector/ElementsDeselector";
@@ -20,6 +18,7 @@ import { SetFoundObject } from "@/stores/useSetsStore";
 import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
+import StatSelector from "../statSelector/StatSelector";
 
 interface SearchSetScreenPressablesContainerProps {
   scrollRef: React.RefObject<any>;
@@ -131,7 +130,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
 
   return (
     <View style={styles.screenPressablesContainer}>
-      <ButtonAndModalStatSelectorChosenStats />
+      <StatSelector />
 
       <ButtonAndModal
         modalTitle="Filters"
@@ -164,8 +163,6 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
       >
         <ResultsNumber resultsNumber={resultsNumber} setResultsNumber={setResultsNumber} />
       </ButtonAndModal>
-
-      <ButtonAndModalStatSelectorResultStats />
     </View>
   );
 };

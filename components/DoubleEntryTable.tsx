@@ -8,33 +8,28 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Checkbox, DataTable } from "react-native-paper";
 
 type CheckList = ChosenStat[] | ResultStat[];
+export type ColumnName = "chosenStats" | "resultStats";
 
-type Column = { columnName: string; checkList: CheckList; setCheckList: (newCheckList: CheckList) => void };
+export type Column = {
+  columnName: ColumnName;
+  checkList: CheckList;
+};
 
 interface DoubleEntryTableProps {
   columns: Column[];
+  onToggleStat: (statName: string, columnName: ColumnName) => void;
 }
 
-const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns }) => {
+const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleStat }) => {
   const language = useLanguageStore((state) => state.language);
 
   const rowLabels = columns[0].checkList.map((stat) => stat.name);
 
-  // Fonction pour gérer la sélection
-  const toggleSelection = (statName, colIndex) => {
-    console.log(statName);
-    const { checkList, setCheckList } = columns[colIndex];
-    const newCheckList = checkList.map((stat, index) =>
-      stat.name === statName ? { ...stat, checked: !stat.checked } : stat
-    );
-    setCheckList(newCheckList);
-  };
-
   return (
     <View style={styles.container}>
-      <DataTable>
+      <DataTable style={{ padding: 0, margin: 0 }}>
         {/* En-tête des colonnes */}
-        <DataTable.Header>
+        <DataTable.Header style={{ padding: 0 }}>
           <DataTable.Title style={styles.cornerCell}>
             <Text style={styles.headerText}></Text>
           </DataTable.Title>
@@ -47,26 +42,31 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns }) => {
           })}
         </DataTable.Header>
 
-        {/* Corps du tableau */}
-        {rowLabels.map((statName, statIndex) => (
-          <DataTable.Row key={statName}>
-            {/* Label de la ligne */}
-            <DataTable.Cell style={styles.rowLabelCell}>
-              <Text style={styles.rowLabelText}>{translateToLanguage(statName, language)}</Text>
-            </DataTable.Cell>
-
-            {/* Checkboxes pour chaque colonne */}
-            {columns.map((_, colIndex) => (
-              <DataTable.Cell key={colIndex} style={styles.checkboxCell}>
-                <Checkbox
-                  status={columns[colIndex].checkList[statIndex].checked ? "checked" : "unchecked"}
-                  onPress={() => toggleSelection(statName, colIndex)}
-                  color="#6200ee"
-                />
+        <ScrollView contentContainerStyle={{ height: 300 }}>
+          {/* Corps du tableau */}
+          {rowLabels.map((statName, statIndex) => (
+            <DataTable.Row key={statName}>
+              {/* Label de la ligne */}
+              <DataTable.Cell style={styles.rowLabelCell}>
+                <Text style={styles.rowLabelText}>{translateToLanguage(statName, language)}</Text>
               </DataTable.Cell>
-            ))}
-          </DataTable.Row>
-        ))}
+
+              {/* Checkboxes pour chaque colonne */}
+              {columns.map(({ columnName, checkList }) => {
+                const stat = checkList.find((s) => s.name === statName);
+                return (
+                  <DataTable.Cell key={columnName} style={styles.checkboxCell}>
+                    <Checkbox
+                      status={stat?.checked ? "checked" : "unchecked"}
+                      onPress={() => onToggleStat(statName, columnName)}
+                      color="#6200ee"
+                    />
+                  </DataTable.Cell>
+                );
+              })}
+            </DataTable.Row>
+          ))}
+        </ScrollView>
       </DataTable>
     </View>
   );
@@ -78,21 +78,15 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#fff",
   },
-  cornerCell: {
-    flex: 1,
-    justifyContent: "center",
-  },
+  cornerCell: {},
   headerCell: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
   rowLabelCell: {
-    flex: 1,
     justifyContent: "flex-start",
   },
   checkboxCell: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -104,14 +98,6 @@ const styles = StyleSheet.create({
   rowLabelText: {
     fontSize: 14,
     color: "#666",
-  },
-  selectionTitle: {
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  selectionText: {
-    fontSize: 12,
-    color: "#333",
   },
 });
 

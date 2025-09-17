@@ -1,6 +1,6 @@
 import React from "react";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
-import ButtonAndModalStatSelector from "../statSelector/ButtonAndModalStatSelector";
+import ButtonAndModalStatSelector from "../statSelector/StatSelector";
 
 const ButtonAndModalStatSelectorResultStatsDefault = () => {
   const resultStatsDefault = useResultStatsDefaultStore((state) => state.resultStatsDefault);

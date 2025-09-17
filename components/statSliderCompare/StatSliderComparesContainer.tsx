@@ -8,7 +8,6 @@ import StatSliderCompare, { STAT_SLIDER_COMPARE_WIDTH } from "./StatSliderCompar
 import PaginatedWrapper from "../paginatedWrapper/PaginatedWrapper";
 import { ButtonName } from "../paginatedWrapper/PagesNavigator";
 import { StatName } from "@/data/stats/statsTypes";
-import ButtonAndModalStatSelectorResultStats from "../statSelector/ButtonAndModalStatSelectorResultStats";
 
 interface StatSliderComparesContainerProps {
   setsColorsMap: Map<string, string>;
@@ -68,7 +67,7 @@ const StatSliderComparesContainer: React.FC<StatSliderComparesContainerProps> = 
         />
       )}
       dotsNamesList={statsChecked}
-      moreDots={[<ButtonAndModalStatSelectorResultStats key="button'+'" />]}
+      moreDots={[]}
       numberOfPages={numberOfPages}
       containerStyle={containerStyleDynamic}
     />
