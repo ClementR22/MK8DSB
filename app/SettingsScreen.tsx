@@ -12,9 +12,10 @@ import useSetsStore from "@/stores/useSetsStore";
 import { useResetSettings } from "@/hooks/useResetSettings";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import ButtonDeleteAllSetsInMemory from "@/components/settingsComponent/ButtonDeleteAllSetsInMemory";
-import ButtonAndModalStatSelectorResultStatsDefault from "@/components/settingsComponent/ButtonAndModalStatSelectorResultStatsDefault";
 import { Text } from "react-native";
 import { ScrollView } from "react-native";
+import StatSelector from "@/components/statSelector/StatSelector";
+import { ScreenProvider } from "@/contexts/ScreenContext";
 
 const SettingsScreen: React.FC = () => {
   const resetSettings = useResetSettings();
@@ -36,30 +37,32 @@ const SettingsScreen: React.FC = () => {
   }, []);
 
   return (
-    <ResultStatsProvider>
-      <ScrollView>
-        <BoxContainer alignItems={"stretch"}>
-          <LanguageSelector />
+    <ScreenProvider screenName="settings">
+      <ResultStatsProvider>
+        <ScrollView>
+          <BoxContainer alignItems={"stretch"}>
+            <LanguageSelector />
 
-          <ThemeSelector />
+            <ThemeSelector />
 
-          <ButtonAndModalStatSelectorResultStatsDefault />
+            <StatSelector triggerButtonText="ConfigureDefaultStats" />
 
-          <ButtonSendFeedback />
+            <ButtonSendFeedback />
 
-          <ButtonLicenses />
+            <ButtonLicenses />
 
-          <ButtonResetSettings resetSettings={resetSettings} />
+            <ButtonResetSettings resetSettings={resetSettings} />
 
-          <ButtonDeleteAllSetsInMemory deleteAllSavedSets={deleteAllSavedSets} />
+            <ButtonDeleteAllSetsInMemory deleteAllSavedSets={deleteAllSavedSets} />
 
-          <Text>DEBUG</Text>
-          <Button onPress={handleShowMemory}>show memory</Button>
+            <Text>DEBUG</Text>
+            <Button onPress={handleShowMemory}>show memory</Button>
 
-          <Button onPress={handleRemoveMemory}>remvove memory</Button>
-        </BoxContainer>
-      </ScrollView>
-    </ResultStatsProvider>
+            <Button onPress={handleRemoveMemory}>remvove memory</Button>
+          </BoxContainer>
+        </ScrollView>
+      </ResultStatsProvider>
+    </ScreenProvider>
   );
 };
 

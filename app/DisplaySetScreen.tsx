@@ -103,7 +103,7 @@ const DisplaySetScreen = () => {
           </ScreenPressablesContainer>
           <SetCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
 
-          <StatSelector />
+          <StatSelector triggerButtonText="DisplayedStats" />
 
           <StatSliderComparesContainer setsColorsMap={setsColorsMap} scrollToSetCard={scrollToSetCard} />
         </ScrollViewScreen>

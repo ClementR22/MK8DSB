@@ -21,6 +21,7 @@ import {
   saveThingInMemory,
 } from "@/utils/asyncStorageOperations";
 import { SortableElement, sortElements } from "@/utils/sortElements";
+import { CHOSEN_STATS_DEFAULT_SELECTED } from "@/constants/constants";
 
 const MAX_NUMBER_SETS_DISPLAY = 10;
 export interface ChosenStat {
@@ -103,7 +104,7 @@ const setDefault2: SetObject = {
 const useSetsStore = create<SetsStoreState>((set, get) => ({
   chosenStats: statNames.map((statName, index) => ({
     name: statName,
-    checked: index === 0,
+    checked: CHOSEN_STATS_DEFAULT_SELECTED.includes(statName),
     value: 0,
     statFilterNumber: 0,
   })),

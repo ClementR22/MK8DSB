@@ -32,6 +32,8 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondBu
   const isInSearchScreen = screenName === "search";
 
   const { resultStats, setResultStats } = useResultStats();
+  const resultStatsDefault = useResultStatsDefaultStore((state) => state.resultStatsDefault);
+  const setResultStatsDefault = useResultStatsDefaultStore((state) => state.setResultStatsDefault);
 
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const setChosenStats = useSetsStore((state) => state.setChosenStats);
@@ -45,51 +47,58 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondBu
     let customTrigger: React.ReactElement;
     let modalTitle: string;
 
-    if (isInSearchScreen) {
-      columns = [
-        {
-          columnName: "chosenStats",
-          checkList: chosenStats,
-          setCheckList: setChosenStats,
-          keepOneSelected: true,
-        },
-        {
-          columnName: "resultStats",
-          checkList: resultStats,
-          setCheckList: setResultStats,
-          keepOneSelected: false,
-        },
-      ];
+    columns = isInSearchScreen
+      ? [
+          {
+            columnName: "chosenStats",
+            checkList: chosenStats,
+            setCheckList: setChosenStats,
+            keepOneSelected: true,
+          },
+          {
+            columnName: "resultStats",
+            checkList: resultStats,
+            setCheckList: setResultStats,
+            keepOneSelected: false,
+          },
+        ]
+      : screenName === "display" || screenName === "save"
+      ? [
+          {
+            columnName: "resultStats",
+            checkList: resultStats,
+            setCheckList: setResultStats,
+            keepOneSelected: false,
+          },
+        ]
+      : [
+          {
+            columnName: "resultStats",
+            checkList: resultStatsDefault,
+            setCheckList: setResultStatsDefault,
+            keepOneSelected: false,
+          },
+        ];
+    customTrigger = isInSearchScreen ? (
+      <ButtonIcon
+        tooltipText={"DisplayedStatsInSets"}
+        iconName={"checkbox-multiple-marked"}
+        iconType={IconType.MaterialCommunityIcons}
+      />
+    ) : screenName === "save" ? (
+      <ButtonIcon
+        tooltipText={"DisplayedStatsInSets"}
+        iconName={"checkbox-multiple-marked"}
+        iconType={IconType.MaterialCommunityIcons}
+      />
+    ) : null;
 
-      customTrigger = (
-        <ButtonIcon
-          tooltipText={"DisplayedStatsInSets"}
-          iconName={"checkbox-multiple-marked"}
-          iconType={IconType.MaterialCommunityIcons}
-        />
-      );
-
-      modalTitle = "DisplayedStatsInSets";
-    } else {
-      columns = [
-        {
-          columnName: "resultStats",
-          checkList: resultStats,
-          setCheckList: setResultStats,
-          keepOneSelected: false,
-        },
-      ];
-
-      customTrigger = (
-        <ButtonIcon
-          tooltipText={"DisplayedStatsInSets"}
-          iconName={"checkbox-multiple-marked"}
-          iconType={IconType.MaterialCommunityIcons}
-        />
-      );
-
-      modalTitle = "DisplayedStatsInSets";
-    }
+    modalTitle =
+      isInSearchScreen || screenName === "save"
+        ? "DisplayedStatsInSets"
+        : screenName === "display"
+        ? "DisplayedStats"
+        : "DefaultDisplayedStats";
 
     return { columns, customTrigger, modalTitle };
   }, [screenName, chosenStats, resultStats, setChosenStats, setResultStats]);
