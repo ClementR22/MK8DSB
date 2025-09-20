@@ -14,7 +14,7 @@ const ElementPickerSelectorPannel: React.FC<ElementPickerSelectorPannelProps> = 
 
     const containerDynamicStyle = useMemo(
       () => ({
-        backgroundColor: theme.surface,
+        backgroundColor: theme.surface_container_high,
       }),
       [theme.surface]
     );
@@ -38,9 +38,10 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     bottom: 0,
-    marginVertical: CARD_SPACING / 2,
+    marginBottom: CARD_SPACING / 2,
     paddingTop: CARD_SPACING / 2,
     gap: CARD_SPACING / 2, // Small internal padding
+    borderLeftWidth: 0,
     ...SHADOW_STYLE, // Apply shadow to the column
   },
 });

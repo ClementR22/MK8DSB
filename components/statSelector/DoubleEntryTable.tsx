@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 import { Checkbox, DataTable } from "react-native-paper";
 import { ResultStat } from "@/contexts/ResultStatsContext";
 import { ChosenStat } from "@/stores/useSetsStore";
@@ -62,28 +62,31 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleSt
   // Rendu optimisé des lignes
   const renderRow = useCallback(
     (statName: string) => (
-      <DataTable.Row key={statName} style={styles.row}>
-        {/* Label de la ligne */}
-        <DataTable.Cell style={{ flex: labelFlex }}>
-          <Text style={rowLabelTextStyle}>{translateToLanguage(statName, language)}</Text>
-        </DataTable.Cell>
+      <Pressable key={statName}>
+        {/* pressable pour permettre le scroll */}
+        <DataTable.Row style={styles.row}>
+          {/* Label de la ligne */}
+          <DataTable.Cell style={{ flex: labelFlex }}>
+            <Text style={rowLabelTextStyle}>{translateToLanguage(statName, language)}</Text>
+          </DataTable.Cell>
 
-        {/* Checkboxes pour chaque colonne */}
-        {columns.map(({ columnName, checkList }) => {
-          const stat = checkList.find((s) => s.name === statName);
-          const isDisabled = columnName === "resultStats" && disabled;
+          {/* Checkboxes pour chaque colonne */}
+          {columns.map(({ columnName, checkList }) => {
+            const stat = checkList.find((s) => s.name === statName);
+            const isDisabled = columnName === "resultStats" && disabled;
 
-          return (
-            <DataTable.Cell key={columnName} style={styles.checkboxCell}>
-              <Checkbox
-                status={stat?.checked ? "checked" : "unchecked"}
-                onPress={() => onToggleStat(statName, columnName)}
-                disabled={isDisabled}
-              />
-            </DataTable.Cell>
-          );
-        })}
-      </DataTable.Row>
+            return (
+              <DataTable.Cell key={columnName} style={styles.checkboxCell}>
+                <Checkbox
+                  status={stat?.checked ? "checked" : "unchecked"}
+                  onPress={() => onToggleStat(statName, columnName)}
+                  disabled={isDisabled}
+                />
+              </DataTable.Cell>
+            );
+          })}
+        </DataTable.Row>
+      </Pressable>
     ),
     [columns, labelFlex, language, disabled]
   );

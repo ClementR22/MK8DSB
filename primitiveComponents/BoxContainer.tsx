@@ -17,6 +17,7 @@ interface BoxContainerProps {
   widthContainer?: DimensionValue;
   borderRadius?: number;
   padding?: number;
+  paddingHorizontal?: number;
   flexWrap?: string;
 }
 
@@ -34,6 +35,7 @@ const BoxContainer = ({
   widthContainer = "100%",
   borderRadius = 12,
   padding = 10,
+  paddingHorizontal,
   flexWrap = "nowrap",
 }: BoxContainerProps) => {
   const theme = useThemeStore((state) => state.theme);
@@ -58,6 +60,7 @@ const BoxContainer = ({
       flexDirection: flexDirection,
       alignItems: alignItems,
       padding: padding,
+      paddingHorizontal: paddingHorizontal,
       flexWrap: flexWrap,
     };
   }, [
@@ -71,6 +74,7 @@ const BoxContainer = ({
     flexDirection,
     alignItems,
     padding,
+    paddingHorizontal,
     flexWrap,
   ]);
 
@@ -80,7 +84,7 @@ const BoxContainer = ({
   );
 
   const finalContentStyle = useMemo(
-    () => StyleSheet.flatten([styles.content, contentDynamicStyle, inputStyles]),
+    () => StyleSheet.flatten([styles.content, contentDynamicStyle, inputStyles]) as ViewStyle,
     [contentDynamicStyle, inputStyles]
   );
 
@@ -95,7 +99,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "flex-start",
   },
-  content: {},
+  content: { overflow: "hidden" },
 });
 
 BoxContainer.displayName = "BoxContainer";

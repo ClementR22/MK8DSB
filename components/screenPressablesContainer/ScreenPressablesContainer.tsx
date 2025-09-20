@@ -6,14 +6,13 @@ import SortModeSelector from "../sortModeSelector/SortModeSelector";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
 import { useScreen } from "@/contexts/ScreenContext";
-import { useThemeStore } from "@/stores/useThemeStore";
 import { BORDER_RADIUS_BIG } from "@/utils/designTokens";
 import Separator from "../Separator";
 
 interface ScreenPressablesContainerProps {
   sortNumber: number;
   setSortNumber: React.Dispatch<React.SetStateAction<number>>;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
@@ -21,30 +20,40 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
   setSortNumber,
   children,
 }) => {
-  const theme = useThemeStore((state) => state.theme);
   const screenName = useScreen();
+  const isInGalleryScreen = screenName === "gallery";
 
   const [isOpenSortView, setIsOpenSortView] = useState(false);
   const toggleOpenSortView = useCallback(() => setIsOpenSortView((prev) => !prev), []);
 
   const sortSetsList = useSetsStore((state) => state.sortSetsList);
-  useEffect(() => sortSetsList(screenName, sortNumber), [sortNumber]);
+  useEffect(() => {
+    if (!isInGalleryScreen) {
+      sortSetsList(screenName, sortNumber);
+    }
+  }, [sortNumber]);
 
   return (
-    <BoxContainer alignItems={null} borderRadius={BORDER_RADIUS_BIG}>
-      <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-        {children}
-        <ButtonIcon
-          onPress={toggleOpenSortView}
-          iconName="sort"
-          iconType={IconType.MaterialCommunityIcons}
-          tooltipText="SortSets"
-        />
-      </View>
-      {isOpenSortView && (
+    <BoxContainer alignItems={null} borderRadius={BORDER_RADIUS_BIG} paddingHorizontal={0}>
+      {children && (
+        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+          {children}
+          <ButtonIcon
+            onPress={toggleOpenSortView}
+            iconName="sort"
+            iconType={IconType.MaterialCommunityIcons}
+            tooltipText="SortSets"
+          />
+        </View>
+      )}
+      {(isOpenSortView || isInGalleryScreen) && (
         <>
-          <Separator direction="horizontal" />
-          <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="set" />
+          {children && <Separator direction="horizontal" />}
+          <SortModeSelector
+            sortNumber={sortNumber}
+            setSortNumber={setSortNumber}
+            sortCase={isInGalleryScreen ? "element" : "set"}
+          />
         </>
       )}
     </BoxContainer>

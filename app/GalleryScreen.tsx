@@ -6,12 +6,16 @@ import { Category } from "@/data/elements/elementsTypes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { sortElements } from "@/utils/sortElements";
-import SortModeSelector from "@/components/sortModeSelector/SortModeSelector";
+import SortModeSelector, { HALF_GAP } from "@/components/sortModeSelector/SortModeSelector";
 import ElementCard from "@/components/galleryComponents/ElementCard";
 import ElementPickerSelector from "@/components/galleryComponents/ElementPickerSelector";
 import ElementPickerSelectorPannel from "@/components/galleryComponents/ElementPickerSelectorPannel";
 import { useSelectedElementData } from "@/hooks/useSelectedElementData";
 import { useGalleryAnimation } from "@/hooks/useGalleryAnimation";
+import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
+import { ScreenProvider } from "@/contexts/ScreenContext";
+import ScrollViewScreen from "@/components/ScrollViewScreen";
+import { LEFT_PANNEL_WIDTH_COLLAPSED, MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 
 // --- Main GalleryScreen Component ---
 const GalleryScreen = () => {
@@ -64,44 +68,42 @@ const GalleryScreen = () => {
     setSelectedElementId(categoryElementsSorted[0].id);
   }, [selectedCategory, categoryElementsSorted]);
 
-  return (
-    <View style={styles.container}>
-      <ElementCard
-        name={selectedElementName}
-        stats={selectedElementStats}
-        category={selectedCategory}
-        animatedOverlayOpacity={animatedOverlayOpacity}
-        handleBackgroundPress={handleBackgroundPress}
-      />
+  const isScr = useState(true);
 
-      <ElementPickerSelectorPannel animatedLeftPannelWidth={animatedLeftPannelWidth}>
-        <View>
-          <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="element" />
+  return (
+    <ScreenProvider screenName="gallery">
+      <ScrollViewScreen scrollEnabled={true}>
+        <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
+          {" "}
+          <CategorySelector
+            selectedCategory={selectedCategory}
+            onCategoryPress={setSelectedCategory}
+            isInGalleryPannel={true}
+            animatedCategoryMarginLeft={animatedCategoryMarginLeft}
+          />
+        </ScreenPressablesContainer>
+        <View style={{ flex: 1 }}>
+          <ElementCard
+            name={selectedElementName}
+            stats={selectedElementStats}
+            category={selectedCategory}
+            animatedOverlayOpacity={animatedOverlayOpacity}
+            handleBackgroundPress={handleBackgroundPress}
+          />
+
+          <ElementPickerSelectorPannel animatedLeftPannelWidth={animatedLeftPannelWidth}>
+            <ElementPickerSelector
+              categoryElementsSorted={categoryElementsSorted}
+              selectedElementId={selectedElementId}
+              isLeftPannelExpanded={isLeftPannelExpanded}
+              onElementPickerPress={handleElementPickerPress}
+            />
+          </ElementPickerSelectorPannel>
         </View>
-        <CategorySelector
-          selectedCategory={selectedCategory}
-          onCategoryPress={setSelectedCategory}
-          isInGalleryPannel={true}
-          animatedCategoryMarginLeft={animatedCategoryMarginLeft}
-        />
-        <ElementPickerSelector
-          categoryElementsSorted={categoryElementsSorted}
-          selectedElementId={selectedElementId}
-          isLeftPannelExpanded={isLeftPannelExpanded}
-          onElementPickerPress={handleElementPickerPress}
-        />
-      </ElementPickerSelectorPannel>
-    </View>
+      </ScrollViewScreen>
+    </ScreenProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    // Background color from theme applied in JSX
-  },
-});
 
 GalleryScreen.displayName = "GalleryScreen";
 

@@ -179,15 +179,13 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondBu
     >
       <View style={{ backgroundColor: theme.surface, padding: 16 }}>
         {isInSearchScreen && (
-          <View style={{}}>
-            <ResultStatsSyncSwitch
-              resultStats={statListsInModal.resultStats || []}
-              setResultStats={(newStatList) => setStatListsInModal({ ...statListsInModal, resultStats: newStatList })}
-              resultStatsBeforeSync={resultStatsBeforeSync}
-              setResultStatsBeforeSync={setResultStatsBeforeSync}
-              chosenStats={(statListsInModal.chosenStats || []) as ChosenStat[]}
-            />
-          </View>
+          <ResultStatsSyncSwitch
+            resultStats={statListsInModal.resultStats || []}
+            setResultStats={(newStatList) => setStatListsInModal({ ...statListsInModal, resultStats: newStatList })}
+            resultStatsBeforeSync={resultStatsBeforeSync}
+            setResultStatsBeforeSync={setResultStatsBeforeSync}
+            chosenStats={(statListsInModal.chosenStats || []) as ChosenStat[]}
+          />
         )}
         <DoubleEntryTable columns={columnsInModal} onToggleStat={handleStatToggle} disabled={disabled} />
       </View>

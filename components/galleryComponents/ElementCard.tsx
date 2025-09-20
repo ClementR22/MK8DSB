@@ -8,7 +8,8 @@ import {
   CARD_SPACING,
   LEFT_PANNEL_WIDTH_COLLAPSED,
   LIST_ITEM_SPACING,
-  PADDING_HORIZONTAL,
+  MARGIN_CONTAINER_LOWEST,
+  PADDING_HORIZONTAL_ELEMENT_CARD,
 } from "@/utils/designTokens";
 import { useThemeStore } from "@/stores/useThemeStore";
 import StatGaugeRelativeBar from "../statGauge/StatGaugeRelativeBar";
@@ -81,13 +82,14 @@ const ElementCard: React.FC<ElementCardProps> = memo(
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: MARGIN_CONTAINER_LOWEST / 2,
     marginLeft: LEFT_PANNEL_WIDTH_COLLAPSED + CARD_SPACING,
     marginRight: CARD_SPACING,
     borderRadius: BORDER_RADIUS_18,
     borderWidth: 5,
   },
   textWrapper: {
-    padding: PADDING_HORIZONTAL,
+    padding: PADDING_HORIZONTAL_ELEMENT_CARD,
     paddingBottom: 0,
     borderBottomWidth: 1,
     borderBottomColor: "#EEE", // Light separator line

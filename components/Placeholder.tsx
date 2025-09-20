@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { useThemeStore } from "@/stores/useThemeStore";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import Text from "@/primitiveComponents/Text";
@@ -13,7 +13,7 @@ const iconName = {
   SearchEmpty: "chat-question",
   SearchNotFound: "home-flood",
   SavedEmpty: "heart-multiple",
-}
+};
 
 export function Placeholder({ type }: PlaceholderProps) {
   const theme = useThemeStore((state) => state.theme);
@@ -28,5 +28,5 @@ export function Placeholder({ type }: PlaceholderProps) {
         color={theme.on_surface}
       />
     </BoxContainer>
-  )
+  );
 }

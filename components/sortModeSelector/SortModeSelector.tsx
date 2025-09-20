@@ -15,6 +15,7 @@ import {
 import TooltipMenu from "../TooltipMenu";
 import ButtonIconSort from "./ButtonIconSort";
 import { BORDER_RADIUS_INF } from "@/utils/designTokens";
+import { useScreen } from "@/contexts/ScreenContext";
 
 // Constants
 export const HALF_GAP = 7;
@@ -55,6 +56,8 @@ interface SortModeSelectorProps {
 }
 
 const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortModeSelectorProps) => {
+  const screenName = useScreen();
+
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const statNamesSortDefault = useMemo(
@@ -184,16 +187,20 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
     });
   }, [statNamesSortDefault, activeSort, currentDirection, handlePress, renderSpeedMenu, renderHandlingMenu]);
 
+  const containerStyle = useMemo(
+    () => ({ ...styles.container, paddingHorizontal: screenName === "search" ? HALF_GAP : 10 }),
+    [screenName]
+  );
+
   return (
     <ScrollView horizontal scrollEnabled={isScrollEnable}>
-      <Pressable style={styles.container}>{mainButtons}</Pressable>
+      <Pressable style={containerStyle}>{mainButtons}</Pressable>
     </ScrollView>
   );
 });
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: HALF_GAP,
     flexDirection: "row",
     alignItems: "center",
     gap: 8,

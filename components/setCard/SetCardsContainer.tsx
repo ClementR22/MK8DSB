@@ -141,30 +141,28 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
     ]);
 
     return (
-      <View>
-        <ScrollView
-          ref={scrollViewRef}
-          horizontal
-          scrollEnabled={isScrollEnable}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ width: calculatedContentWidth, marginHorizontal: MARGIN_CONTAINER_LOWEST }}
+      <ScrollView
+        ref={scrollViewRef}
+        horizontal
+        scrollEnabled={isScrollEnable}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ width: calculatedContentWidth, paddingHorizontal: MARGIN_CONTAINER_LOWEST }}
+      >
+        <Pressable
+          style={[
+            {
+              flexDirection: "row",
+              marginHorizontal: 0,
+              padding: PADDING_SET_CARDS_CONTAINER,
+              gap: PADDING_SET_CARDS_CONTAINER / 2,
+              borderRadius: BORDER_RADIUS_BIG,
+              backgroundColor: theme.surface_container_high,
+            },
+          ]}
         >
-          <Pressable
-            style={[
-              {
-                flexDirection: "row",
-                marginHorizontal: 0,
-                padding: PADDING_SET_CARDS_CONTAINER,
-                gap: PADDING_SET_CARDS_CONTAINER / 2,
-                borderRadius: BORDER_RADIUS_BIG,
-                backgroundColor: theme.surface_container_high,
-              },
-            ]}
-          >
-            {noSetToShow ? placeHolder : memoizedSetCards}
-          </Pressable>
-        </ScrollView>
-      </View>
+          {noSetToShow ? placeHolder : memoizedSetCards}
+        </Pressable>
+      </ScrollView>
     );
   }
 );
