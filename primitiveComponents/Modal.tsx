@@ -7,7 +7,6 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import Snackbar from "./Snackbar";
 import {
-  BORDER_RADIUS_12,
   BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,
   BORDER_RADIUS_MODAL_CONTAINER,
   MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER,
@@ -43,13 +42,13 @@ interface ModalProps {
   children: ReactNode;
   onClose?: () => void; // option
   closeButtonText?: string;
-  isWithClosePressable?: boolean;
   // on peut donner un composant
   secondButton?: ReactElement<{ onComplete?: () => void }>;
   // ou uniquement ses props
   secondButtonProps?: { text: string; onPress: () => void | boolean; tooltipText?: string };
   closeAfterSecondButton?: boolean;
   secondButtonPosition?: "left" | "right";
+  withoutChildrenContainer?: boolean;
 }
 
 const Modal = ({
@@ -59,11 +58,11 @@ const Modal = ({
   children,
   onClose,
   closeButtonText = "Close",
-  isWithClosePressable = true,
   secondButton,
   secondButtonProps,
   closeAfterSecondButton = true,
   secondButtonPosition = "left",
+  withoutChildrenContainer = false,
   ...props
 }: ModalProps) => {
   const theme = useThemeStore((state) => state.theme);
@@ -144,11 +143,11 @@ const Modal = ({
         >
           {modalTitle && <Text style={[styles.title_center, titleColorStyle]}>{translate(modalTitle)}</Text>}
 
-          <View style={[styles.childrenContainer, contentColorStyle]}>{children}</View>
+          <View style={!withoutChildrenContainer && [styles.childrenContainer, contentColorStyle]}>{children}</View>
 
           <View style={{ flexDirection: buttonContainerFlexDirection, ...styles.buttonContainer }}>
             {renderSecondButton()}
-            {isWithClosePressable && <ModalButton text={closeButtonText} onPress={actualOnPressClose} />}
+            {<ModalButton text={closeButtonText} onPress={actualOnPressClose} />}
           </View>
         </Pressable>
         <Snackbar />

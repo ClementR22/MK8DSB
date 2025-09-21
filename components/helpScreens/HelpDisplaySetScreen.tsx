@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
-import ButtonAndHelpmodal from "./ButtonAndHelpmodal";
+import HelpModal from "./HelpModal";
 import StatGaugeCompare from "../statGaugeCompare/StatGaugeCompare";
 import HelpText from "../helpComponents/HelpText";
 import { PAGES_NAVIGATOR_DOTS_BUTTON_SIZE } from "../paginatedWrapper/PagesNavigator";
@@ -10,7 +10,7 @@ import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
 
 const HelpDisplaySetScreen = () => {
   return (
-    <ButtonAndHelpmodal
+    <HelpModal
       title="Guide du Comparateur de Sets"
       introHighlight={{
         content: (

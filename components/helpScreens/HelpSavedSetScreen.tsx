@@ -1,14 +1,14 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
-import ButtonAndHelpmodal from "./ButtonAndHelpmodal";
+import HelpModal from "./HelpModal";
 import HelpBoldText from "../helpComponents/HelpBoldText";
 import HelpText from "../helpComponents/HelpText";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
 
 const HelpFavoritesScreen = () => {
   return (
-    <ButtonAndHelpmodal
+    <HelpModal
       title="Guide des Sets Favoris"
       introHighlight={{
         content: (

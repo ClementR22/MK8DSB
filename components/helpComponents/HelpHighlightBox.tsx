@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 8,
     borderRadius: BORDER_RADIUS_12,
-    marginHorizontal: 16,
   },
   text: { fontSize: 13, textAlign: "center", lineHeight: 18 },
 });

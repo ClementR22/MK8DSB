@@ -15,10 +15,10 @@ const HelpStepItem = ({ stepChar, title, alignItems, children }: HelpStepItemPro
   const theme = useThemeStore((state) => state.theme);
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.surface_container }]}>
+    <View style={styles.container}>
       <View style={styles.iconWrapper}>{<StepCircle number={stepChar} />}</View>
 
-      <View style={{ flex: 1, gap: 10, justifyContent: "center" }}>
+      <View style={styles.contentContainer}>
         <Text
           style={[
             styles.title,
@@ -40,14 +40,13 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     gap: 10,
-    padding: 12,
-    borderRadius: BORDER_RADIUS_12,
   },
   iconWrapper: { width: 40, alignItems: "center" },
+  contentContainer: { flex: 1, gap: 10, justifyContent: "center" },
   title: {
     fontSize: 14,
     fontWeight: "600",
   },
 });
 
-export default HelpStepItem;
+export default React.memo(HelpStepItem);

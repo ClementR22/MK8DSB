@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
-import ButtonAndHelpmodal from "./ButtonAndHelpmodal";
+import HelpModal from "./HelpModal";
 import StatSliderPreview from "../statSlider/StatSliderPreview";
 import StatSliderCompact from "../statGauge/StatGaugeContainer";
 import { SET_CARD_WIDTH } from "@/utils/designTokens";
@@ -19,7 +19,7 @@ const HelpSearchSetScreen = () => {
   const language = useLanguageStore((state) => state.language);
 
   return (
-    <ButtonAndHelpmodal
+    <HelpModal
       title="Guide du Set Builder"
       introHighlight={{
         content: (

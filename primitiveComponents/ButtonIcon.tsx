@@ -5,6 +5,7 @@ import ButtonBase from "./ButtonBase";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { TooltipPlacementType } from "@/components/Tooltip";
 import IconContainer from "./IconContainer";
+import { BORDER_RADIUS_INF } from "@/utils/designTokens";
 
 export interface ButtonIconProps {
   onPress?: (event?: Event) => void;
@@ -38,7 +39,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
       ? {
           height: buttonSize,
           width: buttonSize,
-          borderRadius: buttonSize / 2,
+          borderRadius: BORDER_RADIUS_INF,
         }
       : { height: 30, width: 46, borderRadius: 10 };
   }, [shape, buttonSize]);

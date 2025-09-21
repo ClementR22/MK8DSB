@@ -22,10 +22,9 @@ type StatListColumn = {
 
 interface StatSelectorProps {
   triggerButtonText?: string;
-  secondButtonProps?: { text: string; onPress: () => void; tooltipText: string };
 }
 
-const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondButtonProps }) => {
+const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText }) => {
   const theme = useThemeStore((state) => state.theme);
 
   const screenName = useScreen();
@@ -42,10 +41,8 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondBu
 
   const isResultStatsSync = useResultStatsDefaultStore((state) => state.isResultStatsSync);
 
-  const { columns, customTrigger, modalTitle } = useMemo(() => {
+  const { columns } = useMemo(() => {
     let columns: StatListColumn[] = [];
-    let customTrigger: React.ReactElement;
-    let modalTitle: string;
 
     columns = isInSearchScreen
       ? [
@@ -79,7 +76,12 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondBu
             keepOneSelected: false,
           },
         ];
-    customTrigger = isInSearchScreen ? (
+
+    return { columns };
+  }, [screenName, chosenStats, resultStats, setChosenStats, setResultStats]);
+
+  const { customTrigger, modalTitle } = useMemo(() => {
+    const customTrigger = isInSearchScreen ? (
       <ButtonIcon
         tooltipText={"DisplayedStatsInSets"}
         iconName={"checkbox-multiple-marked"}
@@ -93,15 +95,14 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondBu
       />
     ) : null;
 
-    modalTitle =
+    const modalTitle =
       isInSearchScreen || screenName === "save"
         ? "DisplayedStatsInSets"
         : screenName === "display"
         ? "DisplayedStats"
         : "DefaultDisplayedStats";
-
-    return { columns, customTrigger, modalTitle };
-  }, [screenName, chosenStats, resultStats, setChosenStats, setResultStats]);
+    return { customTrigger, modalTitle };
+  }, [screenName]);
 
   const [statListsInModal, setStatListsInModal] = useState<Record<string, StatList>>({});
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -172,8 +173,6 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, secondBu
       customTrigger={customTrigger}
       triggerButtonText={triggerButtonText}
       modalTitle={modalTitle}
-      secondButtonProps={secondButtonProps}
-      closeAfterSecondButton={false}
       isModalVisibleProp={isModalVisible}
       setIsModalVisibleProp={setIsModalVisible}
     >

@@ -26,6 +26,7 @@ const ModalLoadSet = () => {
       isModalVisible={isLoadSetModalVisible}
       setIsModalVisible={setIsLoadSetModalVisible}
       secondButton={<ButtonImportSet screenName={screenNameForLoadModal} />} // Pass the screen name to the import button
+      withoutChildrenContainer
     >
       <SetCardsContainer
         setsToShow={setsListSaved} // Use setsListSaved directly

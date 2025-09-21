@@ -12,8 +12,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     textAlign: "center",
-    paddingHorizontal: 20,
   },
 });
 
-export default HelpSubtitle;
+export default React.memo(HelpSubtitle);

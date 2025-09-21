@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { Text, Modal, ScrollView, View } from "react-native";
+import React, { useMemo, useState } from "react";
+import { Text, ScrollView, View, Pressable } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import Button from "@/primitiveComponents/Button";
 import HelpTitle from "../helpComponents/HelpTitle";
-import HelpListContainer from "../helpComponents/HelpListContainer";
 import HelpText from "../helpComponents/HelpText";
 import HelpHighlightBox, { BoxType } from "../helpComponents/HelpHighlightBox";
 import HelpStepItem from "../helpComponents/HelpStepItem";
@@ -14,6 +13,10 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import { translateToLanguage } from "@/translations/translations";
 import useGeneralStore from "@/stores/useGeneralStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
+import Separator from "../Separator";
+import Modal from "@/primitiveComponents/Modal";
+import ButtonAndModal from "../modal/ButtonAndModal";
+import { StyleSheet } from "react-native";
 
 export type HelpContentItem = {
   type: "title" | "subtitle" | "highlight" | "step" | "feature" | "custom";
@@ -22,12 +25,6 @@ export type HelpContentItem = {
 };
 
 export type HelpModalProps = {
-  triggerIcon?: {
-    name: string;
-    type: IconType;
-    tooltipText?: string;
-    placement?: "top" | "bottom" | "left" | "right";
-  };
   title: string;
   introHighlight: {
     content: React.ReactNode;
@@ -37,28 +34,10 @@ export type HelpModalProps = {
     title: string;
     items: HelpContentItem[];
   }>;
-  actionButton?: {
-    text: string;
-    onPress: () => void;
-  };
   outroAdviceHighlightContent?: React.ReactNode;
 };
 
-const ButtonAndHelpmodal: React.FC<HelpModalProps> = ({
-  triggerIcon = {
-    name: "help-circle",
-    type: IconType.Feather,
-    tooltipText: "Help",
-    placement: "bottom",
-  },
-  title,
-  introHighlight,
-  sections,
-  actionButton,
-  outroAdviceHighlightContent,
-}) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const language = useLanguageStore((state) => state.language);
+const HelpModal: React.FC<HelpModalProps> = ({ title, introHighlight, sections, outroAdviceHighlightContent }) => {
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const renderContentItem = (item: HelpContentItem, index: number) => {
@@ -99,46 +78,41 @@ const ButtonAndHelpmodal: React.FC<HelpModalProps> = ({
     }
   };
 
+  const customTrigger = useMemo(
+    () => <ButtonIcon tooltipText={"DisplayedStatsInSets"} iconName={"help-circle"} iconType={IconType.Feather} />,
+    []
+  );
+
   return (
-    <>
-      <ButtonIcon
-        tooltipText={triggerIcon.tooltipText}
-        toolTipPlacement={triggerIcon.placement}
-        iconName={triggerIcon.name}
-        iconType={triggerIcon.type}
-        onPress={() => setIsVisible(true)}
-      />
+    <ButtonAndModal customTrigger={customTrigger} modalTitle={title}>
+      <ScrollView scrollEnabled={true} style={{ maxHeight: 450 }}>
+        <Pressable style={styles.container}>
+          <HelpHighlightBox type="info" title={introHighlight.title}>
+            {introHighlight.content}
+          </HelpHighlightBox>
 
-      {isVisible && (
-        <Modal visible={isVisible} animationType="slide">
-          <ScrollView contentContainerStyle={{ gap: 16, padding: 16 }} scrollEnabled={isScrollEnable}>
-            <HelpTitle>{title}</HelpTitle>
-
-            <HelpHighlightBox type="info" title={introHighlight.title}>
-              {introHighlight.content}
-            </HelpHighlightBox>
-
+          <View style={styles.sections}>
             {sections.map((section, sectionIndex) => (
-              <View key={sectionIndex}>
+              <View key={sectionIndex} style={styles.section}>
                 <HelpSubtitle>{section.title}</HelpSubtitle>
-                <HelpListContainer>
-                  {section.items.map((item, itemIndex) => renderContentItem(item, itemIndex))}
-                </HelpListContainer>
+                {section.items.map((item, itemIndex) => renderContentItem(item, itemIndex))}
               </View>
             ))}
+          </View>
 
-            <HelpHighlightBox type="tips" title="Conseil pratique">
-              {outroAdviceHighlightContent}
-            </HelpHighlightBox>
-          </ScrollView>
-
-          <Button onPress={() => setIsVisible(false)} style={{ marginTop: 20 }}>
-            <Text>{actionButton?.text || translateToLanguage("Start", language)}</Text>
-          </Button>
-        </Modal>
-      )}
-    </>
+          <HelpHighlightBox type="tips" title="Conseil pratique">
+            {outroAdviceHighlightContent}
+          </HelpHighlightBox>
+        </Pressable>
+      </ScrollView>
+    </ButtonAndModal>
   );
 };
 
-export default ButtonAndHelpmodal;
+const styles = StyleSheet.create({
+  container: { gap: 20, padding: 10 },
+  sections: { gap: 30 },
+  section: { gap: 15 },
+});
+
+export default React.memo(HelpModal);
