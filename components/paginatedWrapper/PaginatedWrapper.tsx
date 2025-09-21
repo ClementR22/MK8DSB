@@ -24,60 +24,32 @@ const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const flatlistRef = useRef<FlatList>(null);
-  const scrollStartX = useRef<number>(0);
-  const isScrolling = useRef<boolean>(false);
-  const isManualScroll = useRef(false);
 
   // Reset à la première page quand les données changent
   useEffect(() => {
     if (currentPage !== 0) {
-      flatlistRef.current?.scrollToIndex({ index: 0, animated: false });
+      flatlistRef.current?.scrollToIndex({ index: 0, animated: true });
       setCurrentPage(0);
     }
   }, [data]);
 
   // Scroll programmatique vers la page courante
   useEffect(() => {
-    if (!isManualScroll.current) {
-      flatlistRef.current?.scrollToIndex({ index: currentPage, animated: true });
-    }
+    flatlistRef.current?.scrollToIndex({ index: currentPage, animated: true });
   }, [flatlistRef, currentPage]);
 
-  // Début du scroll manuel
-  const handleScrollBeginDrag = useCallback(() => {
-    isManualScroll.current = true;
-  }, []);
-
-  const handleMomentumScrollEnd = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const pageIndex = Math.round(e.nativeEvent.contentOffset.x / pageWidth);
-
-    if (e.nativeEvent.contentOffset.x / pageWidth === pageIndex) {
-      isScrolling.current = false;
-      isManualScroll.current = false;
-
-      if (pageIndex != currentPage) {
-        setCurrentPage(pageIndex);
+  const handleMomentumScrollEnd = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const pageIndex = e.nativeEvent.contentOffset.x / pageWidth;
+      if (Number.isInteger(pageIndex)) {
+        // si on est bien arrivé pile sur une page alors on peut mettre à jour la page
+        if (pageIndex != currentPage) {
+          setCurrentPage(pageIndex);
+        }
       }
-    }
-  }, []);
-
-  const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (!isScrolling.current) {
-      isScrolling.current = true;
-      scrollStartX.current = e.nativeEvent.contentOffset.x;
-    }
-
-    const currentX = e.nativeEvent.contentOffset.x;
-    const distanceDiff = currentX - scrollStartX.current;
-
-    const pageIndex = Math.round(e.nativeEvent.contentOffset.x / pageWidth);
-
-    if (Math.abs(distanceDiff) > pageWidth / 2) {
-      if (pageIndex != currentPage && isManualScroll.current) {
-        setCurrentPage(pageIndex);
-      }
-    }
-  }, []);
+    },
+    [currentPage]
+  );
 
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
@@ -91,9 +63,8 @@ const PaginatedWrapper: React.FC<PaginatedWrapperProps> = ({
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         scrollEnabled={isScrollEnable}
-        onScrollBeginDrag={handleScrollBeginDrag}
         onMomentumScrollEnd={handleMomentumScrollEnd}
-        onScroll={handleScroll}
+        // onScroll={handleScroll}
         // Optimisations de performance
         keyExtractor={(_, index) => index.toString()}
         getItemLayout={(_, index) => ({

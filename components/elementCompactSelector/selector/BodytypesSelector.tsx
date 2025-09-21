@@ -29,7 +29,7 @@ const BodytypesSelector: React.FC<BodytypesSelectorProps> = memo(({ selectedBody
       }
       setSelectedBodytypes(newSelected);
     },
-    [setSelectedBodytypes]
+    [selectedBodytypes, setSelectedBodytypes]
   );
 
   const activeStyle = useMemo(() => ({ borderColor: theme.primary }), [theme.primary]);
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   container: { justifyContent: "space-between" },
 });
 
-export default BodytypesSelector;
+export default React.memo(BodytypesSelector);

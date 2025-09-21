@@ -16,11 +16,10 @@ const { width: screenWidth } = Dimensions.get("window");
 const NUM_COLUMNS = 4;
 export const ELEMENTS_PER_PAGE = 12;
 
-const MARGIN_ELEMENTS_GRID = GAP;
-export const ELEMENTS_GRID_WIDTH =
-  screenWidth * 0.9 - MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER * 2 - MARGIN_ELEMENTS_GRID * 2;
+const PADDING_ELEMENTS_GRID = GAP;
+export const ELEMENTS_GRID_WIDTH = screenWidth * 0.9 - MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER * 2;
 
-const ITEM_WIDTH = (ELEMENTS_GRID_WIDTH - GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
+const ITEM_WIDTH = (ELEMENTS_GRID_WIDTH - PADDING_ELEMENTS_GRID * 2 - GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
 
 const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, onSelectElement }) => {
   const calculateIsSelected = useCallback(
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: GAP, // Keep gap defined here
-    marginHorizontal: MARGIN_ELEMENTS_GRID,
+    paddingHorizontal: PADDING_ELEMENTS_GRID,
   },
 });
 

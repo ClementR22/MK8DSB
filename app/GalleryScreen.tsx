@@ -74,7 +74,6 @@ const GalleryScreen = () => {
     <ScreenProvider screenName="gallery">
       <ScrollViewScreen scrollEnabled={true}>
         <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
-          {" "}
           <CategorySelector
             selectedCategory={selectedCategory}
             onCategoryPress={setSelectedCategory}
