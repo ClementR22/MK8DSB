@@ -10,7 +10,6 @@ import ButtonLoadSet from "@/components/managingSetsButton/ButtonLoadSet";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
-import FlexContainer from "@/primitiveComponents/FlexContainer";
 import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -68,11 +67,7 @@ const SearchSetScreen: React.FC = () => {
     <ScreenProvider screenName="search">
       <ResultStatsProvider>
         <ScrollViewScreen scrollEnabled={isScrollEnable}>
-          <BoxContainer
-            contentBackgroundColor={theme.surface_container_high}
-            borderRadius={BORDER_RADIUS_BIG}
-            padding={PADDING_SEARCH_CONTAINER}
-          >
+          <BoxContainer borderRadius={BORDER_RADIUS_BIG} padding={PADDING_SEARCH_CONTAINER}>
             <View style={styles.searchContainer}>
               <ButtonIcon
                 onPress={toggleReduceStatSliders}

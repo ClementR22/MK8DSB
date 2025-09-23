@@ -6,7 +6,7 @@ import { StyleSheet } from "react-native";
 export const useStatGaugeStyles = () => {
   const theme = useThemeStore((state) => state.theme);
 
-  const emptyContainer = [styles.emptyContainer, { backgroundColor: theme.secondary_container }];
+  const emptyContainer = [styles.emptyContainer, { backgroundColor: theme.surface_container_highest }];
   const thick = styles.thick;
 
   return useMemo(

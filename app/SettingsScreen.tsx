@@ -13,9 +13,9 @@ import { useResetSettings } from "@/hooks/useResetSettings";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import ButtonDeleteAllSetsInMemory from "@/components/settingsComponent/ButtonDeleteAllSetsInMemory";
 import { Text } from "react-native";
-import { ScrollView } from "react-native";
 import StatSelector from "@/components/statSelector/StatSelector";
 import { ScreenProvider } from "@/contexts/ScreenContext";
+import ScrollViewScreen from "@/components/ScrollViewScreen";
 
 const SettingsScreen: React.FC = () => {
   const resetSettings = useResetSettings();
@@ -39,7 +39,7 @@ const SettingsScreen: React.FC = () => {
   return (
     <ScreenProvider screenName="settings">
       <ResultStatsProvider>
-        <ScrollView>
+        <ScrollViewScreen scrollEnabled={true}>
           <BoxContainer alignItems={"stretch"}>
             <LanguageSelector />
 
@@ -60,7 +60,7 @@ const SettingsScreen: React.FC = () => {
 
             <Button onPress={handleRemoveMemory}>remvove memory</Button>
           </BoxContainer>
-        </ScrollView>
+        </ScrollViewScreen>
       </ResultStatsProvider>
     </ScreenProvider>
   );

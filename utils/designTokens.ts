@@ -43,6 +43,19 @@ export const SHADOW_STYLE = StyleSheet.create({
   },
 }).shadow;
 
+export const SHADOW_STYLE_HEAVY = StyleSheet.create({
+  shadow: {
+    shadowColor: "#000", // Black shadow
+    shadowOffset: {
+      width: 4,
+      height: 4, // Vertical offset
+    },
+    shadowOpacity: 0.25, // Softer shadow
+    shadowRadius: 15, // Blur radius
+    elevation: 5, // Android shadow
+  },
+}).shadow;
+
 export const SHADOW_STYLE_LIGHT = StyleSheet.create({
   shadow: {
     shadowColor: "#000",

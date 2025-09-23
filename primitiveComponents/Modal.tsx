@@ -1,7 +1,6 @@
 import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo } from "react";
 import { Modal as NativeModal, Pressable, StyleSheet, Text, View } from "react-native";
 import { translate } from "@/translations/translations";
-import FlexContainer from "@/primitiveComponents/FlexContainer";
 import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";

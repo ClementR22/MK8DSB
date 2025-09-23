@@ -149,12 +149,12 @@ const SetCard: React.FC<SetCardProps> = ({
   const { setCardStyle } = useSetCardStyle(SET_CARD_WIDTH);
 
   const setCardCompleteStyle = useMemo(
-    () => ({ ...setCardStyle, borderColor: borderColor }),
+    () => [{ ...setCardStyle }, borderColor && { borderColor }],
     [setCardStyle, borderColor]
   );
 
   return (
-    <View onLayout={onLayout}>
+    <View style={styles.wrapper} onLayout={onLayout}>
       <View style={setCardCompleteStyle}>
         <SetCardHeader {...headerProps} />
 
@@ -174,5 +174,9 @@ const SetCard: React.FC<SetCardProps> = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  wrapper: { gap: PADDING_SET_CARDS_CONTAINER / 2 },
+});
 
 export default memo(SetCard);

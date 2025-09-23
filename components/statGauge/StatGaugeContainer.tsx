@@ -7,6 +7,7 @@ import { getBonusColor } from "@/utils/getBonusColor";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { vw } from "../styles/theme";
 import { BORDER_RADIUS_STAT_GAUGE_CONTAINER, HEIGHT_STAT_GAUGE_CONTAINER } from "@/utils/designTokens";
+import { useScreen } from "@/contexts/ScreenContext";
 
 interface StatGaugeContainerProps {
   name: string;
@@ -26,15 +27,41 @@ const StatGaugeContainer = ({
   children,
 }: StatGaugeContainerProps) => {
   const theme = useThemeStore((state) => state.theme);
-  const showAllStatGaugeBonuses = useGeneralStore((state) => state.showAllStatGaugeBonuses);
+
+  const screenName = useScreen();
+
+  const isInSearchScreen = useMemo(() => screenName === "search", [screenName]);
+
+  const showAllStatGaugeBonuses = isInSearchScreen ? useGeneralStore((state) => state.showAllStatGaugeBonuses) : false;
   const toggleAllStatGaugeBonuses = useGeneralStore((state) => state.toggleAllStatGaugeBonuses);
 
-  // Calcul du bonus activé
-  const bonusEnabled = useMemo(() => chosenValue !== undefined, [chosenValue]);
   // Bonus trouvé
-  const bonusFound = useMemo(() => (chosenValue != undefined ? value - chosenValue : 0), [value, chosenValue]);
-  // Couleur du bonus
-  const bonusColor = useMemo(() => getBonusColor(bonusFound), [bonusFound]);
+  const { displayedValue, bonusColor } = useMemo(() => {
+    let bonusFound = undefined;
+
+    if (chosenValue !== undefined) {
+      bonusFound = value - chosenValue;
+    }
+
+    let displayedValue: number | string;
+    if (!showAllStatGaugeBonuses) {
+      displayedValue = value;
+    } else {
+      if (bonusFound === undefined) {
+        displayedValue = "?";
+      } else if (bonusFound === 0) {
+        displayedValue = "=";
+      } else if (bonusFound > 0) {
+        displayedValue = `+${bonusFound}`;
+      } else {
+        displayedValue = bonusFound;
+      }
+    }
+
+    const bonusColor = getBonusColor(bonusFound);
+
+    return { displayedValue, bonusColor };
+  }, [value, chosenValue, showAllStatGaugeBonuses]);
 
   // Style du conteneur, dépend du thème et du filtre
   const containerStyle = useMemo(() => {
@@ -56,9 +83,9 @@ const StatGaugeContainer = ({
 
   // Handler mémoïsé pour le press
   const handlePress = useCallback(() => {
-    if (!bonusEnabled) return;
+    if (!isInSearchScreen) return;
     toggleAllStatGaugeBonuses();
-  }, [bonusEnabled, toggleAllStatGaugeBonuses]);
+  }, [isInSearchScreen, toggleAllStatGaugeBonuses]);
 
   return (
     <Pressable style={containerStyle} onPress={handlePress}>
@@ -84,15 +111,7 @@ const StatGaugeContainer = ({
             },
           ]}
         >
-          <Text style={valueStyle}>
-            {showAllStatGaugeBonuses
-              ? bonusFound > 0
-                ? `+${bonusFound}`
-                : bonusFound === 0
-                ? "*"
-                : bonusFound
-              : value}
-          </Text>
+          <Text style={valueStyle}>{displayedValue}</Text>
         </View>
       )}
     </Pressable>

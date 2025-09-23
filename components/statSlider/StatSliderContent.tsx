@@ -73,8 +73,8 @@ const StatSliderContent = ({
   const textColorStyle = useMemo(() => ({ color: theme.on_surface }), [theme.on_surface]);
   const minimumTrackDynamicStyle = useMemo(() => ({ backgroundColor: theme.primary }), [theme.primary]);
   const maximumTrackDynamicStyle = useMemo(
-    () => ({ backgroundColor: theme.secondary_container }),
-    [theme.secondary_container]
+    () => ({ backgroundColor: theme.surface_container_highest }),
+    [theme.surface_container_highest]
   );
 
   // Mémoïsation du label traduit

@@ -49,7 +49,7 @@ const BoxContainer = ({
   );
 
   const contentDynamicStyle = useMemo(() => {
-    const finalContentBackgroundColor = contentBackgroundColor || theme.surface_container_high;
+    const finalContentBackgroundColor = contentBackgroundColor || theme.surface_container;
     return {
       backgroundColor: finalContentBackgroundColor,
       justifyContent: justifyContent,

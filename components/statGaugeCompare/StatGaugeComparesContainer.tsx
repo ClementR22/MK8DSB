@@ -41,12 +41,12 @@ const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({
   const containerStyle: ViewStyle = useMemo(() => {
     return {
       padding: PADDING_SET_CARDS_CONTAINER,
-      backgroundColor: theme.surface_container_high,
+      backgroundColor: theme.surface_container,
       gap: 7,
       borderRadius: BORDER_RADIUS_BIG,
       marginHorizontal: MARGIN_CONTAINER_LOWEST,
     };
-  }, [theme.surface_container_high]);
+  }, [theme.surface_container]);
 
   return (
     <View style={containerStyle}>

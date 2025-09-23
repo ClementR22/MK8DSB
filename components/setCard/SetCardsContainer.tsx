@@ -112,24 +112,21 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
         return null;
       }
 
-      return setsToShow.map((set: SetWithColor) => {
-        const effectiveColor = set.color || theme.surface_container_high;
-        return (
-          <SetCard
-            key={set.id}
-            setToShowName={set.name}
-            setToShowClassIds={set.classIds}
-            setToShowStats={set.stats}
-            setToShowId={set.id}
-            isInLoadSetModal={isInLoadSetModal}
-            screenNameFromProps={screenNameFromProps}
-            hideRemoveSet={hideRemoveSet}
-            setToShowPercentage={(set as any).percentage ?? undefined}
-            onLayout={(event) => onSetCardLayout(set.id, event)}
-            borderColor={effectiveColor}
-          />
-        );
-      });
+      return setsToShow.map((set: SetWithColor) => (
+        <SetCard
+          key={set.id}
+          setToShowName={set.name}
+          setToShowClassIds={set.classIds}
+          setToShowStats={set.stats}
+          setToShowId={set.id}
+          isInLoadSetModal={isInLoadSetModal}
+          screenNameFromProps={screenNameFromProps}
+          hideRemoveSet={hideRemoveSet}
+          setToShowPercentage={(set as any).percentage ?? undefined}
+          onLayout={(event) => onSetCardLayout(set.id, event)}
+          borderColor={set.color}
+        />
+      ));
     }, [
       setsToShow,
       noSetToShow,
@@ -154,9 +151,9 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
               flexDirection: "row",
               marginHorizontal: 0,
               padding: PADDING_SET_CARDS_CONTAINER,
-              gap: PADDING_SET_CARDS_CONTAINER / 2,
+              gap: PADDING_SET_CARDS_CONTAINER / 1.5,
               borderRadius: BORDER_RADIUS_BIG,
-              backgroundColor: theme.surface_container_high,
+              backgroundColor: theme.surface_container,
             },
           ]}
         >

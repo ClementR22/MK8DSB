@@ -16,8 +16,8 @@ const StatGaugeCompareBar = ({ value, color, scrollToThisSetCard }: StatGaugeCom
 
   // Style du fond de la piste, dépendant du thème
   const sliderTrackDynamicBg = useMemo(
-    () => ({ backgroundColor: theme.surface_container_low }),
-    [theme.surface_container_low]
+    () => ({ backgroundColor: theme.surface_container_highest }),
+    [theme.surface_container_highest]
   );
 
   // Couleur principale du segment, dépend du color passé ou du thème
