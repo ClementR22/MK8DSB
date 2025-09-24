@@ -13,6 +13,8 @@ interface GeneralStoreState {
   statusBarHeight: number;
   setStatusBarHeight: (newStatusBarHeight: number) => void;
   getTooltipVerticalOffset: () => number;
+  resultsNumber: number;
+  setResultsNumber: (newResultsNumber: number) => void;
 }
 
 const useGeneralStore = create<GeneralStoreState>((set, get) => ({
@@ -36,6 +38,9 @@ const useGeneralStore = create<GeneralStoreState>((set, get) => ({
   getTooltipVerticalOffset: () => {
     return get().isAnyModalVisible ? -get().statusBarHeight : 0;
   },
+
+  resultsNumber: 5,
+  setResultsNumber: (newResultsNumber: number) => set({ resultsNumber: newResultsNumber }),
 }));
 
 export default useGeneralStore;

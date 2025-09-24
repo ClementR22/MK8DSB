@@ -19,6 +19,7 @@ interface ButtonProps {
   tooltipText?: string;
   iconProps?: IconProps;
   minWidth?: number;
+  flex?: 1;
   disabled?: boolean;
   [key: string]: any;
 }
@@ -32,17 +33,24 @@ const Button = ({
   tooltipText,
   iconProps,
   minWidth,
+  flex,
   disabled = false,
   ...props
 }: ButtonProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   const containerStyle = useMemo(
-    () => ({
-      backgroundColor: buttonColor || theme.primary,
-      paddingHorizontal: iconProps ? 15 : 10,
-      minWidth: minWidth,
-    }),
+    () =>
+      StyleSheet.flatten([
+        styles.container,
+        disabled && { backgroundColor: "grey" },
+        {
+          backgroundColor: buttonColor || theme.primary,
+          paddingHorizontal: iconProps ? 15 : 10,
+          minWidth: minWidth,
+          flex: flex,
+        },
+      ]),
     [theme.primary, iconProps, minWidth]
   );
 
@@ -56,7 +64,7 @@ const Button = ({
       onPress={onPress}
       tooltipText={tooltipText}
       elevation={elevation}
-      containerStyle={StyleSheet.flatten([styles.container, containerStyle, disabled && { backgroundColor: "grey" }])}
+      containerStyle={containerStyle}
       {...props}
     >
       <>
@@ -75,7 +83,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 5,
-    alignSelf: "stretch",
   },
   text: {
     fontWeight: "500",

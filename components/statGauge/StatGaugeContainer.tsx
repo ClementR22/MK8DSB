@@ -30,9 +30,10 @@ const StatGaugeContainer = ({
 
   const screenName = useScreen();
 
-  const isInSearchScreen = useMemo(() => screenName === "search", [screenName]);
+  const isInSearchScreen = screenName === "search";
 
-  const showAllStatGaugeBonuses = isInSearchScreen ? useGeneralStore((state) => state.showAllStatGaugeBonuses) : false;
+  const showAllStatGaugeBonuses =
+    screenName === "search" ? useGeneralStore((state) => state.showAllStatGaugeBonuses) : false;
   const toggleAllStatGaugeBonuses = useGeneralStore((state) => state.toggleAllStatGaugeBonuses);
 
   // Bonus trouvé

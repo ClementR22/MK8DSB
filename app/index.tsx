@@ -20,11 +20,12 @@ import TabBarHeightUpdater from "@/components/TabBarHeightUpdater";
 import StatGaugeContainer from "@/components/statGauge/StatGaugeContainer";
 import StatGaugeBar from "@/components/statGauge/StatGaugeBar";
 import { BORDER_RADIUS_BIG, PADDING_SEARCH_CONTAINER } from "@/utils/designTokens";
-import ScrollViewScreen from "@/components/ScrollViewScreen";
+import ScrollViewScreen, { ScrollViewScreenHandles } from "@/components/ScrollViewScreen";
 
 const SearchSetScreen: React.FC = () => {
   const theme = useThemeStore((state) => state.theme);
-  const scrollRef = useRef<SetCardsContainerHandles>(null);
+  const scrollviewSetsCardsRef = useRef<SetCardsContainerHandles>(null);
+  const scrollviewMainRef = useRef<ScrollViewScreenHandles>(null);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const setsListFound = useSetsStore((state) => state.setsListFound);
@@ -66,7 +67,7 @@ const SearchSetScreen: React.FC = () => {
   return (
     <ScreenProvider screenName="search">
       <ResultStatsProvider>
-        <ScrollViewScreen scrollEnabled={isScrollEnable}>
+        <ScrollViewScreen scrollEnabled={isScrollEnable} ref={scrollviewMainRef}>
           <BoxContainer borderRadius={BORDER_RADIUS_BIG} padding={PADDING_SEARCH_CONTAINER}>
             <View style={styles.searchContainer}>
               <ButtonIcon
@@ -86,9 +87,12 @@ const SearchSetScreen: React.FC = () => {
             {/* Afficher les sliders memoisés */}
             {renderedSliders}
           </BoxContainer>
-          <SearchSetScreenPressablesContainer scrollRef={scrollRef} />
+          <SearchSetScreenPressablesContainer
+            scrollviewSetsCardsRef={scrollviewSetsCardsRef}
+            scrollviewMainRef={scrollviewMainRef}
+          />
 
-          <SetCardsContainer ref={scrollRef} setsToShow={setsListFound} />
+          <SetCardsContainer ref={scrollviewSetsCardsRef} setsToShow={setsListFound} />
         </ScrollViewScreen>
         <TabBarHeightUpdater />
       </ResultStatsProvider>

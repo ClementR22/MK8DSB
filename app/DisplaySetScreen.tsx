@@ -15,6 +15,8 @@ import ScrollViewScreen from "@/components/ScrollViewScreen";
 import StatSelector from "@/components/statSelector/StatSelector";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
+import { StyleSheet, View } from "react-native";
+import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 
 const DisplaySetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -111,7 +113,10 @@ const DisplaySetScreen = () => {
           {!isReduceSetCards && (
             <SetCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
           )}
-          <StatSelector triggerButtonText="DisplayedStats" />
+
+          <View style={styles.mainButtonWrapper}>
+            <StatSelector triggerButtonText="DisplayedStats" />
+          </View>
 
           <StatGaugeComparesContainer setsColorsMap={setsColorsMap} scrollToSetCard={scrollToSetCard} />
         </ScrollViewScreen>
@@ -119,5 +124,11 @@ const DisplaySetScreen = () => {
     </ScreenProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  mainButtonWrapper: {
+    marginHorizontal: MARGIN_CONTAINER_LOWEST * 2,
+  },
+});
 
 export default React.memo(DisplaySetScreen);

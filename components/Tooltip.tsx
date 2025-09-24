@@ -12,6 +12,7 @@ interface TooltipProps {
   onPress?: () => void;
   style?: ViewStyle;
   placement?: TooltipPlacementType;
+  disabled?: boolean;
   children: React.ReactNode;
 }
 
@@ -20,6 +21,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   onPress = null,
   style,
   placement = PopoverPlacement.TOP,
+  disabled = false,
   children,
 }) => {
   const [showPopover, setShowPopover] = useState(false);
@@ -50,7 +52,7 @@ const Tooltip: React.FC<TooltipProps> = ({
 
   return (
     <>
-      <Pressable ref={touchableRef} onLongPress={openPopover} onPress={onPress} style={style}>
+      <Pressable ref={touchableRef} onLongPress={openPopover} onPress={onPress} disabled={disabled} style={style}>
         {children}
       </Pressable>
 

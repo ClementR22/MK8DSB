@@ -16,6 +16,8 @@ import { Text } from "react-native";
 import StatSelector from "@/components/statSelector/StatSelector";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
+import ResultsNumberSelector from "@/components/ResultsNumberSelector";
+import ButtonAndModal from "@/components/modal/ButtonAndModal";
 
 const SettingsScreen: React.FC = () => {
   const resetSettings = useResetSettings();
@@ -44,6 +46,10 @@ const SettingsScreen: React.FC = () => {
             <LanguageSelector />
 
             <ThemeSelector />
+
+            <ButtonAndModal modalTitle="NumberOfSearchResults" triggerButtonText="NumberOfSearchResults">
+              <ResultsNumberSelector />
+            </ButtonAndModal>
 
             <StatSelector triggerButtonText="ConfigureDefaultStats" />
 

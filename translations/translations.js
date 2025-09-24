@@ -36,7 +36,7 @@ const translations = {
     // modal title
     DesiredStats: "Desired stats",
     Filters: "Filters",
-    NumberOfResults: "Number of results",
+    NumberOfSearchResults: "Number of search results",
     DisplayedStatsInSets: "Displayed stats in sets",
     DisplayedStats: "Displayed stats",
     LoadASavedSet: "Load a saved set",
@@ -328,7 +328,7 @@ const translations = {
     // modal title
     DesiredStats: "Stats souhaitées",
     Filters: "Filtres",
-    NumberOfResults: "Nombre de résultats",
+    NumberOfSearchResults: "Nombre de résultats de recherche",
     DisplayedStatsInSets: "Stats affichées dans les sets",
     DisplayedStats: "Stats affichées",
     LoadASavedSet: "Charger un set enregistré",

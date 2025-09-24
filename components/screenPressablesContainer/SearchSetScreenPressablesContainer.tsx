@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { categories } from "@/data/elements/elementsData";
 import { setsData } from "@/data/setsData";
 import { translateToLanguage } from "@/translations/translations";
-import ResultsNumber from "../ResultsNumberSelector";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
@@ -19,17 +18,22 @@ import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 import StatSelector from "../statSelector/StatSelector";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 interface SearchSetScreenPressablesContainerProps {
-  scrollRef: React.RefObject<any>;
+  scrollviewSetsCardsRef: React.RefObject<any>;
+  scrollviewMainRef: React.RefObject<any>;
 }
 
-const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesContainerProps> = ({ scrollRef }) => {
+const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesContainerProps> = ({
+  scrollviewSetsCardsRef,
+  scrollviewMainRef,
+}) => {
   const language = useLanguageStore((state) => state.language);
 
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
-  const [resultsNumber, setResultsNumber] = useState(5);
+  const resultsNumber = useGeneralStore((state) => state.resultsNumber);
   const selectedClassIdsByCategory = usePressableElementsStore((state) => state.multiSelectedClassIdsByCategory);
   const [chosenBodytype, setChosenBodytype] = useState<Set<Bodytype>>(new Set());
   const [isResultsUpdated, setIsResultUpdated] = useState(false);
@@ -119,18 +123,31 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
 
       setSetsListFound(setsFound);
     }
-
-    scrollRef?.current?.scrollToStart();
-  }, [chosenStats, selectedClassIdsByCategory, chosenBodytype, resultsNumber, setSetsListFound, scrollRef]);
+  }, [chosenStats, selectedClassIdsByCategory, chosenBodytype, resultsNumber, setSetsListFound]);
 
   const handleSearch = useCallback(() => {
     setIsResultUpdated(true);
     search();
-  }, [search]);
+
+    scrollviewSetsCardsRef?.current?.scrollToStart();
+
+    setTimeout(() => {
+      scrollviewMainRef?.current?.scrollToEnd();
+    }, 20);
+  }, [search, scrollviewSetsCardsRef, scrollviewMainRef]);
 
   return (
     <View style={styles.screenPressablesContainer}>
       <StatSelector />
+
+      <Button
+        onPress={handleSearch}
+        iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}
+        disabled={isResultsUpdated}
+        flex={1}
+      >
+        <Text>{translateToLanguage("Search", language)}</Text>
+      </Button>
 
       <ButtonAndModal
         modalTitle="Filters"
@@ -146,23 +163,6 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
           <ElementsDeselector />
         </ElementPickerCompactSelectorPannel>
       </ButtonAndModal>
-
-      <Button
-        onPress={handleSearch}
-        iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}
-        disabled={isResultsUpdated}
-      >
-        <Text>{translateToLanguage("Search", language)}</Text>
-      </Button>
-
-      <ButtonAndModal
-        modalTitle="NumberOfResults"
-        customTrigger={
-          <ButtonIcon tooltipText="NumberOfResults" iconName="numbers" iconType={IconType.MaterialIcons} />
-        }
-      >
-        <ResultsNumber resultsNumber={resultsNumber} setResultsNumber={setResultsNumber} />
-      </ButtonAndModal>
     </View>
   );
 };
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginHorizontal: MARGIN_CONTAINER_LOWEST * 1.5,
+    gap: 15,
   },
 });
 

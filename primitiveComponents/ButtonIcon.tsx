@@ -17,6 +17,7 @@ export interface ButtonIconProps {
   buttonSize?: number;
   shape?: "circle" | "rectangle";
   style?: StyleProp<ViewStyle> | any;
+  disabled?: boolean;
   [key: string]: any;
 }
 
@@ -30,6 +31,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   buttonSize = 40,
   shape = "circle",
   style = null,
+  disabled = false,
   ...props
 }) => {
   const theme = useThemeStore((state) => state.theme);
@@ -45,8 +47,13 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   }, [shape, buttonSize]);
 
   const containerCombinedStyle = useMemo(() => {
-    return StyleSheet.flatten([styles.container, shapeStyle, { backgroundColor: theme.primary }, style]);
-  }, [shapeStyle, theme.primary, style]);
+    return StyleSheet.flatten([
+      styles.container,
+      shapeStyle,
+      { backgroundColor: disabled ? "grey" : theme.primary },
+      style,
+    ]);
+  }, [shapeStyle, theme.primary, disabled, style]);
 
   return (
     <ButtonBase
@@ -54,6 +61,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
       tooltipText={tooltipText}
       placement={toolTipPlacement}
       elevation={elevation}
+      disabled={disabled}
       {...props}
     >
       <IconContainer

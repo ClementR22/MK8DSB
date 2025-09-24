@@ -70,15 +70,6 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
 
     const [hasShownSearchQuestionIcon, setHasShownSearchQuestionIcon] = useState(false);
 
-    const { isInSearchScreen, isInDisplayScreen } = useMemo(() => {
-      const isSearch = screenName === "search";
-      const isDisplay = screenName === "display";
-      return {
-        isInSearchScreen: isSearch,
-        isInDisplayScreen: isDisplay,
-      };
-    }, [screenName]);
-
     const noSetToShow = useMemo(() => setsToShow.length === 0, [setsToShow]);
 
     const calculatedContentWidth: DimensionValue | undefined = useMemo(
@@ -98,14 +89,14 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
         return null;
       }
 
-      if (isInSearchScreen) {
+      if (screenName === "search") {
         if (!hasShownSearchQuestionIcon) {
           return <Placeholder type={"SearchEmpty"} />;
         }
         return <Placeholder type={"SearchNotFound"} />;
       }
       return <Placeholder type={"SavedEmpty"} />;
-    }, [noSetToShow, isInSearchScreen, language, theme.on_surface, hasShownSearchQuestionIcon, placeholderTextStyle]);
+    }, [noSetToShow, screenName, language, theme.on_surface, hasShownSearchQuestionIcon, placeholderTextStyle]);
 
     const memoizedSetCards = useMemo(() => {
       if (noSetToShow) {

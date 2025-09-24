@@ -9,6 +9,7 @@ type ButtonBaseProps = {
   placement?: TooltipPlacementType;
   elevation?: 1 | 3 | 6 | 8 | 12;
   containerStyle?: ViewStyle;
+  disabled?: boolean;
   [key: string]: any; // autres props à passer
 };
 
@@ -19,12 +20,20 @@ const ButtonBase = ({
   placement = "top",
   elevation,
   containerStyle,
+  disabled = false,
   ...props
 }: ButtonBaseProps) => {
   const Wrapper = tooltipText ? Tooltip : Pressable;
 
   return (
-    <Wrapper onPress={onPress} style={containerStyle} tooltipText={tooltipText} placement={placement} {...props}>
+    <Wrapper
+      onPress={onPress}
+      style={containerStyle}
+      tooltipText={tooltipText}
+      placement={placement}
+      disabled={disabled}
+      {...props}
+    >
       {children}
     </Wrapper>
   );
