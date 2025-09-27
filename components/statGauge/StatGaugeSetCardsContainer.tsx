@@ -3,23 +3,21 @@ import { useScreen } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import { statNamesCompact } from "@/data/stats/statsData";
-import { StyleSheet, View } from "react-native";
-import { useSetCardStyle } from "@/hooks/useSetCardStyle";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import StatGaugeContainer from "./StatGaugeContainer";
 import StatGaugeSetCardBar from "./StatGaugeSetCardBar";
 
 interface StatGaugeSetCardsContainerProps {
   setToShowStats: number[];
+  containerStyle: ViewStyle;
 }
 
-const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({ setToShowStats }) => {
+const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({ setToShowStats, containerStyle }) => {
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
   const { resultStats } = useResultStats();
 
   const chosenStats = useSetsStore((state) => state.chosenStats);
-
-  const { setCardStyle } = useSetCardStyle(); // la prop SET_CARD_WIDTH n'est pas nécessaire ici
 
   const memoizedSliders = useMemo(() => {
     const filteredResultStats = resultStats.filter((stat) => stat.checked);
@@ -29,7 +27,7 @@ const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({
     }
 
     return (
-      <View style={[styles.container, setCardStyle]}>
+      <View style={[styles.container, containerStyle]}>
         {filteredResultStats.map((stat: ResultStat) => {
           const originalIndex = resultStats.findIndex((item) => item.name === stat.name);
 
@@ -59,7 +57,7 @@ const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({
         })}
       </View>
     );
-  }, [resultStats, setToShowStats, isInSearchScreen, setCardStyle]);
+  }, [resultStats, setToShowStats, isInSearchScreen, containerStyle]);
 
   return <>{memoizedSliders}</>;
 };

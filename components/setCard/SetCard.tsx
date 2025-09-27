@@ -169,7 +169,7 @@ const SetCard: React.FC<SetCardProps> = ({
         />
       </View>
       {config.showStatSliderResult && setToShowStats !== null && (
-        <StatGaugeSetCardsContainer setToShowStats={setToShowStats} />
+        <StatGaugeSetCardsContainer setToShowStats={setToShowStats} containerStyle={setCardStyle} />
       )}
     </View>
   );

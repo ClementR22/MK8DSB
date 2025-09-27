@@ -97,7 +97,7 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
         key="speed"
         trigger={
           <ButtonIconSort
-            tooltipText="Speed"
+            tooltipText="speed"
             iconName={sortButtonsConfig.speed.iconName}
             iconType={sortButtonsConfig.speed.iconType}
             direction={statNamesSpeed.includes(activeSort as StatNameSpeed) ? currentDirection : undefined}
@@ -133,7 +133,7 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
         key="handling"
         trigger={
           <ButtonIconSort
-            tooltipText="Handling"
+            tooltipText="handling"
             iconName={sortButtonsConfig.handling.iconName}
             iconType={sortButtonsConfig.handling.iconType}
             direction={statNamesHandling.includes(activeSort as StatNameHandling) ? currentDirection : undefined}

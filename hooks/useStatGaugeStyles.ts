@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   thick: {
-    position: "absolute",
     height: "100%",
   },
 });

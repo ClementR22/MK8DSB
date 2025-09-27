@@ -108,7 +108,7 @@ const StatGaugeContainer = ({
           style={[
             styles.nameContainer,
             {
-              width: (vw / 360) * 40,
+              width: (vw / 360) * 45,
             },
           ]}
         >

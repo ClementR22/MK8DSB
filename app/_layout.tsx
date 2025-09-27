@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { Tabs, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { StatusBar as RNStatusBar } from "react-native";
+import { Platform, StatusBar as RNStatusBar } from "react-native";
 import * as NavigationBar from "expo-navigation-bar";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Appearance } from "react-native";
@@ -79,8 +79,10 @@ export default function TabLayout() {
   }, [fetchSetsSaved]); // Only re-run if fetchSetsSaved function identity changes
 
   useEffect(() => {
-    NavigationBar.setBackgroundColorAsync(theme.surface);
-    NavigationBar.setButtonStyleAsync(theme.theme === "light" ? "dark" : "light");
+    if (Platform.OS === "android") {
+      NavigationBar.setBackgroundColorAsync(theme.surface);
+      NavigationBar.setButtonStyleAsync(theme.theme === "light" ? "dark" : "light");
+    }
   });
 
   // Custom hook for loading settings (assuming it has its own internal effects)

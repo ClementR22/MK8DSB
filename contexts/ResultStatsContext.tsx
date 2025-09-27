@@ -1,9 +1,10 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState, ReactNode } from "react";
-import { toggleCheckList } from "@/utils/toggleCheck";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import { resultStatsInit } from "@/config/resultStatsInit";
 import { deepCompareStatArrays } from "@/utils/deepCompare";
 import { StatName } from "@/data/stats/statsTypes";
+import useSetsStore from "@/stores/useSetsStore";
+import { useScreen } from "./ScreenContext";
 
 export type ResultStat = {
   name: StatName;
@@ -28,8 +29,14 @@ export const ResultStatsProvider: React.FC<ResultStatsProviderProps> = ({ childr
 
   const [resultStats, setResultStats] = useState<ResultStats>(resultStatsInit);
 
+  const isResultStatsSync = useResultStatsDefaultStore((state) => state.isResultStatsSync);
+  const screenName = useScreen();
+  const chosenStats = useSetsStore((state) => state.chosenStats);
+
   useEffect(() => {
-    if (!deepCompareStatArrays(resultStatsDefault, resultStats)) {
+    if (isResultStatsSync && screenName === "search") {
+      setResultStats(chosenStats);
+    } else if (!deepCompareStatArrays(resultStatsDefault, resultStats)) {
       setResultStats(resultStatsDefault);
     }
   }, [resultStatsDefault]);
