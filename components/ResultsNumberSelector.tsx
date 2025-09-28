@@ -1,9 +1,10 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useGeneralStore from "@/stores/useGeneralStore";
+import ButtonAndModal from "./modal/ButtonAndModal";
 
 const MIN_RESULTS = 1;
 const MAX_RESULTS = 20;
@@ -13,35 +14,58 @@ const ResultsNumberSelector = () => {
   const resultsNumber = useGeneralStore((state) => state.resultsNumber);
   const setResultsNumber = useGeneralStore((state) => state.setResultsNumber);
 
-  // Handlers optimisés sans dépendances sur resultsNumber
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [resultsNumberInModal, setResultsNumberInModal] = useState(resultsNumber);
+
+  useEffect(() => {
+    if (isModalVisible) {
+      // À l'ouverture : charger la valeur du store
+      setResultsNumberInModal(resultsNumber);
+    } else if (resultsNumber !== resultsNumberInModal) {
+      // À la fermeture : sauvegarder dans le store
+      setResultsNumber(resultsNumberInModal);
+    }
+  }, [isModalVisible]);
+
+  // Handlers optimisés avec useCallback correct
   const increment = useCallback(() => {
-    setResultsNumber(Math.min(resultsNumber + 1, MAX_RESULTS));
-  }, [setResultsNumber]);
+    setResultsNumberInModal((prev) => Math.min(prev + 1, MAX_RESULTS));
+  }, []);
 
   const decrement = useCallback(() => {
-    setResultsNumber(Math.max(resultsNumber - 1, MIN_RESULTS));
-  }, [setResultsNumber]);
+    setResultsNumberInModal((prev) => Math.max(prev - 1, MIN_RESULTS));
+  }, []);
 
-  // États dérivés simples (pas besoin de useMemo)
-  const canDecrement = resultsNumber > MIN_RESULTS;
-  const canIncrement = resultsNumber < MAX_RESULTS;
+  // États dérivés calculés à chaque render (pas de problème de performance ici)
+  const canDecrement = resultsNumberInModal > MIN_RESULTS;
+  const canIncrement = resultsNumberInModal < MAX_RESULTS;
+
+  // Style de texte mémorisé seulement si la couleur change souvent
+  const textStyle = [styles.resultsNumberText, { color: theme.on_surface }];
 
   return (
-    <View style={styles.container}>
-      <ButtonIcon
-        onPress={decrement}
-        iconName="minus"
-        iconType={IconType.MaterialCommunityIcons}
-        disabled={!canDecrement}
-      />
-      <Text style={[styles.resultsNumberText, { color: theme.on_surface }]}>{resultsNumber}</Text>
-      <ButtonIcon
-        onPress={increment}
-        iconName="plus"
-        iconType={IconType.MaterialCommunityIcons}
-        disabled={!canIncrement}
-      />
-    </View>
+    <ButtonAndModal
+      modalTitle="NumberOfSearchResults"
+      triggerButtonText="NumberOfSearchResults"
+      isModalVisibleProp={isModalVisible}
+      setIsModalVisibleProp={setIsModalVisible}
+    >
+      <View style={styles.container}>
+        <ButtonIcon
+          onPress={decrement}
+          iconName="minus"
+          iconType={IconType.MaterialCommunityIcons}
+          disabled={!canDecrement}
+        />
+        <Text style={textStyle}>{resultsNumberInModal}</Text>
+        <ButtonIcon
+          onPress={increment}
+          iconName="plus"
+          iconType={IconType.MaterialCommunityIcons}
+          disabled={!canIncrement}
+        />
+      </View>
+    </ButtonAndModal>
   );
 };
 

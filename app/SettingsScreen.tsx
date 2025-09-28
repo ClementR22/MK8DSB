@@ -47,9 +47,7 @@ const SettingsScreen: React.FC = () => {
 
             <ThemeSelector />
 
-            <ButtonAndModal modalTitle="NumberOfSearchResults" triggerButtonText="NumberOfSearchResults">
-              <ResultsNumberSelector />
-            </ButtonAndModal>
+            <ResultsNumberSelector />
 
             <StatSelector triggerButtonText="ConfigureDefaultStats" />
 

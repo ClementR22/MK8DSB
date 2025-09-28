@@ -17,8 +17,6 @@ const StatGaugeSetCardBar = ({ obtainedValue, chosenValue, isInSearchScreen = fa
   const { getWidth, handleGaugeLayout } = useGaugeMetrics();
   const stylesDynamic = useStatGaugeStyles();
 
-  console.log({ obtainedValue, chosenValue });
-
   // Memoized calculations
   const gaugeData = useMemo(() => {
     const isBonus = chosenValue !== undefined && obtainedValue > chosenValue;

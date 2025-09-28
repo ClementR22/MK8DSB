@@ -21,7 +21,7 @@ import {
   saveThingInMemory,
 } from "@/utils/asyncStorageOperations";
 import { SortableElement, sortElements } from "@/utils/sortElements";
-import { CHOSEN_STATS_DEFAULT_SELECTED } from "@/constants/constants";
+import { CHOSEN_STATS_DEFAULT_SELECTED, SORT_NUMBER_SAVED_SETS_DEFAULT } from "@/constants/constants";
 
 const MAX_NUMBER_SETS_DISPLAY = 10;
 export interface ChosenStat {
@@ -62,7 +62,7 @@ export interface SetsStoreState {
   updateStatValue: (name: StatName, newValue: number) => void;
   removeStat: (name: StatName) => void;
   setStatFilterNumber: (statName: string, newState: number) => void;
-  setSortNumberSavedSets: (newSortNumberSavedSets: number) => void;
+  setSortNumberSavedSets: (newSortNumberSavedSets: number) => Promise<void>;
   fetchSetsSavedKeys: () => Promise<string[]>;
   fetchSetsSaved: () => Promise<void>;
   addNewSetInDisplay: () => void;
@@ -102,7 +102,7 @@ const setDefault2: SetObject = {
 };
 
 const useSetsStore = create<SetsStoreState>((set, get) => ({
-  chosenStats: statNames.map((statName, index) => ({
+  chosenStats: statNames.map((statName) => ({
     name: statName,
     checked: CHOSEN_STATS_DEFAULT_SELECTED.includes(statName),
     value: 0,
@@ -116,7 +116,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   setCardEditedId: null,
   setKeyInDisplay: 2,
 
-  sortNumberSavedSets: 0,
+  sortNumberSavedSets: SORT_NUMBER_SAVED_SETS_DEFAULT,
 
   setChosenStats: (newChosenStats) => {
     set({ chosenStats: newChosenStats });
@@ -173,8 +173,8 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     }));
   },
 
-  setSortNumberSavedSets: (newSortNumberSavedSets) => {
-    saveThingInMemory("sortNumberSavedSets", newSortNumberSavedSets);
+  setSortNumberSavedSets: async (newSortNumberSavedSets) => {
+    await saveThingInMemory("sortNumberSavedSets", newSortNumberSavedSets);
     set({ sortNumberSavedSets: newSortNumberSavedSets });
   },
 
@@ -185,7 +185,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
 
   fetchSetsSaved: async () => {
     const setsKeys = await get().fetchSetsSavedKeys();
-    // Utilise Promise.all pour récupérer tous les sets en parallèle
     const setsData = await AsyncStorage.multiGet(setsKeys);
     const setsDataParsed: SetObject[] = setsData
       .map(([, value]) => {

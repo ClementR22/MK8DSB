@@ -1,4 +1,5 @@
-import { ScreenName } from "@/contexts/ScreenContext";
+import { RESULTS_NUMBER_DEFAULT } from "@/constants/constants";
+import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 import { create } from "zustand";
 
 interface GeneralStoreState {
@@ -39,8 +40,11 @@ const useGeneralStore = create<GeneralStoreState>((set, get) => ({
     return get().isAnyModalVisible ? -get().statusBarHeight : 0;
   },
 
-  resultsNumber: 5,
-  setResultsNumber: (newResultsNumber: number) => set({ resultsNumber: newResultsNumber }),
+  resultsNumber: RESULTS_NUMBER_DEFAULT,
+  setResultsNumber: async (newResultsNumber: number) => {
+    await saveThingInMemory("resultsNumber", newResultsNumber);
+    set({ resultsNumber: newResultsNumber });
+  },
 }));
 
 export default useGeneralStore;
