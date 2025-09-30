@@ -1,5 +1,6 @@
 export interface ThemeColor {
-  theme: string;
+  theme: "dark" | "light";
+  theme_surface: "dark" | "light";
   primary: string;
   on_primary: string;
   primary_container: string;

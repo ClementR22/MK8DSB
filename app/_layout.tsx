@@ -2,8 +2,7 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { Tabs, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Platform, StatusBar as RNStatusBar } from "react-native";
-import * as NavigationBar from "expo-navigation-bar";
+import { StatusBar as RNStatusBar } from "react-native";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Appearance } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -78,13 +77,6 @@ export default function TabLayout() {
     fetchSetsSaved();
   }, [fetchSetsSaved]); // Only re-run if fetchSetsSaved function identity changes
 
-  useEffect(() => {
-    if (Platform.OS === "android") {
-      NavigationBar.setBackgroundColorAsync(theme.surface);
-      NavigationBar.setButtonStyleAsync(theme.theme === "light" ? "dark" : "light");
-    }
-  });
-
   // Custom hook for loading settings (assuming it has its own internal effects)
   useLoadSettings();
 
@@ -148,7 +140,7 @@ export default function TabLayout() {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: theme.surface }} edges={["top"]}>
         <PaperProvider>
-          <StatusBar backgroundColor={theme.surface_container} style={theme.theme === "light" ? "dark" : "light"} />
+          <StatusBar style={theme.theme_surface} />
           <Tabs
             screenOptions={{
               tabBarActiveTintColor: theme.primary,
