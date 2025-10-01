@@ -1,4 +1,3 @@
-// app/_layout_tabs.tsx
 import React, { useCallback, useEffect, useMemo } from "react";
 import { Tabs, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -12,7 +11,7 @@ import { PaperProvider } from "react-native-paper";
 import CustomHeader from "@/components/CustomHeader";
 import ModalEditSet from "@/components/modal/ModalEditSet";
 import ModalLoadSet from "@/components/modal/ModalLoadSet";
-import Snackbar from "@/primitiveComponents/Snackbar";
+import Toast from "react-native-toast-message";
 // Help Components - Memoized for performance
 import HelpSearchSetScreen from "@/components/helpScreens/HelpSearchSetScreen";
 import HelpDisplaySetScreen from "@/components/helpScreens/HelpDisplaySetScreen";
@@ -29,6 +28,7 @@ import { useLoadSettings } from "@/hooks/useLoadSettings";
 import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import useGeneralStore from "@/stores/useGeneralStore";
+import { toastConfig } from "@/config/toastConfig";
 
 // Helper function to derive screen name from pathname
 // This can be extracted to a separate utility file if used elsewhere
@@ -205,7 +205,7 @@ export default function TabLayout() {
           {/* Modals and Snackbar are placed outside Tabs to ensure they render above everything */}
           <ModalEditSet />
           <ModalLoadSet />
-          <Snackbar />
+          <Toast config={toastConfig} />
         </PaperProvider>
       </SafeAreaView>
     </SafeAreaProvider>

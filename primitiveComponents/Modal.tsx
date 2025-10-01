@@ -4,12 +4,13 @@ import { translate } from "@/translations/translations";
 import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
-import Snackbar from "./Snackbar";
 import {
   BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,
   BORDER_RADIUS_MODAL_CONTAINER,
   MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER,
 } from "@/utils/designTokens";
+import Toast from "react-native-toast-message";
+import { toastConfig } from "@/config/toastConfig";
 
 interface ModalButtonProps {
   text: string;
@@ -149,7 +150,7 @@ const Modal = ({
             {<ModalButton text={closeButtonText} onPress={actualOnPressClose} />}
           </View>
         </Pressable>
-        <Snackbar />
+        <Toast config={toastConfig} />
       </Pressable>
     </NativeModal>
   );

@@ -1,24 +1,35 @@
-/**
- * Made thanks to https://github.com/callstack/react-native-paper/issues/2825#issuecomment-1507560542
- */
+import Toast from "react-native-toast-message";
 
-type Listener = (title: string) => void;
+type ToastType = "success" | "error" | "info";
 
-class SnackbarManager {
-  listener: Listener | null = null;
-
+class ToastManager {
   constructor() {
     this.show = this.show.bind(this);
-    this.setListener = this.setListener.bind(this);
+    this.success = this.success.bind(this);
+    this.error = this.error.bind(this);
+    this.info = this.info.bind(this);
   }
 
-  setListener(listener: Listener | null): void {
-    this.listener = listener;
+  show(title: string, type: ToastType = "info"): void {
+    Toast.show({
+      type,
+      text1: title,
+      position: "bottom",
+      visibilityTime: 2000,
+    });
   }
 
-  show(title: string): void {
-    this.listener?.(title);
+  success(title: string): void {
+    this.show(title, "success");
+  }
+
+  error(title: string): void {
+    this.show(title, "error");
+  }
+
+  info(title: string): void {
+    this.show(title, "info");
   }
 }
 
-export default new SnackbarManager();
+export default new ToastManager();
