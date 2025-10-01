@@ -1,18 +1,20 @@
 import { MAX_STAT_VALUE } from "@/constants/constants";
 import { useGaugeMetrics } from "@/hooks/useGaugeMetrics";
 import { useStatGaugeStyles } from "@/hooks/useStatGaugeStyles";
+import { ContextId } from "@/stores/useGaugeStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import React, { useCallback, useMemo, useState } from "react";
 import { StyleSheet, Text, View, LayoutChangeEvent } from "react-native";
 
 interface StatGaugeBarProps {
   value: number;
+  contextId: ContextId;
 }
 
-const StatGaugeBar = ({ value }: StatGaugeBarProps) => {
+const StatGaugeBar = ({ value, contextId }: StatGaugeBarProps) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const { gaugeWidth, getWidth, handleGaugeLayout } = useGaugeMetrics();
+  const { gaugeWidth, getWidth, handleGaugeLayout } = useGaugeMetrics(contextId);
 
   const fillWidth = useMemo(() => getWidth(value), [value, gaugeWidth]);
 

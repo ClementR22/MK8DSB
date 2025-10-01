@@ -1,15 +1,22 @@
 import { MAX_STAT_VALUE } from "@/constants/constants";
-import { useCallback, useState } from "react";
-import { LayoutChangeEvent } from "react-native";
+import { ContextId, useGaugeStore } from "@/stores/useGaugeStore";
+import { useCallback, useMemo } from "react";
 
-export const useGaugeMetrics = () => {
-  const [gaugeWidth, setGaugeWidth] = useState(0);
+export const useGaugeMetrics = (contextId: ContextId) => {
+  // Sélecteur optimisé : ne re-render que si LA largeur de CE contexte change
+  const gaugeWidth = useGaugeStore((state) => state.gaugeWidths[contextId] ?? 0);
+  const createLayoutHandler = useGaugeStore((state) => state.createLayoutHandler);
 
-  const getWidth = useCallback((val: number) => (val / MAX_STAT_VALUE) * gaugeWidth, [gaugeWidth]);
+  // Mémorisé par contextId pour éviter de recréer à chaque render
+  const handleGaugeLayout = useMemo(() => createLayoutHandler(contextId), [contextId, createLayoutHandler]);
 
-  const handleGaugeLayout = useCallback((e: LayoutChangeEvent) => {
-    setGaugeWidth(e.nativeEvent.layout.width);
-  }, []);
+  const getWidth = useCallback(
+    (value: number, maxValue: number = MAX_STAT_VALUE) => {
+      if (gaugeWidth === 0) return 0;
+      return (gaugeWidth * value) / maxValue;
+    },
+    [gaugeWidth]
+  );
 
   return { gaugeWidth, getWidth, handleGaugeLayout };
 };

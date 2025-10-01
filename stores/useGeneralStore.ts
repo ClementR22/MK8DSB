@@ -1,19 +1,26 @@
 import { RESULTS_NUMBER_DEFAULT } from "@/constants/constants";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
+import { LayoutChangeEvent } from "react-native";
 import { create } from "zustand";
 
 interface GeneralStoreState {
   isScrollEnable: boolean;
   setIsScrollEnable: (newIsScrollEnable: boolean) => void;
+
   tabBarHeight: number;
   setTabBarHeight: (height: number) => void;
+
   showAllStatGaugeBonuses: boolean;
   toggleAllStatGaugeBonuses: () => void;
+
   isAnyModalVisible: boolean;
   setIsAnyModalVisible: (newIsAnyModalVisible: boolean) => void;
+
   statusBarHeight: number;
   setStatusBarHeight: (newStatusBarHeight: number) => void;
+
   getTooltipVerticalOffset: () => number;
+
   resultsNumber: number;
   setResultsNumber: (newResultsNumber: number) => void;
 }
@@ -36,9 +43,7 @@ const useGeneralStore = create<GeneralStoreState>((set, get) => ({
   statusBarHeight: 0,
   setStatusBarHeight: (newStatusBarHeight: number) => set({ statusBarHeight: newStatusBarHeight }),
 
-  getTooltipVerticalOffset: () => {
-    return get().isAnyModalVisible ? -get().statusBarHeight : 0;
-  },
+  getTooltipVerticalOffset: () => (get().isAnyModalVisible ? -get().statusBarHeight : 0),
 
   resultsNumber: RESULTS_NUMBER_DEFAULT,
   setResultsNumber: async (newResultsNumber: number) => {

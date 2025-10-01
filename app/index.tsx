@@ -47,7 +47,7 @@ const SearchSetScreen: React.FC = () => {
             value={stat.value}
             statFilterNumber={stat.statFilterNumber}
           >
-            <StatGaugeBar value={stat.value} />
+            <StatGaugeBar value={stat.value} contextId="stat-gauge-compact" />
           </StatGaugeContainer>
         );
       } else

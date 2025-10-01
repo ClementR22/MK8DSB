@@ -56,7 +56,7 @@ const ElementCard: React.FC<ElementCardProps> = memo(
           {isRelativeValue ? (
             <StatGaugeRelativeBar value={value} maxValue={maxValue} />
           ) : (
-            <StatGaugeBar value={value} />
+            <StatGaugeBar value={value} contextId="stat-gauge-gallery" />
           )}
         </StatGaugeContainer>
       ),

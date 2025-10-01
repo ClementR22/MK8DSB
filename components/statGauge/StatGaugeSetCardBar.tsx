@@ -13,7 +13,9 @@ interface StatGaugeSetCardBarProps {
 
 const StatGaugeSetCardBar = ({ obtainedValue, chosenValue, isInSearchScreen = false }: StatGaugeSetCardBarProps) => {
   const theme = useThemeStore((state) => state.theme);
-  const { getWidth, handleGaugeLayout } = useGaugeMetrics();
+
+  const { getWidth, handleGaugeLayout } = useGaugeMetrics("stat-gauge-set-card");
+
   const stylesDynamic = useStatGaugeStyles();
 
   // Memoized calculations

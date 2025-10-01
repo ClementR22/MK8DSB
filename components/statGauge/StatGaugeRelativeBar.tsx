@@ -1,9 +1,9 @@
 import { useThemeStore } from "@/stores/useThemeStore";
-import React, { useCallback, useMemo, useState } from "react";
-import { StyleSheet, Text, View, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent } from "react-native";
+import React, { useCallback, useMemo } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { getBonusColor } from "@/utils/getBonusColor";
-import { useGaugeMetrics } from "@/hooks/useGaugeMetrics";
 import { useStatGaugeStyles } from "@/hooks/useStatGaugeStyles";
+import { useGaugeMetrics } from "@/hooks/useGaugeMetrics";
 
 interface StatGaugeRelativeBarProps {
   value: number;
@@ -12,7 +12,8 @@ interface StatGaugeRelativeBarProps {
 
 const StatGaugeRelativeBar = ({ value, maxValue = 6 }: StatGaugeRelativeBarProps) => {
   const theme = useThemeStore((state) => state.theme);
-  const { gaugeWidth, handleGaugeLayout } = useGaugeMetrics();
+
+  const { gaugeWidth, handleGaugeLayout } = useGaugeMetrics("stat-gauge-gallery");
 
   const getWidth = useCallback((val: number) => (gaugeWidth * Math.abs(val)) / (maxValue * 2), [gaugeWidth, maxValue]);
 
@@ -50,6 +51,7 @@ const StatGaugeRelativeBar = ({ value, maxValue = 6 }: StatGaugeRelativeBarProps
           {
             backgroundColor: fillBackgroundColor,
             width: fillWidth,
+            position: "absolute",
           },
           value > 0
             ? { left: gaugeWidth / 2, borderTopRightRadius: 12, borderBottomRightRadius: 12 }
