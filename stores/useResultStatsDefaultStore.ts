@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { toggleAndGetChecks } from "@/utils/toggleCheck";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
-import { resultStatsInit } from "@/config/resultStatsInit";
+import { resultStatsDefaultInit } from "@/config/resultStatsInit";
 import { ResultStats } from "@/contexts/ResultStatsContext";
 import { IS_RESULT_STATS_SYNC } from "@/constants/constants";
 
@@ -22,7 +22,7 @@ export const useResultStatsDefaultStore = create<ResultStatsDefaultStore>((set, 
     set({ isResultStatsSync: newValue });
   },
 
-  resultStatsDefault: resultStatsInit,
+  resultStatsDefault: resultStatsDefaultInit,
 
   async setResultStatsDefault(newList) {
     await saveThingInMemory("resultStatsDefault", newList);

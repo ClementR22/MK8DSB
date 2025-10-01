@@ -1,6 +1,6 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState, ReactNode } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState, ReactNode } from "react";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
-import { resultStatsInit } from "@/config/resultStatsInit";
+import { resultStatsSaveScreenInit } from "@/config/resultStatsInit";
 import { deepCompareStatArrays } from "@/utils/deepCompare";
 import { StatName } from "@/data/stats/statsTypes";
 import useSetsStore from "@/stores/useSetsStore";
@@ -25,17 +25,21 @@ interface ResultStatsProviderProps {
 }
 
 export const ResultStatsProvider: React.FC<ResultStatsProviderProps> = ({ children }) => {
+  const screenName = useScreen();
   const resultStatsDefault = useResultStatsDefaultStore((state) => state.resultStatsDefault);
 
-  const [resultStats, setResultStats] = useState<ResultStats>(resultStatsInit);
+  const [resultStats, setResultStats] = useState<ResultStats>(
+    screenName === "save" ? resultStatsSaveScreenInit : resultStatsDefault
+  );
 
   const isResultStatsSync = useResultStatsDefaultStore((state) => state.isResultStatsSync);
-  const screenName = useScreen();
-  const chosenStats = useSetsStore((state) => state.chosenStats);
 
+  // useEffect est exécuté au lancement ET à chaque changement de resultStatsDefault dans les settings
   useEffect(() => {
     if (isResultStatsSync && screenName === "search") {
-      setResultStats(chosenStats);
+      return;
+    } else if (screenName === "save") {
+      return;
     } else if (!deepCompareStatArrays(resultStatsDefault, resultStats)) {
       setResultStats(resultStatsDefault);
     }

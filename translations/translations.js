@@ -57,6 +57,7 @@ const translations = {
     Selected: "Selected",
     chosenStats: "param.",
     resultStats: "disp.",
+    AppliedOnMountForSetBuilderAndComparator: "Applied on mount for Set builder and Comparator",
 
     // placeholder
     SearchEmpty: "Search your dream set",
@@ -349,6 +350,7 @@ const translations = {
     Selected: "Sélectionnés",
     chosenStats: "param.",
     resultStats: "affich.",
+    AppliedOnMountForSetBuilderAndComparator: "Appliqué au démarrage pour le Set builder et le Comparateur",
 
     // placeholder
     SearchEmpty: "Recherchez le set de vos rêves",
