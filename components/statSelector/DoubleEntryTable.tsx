@@ -92,22 +92,18 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleSt
   );
 
   return (
-    <View style={styles.container}>
-      <DataTable>
-        {renderHeaders}
-        <ScrollView
-          style={[styles.scrollView, { borderColor: theme.outline_variant }]}
-          showsVerticalScrollIndicator={false}
-        >
+    <DataTable>
+      {renderHeaders}
+      <View style={[styles.scrollViewWrapper, { borderColor: theme.outline_variant }]}>
+        <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
           {rowNames.map(renderRow)}
         </ScrollView>
-      </DataTable>
-    </View>
+      </View>
+    </DataTable>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
   header: {
     height: 30,
     paddingRight: 0,
@@ -122,10 +118,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  scrollView: {
-    maxHeight: 300,
+  scrollViewWrapper: {
     borderTopWidth: 2,
     borderBottomWidth: 2,
+  },
+  scrollView: {
+    maxHeight: 300,
   },
   checkboxCell: {
     justifyContent: "center",

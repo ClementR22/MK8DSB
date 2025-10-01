@@ -171,7 +171,6 @@ const styles = StyleSheet.create({
     zIndex: 10,
     // cursor: "auto", // Web-specific. RN ignores.
     width: "90%",
-    maxWidth: 360,
     borderRadius: BORDER_RADIUS_MODAL_CONTAINER,
     paddingVertical: 12,
   },
