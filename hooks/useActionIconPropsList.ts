@@ -30,12 +30,14 @@ export function useActionIconPropsList(
   const exportSet = useSetsStore((state) => state.exportSet);
   const setSetCardEditedId = useSetsStore((state) => state.setSetCardEditedId);
   const saveSet = useSetsStore((state) => state.saveSet);
+  const unSaveSet = useSetsStore((state) => state.unSaveSet);
   const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
   const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
 
-  const handleSavePress = useCallback(() => {
-    saveSet(situation as ScreenName, setToShowId);
-  }, [setSetCardEditedId, setToShowId, situation, setIsRenameSetModalVisible, saveSet]);
+  const handleSavePress = useCallback(
+    () => (!isSaved ? saveSet(situation as ScreenName, setToShowId) : unSaveSet(situation as ScreenName, setToShowId)),
+    [setSetCardEditedId, setToShowId, situation, setIsRenameSetModalVisible, saveSet, isSaved]
+  );
 
   const handleRemovePress = useCallback(() => {
     if (situation !== "load") {

@@ -22,6 +22,7 @@ import {
 } from "@/utils/asyncStorageOperations";
 import { SortableElement, sortElements } from "@/utils/sortElements";
 import { CHOSEN_STATS_DEFAULT_SELECTED, SORT_NUMBER_SAVED_SETS_DEFAULT } from "@/constants/constants";
+import { arraysEqual } from "@/utils/deepCompare";
 
 const MAX_NUMBER_SETS_DISPLAY = 10;
 export interface ChosenStat {
@@ -77,6 +78,7 @@ export interface SetsStoreState {
   loadSetSearchToDisplay: (id: string) => void;
   checkNameUnique: (name: string, screenName: ScreenName) => boolean;
   saveSet: (screenName: ScreenName, id: string) => boolean;
+  unSaveSet: (screenName: ScreenName, id: string) => void;
   saveSetInMemory: (setToSave: SetObject) => Promise<void>;
   renameSet: (newName: string, screenName: ScreenName, id: string) => boolean;
   updateSetsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => Promise<void>;
@@ -367,6 +369,16 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
 
   saveSetInMemory: async (setToSave) => {
     await saveThingInMemory(setToSave.id, setToSave);
+  },
+
+  unSaveSet: (screenName: ScreenName, id) => {
+    const { setsList } = get().getSetsListFromScreenName(screenName);
+    const classIds = setsList.find((set) => set.id === id).classIds;
+
+    const removeSet = get().removeSet;
+    get().setsListSaved.forEach((set) => {
+      if (arraysEqual(set.classIds, classIds)) removeSet(set.id, "save");
+    });
   },
 
   renameSet: (newName, screenName, setToShowId) => {

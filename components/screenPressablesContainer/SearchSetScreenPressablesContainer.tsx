@@ -112,7 +112,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
       const setsFound: SetFoundObject[] = setsFoundIdGap.map(({ setId, gap }, index) => {
         const percentage = 100 * (1 - Math.sqrt(gap / worstGap));
         const percentageRounded = Number(percentage.toPrecision(3));
-        const setFoundData = setsData.get(setId);
+        const { bodytypes, ...setFoundData } = setsData.get(setId);
         return {
           ...setFoundData,
           id: nanoid(8),
