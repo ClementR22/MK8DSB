@@ -23,6 +23,7 @@ import {
 import { SortableElement, sortElements } from "@/utils/sortElements";
 import { CHOSEN_STATS_DEFAULT_SELECTED, SORT_NUMBER_SAVED_SETS_DEFAULT } from "@/constants/constants";
 import { arraysEqual } from "@/utils/deepCompare";
+import { router } from "expo-router";
 
 const MAX_NUMBER_SETS_DISPLAY = 10;
 export interface ChosenStat {
@@ -292,6 +293,8 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       value: setToLoad.stats[i],
     }));
     set({ chosenStats: newChosenStats });
+
+    router.push("/");
     showToast("Succès" + " " + "Les stats du set ont été chargées");
   },
 
