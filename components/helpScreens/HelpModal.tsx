@@ -26,7 +26,7 @@ export type HelpContentItem = {
 
 export type HelpModalProps = {
   title: string;
-  introHighlight: {
+  intro: {
     content: React.ReactNode;
     title?: string;
   };
@@ -37,9 +37,7 @@ export type HelpModalProps = {
   outroAdviceHighlightContent?: React.ReactNode;
 };
 
-const HelpModal: React.FC<HelpModalProps> = ({ title, introHighlight, sections, outroAdviceHighlightContent }) => {
-  const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
-
+const HelpModal: React.FC<HelpModalProps> = ({ title, intro, sections, outroAdviceHighlightContent }) => {
   const renderContentItem = (item: HelpContentItem, index: number) => {
     switch (item.type) {
       case "title":
@@ -78,18 +76,13 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, introHighlight, sections, 
     }
   };
 
-  const customTrigger = useMemo(
-    () => <ButtonIcon tooltipText={"DisplayedStatsInSets"} iconName={"help-circle"} iconType={IconType.Feather} />,
-    []
-  );
+  const customTrigger = useMemo(() => <ButtonIcon iconName={"help-circle"} iconType={IconType.Feather} />, []);
 
   return (
     <ButtonAndModal customTrigger={customTrigger} modalTitle={title}>
       <ScrollView scrollEnabled={true} style={{ maxHeight: 450 }}>
         <Pressable style={styles.container}>
-          <HelpHighlightBox type="info" title={introHighlight.title}>
-            {introHighlight.content}
-          </HelpHighlightBox>
+          <HelpText>{intro.content}</HelpText>
 
           <View style={styles.sections}>
             {sections.map((section, sectionIndex) => (

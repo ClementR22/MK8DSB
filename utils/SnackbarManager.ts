@@ -1,3 +1,7 @@
+/**
+ * Gestionnaire de toasts simplifié pour react-native-toast-message
+ */
+
 import Toast from "react-native-toast-message";
 
 type ToastType = "success" | "error" | "info";
@@ -11,12 +15,18 @@ class ToastManager {
   }
 
   show(title: string, type: ToastType = "info"): void {
-    Toast.show({
-      type,
-      text1: title,
-      position: "bottom",
-      visibilityTime: 2000,
-    });
+    // Masquer le toast actuel avant d'en afficher un nouveau
+    Toast.hide();
+
+    // Petit délai pour permettre l'animation de fermeture
+    setTimeout(() => {
+      Toast.show({
+        type,
+        text1: title,
+        position: "bottom",
+        visibilityTime: 2000,
+      });
+    }, 100);
   }
 
   success(title: string): void {

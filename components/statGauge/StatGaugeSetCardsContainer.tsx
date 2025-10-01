@@ -46,6 +46,7 @@ const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({
               value={statValue}
               isInSetCard={true}
               chosenValue={chosenValue}
+              bonusEnabled={isInSearchScreen}
             >
               <StatGaugeSetCardBar
                 obtainedValue={statValue}

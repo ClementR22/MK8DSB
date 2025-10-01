@@ -15,6 +15,7 @@ interface StatGaugeContainerProps {
   statFilterNumber?: number;
   chosenValue?: number;
   isInSetCard?: boolean;
+  bonusEnabled?: boolean;
   children: React.ReactElement;
 }
 
@@ -24,16 +25,12 @@ const StatGaugeContainer = ({
   statFilterNumber = 0,
   chosenValue,
   isInSetCard = false,
+  bonusEnabled = false,
   children,
 }: StatGaugeContainerProps) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const screenName = useScreen();
-
-  const isInSearchScreen = screenName === "search";
-
-  const showAllStatGaugeBonuses =
-    screenName === "search" ? useGeneralStore((state) => state.showAllStatGaugeBonuses) : false;
+  const showAllStatGaugeBonuses = bonusEnabled ? useGeneralStore((state) => state.showAllStatGaugeBonuses) : false;
   const toggleAllStatGaugeBonuses = useGeneralStore((state) => state.toggleAllStatGaugeBonuses);
 
   // Bonus trouvé
@@ -84,9 +81,9 @@ const StatGaugeContainer = ({
 
   // Handler mémoïsé pour le press
   const handlePress = useCallback(() => {
-    if (!isInSearchScreen) return;
+    if (!bonusEnabled) return;
     toggleAllStatGaugeBonuses();
-  }, [isInSearchScreen, toggleAllStatGaugeBonuses]);
+  }, [bonusEnabled, toggleAllStatGaugeBonuses]);
 
   return (
     <Pressable style={containerStyle} onPress={handlePress}>

@@ -10,7 +10,7 @@ const HelpFavoritesScreen = () => {
   return (
     <HelpModal
       title="Guide des Sets Favoris"
-      introHighlight={{
+      intro={{
         content: (
           <>
             <HelpBoldText>Centralisez et organisez</HelpBoldText> tous vos sets préférés pour y accéder rapidement.

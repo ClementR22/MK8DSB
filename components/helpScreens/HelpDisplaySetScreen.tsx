@@ -12,7 +12,7 @@ const HelpDisplaySetScreen = () => {
   return (
     <HelpModal
       title="Guide du Comparateur de Sets"
-      introHighlight={{
+      intro={{
         content: (
           <>
             <HelpBoldText>Comparez</HelpBoldText> jusqu'à 12 sets simultanément pour identifier le set qui vous

@@ -3,7 +3,6 @@ import { Text, View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal from "./HelpModal";
 import StatSliderPreview from "../statSlider/StatSliderPreview";
-import StatSliderCompact from "../statGauge/StatGaugeContainer";
 import { SET_CARD_WIDTH } from "@/utils/designTokens";
 import Button from "@/primitiveComponents/Button";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -11,7 +10,6 @@ import { translateToLanguage } from "@/translations/translations";
 import HelpBoldText from "../helpComponents/HelpBoldText";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
 import HelpText from "../helpComponents/HelpText";
-import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
 import StatGaugeContainer from "../statGauge/StatGaugeContainer";
 import StatGaugeSetCardBar from "../statGauge/StatGaugeSetCardBar";
 
@@ -21,7 +19,7 @@ const HelpSearchSetScreen = () => {
   return (
     <HelpModal
       title="Guide du Set Builder"
-      introHighlight={{
+      intro={{
         content: (
           <>
             <HelpBoldText>Créez la combinaison idéale</HelpBoldText> en définissant les statistiques que vous souhaitez.
@@ -50,8 +48,9 @@ const HelpSearchSetScreen = () => {
               content: (
                 <>
                   <StatSliderPreview name="speedGround" />
+                  <HelpText style={{ fontSize: 12, fontStyle: "italic" }}>appuyez longuement pour supprimer</HelpText>
                   <HelpText style={{ fontSize: 12, fontStyle: "italic" }}>
-                    ≈ : valeur approximative | = : valeur exacte | ≥ : valeur minimale
+                    {"≈ : valeur approximative" + "\n" + "= : valeur exacte" + "\n" + "≥ : valeur minimale"}
                   </HelpText>
                 </>
               ),
@@ -72,7 +71,7 @@ const HelpSearchSetScreen = () => {
                 <>
                   <HelpText>Les sets sont classés par score de correspondance</HelpText>
                   <View style={{ width: SET_CARD_WIDTH - 11 }}>
-                    <StatGaugeContainer name="SG" value={4} isInSetCard={true} chosenValue={5}>
+                    <StatGaugeContainer name="SG" value={4} isInSetCard={true} chosenValue={5} bonusEnabled={true}>
                       <StatGaugeSetCardBar obtainedValue={4} chosenValue={5} isInSearchScreen={true} />
                     </StatGaugeContainer>
                   </View>
