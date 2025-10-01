@@ -282,6 +282,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     } else {
       console.warn(`Attempted to remove set ${keyToRemove}, but no key found.`);
     }
+    showToast("Succès" + " " + "Le set a été supprimé des favoris.");
   },
 
   loadSetToSearch: (setToLoad) => {

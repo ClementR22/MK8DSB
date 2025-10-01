@@ -102,7 +102,7 @@ export default function TabLayout() {
 
   const renderDisplayHeader = useCallback(
     () => (
-      <CustomHeader helpComponent={memoizedHelpDisplaySetScreen}>
+      <CustomHeader icon="compare" helpComponent={memoizedHelpDisplaySetScreen}>
         {translateToLanguage("DisplaySetTitle", language)}
       </CustomHeader>
     ),

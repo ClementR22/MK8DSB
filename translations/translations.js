@@ -21,9 +21,9 @@ export const translateToLanguage = (key, language) => {
 const translations = {
   en: {
     // screen title
-    FindSetTitle: "Find a set",
-    DisplaySetTitle: "Compare sets",
-    SavedSetTitle: "Favorite sets",
+    FindSetTitle: "Set builder",
+    DisplaySetTitle: "Comparator",
+    SavedSetTitle: "Favorites",
     GalleryTitle: "Gallery",
     SettingsTitle: "Settings",
 
@@ -313,9 +313,9 @@ const translations = {
 
   fr: {
     // screen title
-    FindSetTitle: "Trouver un set",
-    DisplaySetTitle: "Comparer des sets",
-    SavedSetTitle: "Sets favoris",
+    FindSetTitle: "Set builder",
+    DisplaySetTitle: "Comparateur",
+    SavedSetTitle: "Favoris",
     GalleryTitle: "Galerie",
     SettingsTitle: "Paramètres",
 
