@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import IconContainer from "@/primitiveComponents/IconContainer";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { BORDER_RADIUS_INF } from "@/utils/designTokens";
+import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
 
 interface HelpButtonDescriptionProps {
   iconName: string;
@@ -12,7 +12,12 @@ interface HelpButtonDescriptionProps {
   description: string;
 }
 
-const HelpButtonDescription = ({ iconName, iconType, containerSize = 40, description }: HelpButtonDescriptionProps) => {
+const HelpButtonDescription = ({
+  iconName,
+  iconType,
+  containerSize = BUTTON_SIZE,
+  description,
+}: HelpButtonDescriptionProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   return (
@@ -40,7 +45,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     alignItems: "center",
   },
-  iconWrapper: { width: 40, alignItems: "center" },
+  iconWrapper: { width: BUTTON_SIZE, alignItems: "center" },
   description: {
     fontSize: 14,
   },

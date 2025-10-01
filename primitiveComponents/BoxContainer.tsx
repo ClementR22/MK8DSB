@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { DimensionValue, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
+import { MARGIN_CONTAINER_LOWEST, PADDING_BOX_CONTAINER } from "@/utils/designTokens";
 
 interface BoxContainerProps {
   children: React.ReactNode;
@@ -34,7 +34,7 @@ const BoxContainer = ({
   inputStyles,
   widthContainer = "100%",
   borderRadius = 12,
-  padding = 10,
+  padding = PADDING_BOX_CONTAINER,
   paddingHorizontal,
   flexWrap = "nowrap",
 }: BoxContainerProps) => {

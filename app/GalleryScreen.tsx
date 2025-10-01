@@ -1,12 +1,11 @@
 // GalleryScreen.tsx
 import React, { useState, useEffect, useMemo, useCallback, memo } from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import CategorySelector from "@/components/elementCompactSelector/selector/CategorySelector";
 import { Category } from "@/data/elements/elementsTypes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { sortElements } from "@/utils/sortElements";
-import SortModeSelector, { HALF_GAP } from "@/components/sortModeSelector/SortModeSelector";
 import ElementCard from "@/components/galleryComponents/ElementCard";
 import ElementPickerSelector from "@/components/galleryComponents/ElementPickerSelector";
 import ElementPickerSelectorPannel from "@/components/galleryComponents/ElementPickerSelectorPannel";
@@ -15,7 +14,6 @@ import { useGalleryAnimation } from "@/hooks/useGalleryAnimation";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
-import { LEFT_PANNEL_WIDTH_COLLAPSED, MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 
 // --- Main GalleryScreen Component ---
 const GalleryScreen = () => {

@@ -5,7 +5,7 @@ import ButtonBase from "./ButtonBase";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { TooltipPlacementType } from "@/components/Tooltip";
 import IconContainer from "./IconContainer";
-import { BORDER_RADIUS_INF } from "@/utils/designTokens";
+import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
 
 export interface ButtonIconProps {
   onPress?: (event?: Event) => void;
@@ -28,7 +28,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   elevation,
   iconName,
   iconType,
-  buttonSize = 40,
+  buttonSize = BUTTON_SIZE,
   shape = "circle",
   style = null,
   disabled = false,

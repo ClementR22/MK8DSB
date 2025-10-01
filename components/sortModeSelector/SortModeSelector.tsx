@@ -1,11 +1,8 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
-import ButtonIcon, { ButtonIconProps } from "@/primitiveComponents/ButtonIcon";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { sortButtonsConfig } from "@/config/sortButtonsConfig";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { StatNameHandling, StatNameSort, StatNameSpeed } from "@/data/stats/statsTypes";
+import { StatNameSort } from "@/data/stats/statsTypes";
 import {
   statNamesHandling,
   statNamesSortElementDefault,
@@ -14,40 +11,23 @@ import {
 } from "@/data/stats/statsData";
 import TooltipMenu from "../TooltipMenu";
 import ButtonIconSort from "./ButtonIconSort";
-import { BORDER_RADIUS_INF } from "@/utils/designTokens";
+import {
+  BORDER_RADIUS_INF,
+  BUTTON_SIZE,
+  GAP_SORT_MODE_SELECTOR,
+  MARGIN_CONTAINER_LOWEST,
+  PADDING_BOX_CONTAINER,
+} from "@/utils/designTokens";
 import { useScreen } from "@/contexts/ScreenContext";
+import { getCurrentDirection, getSortNameFromSortNumber, sortNameMap } from "@/utils/getSortNameFromSortNumber";
+import { vw } from "../styles/theme";
+import { IconType } from "react-native-dynamic-vector-icons";
 
 // Constants
-export const HALF_GAP = 7;
-
-const sortNameMap: { [key: string]: { asc: number; desc: number } } = {
-  id: { asc: 0, desc: 1 },
-  name: { asc: 2, desc: 3 },
-  speedGround: { asc: 4, desc: 5 },
-  speedAntiGravity: { asc: 6, desc: 7 },
-  speedWater: { asc: 8, desc: 9 },
-  speedAir: { asc: 10, desc: 11 },
-  handlingGround: { asc: 12, desc: 13 },
-  handlingAntiGravity: { asc: 14, desc: 15 },
-  handlingWater: { asc: 16, desc: 17 },
-  handlingAir: { asc: 18, desc: 19 },
-  acceleration: { asc: 20, desc: 21 },
-  weight: { asc: 22, desc: 23 },
-  traction: { asc: 24, desc: 25 },
-  miniTurbo: { asc: 26, desc: 27 },
-};
-
-function getSortNameFromSortNumber(sortNumber: number): StatNameSort | undefined {
-  for (const sortName in sortNameMap) {
-    if (sortNameMap.hasOwnProperty(sortName)) {
-      const { asc, desc } = sortNameMap[sortName];
-      if (sortNumber === asc || sortNumber === desc) {
-        return sortName as StatNameSort;
-      }
-    }
-  }
-  return undefined;
-}
+const NUMBER_OF_BUTTONS = 8;
+const CONTENT_WIDTH =
+  BUTTON_SIZE * NUMBER_OF_BUTTONS + GAP_SORT_MODE_SELECTOR * (NUMBER_OF_BUTTONS - 1) + 2 * PADDING_BOX_CONTAINER;
+const NEEDS_SCROLL = CONTENT_WIDTH > vw - 2 * MARGIN_CONTAINER_LOWEST;
 
 interface SortModeSelectorProps {
   sortNumber: number;
@@ -57,17 +37,12 @@ interface SortModeSelectorProps {
 
 const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortModeSelectorProps) => {
   const screenName = useScreen();
-
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const statNamesSortDefault = useMemo(
     () => (sortCase === "element" ? statNamesSortElementDefault : statNamesSortSetCardDefault),
     [sortCase]
   );
-
-  const getCurrentDirection = (sortNum: number) => {
-    return sortNum % 2 === 0 ? "asc" : "desc";
-  };
 
   const [currentDirection, setCurrentDirection] = useState<"asc" | "desc">(getCurrentDirection(sortNumber));
   const [activeSort, setActiveSort] = useState<StatNameSort>(
@@ -84,74 +59,45 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
 
       const newOrderInfo = sortNameMap[name];
       if (newOrderInfo) {
-        const newSortNumber = newDirection === "asc" ? newOrderInfo.asc : newOrderInfo.desc;
-        setSortNumber(newSortNumber);
+        setSortNumber(newDirection === "asc" ? newOrderInfo.asc : newOrderInfo.desc);
       }
     },
     [activeSort, currentDirection, setSortNumber]
   );
 
-  const renderSpeedMenu = useMemo(
-    () => (
+  // Fonction générique pour créer un menu tooltip
+  const createTooltipMenu = useCallback(
+    (
+      key: string,
+      statNames: readonly StatNameSort[],
+      tooltipText: string,
+      triggerIconName: string,
+      triggerIconType: IconType
+    ) => (
       <TooltipMenu
-        key="speed"
+        key={key}
         trigger={
           <ButtonIconSort
-            tooltipText="speed"
-            iconName={sortButtonsConfig.speed.iconName}
-            iconType={sortButtonsConfig.speed.iconType}
-            direction={statNamesSpeed.includes(activeSort as StatNameSpeed) ? currentDirection : undefined}
-            isBadge={statNamesSpeed.includes(activeSort as StatNameSpeed)}
+            tooltipText={tooltipText}
+            iconName={triggerIconName}
+            iconType={triggerIconType}
+            direction={statNames.includes(activeSort) ? currentDirection : undefined}
+            isBadge={statNames.includes(activeSort)}
             badgeContainerStyle={styles.badgeContainer}
           />
         }
       >
-        {statNamesSpeed.map((speedName) => {
-          const isActive = speedName === activeSort;
+        {statNames.map((name) => {
+          const config = sortButtonsConfig[name];
+          const isActive = name === activeSort;
           return (
             <ButtonIconSort
-              key={speedName}
-              onPress={() => handlePress(speedName)}
-              tooltipText={speedName}
-              iconName={sortButtonsConfig[speedName].iconName}
-              iconType={sortButtonsConfig[speedName].iconType}
-              iconBackgroundColor={sortButtonsConfig[speedName].iconBackgroundColor}
-              direction={isActive ? currentDirection : undefined}
-              isBadge={isActive}
-              badgeContainerStyle={styles.badgeContainer}
-            />
-          );
-        })}
-      </TooltipMenu>
-    ),
-    [activeSort, currentDirection, handlePress]
-  );
-
-  const renderHandlingMenu = useMemo(
-    () => (
-      <TooltipMenu
-        key="handling"
-        trigger={
-          <ButtonIconSort
-            tooltipText="handling"
-            iconName={sortButtonsConfig.handling.iconName}
-            iconType={sortButtonsConfig.handling.iconType}
-            direction={statNamesHandling.includes(activeSort as StatNameHandling) ? currentDirection : undefined}
-            isBadge={statNamesHandling.includes(activeSort as StatNameHandling)}
-            badgeContainerStyle={styles.badgeContainer}
-          />
-        }
-      >
-        {statNamesHandling.map((handlingName) => {
-          const isActive = handlingName === activeSort;
-          return (
-            <ButtonIconSort
-              key={handlingName}
-              onPress={() => handlePress(handlingName)}
-              tooltipText={handlingName}
-              iconName={sortButtonsConfig[handlingName].iconName}
-              iconType={sortButtonsConfig[handlingName].iconType}
-              iconBackgroundColor={sortButtonsConfig[handlingName].iconBackgroundColor}
+              key={name}
+              onPress={() => handlePress(name)}
+              tooltipText={name}
+              iconName={config.iconName}
+              iconType={config.iconType}
+              iconBackgroundColor={config.iconBackgroundColor}
               direction={isActive ? currentDirection : undefined}
               isBadge={isActive}
               badgeContainerStyle={styles.badgeContainer}
@@ -168,9 +114,15 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
       const iconConfig = sortButtonsConfig[name];
       if (!iconConfig) return null;
 
-      if (name === "speed") return renderSpeedMenu;
-      if (name === "handling") return renderHandlingMenu;
+      // Menus spéciaux
+      if (name === "speed") {
+        return createTooltipMenu("speed", statNamesSpeed, "speed", iconConfig.iconName, iconConfig.iconType);
+      }
+      if (name === "handling") {
+        return createTooltipMenu("handling", statNamesHandling, "handling", iconConfig.iconName, iconConfig.iconType);
+      }
 
+      // Boutons normaux
       const isActive = name === activeSort;
       return (
         <ButtonIconSort
@@ -185,25 +137,40 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
         />
       );
     });
-  }, [statNamesSortDefault, activeSort, currentDirection, handlePress, renderSpeedMenu, renderHandlingMenu]);
+  }, [statNamesSortDefault, activeSort, currentDirection, handlePress, createTooltipMenu]);
 
   const containerStyle = useMemo(
-    () => ({ ...styles.container, paddingHorizontal: screenName === "search" ? HALF_GAP : 10 }),
+    () => [
+      styles.container,
+      { paddingHorizontal: screenName === "search" ? GAP_SORT_MODE_SELECTOR : PADDING_BOX_CONTAINER },
+      !NEEDS_SCROLL && styles.spaceAround,
+    ],
     [screenName]
   );
 
+  const Wrapper = NEEDS_SCROLL ? ScrollView : View;
+  const wrapperProps = NEEDS_SCROLL ? { horizontal: true, scrollEnabled: isScrollEnable } : {};
+
   return (
-    <ScrollView horizontal scrollEnabled={isScrollEnable}>
-      <Pressable style={containerStyle}>{mainButtons}</Pressable>
-    </ScrollView>
+    <View style={styles.wrapper}>
+      <Wrapper {...wrapperProps}>
+        <Pressable style={containerStyle}>{mainButtons}</Pressable>
+      </Wrapper>
+    </View>
   );
 });
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
   container: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: GAP_SORT_MODE_SELECTOR,
+  },
+  spaceAround: {
+    justifyContent: "space-around",
   },
   badgeContainer: {
     position: "absolute",

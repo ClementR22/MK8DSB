@@ -3,7 +3,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { Category } from "@/data/elements/elementsTypes";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import SortModeSelector, { HALF_GAP } from "../sortModeSelector/SortModeSelector";
+import SortModeSelector from "../sortModeSelector/SortModeSelector";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
@@ -14,7 +14,12 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import CategorySelector from "./selector/CategorySelector";
 import PaginatedWrapper from "../paginatedWrapper/PaginatedWrapper";
 import ElementsGrid, { ELEMENTS_GRID_WIDTH, ELEMENTS_PER_PAGE } from "./selector/ElementsGrid";
-import { BORDER_RADIUS_12, PADDING_PAGINATED_WRAPPER_CONTAINER } from "@/utils/designTokens";
+import {
+  BORDER_RADIUS_12,
+  BUTTON_SIZE,
+  GAP_SORT_MODE_SELECTOR,
+  PADDING_PAGINATED_WRAPPER_CONTAINER,
+} from "@/utils/designTokens";
 import Separator from "../Separator";
 
 interface ElementPickerCompactSelectorPannelProps {
@@ -97,7 +102,7 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
                 tooltipText={tooltipText}
               />
             </View>
-            <Separator direction="vertical" length={40} />
+            <Separator direction="vertical" length={BUTTON_SIZE} />
           </>
         )}
         <View style={styles.controlsContainer}>
@@ -137,9 +142,9 @@ const styles = StyleSheet.create({
     marginVertical: 2,
     height: 54,
   },
-  buttonToggleWrapper: { marginHorizontal: HALF_GAP },
+  buttonToggleWrapper: { marginHorizontal: GAP_SORT_MODE_SELECTOR },
   controlsContainer: { justifyContent: "center", flexGrow: 1, flexShrink: 1 },
-  bodytypeSelectorWrapper: { marginHorizontal: HALF_GAP },
+  bodytypeSelectorWrapper: { marginHorizontal: GAP_SORT_MODE_SELECTOR },
   paginatedWrapperContainer: {
     borderRadius: BORDER_RADIUS_12,
     overflow: "hidden",

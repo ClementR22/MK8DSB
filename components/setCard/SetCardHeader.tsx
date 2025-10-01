@@ -8,6 +8,7 @@ import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
 import { ScreenName } from "@/contexts/ScreenContext";
 import { actionNamesList } from "./SetCard";
 import SetNameInput from "../textInput/SetNameInput";
+import { BUTTON_SIZE } from "@/utils/designTokens";
 
 export interface SetCardHeaderProps {
   isNameEditable: boolean;
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    height: 40, // taille du buttonIcon
+    height: BUTTON_SIZE, // taille du buttonIcon
     gap: 10,
     marginBottom: 5,
   },

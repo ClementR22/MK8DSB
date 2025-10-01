@@ -7,9 +7,11 @@ import { useScreen } from "@/contexts/ScreenContext";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import ResultStatsSyncSwitch from "./ResultStatsSyncSwitch";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { translateToLanguage } from "@/translations/translations";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 export type StatList = ChosenStat[] | ResultStat[];
 
@@ -63,6 +65,8 @@ const getTriggerConfig = (screenName: string) => {
 };
 
 const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText }) => {
+  const language = useLanguageStore((state) => state.language);
+
   const theme = useThemeStore((state) => state.theme);
   const screenName = useScreen();
 
@@ -181,6 +185,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText }) => {
       setIsModalVisibleProp={setIsModalVisible}
     >
       <View style={{ backgroundColor: theme.surface, padding: 16 }}>
+        <Text>{translateToLanguage("AppliedOnMountForSetBuilderAndComparator", language)}</Text>
         {screenName === "search" && (
           <ResultStatsSyncSwitch
             resultStats={statListsInModal.resultStats || []}

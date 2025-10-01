@@ -4,9 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { sortButtonsConfig } from "@/config/sortButtonsConfig";
-import { HALF_GAP } from "../sortModeSelector/SortModeSelector";
-import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
-import { BORDER_RADIUS_INF } from "@/utils/designTokens";
+import { BORDER_RADIUS_INF, GAP_SORT_MODE_SELECTOR } from "@/utils/designTokens";
 import Separator from "../Separator";
 
 // Constants
@@ -20,7 +18,6 @@ interface PagesNavigatorProps {
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   dotsNamesList?: ButtonName[];
-  moreDots?: React.ReactElement[];
   numberOfPages: number;
 }
 
@@ -28,7 +25,6 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({
   currentPage,
   setCurrentPage,
   dotsNamesList,
-  moreDots,
   numberOfPages,
 }) => {
   const theme = useThemeStore((state) => state.theme);
@@ -53,11 +49,6 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({
     [theme]
   );
 
-  const scrollViewStyle = useMemo(
-    () => ({ height: "100%", paddingRight: moreDots && HALF_GAP } as ViewStyle),
-    [moreDots]
-  );
-
   // Navigation state
   const { isLeftButtonDisabled, isRightButtonDisabled } = useMemo(
     () => ({
@@ -66,28 +57,6 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({
     }),
     [currentPage, numberOfPages]
   );
-
-  const scrollViewRef = useRef<ScrollView>(null);
-
-  // Fonction pour scroller vers la page active
-  const scrollToActiveDot = useCallback(() => {
-    if (!scrollViewRef.current) return;
-
-    // Calculer la position x pour centrer le dot actif
-    const dotWidth = PAGES_NAVIGATOR_DOTS_BUTTON_SIZE;
-    const gap = HALF_GAP; // Espace entre les dots
-    const offset = (dotWidth + gap) * currentPage; // - (STAT_SLIDER_COMPARE_WIDTH / 2 - dotWidth / 2);
-
-    scrollViewRef.current.scrollTo({
-      x: Math.max(0, offset),
-      animated: true,
-    });
-  }, [currentPage]);
-
-  // Appeler scrollToActiveDot quand currentPage change
-  useEffect(() => {
-    scrollToActiveDot();
-  }, [currentPage, scrollToActiveDot]);
 
   // Dots rendering
   const renderDots = useMemo(() => {
@@ -142,21 +111,13 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({
 
       <View style={styles.dotsContainer}>
         <ScrollView
-          ref={scrollViewRef}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollViewContent}
-          style={scrollViewStyle}
+          style={styles.scrollView}
         >
           {renderDots}
         </ScrollView>
-
-        {moreDots && (
-          <>
-            <Separator direction="vertical" />
-            <View style={styles.moreDotsContainer}>{moreDots}</View>
-          </>
-        )}
       </View>
 
       <NavButton
@@ -200,9 +161,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
   },
+  scrollView: {
+    height: "100%",
+  },
   scrollViewContent: {
     alignItems: "center",
-    gap: HALF_GAP,
+    gap: GAP_SORT_MODE_SELECTOR,
   },
   navButton: {
     width: NAV_BUTTON_WIDTH,
@@ -211,11 +175,6 @@ const styles = StyleSheet.create({
   },
   navButtonDisabled: {
     opacity: 0.5,
-  },
-  moreDotsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginLeft: HALF_GAP,
   },
   dotPressable: {
     height: "100%",

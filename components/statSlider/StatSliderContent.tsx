@@ -9,7 +9,7 @@ import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { StatName } from "@/data/stats/statsTypes";
-import { BORDER_RADIUS_INF, BORDER_RADIUS_STAT_GAUGE_CONTAINER } from "@/utils/designTokens";
+import { BORDER_RADIUS_INF, BORDER_RADIUS_STAT_GAUGE_CONTAINER, BUTTON_SIZE } from "@/utils/designTokens";
 
 interface StatSliderContentProps {
   name: StatName;
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   valueWrapper: {
-    width: 40,
+    width: BUTTON_SIZE,
     alignItems: "flex-start",
   },
   buttonWrapper: { position: "absolute", bottom: 8 },

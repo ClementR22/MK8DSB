@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { BUTTON_SIZE } from "@/utils/designTokens";
 
 interface IconContainerProps {
   iconName: string;
@@ -15,7 +16,7 @@ interface IconContainerProps {
 const IconContainer = ({
   iconName,
   iconType,
-  containerSize = 40,
+  containerSize = BUTTON_SIZE,
   backgroundColor,
   iconColor,
   containerStyle,
@@ -23,7 +24,7 @@ const IconContainer = ({
 }: IconContainerProps) => {
   const { theme } = useThemeStore();
 
-  const iconSize = useMemo(() => (24 / 40) * containerSize, [containerSize]);
+  const iconSize = useMemo(() => (24 / BUTTON_SIZE) * containerSize, [containerSize]);
 
   return (
     <View
