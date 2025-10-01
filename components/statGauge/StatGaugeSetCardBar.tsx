@@ -2,7 +2,6 @@ import { BONUS_COLOR, MALUS_COLOR } from "@/constants/Colors";
 import { useGaugeMetrics } from "@/hooks/useGaugeMetrics";
 import { useStatGaugeStyles } from "@/hooks/useStatGaugeStyles";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { BORDER_RADIUS_INF } from "@/utils/designTokens";
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -24,79 +23,41 @@ const StatGaugeSetCardBar = ({ obtainedValue, chosenValue, isInSearchScreen = fa
     const chosenWidth = chosenValue !== undefined ? getWidth(chosenValue) : obtainedWidth;
     const purpleWidth = isInSearchScreen && isBonus ? chosenWidth : obtainedWidth;
     const bonusOrMalusWidth = Math.abs(chosenWidth - obtainedWidth);
-    return { isBonus, purpleWidth, bonusOrMalusWidth };
+    const bonusOrMalusColor = isBonus ? BONUS_COLOR : MALUS_COLOR;
+
+    return { isBonus, purpleWidth, bonusOrMalusWidth, bonusOrMalusColor };
   }, [obtainedValue, chosenValue, isInSearchScreen, getWidth]);
 
   // Créer les traits obliques pour les hachures
   const createHatchPattern = useMemo(() => {
-    const barHeight = 34; // Hauteur estimée
-    const spacing = 12; // Espacement entre les traits
-    const lineWidth = 1; // Épaisseur des traits
-    const totalWidth = gaugeData.bonusOrMalusWidth;
+    if (gaugeData.bonusOrMalusWidth <= 0) return [];
 
-    if (totalWidth <= 0) return [];
-
-    // Calculer le nombre de traits nécessaires
-    const diagonalLength = Math.sqrt(2) * barHeight; // Longueur diagonale
-    const numLines = Math.ceil((totalWidth + diagonalLength) / spacing);
+    const spacing = 10; // Espacement entre les traits
+    const numLines = 20;
 
     return Array.from({ length: numLines }, (_, i) => {
       const xPosition = i * spacing;
-      return (
-        <View
-          key={i}
-          style={{
-            position: "absolute",
-            left: xPosition,
-            top: -barHeight / 2, // Centrer verticalement
-            width: lineWidth,
-            height: diagonalLength,
-            backgroundColor: MALUS_COLOR,
-            transform: [{ rotate: "45deg" }],
-          }}
-        />
-      );
+      return <View key={i} style={[styles.hatch, { left: xPosition, backgroundColor: gaugeData.bonusOrMalusColor }]} />;
     });
-  }, [gaugeData.bonusOrMalusWidth]);
+  }, [gaugeData.bonusOrMalusWidth, gaugeData.bonusOrMalusColor]);
 
-  const MalusBar = useMemo(
-    () => (
+  const bonusOrMalusBar = useMemo(() => {
+    return (
       <View
         style={[
           stylesDynamic.thick,
           {
             width: gaugeData.bonusOrMalusWidth,
             overflow: "hidden",
-            position: "relative",
-            backgroundColor: "rgba(255, 0, 0, 0.1)", // Fond légèrement coloré
-            borderRightWidth: 1,
-            borderColor: MALUS_COLOR,
+            backgroundColor: gaugeData.isBonus ? theme.primary : "rgba(255, 0, 0, 0.1)", // Fond légèrement coloré
           },
+          !gaugeData.isBonus && styles.malus,
         ]}
       >
         {createHatchPattern}
       </View>
-    ),
-    [createHatchPattern, gaugeData.bonusOrMalusWidth, stylesDynamic.thick]
-  );
-
-  const BonusBar = useMemo(
-    () => (
-      <View
-        style={[
-          stylesDynamic.thick,
-          {
-            width: gaugeData.bonusOrMalusWidth,
-            borderColor: BONUS_COLOR,
-            borderTopWidth: 4,
-            borderBottomWidth: 4,
-            backgroundColor: theme.primary,
-          },
-        ]}
-      />
-    ),
-    [gaugeData.bonusOrMalusWidth, stylesDynamic.thick, theme.primary]
-  );
+    );
+  }, [gaugeData.isBonus, gaugeData.bonusOrMalusWidth, gaugeData.bonusOrMalusColor, stylesDynamic.thick]);
 
   return (
     <View style={stylesDynamic.emptyContainer} onLayout={handleGaugeLayout}>
@@ -107,16 +68,25 @@ const StatGaugeSetCardBar = ({ obtainedValue, chosenValue, isInSearchScreen = fa
           {
             backgroundColor: theme.primary,
             width: gaugeData.purpleWidth,
-            justifyContent: "center",
-            overflow: "hidden",
           },
         ]}
       />
 
       {/* rouge hachuré (indicatif) ou vert mélé au violet */}
-      {gaugeData.isBonus ? BonusBar : MalusBar}
+      {bonusOrMalusBar}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  malus: { borderRightWidth: 2, borderColor: MALUS_COLOR },
+  hatch: {
+    position: "absolute",
+    top: -17, // ~ moitié de la bar height, pour centrer verticalement
+    width: 2,
+    height: 50,
+    transform: [{ rotate: "45deg" }],
+  },
+});
 
 export default React.memo(StatGaugeSetCardBar);
