@@ -36,14 +36,23 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
   return (
     <BoxContainer alignItems={null} borderRadius={BORDER_RADIUS_BIG} paddingHorizontal={0}>
       {children && (
-        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            paddingHorizontal: isInGalleryScreen ? 10 : 0,
+          }}
+        >
           {children}
-          <ButtonIcon
-            onPress={toggleOpenSortView}
-            iconName="sort"
-            iconType={IconType.MaterialCommunityIcons}
-            tooltipText="SortSets"
-          />
+
+          {!isInGalleryScreen && (
+            <ButtonIcon
+              onPress={toggleOpenSortView}
+              iconName="sort"
+              iconType={IconType.MaterialCommunityIcons}
+              tooltipText="SortSets"
+            />
+          )}
         </View>
       )}
       {(isOpenSortView || isInGalleryScreen) && (
