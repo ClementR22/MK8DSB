@@ -6,7 +6,6 @@ export const BORDER_RADIUS_STAT_GAUGE_CONTAINER = HEIGHT_STAT_GAUGE_CONTAINER / 
 
 // Spacing
 export const PADDING_SEARCH_CONTAINER = 7;
-export const CARD_SPACING = 16;
 export const LIST_ITEM_SPACING = 8;
 export const PADDING_HORIZONTAL_ELEMENT_CARD = 20; // For screen-level padding
 export const BORDER_WIDTH_CATEGORY_SELECTOR = 4;

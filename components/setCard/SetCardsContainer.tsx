@@ -6,7 +6,7 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { SetObject } from "@/stores/useSetsStore";
-import { Placeholder } from "@/components/Placeholder";
+import Placeholder from "@/components/Placeholder";
 import { BORDER_RADIUS_BIG, MARGIN_CONTAINER_LOWEST, PADDING_SET_CARDS_CONTAINER } from "@/utils/designTokens";
 
 interface SetWithColor extends SetObject {

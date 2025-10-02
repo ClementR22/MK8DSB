@@ -1,10 +1,10 @@
+import { useContainerLowestStyle } from "@/hooks/useScreenStyle";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 interface ScrollViewScreenProps {
   scrollEnabled: boolean;
-  paddingBottom?: number;
   children: React.ReactNode;
 }
 
@@ -13,7 +13,7 @@ export interface ScrollViewScreenHandles {
 }
 
 const ScrollViewScreen = forwardRef<ScrollViewScreenHandles, ScrollViewScreenProps>(
-  ({ scrollEnabled, paddingBottom, children }, ref) => {
+  ({ scrollEnabled, children }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
 
     useImperativeHandle(ref, () => ({
@@ -22,14 +22,12 @@ const ScrollViewScreen = forwardRef<ScrollViewScreenHandles, ScrollViewScreenPro
       },
     }));
 
+    const containerLowestStyle = useContainerLowestStyle("scrollview");
+
     return (
       <ScrollView
         scrollEnabled={scrollEnabled}
-        contentContainerStyle={{
-          gap: MARGIN_CONTAINER_LOWEST,
-          paddingVertical: MARGIN_CONTAINER_LOWEST,
-          paddingBottom: paddingBottom,
-        }}
+        contentContainerStyle={containerLowestStyle}
         style={{ height: "100%" }}
         ref={scrollViewRef}
       >

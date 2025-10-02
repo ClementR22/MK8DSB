@@ -15,7 +15,7 @@ const iconName = {
   SavedEmpty: "heart-multiple",
 };
 
-export function Placeholder({ type }: PlaceholderProps) {
+function Placeholder({ type }: PlaceholderProps) {
   const theme = useThemeStore((state) => state.theme);
 
   return (
@@ -30,3 +30,5 @@ export function Placeholder({ type }: PlaceholderProps) {
     </BoxContainer>
   );
 }
+
+export default Placeholder;

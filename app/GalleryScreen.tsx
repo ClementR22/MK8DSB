@@ -1,6 +1,6 @@
 // GalleryScreen.tsx
 import React, { useState, useEffect, useMemo, useCallback, memo } from "react";
-import { View } from "react-native";
+import { Animated, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import CategorySelector from "@/components/elementCompactSelector/selector/CategorySelector";
 import { Category } from "@/data/elements/elementsTypes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -13,7 +13,8 @@ import { useSelectedElementData } from "@/hooks/useSelectedElementData";
 import { useGalleryAnimation } from "@/hooks/useGalleryAnimation";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import ScrollViewScreen from "@/components/ScrollViewScreen";
+import { useContainerLowestStyle } from "@/hooks/useScreenStyle";
+import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 
 // --- Main GalleryScreen Component ---
 const GalleryScreen = () => {
@@ -58,19 +59,36 @@ const GalleryScreen = () => {
     setIsLeftPannelExpanded(false);
   }, []);
 
-  const handleCollapsedCategoryPress = useCallback(() => {
-    setIsLeftPannelExpanded(true);
-  }, []);
-
   useEffect(() => {
     setSelectedElementId(categoryElementsSorted[0].id);
-  }, [selectedCategory, categoryElementsSorted]);
+  }, [selectedCategory]);
 
-  const isScr = useState(true);
+  const containerLowestStyle = useContainerLowestStyle("view");
 
   return (
     <ScreenProvider screenName="gallery">
-      <ScrollViewScreen scrollEnabled={true}>
+      <View style={containerLowestStyle}>
+        <ScrollView
+          style={{
+            position: "absolute",
+            right: MARGIN_CONTAINER_LOWEST,
+            bottom: 0,
+            left: 100,
+            top: 156 - 24,
+          }}
+          contentContainerStyle={{ paddingTop: MARGIN_CONTAINER_LOWEST + 24, paddingBottom: MARGIN_CONTAINER_LOWEST }} // MARGIN_CONTAINER_LOWEST
+          showsVerticalScrollIndicator={false}
+        >
+          <ElementCard name={selectedElementName} stats={selectedElementStats} category={selectedCategory} />
+        </ScrollView>
+
+        <Animated.View
+          style={[styles.overlay, { opacity: animatedOverlayOpacity, backgroundColor: "green" }]}
+          pointerEvents={isLeftPannelExpanded ? "auto" : "none"}
+        >
+          <Pressable style={[styles.flex, { backgroundColor: "red" }]} onPress={handleBackgroundPress} />
+        </Animated.View>
+
         <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
           <CategorySelector
             selectedCategory={selectedCategory}
@@ -79,28 +97,29 @@ const GalleryScreen = () => {
             animatedCategoryMarginLeft={animatedCategoryMarginLeft}
           />
         </ScreenPressablesContainer>
-        <View style={{ flex: 1 }}>
-          <ElementCard
-            name={selectedElementName}
-            stats={selectedElementStats}
-            category={selectedCategory}
-            animatedOverlayOpacity={animatedOverlayOpacity}
-            handleBackgroundPress={handleBackgroundPress}
-          />
 
-          <ElementPickerSelectorPannel animatedLeftPannelWidth={animatedLeftPannelWidth}>
-            <ElementPickerSelector
-              categoryElementsSorted={categoryElementsSorted}
-              selectedElementId={selectedElementId}
-              isLeftPannelExpanded={isLeftPannelExpanded}
-              onElementPickerPress={handleElementPickerPress}
-            />
-          </ElementPickerSelectorPannel>
-        </View>
-      </ScrollViewScreen>
+        <ElementPickerSelectorPannel animatedLeftPannelWidth={animatedLeftPannelWidth}>
+          <ElementPickerSelector
+            categoryElementsSorted={categoryElementsSorted}
+            selectedElementId={selectedElementId}
+            isLeftPannelExpanded={isLeftPannelExpanded}
+            onElementPickerPress={handleElementPickerPress}
+          />
+        </ElementPickerSelectorPannel>
+      </View>
     </ScreenProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  flex: {
+    flex: 1,
+  },
+});
 
 GalleryScreen.displayName = "GalleryScreen";
 

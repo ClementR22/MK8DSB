@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from "react";
 import { Animated, StyleSheet } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { BORDER_RADIUS_18, CARD_SPACING, SHADOW_STYLE } from "@/utils/designTokens";
+import { BORDER_RADIUS_18, SHADOW_STYLE } from "@/utils/designTokens";
 
 interface ElementPickerSelectorPannelProps {
   animatedLeftPannelWidth: Animated.Value;
@@ -31,18 +31,10 @@ ElementPickerSelectorPannel.displayName = "ElementPickerSelectorPannel";
 
 const styles = StyleSheet.create({
   container: {
-    borderTopEndRadius: BORDER_RADIUS_18, // Consistent radius
+    borderTopEndRadius: BORDER_RADIUS_18,
     borderEndEndRadius: BORDER_RADIUS_18,
     overflow: "hidden",
-    position: "absolute",
-    left: 0,
-    top: 0,
-    bottom: 0,
-    marginBottom: CARD_SPACING / 2,
-    paddingTop: CARD_SPACING / 2,
-    gap: CARD_SPACING / 2, // Small internal padding
-    borderLeftWidth: 0,
-    ...SHADOW_STYLE, // Apply shadow to the column
+    ...SHADOW_STYLE,
   },
 });
 
