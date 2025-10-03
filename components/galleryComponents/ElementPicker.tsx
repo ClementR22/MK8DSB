@@ -3,7 +3,7 @@ import {
   ELEMENT_PICKER_LIST_IMAGE_RATIO,
   ELEMENT_PICKER_LIST_IMAGE_SIZE,
   LIST_ITEM_SPACING,
-  SHADOW_STYLE_LIGHT,
+  SHADOW_STYLE_A,
 } from "@/utils/designTokens";
 import React, { memo } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
@@ -43,7 +43,7 @@ const defaultStyles = StyleSheet.create({
     marginVertical: LIST_ITEM_SPACING / 2, // Half spacing for vertical rhythm
     borderRadius: BORDER_RADIUS_12, // Medium rounded corners
     overflow: "hidden", // Ensures shadow works nicely
-    ...SHADOW_STYLE_LIGHT,
+    ...SHADOW_STYLE_A,
   },
   imagePlaceholder: {
     width: ELEMENT_PICKER_LIST_IMAGE_SIZE, // Slightly larger image placeholder

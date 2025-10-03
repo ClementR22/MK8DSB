@@ -1,6 +1,5 @@
-// GalleryScreen.tsx
 import React, { useState, useEffect, useMemo, useCallback, memo } from "react";
-import { Animated, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import CategorySelector from "@/components/elementCompactSelector/selector/CategorySelector";
 import { Category } from "@/data/elements/elementsTypes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -8,19 +7,18 @@ import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { sortElements } from "@/utils/sortElements";
 import ElementCard from "@/components/galleryComponents/ElementCard";
 import ElementPickerSelector from "@/components/galleryComponents/ElementPickerSelector";
-import ElementPickerSelectorPannel from "@/components/galleryComponents/ElementPickerSelectorPannel";
 import { useSelectedElementData } from "@/hooks/useSelectedElementData";
-import { useGalleryAnimation } from "@/hooks/useGalleryAnimation";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { useContainerLowestStyle } from "@/hooks/useScreenStyle";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
+import Pannel from "@/components/Pannel";
+import Animated, { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 
 // --- Main GalleryScreen Component ---
 const GalleryScreen = () => {
   const [selectedElementId, setSelectedElementId] = useState(0);
   const [isLeftPannelExpanded, setIsLeftPannelExpanded] = useState(true);
-  const [isCategorySelectorExpanded, setIsCategorySelectorExpanded] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [sortNumber, setSortNumber] = useState(0);
 
@@ -31,10 +29,7 @@ const GalleryScreen = () => {
     [selectedCategory, sortNumber, language]
   );
 
-  const { animatedLeftPannelWidth, animatedOverlayOpacity, animatedCategoryMarginLeft } = useGalleryAnimation(
-    isLeftPannelExpanded,
-    setIsCategorySelectorExpanded
-  );
+  const overlayOpacity = useSharedValue(isLeftPannelExpanded ? 0.5 : 0);
 
   const { selectedElementName, selectedElementStats } = useSelectedElementData(
     categoryElementsSorted,
@@ -63,6 +58,14 @@ const GalleryScreen = () => {
     setSelectedElementId(categoryElementsSorted[0].id);
   }, [selectedCategory]);
 
+  const animatedOverlayStyle = useAnimatedStyle(() => ({
+    opacity: overlayOpacity.value,
+  }));
+
+  const animatedBlueBoxStyle = useAnimatedStyle(() => ({
+    opacity: overlayOpacity.value,
+  }));
+
   const containerLowestStyle = useContainerLowestStyle("view");
 
   return (
@@ -83,10 +86,10 @@ const GalleryScreen = () => {
         </ScrollView>
 
         <Animated.View
-          style={[styles.overlay, { opacity: animatedOverlayOpacity, backgroundColor: "green" }]}
+          style={[styles.overlay, animatedOverlayStyle]}
           pointerEvents={isLeftPannelExpanded ? "auto" : "none"}
         >
-          <Pressable style={[styles.flex, { backgroundColor: "red" }]} onPress={handleBackgroundPress} />
+          <Pressable style={styles.flex} onPress={handleBackgroundPress} />
         </Animated.View>
 
         <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
@@ -94,18 +97,21 @@ const GalleryScreen = () => {
             selectedCategory={selectedCategory}
             onCategoryPress={setSelectedCategory}
             isInGalleryPannel={true}
-            animatedCategoryMarginLeft={animatedCategoryMarginLeft}
           />
         </ScreenPressablesContainer>
 
-        <ElementPickerSelectorPannel animatedLeftPannelWidth={animatedLeftPannelWidth}>
+        <Pannel
+          isLeftPannelExpanded={isLeftPannelExpanded}
+          setIsLeftPannelExpanded={setIsLeftPannelExpanded}
+          overlayOpacity={overlayOpacity}
+        >
           <ElementPickerSelector
             categoryElementsSorted={categoryElementsSorted}
             selectedElementId={selectedElementId}
             isLeftPannelExpanded={isLeftPannelExpanded}
             onElementPickerPress={handleElementPickerPress}
           />
-        </ElementPickerSelectorPannel>
+        </Pannel>
       </View>
     </ScreenProvider>
   );

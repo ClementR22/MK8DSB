@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
-import { DimensionValue, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { DimensionValue, StyleSheet, View, ViewStyle } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { MARGIN_CONTAINER_LOWEST, PADDING_BOX_CONTAINER } from "@/utils/designTokens";
+import { MARGIN_CONTAINER_LOWEST, PADDING_BOX_CONTAINER, SHADOW_STYLE_B } from "@/utils/designTokens";
 
 interface BoxContainerProps {
   children: React.ReactNode;
@@ -13,12 +13,12 @@ interface BoxContainerProps {
   gap?: number;
   marginHorizontal?: number;
   marginTop?: number;
-  inputStyles?: StyleProp<ViewStyle>;
   widthContainer?: DimensionValue;
   borderRadius?: number;
   padding?: number;
   paddingHorizontal?: number;
   flexWrap?: string;
+  shadow?: boolean;
 }
 
 const BoxContainer = ({
@@ -31,12 +31,12 @@ const BoxContainer = ({
   gap = 10,
   marginHorizontal = MARGIN_CONTAINER_LOWEST,
   marginTop,
-  inputStyles,
   widthContainer = "100%",
   borderRadius = 12,
   padding = PADDING_BOX_CONTAINER,
   paddingHorizontal,
   flexWrap = "nowrap",
+  shadow,
 }: BoxContainerProps) => {
   const theme = useThemeStore((state) => state.theme);
 
@@ -84,8 +84,8 @@ const BoxContainer = ({
   );
 
   const finalContentStyle = useMemo(
-    () => StyleSheet.flatten([styles.content, contentDynamicStyle, inputStyles]) as ViewStyle,
-    [contentDynamicStyle, inputStyles]
+    () => StyleSheet.flatten([styles.content, contentDynamicStyle, shadow && styles.shadow]) as ViewStyle,
+    [contentDynamicStyle]
   );
 
   return (
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   content: { overflow: "hidden" },
+  shadow: { ...SHADOW_STYLE_B },
 });
 
 BoxContainer.displayName = "BoxContainer";

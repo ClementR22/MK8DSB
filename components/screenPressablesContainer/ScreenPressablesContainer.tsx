@@ -34,7 +34,7 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
   }, [sortNumber]);
 
   return (
-    <BoxContainer alignItems={null} borderRadius={BORDER_RADIUS_BIG} paddingHorizontal={0}>
+    <BoxContainer alignItems={null} borderRadius={BORDER_RADIUS_BIG} paddingHorizontal={0} shadow={true}>
       {children && (
         <View
           style={{

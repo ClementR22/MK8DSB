@@ -1,7 +1,7 @@
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { translateToLanguage } from "@/translations/translations";
-import { LEFT_COLUMN_PADDING_HORIZONTAL, SHADOW_STYLE_LIGHT } from "@/utils/designTokens";
+import { SHADOW_STYLE_A } from "@/utils/designTokens";
 import React, { memo, useCallback, useMemo } from "react";
 import { FlatList } from "react-native";
 import ElementPicker from "./ElementPicker";
@@ -22,11 +22,11 @@ const ElementPickerSelector: React.FC<ElementPickerSelectorProps> = memo(
     const { activeStyle, inactiveStyle } = useMemo(
       () => ({
         activeStyle: {
-          containerDynamic: { backgroundColor: theme.primary, ...SHADOW_STYLE_LIGHT },
+          containerDynamic: { backgroundColor: theme.primary, ...SHADOW_STYLE_A },
           textDynamic: { color: theme.on_primary },
         },
         inactiveStyle: {
-          containerDynamic: { backgroundColor: theme.surface, ...SHADOW_STYLE_LIGHT },
+          containerDynamic: { backgroundColor: theme.surface, ...SHADOW_STYLE_A },
           textDynamic: { color: theme.on_surface },
         },
       }),
@@ -58,7 +58,7 @@ const ElementPickerSelector: React.FC<ElementPickerSelectorProps> = memo(
             />
           );
         }}
-        contentContainerStyle={{ paddingHorizontal: LEFT_COLUMN_PADDING_HORIZONTAL }}
+        contentContainerStyle={{ paddingHorizontal: 4 }}
       />
     );
   }

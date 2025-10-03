@@ -2,7 +2,7 @@
 import { useMemo } from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { BORDER_RADIUS_12, SHADOW_STYLE_HEAVY, SHADOW_STYLE_LIGHT } from "@/utils/designTokens";
+import { BORDER_RADIUS_12, SHADOW_STYLE_C } from "@/utils/designTokens";
 
 const SET_CARD_BORDER_WIDTH = 3;
 
@@ -20,7 +20,7 @@ export const useSetCardStyle = (width?: number | string) => {
         padding: 11 - SET_CARD_BORDER_WIDTH,
         backgroundColor: theme.surface,
         borderColor: theme.surface,
-        ...SHADOW_STYLE_HEAVY,
+        ...SHADOW_STYLE_C,
       },
     ]) as ViewStyle;
   }, [theme.surface, theme.surface_container_high]); // Dépendances

@@ -31,33 +31,7 @@ export const BORDER_RADIUS_MODAL_CONTAINER =
   BORDER_RADIUS_MODAL_CHILDREN_CONTAINER + MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER;
 
 // Shadows (for depth)
-export const SHADOW_STYLE = StyleSheet.create({
-  shadow: {
-    shadowColor: "#000", // Black shadow
-    shadowOffset: {
-      width: 0,
-      height: 2, // Vertical offset
-    },
-    shadowOpacity: 0.15, // Softer shadow
-    shadowRadius: 3.84, // Blur radius
-    elevation: 5, // Android shadow
-  },
-}).shadow;
-
-export const SHADOW_STYLE_HEAVY = StyleSheet.create({
-  shadow: {
-    shadowColor: "#000", // Black shadow
-    shadowOffset: {
-      width: 4,
-      height: 4, // Vertical offset
-    },
-    shadowOpacity: 0.25, // Softer shadow
-    shadowRadius: 15, // Blur radius
-    elevation: 5, // Android shadow
-  },
-}).shadow;
-
-export const SHADOW_STYLE_LIGHT = StyleSheet.create({
+export const SHADOW_STYLE_A = StyleSheet.create({
   shadow: {
     shadowColor: "#000",
     shadowOffset: {
@@ -70,12 +44,37 @@ export const SHADOW_STYLE_LIGHT = StyleSheet.create({
   },
 }).shadow;
 
+export const SHADOW_STYLE_B = StyleSheet.create({
+  shadow: {
+    shadowColor: "#000", // Black shadow
+    shadowOffset: {
+      width: 0,
+      height: 2, // Vertical offset
+    },
+    shadowOpacity: 0.15, // Softer shadow
+    shadowRadius: 3.84, // Blur radius
+    elevation: 5, // Android shadow
+  },
+}).shadow;
+
+export const SHADOW_STYLE_C = StyleSheet.create({
+  shadow: {
+    shadowColor: "#000", // Black shadow
+    shadowOffset: {
+      width: 4,
+      height: 4, // Vertical offset
+    },
+    shadowOpacity: 0.25, // Softer shadow
+    shadowRadius: 15, // Blur radius
+    elevation: 5, // Android shadow
+  },
+}).shadow;
+
 export const CATEGORY_BUTTON_GALLERY_WIDTH = 60;
 export const ELEMENT_PICKER_LIST_IMAGE_SIZE = CATEGORY_BUTTON_GALLERY_WIDTH;
 export const ELEMENT_PICKER_LIST_IMAGE_RATIO = 1.1;
 
 // Largeurs définies pour la colonne de gauche
-export const LEFT_COLUMN_PADDING_HORIZONTAL = BORDER_WIDTH_CATEGORY_SELECTOR;
 export const LEFT_PANNEL_WIDTH_EXPANDED = CATEGORY_BUTTON_GALLERY_WIDTH * 4 + BORDER_WIDTH_CATEGORY_SELECTOR * 2;
 export const LEFT_PANNEL_WIDTH_COLLAPSED = CATEGORY_BUTTON_GALLERY_WIDTH + BORDER_WIDTH_CATEGORY_SELECTOR * 2;
 
