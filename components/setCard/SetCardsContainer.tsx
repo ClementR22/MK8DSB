@@ -7,7 +7,8 @@ import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { SetObject } from "@/stores/useSetsStore";
 import Placeholder from "@/components/Placeholder";
-import { BORDER_RADIUS_BIG, MARGIN_CONTAINER_LOWEST, PADDING_SET_CARDS_CONTAINER } from "@/utils/designTokens";
+import { BORDER_RADIUS_CONTAINER_LOWEST, MARGIN_CONTAINER_LOWEST, PADDING_STANDARD } from "@/utils/designTokens";
+import { box_shadow_z1 } from "../styles/theme";
 
 interface SetWithColor extends SetObject {
   color?: string;
@@ -134,16 +135,12 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
         horizontal
         scrollEnabled={isScrollEnable}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ width: calculatedContentWidth, paddingHorizontal: MARGIN_CONTAINER_LOWEST }}
+        contentContainerStyle={{ width: calculatedContentWidth }}
       >
         <Pressable
           style={[
+            styles.container,
             {
-              flexDirection: "row",
-              marginHorizontal: 0,
-              padding: PADDING_SET_CARDS_CONTAINER,
-              gap: PADDING_SET_CARDS_CONTAINER / 1.5,
-              borderRadius: BORDER_RADIUS_BIG,
               backgroundColor: theme.surface_container,
             },
           ]}
@@ -156,6 +153,15 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
 );
 
 const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: MARGIN_CONTAINER_LOWEST,
+    flexDirection: "row",
+    padding: PADDING_STANDARD,
+    gap: PADDING_STANDARD / 1.5,
+    borderRadius: BORDER_RADIUS_CONTAINER_LOWEST,
+    boxShadow: box_shadow_z1,
+    marginBottom: 2, // so the shadow is visible
+  },
   placeholderText: {
     fontSize: 18,
     textAlign: "center",

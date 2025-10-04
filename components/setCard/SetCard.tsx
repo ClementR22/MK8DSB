@@ -10,7 +10,7 @@ import StatGaugeSetCardsContainer from "../statGauge/StatGaugeSetCardsContainer"
 import { arraysEqual } from "@/utils/deepCompare";
 import SetCardHeader, { SetCardHeaderProps } from "./SetCardHeader";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
-import { PADDING_SET_CARDS_CONTAINER, SET_CARD_WIDTH } from "@/utils/designTokens";
+import { SET_CARD_WIDTH } from "@/utils/designTokens";
 
 export interface SetData {
   name: string;
@@ -176,7 +176,7 @@ const SetCard: React.FC<SetCardProps> = ({
 };
 
 const styles = StyleSheet.create({
-  wrapper: { gap: PADDING_SET_CARDS_CONTAINER / 2 },
+  wrapper: { gap: 8 },
 });
 
 export default memo(SetCard);

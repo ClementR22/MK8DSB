@@ -6,8 +6,9 @@ import SortModeSelector from "../sortModeSelector/SortModeSelector";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
 import { useScreen } from "@/contexts/ScreenContext";
-import { BORDER_RADIUS_BIG } from "@/utils/designTokens";
+import { BORDER_RADIUS_CONTAINER_LOWEST } from "@/utils/designTokens";
 import Separator from "../Separator";
+import { box_shadow_z1 } from "../styles/theme";
 
 interface ScreenPressablesContainerProps {
   sortNumber: number;
@@ -34,7 +35,12 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
   }, [sortNumber]);
 
   return (
-    <BoxContainer alignItems={null} borderRadius={BORDER_RADIUS_BIG} paddingHorizontal={0} shadow={true}>
+    <BoxContainer
+      alignItems={null}
+      borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}
+      paddingHorizontal={0}
+      boxShadow={box_shadow_z1}
+    >
       {children && (
         <View
           style={{

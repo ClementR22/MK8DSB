@@ -4,6 +4,7 @@ import Text from "@/primitiveComponents/Text";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useThemeStore } from "@/stores/useThemeStore";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { box_shadow_z1 } from "./styles/theme";
 
 interface CustomHeaderProps {
   icon: string;
@@ -36,11 +37,10 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ children, icon, helpCompone
 const styles = StyleSheet.create({
   container: {
     height: 64,
-    boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
-    elevation: 5,
     flexDirection: "row",
     alignItems: "center",
     paddingEnd: 15,
+    boxShadow: box_shadow_z1,
   },
   icon: {
     width: 48,

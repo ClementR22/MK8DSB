@@ -4,12 +4,12 @@ import {
   BORDER_RADIUS_INF,
   LEFT_PANNEL_WIDTH_COLLAPSED,
   LEFT_PANNEL_WIDTH_EXPANDED,
-  SHADOW_STYLE_B,
 } from "@/utils/designTokens";
 import React, { useEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { useSharedValue, withTiming, useAnimatedStyle, runOnJS, SharedValue } from "react-native-reanimated";
+import { box_shadow_z1 } from "./styles/theme";
 
 interface PannelProps {
   isLeftPannelExpanded: boolean;
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     flex: 1, // nécessaire pour que la FlatList enfant ne déborde pas
     borderTopEndRadius: BORDER_RADIUS_18,
     borderEndEndRadius: BORDER_RADIUS_18,
-    ...SHADOW_STYLE_B,
+    boxShadow: box_shadow_z1,
   },
   childrenWrapper: {
     flex: 1,
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     bottom: 0,
+    marginLeft: 1,
     width: HANDLE_WIDTH, // Largeur de la zone de glissement
     // marginLeft: -HANDLE_WIDTH, // Centrer la zone par rapport à la bordure du panneau
     justifyContent: "center",

@@ -4,6 +4,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
 import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
+import { box_shadow_z1, box_shadow_z2, box_shadow_z3, box_shadow_z5 } from "@/components/styles/theme";
 
 type IconProps = {
   name: string;
@@ -15,7 +16,6 @@ interface ButtonProps {
   buttonColor?: string;
   buttonTextColor?: string;
   onPress: () => void;
-  elevation?: 1 | 3 | 6 | 8 | 12;
   tooltipText?: string;
   iconProps?: IconProps;
   minWidth?: number;
@@ -29,7 +29,6 @@ const Button = ({
   buttonColor,
   buttonTextColor,
   onPress,
-  elevation,
   tooltipText,
   iconProps,
   minWidth,
@@ -43,15 +42,14 @@ const Button = ({
     () =>
       StyleSheet.flatten([
         styles.container,
-        disabled && { backgroundColor: "grey" },
         {
-          backgroundColor: buttonColor || theme.primary,
+          backgroundColor: disabled ? "grey" : buttonColor || theme.primary,
           paddingHorizontal: iconProps ? 15 : 10,
           minWidth: minWidth,
           flex: flex,
         },
       ]),
-    [theme.primary, iconProps, minWidth]
+    [theme.primary, iconProps, minWidth, disabled]
   );
 
   const textStyle = useMemo(
@@ -63,14 +61,12 @@ const Button = ({
     <ButtonBase
       onPress={onPress}
       tooltipText={tooltipText}
-      elevation={elevation}
       containerStyle={containerStyle}
       {...props}
+      disabled={disabled}
     >
-      <>
-        {iconProps && <Icon type={iconProps.type} name={iconProps.name} size={24} color={theme.on_primary} />}
-        <Text style={[styles.text, textStyle]}>{children}</Text>
-      </>
+      {iconProps && <Icon type={iconProps.type} name={iconProps.name} size={24} color={theme.on_primary} />}
+      <Text style={[styles.text, textStyle]}>{children}</Text>
     </ButtonBase>
   );
 };
@@ -83,6 +79,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 5,
+    boxShadow: box_shadow_z2,
   },
   text: {
     fontWeight: "500",

@@ -7,7 +7,6 @@ type ButtonBaseProps = {
   onPress: () => void;
   tooltipText?: string;
   placement?: TooltipPlacementType;
-  elevation?: 1 | 3 | 6 | 8 | 12;
   containerStyle?: ViewStyle;
   disabled?: boolean;
   [key: string]: any; // autres props à passer
@@ -18,7 +17,6 @@ const ButtonBase = ({
   onPress,
   tooltipText,
   placement = "top",
-  elevation,
   containerStyle,
   disabled = false,
   ...props

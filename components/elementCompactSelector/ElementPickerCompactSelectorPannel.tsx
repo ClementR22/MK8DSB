@@ -15,7 +15,7 @@ import CategorySelector from "./selector/CategorySelector";
 import PaginatedWrapper from "../paginatedWrapper/PaginatedWrapper";
 import ElementsGrid, { ELEMENTS_GRID_WIDTH, ELEMENTS_PER_PAGE } from "./selector/ElementsGrid";
 import {
-  BORDER_RADIUS_12,
+  BORDER_RADIUS_STANDARD,
   BUTTON_SIZE,
   GAP_SORT_MODE_SELECTOR,
   PADDING_PAGINATED_WRAPPER_CONTAINER,
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   controlsContainer: { justifyContent: "center", flexGrow: 1, flexShrink: 1 },
   bodytypeSelectorWrapper: { marginHorizontal: GAP_SORT_MODE_SELECTOR },
   paginatedWrapperContainer: {
-    borderRadius: BORDER_RADIUS_12,
+    borderRadius: BORDER_RADIUS_STANDARD,
     overflow: "hidden",
     paddingVertical: PADDING_PAGINATED_WRAPPER_CONTAINER,
     gap: PADDING_PAGINATED_WRAPPER_CONTAINER,

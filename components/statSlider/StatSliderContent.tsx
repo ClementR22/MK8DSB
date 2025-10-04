@@ -10,6 +10,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { StatName } from "@/data/stats/statsTypes";
 import { BORDER_RADIUS_INF, BORDER_RADIUS_STAT_GAUGE_CONTAINER, BUTTON_SIZE } from "@/utils/designTokens";
+import { box_shadow_z1 } from "../styles/theme";
 
 interface StatSliderContentProps {
   name: StatName;
@@ -151,6 +152,7 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     paddingHorizontal: 13,
     gap: 13,
+    boxShadow: box_shadow_z1,
   },
   containerLeft: { flex: 1, justifyContent: "flex-start" },
   containerRight: { alignItems: "center", justifyContent: "flex-start", width: 46 },

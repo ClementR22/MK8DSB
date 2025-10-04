@@ -25,7 +25,6 @@ const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, butto
     <Button
       buttonColor={buttonColor}
       buttonTextColor={buttonTextColor}
-      elevation={12}
       onPress={onPress}
       minWidth={100}
       tooltipText={tooltipText}

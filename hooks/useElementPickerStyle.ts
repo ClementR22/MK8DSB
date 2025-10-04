@@ -2,6 +2,7 @@
 import { useMemo } from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore"; // N'oublie pas d'importer useThemeStore
+import { box_shadow_z1 } from "@/components/styles/theme";
 
 interface ElementPickerStyleProps {
   size: number;
@@ -23,6 +24,7 @@ export const useElementPickerStyle = ({ size }: ElementPickerStyleProps) => {
         backgroundColor: theme.surface_container_low,
         width: size,
         height: size * 1.1,
+        boxShadow: box_shadow_z1,
       },
     ]) as ViewStyle;
   }, [theme.surface_container_low]); // Dépendances

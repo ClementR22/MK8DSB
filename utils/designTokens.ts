@@ -11,64 +11,23 @@ export const PADDING_HORIZONTAL_ELEMENT_CARD = 20; // For screen-level padding
 export const BORDER_WIDTH_CATEGORY_SELECTOR = 4;
 export const PADDING_PAGINATED_WRAPPER_CONTAINER = 6;
 export const MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER = 10;
-export const PADDING_SET_CARDS_CONTAINER = 12;
 export const MARGIN_CONTAINER_LOWEST = 16;
 export const GAP_SORT_MODE_SELECTOR = 7;
-export const PADDING_BOX_CONTAINER = 10;
+export const PADDING_STANDARD = 10;
+export const PADDING_BOX_CONTAINER = PADDING_STANDARD;
 
 // calc
-export const BORDER_RADIUS_BIG = BORDER_RADIUS_STAT_GAUGE_CONTAINER + PADDING_SEARCH_CONTAINER; // 24
-export const BORDER_RADIUS_12 = BORDER_RADIUS_BIG - PADDING_SET_CARDS_CONTAINER; // 12
+export const BORDER_RADIUS_CONTAINER_LOWEST = BORDER_RADIUS_STAT_GAUGE_CONTAINER + PADDING_SEARCH_CONTAINER; // 24
+export const BORDER_RADIUS_STANDARD = BORDER_RADIUS_CONTAINER_LOWEST - PADDING_STANDARD; // 12
 
 // Border Radius
-export const BORDER_RADIUS_15 = 15;
 export const BORDER_RADIUS_18 = 18; // More prominent rounded corners
 export const BORDER_RADIUS_INF = 200;
-export const BORDER_RADIUS_CATEGORY_SELECTOR = 8; // au lieu de BORDER_RADIUS_12 - PADDING_PAGINATED_WRAPPER_CONTAINER; // = 6
+export const BORDER_RADIUS_CATEGORY_SELECTOR = 8; // au lieu de BORDER_RADIUS_STANDARD - PADDING_PAGINATED_WRAPPER_CONTAINER; // = 6
 
-export const BORDER_RADIUS_MODAL_CHILDREN_CONTAINER = BORDER_RADIUS_12;
+export const BORDER_RADIUS_MODAL_CHILDREN_CONTAINER = BORDER_RADIUS_STANDARD;
 export const BORDER_RADIUS_MODAL_CONTAINER =
   BORDER_RADIUS_MODAL_CHILDREN_CONTAINER + MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER;
-
-// Shadows (for depth)
-export const SHADOW_STYLE_A = StyleSheet.create({
-  shadow: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.08,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-}).shadow;
-
-export const SHADOW_STYLE_B = StyleSheet.create({
-  shadow: {
-    shadowColor: "#000", // Black shadow
-    shadowOffset: {
-      width: 0,
-      height: 2, // Vertical offset
-    },
-    shadowOpacity: 0.15, // Softer shadow
-    shadowRadius: 3.84, // Blur radius
-    elevation: 5, // Android shadow
-  },
-}).shadow;
-
-export const SHADOW_STYLE_C = StyleSheet.create({
-  shadow: {
-    shadowColor: "#000", // Black shadow
-    shadowOffset: {
-      width: 4,
-      height: 4, // Vertical offset
-    },
-    shadowOpacity: 0.25, // Softer shadow
-    shadowRadius: 15, // Blur radius
-    elevation: 5, // Android shadow
-  },
-}).shadow;
 
 export const CATEGORY_BUTTON_GALLERY_WIDTH = 60;
 export const ELEMENT_PICKER_LIST_IMAGE_SIZE = CATEGORY_BUTTON_GALLERY_WIDTH;

@@ -19,8 +19,9 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import TabBarHeightUpdater from "@/components/TabBarHeightUpdater";
 import StatGaugeContainer from "@/components/statGauge/StatGaugeContainer";
 import StatGaugeBar from "@/components/statGauge/StatGaugeBar";
-import { BORDER_RADIUS_BIG, PADDING_SEARCH_CONTAINER } from "@/utils/designTokens";
+import { BORDER_RADIUS_CONTAINER_LOWEST, PADDING_SEARCH_CONTAINER } from "@/utils/designTokens";
 import ScrollViewScreen, { ScrollViewScreenHandles } from "@/components/ScrollViewScreen";
+import { box_shadow_z1 } from "@/components/styles/theme";
 
 const SearchSetScreen: React.FC = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -68,8 +69,12 @@ const SearchSetScreen: React.FC = () => {
     <ScreenProvider screenName="search">
       <ResultStatsProvider>
         <ScrollViewScreen scrollEnabled={isScrollEnable} ref={scrollviewMainRef}>
-          <BoxContainer borderRadius={BORDER_RADIUS_BIG} padding={PADDING_SEARCH_CONTAINER}>
-            <View style={styles.searchContainer}>
+          <BoxContainer
+            borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}
+            padding={PADDING_SEARCH_CONTAINER}
+            boxShadow={box_shadow_z1}
+          >
+            <View style={styles.searchContainerPressablesContainer}>
               <ButtonIcon
                 onPress={toggleReduceStatSliders}
                 iconName={isReduceStatSliders ? "chevron-down" : "chevron-up"}
@@ -109,6 +114,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
-  searchContainer: { flexDirection: "row", width: "100%", alignItems: "center", padding: 3 },
+  searchContainerPressablesContainer: { flexDirection: "row", width: "100%", alignItems: "center", padding: 3 },
   headerTextContainer: { flex: 1, alignItems: "center" },
 });

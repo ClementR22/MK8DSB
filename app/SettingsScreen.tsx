@@ -18,6 +18,7 @@ import { ScreenProvider } from "@/contexts/ScreenContext";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
 import ResultsNumberSelector from "@/components/ResultsNumberSelector";
 import ButtonAndModal from "@/components/modal/ButtonAndModal";
+import { box_shadow_z1 } from "@/components/styles/theme";
 
 const SettingsScreen: React.FC = () => {
   const resetSettings = useResetSettings();
@@ -42,7 +43,7 @@ const SettingsScreen: React.FC = () => {
     <ScreenProvider screenName="settings">
       <ResultStatsProvider>
         <ScrollViewScreen scrollEnabled={true}>
-          <BoxContainer alignItems={"stretch"}>
+          <BoxContainer alignItems={"stretch"} boxShadow={box_shadow_z1}>
             <LanguageSelector />
 
             <ThemeSelector />

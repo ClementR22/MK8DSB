@@ -29,6 +29,7 @@ import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { toastConfig } from "@/config/toastConfig";
+import { box_shadow_z2 } from "@/components/styles/theme";
 
 // Helper function to derive screen name from pathname
 // This can be extracted to a separate utility file if used elsewhere
@@ -151,7 +152,9 @@ export default function TabLayout() {
                 backgroundColor: theme.surface,
               },
               tabBarStyle: {
-                backgroundColor: theme.surface,
+                backgroundColor: theme.surface_container,
+                borderTopWidth: 0,
+                boxShadow: box_shadow_z2,
               },
             }}
           >

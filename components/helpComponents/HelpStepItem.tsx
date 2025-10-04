@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, ViewStyle } from "react-native";
 import StepCircle from "./StepCircle";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { BORDER_RADIUS_12, BUTTON_SIZE } from "@/utils/designTokens";
+import { BORDER_RADIUS_STANDARD, BUTTON_SIZE } from "@/utils/designTokens";
 
 interface HelpStepItemProps {
   stepChar: number | string;

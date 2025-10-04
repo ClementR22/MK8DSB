@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
@@ -16,4 +16,4 @@ const ButtonLoadSet = ({ tooltipText }) => {
   );
 };
 
-export default ButtonLoadSet;
+export default memo(ButtonLoadSet);

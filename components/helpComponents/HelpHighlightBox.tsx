@@ -1,7 +1,7 @@
 import React, { ReactNode, useCallback, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { HELP_HIGHLIGHT_BOX_COLORS } from "@/constants/Colors";
-import { BORDER_RADIUS_12 } from "@/utils/designTokens";
+import { BORDER_RADIUS_STANDARD } from "@/utils/designTokens";
 
 export type BoxType = "info" | "result" | "tips";
 
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     padding: 16,
     gap: 8,
-    borderRadius: BORDER_RADIUS_12,
+    borderRadius: BORDER_RADIUS_STANDARD,
   },
   text: { fontSize: 13, textAlign: "center", lineHeight: 18 },
 });

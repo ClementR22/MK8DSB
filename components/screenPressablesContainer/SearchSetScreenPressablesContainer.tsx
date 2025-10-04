@@ -46,7 +46,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
 
   const SetFoundTranslated = useMemo(() => translateToLanguage("SetFound", language), []);
 
-  const search = useCallback(() => {
+  const search = () => {
     const chosenStatsChecked = chosenStats.map((stat) => stat.checked);
     const chosenStatsValue = chosenStats.map((stat) => stat.value);
     const chosenStatsFilterNumber = chosenStats.map((stat) => stat.statFilterNumber);
@@ -123,7 +123,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
 
       setSetsListFound(setsFound);
     }
-  }, [chosenStats, selectedClassIdsByCategory, chosenBodytype, resultsNumber, setSetsListFound]);
+  };
 
   const handleSearch = useCallback(() => {
     setIsResultUpdated(true);
@@ -141,10 +141,12 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
       <StatSelector />
 
       <Button
+        key="button-search"
         onPress={handleSearch}
         iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}
         disabled={isResultsUpdated}
         flex={1}
+        tooltipText="ok"
       >
         <Text>{translateToLanguage("Search", language)}</Text>
       </Button>

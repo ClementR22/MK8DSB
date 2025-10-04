@@ -1,7 +1,6 @@
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { translateToLanguage } from "@/translations/translations";
-import { SHADOW_STYLE_A } from "@/utils/designTokens";
 import React, { memo, useCallback, useMemo } from "react";
 import { FlatList } from "react-native";
 import ElementPicker from "./ElementPicker";
@@ -22,11 +21,11 @@ const ElementPickerSelector: React.FC<ElementPickerSelectorProps> = memo(
     const { activeStyle, inactiveStyle } = useMemo(
       () => ({
         activeStyle: {
-          containerDynamic: { backgroundColor: theme.primary, ...SHADOW_STYLE_A },
+          containerDynamic: { backgroundColor: theme.primary },
           textDynamic: { color: theme.on_primary },
         },
         inactiveStyle: {
-          containerDynamic: { backgroundColor: theme.surface, ...SHADOW_STYLE_A },
+          containerDynamic: { backgroundColor: theme.surface },
           textDynamic: { color: theme.on_surface },
         },
       }),

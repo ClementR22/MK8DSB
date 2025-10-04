@@ -11,7 +11,6 @@ export interface ButtonIconProps {
   onPress?: (event?: Event) => void;
   tooltipText?: string;
   toolTipPlacement?: TooltipPlacementType;
-  elevation?: 1 | 3 | 6 | 8 | 12;
   iconName: string;
   iconType: IconType;
   buttonSize?: number;
@@ -25,7 +24,6 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   onPress,
   tooltipText,
   toolTipPlacement,
-  elevation,
   iconName,
   iconType,
   buttonSize = BUTTON_SIZE,
@@ -56,14 +54,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   }, [shapeStyle, theme.primary, disabled, style]);
 
   return (
-    <ButtonBase
-      onPress={onPress}
-      tooltipText={tooltipText}
-      placement={toolTipPlacement}
-      elevation={elevation}
-      disabled={disabled}
-      {...props}
-    >
+    <ButtonBase onPress={onPress} tooltipText={tooltipText} placement={toolTipPlacement} disabled={disabled} {...props}>
       <IconContainer
         iconName={iconName}
         iconType={iconType}
