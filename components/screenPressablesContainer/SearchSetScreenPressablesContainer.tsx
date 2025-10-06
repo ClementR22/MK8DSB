@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { categories } from "@/data/elements/elementsData";
 import { setsData } from "@/data/setsData";
 import { translateToLanguage } from "@/translations/translations";
@@ -43,8 +43,6 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
       setIsResultUpdated(false);
     }
   }, [chosenStats, chosenBodytype, selectedClassIdsByCategory]);
-
-  const SetFoundTranslated = useMemo(() => translateToLanguage("SetFound", language), []);
 
   const search = () => {
     const chosenStatsChecked = chosenStats.map((stat) => stat.checked);
@@ -116,7 +114,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
         return {
           ...setFoundData,
           id: nanoid(8),
-          name: `${SetFoundTranslated} ${index + 1}`,
+          name: `${translateToLanguage("SetFound", language)} ${index + 1}`,
           percentage: percentageRounded,
         };
       });
@@ -146,9 +144,8 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
         iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}
         disabled={isResultsUpdated}
         flex={1}
-        tooltipText="ok"
       >
-        <Text>{translateToLanguage("Search", language)}</Text>
+        {translateToLanguage("Search", language)}
       </Button>
 
       <ButtonAndModal

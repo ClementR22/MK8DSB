@@ -10,7 +10,7 @@ interface IconContainerProps {
   containerSize?: number;
   backgroundColor?: string;
   iconColor?: string;
-  containerStyle?: ViewStyle;
+  containerStyle?: ViewStyle | ViewStyle[];
 }
 
 const IconContainer = ({
@@ -24,7 +24,7 @@ const IconContainer = ({
 }: IconContainerProps) => {
   const { theme } = useThemeStore();
 
-  const iconSize = useMemo(() => (24 / BUTTON_SIZE) * containerSize, [containerSize]);
+  const iconSize = (24 / BUTTON_SIZE) * containerSize;
 
   return (
     <View

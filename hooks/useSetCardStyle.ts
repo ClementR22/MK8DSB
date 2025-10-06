@@ -1,13 +1,13 @@
 // hooks/useSetCardStyle.ts
 import { useMemo } from "react";
-import { StyleSheet, ViewStyle } from "react-native";
+import { DimensionValue, StyleSheet, ViewStyle } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { BORDER_RADIUS_STANDARD } from "@/utils/designTokens";
-import { box_shadow_z1 } from "@/components/styles/theme";
+import { box_shadow_z1 } from "@/components/styles/shadow";
 
 const SET_CARD_BORDER_WIDTH = 3;
 
-export const useSetCardStyle = (width?: number | string) => {
+export const useSetCardStyle = (width?: DimensionValue) => {
   const theme = useThemeStore((state) => state.theme);
 
   // Calcule le style de la carte une seule fois

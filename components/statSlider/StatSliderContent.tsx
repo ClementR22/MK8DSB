@@ -1,6 +1,6 @@
 import { translateToLanguage } from "@/translations/translations";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
 import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import { Slider } from "@miblanchard/react-native-slider";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -10,7 +10,8 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { StatName } from "@/data/stats/statsTypes";
 import { BORDER_RADIUS_INF, BORDER_RADIUS_STAT_GAUGE_CONTAINER, BUTTON_SIZE } from "@/utils/designTokens";
-import { box_shadow_z1 } from "../styles/theme";
+import { box_shadow_z1 } from "../styles/shadow";
+import Text from "@/primitiveComponents/Text";
 
 interface StatSliderContentProps {
   name: StatName;
@@ -59,40 +60,14 @@ const StatSliderContent = ({
     }
   }, [value]);
 
-  // Mémoïsation stricte des styles
-  const borderColorDynamicStyle = useMemo(
-    () => getStatSliderBorderColor(statFilterNumber, theme),
-    [statFilterNumber, theme]
-  );
-  const containerDynamicStyle = useMemo(
-    () => ({
-      backgroundColor: theme.surface,
-      borderColor: borderColorDynamicStyle,
-    }),
-    [theme.surface, borderColorDynamicStyle]
-  );
-  const textColorStyle = useMemo(() => ({ color: theme.on_surface }), [theme.on_surface]);
-  const minimumTrackDynamicStyle = useMemo(() => ({ backgroundColor: theme.primary }), [theme.primary]);
-  const maximumTrackDynamicStyle = useMemo(
-    () => ({ backgroundColor: theme.surface_container_highest }),
-    [theme.surface_container_highest]
-  );
-
-  // Mémoïsation du label traduit
-  const translatedName = useMemo(() => translateToLanguage(name, language), [name, language]);
-  const translatedSeparator = useMemo(() => translateToLanguage(":", language), [language]);
-
   // Styles dynamiques pour le thumb du slider
-  const thumbWrapperDynamicStyle = useMemo(() => ({ backgroundColor: theme.surface }), [theme.surface, theme.primary]);
-  const thumbDynamicStyle = useMemo(() => ({ backgroundColor: theme.primary }), [theme.primary]);
-
   const renderCustomThumb = useCallback(
     () => (
-      <View style={[styles.thumbWrapper, thumbWrapperDynamicStyle]}>
-        <View style={[styles.thumb, thumbDynamicStyle]} />
+      <View style={[styles.thumbWrapper, { backgroundColor: theme.surface }]}>
+        <View style={[styles.thumb, { backgroundColor: theme.primary }]} />
       </View>
     ),
-    [thumbWrapperDynamicStyle, thumbDynamicStyle]
+    [styles]
   );
 
   const handleRemove = useCallback(() => {
@@ -100,14 +75,23 @@ const StatSliderContent = ({
   }, [removeStat, name]);
 
   return (
-    <Pressable style={StyleSheet.flatten([styles.container, containerDynamicStyle])} onLongPress={handleRemove}>
+    <Pressable
+      style={StyleSheet.flatten([
+        styles.container,
+        {
+          backgroundColor: theme.surface,
+          borderColor: getStatSliderBorderColor(statFilterNumber, theme),
+        },
+      ])}
+      onLongPress={handleRemove}
+    >
       <View style={styles.containerLeft}>
         <View style={styles.textWrapper}>
-          <Text style={StyleSheet.flatten([styles.text, textColorStyle])} numberOfLines={1} ellipsizeMode="tail">
-            {translatedName}
+          <Text role="title" size="medium" numberOfLines={1} ellipsizeMode="tail">
+            {translateToLanguage(name, language)}
           </Text>
-          <Text style={StyleSheet.flatten([styles.text, styles.separatorText, textColorStyle])}>
-            {translatedSeparator}
+          <Text role="title" size="medium" style={styles.separatorText}>
+            {translateToLanguage(":", language)}
           </Text>
         </View>
 
@@ -122,13 +106,15 @@ const StatSliderContent = ({
           step={0.25}
           trackStyle={styles.track}
           renderThumbComponent={renderCustomThumb}
-          minimumTrackStyle={StyleSheet.flatten(minimumTrackDynamicStyle)}
-          maximumTrackStyle={StyleSheet.flatten(maximumTrackDynamicStyle)}
+          minimumTrackStyle={{ backgroundColor: theme.primary }}
+          maximumTrackStyle={{ backgroundColor: theme.surface_container_highest }}
         />
       </View>
       <View style={styles.containerRight}>
         <View style={styles.valueWrapper}>
-          <Text style={[styles.text, textColorStyle]}>{tempValue}</Text>
+          <Text role="title" size="medium">
+            {tempValue}
+          </Text>
         </View>
 
         <View style={styles.buttonWrapper}>
@@ -159,6 +145,7 @@ const styles = StyleSheet.create({
   textWrapper: {
     flexDirection: "row",
     marginLeft: 3,
+    paddingTop: 2,
   },
   sliderContainer: {
     marginBottom: 4,
@@ -166,6 +153,7 @@ const styles = StyleSheet.create({
   valueWrapper: {
     width: BUTTON_SIZE,
     alignItems: "flex-start",
+    paddingTop: 2,
   },
   buttonWrapper: { position: "absolute", bottom: 8 },
   track: {
@@ -182,10 +170,6 @@ const styles = StyleSheet.create({
     width: 4,
     height: 36,
     borderRadius: BORDER_RADIUS_INF,
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: "600",
   },
   separatorText: {
     marginRight: 2,

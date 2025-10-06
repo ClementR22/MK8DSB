@@ -1,14 +1,14 @@
 // components/SetCard/SetCardHeader.tsx
 
-import React, { useMemo } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useThemeStore } from "@/stores/useThemeStore";
+import React, { memo } from "react";
+import { View, StyleSheet } from "react-native";
 import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
 import { ScreenName } from "@/contexts/ScreenContext";
 import { actionNamesList } from "./SetCard";
 import SetNameInput from "../textInput/SetNameInput";
 import { BUTTON_SIZE } from "@/utils/designTokens";
+import Text from "@/primitiveComponents/Text";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 export interface SetCardHeaderProps {
   isNameEditable: boolean;
@@ -19,40 +19,38 @@ export interface SetCardHeaderProps {
   situation: ScreenName | "load";
 }
 
-const SetCardHeader: React.FC<SetCardHeaderProps> = React.memo(
-  ({ isNameEditable, setToShowName, setToShowId, setToShowPercentage, moreActionNamesList, situation }) => {
-    const theme = useThemeStore((state) => state.theme);
+const SetCardHeader: React.FC<SetCardHeaderProps> = ({
+  isNameEditable,
+  setToShowName,
+  setToShowId,
+  setToShowPercentage,
+  moreActionNamesList,
+  situation,
+}) => {
+  const theme = useThemeStore((state) => state.theme);
 
-    const percentageTextDynamicStyle = useMemo(
-      () => ({
-        color: theme.primary,
-      }),
-      [theme.primary]
-    );
-
-    return (
-      <View style={styles.headerContainer}>
-        <View style={StyleSheet.flatten(styles.nameContainer)}>
-          <SetNameInput setToShowName={setToShowName} setToShowId={setToShowId} editable={isNameEditable} />
-        </View>
-
-        {setToShowPercentage && (
-          <Text style={StyleSheet.flatten([styles.percentageText, percentageTextDynamicStyle])} numberOfLines={1}>
-            {setToShowPercentage}%
-          </Text>
-        )}
-
-        {moreActionNamesList && (
-          <SetCardMoreActionsButton
-            moreActionNamesList={moreActionNamesList}
-            setToShowId={setToShowId}
-            situation={situation}
-          />
-        )}
+  return (
+    <View style={styles.headerContainer}>
+      <View style={StyleSheet.flatten(styles.nameContainer)}>
+        <SetNameInput setToShowName={setToShowName} setToShowId={setToShowId} editable={isNameEditable} />
       </View>
-    );
-  }
-);
+
+      {setToShowPercentage && (
+        <Text role="title" size="medium" weight="bold" color={theme.primary}>
+          {setToShowPercentage}%
+        </Text>
+      )}
+
+      {moreActionNamesList && (
+        <SetCardMoreActionsButton
+          moreActionNamesList={moreActionNamesList}
+          setToShowId={setToShowId}
+          situation={situation}
+        />
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -71,10 +69,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  percentageText: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
 });
 
-export default SetCardHeader;
+export default memo(SetCardHeader);

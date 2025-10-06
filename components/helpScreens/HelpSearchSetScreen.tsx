@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { memo } from "react";
+import { View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal from "./HelpModal";
 import StatSliderPreview from "../statSlider/StatSliderPreview";
@@ -7,11 +7,10 @@ import { SET_CARD_WIDTH } from "@/utils/designTokens";
 import Button from "@/primitiveComponents/Button";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { translateToLanguage } from "@/translations/translations";
-import HelpBoldText from "../helpComponents/HelpBoldText";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
-import HelpText from "../helpComponents/HelpText";
 import StatGaugeContainer from "../statGauge/StatGaugeContainer";
 import StatGaugeSetCardBar from "../statGauge/StatGaugeSetCardBar";
+import Text from "@/primitiveComponents/Text";
 
 const HelpSearchSetScreen = () => {
   const language = useLanguageStore((state) => state.language);
@@ -22,14 +21,18 @@ const HelpSearchSetScreen = () => {
       intro={{
         content: (
           <>
-            <HelpBoldText>Créez la combinaison idéale</HelpBoldText> en définissant les statistiques que vous souhaitez.
-            L'algorithme trouvera pour vous les meilleurs sets correspondants.
+            <Text role="body" size="large" weight="bold">
+              Créez la combinaison idéale
+            </Text>
+            {"\n"}
+            en définissant les statistiques que vous souhaitez. L'algorithme trouvera pour vous les meilleurs sets
+            correspondants.
           </>
         ),
       }}
       sections={[
         {
-          title: "🎯 Comment utiliser le Set Builder",
+          title: "🎯 Comment utiliser le\nSet Builder",
           items: [
             {
               type: "step",
@@ -48,10 +51,12 @@ const HelpSearchSetScreen = () => {
               content: (
                 <>
                   <StatSliderPreview name="speedGround" />
-                  <HelpText style={{ fontSize: 12, fontStyle: "italic" }}>appuyez longuement pour supprimer</HelpText>
-                  <HelpText style={{ fontSize: 12, fontStyle: "italic" }}>
+                  <Text role="body" size="large">
+                    appuyez longuement pour supprimer
+                  </Text>
+                  <Text role="body" size="large" fontStyle="italic">
                     {"≈ : valeur approximative" + "\n" + "= : valeur exacte" + "\n" + "≥ : valeur minimale"}
-                  </HelpText>
+                  </Text>
                 </>
               ),
             },
@@ -60,7 +65,7 @@ const HelpSearchSetScreen = () => {
               props: { stepChar: "3", title: "Lancez la recherche", alignItems: "center" },
               content: (
                 <Button onPress={() => {}} iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
-                  <Text>{translateToLanguage("Search", language)}</Text>
+                  {translateToLanguage("Search", language)}
                 </Button>
               ),
             },
@@ -69,15 +74,17 @@ const HelpSearchSetScreen = () => {
               props: { stepChar: "4", title: "Analysez les résultats", alignItems: "center" },
               content: (
                 <>
-                  <HelpText>Les sets sont classés par score de correspondance</HelpText>
+                  <Text role="body" size="large">
+                    Les sets sont classés par score de correspondance
+                  </Text>
                   <View style={{ width: SET_CARD_WIDTH - 11 }}>
                     <StatGaugeContainer name="SG" value={4} isInSetCard={true} chosenValue={5} bonusEnabled={true}>
                       <StatGaugeSetCardBar obtainedValue={4} chosenValue={5} isInSearchScreen={true} />
                     </StatGaugeContainer>
                   </View>
-                  <HelpText style={{ fontSize: 12 }}>
+                  <Text role="body" size="large" fontStyle="italic">
                     Appuyez sur une barre pour voir l'écart avec votre critère
-                  </HelpText>
+                  </Text>
                 </>
               ),
             },
@@ -159,10 +166,12 @@ const HelpSearchSetScreen = () => {
         },
       ]}
       outroAdviceHighlightContent={
-        <HelpText>Commencez avec 2-3 statistiques principales pour des résultats plus pertinents</HelpText>
+        <Text role="body" size="large">
+          Commencez avec 2-3 statistiques principales pour des résultats plus pertinents
+        </Text>
       }
     />
   );
 };
 
-export default HelpSearchSetScreen;
+export default memo(HelpSearchSetScreen);

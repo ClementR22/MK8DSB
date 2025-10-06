@@ -139,22 +139,21 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
     });
   }, [statNamesSortDefault, activeSort, currentDirection, handlePress, createTooltipMenu]);
 
-  const containerStyle = useMemo(
-    () => [
-      styles.container,
-      { paddingHorizontal: screenName === "search" ? GAP_SORT_MODE_SELECTOR : PADDING_BOX_CONTAINER },
-      !NEEDS_SCROLL && styles.spaceAround,
-    ],
-    [screenName]
-  );
-
   const Wrapper = NEEDS_SCROLL ? ScrollView : View;
   const wrapperProps = NEEDS_SCROLL ? { horizontal: true, scrollEnabled: isScrollEnable } : {};
 
   return (
     <View style={styles.wrapper}>
       <Wrapper {...wrapperProps}>
-        <Pressable style={containerStyle}>{mainButtons}</Pressable>
+        <Pressable
+          style={[
+            styles.container,
+            { paddingHorizontal: screenName === "search" ? GAP_SORT_MODE_SELECTOR : PADDING_BOX_CONTAINER },
+            !NEEDS_SCROLL && styles.spaceAround,
+          ]}
+        >
+          {mainButtons}
+        </Pressable>
       </Wrapper>
     </View>
   );

@@ -1,10 +1,8 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { memo } from "react";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal from "./HelpModal";
-import HelpBoldText from "../helpComponents/HelpBoldText";
-import HelpText from "../helpComponents/HelpText";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
+import Text from "@/primitiveComponents/Text";
 
 const HelpFavoritesScreen = () => {
   return (
@@ -13,7 +11,10 @@ const HelpFavoritesScreen = () => {
       intro={{
         content: (
           <>
-            <HelpBoldText>Centralisez et organisez</HelpBoldText> tous vos sets préférés pour y accéder rapidement.
+            <Text role="body" size="large" weight="bold">
+              Centralisez et organisez
+            </Text>{" "}
+            tous vos sets préférés pour y accéder rapidement.
           </>
         ),
       }}
@@ -74,9 +75,9 @@ const HelpFavoritesScreen = () => {
                     iconType={IconType.MaterialCommunityIcons}
                     description="Selectionner le tri qui vous convient"
                   />
-                  <HelpText style={{ fontSize: 12, fontStyle: "italic" }}>
+                  <Text role="body" size="large" fontStyle="italic">
                     Cliquez longuement sur un bouton de tri pour afficher son nom
-                  </HelpText>
+                  </Text>
                 </>
               ),
             },
@@ -132,4 +133,4 @@ const HelpFavoritesScreen = () => {
   );
 };
 
-export default HelpFavoritesScreen;
+export default memo(HelpFavoritesScreen);

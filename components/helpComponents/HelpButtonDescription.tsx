@@ -1,9 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import IconContainer from "@/primitiveComponents/IconContainer";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
+import Text from "@/primitiveComponents/Text";
 
 interface HelpButtonDescriptionProps {
   iconName: string;
@@ -32,7 +33,9 @@ const HelpButtonDescription = ({
       </View>
 
       <View style={{ flex: 1, gap: 10, justifyContent: "center" }}>
-        <Text style={[styles.description, { color: theme.on_surface_variant }]}>{description}</Text>
+        <Text role="body" size="large">
+          {description}
+        </Text>
       </View>
     </View>
   );
@@ -46,9 +49,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   iconWrapper: { width: BUTTON_SIZE, alignItems: "center" },
-  description: {
-    fontSize: 14,
-  },
 });
 
 export default HelpButtonDescription;

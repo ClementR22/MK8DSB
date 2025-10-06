@@ -1,10 +1,11 @@
 import { MAX_STAT_VALUE } from "@/constants/constants";
 import { useGaugeMetrics } from "@/hooks/useGaugeMetrics";
 import { useStatGaugeStyles } from "@/hooks/useStatGaugeStyles";
+import Text from "@/primitiveComponents/Text";
 import { ContextId } from "@/stores/useGaugeStore";
 import { useThemeStore } from "@/stores/useThemeStore";
-import React, { useCallback, useMemo, useState } from "react";
-import { StyleSheet, Text, View, LayoutChangeEvent } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
 interface StatGaugeBarProps {
   value: number;
@@ -14,27 +15,11 @@ interface StatGaugeBarProps {
 const StatGaugeBar = ({ value, contextId }: StatGaugeBarProps) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const { gaugeWidth, getWidth, handleGaugeLayout } = useGaugeMetrics(contextId);
+  const { getWidth, handleGaugeLayout } = useGaugeMetrics(contextId);
 
-  const fillWidth = useMemo(() => getWidth(value), [value, gaugeWidth]);
-
-  const showValueInside = useMemo(() => value >= MAX_STAT_VALUE / 4, [value]);
+  const showValueInside = value >= MAX_STAT_VALUE / 4;
 
   const stylesDynamic = useStatGaugeStyles();
-
-  const valueLabelInsideColor = useMemo(
-    () => ({
-      color: theme.on_primary,
-    }),
-    [theme.on_primary]
-  );
-
-  const valueLabelOutsideColor = useMemo(
-    () => ({
-      color: theme.on_surface,
-    }),
-    [theme.on_surface]
-  );
 
   return (
     <View style={stylesDynamic.emptyContainer} onLayout={handleGaugeLayout}>
@@ -44,12 +29,12 @@ const StatGaugeBar = ({ value, contextId }: StatGaugeBarProps) => {
           stylesDynamic.thick,
           {
             backgroundColor: theme.primary,
-            width: fillWidth,
+            width: getWidth(value),
           },
         ]}
       >
         {showValueInside && (
-          <Text style={StyleSheet.flatten([styles.valueLabel, styles.valueLabelInsidePosition, valueLabelInsideColor])}>
+          <Text role="label" size="large" inverse style={styles.valueLabelInsidePosition}>
             {value}
           </Text>
         )}
@@ -57,7 +42,7 @@ const StatGaugeBar = ({ value, contextId }: StatGaugeBarProps) => {
 
       {/* Valeur en dehors de la barre */}
       {!showValueInside && (
-        <Text style={StyleSheet.flatten([styles.valueLabel, styles.valueLabelOutsidePosition, valueLabelOutsideColor])}>
+        <Text role="label" size="large" style={styles.valueLabelOutsidePosition}>
           {value}
         </Text>
       )}
@@ -66,11 +51,6 @@ const StatGaugeBar = ({ value, contextId }: StatGaugeBarProps) => {
 };
 
 const styles = StyleSheet.create({
-  valueLabel: {
-    fontSize: 16,
-    fontWeight: "bold",
-    top: 0,
-  },
   valueLabelInsidePosition: {
     position: "absolute",
     right: 7,

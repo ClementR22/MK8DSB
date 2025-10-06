@@ -1,5 +1,5 @@
 import React, { useState, memo, useMemo, useCallback } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { Category } from "@/data/elements/elementsTypes";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
@@ -40,11 +40,23 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
 
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [sortNumber, setSortNumber] = useState(0);
+  const [isOpenSortView, setIsOpenSortView] = useState(false);
 
   const categoryElementsSorted = useMemo(
     () => sortElements(elementsDataByCategory[selectedCategory], sortNumber, language),
     [selectedCategory, sortNumber, language]
   );
+
+  const numberOfPages = useMemo(() => {
+    return Math.ceil(categoryElementsSorted.length / ELEMENTS_PER_PAGE);
+  }, [categoryElementsSorted.length]);
+
+  const pages = useMemo(() => {
+    return Array.from({ length: numberOfPages }, (_, i) => {
+      const start = i * ELEMENTS_PER_PAGE;
+      return categoryElementsSorted.slice(start, start + ELEMENTS_PER_PAGE);
+    });
+  }, [categoryElementsSorted, numberOfPages]);
 
   const selectedClassId = usePressableElementsStore((state) => {
     return selectionMode === "single"
@@ -52,11 +64,8 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
       : state.multiSelectedClassIdsByCategory[selectedCategory];
   });
 
-  const numberOfPages = useMemo(() => {
-    return Math.ceil(categoryElementsSorted.length / ELEMENTS_PER_PAGE);
-  }, [categoryElementsSorted.length]);
-
   const selectElementsByClassId = usePressableElementsStore((state) => state.selectElementsByClassId);
+
   const toggleMultiSelectElementsByClassId = usePressableElementsStore(
     (state) => state.toggleMultiSelectElementsByClassId
   );
@@ -66,27 +75,11 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
     [selectElementsByClassId, toggleMultiSelectElementsByClassId, selectionMode]
   );
 
-  const [isOpenSortView, setIsOpenSortView] = useState(false);
   const toggleOpenSortView = useCallback(() => setIsOpenSortView((prev) => !prev), []);
 
-  const { iconName, iconType, tooltipText } = useMemo(() => {
-    if (isOpenSortView) {
-      return { iconName: "car-sports", iconType: IconType.MaterialCommunityIcons, tooltipText: "FilterBodytypes" };
-    }
-    return { iconName: "sort", iconType: IconType.MaterialCommunityIcons, tooltipText: "SortElements" };
-  }, [isOpenSortView]);
-
-  const pages = useMemo(() => {
-    return Array.from({ length: numberOfPages }, (_, i) => {
-      const start = i * ELEMENTS_PER_PAGE;
-      return categoryElementsSorted.slice(start, start + ELEMENTS_PER_PAGE);
-    });
-  }, [categoryElementsSorted, numberOfPages]);
-
-  const paginatedWrapperContainerStyle = useMemo(
-    () => ({ ...styles.paginatedWrapperContainer, backgroundColor: theme.surface }),
-    [theme.surface]
-  );
+  const { iconName, iconType, tooltipText } = isOpenSortView
+    ? { iconName: "car-sports", iconType: IconType.MaterialCommunityIcons, tooltipText: "FilterBodytypes" }
+    : { iconName: "sort", iconType: IconType.MaterialCommunityIcons, tooltipText: "SortElements" };
 
   return (
     <>
@@ -116,7 +109,7 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
         </View>
       </View>
 
-      <View style={paginatedWrapperContainerStyle}>
+      <View style={[styles.paginatedWrapperContainer, { backgroundColor: theme.surface }]}>
         <View style={styles.categorySelectorWrapper}>
           <CategorySelector selectedCategory={selectedCategory} onCategoryPress={setSelectedCategory} />
         </View>

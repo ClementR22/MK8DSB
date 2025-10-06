@@ -1,10 +1,11 @@
-import React, { ReactNode, useMemo } from "react";
-import { StyleSheet, Text } from "react-native";
+import React, { ReactNode } from "react";
+import { StyleSheet } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
 import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
-import { box_shadow_z1, box_shadow_z2, box_shadow_z3, box_shadow_z5 } from "@/components/styles/theme";
+import { box_shadow_z2 } from "@/components/styles/shadow";
+import Text from "./Text";
 
 type IconProps = {
   name: string;
@@ -24,7 +25,7 @@ interface ButtonProps {
   [key: string]: any;
 }
 
-const Button = ({
+const Button: React.FC<ButtonProps> = ({
   children,
   buttonColor,
   buttonTextColor,
@@ -35,12 +36,14 @@ const Button = ({
   flex,
   disabled = false,
   ...props
-}: ButtonProps) => {
+}) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const containerStyle = useMemo(
-    () =>
-      StyleSheet.flatten([
+  return (
+    <ButtonBase
+      onPress={onPress}
+      tooltipText={tooltipText}
+      containerStyle={[
         styles.container,
         {
           backgroundColor: disabled ? "grey" : buttonColor || theme.primary,
@@ -48,25 +51,14 @@ const Button = ({
           minWidth: minWidth,
           flex: flex,
         },
-      ]),
-    [theme.primary, iconProps, minWidth, disabled]
-  );
-
-  const textStyle = useMemo(
-    () => ({ color: buttonTextColor || theme.on_primary }),
-    [buttonTextColor, theme.on_primary]
-  );
-
-  return (
-    <ButtonBase
-      onPress={onPress}
-      tooltipText={tooltipText}
-      containerStyle={containerStyle}
+      ]}
       {...props}
       disabled={disabled}
     >
       {iconProps && <Icon type={iconProps.type} name={iconProps.name} size={24} color={theme.on_primary} />}
-      <Text style={[styles.text, textStyle]}>{children}</Text>
+      <Text role="title" size="small" weight="semibold" textAlign="center" color={buttonTextColor} inverse>
+        {children}
+      </Text>
     </ButtonBase>
   );
 };
@@ -80,10 +72,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 5,
     boxShadow: box_shadow_z2,
-  },
-  text: {
-    fontWeight: "500",
-    fontSize: 14,
   },
 });
 

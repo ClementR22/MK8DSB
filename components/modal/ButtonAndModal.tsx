@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useState } from "react";
+import React, { memo, ReactElement, useCallback, useState } from "react";
 import { GestureResponderEvent } from "react-native";
 import Modal from "@/primitiveComponents/Modal";
 import Button from "../../primitiveComponents/Button";
@@ -33,80 +33,78 @@ interface ButtonAndModalProps {
   secondButtonPosition?: "left" | "right";
 }
 
-const ButtonAndModal: React.FC<ButtonAndModalProps> = React.memo(
-  ({
-    children,
-    buttonColor,
-    buttonTextColor,
-    modalTitle = undefined, // Initialisé à undefined pour ne pas passer null par défaut
-    isModalVisibleProp, // option
-    setIsModalVisibleProp, // option
-    customTrigger, // give a component OR
-    triggerButtonText, // give just the text
-    closeButtonText = undefined,
-    secondButton,
-    secondButtonProps,
-    closeAfterSecondButton,
-    secondButtonPosition = "left",
-  }) => {
-    // État interne pour gérer la visibilité si les props externes ne sont pas fournies
-    const [internalIsModalVisible, setInternalIsModalVisible] = useState(false);
+const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
+  children,
+  buttonColor,
+  buttonTextColor,
+  modalTitle = undefined, // Initialisé à undefined pour ne pas passer null par défaut
+  isModalVisibleProp, // option
+  setIsModalVisibleProp, // option
+  customTrigger, // give a component OR
+  triggerButtonText, // give just the text
+  closeButtonText = undefined,
+  secondButton,
+  secondButtonProps,
+  closeAfterSecondButton,
+  secondButtonPosition = "left",
+}) => {
+  // État interne pour gérer la visibilité si les props externes ne sont pas fournies
+  const [internalIsModalVisible, setInternalIsModalVisible] = useState(false);
 
-    // Détermine la visibilité actuelle de la modale :
-    // Si isModalVisibleProp est défini, utilisez-le. Sinon, utilisez l'état interne.
-    const currentIsModalVisible = isModalVisibleProp !== undefined ? isModalVisibleProp : internalIsModalVisible;
+  // Détermine la visibilité actuelle de la modale :
+  // Si isModalVisibleProp est défini, utilisez-le. Sinon, utilisez l'état interne.
+  const currentIsModalVisible = isModalVisibleProp !== undefined ? isModalVisibleProp : internalIsModalVisible;
 
-    // Détermine la fonction de mise à jour de la visibilité :
-    // Si setIsModalVisibleProp est défini, utilisez-le. Sinon, utilisez le setter interne.
-    const currentSetIsModalVisible =
-      setIsModalVisibleProp !== undefined ? setIsModalVisibleProp : setInternalIsModalVisible;
+  // Détermine la fonction de mise à jour de la visibilité :
+  // Si setIsModalVisibleProp est défini, utilisez-le. Sinon, utilisez le setter interne.
+  const currentSetIsModalVisible =
+    setIsModalVisibleProp !== undefined ? setIsModalVisibleProp : setInternalIsModalVisible;
 
-    // Fonction pour ouvrir le modal
-    const openModal = useCallback(() => {
-      currentSetIsModalVisible(true);
-    }, [currentSetIsModalVisible]);
+  // Fonction pour ouvrir le modal
+  const openModal = useCallback(() => {
+    currentSetIsModalVisible(true);
+  }, [currentSetIsModalVisible]);
 
-    // Fonction pour fermer le modal
-    const closeModal = useCallback(() => {
-      currentSetIsModalVisible(false);
-    }, [currentSetIsModalVisible]);
+  // Fonction pour fermer le modal
+  const closeModal = useCallback(() => {
+    currentSetIsModalVisible(false);
+  }, [currentSetIsModalVisible]);
 
-    // Clonez le customTrigger pour injecter la prop onPress
-    const triggerElement = customTrigger ? (
-      React.cloneElement(customTrigger, { onPress: openModal })
-    ) : (
-      <Button
-        key={"ModalButton"}
-        buttonColor={buttonColor}
-        buttonTextColor={buttonTextColor}
-        onPress={openModal}
-        tooltipText={undefined}
+  // Clonez le customTrigger pour injecter la prop onPress
+  const triggerElement = customTrigger ? (
+    React.cloneElement(customTrigger, { onPress: openModal })
+  ) : (
+    <Button
+      key={"ModalButton"}
+      buttonColor={buttonColor}
+      buttonTextColor={buttonTextColor}
+      onPress={openModal}
+      tooltipText={undefined}
+    >
+      {translate(triggerButtonText)}
+    </Button>
+  );
+
+  return (
+    <>
+      {triggerElement}
+
+      <Modal
+        key={"Modal-ButtonAndModal"}
+        modalTitle={modalTitle}
+        isModalVisible={currentIsModalVisible}
+        setIsModalVisible={currentSetIsModalVisible}
+        closeButtonText={closeButtonText}
+        onClose={closeModal} // Assurez-vous que onClose utilise aussi le setter approprié
+        secondButton={secondButton}
+        secondButtonProps={secondButtonProps}
+        closeAfterSecondButton={closeAfterSecondButton}
+        secondButtonPosition={secondButtonPosition}
       >
-        {translate(triggerButtonText)}
-      </Button>
-    );
+        {children}
+      </Modal>
+    </>
+  );
+};
 
-    return (
-      <>
-        {triggerElement}
-
-        <Modal
-          key={"Modal-ButtonAndModal"}
-          modalTitle={modalTitle}
-          isModalVisible={currentIsModalVisible}
-          setIsModalVisible={currentSetIsModalVisible}
-          closeButtonText={closeButtonText}
-          onClose={closeModal} // Assurez-vous que onClose utilise aussi le setter approprié
-          secondButton={secondButton}
-          secondButtonProps={secondButtonProps}
-          closeAfterSecondButton={closeAfterSecondButton}
-          secondButtonPosition={secondButtonPosition}
-        >
-          {children}
-        </Modal>
-      </>
-    );
-  }
-);
-
-export default ButtonAndModal;
+export default memo(ButtonAndModal);

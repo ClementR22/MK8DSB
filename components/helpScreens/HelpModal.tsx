@@ -1,25 +1,17 @@
-import React, { useMemo, useState } from "react";
-import { Text, ScrollView, View, Pressable } from "react-native";
+import React, { useMemo } from "react";
+import { ScrollView, View, Pressable } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
-import Button from "@/primitiveComponents/Button";
-import HelpTitle from "../helpComponents/HelpTitle";
-import HelpText from "../helpComponents/HelpText";
-import HelpHighlightBox, { BoxType } from "../helpComponents/HelpHighlightBox";
+import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
 import HelpStepItem from "../helpComponents/HelpStepItem";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
-import HelpBoldText from "../helpComponents/HelpBoldText";
-import HelpSubtitle from "../helpComponents/HelpSubtitle";
-import { useLanguageStore } from "@/stores/useLanguageStore";
-import { translateToLanguage } from "@/translations/translations";
-import useGeneralStore from "@/stores/useGeneralStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import Separator from "../Separator";
-import Modal from "@/primitiveComponents/Modal";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import { StyleSheet } from "react-native";
+import Text from "@/primitiveComponents/Text";
+import Separator from "../Separator";
 
 export type HelpContentItem = {
-  type: "title" | "subtitle" | "highlight" | "step" | "feature" | "custom";
+  type: "title" | "highlight" | "step" | "feature" | "custom";
   content: any;
   props?: any;
 };
@@ -40,10 +32,6 @@ export type HelpModalProps = {
 const HelpModal: React.FC<HelpModalProps> = ({ title, intro, sections, outroAdviceHighlightContent }) => {
   const renderContentItem = (item: HelpContentItem, index: number) => {
     switch (item.type) {
-      case "title":
-        return <HelpTitle key={index}>{item.content}</HelpTitle>;
-      case "subtitle":
-        return <HelpSubtitle key={index}>{item.content}</HelpSubtitle>;
       case "highlight":
         return (
           <HelpHighlightBox key={index} type={item.props?.type || "info"} title={item.props?.title}>
@@ -80,16 +68,23 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, intro, sections, outroAdvi
 
   return (
     <ButtonAndModal customTrigger={customTrigger} modalTitle={title}>
-      <ScrollView scrollEnabled={true} style={{ maxHeight: 450 }}>
+      <ScrollView scrollEnabled={true} style={styles.scrollView}>
         <Pressable style={styles.container}>
-          <HelpText>{intro.content}</HelpText>
+          <Text role="body" size="large" textAlign="center">
+            {intro.content}
+          </Text>
 
-          <View style={styles.sections}>
+          <View key="body-sections">
             {sections.map((section, sectionIndex) => (
-              <View key={sectionIndex} style={styles.section}>
-                <HelpSubtitle>{section.title}</HelpSubtitle>
-                {section.items.map((item, itemIndex) => renderContentItem(item, itemIndex))}
-              </View>
+              <>
+                <Separator direction="horizontal" wrapperStyle={{ marginVertical: 20 }} />
+                <View key={sectionIndex} style={styles.section}>
+                  <Text role="title" size="large" textAlign="center">
+                    {section.title}
+                  </Text>
+                  {section.items.map((item, itemIndex) => renderContentItem(item, itemIndex))}
+                </View>
+              </>
             ))}
           </View>
 
@@ -103,9 +98,9 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, intro, sections, outroAdvi
 };
 
 const styles = StyleSheet.create({
-  container: { gap: 20, padding: 10 },
-  sections: { gap: 30 },
-  section: { gap: 15 },
+  container: { gap: 0, padding: 10, paddingTop: 20 },
+  section: { gap: 25 },
+  scrollView: { maxHeight: 450 },
 });
 
 export default React.memo(HelpModal);

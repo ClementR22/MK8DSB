@@ -1,7 +1,8 @@
+import Text from "@/primitiveComponents/Text";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { translate } from "@/translations/translations";
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import { Platform, Pressable, Text, ViewStyle } from "react-native";
+import React, { useCallback, useRef, useState } from "react";
+import { Pressable, ViewStyle } from "react-native";
 import Popover, { PopoverMode, PopoverPlacement } from "react-native-popover-view";
 import { Placement } from "react-native-popover-view/dist/Types";
 
@@ -10,7 +11,7 @@ export type TooltipPlacementType = Placement | "top" | "right" | "bottom" | "lef
 interface TooltipProps {
   tooltipText: string;
   onPress?: () => void;
-  style?: ViewStyle;
+  style?: ViewStyle | ViewStyle[];
   placement?: TooltipPlacementType;
   disabled?: boolean;
   children: React.ReactNode;
@@ -66,7 +67,11 @@ const Tooltip: React.FC<TooltipProps> = ({
         arrowSize={{ width: 0, height: 0 }}
         offset={5}
       >
-        {tooltipText && <Text>{translate(tooltipText)}</Text>}
+        {tooltipText && (
+          <Text role="title" size="small">
+            {translate(tooltipText)}
+          </Text>
+        )}
       </Popover>
     </>
   );

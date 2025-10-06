@@ -1,9 +1,10 @@
 import { useThemeStore } from "@/stores/useThemeStore";
-import React, { useCallback, useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import { getBonusColor } from "@/utils/getBonusColor";
 import { useStatGaugeStyles } from "@/hooks/useStatGaugeStyles";
 import { useGaugeMetrics } from "@/hooks/useGaugeMetrics";
+import Text from "@/primitiveComponents/Text";
 
 interface StatGaugeRelativeBarProps {
   value: number;
@@ -15,41 +16,22 @@ const StatGaugeRelativeBar = ({ value, maxValue = 6 }: StatGaugeRelativeBarProps
 
   const { gaugeWidth, handleGaugeLayout } = useGaugeMetrics("stat-gauge-gallery");
 
-  const getWidth = useCallback((val: number) => (gaugeWidth * Math.abs(val)) / (maxValue * 2), [gaugeWidth, maxValue]);
+  const fillWidth = (gaugeWidth * Math.abs(value)) / (maxValue * 2);
 
-  const fillWidth = useMemo(() => getWidth(value), [value, getWidth]);
+  const showValueInside = Math.abs(value) > maxValue / 2;
 
-  const showValueInside = useMemo(() => Math.abs(value) > maxValue / 2, [value, maxValue]);
-  const showValueOutside = useMemo(() => !showValueInside, [showValueInside]);
-
-  const valueLabelInsideColor = useMemo(
-    () => ({
-      color: theme.on_primary,
-    }),
-    [theme.on_primary]
-  );
-
-  const valueLabelOutsideColor = useMemo(
-    () => ({
-      color: theme.on_surface,
-    }),
-    [theme.on_surface]
-  );
-
-  const fillBackgroundColor = useMemo(() => getBonusColor(value) ?? theme.primary, [value, theme.primary]);
-
-  const stylesDynamic = useStatGaugeStyles();
+  const { emptyContainer, thick } = useStatGaugeStyles();
 
   return (
-    <View style={stylesDynamic.emptyContainer} onLayout={handleGaugeLayout}>
+    <View style={emptyContainer} onLayout={handleGaugeLayout}>
       {/* Ligne noire centrale */}
       <View style={[styles.zeroLine, { left: gaugeWidth / 2 - 1 }]} />
       {/* Fill principal */}
       <View
         style={[
-          stylesDynamic.thick,
+          thick,
           {
-            backgroundColor: fillBackgroundColor,
+            backgroundColor: getBonusColor(value) ?? theme.primary,
             width: fillWidth,
             position: "absolute",
           },
@@ -64,31 +46,24 @@ const StatGaugeRelativeBar = ({ value, maxValue = 6 }: StatGaugeRelativeBarProps
       >
         {/* Valeur à l'intérieur de la barre */}
         {showValueInside && (
-          <Text
-            style={StyleSheet.flatten([
-              styles.valueLabel,
-              valueLabelInsideColor,
-              value > 0 ? { right: -5 } : { left: 5 },
-            ])}
-          >
+          <Text role="label" size="large" style={value > 0 ? { right: -5 } : { left: 5 }}>
             {value > 0 ? `+${value}` : value}
           </Text>
         )}
       </View>
 
       {/* Valeur en dehors de la barre */}
-      {showValueOutside && (
+      {!showValueInside && (
         <Text
-          style={StyleSheet.flatten([
-            styles.valueLabel,
-            valueLabelOutsideColor,
-            { position: "absolute" },
+          role="label"
+          size="large"
+          style={
             value > 0
               ? { left: gaugeWidth / 2 + fillWidth + 2 }
               : value < 0
               ? { right: gaugeWidth / 2 + fillWidth + 4 }
-              : { left: gaugeWidth / 2 + fillWidth + 6 },
-          ])}
+              : { left: gaugeWidth / 2 + fillWidth + 6 }
+          }
         >
           {value > 0 ? `+${value}` : value}
         </Text>
@@ -104,11 +79,6 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "black",
     zIndex: 1,
-  },
-  valueLabel: {
-    fontSize: 16,
-    fontWeight: "bold",
-    top: 0,
   },
   valueLabelInsidePosition: {
     position: "absolute",

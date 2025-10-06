@@ -80,8 +80,8 @@ const SetCard: React.FC<SetCardProps> = ({
 }) => {
   const contextScreenName = useScreen();
 
-  const screenName = useMemo(() => screenNameFromProps ?? contextScreenName, [screenNameFromProps, contextScreenName]);
-  const situation = useMemo(() => (isInLoadSetModal ? "load" : screenName), [isInLoadSetModal, screenName]);
+  const screenName = screenNameFromProps ?? contextScreenName;
+  const situation = isInLoadSetModal ? "load" : screenName;
 
   const setsListSaved = useSetsStore((state) => state.setsListSaved);
   const isSaved = useMemo(
@@ -148,14 +148,9 @@ const SetCard: React.FC<SetCardProps> = ({
 
   const { setCardStyle } = useSetCardStyle(SET_CARD_WIDTH);
 
-  const setCardCompleteStyle = useMemo(
-    () => [{ ...setCardStyle }, borderColor && { borderColor }],
-    [setCardStyle, borderColor]
-  );
-
   return (
     <View style={styles.wrapper} onLayout={onLayout}>
-      <View style={setCardCompleteStyle}>
+      <View style={[setCardStyle, borderColor && { borderColor }]}>
         <SetCardHeader {...headerProps} />
 
         <SetImagesModal setToShowClassIds={setToShowClassIds} />

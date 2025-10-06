@@ -1,5 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
-import { Platform } from "react-native";
+import React, { useState, useCallback } from "react";
 import { Menu } from "react-native-paper";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";

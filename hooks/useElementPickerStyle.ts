@@ -2,7 +2,7 @@
 import { useMemo } from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore"; // N'oublie pas d'importer useThemeStore
-import { box_shadow_z1 } from "@/components/styles/theme";
+import { box_shadow_z1 } from "@/components/styles/shadow";
 
 interface ElementPickerStyleProps {
   size: number;

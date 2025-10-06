@@ -1,11 +1,12 @@
 import React, { useMemo, useCallback } from "react";
-import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
+import { View, StyleSheet, ScrollView, Pressable } from "react-native";
 import { Checkbox, DataTable } from "react-native-paper";
 import { ResultStat } from "@/contexts/ResultStatsContext";
 import { ChosenStat } from "@/stores/useSetsStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { translateToLanguage } from "@/translations/translations";
 import { useThemeStore } from "@/stores/useThemeStore";
+import Text from "@/primitiveComponents/Text";
 
 type CheckList = ChosenStat[] | ResultStat[];
 export type ColumnName = "chosenStats" | "resultStats";
@@ -25,39 +26,8 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleSt
   const language = useLanguageStore((state) => state.language);
   const theme = useThemeStore((state) => state.theme);
 
-  // Mémoisation des calculs
-  const { rowNames, labelFlex } = useMemo(
-    () => ({
-      rowNames: columns[0]?.checkList.map((stat) => stat.name) || [],
-      labelFlex: 5 - columns.length,
-    }),
-    [columns]
-  );
-
-  const { rowLabelTextStyle, headerTextStyle } = useMemo(
-    () => ({
-      rowLabelTextStyle: { ...styles.rowLabelText, color: theme.on_surface },
-      headerTextStyle: { ...styles.headerText, color: theme.on_surface },
-    }),
-    []
-  );
-
-  // Mémoisation du rendu des headers
-  const renderHeaders = useMemo(
-    () => (
-      <DataTable.Header style={styles.header}>
-        <DataTable.Title style={{ flex: labelFlex }}>
-          <Text style={headerTextStyle} />
-        </DataTable.Title>
-        {columns.map(({ columnName }) => (
-          <DataTable.Title key={columnName} style={styles.headerCell}>
-            <Text style={headerTextStyle}>{translateToLanguage(columnName, language)}</Text>
-          </DataTable.Title>
-        ))}
-      </DataTable.Header>
-    ),
-    [columns, labelFlex, language]
-  );
+  const rowNames = useMemo(() => columns[0]?.checkList.map((stat) => stat.name) || [], [columns]);
+  const labelFlex = 5 - columns.length;
 
   // Rendu optimisé des lignes
   const renderRow = useCallback(
@@ -67,7 +37,9 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleSt
         <DataTable.Row style={styles.row}>
           {/* Label de la ligne */}
           <DataTable.Cell style={{ flex: labelFlex }}>
-            <Text style={rowLabelTextStyle}>{translateToLanguage(statName, language)}</Text>
+            <Text role="title" size="small">
+              {translateToLanguage(statName, language)}
+            </Text>
           </DataTable.Cell>
 
           {/* Checkboxes pour chaque colonne */}
@@ -93,7 +65,21 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleSt
 
   return (
     <DataTable>
-      {renderHeaders}
+      <DataTable.Header style={styles.header}>
+        <DataTable.Title style={{ flex: labelFlex }}>
+          <Text role="title" size="small">
+            {""}
+          </Text>
+        </DataTable.Title>
+        {columns.map(({ columnName }) => (
+          <DataTable.Title key={columnName} style={styles.headerCell}>
+            <Text role="title" size="small">
+              {translateToLanguage(columnName, language)}
+            </Text>
+          </DataTable.Title>
+        ))}
+      </DataTable.Header>
+
       <View style={[styles.scrollViewWrapper, { borderColor: theme.outline_variant }]}>
         <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
           {rowNames.map(renderRow)}
@@ -128,13 +114,6 @@ const styles = StyleSheet.create({
   checkboxCell: {
     justifyContent: "center",
     alignItems: "center",
-  },
-  headerText: {
-    fontWeight: "600",
-    fontSize: 14,
-  },
-  rowLabelText: {
-    fontSize: 14,
   },
 });
 

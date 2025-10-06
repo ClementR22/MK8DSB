@@ -1,11 +1,13 @@
 import React, { useMemo } from "react";
 import { Picker as NativePicker } from "@react-native-picker/picker";
 import { translate, translateToLanguage } from "@/translations/translations";
-import { Text, View, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import Icon from "react-native-vector-icons/MaterialIcons"; // Assure-toi d’avoir installé react-native-vector-icons
 import { BORDER_RADIUS_STANDARD } from "@/utils/designTokens";
+import Text from "@/primitiveComponents/Text";
+import { typography } from "./styles/typography";
 
 interface PickerItem {
   label: string;
@@ -29,13 +31,11 @@ const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle 
     ));
   }, [itemList, language]);
 
-  const iosItemStyle = useMemo(() => {
-    return { color: theme.on_surface };
-  }, [theme.on_surface]);
-
   return (
     <View style={styles.container}>
-      <Text style={StyleSheet.flatten([styles.title, { color: theme.on_surface }])}>{translate(pickerTitle)}</Text>
+      <Text role="title" size="small" style={styles.title}>
+        {translate(pickerTitle)}
+      </Text>
 
       <View style={[styles.pickerWrapper, { backgroundColor: theme.surface, borderColor: theme.outline }]}>
         <NativePicker
@@ -44,7 +44,7 @@ const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle 
             setValue(itemValue);
           }}
           style={[styles.pickerInput, { color: theme.on_surface }]}
-          itemStyle={Platform.OS === "ios" ? iosItemStyle : undefined}
+          itemStyle={Platform.OS === "ios" ? { color: theme.on_surface } : undefined}
           mode="dropdown"
           dropdownIconColor={Platform.OS === "android" ? "transparent" : undefined} // masque l'icône native sur Android
         >
@@ -63,9 +63,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   title: {
-    fontSize: 16,
     marginBottom: 5,
-    fontWeight: "bold",
   },
   pickerWrapper: {
     borderWidth: 1,
@@ -74,7 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   pickerInput: {
-    fontSize: 16,
+    fontSize: typography.title.small.fontSize,
     paddingHorizontal: 10,
     minHeight: 40,
     width: "100%",

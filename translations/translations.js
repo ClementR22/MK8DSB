@@ -350,7 +350,7 @@ const translations = {
     Selected: "Sélectionnés",
     chosenStats: "param.",
     resultStats: "affich.",
-    AppliedOnMountForSetBuilderAndComparator: "Appliqué au démarrage pour le Set builder et le Comparateur",
+    AppliedOnMountForSetBuilderAndComparator: "Appliquées au démarrage pour le Set builder et le Comparateur",
 
     // placeholder
     SearchEmpty: "Recherchez le set de vos rêves",

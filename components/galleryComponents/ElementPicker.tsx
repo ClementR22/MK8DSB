@@ -5,8 +5,9 @@ import {
   LIST_ITEM_SPACING,
 } from "@/utils/designTokens";
 import React, { memo } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { box_shadow_z1 } from "../styles/theme";
+import { Image, Pressable, StyleSheet, View } from "react-native";
+import { box_shadow_z1 } from "../styles/shadow";
+import Text from "@/primitiveComponents/Text";
 
 interface ElementPickerProps {
   name: string;
@@ -17,8 +18,7 @@ interface ElementPickerProps {
   style: any;
 }
 
-const ElementPicker: React.FC<ElementPickerProps> = memo(({ name, imageUrl, onPress, isCollapsed, style }) => {
-  // Pass theme to element item for consistent styling
+const ElementPicker: React.FC<ElementPickerProps> = ({ name, imageUrl, onPress, isCollapsed, style }) => {
   return (
     <Pressable style={[defaultStyles.container, style.containerDynamic]} onPress={onPress}>
       <View style={defaultStyles.imagePlaceholder}>
@@ -26,13 +26,13 @@ const ElementPicker: React.FC<ElementPickerProps> = memo(({ name, imageUrl, onPr
         <Image style={defaultStyles.image} source={imageUrl} resizeMode="contain" />
       </View>
       {!isCollapsed && (
-        <Text style={style.textDynamic} numberOfLines={1}>
+        <Text role="title" size="small" color={style.textColorDynamic} numberOfLines={1}>
           {name}
         </Text>
       )}
     </Pressable>
   );
-});
+};
 
 ElementPicker.displayName = "ElementPicker";
 
@@ -55,12 +55,6 @@ const defaultStyles = StyleSheet.create({
     flex: 1,
     width: "90%",
   },
-  text: {
-    marginLeft: LIST_ITEM_SPACING,
-    flex: 1,
-    fontSize: 16, // Slightly larger font
-    fontWeight: "500", // Medium font weight
-  },
 });
 
-export default ElementPicker;
+export default memo(ElementPicker);

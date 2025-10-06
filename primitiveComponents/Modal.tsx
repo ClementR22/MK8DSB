@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo } from "react";
-import { Modal as NativeModal, Pressable, StyleSheet, Text, View } from "react-native";
+import { Modal as NativeModal, Pressable, StyleSheet, View } from "react-native";
 import { translate } from "@/translations/translations";
 import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
@@ -11,6 +11,7 @@ import {
 } from "@/utils/designTokens";
 import Toast from "react-native-toast-message";
 import { toastConfig } from "@/config/toastConfig";
+import Text from "./Text";
 
 interface ModalButtonProps {
   text: string;
@@ -66,31 +67,7 @@ const Modal = ({
 }: ModalProps) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const containerBackgroundColorStyle = useMemo(
-    () => ({
-      backgroundColor: theme.surface_container_highest,
-    }),
-    [theme.surface_container_highest]
-  );
-
-  const contentColorStyle = useMemo(
-    () => ({
-      backgroundColor: theme.surface_container,
-    }),
-    [theme.surface_container]
-  );
-
-  const titleColorStyle = useMemo(
-    () => ({
-      color: theme.on_surface,
-    }),
-    [theme.on_surface]
-  );
-
-  const buttonContainerFlexDirection = useMemo(
-    () => (secondButtonPosition === "left" ? "row" : "row-reverse"),
-    [secondButtonPosition]
-  );
+  const buttonContainerFlexDirection = secondButtonPosition === "left" ? "row" : "row-reverse";
 
   const renderSecondButton = useCallback(() => {
     if (secondButton) {
@@ -137,14 +114,30 @@ const Modal = ({
     >
       <Pressable style={styles.background} onPress={handleBackgroundPress}>
         <Pressable
-          style={[styles.container, containerBackgroundColorStyle, { marginTop: 0 }]}
+          style={[
+            styles.container,
+            {
+              backgroundColor: theme.surface_container_highest,
+              marginTop: 0,
+            },
+          ]}
           onStartShouldSetResponder={handleContainerResponder}
         >
-          {modalTitle && <Text style={[styles.title_center, titleColorStyle]}>{translate(modalTitle)}</Text>}
+          {modalTitle && (
+            <Text role="headline" size="small" textAlign="center" style={styles.titleCenter}>
+              {translate(modalTitle)}
+            </Text>
+          )}
 
-          <View style={!withoutChildrenContainer && [styles.childrenContainer, contentColorStyle]}>{children}</View>
+          <View
+            style={
+              !withoutChildrenContainer && [styles.childrenContainer, { backgroundColor: theme.surface_container }]
+            }
+          >
+            {children}
+          </View>
 
-          <View style={{ flexDirection: buttonContainerFlexDirection, ...styles.buttonContainer }}>
+          <View style={[styles.buttonContainer, { flexDirection: buttonContainerFlexDirection }]}>
             {renderSecondButton()}
             {<ModalButton text={closeButtonText} onPress={actualOnPressClose} />}
           </View>
@@ -180,12 +173,8 @@ const styles = StyleSheet.create({
     borderRadius: BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,
     overflow: "hidden",
   },
-  title_center: {
-    alignSelf: "center",
-    textAlign: "center",
+  titleCenter: {
     paddingHorizontal: 24,
-    fontSize: 22,
-    fontWeight: "400", // fontWeight should be a string in RN
     marginBottom: 12,
     // fontFamily: "Roboto", // Ensure this font is loaded. If not, it falls back to default.
   },

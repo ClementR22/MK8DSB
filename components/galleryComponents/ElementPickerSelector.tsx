@@ -1,7 +1,7 @@
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { translateToLanguage } from "@/translations/translations";
-import React, { memo, useCallback, useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import { FlatList } from "react-native";
 import ElementPicker from "./ElementPicker";
 import { ElementData } from "@/data/elements/elementsTypes";
@@ -22,21 +22,13 @@ const ElementPickerSelector: React.FC<ElementPickerSelectorProps> = memo(
       () => ({
         activeStyle: {
           containerDynamic: { backgroundColor: theme.primary },
-          textDynamic: { color: theme.on_primary },
+          textColorDynamic: theme.on_primary,
         },
         inactiveStyle: {
           containerDynamic: { backgroundColor: theme.surface },
-          textDynamic: { color: theme.on_surface },
         },
       }),
       [theme]
-    );
-
-    const handleElementPress = useCallback(
-      (elementId: number) => {
-        onElementPickerPress(elementId);
-      },
-      [onElementPickerPress]
     );
 
     return (
@@ -47,10 +39,10 @@ const ElementPickerSelector: React.FC<ElementPickerSelectorProps> = memo(
           const isSelected = item.id === selectedElementId;
           const elementPickerStyle = isSelected ? activeStyle : inactiveStyle;
           return (
-            <ElementPicker // Use Memoized version
+            <ElementPicker
               name={translateToLanguage(item.name, language)}
               imageUrl={item.imageUrl}
-              onPress={() => handleElementPress(item.id)}
+              onPress={() => onElementPickerPress(item.id)}
               isSelected={isSelected}
               isCollapsed={!isLeftPannelExpanded}
               style={elementPickerStyle}

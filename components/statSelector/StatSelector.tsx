@@ -7,11 +7,9 @@ import { useScreen } from "@/contexts/ScreenContext";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import ResultStatsSyncSwitch from "./ResultStatsSyncSwitch";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { translateToLanguage } from "@/translations/translations";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 
 export type StatList = ChosenStat[] | ResultStat[];
 
@@ -24,6 +22,7 @@ type StatListColumn = {
 
 interface StatSelectorProps {
   triggerButtonText?: string;
+  children?: React.ReactNode;
 }
 
 // Configuration des colonnes par écran (déplacé hors du composant pour éviter les re-créations)
@@ -64,9 +63,7 @@ const getTriggerConfig = (screenName: string) => {
   return { customTrigger, modalTitle };
 };
 
-const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText }) => {
-  const language = useLanguageStore((state) => state.language);
-
+const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, children }) => {
   const theme = useThemeStore((state) => state.theme);
   const screenName = useScreen();
 
@@ -111,9 +108,6 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText }) => {
       checkList: statListsInModal[columnName] || [],
     }));
   }, [columns, statListsInModal]);
-
-  // État disabled mémorisé
-  const disabled = useMemo(() => isResultStatsSync && screenName === "search", [isResultStatsSync, screenName]);
 
   // Initialisation des données de la modal
   useEffect(() => {
@@ -185,7 +179,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText }) => {
       setIsModalVisibleProp={setIsModalVisible}
     >
       <View style={{ backgroundColor: theme.surface, padding: 16 }}>
-        <Text>{translateToLanguage("AppliedOnMountForSetBuilderAndComparator", language)}</Text>
+        {children}
         {screenName === "search" && (
           <ResultStatsSyncSwitch
             resultStats={statListsInModal.resultStats || []}
@@ -195,7 +189,11 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText }) => {
             chosenStats={(statListsInModal.chosenStats || []) as ChosenStat[]}
           />
         )}
-        <DoubleEntryTable columns={columnsInModal} onToggleStat={handleStatToggle} disabled={disabled} />
+        <DoubleEntryTable
+          columns={columnsInModal}
+          onToggleStat={handleStatToggle}
+          disabled={isResultStatsSync && screenName === "search"}
+        />
       </View>
     </ButtonAndModal>
   );

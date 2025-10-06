@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { DimensionValue, StyleSheet, View, ViewStyle } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { MARGIN_CONTAINER_LOWEST, PADDING_BOX_CONTAINER } from "@/utils/designTokens";
@@ -17,7 +17,7 @@ interface BoxContainerProps {
   borderRadius?: number;
   padding?: number;
   paddingHorizontal?: number;
-  flexWrap?: string;
+  flexWrap?: "nowrap" | "wrap" | "wrap-reverse";
   boxShadow?: string;
 }
 
@@ -40,59 +40,37 @@ const BoxContainer = ({
 }: BoxContainerProps) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const containerDynamicStyle = useMemo(
-    () => ({
-      backgroundColor: containerBackgroundColor,
-      width: widthContainer,
-    }),
-    [containerBackgroundColor, widthContainer]
-  );
-
-  const contentDynamicStyle = useMemo(() => {
-    const finalContentBackgroundColor = contentBackgroundColor || theme.surface_container;
-    return {
-      backgroundColor: finalContentBackgroundColor,
-      justifyContent: justifyContent,
-      marginHorizontal: marginHorizontal,
-      marginTop: marginTop,
-      borderRadius: borderRadius,
-      gap: gap,
-      flexDirection: flexDirection,
-      alignItems: alignItems,
-      padding: padding,
-      paddingHorizontal: paddingHorizontal,
-      flexWrap: flexWrap,
-      boxShadow: boxShadow,
-    };
-  }, [
-    contentBackgroundColor,
-    theme.surface_container_high,
-    justifyContent,
-    marginHorizontal,
-    marginTop,
-    borderRadius,
-    gap,
-    flexDirection,
-    alignItems,
-    padding,
-    paddingHorizontal,
-    flexWrap,
-    boxShadow,
-  ]);
-
-  const finalContainerStyle = useMemo(
-    () => StyleSheet.flatten([styles.container, containerDynamicStyle]),
-    [containerDynamicStyle]
-  );
-
-  const finalContentStyle = useMemo(
-    () => StyleSheet.flatten([styles.content, contentDynamicStyle]) as ViewStyle,
-    [contentDynamicStyle]
-  );
-
   return (
-    <View style={finalContainerStyle}>
-      <View style={finalContentStyle}>{children}</View>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: containerBackgroundColor,
+          width: widthContainer,
+        },
+      ]}
+    >
+      <View
+        style={[
+          styles.content,
+          {
+            backgroundColor: contentBackgroundColor || theme.surface_container,
+            justifyContent: justifyContent,
+            marginHorizontal: marginHorizontal,
+            marginTop: marginTop,
+            borderRadius: borderRadius,
+            gap: gap,
+            flexDirection: flexDirection,
+            alignItems: alignItems,
+            padding: padding,
+            paddingHorizontal: paddingHorizontal,
+            flexWrap: flexWrap,
+            boxShadow: boxShadow,
+          },
+        ]}
+      >
+        {children}
+      </View>
     </View>
   );
 };

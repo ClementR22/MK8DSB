@@ -36,5 +36,3 @@ export interface ThemeColor {
   primary_hover: string;
   inactive_dot: string;
 }
-
-export type Shadow = string;

@@ -1,6 +1,6 @@
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import React, { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import SortModeSelector from "../sortModeSelector/SortModeSelector";
 import { IconType } from "react-native-dynamic-vector-icons";
@@ -8,7 +8,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import { useScreen } from "@/contexts/ScreenContext";
 import { BORDER_RADIUS_CONTAINER_LOWEST } from "@/utils/designTokens";
 import Separator from "../Separator";
-import { box_shadow_z1 } from "../styles/theme";
+import { box_shadow_z1 } from "../styles/shadow";
 
 interface ScreenPressablesContainerProps {
   sortNumber: number;

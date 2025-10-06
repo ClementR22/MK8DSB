@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Tabs, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { StatusBar as RNStatusBar } from "react-native";
@@ -29,7 +29,7 @@ import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { toastConfig } from "@/config/toastConfig";
-import { box_shadow_z2 } from "@/components/styles/theme";
+import { box_shadow_z2 } from "@/components/styles/shadow";
 
 // Helper function to derive screen name from pathname
 // This can be extracted to a separate utility file if used elsewhere
@@ -81,60 +81,44 @@ export default function TabLayout() {
   // Custom hook for loading settings (assuming it has its own internal effects)
   useLoadSettings();
 
-  // --- Memoized Headers for Tabs ---
-  // Memoize help components to prevent re-rendering when CustomHeader is re-rendered
-  const memoizedHelpSearchSetScreen = useMemo(() => <HelpSearchSetScreen />, []);
-  const memoizedHelpDisplaySetScreen = useMemo(() => <HelpDisplaySetScreen />, []);
-  const memoizedHelpSavedSetScreen = useMemo(() => <HelpSavedSetScreen />, []);
-  // If HelpSearchSetScreen is used for Gallery and Settings, you might need separate memoized instances if they have unique state.
-  // For now, assuming they are truly identical in content for those tabs.
-
   const language = useLanguageStore((state) => state.language);
 
   // Use useCallback for header functions to prevent unnecessary re-renders of CustomHeader
   const renderSearchHeader = useCallback(
     () => (
-      <CustomHeader icon="magnify" helpComponent={memoizedHelpSearchSetScreen}>
+      <CustomHeader icon="magnify" helpComponent={<HelpSearchSetScreen />}>
         {translateToLanguage("FindSetTitle", language)}
       </CustomHeader>
     ),
-    [memoizedHelpSearchSetScreen, language]
+    [language]
   ); // Dependencies for useCallback
 
   const renderDisplayHeader = useCallback(
     () => (
-      <CustomHeader icon="compare" helpComponent={memoizedHelpDisplaySetScreen}>
+      <CustomHeader icon="compare" helpComponent={<HelpDisplaySetScreen />}>
         {translateToLanguage("DisplaySetTitle", language)}
       </CustomHeader>
     ),
-    [memoizedHelpDisplaySetScreen, language]
+    [language]
   );
 
   const renderSavedHeader = useCallback(
     () => (
-      <CustomHeader icon="cards-outline" helpComponent={memoizedHelpSavedSetScreen}>
+      <CustomHeader icon="cards-outline" helpComponent={<HelpSavedSetScreen />}>
         {translateToLanguage("SavedSetTitle", language)}
       </CustomHeader>
     ),
-    [memoizedHelpSavedSetScreen, language]
+    [language]
   );
 
   const renderGalleryHeader = useCallback(
-    () => (
-      <CustomHeader icon="image-outline" helpComponent={memoizedHelpSearchSetScreen}>
-        {translateToLanguage("GalleryTitle", language)}
-      </CustomHeader>
-    ),
-    [memoizedHelpSearchSetScreen, language]
+    () => <CustomHeader icon="image-outline">{translateToLanguage("GalleryTitle", language)}</CustomHeader>,
+    [language]
   );
 
   const renderSettingsHeader = useCallback(
-    () => (
-      <CustomHeader icon="settings" helpComponent={memoizedHelpSearchSetScreen}>
-        {translateToLanguage("SettingsTitle", language)}
-      </CustomHeader>
-    ),
-    [memoizedHelpSearchSetScreen]
+    () => <CustomHeader icon="settings">{translateToLanguage("SettingsTitle", language)}</CustomHeader>,
+    [language]
   );
 
   return (

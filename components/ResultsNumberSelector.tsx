@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ButtonIcon from "../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useGeneralStore from "@/stores/useGeneralStore";
 import ButtonAndModal from "./modal/ButtonAndModal";
+import Text from "@/primitiveComponents/Text";
 
 const MIN_RESULTS = 1;
 const MAX_RESULTS = 20;
@@ -40,9 +41,6 @@ const ResultsNumberSelector = () => {
   const canDecrement = resultsNumberInModal > MIN_RESULTS;
   const canIncrement = resultsNumberInModal < MAX_RESULTS;
 
-  // Style de texte mémorisé seulement si la couleur change souvent
-  const textStyle = [styles.resultsNumberText, { color: theme.on_surface }];
-
   return (
     <ButtonAndModal
       modalTitle="NumberOfSearchResults"
@@ -57,7 +55,9 @@ const ResultsNumberSelector = () => {
           iconType={IconType.MaterialCommunityIcons}
           disabled={!canDecrement}
         />
-        <Text style={textStyle}>{resultsNumberInModal}</Text>
+        <Text role="display" size="medium" textAlign="center" style={styles.resultsNumberText}>
+          {resultsNumberInModal}
+        </Text>
         <ButtonIcon
           onPress={increment}
           iconName="plus"
@@ -78,8 +78,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
   },
   resultsNumberText: {
-    fontSize: 48,
-    textAlign: "center",
     flexGrow: 1,
   },
 });

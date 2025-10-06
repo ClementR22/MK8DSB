@@ -5,11 +5,11 @@ import {
   LEFT_PANNEL_WIDTH_COLLAPSED,
   LEFT_PANNEL_WIDTH_EXPANDED,
 } from "@/utils/designTokens";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { useSharedValue, withTiming, useAnimatedStyle, runOnJS, SharedValue } from "react-native-reanimated";
-import { box_shadow_z1 } from "./styles/theme";
+import { box_shadow_z1 } from "./styles/shadow";
 
 interface PannelProps {
   isLeftPannelExpanded: boolean;
@@ -77,13 +77,10 @@ const Pannel: React.FC<PannelProps> = ({ isLeftPannelExpanded, setIsLeftPannelEx
     opacity: 1 - 2 * overlayOpacity.value,
   }));
 
-  const containerDynamicStyle = useMemo(
-    () => ({ backgroundColor: theme.surface_container_high }),
-    [theme.surface_container_high]
-  );
-
   return (
-    <Animated.View style={[styles.container, animatedContainerStyle, containerDynamicStyle]}>
+    <Animated.View
+      style={[styles.container, animatedContainerStyle, { backgroundColor: theme.surface_container_high }]}
+    >
       <View style={styles.childrenWrapper}>{children}</View>
 
       {/* la poignée de glissement (Handle) - C'est la seule zone qui réagit au glissement */}

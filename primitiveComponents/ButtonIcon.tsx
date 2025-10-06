@@ -34,24 +34,14 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
 }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const shapeStyle = useMemo(() => {
-    return shape === "circle"
+  const shapeStyle =
+    shape === "circle"
       ? {
           height: buttonSize,
           width: buttonSize,
           borderRadius: BORDER_RADIUS_INF,
         }
       : { height: 30, width: 46, borderRadius: 10 };
-  }, [shape, buttonSize]);
-
-  const containerCombinedStyle = useMemo(() => {
-    return StyleSheet.flatten([
-      styles.container,
-      shapeStyle,
-      { backgroundColor: disabled ? "grey" : theme.primary },
-      style,
-    ]);
-  }, [shapeStyle, theme.primary, disabled, style]);
 
   return (
     <ButtonBase onPress={onPress} tooltipText={tooltipText} placement={toolTipPlacement} disabled={disabled} {...props}>
@@ -59,7 +49,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
         iconName={iconName}
         iconType={iconType}
         containerSize={buttonSize}
-        containerStyle={containerCombinedStyle}
+        containerStyle={[styles.container, shapeStyle, { backgroundColor: disabled ? "grey" : theme.primary }, style]}
       />
     </ButtonBase>
   );

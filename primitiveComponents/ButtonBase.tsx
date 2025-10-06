@@ -7,7 +7,7 @@ type ButtonBaseProps = {
   onPress: () => void;
   tooltipText?: string;
   placement?: TooltipPlacementType;
-  containerStyle?: ViewStyle;
+  containerStyle?: ViewStyle | ViewStyle[];
   disabled?: boolean;
   [key: string]: any; // autres props à passer
 };

@@ -4,13 +4,13 @@ import { Category } from "@/data/elements/elementsTypes";
 import IconSelector from "./IconSelector";
 import { categoryImageSources } from "@/assets/images/categoryImageSources";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { Animated, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   CATEGORY_BUTTON_GALLERY_WIDTH,
   BORDER_WIDTH_CATEGORY_SELECTOR,
   BORDER_RADIUS_CATEGORY_SELECTOR,
 } from "@/utils/designTokens";
-import { box_shadow_z1 } from "@/components/styles/theme";
+import { box_shadow_z1 } from "@/components/styles/shadow";
 
 interface CategorySelectorProps {
   selectedCategory: Category;
@@ -35,8 +35,9 @@ const CategorySelector: React.FC<CategorySelectorProps> = memo(
         selectedValues={selectedCategory}
         onSelect={onCategoryPress}
         buttonWrapperWidth={isInGalleryPannel ? CATEGORY_BUTTON_GALLERY_WIDTH : "25%"}
+        buttonSize={"100%"}
         activeStyle={activeStyle}
-        containerStyle={{ ...styles.container, backgroundColor: theme.surface_container }}
+        containerStyle={[styles.container, { backgroundColor: theme.surface_container }]}
       />
     );
   }
@@ -46,8 +47,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     width: "100%",
-    justifyContent: "space-between", // Distribute items more evenly, possibly with padding around them
-    overflow: "hidden",
     borderRadius: BORDER_RADIUS_CATEGORY_SELECTOR, // Use a larger, more prominent radius
     borderWidth: BORDER_WIDTH_CATEGORY_SELECTOR, // Use consistent spacing token
     borderColor: "transparent",

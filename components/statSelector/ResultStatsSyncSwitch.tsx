@@ -22,17 +22,12 @@ const ResultStatsSyncSwitch: React.FC<ResultStatsSyncSwitchProps> = ({
   const isResultStatsSync = useResultStatsDefaultStore((state) => state.isResultStatsSync);
   const setIsResultStatsSync = useResultStatsDefaultStore((state) => state.setIsResultStatsSync);
 
-  // Synchronisation des stats avec les stats choisies
-  const syncStats = useCallback(() => {
-    setResultStats(chosenStats);
-  }, [chosenStats]);
-
   // Gestion du toggle du switch
   const handleToggleSwitch = useCallback(() => {
     if (!isResultStatsSync) {
       // Activation du mode synchronisé
       setResultStatsBeforeSync(resultStats);
-      syncStats();
+      setResultStats(chosenStats);
       setIsResultStatsSync(true);
     } else {
       // Désactivation du mode synchronisé
@@ -43,7 +38,7 @@ const ResultStatsSyncSwitch: React.FC<ResultStatsSyncSwitchProps> = ({
     isResultStatsSync,
     resultStats,
     resultStatsBeforeSync,
-    syncStats,
+    chosenStats,
     setResultStatsBeforeSync,
     setResultStats,
     setIsResultStatsSync,
@@ -52,7 +47,7 @@ const ResultStatsSyncSwitch: React.FC<ResultStatsSyncSwitchProps> = ({
   // Auto-sync quand les chosenStats changent et que le mode sync est actif
   useEffect(() => {
     if (isResultStatsSync) {
-      syncStats();
+      setResultStats(chosenStats);
     }
   }, [chosenStats, isResultStatsSync]);
 

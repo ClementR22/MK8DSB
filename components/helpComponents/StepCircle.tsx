@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { BORDER_RADIUS_INF } from "@/utils/designTokens";
+import Text from "@/primitiveComponents/Text";
 
 interface StepCircleProps {
   number: string | number;
@@ -18,7 +19,9 @@ const StepCircle = ({ number, size = 24 }: StepCircleProps) => {
         { width: size, height: size, borderRadius: BORDER_RADIUS_INF, backgroundColor: theme.primary },
       ]}
     >
-      <Text style={styles.text}>{number}</Text>
+      <Text role="body" size="large" inverse>
+        {number}
+      </Text>
     </View>
   );
 };
@@ -29,7 +32,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexShrink: 0,
   },
-  text: { color: "white", fontSize: 12, fontWeight: "bold" },
 });
 
 export default StepCircle;

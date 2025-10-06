@@ -29,5 +29,6 @@ const styles = StyleSheet.create({
   },
   thick: {
     height: "100%",
+    justifyContent: "center",
   },
 });

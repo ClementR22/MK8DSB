@@ -1,12 +1,10 @@
-import React from "react";
-import { Text } from "react-native";
+import React, { memo } from "react";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal from "./HelpModal";
 import StatGaugeCompare from "../statGaugeCompare/StatGaugeCompare";
-import HelpText from "../helpComponents/HelpText";
 import { PAGES_NAVIGATOR_DOTS_BUTTON_SIZE } from "../paginatedWrapper/PagesNavigator";
-import HelpBoldText from "../helpComponents/HelpBoldText";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
+import Text from "@/primitiveComponents/Text";
 
 const HelpDisplaySetScreen = () => {
   return (
@@ -15,14 +13,16 @@ const HelpDisplaySetScreen = () => {
       intro={{
         content: (
           <>
-            <HelpBoldText>Comparez</HelpBoldText> jusqu'à 12 sets simultanément pour identifier le set qui vous
-            convient.
+            <Text role="body" size="large" weight="bold">
+              Comparez
+            </Text>{" "}
+            jusqu'à 12 sets simultanément pour identifier le set qui vous convient.
           </>
         ),
       }}
       sections={[
         {
-          title: "🎯 Comment utiliser le Comparateur",
+          title: "🎯 Comment utiliser le\nComparateur",
           items: [
             {
               type: "step",
@@ -60,9 +60,9 @@ const HelpDisplaySetScreen = () => {
                     ]}
                     scrollToSetCard={() => {}}
                   />
-                  <HelpText style={{ fontSize: 12, fontStyle: "italic" }}>
+                  <Text role="body" size="large" fontStyle="italic">
                     Chaque couleur = un set différent. Appuyez sur une barre pour naviguer vers le set correspondant.
-                  </HelpText>
+                  </Text>
                 </>
               ),
             },
@@ -116,9 +116,9 @@ const HelpDisplaySetScreen = () => {
                     iconType={IconType.MaterialCommunityIcons}
                     description="Selectionner le tri qui vous convient"
                   />
-                  <HelpText style={{ fontSize: 12, fontStyle: "italic" }}>
+                  <Text role="body" size="large" fontStyle="italic">
                     Cliquez longuement sur un bouton de tri pour afficher son nom
-                  </HelpText>
+                  </Text>
                 </>
               ),
             },
@@ -155,12 +155,12 @@ const HelpDisplaySetScreen = () => {
         },
       ]}
       outroAdviceHighlightContent={
-        <HelpText>
+        <Text role="body" size="large">
           Limitez-vous à 2-3 sets pour une comparaison claire, et concentrez-vous sur vos statistiques prioritaires.
-        </HelpText>
+        </Text>
       }
     />
   );
 };
 
-export default HelpDisplaySetScreen;
+export default memo(HelpDisplaySetScreen);

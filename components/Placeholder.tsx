@@ -20,7 +20,9 @@ function Placeholder({ type }: PlaceholderProps) {
 
   return (
     <BoxContainer>
-      <Text style={{ fontSize: 25, fontWeight: 500, textAlign: "center" }}>{translate(type)}</Text>
+      <Text role="title" size="large">
+        {translate(type)}
+      </Text>
       <MaterialCommunityIcons
         // @ts-ignore
         name={iconName[type]}

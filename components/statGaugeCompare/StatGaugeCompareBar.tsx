@@ -1,7 +1,8 @@
-import React, { useMemo } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { DimensionValue, Pressable, StyleSheet, View } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { BORDER_RADIUS_INF } from "@/utils/designTokens";
+import Text from "@/primitiveComponents/Text";
 
 interface StatGaugeCompareBarProps {
   value: number;
@@ -14,36 +15,23 @@ const MAX_STAT_VALUE = 6;
 const StatGaugeCompareBar = ({ value, color, scrollToThisSetCard }: StatGaugeCompareBarProps) => {
   const theme = useThemeStore((state) => state.theme);
 
-  // Style du fond de la piste, dépendant du thème
-  const sliderTrackDynamicBg = useMemo(
-    () => ({ backgroundColor: theme.surface_container_highest }),
-    [theme.surface_container_highest]
-  );
-
-  // Couleur principale du segment, dépend du color passé ou du thème
-  const primarySegmentColor = useMemo(() => ({ backgroundColor: color ?? theme.primary }), [theme.primary, color]);
-
   // Largeur du segment intérieur, clampée et calculée une seule fois par changement de value
-  const innerFillWidth = useMemo(() => {
-    const clampedValue = Math.min(Math.max(value, 0), MAX_STAT_VALUE);
-    return `${(clampedValue / MAX_STAT_VALUE) * 100}%`;
-  }, [value]);
-
-  // Style du texte dépendant du thème
-  const textDynamicStyle = useMemo(() => ({ color: theme.on_surface }), [theme.on_surface]);
+  const clampedValue = Math.min(Math.max(value, 0), MAX_STAT_VALUE);
+  const innerFillWidth = `${(clampedValue / MAX_STAT_VALUE) * 100}%` as DimensionValue;
 
   return (
     <Pressable style={styles.container} onPress={scrollToThisSetCard}>
-      <View style={StyleSheet.flatten([styles.sliderTrack, sliderTrackDynamicBg])}>
+      <View style={[styles.sliderTrack, { backgroundColor: theme.surface_container_highest }]}>
         <View
           style={StyleSheet.flatten([
             styles.trackSegment,
-            { width: innerFillWidth as `${number}%` | number },
-            primarySegmentColor,
+            { width: innerFillWidth, backgroundColor: color ?? theme.primary },
           ])}
         />
       </View>
-      <Text style={StyleSheet.flatten([styles.text, textDynamicStyle])}>{value}</Text>
+      <Text role="label" size="large" style={styles.text}>
+        {value}
+      </Text>
     </Pressable>
   );
 };
@@ -59,11 +47,7 @@ const styles = StyleSheet.create({
   trackSegment: {
     height: "100%",
   },
-  text: {
-    width: 40,
-    fontSize: 20,
-    fontWeight: "600",
-  },
+  text: { width: 40 },
 });
 
 export default React.memo(StatGaugeCompareBar);

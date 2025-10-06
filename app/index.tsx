@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 // Components import
 import StatSlider from "@/components/statSlider/StatSlider";
@@ -21,7 +21,8 @@ import StatGaugeContainer from "@/components/statGauge/StatGaugeContainer";
 import StatGaugeBar from "@/components/statGauge/StatGaugeBar";
 import { BORDER_RADIUS_CONTAINER_LOWEST, PADDING_SEARCH_CONTAINER } from "@/utils/designTokens";
 import ScrollViewScreen, { ScrollViewScreenHandles } from "@/components/ScrollViewScreen";
-import { box_shadow_z1 } from "@/components/styles/theme";
+import { box_shadow_z1 } from "@/components/styles/shadow";
+import Text from "@/primitiveComponents/Text";
 
 const SearchSetScreen: React.FC = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -63,8 +64,6 @@ const SearchSetScreen: React.FC = () => {
     });
   }, [chosenStats, isReduceStatSliders]);
 
-  const headerTextStyle = useMemo(() => [styles.text, { color: theme.on_surface }], [theme.on_surface]);
-
   return (
     <ScreenProvider screenName="search">
       <ResultStatsProvider>
@@ -83,7 +82,9 @@ const SearchSetScreen: React.FC = () => {
               />
 
               <View style={styles.headerTextContainer}>
-                <Text style={headerTextStyle}>{translate("DesiredStats")}</Text>
+                <Text role="headline" size="medium">
+                  {translate("DesiredStats")}
+                </Text>
               </View>
 
               <ButtonLoadSet tooltipText="LoadStatsOfASet" />
@@ -110,10 +111,6 @@ SearchSetScreen.displayName = "SearchSetScreen";
 export default React.memo(SearchSetScreen);
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
   searchContainerPressablesContainer: { flexDirection: "row", width: "100%", alignItems: "center", padding: 3 },
   headerTextContainer: { flex: 1, alignItems: "center" },
 });

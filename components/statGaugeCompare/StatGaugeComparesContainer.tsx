@@ -4,9 +4,8 @@ import { useResultStats } from "@/contexts/ResultStatsContext";
 import { statNames } from "@/data/stats/statsData";
 import useSetsStore from "@/stores/useSetsStore";
 import StatGaugeCompare from "./StatGaugeCompare";
-import { StatName } from "@/data/stats/statsTypes";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
-import { box_shadow_z1 } from "../styles/theme";
+import { box_shadow_z1 } from "../styles/shadow";
 
 interface StatGaugeComparesContainerProps {
   setsColorsMap: Map<string, string>;
@@ -19,23 +18,18 @@ const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
 
   const data = useMemo(() => {
-    const statsChecked = resultStats.filter((stat) => stat.checked).map((stat) => stat.name);
+    const statIndexMap = new Map(statNames.map((name, index) => [name, index]));
 
-    const data = statsChecked.map((stat: StatName) => {
-      const statIndex = statNames.indexOf(stat);
-      const setsData = setsListDisplayed.map((set) => ({
-        id: set.id,
-        value: set.stats[statIndex],
-        color: setsColorsMap.get(set.id) || theme.surface_variant,
+    return resultStats
+      .filter((stat) => stat.checked)
+      .map((stat) => ({
+        name: stat.name,
+        setsIdAndValueWithColor: setsListDisplayed.map((set) => ({
+          id: set.id,
+          value: set.stats[statIndexMap.get(stat.name)!],
+          color: setsColorsMap.get(set.id) || theme.surface_variant,
+        })),
       }));
-
-      return {
-        name: stat,
-        setsIdAndValueWithColor: setsData,
-      };
-    });
-
-    return data;
   }, [resultStats, setsListDisplayed, setsColorsMap, theme.surface_variant]);
 
   return (

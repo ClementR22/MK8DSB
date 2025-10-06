@@ -1,6 +1,5 @@
 import React from "react";
 import * as Clipboard from "expo-clipboard";
-import { getSetStatsFromClassIds } from "@/utils/getSetStatsFromClassIds";
 import { ScreenName } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { translateToLanguage } from "@/translations/translations";

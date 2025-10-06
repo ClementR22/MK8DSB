@@ -62,10 +62,6 @@ const GalleryScreen = () => {
     opacity: overlayOpacity.value,
   }));
 
-  const animatedBlueBoxStyle = useAnimatedStyle(() => ({
-    opacity: overlayOpacity.value,
-  }));
-
   const containerLowestStyle = useContainerLowestStyle("view");
 
   return (

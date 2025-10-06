@@ -43,24 +43,6 @@ const StatGaugeSetCardBar = ({ obtainedValue, chosenValue, isInSearchScreen = fa
     });
   }, [gaugeData.bonusOrMalusWidth, gaugeData.bonusOrMalusColor]);
 
-  const bonusOrMalusBar = useMemo(() => {
-    return (
-      <View
-        style={[
-          stylesDynamic.thick,
-          {
-            width: gaugeData.bonusOrMalusWidth,
-            overflow: "hidden",
-            backgroundColor: gaugeData.isBonus ? theme.primary : "rgba(255, 0, 0, 0.1)", // Fond légèrement coloré
-          },
-          !gaugeData.isBonus && styles.malus,
-        ]}
-      >
-        {createHatchPattern}
-      </View>
-    );
-  }, [gaugeData.isBonus, gaugeData.bonusOrMalusWidth, gaugeData.bonusOrMalusColor, stylesDynamic.thick]);
-
   return (
     <View style={stylesDynamic.emptyContainer} onLayout={handleGaugeLayout}>
       {/* Jauge violette (valeur désirée) */}
@@ -75,7 +57,21 @@ const StatGaugeSetCardBar = ({ obtainedValue, chosenValue, isInSearchScreen = fa
       />
 
       {/* rouge hachuré (indicatif) ou vert mélé au violet */}
-      {bonusOrMalusBar}
+      {
+        <View
+          style={[
+            stylesDynamic.thick,
+            {
+              width: gaugeData.bonusOrMalusWidth,
+              overflow: "hidden",
+              backgroundColor: gaugeData.isBonus ? theme.primary : "rgba(255, 0, 0, 0.1)", // Fond légèrement coloré
+            },
+            !gaugeData.isBonus && styles.malus,
+          ]}
+        >
+          {createHatchPattern}
+        </View>
+      }
     </View>
   );
 };

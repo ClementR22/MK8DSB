@@ -1,5 +1,5 @@
-import React, { memo, useMemo } from "react";
-import { View, StyleSheet, Image, ImageSourcePropType, ViewStyle, Animated } from "react-native";
+import React, { memo } from "react";
+import { View, StyleSheet, Image, ImageSourcePropType, ViewStyle, DimensionValue } from "react-native";
 import Tooltip from "@/components/Tooltip";
 
 interface IconSelectorProps<T extends string> {
@@ -9,11 +9,10 @@ interface IconSelectorProps<T extends string> {
   }[];
   selectedValues: Set<T> | T;
   onSelect: (value: T) => void;
-  buttonSize?: number;
-  buttonWrapperWidth?: number | string;
+  buttonSize?: DimensionValue;
+  buttonWrapperWidth?: DimensionValue;
   activeStyle?: ViewStyle;
-  containerStyle?: ViewStyle;
-  overlapAmount?: Animated.Value | number;
+  containerStyle?: ViewStyle | ViewStyle[];
 }
 
 const BUTTON_SIZE = 50;
@@ -26,37 +25,23 @@ const IconSelector = <T extends string>({
   buttonWrapperWidth,
   activeStyle,
   containerStyle,
-  overlapAmount = 0,
 }: IconSelectorProps<T>) => {
-  const mergedButtonStyle = useMemo(() => [{ width: buttonSize, height: buttonSize }, styles.button], [buttonSize]);
-
   return (
     <View style={[styles.container, containerStyle]}>
       {options.map((option, index) => {
         const isActive =
           selectedValues instanceof Set ? selectedValues.has(option.name) : selectedValues === option.name;
 
-        const marginLeft = useMemo(() => {
-          if (index === 0) return 0;
-          if (overlapAmount instanceof Animated.Value) {
-            return overlapAmount;
-          }
-          return (overlapAmount as number) - index;
-        }, [index, overlapAmount]);
-
         return (
-          <Animated.View
-            key={option.name}
-            style={{ width: buttonWrapperWidth, zIndex: isActive ? 10 : 0, marginLeft: marginLeft } as ViewStyle}
-          >
+          <View key={option.name} style={{ width: buttonWrapperWidth, zIndex: isActive ? 10 : 0 }}>
             <Tooltip
               tooltipText={option.name}
               onPress={() => onSelect(option.name)}
-              style={StyleSheet.flatten([...mergedButtonStyle, isActive && activeStyle])}
+              style={[styles.button, { width: buttonSize, height: buttonSize }, isActive && activeStyle]}
             >
-              <Image source={option.imageUrl} style={[styles.image]} resizeMode="contain" />
+              <Image source={option.imageUrl} style={styles.image} resizeMode="contain" />
             </Tooltip>
-          </Animated.View>
+          </View>
         );
       })}
     </View>

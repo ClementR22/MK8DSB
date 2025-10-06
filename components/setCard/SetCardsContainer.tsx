@@ -1,5 +1,5 @@
-import React, { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
-import { Dimensions, DimensionValue, LayoutChangeEvent, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import React, { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { Dimensions, DimensionValue, LayoutChangeEvent, Pressable, ScrollView, StyleSheet } from "react-native";
 import SetCard from "./SetCard";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -8,7 +8,7 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import { SetObject } from "@/stores/useSetsStore";
 import Placeholder from "@/components/Placeholder";
 import { BORDER_RADIUS_CONTAINER_LOWEST, MARGIN_CONTAINER_LOWEST, PADDING_STANDARD } from "@/utils/designTokens";
-import { box_shadow_z1 } from "../styles/theme";
+import { box_shadow_z1 } from "../styles/shadow";
 
 interface SetWithColor extends SetObject {
   color?: string;
@@ -71,24 +71,18 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
 
     const [hasShownSearchQuestionIcon, setHasShownSearchQuestionIcon] = useState(false);
 
-    const noSetToShow = useMemo(() => setsToShow.length === 0, [setsToShow]);
+    const noSetToShow = setsToShow.length === 0;
 
-    const calculatedContentWidth: DimensionValue | undefined = useMemo(
-      () => (noSetToShow ? "100%" : undefined),
-      [noSetToShow]
-    );
+    const calculatedContentWidth: DimensionValue | undefined = noSetToShow ? "100%" : undefined;
 
-    const placeholderTextStyle = useMemo(() => {
-      return [styles.placeholderText, { color: theme.on_surface }];
-    }, [theme.on_surface]);
+    useEffect(() => {
+      if (!noSetToShow && !hasShownSearchQuestionIcon) {
+        setHasShownSearchQuestionIcon(true);
+      }
+    }, [noSetToShow, hasShownSearchQuestionIcon]);
 
     const placeHolder = useMemo(() => {
-      if (!noSetToShow) {
-        if (!hasShownSearchQuestionIcon) {
-          setHasShownSearchQuestionIcon(true);
-        }
-        return null;
-      }
+      if (!noSetToShow) return null;
 
       if (screenName === "search") {
         if (!hasShownSearchQuestionIcon) {
@@ -97,7 +91,7 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
         return <Placeholder type={"SearchNotFound"} />;
       }
       return <Placeholder type={"SavedEmpty"} />;
-    }, [noSetToShow, screenName, language, theme.on_surface, hasShownSearchQuestionIcon, placeholderTextStyle]);
+    }, [noSetToShow, screenName, language, theme.on_surface, hasShownSearchQuestionIcon]);
 
     const memoizedSetCards = useMemo(() => {
       if (noSetToShow) {
@@ -119,15 +113,7 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
           borderColor={set.color}
         />
       ));
-    }, [
-      setsToShow,
-      noSetToShow,
-      isInLoadSetModal,
-      screenNameFromProps,
-      hideRemoveSet,
-      onSetCardLayout,
-      theme.surface_container_high,
-    ]);
+    }, [setsToShow, isInLoadSetModal, screenNameFromProps, hideRemoveSet, onSetCardLayout]);
 
     return (
       <ScrollView
@@ -161,10 +147,6 @@ const styles = StyleSheet.create({
     borderRadius: BORDER_RADIUS_CONTAINER_LOWEST,
     boxShadow: box_shadow_z1,
     marginBottom: 2, // so the shadow is visible
-  },
-  placeholderText: {
-    fontSize: 18,
-    textAlign: "center",
   },
 });
 
