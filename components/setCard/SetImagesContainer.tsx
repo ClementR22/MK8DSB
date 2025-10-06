@@ -9,11 +9,16 @@ import Tooltip from "../Tooltip";
 
 const MODAL_WIDTH = vw * 0.9;
 const MAX_WIDTH_IN_MODAL = MODAL_WIDTH - 20;
-const MAX_WIDTH_IN_SET_CARD = SET_CARD_WIDTH - 20;
+const MAX_WIDTH_IN_SET_CARD = SET_CARD_WIDTH - 20; // 200
 const MAX_NUMBER_OF_IMAGE = 5;
 
-const IMAGE_SIZE_IN_SET_CARD = MAX_WIDTH_IN_SET_CARD / MAX_NUMBER_OF_IMAGE;
+const IMAGE_SIZE_IN_SET_CARD = MAX_WIDTH_IN_SET_CARD / MAX_NUMBER_OF_IMAGE; // 40
 const IMAGE_SIZE_IN_MODAL = MAX_WIDTH_IN_MODAL / MAX_NUMBER_OF_IMAGE;
+
+const PADDING_VERTICAL_CONTAINER = 7;
+const GAP_CONTAINER = 14;
+const HEIGHT_CONTAINER_ICON_MODE = IMAGE_SIZE_IN_SET_CARD * 4 + PADDING_VERTICAL_CONTAINER * 2 + GAP_CONTAINER * 3;
+
 interface SetImageCategoryData {
   category: string;
   elements: Array<{ name: string; image: any }>;
@@ -45,34 +50,35 @@ const SetImagesContainer: React.FC<SetImagesContainerProps> = ({ setToShowClassI
   const imageSize = mode === "icon" ? IMAGE_SIZE_IN_SET_CARD : IMAGE_SIZE_IN_MODAL;
 
   return (
-    <>
+    <View style={[styles.container, mode === "icon" && { height: HEIGHT_CONTAINER_ICON_MODE }]}>
       {data.map((item) => (
-        <View key={item.category} style={styles.category}>
+        <View key={item.category} style={styles.category} onLayout={(e) => console.log(e.nativeEvent.layout)}>
           {item.elements.map(({ name, image }, index) => (
             <Tooltip key={`${item.category}-${index}`} tooltipText={name} onPress={onPress} style={styles.tooltip}>
-              <View>
-                <Image
-                  source={image}
-                  style={{
-                    maxWidth: imageSize,
-                    maxHeight: imageSize,
-                  }}
-                  resizeMode="contain"
-                />
-              </View>
+              <Image
+                source={image}
+                style={{
+                  maxWidth: imageSize,
+                  maxHeight: imageSize,
+                }}
+                resizeMode="contain"
+              />
             </Tooltip>
           ))}
         </View>
       ))}
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingVertical: PADDING_VERTICAL_CONTAINER,
+    gap: GAP_CONTAINER,
+  },
   category: {
     flexDirection: "row",
     justifyContent: "center",
-    marginVertical: 7,
   },
   tooltip: {
     alignItems: "center",
