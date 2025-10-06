@@ -11,7 +11,11 @@ interface StatGaugeSetCardBarProps {
   isInSearchScreen?: boolean;
 }
 
-const StatGaugeSetCardBar = ({ obtainedValue, chosenValue, isInSearchScreen = false }: StatGaugeSetCardBarProps) => {
+const StatGaugeSetCardBar: React.FC<StatGaugeSetCardBarProps> = ({
+  obtainedValue,
+  chosenValue,
+  isInSearchScreen = false,
+}) => {
   const theme = useThemeStore((state) => state.theme);
 
   const { getWidth, handleGaugeLayout } = useGaugeMetrics("stat-gauge-set-card");
@@ -20,7 +24,12 @@ const StatGaugeSetCardBar = ({ obtainedValue, chosenValue, isInSearchScreen = fa
 
   // Memoized calculations
   const gaugeData = useMemo(() => {
-    const isBonus = chosenValue !== undefined && obtainedValue > chosenValue;
+    let isBonus;
+    if (chosenValue === undefined || obtainedValue === chosenValue) {
+      isBonus = undefined;
+    } else {
+      isBonus = obtainedValue > chosenValue;
+    }
     const obtainedWidth = getWidth(obtainedValue);
     const chosenWidth = chosenValue !== undefined ? getWidth(chosenValue) : obtainedWidth;
     const purpleWidth = isInSearchScreen && isBonus ? chosenWidth : obtainedWidth;
@@ -66,7 +75,7 @@ const StatGaugeSetCardBar = ({ obtainedValue, chosenValue, isInSearchScreen = fa
               overflow: "hidden",
               backgroundColor: gaugeData.isBonus ? theme.primary : "rgba(255, 0, 0, 0.1)", // Fond légèrement coloré
             },
-            !gaugeData.isBonus && styles.malus,
+            gaugeData.isBonus === false && styles.malus,
           ]}
         >
           {createHatchPattern}
@@ -77,7 +86,7 @@ const StatGaugeSetCardBar = ({ obtainedValue, chosenValue, isInSearchScreen = fa
 };
 
 const styles = StyleSheet.create({
-  malus: { borderRightWidth: 2, borderColor: MALUS_COLOR },
+  malus: { borderRightWidth: 1, borderColor: MALUS_COLOR },
   hatch: {
     position: "absolute",
     top: -17, // ~ moitié de la bar height, pour centrer verticalement
