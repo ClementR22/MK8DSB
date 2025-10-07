@@ -23,3 +23,10 @@ jobs:
 
       - name: 🚀 Create update
         run: eas build --non-interactive --platform android --profile preview --local
+      
+      - name: Upload application
+        uses: actions/upload-artifact@v4
+        with:
+          name: app
+          path: ./build-*.apk
+          retention-days: 3
