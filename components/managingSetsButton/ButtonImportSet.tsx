@@ -30,8 +30,7 @@ const ButtonImportSet: React.FC<ButtonImportSetProps> = ({ screenName }) => {
       const text =
         translateToLanguage("ImportError", language) +
         translateToLanguage(":", language) +
-        translateToLanguage(e.message, language) +
-        ".";
+        translateToLanguage(e.message, language);
       showToast(text);
     }
   };

@@ -40,7 +40,6 @@ const HelpHighlightBox = ({ children, type, title }: HelpHighlightBoxProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
     borderLeftWidth: 4,
     padding: 16,
     gap: 6,

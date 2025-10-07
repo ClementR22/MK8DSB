@@ -18,79 +18,22 @@ export type HelpContentItem = {
 
 export type HelpModalProps = {
   title: string;
-  intro: {
-    content: React.ReactNode;
-    title?: string;
-  };
-  sections: Array<{
-    title: string;
-    items: HelpContentItem[];
-  }>;
-  outroAdviceHighlightContent?: React.ReactNode;
+  children: React.ReactElement[];
 };
 
-const HelpModal: React.FC<HelpModalProps> = ({ title, intro, sections, outroAdviceHighlightContent }) => {
-  const renderContentItem = (item: HelpContentItem, index: number) => {
-    switch (item.type) {
-      case "highlight":
-        return (
-          <HelpHighlightBox key={index} type={item.props?.type || "info"} title={item.props?.title}>
-            {item.content}
-          </HelpHighlightBox>
-        );
-      case "step":
-        return (
-          <HelpStepItem
-            key={index}
-            stepChar={item.props.stepChar}
-            title={item.props.title}
-            alignItems={item.props.alignItems}
-          >
-            {item.content}
-          </HelpStepItem>
-        );
-      case "feature":
-        return (
-          <HelpButtonDescription
-            key={index}
-            iconName={item.props.iconName}
-            iconType={item.props.iconType}
-            description={item.content}
-            containerSize={item.props.containerSize}
-          />
-        );
-      default:
-        return null;
-    }
-  };
-
+const HelpModal: React.FC<HelpModalProps> = ({ title, children }) => {
   const customTrigger = useMemo(() => <ButtonIcon iconName={"help-circle"} iconType={IconType.Feather} />, []);
 
   return (
     <ButtonAndModal customTrigger={customTrigger} modalTitle={title}>
       <ScrollView scrollEnabled={true} style={styles.scrollView}>
         <Pressable style={styles.container}>
-          <Text role="body" size="large" textAlign="center">
-            {intro.content}
-          </Text>
-
-          <View key="body-sections">
-            {sections.map((section, sectionIndex) => (
-              <View key={sectionIndex}>
-                <Separator direction="horizontal" wrapperStyle={{ marginVertical: 20 }} />
-                <View key={sectionIndex} style={styles.section}>
-                  <Text role="title" size="large" textAlign="center">
-                    {section.title}
-                  </Text>
-                  {section.items.map((item, itemIndex) => renderContentItem(item, itemIndex))}
-                </View>
-              </View>
-            ))}
-          </View>
-
-          <HelpHighlightBox type="tips" title="Conseil pratique">
-            {outroAdviceHighlightContent}
-          </HelpHighlightBox>
+          {children.map((section, index) => (
+            <>
+              {index != 0 && index != 4 && <Separator direction="horizontal" />}
+              {section}
+            </>
+          ))}
         </Pressable>
       </ScrollView>
     </ButtonAndModal>
@@ -98,8 +41,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, intro, sections, outroAdvi
 };
 
 const styles = StyleSheet.create({
-  container: { gap: 0, padding: 10, paddingTop: 20 },
-  section: { gap: 25 },
+  container: { gap: 20, padding: 10, paddingTop: 20 },
   scrollView: { maxHeight: 450 },
 });
 

@@ -20,7 +20,7 @@ function Placeholder({ type }: PlaceholderProps) {
 
   return (
     <BoxContainer>
-      <Text role="title" size="large">
+      <Text role="title" size="large" textAlign="center">
         {translate(type)}
       </Text>
       <MaterialCommunityIcons

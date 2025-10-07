@@ -11,166 +11,121 @@ import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
 import StatGaugeContainer from "../statGauge/StatGaugeContainer";
 import StatGaugeSetCardBar from "../statGauge/StatGaugeSetCardBar";
 import Text from "@/primitiveComponents/Text";
+import HelpStepItem from "../helpComponents/HelpStepItem";
+import HelpSection from "../helpComponents/HelpSection";
+import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
 
 const HelpSearchSetScreen = () => {
   const language = useLanguageStore((state) => state.language);
 
   return (
-    <HelpModal
-      title="Guide du Set Builder"
-      intro={{
-        content: (
-          <>
-            <Text role="body" size="large" weight="bold">
-              Créez la combinaison idéale
-            </Text>
-            {"\n"}
-            en définissant les statistiques que vous souhaitez. L'algorithme trouvera pour vous les meilleurs sets
-            correspondants.
-          </>
-        ),
-      }}
-      sections={[
-        {
-          title: "🎯 Comment utiliser le\nSet Builder",
-          items: [
-            {
-              type: "step",
-              props: { stepChar: "1", title: "Choisissez vos critères" },
-              content: (
-                <HelpButtonDescription
-                  iconName="plus"
-                  iconType={IconType.MaterialCommunityIcons}
-                  description="Ajouter une statistique"
-                />
-              ),
-            },
-            {
-              type: "step",
-              props: { stepChar: "2", title: "Ajustez les valeurs et la tolérance" },
-              content: (
-                <>
-                  <StatSliderPreview name="speedGround" />
-                  <Text role="body" size="large">
-                    appuyez longuement pour supprimer
-                  </Text>
-                  <Text role="body" size="large" fontStyle="italic">
-                    {"≈ : valeur approximative" + "\n" + "= : valeur exacte" + "\n" + "≥ : valeur minimale"}
-                  </Text>
-                </>
-              ),
-            },
-            {
-              type: "step",
-              props: { stepChar: "3", title: "Lancez la recherche", alignItems: "center" },
-              content: (
-                <Button onPress={() => {}} iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
-                  {translateToLanguage("Search", language)}
-                </Button>
-              ),
-            },
-            {
-              type: "step",
-              props: { stepChar: "4", title: "Analysez les résultats", alignItems: "center" },
-              content: (
-                <>
-                  <Text role="body" size="large">
-                    Les sets sont classés par score de correspondance
-                  </Text>
-                  <View style={{ width: SET_CARD_WIDTH - 11 }}>
-                    <StatGaugeContainer name="SG" value={4} isInSetCard={true} chosenValue={5} bonusEnabled={true}>
-                      <StatGaugeSetCardBar obtainedValue={4} chosenValue={5} isInSearchScreen={true} />
-                    </StatGaugeContainer>
-                  </View>
-                  <Text role="body" size="large" fontStyle="italic">
-                    Appuyez sur une barre pour voir l'écart avec votre critère
-                  </Text>
-                </>
-              ),
-            },
-          ],
-        },
-        {
-          title: "⚙️ Options avancées",
-          items: [
-            {
-              type: "step",
-              props: { stepChar: "A", title: "Personnalisation de l'affichage" },
-              content: (
-                <HelpButtonDescription
-                  iconName="checkbox-multiple-marked"
-                  iconType={IconType.MaterialCommunityIcons}
-                  description="Choisissez quelles statistiques afficher dans les résultats"
-                />
-              ),
-            },
-            {
-              type: "step",
-              props: { stepChar: "B", title: "Filtres (option)" },
-              content: (
-                <HelpButtonDescription
-                  iconName="pin"
-                  iconType={IconType.MaterialCommunityIcons}
-                  description="Sélectionner un personnage, kart, roue ou aile à imposer"
-                />
-              ),
-            },
-            {
-              type: "step",
-              props: { stepChar: "C", title: "Réutiliser les stats d'un set" },
-              content: (
-                <>
-                  <HelpButtonDescription
-                    iconName="cards-outline"
-                    iconType={IconType.MaterialCommunityIcons}
-                    description="Ouvrez votre collection de sets favoris"
-                  />
-                  <HelpButtonDescription
-                    iconName="download"
-                    iconType={IconType.MaterialCommunityIcons}
-                    description="Importer les stats d'un set pour chercher des variantes"
-                  />
-                </>
-              ),
-            },
-          ],
-        },
-        {
-          title: "💾 Gestion des résultats",
-          items: [
-            {
-              type: "feature",
-              props: {
-                iconName: "heart-outline",
-                iconType: IconType.MaterialCommunityIcons,
-              },
-              content: "Sauvegarder dans vos favoris",
-            },
-            {
-              type: "feature",
-              props: {
-                iconName: "compare",
-                iconType: IconType.MaterialCommunityIcons,
-              },
-              content: "Déplacer dans le comparateur de sets",
-            },
-            {
-              type: "feature",
-              props: {
-                iconName: "clipboard-outline",
-                iconType: IconType.MaterialCommunityIcons,
-              },
-              content: "Exporter le set",
-            },
-          ],
-        },
-      ]}
-      outroAdviceHighlightContent={
+    <HelpModal title="Guide du Set Builder">
+      <Text role="body" size="large" textAlign="center">
+        <Text role="body" size="large" weight="bold">
+          Créez la combinaison idéale
+        </Text>
+        {"\n"}
+        en définissant les statistiques que vous souhaitez. L'algorithme trouvera pour vous les meilleurs sets
+        correspondants.
+      </Text>
+
+      <HelpSection title="🎯 Comment utiliser le Set Builder" contentType="step">
+        <HelpStepItem key={1} stepChar={"1"} title="Choisissez vos critères">
+          <HelpButtonDescription
+            iconName="plus"
+            iconType={IconType.MaterialCommunityIcons}
+            description="Ajouter une statistique"
+          />
+        </HelpStepItem>
+
+        <HelpStepItem key={2} stepChar={"2"} title="Ajustez les valeurs et la tolérance">
+          <StatSliderPreview name="speedGround" />
+          <Text role="body" size="large">
+            appuyez longuement pour supprimer
+          </Text>
+          <Text role="body" size="large" fontStyle="italic">
+            {"≈ : valeur approximative" + "\n" + "= : valeur exacte" + "\n" + "≥ : valeur minimale"}
+          </Text>
+        </HelpStepItem>
+
+        <HelpStepItem key={3} stepChar={"3"} title={"Lancez la recherche"} alignItems="center">
+          <Button onPress={() => {}} iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
+            {translateToLanguage("Search", language)}
+          </Button>
+        </HelpStepItem>
+
+        <HelpStepItem key={4} stepChar={"4"} title="Analysez les résultats" alignItems="center">
+          <Text role="body" size="large">
+            Les sets sont classés par score de correspondance
+          </Text>
+          <View style={{ width: SET_CARD_WIDTH - 11 }}>
+            <StatGaugeContainer name="SG" value={4} isInSetCard={true} chosenValue={5} bonusEnabled={true}>
+              <StatGaugeSetCardBar obtainedValue={4} chosenValue={5} isInSearchScreen={true} />
+            </StatGaugeContainer>
+          </View>
+          <Text role="body" size="large" fontStyle="italic">
+            Appuyez sur une barre pour voir l'écart avec votre critère
+          </Text>
+        </HelpStepItem>
+      </HelpSection>
+
+      <HelpSection title="⚙️ Options avancées" contentType="step">
+        <HelpStepItem key={"A"} stepChar={"A"} title="Personnalisation de l'affichage">
+          <HelpButtonDescription
+            iconName="checkbox-multiple-marked"
+            iconType={IconType.MaterialCommunityIcons}
+            description="Choisissez quelles statistiques afficher dans les résultats"
+          />
+        </HelpStepItem>
+
+        <HelpStepItem key={"B"} stepChar={"B"} title="Filtres (option)">
+          <HelpButtonDescription
+            iconName="pin"
+            iconType={IconType.MaterialCommunityIcons}
+            description="Sélectionner un personnage, kart, roue ou aile à imposer"
+          />
+        </HelpStepItem>
+
+        <HelpStepItem key={"C"} stepChar={"C"} title="Réutiliser les stats d'un set">
+          <HelpButtonDescription
+            iconName="cards-outline"
+            iconType={IconType.MaterialCommunityIcons}
+            description="Ouvrez votre collection de sets favoris"
+          />
+          <HelpButtonDescription
+            iconName="download"
+            iconType={IconType.MaterialCommunityIcons}
+            description="Importer les stats d'un set pour chercher des variantes"
+          />
+        </HelpStepItem>
+      </HelpSection>
+
+      <HelpSection title="💾 Gestion des résultats" contentType="button">
+        <HelpButtonDescription
+          iconName="heart-outline"
+          iconType={IconType.MaterialCommunityIcons}
+          description="Sauvegarder dans vos favoris"
+        />
+
+        <HelpButtonDescription
+          iconName="compare"
+          iconType={IconType.MaterialCommunityIcons}
+          description="Déplacer dans le comparateur de set"
+        />
+
+        <HelpButtonDescription
+          iconName="clipboard-outline"
+          iconType={IconType.MaterialCommunityIcons}
+          description="Exporter le set"
+        />
+      </HelpSection>
+
+      <HelpHighlightBox type="tips" title="Conseil pratique">
         <Text role="body" size="large">
           Commencez avec 2-3 statistiques principales pour des résultats plus pertinents
         </Text>
-      }
-    />
+      </HelpHighlightBox>
+    </HelpModal>
   );
 };
 
