@@ -13,8 +13,8 @@ export const headline = {
 };
 
 export const title = {
-  large: { fontSize: 22, fontWeight: "400", lineHeight: 28, letterSpacing: 0 },
-  medium: { fontSize: 20, fontWeight: "400", lineHeight: 26, letterSpacing: 0.15 }, // ← Pour "Stats souhaitées"
+  large: { fontSize: 22, fontWeight: "700", lineHeight: 28, letterSpacing: 0 },
+  medium: { fontSize: 20, fontWeight: "600", lineHeight: 26, letterSpacing: 0.15 }, // ← Pour "Stats souhaitées"
   small: { fontSize: 16, fontWeight: "400", lineHeight: 20, letterSpacing: 0.1 },
 };
 

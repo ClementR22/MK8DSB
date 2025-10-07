@@ -81,6 +81,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, intro, sections, outroAdvi
                 <View key={sectionIndex} style={styles.section}>
                   <Text role="title" size="large" textAlign="center">
                     {section.title}
+                <Separator direction="horizontal" wrapperStyle={{ marginVertical: 20 }} />
                   </Text>
                   {section.items.map((item, itemIndex) => renderContentItem(item, itemIndex))}
                 </View>

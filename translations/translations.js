@@ -12,8 +12,7 @@ export const translateToLanguage = (key, language) => {
     {
       /* DEBUG */
     }
-    console.log("translation error");
-    console.log("key", key, "is missing");
+    console.error("translation error\nkey", key, "is missing\n");
   }
   return translations[language]?.[key] || key;
 };
@@ -310,6 +309,11 @@ const translations = {
     BowserKite: "Bowser Kite",
     ParafoilGlider: "Parafoil Glider",
     MKTVParafoilGlider: "MKTV Parafoil Glider",
+
+    // Help modals
+    "Guide des Sets Favoris" : "Favorite Sets guide",
+    "Guide du Set Builder" : "Set Builder guide",
+    "Guide du Comparateur de Sets": "Set Comparator guide"
   },
 
   fr: {
@@ -603,5 +607,10 @@ const translations = {
     BowserKite: "Bowser-volant",
     ParafoilGlider: "Parapente",
     MKTVParafoilGlider: "Parapente MKTV",
+
+    // Help modals
+    "Guide des Sets Favoris": "Guide des Sets Favoris",
+    "Guide du Set Builder" : "Guide du Set Builder",
+    "Guide du Comparateur de Sets": "Guide du Comparateur de Sets"
   },
 };
