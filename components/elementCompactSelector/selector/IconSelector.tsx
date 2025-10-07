@@ -28,7 +28,7 @@ const IconSelector = <T extends string>({
 }: IconSelectorProps<T>) => {
   return (
     <View style={[styles.container, containerStyle]}>
-      {options.map((option, index) => {
+      {options.map((option) => {
         const isActive =
           selectedValues instanceof Set ? selectedValues.has(option.name) : selectedValues === option.name;
 
@@ -37,7 +37,7 @@ const IconSelector = <T extends string>({
             <Tooltip
               tooltipText={option.name}
               onPress={() => onSelect(option.name)}
-              style={[styles.button, { width: buttonSize, height: buttonSize }, isActive && activeStyle]}
+              style={[styles.button, { width: buttonSize }, isActive && activeStyle]}
             >
               <Image source={option.imageUrl} style={styles.image} resizeMode="contain" />
             </Tooltip>

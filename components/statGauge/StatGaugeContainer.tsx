@@ -5,7 +5,6 @@ import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { translate } from "@/translations/translations";
 import { getBonusColor } from "@/utils/getBonusColor";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { vw } from "../styles/theme";
 import { BORDER_RADIUS_STAT_GAUGE_CONTAINER, HEIGHT_STAT_GAUGE_CONTAINER } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
 
@@ -19,7 +18,7 @@ interface StatGaugeContainerProps {
   children: React.ReactElement;
 }
 
-const WIDTH_TEXT = 45;
+const WIDTH_TEXT = 46;
 
 const StatGaugeContainer = ({
   name,

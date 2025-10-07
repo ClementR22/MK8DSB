@@ -5,17 +5,13 @@ import IconSelector from "./IconSelector";
 import { categoryImageSources } from "@/assets/images/categoryImageSources";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { StyleSheet } from "react-native";
-import {
-  CATEGORY_BUTTON_GALLERY_WIDTH,
-  BORDER_WIDTH_CATEGORY_SELECTOR,
-  BORDER_RADIUS_CATEGORY_SELECTOR,
-} from "@/utils/designTokens";
+import { BORDER_WIDTH_CATEGORY_SELECTOR, BORDER_RADIUS_CATEGORY_SELECTOR } from "@/utils/designTokens";
 import { box_shadow_z1 } from "@/components/styles/shadow";
 
 interface CategorySelectorProps {
   selectedCategory: Category;
   onCategoryPress: (category: Category) => void;
-  isInGalleryPannel?: boolean;
+  isInGalleryScreen?: boolean;
 }
 
 const categoryOptions = Object.entries(categoryImageSources).map(([name, imageUrl]) => ({
@@ -24,7 +20,7 @@ const categoryOptions = Object.entries(categoryImageSources).map(([name, imageUr
 }));
 
 const CategorySelector: React.FC<CategorySelectorProps> = memo(
-  ({ selectedCategory, onCategoryPress, isInGalleryPannel = false }) => {
+  ({ selectedCategory, onCategoryPress, isInGalleryScreen = false }) => {
     const theme = useThemeStore((state) => state.theme);
 
     const activeStyle = useMemo(() => ({ backgroundColor: theme.primary }), [theme.primary]);
@@ -34,10 +30,10 @@ const CategorySelector: React.FC<CategorySelectorProps> = memo(
         options={categoryOptions}
         selectedValues={selectedCategory}
         onSelect={onCategoryPress}
-        buttonWrapperWidth={isInGalleryPannel ? CATEGORY_BUTTON_GALLERY_WIDTH : "25%"}
+        buttonWrapperWidth={"25%"}
         buttonSize={"100%"}
         activeStyle={activeStyle}
-        containerStyle={[styles.container, { backgroundColor: theme.surface_container }]}
+        containerStyle={!isInGalleryScreen && [styles.container, { backgroundColor: theme.surface_container }]}
       />
     );
   }

@@ -7,7 +7,7 @@ import {
 } from "@/utils/designTokens";
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, { useSharedValue, withTiming, useAnimatedStyle, runOnJS, SharedValue } from "react-native-reanimated";
 import { box_shadow_z1 } from "./styles/shadow";
 
@@ -83,23 +83,25 @@ const Pannel: React.FC<PannelProps> = ({ isLeftPannelExpanded, setIsLeftPannelEx
     >
       <View style={styles.childrenWrapper}>{children}</View>
 
-      {/* la poignée de glissement (Handle) - C'est la seule zone qui réagit au glissement */}
-      <GestureDetector gesture={panGesture}>
-        <Animated.View
-          style={[
-            styles.dragHandle,
-            animatedHandleStyle,
-            {
-              // Assurer que le handle suit le panneau
-              left: width,
-              backgroundColor: theme.outline_variant, // Un indicateur visuel
-            },
-          ]}
-        >
-          {/* Un petit indicateur visuel à l'intérieur du handle */}
-          <View style={[styles.handleIndicator, { backgroundColor: theme.outline }]} />
-        </Animated.View>
-      </GestureDetector>
+      <GestureHandlerRootView>
+        {/* la poignée de glissement (Handle) - C'est la seule zone qui réagit au glissement */}
+        <GestureDetector gesture={panGesture}>
+          <Animated.View
+            style={[
+              styles.dragHandle,
+              animatedHandleStyle,
+              {
+                // Assurer que le handle suit le panneau
+                left: width,
+                backgroundColor: theme.outline_variant, // Un indicateur visuel
+              },
+            ]}
+          >
+            {/* Un petit indicateur visuel à l'intérieur du handle */}
+            <View style={[styles.handleIndicator, { backgroundColor: theme.outline }]} />
+          </Animated.View>
+        </GestureDetector>
+      </GestureHandlerRootView>
     </Animated.View>
   );
 };

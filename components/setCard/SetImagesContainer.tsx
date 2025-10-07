@@ -52,14 +52,14 @@ const SetImagesContainer: React.FC<SetImagesContainerProps> = ({ setToShowClassI
   return (
     <View style={[styles.container, mode === "icon" && { height: HEIGHT_CONTAINER_ICON_MODE }]}>
       {data.map((item) => (
-        <View key={item.category} style={styles.category} onLayout={(e) => console.log(e.nativeEvent.layout)}>
+        <View key={item.category} style={styles.category}>
           {item.elements.map(({ name, image }, index) => (
             <Tooltip key={`${item.category}-${index}`} tooltipText={name} onPress={onPress} style={styles.tooltip}>
               <Image
                 source={image}
                 style={{
-                  maxWidth: imageSize,
-                  maxHeight: imageSize,
+                  width: imageSize,
+                  height: imageSize,
                 }}
                 resizeMode="contain"
               />

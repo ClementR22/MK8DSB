@@ -92,7 +92,7 @@ const GalleryScreen = () => {
           <CategorySelector
             selectedCategory={selectedCategory}
             onCategoryPress={setSelectedCategory}
-            isInGalleryPannel={true}
+            isInGalleryScreen={true}
           />
         </ScreenPressablesContainer>
 
