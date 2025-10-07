@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect } from "react";
 import { Tabs, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { StatusBar as RNStatusBar } from "react-native";
+import { Platform, StatusBar as RNStatusBar } from "react-native";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Appearance } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
+import * as NavigationBar from "expo-navigation-bar";
 
 // Components
 import CustomHeader from "@/components/CustomHeader";
@@ -57,6 +58,11 @@ export default function TabLayout() {
 
   useEffect(() => {
     setStatusBarHeight(RNStatusBar.currentHeight);
+
+    if (Platform.OS === "android") {
+      // Mode immersif total : cache la barre système
+      NavigationBar.setVisibilityAsync("hidden");
+    }
   }, []);
 
   // Effect to update screenNameForLoadModal based on current path
@@ -136,6 +142,8 @@ export default function TabLayout() {
                 backgroundColor: theme.surface,
               },
               tabBarStyle: {
+                height: 56, // ou moins (50–60 selon ton design)
+                paddingBottom: 0, // supprime le padding ajouté par React Navigation
                 backgroundColor: theme.surface_container,
                 borderTopWidth: 0,
                 boxShadow: box_shadow_z2,
@@ -189,7 +197,6 @@ export default function TabLayout() {
               }}
             />
           </Tabs>
-          {/* Modals and Snackbar are placed outside Tabs to ensure they render above everything */}
           <ModalEditSet />
           <ModalLoadSet />
           <Toast config={toastConfig} />

@@ -21,7 +21,7 @@ const ButtonResetSettings = ({ resetSettings }) => {
       buttonColor={theme.error}
       buttonTextColor={theme.on_error}
     >
-      <Text role="body" size="small" weight="semibold" style={{ padding: 20 }}>
+      <Text role="body" size="large" weight="semibold" style={{ padding: 20 }}>
         {translate("ResetSettingsText")}
       </Text>
     </ButtonAndModal>

@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import showToast from "./toast";
+import showToast from "./showToast";
 
 export const saveThingInMemory = async (thingKey: string, newThing: any) => {
   try {

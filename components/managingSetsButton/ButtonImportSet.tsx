@@ -4,11 +4,15 @@ import { ScreenName } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import showToast from "@/utils/toast";
+import showToast from "@/utils/showToast";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 
-const ButtonImportSet = ({ screenName, onComplete }: { screenName: ScreenName; onComplete?: () => void }) => {
+interface ButtonImportSetProps {
+  screenName: ScreenName;
+}
+
+const ButtonImportSet: React.FC<ButtonImportSetProps> = ({ screenName }) => {
   const importSet = useSetsStore((state) => state.importSet);
   const language = useLanguageStore((state) => state.language);
 
@@ -22,8 +26,6 @@ const ButtonImportSet = ({ screenName, onComplete }: { screenName: ScreenName; o
 
       // La validation JSON et structure est maintenant dans `importSet` :
       importSet(clipboardContent, screenName);
-
-      onComplete?.();
     } catch (e) {
       const text =
         translateToLanguage("ImportError", language) +

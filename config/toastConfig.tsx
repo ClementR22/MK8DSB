@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 
 export const toastConfig = {
   info: (props: any) => (
-    <View style={styles.snackbar}>
+    <View style={styles.toast}>
       <Text role="body" size="medium" inverse>
         {props.text1}
       </Text>
@@ -12,11 +12,12 @@ export const toastConfig = {
 };
 
 const styles = StyleSheet.create({
-  snackbar: {
+  toast: {
     width: "90%",
     backgroundColor: "#323232",
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 4,
+    bottom: 25,
   },
 });

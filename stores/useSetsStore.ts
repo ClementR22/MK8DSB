@@ -12,7 +12,7 @@ import { ResultStats } from "@/contexts/ResultStatsContext";
 import { StatName } from "@/data/stats/statsTypes";
 
 // Utilities
-import showToast from "@/utils/toast";
+import showToast from "@/utils/showToast";
 import { getSetStatsFromClassIds } from "@/utils/getSetStatsFromClassIds";
 import {
   deleteAllSavedSetsInMemory,

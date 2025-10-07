@@ -342,7 +342,7 @@ const translations = {
     Language: "Langue",
     Theme: "Theme",
     ImportError: "Erreur d'importation",
-    ClipboardIsEmpty: "Le presse-papiers est vide",
+    ClipboardIsEmpty: "Presse-papiers vide",
     IncorrectFormat: "Format incorrect",
     ThisSetDoesNotExist: "Ce set n'existe pas",
     DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",

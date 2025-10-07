@@ -11,12 +11,10 @@ import { ScreenProvider } from "@/contexts/ScreenContext";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import useSetsStore from "@/stores/useSetsStore";
-import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { statNamesCompact } from "@/data/stats/statsData";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import TabBarHeightUpdater from "@/components/TabBarHeightUpdater";
 import StatGaugeContainer from "@/components/statGauge/StatGaugeContainer";
 import StatGaugeBar from "@/components/statGauge/StatGaugeBar";
 import { BORDER_RADIUS_CONTAINER_LOWEST, PADDING_SEARCH_CONTAINER } from "@/utils/designTokens";
@@ -25,7 +23,6 @@ import { box_shadow_z1 } from "@/components/styles/shadow";
 import Text from "@/primitiveComponents/Text";
 
 const SearchSetScreen: React.FC = () => {
-  const theme = useThemeStore((state) => state.theme);
   const scrollviewSetsCardsRef = useRef<SetCardsContainerHandles>(null);
   const scrollviewMainRef = useRef<ScrollViewScreenHandles>(null);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
@@ -100,7 +97,6 @@ const SearchSetScreen: React.FC = () => {
 
           <SetCardsContainer ref={scrollviewSetsCardsRef} setsToShow={setsListFound} />
         </ScrollViewScreen>
-        <TabBarHeightUpdater />
       </ResultStatsProvider>
     </ScreenProvider>
   );
