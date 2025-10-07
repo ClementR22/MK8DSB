@@ -9,6 +9,7 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 import { StyleSheet } from "react-native";
 import Text from "@/primitiveComponents/Text";
 import Separator from "../Separator";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 export type HelpContentItem = {
   type: "title" | "highlight" | "step" | "feature" | "custom";
@@ -22,17 +23,27 @@ export type HelpModalProps = {
 };
 
 const HelpModal: React.FC<HelpModalProps> = ({ title, children }) => {
-  const customTrigger = useMemo(() => <ButtonIcon iconName={"help-circle"} iconType={IconType.Feather} />, []);
+  const theme = useThemeStore((state) => state.theme);
+
+  const customTrigger = useMemo(
+    () => (
+      <ButtonIcon
+        iconName={"help-circle-outline"}
+        iconType={IconType.MaterialCommunityIcons}
+        buttonSize={48}
+        color={theme.on_surface}
+        style={{ backgroundColor: "transparent" }}
+      />
+    ),
+    []
+  );
 
   return (
     <ButtonAndModal customTrigger={customTrigger} modalTitle={title}>
       <ScrollView scrollEnabled={true} style={styles.scrollView}>
         <Pressable style={styles.container}>
           {children.map((section, index) => (
-            <>
-              {index != 0 && index != 4 && <Separator direction="horizontal" />}
-              {section}
-            </>
+            <>{section}</>
           ))}
         </Pressable>
       </ScrollView>

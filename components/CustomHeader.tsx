@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     padding: 12,
-    marginHorizontal: 4,
+    marginRight: 4,
+    marginLeft: 16
   },
 });
 

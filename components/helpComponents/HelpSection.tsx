@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import Text from "@/primitiveComponents/Text";
+import Separator from "../Separator";
 
 interface HelpSectionProps {
   title: string;
@@ -11,9 +12,11 @@ interface HelpSectionProps {
 const HelpSection: React.FC<HelpSectionProps> = ({ title, contentType, children }) => {
   return (
     <View>
-      <Text role="title" size="large" textAlign="center" style={{ marginBottom: 20 }}>
+      <Separator direction="horizontal" wrapperStyle={{ marginTop: 10, marginBottom: 20 }} />
+      <Text role="title" size="large" textAlign="center">
         {title}
       </Text>
+      <Separator direction="horizontal" wrapperStyle={{ marginVertical: 20 }} />
       <View style={{ gap: contentType === "step" ? 25 : 15 }}>{children}</View>
     </View>
   );

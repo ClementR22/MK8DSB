@@ -9,7 +9,7 @@ interface TextProps {
   size: TextSize;
   weight?: TextWeight;
   fontStyle?: "italic" | "normal";
-  textAlign?: string;
+  textAlign?: 'auto' | 'left' | 'right' | 'center' | 'justify'; // from React StyleProps.d.ts
   color?: string;
   inverse?: boolean;
   numberOfLines?: number;

@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
-import { useThemeStore } from "@/stores/useThemeStore";
 import { TooltipPlacementType } from "@/components/Tooltip";
 import IconContainer from "./IconContainer";
 import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
@@ -30,10 +29,9 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   shape = "circle",
   style = null,
   disabled = false,
+  color = null,
   ...props
 }) => {
-  const theme = useThemeStore((state) => state.theme);
-
   const shapeStyle =
     shape === "circle"
       ? {
@@ -49,7 +47,8 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
         iconName={iconName}
         iconType={iconType}
         containerSize={buttonSize}
-        containerStyle={[styles.container, shapeStyle, { backgroundColor: disabled ? "grey" : theme.primary }, style]}
+        containerStyle={[styles.container, shapeStyle, disabled && { backgroundColor: "grey" }, style]}
+        iconColor={color}
       />
     </ButtonBase>
   );

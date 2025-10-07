@@ -20,7 +20,18 @@ export const PADDING_BOX_CONTAINER = PADDING_STANDARD;
 export const BORDER_RADIUS_CONTAINER_LOWEST = BORDER_RADIUS_STAT_GAUGE_CONTAINER + PADDING_SEARCH_CONTAINER; // 24
 export const BORDER_RADIUS_STANDARD = BORDER_RADIUS_CONTAINER_LOWEST - PADDING_STANDARD; // 12
 
-// Border Radius
+/**** Border Radius ****/
+
+// Material 3 constants
+export const CORNER_EXTRA_SMALL = 4;
+export const CORNER_SMALL = 8;
+export const CORNER_MEDIUM = 12;
+export const CORNER_LARGE = 16;
+export const CORNER_LARGE_INCREASED = 20;
+export const CORNER_EXTRA_LARGE = 28;
+export const CORNER_EXTRA_LARGE_INCREASED = 32;
+export const CORNER_EXTRA_EXTRA_LARGE = 48;
+
 export const BORDER_RADIUS_18 = 18; // More prominent rounded corners
 export const BORDER_RADIUS_INF = 200;
 export const BORDER_RADIUS_CATEGORY_SELECTOR = 8; // au lieu de BORDER_RADIUS_STANDARD - PADDING_PAGINATED_WRAPPER_CONTAINER; // = 6
