@@ -1,8 +1,10 @@
 import Text from "@/primitiveComponents/Text";
 import useGeneralStore from "@/stores/useGeneralStore";
+import { useThemeStore } from "@/stores/useThemeStore";
 import { translate } from "@/translations/translations";
+import { CORNER_EXTRA_SMALL } from "@/utils/designTokens";
 import React, { useCallback, useRef, useState } from "react";
-import { Pressable, ViewStyle } from "react-native";
+import { Pressable, StyleSheet, ViewStyle } from "react-native";
 import Popover, { PopoverMode, PopoverPlacement } from "react-native-popover-view";
 import { Placement } from "react-native-popover-view/dist/Types";
 
@@ -51,6 +53,19 @@ const Tooltip: React.FC<TooltipProps> = ({
     return clearTimeout(timeoutRef.current);
   }, []);
 
+  const theme = useThemeStore((state) => state.theme);
+
+  const tooltipStyle = StyleSheet.create({
+    content: {
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: CORNER_EXTRA_SMALL,
+      backgroundColor: theme.inverse_surface,
+      color: theme.inverse_on_surface
+    }
+  })
+
+
   return (
     <>
       <Pressable ref={touchableRef} onLongPress={openPopover} onPress={onPress} disabled={disabled} style={style}>
@@ -68,7 +83,7 @@ const Tooltip: React.FC<TooltipProps> = ({
         offset={5}
       >
         {tooltipText && (
-          <Text role="title" size="small">
+          <Text role="title" size="small" style={tooltipStyle.content}>
             {translate(tooltipText)}
           </Text>
         )}
@@ -76,5 +91,6 @@ const Tooltip: React.FC<TooltipProps> = ({
     </>
   );
 };
+
 
 export default Tooltip;
