@@ -9,6 +9,7 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 import { StyleSheet } from "react-native";
 import Text from "@/primitiveComponents/Text";
 import Separator from "../Separator";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 export type HelpContentItem = {
   type: "title" | "highlight" | "step" | "feature" | "custom";
@@ -63,8 +64,9 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, intro, sections, outroAdvi
         return null;
     }
   };
+  const theme = useThemeStore((state) => state.theme);
 
-  const customTrigger = useMemo(() => <ButtonIcon iconName={"help-circle"} iconType={IconType.Feather} />, []);
+  const customTrigger = useMemo(() => <ButtonIcon iconName={"help-circle-outline"} iconType={IconType.MaterialCommunityIcons} buttonSize={48} color={theme.on_surface} style={{ backgroundColor: "transparent" }} />, []);
 
   return (
     <ButtonAndModal customTrigger={customTrigger} modalTitle={title}>
@@ -81,7 +83,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, intro, sections, outroAdvi
                 <View key={sectionIndex} style={styles.section}>
                   <Text role="title" size="large" textAlign="center">
                     {section.title}
-                <Separator direction="horizontal" wrapperStyle={{ marginVertical: 20 }} />
+                    <Separator direction="horizontal" wrapperStyle={{ marginVertical: 20 }} />
                   </Text>
                   {section.items.map((item, itemIndex) => renderContentItem(item, itemIndex))}
                 </View>
