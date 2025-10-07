@@ -313,7 +313,10 @@ const translations = {
     // Help modals
     "Guide des Sets Favoris" : "Favorite Sets guide",
     "Guide du Set Builder" : "Set Builder guide",
-    "Guide du Comparateur de Sets": "Set Comparator guide"
+    "Guide du Comparateur de Sets": "Set Comparator guide",
+
+    // Misc
+    Warning: "Warning"
   },
 
   fr: {
@@ -611,6 +614,9 @@ const translations = {
     // Help modals
     "Guide des Sets Favoris": "Guide des Sets Favoris",
     "Guide du Set Builder" : "Guide du Set Builder",
-    "Guide du Comparateur de Sets": "Guide du Comparateur de Sets"
+    "Guide du Comparateur de Sets": "Guide du Comparateur de Sets",
+
+    // Misc
+    Warning: "Attention"
   },
 };
