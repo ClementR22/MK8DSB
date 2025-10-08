@@ -41,11 +41,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, children }) => {
   return (
     <ButtonAndModal customTrigger={customTrigger} modalTitle={title}>
       <ScrollView scrollEnabled={true} style={styles.scrollView}>
-        <Pressable style={styles.container}>
-          {children.map((section, index) => (
-            <>{section}</>
-          ))}
-        </Pressable>
+        <Pressable style={styles.container}>{children}</Pressable>
       </ScrollView>
     </ButtonAndModal>
   );

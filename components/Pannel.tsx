@@ -19,7 +19,7 @@ interface PannelProps {
 }
 
 const THRESHOLD = (LEFT_PANNEL_WIDTH_COLLAPSED + LEFT_PANNEL_WIDTH_EXPANDED) / 2;
-const HANDLE_WIDTH = 20; // Largeur de la zone de glissement dédiée
+const HANDLE_WIDTH = 25;
 
 const Pannel: React.FC<PannelProps> = ({ isLeftPannelExpanded, setIsLeftPannelExpanded, overlayOpacity, children }) => {
   const theme = useThemeStore((state) => state.theme);
@@ -37,17 +37,16 @@ const Pannel: React.FC<PannelProps> = ({ isLeftPannelExpanded, setIsLeftPannelEx
   }, [isLeftPannelExpanded, width, overlayOpacity]);
 
   const panGesture = Gesture.Pan()
-    // Limiter le glissement pour qu'il soit principalement horizontal (pour éviter le vol de geste)
     .activeOffsetX([-10, 10])
     .onStart(() => {
-      // Capture la largeur réelle au début
       startWidth.value = width.value;
+    })
+    .onBegin(() => {
+      runOnJS(setIsLeftPannelExpanded)(true);
     })
     .onUpdate((e) => {
       // Calculer la nouvelle largeur basée sur la position de départ + glissement horizontal
       const newWidth = startWidth.value + e.translationX;
-
-      // Limiter entre min et max
       width.value = Math.max(LEFT_PANNEL_WIDTH_COLLAPSED, Math.min(LEFT_PANNEL_WIDTH_EXPANDED, newWidth));
 
       // Calculer l'opacité de l'overlay en fonction de la progression de la largeur
@@ -78,40 +77,47 @@ const Pannel: React.FC<PannelProps> = ({ isLeftPannelExpanded, setIsLeftPannelEx
   }));
 
   return (
-    <Animated.View
-      style={[styles.container, animatedContainerStyle, { backgroundColor: theme.surface_container_high }]}
+    <GestureHandlerRootView
+      style={[
+        styles.gestureHandlerRootView,
+        {
+          width: isLeftPannelExpanded ? LEFT_PANNEL_WIDTH_EXPANDED : LEFT_PANNEL_WIDTH_COLLAPSED + HANDLE_WIDTH,
+        },
+      ]}
     >
-      <View style={styles.childrenWrapper}>{children}</View>
+      <Animated.View
+        style={[styles.container, animatedContainerStyle, { backgroundColor: theme.surface_container_high }]}
+      >
+        <View style={styles.childrenWrapper}>{children}</View>
 
-      <GestureHandlerRootView>
-        {/* la poignée de glissement (Handle) - C'est la seule zone qui réagit au glissement */}
+        {/* la poignée de glissement (Handle) */}
         <GestureDetector gesture={panGesture}>
           <Animated.View
             style={[
               styles.dragHandle,
               animatedHandleStyle,
               {
-                // Assurer que le handle suit le panneau
-                left: width,
-                backgroundColor: theme.outline_variant, // Un indicateur visuel
+                backgroundColor: theme.outline_variant,
               },
             ]}
           >
-            {/* Un petit indicateur visuel à l'intérieur du handle */}
+            {/* Indicateur visuel */}
             <View style={[styles.handleIndicator, { backgroundColor: theme.outline }]} />
           </Animated.View>
         </GestureDetector>
-      </GestureHandlerRootView>
-    </Animated.View>
+      </Animated.View>
+    </GestureHandlerRootView>
   );
 };
 
 const styles = StyleSheet.create({
+  gestureHandlerRootView: { flex: 1 },
   container: {
-    flex: 1, // nécessaire pour que la FlatList enfant ne déborde pas
+    flex: 1,
     borderTopEndRadius: BORDER_RADIUS_18,
     borderEndEndRadius: BORDER_RADIUS_18,
     boxShadow: box_shadow_z1,
+    flexDirection: "row", // IMPORTANT: pour que le handle soit à droite
   },
   childrenWrapper: {
     flex: 1,
@@ -123,14 +129,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     bottom: 0,
-    marginLeft: 1,
-    width: HANDLE_WIDTH, // Largeur de la zone de glissement
-    // marginLeft: -HANDLE_WIDTH, // Centrer la zone par rapport à la bordure du panneau
+    right: -HANDLE_WIDTH,
+    width: HANDLE_WIDTH,
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 10, // S'assurer qu'il est au-dessus du contenu principal
-    // Rendre la poignée semi-transparente
+    zIndex: 10,
     borderRadius: BORDER_RADIUS_INF,
+    //    elevation: 5, // Android
   },
   handleIndicator: {
     width: 4,
