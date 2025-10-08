@@ -33,7 +33,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = memo(
         buttonWrapperWidth={"25%"}
         buttonSize={"100%"}
         activeStyle={activeStyle}
-        containerStyle={!isInGalleryScreen && [styles.container, { backgroundColor: theme.surface_container }]}
+        containerStyle={!isInGalleryScreen && [styles.container, { backgroundColor: theme.surface_container_high }]}
       />
     );
   }

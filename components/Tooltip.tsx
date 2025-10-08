@@ -55,15 +55,6 @@ const Tooltip: React.FC<TooltipProps> = ({
 
   const theme = useThemeStore((state) => state.theme);
 
-  const tooltipStyle = StyleSheet.create({
-    content: {
-      paddingHorizontal: 8,
-      paddingVertical: 4,
-      borderRadius: CORNER_EXTRA_SMALL,
-      backgroundColor: theme.inverse_surface,
-      color: theme.inverse_on_surface
-    }
-  })
 
 
   return (
@@ -83,7 +74,10 @@ const Tooltip: React.FC<TooltipProps> = ({
         offset={5}
       >
         {tooltipText && (
-          <Text role="title" size="small" style={tooltipStyle.content}>
+          <Text role="title" size="small" style={[styles.content, {
+            backgroundColor: theme.inverse_surface,
+            color: theme.inverse_on_surface
+          }]}>
             {translate(tooltipText)}
           </Text>
         )}
@@ -91,6 +85,14 @@ const Tooltip: React.FC<TooltipProps> = ({
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  content: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: CORNER_EXTRA_SMALL
+  }
+})
 
 
 export default Tooltip;
