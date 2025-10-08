@@ -61,7 +61,7 @@ const StatGaugeRelativeBar = ({ value, maxValue = 6 }: StatGaugeRelativeBarProps
             value > 0
               ? { left: gaugeWidth / 2 + fillWidth + 2 }
               : value < 0
-              ? { right: gaugeWidth / 2 + fillWidth + 4 }
+              ? { position: "absolute", right: gaugeWidth / 2 + fillWidth + 4 }
               : { left: gaugeWidth / 2 + fillWidth + 6 }
           }
         >
