@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
     borderBottomColor: "#EEE", // Light separator line
   },
   flatListContent: {
-    paddingVertical: LIST_ITEM_SPACING, // Padding for lists
-    paddingHorizontal: LIST_ITEM_SPACING, // Consistent padding
+    paddingVertical: LIST_ITEM_SPACING * 2, // Padding for lists
+    paddingHorizontal: LIST_ITEM_SPACING * 2, // Consistent padding
     gap: 1,
   },
 });

@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    borderRadius: 10,
+    borderRadius: 18,
     overflow: "hidden",
     borderWidth: 3,
     borderColor: "transparent",

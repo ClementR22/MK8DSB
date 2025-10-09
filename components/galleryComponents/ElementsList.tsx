@@ -5,6 +5,7 @@ import React, { memo, useMemo } from "react";
 import { FlatList } from "react-native";
 import ElementPicker from "./ElementPicker";
 import { ElementData } from "@/data/elements/elementsTypes";
+import { LIST_ITEM_SPACING } from "@/utils/designTokens";
 
 interface ElementPickerSelectorProps {
   categoryElementsSorted: ElementData[];
@@ -49,7 +50,7 @@ const ElementsList: React.FC<ElementPickerSelectorProps> = memo(
             />
           );
         }}
-        contentContainerStyle={{ paddingHorizontal: 4 }}
+        contentContainerStyle={{ paddingHorizontal: LIST_ITEM_SPACING, paddingVertical: LIST_ITEM_SPACING / 2 }}
       />
     );
   }

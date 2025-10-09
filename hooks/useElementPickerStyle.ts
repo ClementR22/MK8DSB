@@ -21,13 +21,13 @@ export const useElementPickerStyle = ({ size }: ElementPickerStyleProps) => {
         borderColor: "transparent",
         overflow: "hidden",
         alignItems: "center",
-        backgroundColor: theme.surface_container_low,
+        backgroundColor: theme.surface_container,
         width: size,
         height: size * 1.1,
         boxShadow: box_shadow_z1,
       },
     ]) as ViewStyle;
-  }, [theme.surface_container_low]); // Dépendances
+  }, [theme.surface_container]); // Dépendances
 
   // Calcule le style de la bordure active une seule fois
   const activeBorderStyle = useMemo(() => ({ borderColor: theme.primary } as ViewStyle), [theme.primary]);
