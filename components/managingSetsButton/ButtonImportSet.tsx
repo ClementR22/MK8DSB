@@ -7,6 +7,7 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import showToast from "@/utils/showToast";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
+import { getScreenNameFromPath } from "@/utils/getScreenNameFromPath";
 
 interface ButtonImportSetProps {
   screenName: ScreenName;

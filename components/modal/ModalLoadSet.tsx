@@ -5,6 +5,7 @@ import ButtonImportSet from "../managingSetsButton/ButtonImportSet"; // Assuming
 import Modal from "@/primitiveComponents/Modal"; // Assuming correct path
 import useSetsStore from "@/stores/useSetsStore";
 import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore"; // Ensure this is correctly typed and implemented
+import { getScreenNameFromPath } from "@/utils/getScreenNameFromPath";
 
 const ModalLoadSet = () => {
   const setsListSaved = useSetsStore((state) => state.setsListSaved);
@@ -12,21 +13,17 @@ const ModalLoadSet = () => {
   const isLoadSetModalVisible = useModalLoadSetStore((state) => state.isLoadSetModalVisible);
   const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
 
-  const screenNameForLoadModal = useModalLoadSetStore((state) => state.screenNameForLoadModal);
+  const screenName = getScreenNameFromPath();
 
   return (
     <Modal
       modalTitle="LoadASavedSet"
       isModalVisible={isLoadSetModalVisible}
       setIsModalVisible={setIsLoadSetModalVisible}
-      secondButton={<ButtonImportSet screenName={screenNameForLoadModal} />}
+      secondButton={<ButtonImportSet screenName={screenName} />}
       withoutChildrenContainer
     >
-      <SetCardsContainer
-        setsToShow={setsListSaved}
-        isInLoadSetModal={true}
-        screenNameFromProps={screenNameForLoadModal}
-      />
+      <SetCardsContainer setsToShow={setsListSaved} isInLoadSetModal={true} screenNameFromProps={screenName} />
     </Modal>
   );
 };

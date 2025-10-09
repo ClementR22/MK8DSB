@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { Tabs, usePathname } from "expo-router";
+import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Platform, StatusBar as RNStatusBar } from "react-native";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -24,31 +24,15 @@ import { useThemeStore } from "@/stores/useThemeStore";
 
 // Utils & Hooks
 import { translateToLanguage } from "@/translations/translations";
-import { ScreenName } from "@/contexts/ScreenContext"; // Assurez-vous que ScreenName est bien défini ici
 import { useLoadSettings } from "@/hooks/useLoadSettings";
-import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { toastConfig } from "@/config/toastConfig";
 import { box_shadow_z2 } from "@/components/styles/shadow";
 
-// Helper function to derive screen name from pathname
-// This can be extracted to a separate utility file if used elsewhere
-const getScreenNameFromPath = (pathname: string): ScreenName | null => {
-  if (pathname === "/") return "search";
-  // Using .includes() is less precise, consider exact matches or regex if paths become complex
-  // For simplicity, keeping it as is, but be aware of potential false positives (e.g., "save" matches "saved")
-  if (pathname.includes("isplay")) return "display";
-  if (pathname.includes("ave")) return "save"; // This might match 'save' and 'saved', depending on your exact routes.
-  return null;
-};
-
 export default function TabLayout() {
-  const pathname = usePathname();
-
   // --- Zustand Store Selections ---
   // Select only the parts of the state that are needed
-  const setScreenNameForLoadModal = useModalLoadSetStore((state) => state.setScreenNameForLoadModal);
   const fetchSetsSaved = useSetsStore((state) => state.fetchSetsSaved);
   const theme = useThemeStore((state) => state.theme);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
@@ -59,14 +43,6 @@ export default function TabLayout() {
   useEffect(() => {
     setStatusBarHeight(RNStatusBar.currentHeight);
   }, []);
-
-  // Effect to update screenNameForLoadModal based on current path
-  useEffect(() => {
-    const currentScreen = getScreenNameFromPath(pathname);
-    if (currentScreen) {
-      setScreenNameForLoadModal(currentScreen);
-    }
-  }, [pathname, setScreenNameForLoadModal]); // Only re-run if pathname or setter changes
 
   // Effect to listen for system theme changes
   useEffect(() => {

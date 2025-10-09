@@ -24,6 +24,7 @@ import { SortableElement, sortElements } from "@/utils/sortElements";
 import { CHOSEN_STATS_DEFAULT_SELECTED, SORT_NUMBER_SAVED_SETS_DEFAULT } from "@/constants/constants";
 import { arraysEqual } from "@/utils/deepCompare";
 import { router } from "expo-router";
+import { getScreenNameFromPath } from "@/utils/getScreenNameFromPath";
 
 const MAX_NUMBER_SETS_DISPLAY = 10;
 export interface ChosenStat {
@@ -82,7 +83,7 @@ export interface SetsStoreState {
   unSaveSet: (screenName: ScreenName, id: string) => void;
   saveSetInMemory: (setToSave: SetObject) => Promise<void>;
   renameSet: (newName: string, screenName: ScreenName, id: string) => boolean;
-  updateSetsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => Promise<void>;
+  updateSetsList: (pressedClassIds: Record<string, number>) => Promise<void>;
   setSetInMemory: (setObj: SetObject) => Promise<void>;
   exportSet: (id: string, screenName: ScreenName) => void;
   importSet: (clipboardContent: string, screenName: ScreenName) => void;
@@ -417,9 +418,10 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     return true;
   },
 
-  updateSetsList: async (pressedClassIdsObj, screenName) => {
+  updateSetsList: async (pressedClassIdsObj) => {
+    const screenName = getScreenNameFromPath();
     const { setsList, setsListName, isSaveScreen } = get().getSetsListFromScreenName(screenName);
-
+    console.log(pressedClassIdsObj);
     const newClassIds = Object.values(pressedClassIdsObj);
     const setCardEditedId = get().setCardEditedId;
 
