@@ -9,8 +9,8 @@ import useSetsStore from "@/stores/useSetsStore";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import ElementPickerCompactSelectorPannel from "../elementCompactSelector/ElementPickerCompactSelectorPannel";
-import ElementsDeselector from "../elementCompactSelector/deselector/ElementsDeselector";
+import PannelPaginated from "../elementPickerCompact/PannelPaginated";
+import ElementsDeselector from "../elementPickerCompact/ElementsDeselector";
 import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 import { SetFoundObject } from "@/stores/useSetsStore";
@@ -154,13 +154,13 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
           <ButtonIcon tooltipText="ChooseFilters" iconName="pin" iconType={IconType.MaterialCommunityIcons} />
         }
       >
-        <ElementPickerCompactSelectorPannel
+        <PannelPaginated
           selectionMode="multiple"
           selectedBodytypes={chosenBodytype}
           setSelectedBodytypes={setChosenBodytype}
         >
           <ElementsDeselector />
-        </ElementPickerCompactSelectorPannel>
+        </PannelPaginated>
       </ButtonAndModal>
     </View>
   );

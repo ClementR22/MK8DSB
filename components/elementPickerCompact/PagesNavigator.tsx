@@ -1,9 +1,7 @@
 import React, { useCallback, memo } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { sortButtonsConfig } from "@/config/sortButtonsConfig";
 import { BORDER_RADIUS_INF, GAP_SORT_MODE_SELECTOR } from "@/utils/designTokens";
 
 // Constants

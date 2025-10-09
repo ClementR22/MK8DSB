@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useMemo, useCallback, memo } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
-import CategorySelector from "@/components/elementCompactSelector/selector/CategorySelector";
+import CategorySelector from "@/components/rowSelector/CategorySelector";
 import { Category } from "@/data/elements/elementsTypes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { sortElements } from "@/utils/sortElements";
 import ElementCard from "@/components/galleryComponents/ElementCard";
-import ElementPickerSelector from "@/components/galleryComponents/ElementPickerSelector";
+import ElementsList from "@/components/galleryComponents/ElementsList";
 import { useSelectedElementData } from "@/hooks/useSelectedElementData";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { useContainerLowestStyle } from "@/hooks/useScreenStyle";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
-import Pannel from "@/components/Pannel";
+import Pannel from "@/components/galleryComponents/Pannel";
 import Animated, { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 
 // --- Main GalleryScreen Component ---
@@ -101,7 +101,7 @@ const GalleryScreen = () => {
           setIsLeftPannelExpanded={setIsLeftPannelExpanded}
           overlayOpacity={overlayOpacity}
         >
-          <ElementPickerSelector
+          <ElementsList
             categoryElementsSorted={categoryElementsSorted}
             selectedElementId={selectedElementId}
             isLeftPannelExpanded={isLeftPannelExpanded}

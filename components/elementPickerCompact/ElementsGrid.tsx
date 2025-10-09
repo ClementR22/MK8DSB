@@ -2,8 +2,8 @@ import { Category, ElementData } from "@/data/elements/elementsTypes";
 import React, { memo } from "react";
 import { View, StyleSheet, Dimensions, Pressable } from "react-native"; // Removed Dimensions
 import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
-import ElementPickerCompact from "../ElementPickerCompact";
-import { MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER } from "@/utils/designTokens";
+import ElementPickerCompact from "./ElementPickerCompact";
+import { MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER, PADDING_PANNEL_PAGINATED } from "@/utils/designTokens";
 
 interface ElementsGridProps {
   elements: ElementData[];
@@ -15,13 +15,16 @@ const GAP = 5;
 const { width: screenWidth } = Dimensions.get("window");
 const NUM_COLUMNS = 4;
 export const ELEMENTS_PER_PAGE = 12;
+const NUM_LINES = ELEMENTS_PER_PAGE / NUM_COLUMNS;
 
-const PADDING_ELEMENTS_GRID = GAP;
-export const ELEMENTS_GRID_WIDTH = screenWidth * 0.9 - MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER * 2;
+const PADDING_ELEMENTS_GRID = PADDING_PANNEL_PAGINATED;
+const ELEMENTS_GRID_WIDTH = screenWidth * 0.9 - MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER * 2;
 
 const ITEM_WIDTH = (ELEMENTS_GRID_WIDTH - PADDING_ELEMENTS_GRID * 2 - GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
 const ITEM_HEIGHT = ITEM_WIDTH * 1.1;
 const FILLING_ELEMENT_STYLE = { width: ITEM_WIDTH, height: ITEM_HEIGHT };
+
+export const ELEMENTS_GRID_HEIGHT = ITEM_HEIGHT * NUM_LINES + GAP * (NUM_LINES - 1);
 
 const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, onSelectElement }) => {
   const fillingElements = Array.from({ length: ELEMENTS_PER_PAGE - elements.length });

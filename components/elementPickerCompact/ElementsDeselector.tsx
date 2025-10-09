@@ -1,4 +1,4 @@
-// components/elementCompactSelector/ElementsDeselector.tsx
+// components/elementPickerCompact/ElementsDeselector.tsx
 import React, { memo, useEffect, useMemo, useRef } from "react";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { elementsDataByClassId } from "@/data/elements/elementsData";
@@ -8,7 +8,7 @@ import { Pressable, ScrollView, View } from "react-native";
 import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
 import { StyleSheet } from "react-native";
 import { translateToLanguage } from "@/translations/translations";
-import ElementPickerCompact from "../ElementPickerCompact";
+import ElementPickerCompact from "./ElementPickerCompact";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { BORDER_RADIUS_MODAL_CHILDREN_CONTAINER } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";

@@ -42,6 +42,7 @@
     "react-native-dynamic-vector-icons": "^2.0.0",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-get-random-values": "^1.11.0",
+    "react-native-pager-view": "^6.9.1",
     "react-native-paper": "^5.12.5",
     "react-native-popover-view": "^6.1.0",
     "react-native-reanimated": "~3.17.4",

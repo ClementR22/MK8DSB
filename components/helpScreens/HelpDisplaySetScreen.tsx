@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal from "./HelpModal";
 import StatGaugeCompare from "../statGaugeCompare/StatGaugeCompare";
-import { PAGES_NAVIGATOR_DOTS_BUTTON_SIZE } from "../paginatedWrapper/PagesNavigator";
+import { PAGES_NAVIGATOR_DOTS_BUTTON_SIZE } from "../elementPickerCompact/PagesNavigator";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
 import Text from "@/primitiveComponents/Text";
 import HelpStepItem from "../helpComponents/HelpStepItem";

@@ -1,5 +1,6 @@
-import React, { useState, memo, useMemo, useCallback } from "react";
+import React, { useState, memo, useMemo, useCallback, useRef } from "react";
 import { StyleSheet, View } from "react-native";
+import PagerView from "react-native-pager-view";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { Category } from "@/data/elements/elementsTypes";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
@@ -9,16 +10,16 @@ import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
-import BodytypesSelector from "./selector/BodytypesSelector";
+import BodytypesSelector from "../rowSelector/BodytypesSelector";
 import { useThemeStore } from "@/stores/useThemeStore";
-import CategorySelector from "./selector/CategorySelector";
-import PaginatedWrapper from "../paginatedWrapper/PaginatedWrapper";
-import ElementsGrid, { ELEMENTS_GRID_WIDTH, ELEMENTS_PER_PAGE } from "./selector/ElementsGrid";
+import CategorySelector from "../rowSelector/CategorySelector";
+import ElementsGrid, { ELEMENTS_GRID_HEIGHT, ELEMENTS_PER_PAGE } from "./ElementsGrid";
+import PagesNavigator from "./PagesNavigator";
 import {
   BORDER_RADIUS_STANDARD,
   BUTTON_SIZE,
   GAP_SORT_MODE_SELECTOR,
-  PADDING_PAGINATED_WRAPPER_CONTAINER,
+  PADDING_PANNEL_PAGINATED,
 } from "@/utils/designTokens";
 import Separator from "../Separator";
 
@@ -29,7 +30,7 @@ interface ElementPickerCompactSelectorPannelProps {
   children?: React.ReactNode;
 }
 
-const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorPannelProps> = ({
+const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
   selectionMode = "single",
   selectedBodytypes,
   setSelectedBodytypes,
@@ -37,10 +38,12 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
 }) => {
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
+  const pagerRef = useRef<PagerView>(null);
 
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [sortNumber, setSortNumber] = useState(0);
   const [isOpenSortView, setIsOpenSortView] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const categoryElementsSorted = useMemo(
     () => sortElements(elementsDataByCategory[selectedCategory], sortNumber, language),
@@ -77,6 +80,42 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
 
   const toggleOpenSortView = useCallback(() => setIsOpenSortView((prev) => !prev), []);
 
+  // Track si on est en navigation programmatique
+  const isProgrammaticScroll = useRef(false);
+
+  // Gestion du changement de page
+  const handleSetPage = useCallback(
+    (page: number | ((prev: number) => number)) => {
+      const newPage = typeof page === "function" ? page(currentPage) : page;
+      setCurrentPage(newPage);
+      isProgrammaticScroll.current = true;
+      pagerRef.current?.setPage(newPage);
+    },
+    [currentPage]
+  );
+
+  // Synchronisation quand on swipe manuellement
+  const handlePageSelected = useCallback((e: any) => {
+    const selectedPage = e.nativeEvent.position;
+
+    // Si c'est un scroll programmatique, on ignore
+    if (isProgrammaticScroll.current) {
+      isProgrammaticScroll.current = false;
+      return;
+    }
+
+    // Sinon c'est un swipe manuel, on met à jour
+    setCurrentPage(selectedPage);
+  }, []);
+
+  // Reset de la page quand on change de catégorie
+  const handleCategoryChange = useCallback((category: Category) => {
+    setSelectedCategory(category);
+    setCurrentPage(0);
+    isProgrammaticScroll.current = true;
+    pagerRef.current?.setPageWithoutAnimation(0);
+  }, []);
+
   const { iconName, iconType, tooltipText } = isOpenSortView
     ? { iconName: "car-sports", iconType: IconType.MaterialCommunityIcons, tooltipText: "FilterBodytypes" }
     : { iconName: "sort", iconType: IconType.MaterialCommunityIcons, tooltipText: "SortElements" };
@@ -111,18 +150,24 @@ const ElementPickerCompactSelectorPannel: React.FC<ElementPickerCompactSelectorP
 
       <View style={[styles.paginatedWrapperContainer, { backgroundColor: theme.surface }]}>
         <View style={styles.categorySelectorWrapper}>
-          <CategorySelector selectedCategory={selectedCategory} onCategoryPress={setSelectedCategory} />
+          <CategorySelector selectedCategory={selectedCategory} onCategoryPress={handleCategoryChange} />
         </View>
 
-        <PaginatedWrapper
-          pageWidth={ELEMENTS_GRID_WIDTH}
-          data={pages}
-          renderItem={({ item }) => (
-            <ElementsGrid elements={item} selectedClassId={selectedClassId} onSelectElement={handleSelectElement} />
-          )}
-          numberOfPages={numberOfPages}
-          containerStyle={{ gap: PADDING_PAGINATED_WRAPPER_CONTAINER }}
-        />
+        <PagerView ref={pagerRef} style={styles.pagerView} initialPage={0} onPageSelected={handlePageSelected}>
+          {pages.map((pageElements, index) => (
+            <View key={`page-${index}`} style={styles.pageContainer}>
+              <ElementsGrid
+                elements={pageElements}
+                selectedClassId={selectedClassId}
+                onSelectElement={handleSelectElement}
+              />
+            </View>
+          ))}
+        </PagerView>
+
+        <View style={styles.navigatorWrapper}>
+          <PagesNavigator currentPage={currentPage} setCurrentPage={handleSetPage} numberOfPages={numberOfPages} />
+        </View>
       </View>
     </>
   );
@@ -141,12 +186,21 @@ const styles = StyleSheet.create({
   paginatedWrapperContainer: {
     borderRadius: BORDER_RADIUS_STANDARD,
     overflow: "hidden",
-    paddingVertical: PADDING_PAGINATED_WRAPPER_CONTAINER,
-    gap: PADDING_PAGINATED_WRAPPER_CONTAINER,
+    paddingVertical: PADDING_PANNEL_PAGINATED,
+    gap: PADDING_PANNEL_PAGINATED,
   },
   categorySelectorWrapper: {
-    paddingHorizontal: PADDING_PAGINATED_WRAPPER_CONTAINER,
+    paddingHorizontal: PADDING_PANNEL_PAGINATED,
+  },
+  pagerView: {
+    height: ELEMENTS_GRID_HEIGHT,
+  },
+  pageContainer: {
+    flex: 1,
+  },
+  navigatorWrapper: {
+    paddingHorizontal: PADDING_PANNEL_PAGINATED,
   },
 });
 
-export default memo(ElementPickerCompactSelectorPannel);
+export default memo(PannelPaginated);

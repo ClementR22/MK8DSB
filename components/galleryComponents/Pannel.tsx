@@ -9,7 +9,7 @@ import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, { useSharedValue, withTiming, useAnimatedStyle, runOnJS, SharedValue } from "react-native-reanimated";
-import { box_shadow_z1 } from "./styles/shadow";
+import { box_shadow_z1 } from "../styles/shadow";
 
 interface PannelProps {
   isLeftPannelExpanded: boolean;

@@ -13,7 +13,7 @@ interface ElementPickerSelectorProps {
   onElementPickerPress: (elementId: number) => void;
 }
 
-const ElementPickerSelector: React.FC<ElementPickerSelectorProps> = memo(
+const ElementsList: React.FC<ElementPickerSelectorProps> = memo(
   ({ categoryElementsSorted, selectedElementId, isLeftPannelExpanded, onElementPickerPress }) => {
     const theme = useThemeStore((state) => state.theme);
     const language = useLanguageStore((state) => state.language);
@@ -55,6 +55,6 @@ const ElementPickerSelector: React.FC<ElementPickerSelectorProps> = memo(
   }
 );
 
-ElementPickerSelector.displayName = "ElementPickerSelector";
+ElementsList.displayName = "ElementsList";
 
-export default ElementPickerSelector;
+export default ElementsList;
