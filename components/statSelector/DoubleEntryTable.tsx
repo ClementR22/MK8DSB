@@ -22,45 +22,84 @@ interface DoubleEntryTableProps {
   disabled: boolean;
 }
 
+// Composant Row mémorisé séparément
+const TableRow = React.memo<{
+  statName: string;
+  columns: Column[];
+  labelFlex: number;
+  language: string;
+  disabled: boolean;
+  onToggleStat: (statName: string, columnName: ColumnName) => void;
+  statsMap: Map<string, Map<string, boolean>>;
+}>(({ statName, columns, labelFlex, language, disabled, onToggleStat, statsMap }) => {
+  return (
+    <Pressable>
+      <DataTable.Row style={styles.row}>
+        <DataTable.Cell style={{ flex: labelFlex }}>
+          <Text role="title" size="small">
+            {translateToLanguage(statName, language)}
+          </Text>
+        </DataTable.Cell>
+
+        {columns.map(({ columnName }) => {
+          const isChecked = statsMap.get(columnName)?.get(statName) ?? false;
+          const isDisabled = columnName === "resultStats" && disabled;
+
+          return (
+            <DataTable.Cell key={columnName} style={styles.checkboxCell}>
+              <Checkbox
+                status={isChecked ? "checked" : "unchecked"}
+                onPress={() => onToggleStat(statName, columnName)}
+                disabled={isDisabled}
+              />
+            </DataTable.Cell>
+          );
+        })}
+      </DataTable.Row>
+    </Pressable>
+  );
+});
+
+TableRow.displayName = "TableRow";
+
 const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleStat, disabled }) => {
   const language = useLanguageStore((state) => state.language);
   const theme = useThemeStore((state) => state.theme);
 
+  // Extraire les noms des stats une seule fois
   const rowNames = useMemo(() => columns[0]?.checkList.map((stat) => stat.name) || [], [columns]);
   const labelFlex = 5 - columns.length;
 
-  // Rendu optimisé des lignes
+  // Créer une Map pour lookup O(1)
+  const statsMap = useMemo(() => {
+    const map = new Map<string, Map<string, boolean>>();
+
+    columns.forEach(({ columnName, checkList }) => {
+      const columnMap = new Map<string, boolean>();
+      checkList.forEach((stat) => {
+        columnMap.set(stat.name, stat.checked);
+      });
+      map.set(columnName, columnMap);
+    });
+
+    return map;
+  }, [columns]);
+
+  //  Callback stable pour le rendu des lignes
   const renderRow = useCallback(
     (statName: string) => (
-      <Pressable key={statName}>
-        {/* pressable pour permettre le scroll */}
-        <DataTable.Row style={styles.row}>
-          {/* Label de la ligne */}
-          <DataTable.Cell style={{ flex: labelFlex }}>
-            <Text role="title" size="small">
-              {translateToLanguage(statName, language)}
-            </Text>
-          </DataTable.Cell>
-
-          {/* Checkboxes pour chaque colonne */}
-          {columns.map(({ columnName, checkList }) => {
-            const stat = checkList.find((s) => s.name === statName);
-            const isDisabled = columnName === "resultStats" && disabled;
-
-            return (
-              <DataTable.Cell key={columnName} style={styles.checkboxCell}>
-                <Checkbox
-                  status={stat?.checked ? "checked" : "unchecked"}
-                  onPress={() => onToggleStat(statName, columnName)}
-                  disabled={isDisabled}
-                />
-              </DataTable.Cell>
-            );
-          })}
-        </DataTable.Row>
-      </Pressable>
+      <TableRow
+        key={statName}
+        statName={statName}
+        columns={columns}
+        labelFlex={labelFlex}
+        language={language}
+        disabled={disabled}
+        onToggleStat={onToggleStat}
+        statsMap={statsMap}
+      />
     ),
-    [columns, labelFlex, language, disabled]
+    [columns, labelFlex, language, disabled, onToggleStat, statsMap]
   );
 
   return (
@@ -103,6 +142,7 @@ const styles = StyleSheet.create({
   headerCell: {
     justifyContent: "center",
     alignItems: "center",
+    paddingVertical: 0,
   },
   scrollViewWrapper: {
     borderTopWidth: 2,

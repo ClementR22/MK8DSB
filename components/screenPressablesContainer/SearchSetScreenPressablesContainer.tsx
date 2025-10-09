@@ -127,14 +127,14 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
 
   const handleSearch = useCallback(() => {
     setIsLoading(true);
+    scrollviewSetsCardsRef?.current?.scrollToStart();
+
     setDisableSearch(true);
 
     // Donner le temps à l'UI de se mettre à jour avant de lancer le calcul
     setTimeout(() => {
       // Faire le calcul lourd
       search();
-
-      scrollviewSetsCardsRef?.current?.scrollToStart();
 
       setTimeout(() => {
         scrollviewMainRef?.current?.scrollToEnd();

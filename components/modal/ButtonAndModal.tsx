@@ -31,6 +31,7 @@ interface ButtonAndModalProps {
   secondButtonProps?: { text: string; onPress: () => void; tooltipText: string };
   closeAfterSecondButton?: boolean;
   secondButtonPosition?: "left" | "right";
+  onModalClose?: () => void;
 }
 
 const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
@@ -47,6 +48,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
   secondButtonProps,
   closeAfterSecondButton,
   secondButtonPosition = "left",
+  onModalClose,
 }) => {
   // État interne pour gérer la visibilité si les props externes ne sont pas fournies
   const [internalIsModalVisible, setInternalIsModalVisible] = useState(false);
@@ -67,6 +69,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
 
   // Fonction pour fermer le modal
   const closeModal = useCallback(() => {
+    onModalClose && onModalClose();
     currentSetIsModalVisible(false);
   }, [currentSetIsModalVisible]);
 
