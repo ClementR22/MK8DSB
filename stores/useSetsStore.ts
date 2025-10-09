@@ -25,6 +25,7 @@ import { CHOSEN_STATS_DEFAULT_SELECTED, SORT_NUMBER_SAVED_SETS_DEFAULT } from "@
 import { arraysEqual } from "@/utils/deepCompare";
 import { router } from "expo-router";
 import { getScreenNameFromPath } from "@/utils/getScreenNameFromPath";
+import useGeneralStore from "./useGeneralStore";
 
 const MAX_NUMBER_SETS_DISPLAY = 10;
 export interface ChosenStat {
@@ -295,7 +296,8 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
     }));
     set({ chosenStats: newChosenStats });
 
-    router.push("/");
+    router.push({ pathname: "/", params: { scrollToTop: "true" } });
+    useGeneralStore.getState().setShouldScrollToTop();
     showToast("Succès" + " " + "Les stats du set ont été chargées");
   },
 

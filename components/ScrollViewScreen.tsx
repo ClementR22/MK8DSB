@@ -9,6 +9,7 @@ interface ScrollViewScreenProps {
 }
 
 export interface ScrollViewScreenHandles {
+  scrollToStart;
   scrollToEnd: () => void;
 }
 
@@ -17,6 +18,9 @@ const ScrollViewScreen = forwardRef<ScrollViewScreenHandles, ScrollViewScreenPro
     const scrollViewRef = useRef<ScrollView>(null);
 
     useImperativeHandle(ref, () => ({
+      scrollToStart: () => {
+        scrollViewRef.current?.scrollTo({ y: 0 });
+      },
       scrollToEnd: () => {
         scrollViewRef.current?.scrollToEnd({ animated: true });
       },

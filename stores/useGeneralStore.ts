@@ -25,6 +25,10 @@ interface GeneralStoreState {
 
   isLoading: boolean;
   setIsLoading: (newIsLoading: boolean) => void;
+
+  shouldScrollToTop: boolean;
+  setShouldScrollToTop: () => void;
+  resetScrollToTop: () => void;
 }
 
 const useGeneralStore = create<GeneralStoreState>((set, get) => ({
@@ -56,6 +60,14 @@ const useGeneralStore = create<GeneralStoreState>((set, get) => ({
   isLoading: false,
   setIsLoading: (newIsLoading: boolean) => {
     set({ isLoading: newIsLoading });
+  },
+
+  shouldScrollToTop: false,
+  setShouldScrollToTop: () => {
+    set({ shouldScrollToTop: true });
+  },
+  resetScrollToTop: () => {
+    set({ shouldScrollToTop: false });
   },
 }));
 

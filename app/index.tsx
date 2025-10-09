@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 // Components import
@@ -25,6 +25,19 @@ import Text from "@/primitiveComponents/Text";
 const SearchSetScreen: React.FC = () => {
   const scrollviewSetsCardsRef = useRef<SetCardsContainerHandles>(null);
   const scrollviewMainRef = useRef<ScrollViewScreenHandles>(null);
+
+  const shouldScrollToTop = useGeneralStore((state) => state.shouldScrollToTop);
+  const resetScrollToTop = useGeneralStore((state) => state.resetScrollToTop);
+
+  useEffect(() => {
+    if (shouldScrollToTop && scrollviewMainRef.current) {
+      setTimeout(() => {
+        scrollviewMainRef.current.scrollToStart();
+      }, 100);
+      resetScrollToTop(); // Réinitialiser le flag
+    }
+  }, [shouldScrollToTop, resetScrollToTop]);
+
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
   const chosenStats = useSetsStore((state) => state.chosenStats);
   const setsListFound = useSetsStore((state) => state.setsListFound);
