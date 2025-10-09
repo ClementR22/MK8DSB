@@ -9,7 +9,7 @@ interface IconSelectorProps<T extends string> {
   }[];
   selectedValues: Set<T> | T;
   onSelect: (value: T) => void;
-  buttonSize?: DimensionValue;
+  buttonStyle?: { flex: number } | { width: number };
   buttonWrapperWidth?: DimensionValue;
   activeStyle?: ViewStyle;
   containerStyle?: ViewStyle | ViewStyle[];
@@ -21,8 +21,7 @@ const IconSelector = <T extends string>({
   options,
   selectedValues,
   onSelect,
-  buttonSize = BUTTON_SIZE,
-  buttonWrapperWidth,
+  buttonStyle,
   activeStyle,
   containerStyle,
 }: IconSelectorProps<T>) => {
@@ -33,15 +32,14 @@ const IconSelector = <T extends string>({
           selectedValues instanceof Set ? selectedValues.has(option.name) : selectedValues === option.name;
 
         return (
-          <View key={option.name} style={{ width: buttonWrapperWidth, zIndex: isActive ? 10 : 0 }}>
-            <Tooltip
-              tooltipText={option.name}
-              onPress={() => onSelect(option.name)}
-              style={[styles.button, { width: buttonSize }, isActive && activeStyle]}
-            >
-              <Image source={option.imageUrl} style={styles.image} resizeMode="contain" />
-            </Tooltip>
-          </View>
+          <Tooltip
+            key={option.name}
+            tooltipText={option.name}
+            onPress={() => onSelect(option.name)}
+            style={[styles.button, buttonStyle, isActive && activeStyle]}
+          >
+            <Image source={option.imageUrl} style={styles.image} resizeMode="contain" />
+          </Tooltip>
         );
       })}
     </View>
@@ -55,7 +53,6 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
     borderRadius: 18,
     overflow: "hidden",
     borderWidth: 3,

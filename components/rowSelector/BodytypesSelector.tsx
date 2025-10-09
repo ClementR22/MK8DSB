@@ -42,6 +42,7 @@ const BodytypesSelector: React.FC<BodytypesSelectorProps> = ({ selectedBodytypes
       selectedValues={selectedBodytypes}
       onSelect={handleSelect}
       activeStyle={activeStyle}
+      buttonStyle={styles.button}
       containerStyle={styles.container}
     />
   );
@@ -49,6 +50,7 @@ const BodytypesSelector: React.FC<BodytypesSelectorProps> = ({ selectedBodytypes
 
 const styles = StyleSheet.create({
   container: { justifyContent: "space-between" },
+  button: { width: 63 },
 });
 
 export default React.memo(BodytypesSelector);

@@ -30,8 +30,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = memo(
         options={categoryOptions}
         selectedValues={selectedCategory}
         onSelect={onCategoryPress}
-        buttonWrapperWidth={"25%"}
-        buttonSize={"100%"}
+        buttonStyle={styles.button}
         activeStyle={activeStyle}
         containerStyle={!isInGalleryScreen && [styles.container, { backgroundColor: theme.surface_container_high }]}
       />
@@ -42,11 +41,13 @@ const CategorySelector: React.FC<CategorySelectorProps> = memo(
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    width: "100%",
     borderRadius: BORDER_RADIUS_CATEGORY_SELECTOR, // Use a larger, more prominent radius
     borderWidth: BORDER_WIDTH_CATEGORY_SELECTOR, // Use consistent spacing token
     borderColor: "transparent",
     boxShadow: box_shadow_z1,
+  },
+  button: {
+    flex: 1,
   },
 });
 
