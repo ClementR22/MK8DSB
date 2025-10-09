@@ -1,6 +1,5 @@
 import { RESULTS_NUMBER_DEFAULT } from "@/constants/constants";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
-import { LayoutChangeEvent } from "react-native";
 import { create } from "zustand";
 
 interface GeneralStoreState {
@@ -23,6 +22,9 @@ interface GeneralStoreState {
 
   resultsNumber: number;
   setResultsNumber: (newResultsNumber: number) => void;
+
+  isLoading: boolean;
+  setIsLoading: (newIsLoading: boolean) => void;
 }
 
 const useGeneralStore = create<GeneralStoreState>((set, get) => ({
@@ -49,6 +51,11 @@ const useGeneralStore = create<GeneralStoreState>((set, get) => ({
   setResultsNumber: async (newResultsNumber: number) => {
     await saveThingInMemory("resultsNumber", newResultsNumber);
     set({ resultsNumber: newResultsNumber });
+  },
+
+  isLoading: false,
+  setIsLoading: (newIsLoading: boolean) => {
+    set({ isLoading: newIsLoading });
   },
 }));
 

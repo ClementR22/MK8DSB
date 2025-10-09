@@ -35,12 +35,14 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
   const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
   const resultsNumber = useGeneralStore((state) => state.resultsNumber);
   const selectedClassIdsByCategory = usePressableElementsStore((state) => state.multiSelectedClassIdsByCategory);
+  const setIsLoading = useGeneralStore((state) => state.setIsLoading);
+
   const [chosenBodytype, setChosenBodytype] = useState<Set<Bodytype>>(new Set());
-  const [isResultsUpdated, setIsResultUpdated] = useState(false);
+  const [disableSearch, setDisableSearch] = useState(false);
 
   useEffect(() => {
-    if (isResultsUpdated) {
-      setIsResultUpdated(false);
+    if (disableSearch) {
+      setDisableSearch(false);
     }
   }, [chosenStats, chosenBodytype, selectedClassIdsByCategory]);
 
@@ -124,14 +126,23 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
   };
 
   const handleSearch = useCallback(() => {
-    setIsResultUpdated(true);
-    search();
+    setIsLoading(true);
+    setDisableSearch(true);
 
-    scrollviewSetsCardsRef?.current?.scrollToStart();
-
+    // Donner le temps à l'UI de se mettre à jour avant de lancer le calcul
     setTimeout(() => {
-      scrollviewMainRef?.current?.scrollToEnd();
-    }, 20);
+      // Faire le calcul lourd
+      search();
+
+      scrollviewSetsCardsRef?.current?.scrollToStart();
+
+      setTimeout(() => {
+        scrollviewMainRef?.current?.scrollToEnd();
+      }, 20);
+
+      // Terminer le loading
+      setIsLoading(false);
+    }, 50); // 50ms suffit pour que l'UI se rafraîchisse
   }, [search, scrollviewSetsCardsRef, scrollviewMainRef]);
 
   return (
@@ -142,7 +153,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
         key="button-search"
         onPress={handleSearch}
         iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}
-        disabled={isResultsUpdated}
+        disabled={disableSearch}
         flex={1}
       >
         {translateToLanguage("Search", language)}

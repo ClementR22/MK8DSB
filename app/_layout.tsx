@@ -58,11 +58,6 @@ export default function TabLayout() {
 
   useEffect(() => {
     setStatusBarHeight(RNStatusBar.currentHeight);
-
-    if (Platform.OS === "android") {
-      // Mode immersif total : cache la barre système
-      NavigationBar.setVisibilityAsync("hidden");
-    }
   }, []);
 
   // Effect to update screenNameForLoadModal based on current path
@@ -142,8 +137,6 @@ export default function TabLayout() {
                 backgroundColor: theme.surface,
               },
               tabBarStyle: {
-                height: 56, // ou moins (50–60 selon ton design)
-                paddingBottom: 0, // supprime le padding ajouté par React Navigation
                 backgroundColor: theme.surface_container,
                 borderTopWidth: 0,
                 boxShadow: box_shadow_z2,

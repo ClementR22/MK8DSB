@@ -43,7 +43,7 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
         />
       }
       anchorPosition="bottom"
-      style={{ marginTop: menuVerticalOffset }}
+      style={{ marginTop: -menuVerticalOffset }}
     >
       {actionIconPropsList.map((actionProps) => {
         const { title, name, type, onPress } = actionProps;

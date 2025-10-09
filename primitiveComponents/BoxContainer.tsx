@@ -5,15 +5,14 @@ import { MARGIN_CONTAINER_LOWEST, PADDING_BOX_CONTAINER } from "@/utils/designTo
 
 interface BoxContainerProps {
   children: React.ReactNode;
-  containerBackgroundColor?: string;
-  contentBackgroundColor?: string;
+  backgroundColor?: string;
+  height?: DimensionValue;
   justifyContent?: ViewStyle["justifyContent"];
   flexDirection?: ViewStyle["flexDirection"];
   alignItems?: ViewStyle["alignItems"];
   gap?: number;
   marginHorizontal?: number;
   marginTop?: number;
-  widthContainer?: DimensionValue;
   borderRadius?: number;
   padding?: number;
   paddingHorizontal?: number;
@@ -23,15 +22,14 @@ interface BoxContainerProps {
 
 const BoxContainer = ({
   children,
-  containerBackgroundColor = "transparent",
-  contentBackgroundColor,
+  backgroundColor,
+  height,
   justifyContent = "center",
   flexDirection = "column",
   alignItems = "center",
   gap = 10,
   marginHorizontal = MARGIN_CONTAINER_LOWEST,
   marginTop,
-  widthContainer = "100%",
   borderRadius = 12,
   padding = PADDING_BOX_CONTAINER,
   paddingHorizontal,
@@ -41,20 +39,13 @@ const BoxContainer = ({
   const theme = useThemeStore((state) => state.theme);
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: containerBackgroundColor,
-          width: widthContainer,
-        },
-      ]}
-    >
+    <View style={styles.container}>
       <View
         style={[
           styles.content,
           {
-            backgroundColor: contentBackgroundColor || theme.surface_container,
+            backgroundColor: backgroundColor || theme.surface_container,
+            height: height,
             justifyContent: justifyContent,
             marginHorizontal: marginHorizontal,
             marginTop: marginTop,
@@ -77,7 +68,8 @@ const BoxContainer = ({
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "flex-start",
+    width: "100%",
+    justifyContent: "center",
   },
   content: { overflow: "hidden" },
 });

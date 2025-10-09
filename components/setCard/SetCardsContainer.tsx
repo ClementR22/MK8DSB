@@ -1,5 +1,13 @@
 import React, { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
-import { Dimensions, DimensionValue, LayoutChangeEvent, Pressable, ScrollView, StyleSheet } from "react-native";
+import {
+  ActivityIndicator,
+  Dimensions,
+  DimensionValue,
+  LayoutChangeEvent,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import SetCard from "./SetCard";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -9,6 +17,7 @@ import { SetObject } from "@/stores/useSetsStore";
 import Placeholder from "@/components/Placeholder";
 import { BORDER_RADIUS_CONTAINER_LOWEST, MARGIN_CONTAINER_LOWEST, PADDING_STANDARD } from "@/utils/designTokens";
 import { box_shadow_z1 } from "../styles/shadow";
+import BoxContainer from "@/primitiveComponents/BoxContainer";
 
 interface SetWithColor extends SetObject {
   color?: string;
@@ -68,12 +77,13 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
     const language = useLanguageStore((state) => state.language);
     const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
     const screenName = useScreen();
+    const isLoading = useGeneralStore((state) => state.isLoading);
 
     const [hasShownSearchQuestionIcon, setHasShownSearchQuestionIcon] = useState(false);
 
     const noSetToShow = setsToShow.length === 0;
 
-    const calculatedContentWidth: DimensionValue | undefined = noSetToShow ? "100%" : undefined;
+    const calculatedContentWidth: DimensionValue | undefined = noSetToShow || isLoading ? "100%" : undefined;
 
     useEffect(() => {
       if (!noSetToShow && !hasShownSearchQuestionIcon) {
@@ -131,7 +141,15 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
             },
           ]}
         >
-          {noSetToShow ? placeHolder : memoizedSetCards}
+          {isLoading ? (
+            <BoxContainer height={200}>
+              <ActivityIndicator size={50} color={theme.primary} />
+            </BoxContainer>
+          ) : noSetToShow ? (
+            placeHolder
+          ) : (
+            memoizedSetCards
+          )}
         </Pressable>
       </ScrollView>
     );

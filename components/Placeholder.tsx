@@ -19,7 +19,7 @@ function Placeholder({ type }: PlaceholderProps) {
   const theme = useThemeStore((state) => state.theme);
 
   return (
-    <BoxContainer>
+    <BoxContainer height={200}>
       <Text role="title" size="large" textAlign="center">
         {translate(type)}
       </Text>
