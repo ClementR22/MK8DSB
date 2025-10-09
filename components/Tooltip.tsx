@@ -55,8 +55,6 @@ const Tooltip: React.FC<TooltipProps> = ({
 
   const theme = useThemeStore((state) => state.theme);
 
-
-
   return (
     <>
       <Pressable ref={touchableRef} onLongPress={openPopover} onPress={onPress} disabled={disabled} style={style}>
@@ -69,15 +67,22 @@ const Tooltip: React.FC<TooltipProps> = ({
         placement={placement as Placement}
         isVisible={showPopover}
         from={touchableRef}
-        popoverStyle={{ marginTop: tooltipOffset }}
+        popoverStyle={{ marginTop: tooltipOffset, backgroundColor: theme.inverse_surface }}
         arrowSize={{ width: 0, height: 0 }}
         offset={5}
       >
         {tooltipText && (
-          <Text role="title" size="small" style={[styles.content, {
-            backgroundColor: theme.inverse_surface,
-            color: theme.inverse_on_surface
-          }]}>
+          <Text
+            role="title"
+            size="small"
+            style={[
+              styles.content,
+              {
+                backgroundColor: theme.inverse_surface,
+                color: theme.inverse_on_surface,
+              },
+            ]}
+          >
             {translate(tooltipText)}
           </Text>
         )}
@@ -90,9 +95,8 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: CORNER_EXTRA_SMALL
-  }
-})
-
+    borderRadius: CORNER_EXTRA_SMALL,
+  },
+});
 
 export default Tooltip;
