@@ -67,7 +67,7 @@ const StatSliderContent = ({
         <View style={[styles.thumb, { backgroundColor: theme.primary }]} />
       </View>
     ),
-    [styles]
+    [styles, theme]
   );
 
   const handleRemove = useCallback(() => {
