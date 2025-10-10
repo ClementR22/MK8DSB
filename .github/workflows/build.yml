@@ -77,15 +77,18 @@ jobs:
         run: echo "value=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Store nightly version
-        run: echo "${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.value}}" > nightly-version.txt
+        id: nightly-version
+        run: |
+          echo "${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.value}}" > nightly-version.txt
+          echo "value=$(cat nightly-version.txt)" >> "$GITHUB_OUTPUT"
 
-      - name: Assemble version
+      - name: Update app.json version
         if: ${{!inputs.stable}}
         uses: jossef/action-set-json-field@v2.1
         with:
           file: app.json
           field: expo.version
-          value: ${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.value}}
+          value: ${{steps.nightly-version.outputs.value}}
 
       - name: Cache node_modules
         uses: actions/cache@v4
@@ -99,17 +102,20 @@ jobs:
         run: eas build --non-interactive --platform android --profile preview --local
 
       - name: Rename build
-        run: mv build-*.apk mk8dsb-nightly_${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.value}}.apk
+        id: build-name
+        run: |
+          echo "value=$(mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk)" >> "$GITHUB_OUTPUT"
+          mv build-*.apk ${{steps.build-name.outputs.value}}
 
       - name: Generate SHA256 checksum
-        run: sha256sum app-release.apk > sha256sum.txt && cat sha256sum.txt
+        run: sha256sum ${{steps.build-name.outputs.value}} > sha256sum.txt && cat sha256sum.txt
 
       - name: Upload application artifacts
         uses: actions/upload-artifact@v4
         with:
           name: artifacts
           path: |
-            ./app-release.apk
+            ./${{steps.build-name.outputs.value}}
             ./sha256sum.txt
             ./nightly-version.txt
 
@@ -142,7 +148,7 @@ jobs:
             **Use with caution**
             ${{inputs.description}}
           files: |
-            app-release.apk
+            mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk
             sha256sum.txt
 
 
