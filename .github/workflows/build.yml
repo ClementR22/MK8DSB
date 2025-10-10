@@ -65,6 +65,25 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Get latest tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
+
+      - name: Get latest commit hash
+        id: get-latest-commit
+        run: git rev-parse --short HEAD
+
+      - name: Store nightly version
+        run: echo "${{steps.get-latest-tag.outputs.tag}}-${{steps.get-latest-commit.outputs.stdout}}" > nightly-version.txt
+
+      - name: Assemble version
+        if: ${{!inputs.stable}}
+        uses: jossef/action-set-json-field@v2.1
+        with:
+          file: app.json
+          field: expo.version
+          value: ${{steps.get-latest-tag.outputs.tag}}-${{steps.get-latest-commit.outputs.stdout}}
+
       - name: Build apk
         run: eas build --non-interactive --platform android --profile preview --local
 
@@ -73,7 +92,7 @@ jobs:
 
       - name: Generate SHA256 checksum
         run: sha256sum app-release.apk > sha256sum.txt && cat sha256sum.txt
-      
+
       - name: Upload application artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -81,6 +100,7 @@ jobs:
           path: |
             ./app-release.apk
             ./sha256sum.txt
+            ./nightly-version.txt
 
   nightly:
     if: ${{!inputs.stable}}
@@ -93,13 +113,17 @@ jobs:
           name: artifacts
           path: ./
 
+      - name: Get app-version
+        id: nightly-version
+        run: cat nightly-version.txt
+
       - name: Upload nightly release
         uses: andelf/nightly-release@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: nightly
-          name: 'Nightly release'
+          name: 'Nightly release ${{steps.nightly-version.outputs.stdout}}'
           draft: false
           prerelease: true
           body: |
