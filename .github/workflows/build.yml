@@ -66,15 +66,18 @@ jobs:
         run: npm install
 
       - name: Get latest tag
-        uses: actions-ecosystem/action-get-latest-tag@v1
+        uses: pozetroninc/github-action-get-latest-release@master
         id: get-latest-tag
+        with:
+          repository: ClementR22/MK8DSB
+          excludes: 'prerelease', 'draft'
 
       - name: Get latest commit hash
         id: get-latest-commit
-        run: git rev-parse --short HEAD
+        run: git rev-parse --short HEAD >> "$GITHUB_OUTPUT"
 
       - name: Store nightly version
-        run: echo "${{steps.get-latest-tag.outputs.tag}}-${{steps.get-latest-commit.outputs.stdout}}" > nightly-version.txt
+        run: echo "${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.output1}}" > nightly-version.txt
 
       - name: Assemble version
         if: ${{!inputs.stable}}
@@ -83,6 +86,14 @@ jobs:
           file: app.json
           field: expo.version
           value: ${{steps.get-latest-tag.outputs.tag}}-${{steps.get-latest-commit.outputs.stdout}}
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Build apk
         run: eas build --non-interactive --platform android --profile preview --local
