@@ -134,7 +134,7 @@ jobs:
 
       - name: Get app-version
         id: nightly-version
-        run: echo "value=$(cat nightly-version.txt)"
+        run: echo "value=$(cat nightly-version.txt)" >> "$GITHUB_OUTPUT"
 
       - name: Upload nightly release
         uses: andelf/nightly-release@main
