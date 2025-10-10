@@ -99,8 +99,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Build apk
-        run: dd if=/dev/urandom of=build-107579580437.apk bs=10M count=1 # random file for testing
-          #eas build --non-interactive --platform android --profile preview --local
+        run: eas build --non-interactive --platform android --profile preview --local
 
       - name: Store build name
         id: build-name
