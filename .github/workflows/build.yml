@@ -51,10 +51,6 @@ jobs:
       - name: Setup git
         uses: actions/checkout@v5
 
-      - name: Get latest commit hash
-        id: get-latest-commit
-        run: echo "value=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
-
 
   build:
     runs-on: ubuntu-latest
@@ -85,8 +81,12 @@ jobs:
           repository: ClementR22/MK8DSB
           excludes: 'prerelease'
 
+      - name: Get latest commit hash
+        id: get-latest-commit
+        run: echo "value=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Store nightly version
-        run: echo "${{steps.get-latest-tag.outputs.release}}-${{needs.get-nightly-version.outputs.last-commit}}" > nightly-version.txt
+        run: echo "${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.value}}" > nightly-version.txt
 
       - name: Assemble version
         if: ${{!inputs.stable}}
@@ -94,7 +94,7 @@ jobs:
         with:
           file: app.json
           field: expo.version
-          value: ${{steps.get-latest-tag.outputs.release}}-${{needs.get-nightly-version.outputs.last-commit}}
+          value: ${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.value}}
 
       - name: Cache node_modules
         uses: actions/cache@v4
@@ -108,7 +108,7 @@ jobs:
         run: eas build --non-interactive --platform android --profile preview --local
 
       - name: Rename build
-        run: mv build-*.apk mk8dsb-nightly_${{steps.get-latest-tag.outputs.release}}-${{needs.get-nightly-version.outputs.last-commit}}.apk
+        run: mv build-*.apk mk8dsb-nightly_${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.value}}.apk
 
       - name: Generate SHA256 checksum
         run: sha256sum app-release.apk > sha256sum.txt && cat sha256sum.txt
@@ -135,7 +135,7 @@ jobs:
 
       - name: Get app-version
         id: nightly-version
-        run: cat nightly-version.txt
+        run: echo "value=$(cat nightly-version.txt)"
 
       - name: Upload nightly release
         uses: andelf/nightly-release@main
@@ -143,7 +143,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: nightly
-          name: 'Nightly release ${{steps.nightly-version.outputs.stdout}}'
+          name: 'Nightly release ${{steps.nightly-version.outputs.value}}'
           draft: false
           prerelease: true
           body: |
@@ -153,6 +153,7 @@ jobs:
           files: |
             app-release.apk
             sha256sum.txt
+
 
   release:
     if: ${{inputs.stable}}
