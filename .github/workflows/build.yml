@@ -66,8 +66,8 @@ jobs:
         run: npm install
 
       - name: Get latest tag
-        uses: pozetroninc/github-action-get-latest-release@master
         id: get-latest-tag
+        uses: pozetroninc/github-action-get-latest-release@master
         with:
           repository: ClementR22/MK8DSB
           excludes: 'prerelease', 'draft'
