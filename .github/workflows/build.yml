@@ -99,13 +99,15 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Build apk
-        run: eas build --non-interactive --platform android --profile preview --local
+        run: dd if=/dev/urandom of=build-107579580437.apk bs=10M # random file for testing
+          #eas build --non-interactive --platform android --profile preview --local
 
-      - name: Rename build
+      - name: Store build name
         id: build-name
-        run: |
-          echo "value=$(mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk)" >> "$GITHUB_OUTPUT"
-          mv build-*.apk mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk
+        run: echo "value=$(mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk)" >> "$GITHUB_OUTPUT"
+          
+      - name: Rename build
+        run: mv build-*.apk ${{steps.build-name.outputs.value}}
 
       - name: Generate SHA256 checksum
         run: sha256sum ${{steps.build-name.outputs.value}} > sha256sum.txt && cat sha256sum.txt
