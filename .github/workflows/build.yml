@@ -104,7 +104,7 @@ jobs:
 
       - name: Store build name
         id: build-name
-        run: echo "value=$(mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk)" >> "$GITHUB_OUTPUT"
+        run: echo "value=mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk" >> "$GITHUB_OUTPUT"
           
       - name: Rename build
         run: mv build-*.apk ${{steps.build-name.outputs.value}}
