@@ -1,0 +1,162 @@
+name: Build and release
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      stable:
+        type: boolean
+        description: Stable release ?
+        default: false
+      version-bump:
+        type: choice
+        description: Version level
+        required: false
+        options:
+          - major
+          - minor
+          - patch
+        default: patch
+      is-draft:
+        type: boolean
+        description: Is release a draft ?
+        required: false
+        default: false
+      description:
+        required: false
+        description: Description
+
+jobs:
+  check-description:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exit
+        if: ${{inputs.stable && !inputs.description}}
+        run: echo "Missing description for a stable release" && exit 1
+
+  check-version-bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exit
+        if: ${{inputs.stable && !inputs.version-bump}}
+        run: echo "Missing version bump for a stable release" && exit 1
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [check-description, check-version-bump]
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: npm
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build apk
+        run: eas build --non-interactive --platform android --profile preview --local
+
+      - name: Rename build
+        run: mv build-*.apk app-release.apk
+
+      - name: Generate SHA256 checksum
+        run: sha256sum app-release.apk > sha256sum.txt && cat sha256sum.txt
+      
+      - name: Upload application artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts
+          path: |
+            ./app-release.apk
+            ./sha256sum.txt
+
+  nightly:
+    if: ${{!inputs.stable}}
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: artifacts
+          path: ./
+
+      - name: Upload nightly release
+        uses: andelf/nightly-release@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: nightly
+          name: 'Nightly release'
+          draft: false
+          prerelease: true
+          body: |
+            Unstable release, things may break and you may loose your settings or data
+            **Use with caution**
+            ${{inputs.description}}
+          files: |
+            app-release.apk
+            sha256sum.txt
+
+  release:
+    if: ${{inputs.stable}}
+    needs: [check-description, check-version-bump, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup github
+        uses: actions/checkout@v5
+
+      - name: Increment version
+        uses: reecetech/version-increment@2024.10.1
+        id: version
+        with:
+          scheme: 'semver'
+          increment: ${{inputs.version-bump}}
+          tag_prefix: 'v'
+
+      - name: Bump package.json and app.json version
+        uses: NoAccount1/gh-action-bump-version@master
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          version-type: ${{inputs.version-bump}}
+          skip-tag: 'true'
+          bump-policy: 'ignore'
+          commit-message: 'CI : bumps `package.json` to version ${{steps.version.outputs.v-version}}'
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: artifacts
+          path: ./
+
+      - name: List downloaded files
+        run: ls -lRAh
+
+      - name: Rename stable release
+        run: mv app-release.apk mk8dsb_${{steps.version.outputs.v-version}}.apk
+
+      - name: Upload stable release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          name: MK8DSB ${{steps.version.outputs.v-version}}
+          tag_name: ${{steps.version.outputs.v-version}}
+          body: ${{inputs.description}}
+          draft: ${{inputs.is-draft}}
+          files: |
+            ./mk8dsb_${{steps.version.outputs.v-version}}.apk
+            ./sha256sum.txt
