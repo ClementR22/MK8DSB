@@ -105,7 +105,7 @@ jobs:
         id: build-name
         run: |
           echo "value=$(mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk)" >> "$GITHUB_OUTPUT"
-          mv build-*.apk ${{steps.build-name.outputs.value}}
+          mv build-*.apk mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk
 
       - name: Generate SHA256 checksum
         run: sha256sum ${{steps.build-name.outputs.value}} > sha256sum.txt && cat sha256sum.txt
