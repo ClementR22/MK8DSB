@@ -43,9 +43,19 @@ jobs:
         if: ${{inputs.stable && !inputs.version-bump}}
         run: echo "Missing version bump for a stable release" && exit 1
 
+  get-nightly-version:
+    runs-on: ubuntu-latest
+    outputs:
+      last-commit: ${{steps.get-latest-commit.outputs.value}}
+    steps:
+      - name: Get latest commit hash
+        id: get-latest-commit
+        run: echo "value=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+
   build:
     runs-on: ubuntu-latest
-    needs: [check-description, check-version-bump]
+    needs: [check-description, check-version-bump, get-nightly-version]
     steps:
       - name: Setup repo
         uses: actions/checkout@v3
@@ -72,12 +82,8 @@ jobs:
           repository: ClementR22/MK8DSB
           excludes: 'prerelease'
 
-      - name: Get latest commit hash
-        id: get-latest-commit
-        run: git rev-parse --short HEAD >> "$GITHUB_OUTPUT"
-
       - name: Store nightly version
-        run: echo "${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.output1}}" > nightly-version.txt
+        run: echo "${{steps.get-latest-tag.outputs.release}}-${{needs.get-nightly-version.outputs.last-commit}}" > nightly-version.txt
 
       - name: Assemble version
         if: ${{!inputs.stable}}
