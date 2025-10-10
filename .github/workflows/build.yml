@@ -94,7 +94,7 @@ jobs:
         with:
           file: app.json
           field: expo.version
-          value: ${{steps.get-latest-tag.outputs.tag}}-${{steps.get-latest-commit.outputs.stdout}}
+          value: ${{steps.get-latest-tag.outputs.release}}-${{needs.get-nightly-version.outputs.last-commit}}
 
       - name: Cache node_modules
         uses: actions/cache@v4
@@ -108,7 +108,7 @@ jobs:
         run: eas build --non-interactive --platform android --profile preview --local
 
       - name: Rename build
-        run: mv build-*.apk app-release.apk
+        run: mv build-*.apk mk8dsb-nightly_${{steps.get-latest-tag.outputs.release}}-${{needs.get-nightly-version.outputs.last-commit}}.apk
 
       - name: Generate SHA256 checksum
         run: sha256sum app-release.apk > sha256sum.txt && cat sha256sum.txt
@@ -124,7 +124,7 @@ jobs:
 
   nightly:
     if: ${{!inputs.stable}}
-    needs: [build]
+    needs: [get-nightly-version, build]
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
