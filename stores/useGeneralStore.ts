@@ -29,6 +29,9 @@ interface GeneralStoreState {
   shouldScrollToTop: boolean;
   setShouldScrollToTop: () => void;
   resetScrollToTop: () => void;
+
+  isSetCardsCollapsed: boolean;
+  toggleIsSetCardsCollapsed: () => void;
 }
 
 const useGeneralStore = create<GeneralStoreState>((set, get) => ({
@@ -68,6 +71,11 @@ const useGeneralStore = create<GeneralStoreState>((set, get) => ({
   },
   resetScrollToTop: () => {
     set({ shouldScrollToTop: false });
+  },
+
+  isSetCardsCollapsed: false,
+  toggleIsSetCardsCollapsed: () => {
+    set((state) => ({ isSetCardsCollapsed: !state.isSetCardsCollapsed }));
   },
 }));
 

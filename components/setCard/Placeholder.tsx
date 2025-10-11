@@ -1,0 +1,36 @@
+import React from "react";
+import { useThemeStore } from "@/stores/useThemeStore";
+import BoxContainer from "@/primitiveComponents/BoxContainer";
+import Text from "@/primitiveComponents/Text";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { translate } from "@/translations/translations";
+
+interface PlaceholderProps {
+  type: "SearchEmpty" | "SearchNotFound" | "SavedEmpty";
+}
+
+const iconName = {
+  SearchEmpty: "chat-question",
+  SearchNotFound: "home-flood",
+  SavedEmpty: "heart-multiple",
+};
+
+function Placeholder({ type }: PlaceholderProps) {
+  const theme = useThemeStore((state) => state.theme);
+
+  return (
+    <BoxContainer height={200}>
+      <Text role="title" size="large" textAlign="center">
+        {translate(type)}
+      </Text>
+      <MaterialCommunityIcons
+        // @ts-ignore
+        name={iconName[type]}
+        size={72}
+        color={theme.on_surface}
+      />
+    </BoxContainer>
+  );
+}
+
+export default Placeholder;

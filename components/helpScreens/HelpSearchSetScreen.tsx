@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal from "./HelpModal";
 import StatSliderPreview from "../statSlider/StatSliderPreview";
-import { SET_CARD_WIDTH } from "@/utils/designTokens";
+import { PADDING_SET_CARD, SET_CARD_WIDTH } from "@/utils/designTokens";
 import Button from "@/primitiveComponents/Button";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { translateToLanguage } from "@/translations/translations";
@@ -58,7 +58,7 @@ const HelpSearchSetScreen = () => {
           <Text role="body" size="large">
             Les sets sont classés par score de correspondance
           </Text>
-          <View style={{ width: SET_CARD_WIDTH - 11 }}>
+          <View style={{ width: SET_CARD_WIDTH - PADDING_SET_CARD * 2 }}>
             <StatGaugeContainer name="SG" value={4} isInSetCard={true} chosenValue={5} bonusEnabled={true}>
               <StatGaugeSetCardBar obtainedValue={4} chosenValue={5} isInSearchScreen={true} />
             </StatGaugeContainer>

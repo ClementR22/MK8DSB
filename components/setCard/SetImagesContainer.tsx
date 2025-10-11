@@ -4,12 +4,12 @@ import { categories } from "@/data/elements/elementsData";
 import { elementsData } from "@/data/elements/elementsData";
 import { vw } from "../styles/theme";
 import { Category } from "@/data/elements/elementsTypes";
-import { SET_CARD_WIDTH } from "@/utils/designTokens";
+import { PADDING_SET_CARD, SET_CARD_WIDTH } from "@/utils/designTokens";
 import Tooltip from "../Tooltip";
 
 const MODAL_WIDTH = vw * 0.9;
 const MAX_WIDTH_IN_MODAL = MODAL_WIDTH - 20;
-const MAX_WIDTH_IN_SET_CARD = SET_CARD_WIDTH - 20; // 200
+const MAX_WIDTH_IN_SET_CARD = SET_CARD_WIDTH - PADDING_SET_CARD * 2; // 200
 const MAX_NUMBER_OF_IMAGE = 5;
 
 const IMAGE_SIZE_IN_SET_CARD = MAX_WIDTH_IN_SET_CARD / MAX_NUMBER_OF_IMAGE; // 40
@@ -29,6 +29,7 @@ type ModeType = "icon" | "modal";
 interface SetImagesContainerProps {
   setToShowClassIds: number[];
   mode: ModeType;
+  isCollapsed?: boolean;
   onPress?: () => void;
 }
 

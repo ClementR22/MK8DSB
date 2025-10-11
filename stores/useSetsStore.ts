@@ -423,7 +423,6 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   updateSetsList: async (pressedClassIdsObj) => {
     const screenName = getScreenNameFromPath();
     const { setsList, setsListName, isSaveScreen } = get().getSetsListFromScreenName(screenName);
-    console.log(pressedClassIdsObj);
     const newClassIds = Object.values(pressedClassIdsObj);
     const setCardEditedId = get().setCardEditedId;
 

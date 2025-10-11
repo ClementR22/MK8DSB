@@ -27,10 +27,8 @@ const DisplaySetScreen = () => {
 
   const [sortNumber, setSortNumber] = useState(0);
 
-  const [isReduceSetCards, setIsReduceSetCards] = useState(false);
-  const toggleReduceSetCards = useCallback(() => {
-    setIsReduceSetCards((prev) => !prev);
-  }, []);
+  const isSetCardsCollapsed = useGeneralStore((state) => state.isSetCardsCollapsed);
+  const toggleIsSetCardsCollapsed = useGeneralStore((state) => state.toggleIsSetCardsCollapsed);
 
   // État local pour stocker l'association nom du set -> Couleur
   const [setsColorsMap, setSetsColorsMap] = useState<Map<string, string>>(() => new Map());
@@ -103,16 +101,14 @@ const DisplaySetScreen = () => {
             <ButtonAddSet scrollRef={scrollRef} />
             <ButtonLoadSet tooltipText="LoadASet" />
             <ButtonIcon
-              onPress={toggleReduceSetCards}
-              iconName={isReduceSetCards ? "chevron-down" : "chevron-up"}
+              onPress={toggleIsSetCardsCollapsed}
+              iconName={isSetCardsCollapsed ? "chevron-down" : "chevron-up"}
               iconType={IconType.MaterialCommunityIcons}
-              tooltipText={isReduceSetCards ? "DevelopSets" : "ReduceSets"}
+              tooltipText={isSetCardsCollapsed ? "DevelopSets" : "ReduceSets"}
             />
           </ScreenPressablesContainer>
 
-          {!isReduceSetCards && (
-            <SetCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
-          )}
+          <SetCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
 
           <View style={styles.mainButtonWrapper}>
             <StatSelector triggerButtonText="DisplayedStats" />

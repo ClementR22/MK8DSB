@@ -11,6 +11,7 @@ import { arraysEqual } from "@/utils/deepCompare";
 import SetCardHeader, { SetCardHeaderProps } from "./SetCardHeader";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 import { SET_CARD_WIDTH } from "@/utils/designTokens";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 export interface SetData {
   name: string;
@@ -83,6 +84,8 @@ const SetCard: React.FC<SetCardProps> = ({
   const screenName = screenNameFromProps ?? contextScreenName;
   const situation = isInLoadSetModal ? "load" : screenName;
 
+  const isCollapsed = screenName === "display" && useGeneralStore((state) => state.isSetCardsCollapsed);
+
   const setsListSaved = useSetsStore((state) => state.setsListSaved);
   const isSaved = useMemo(
     () => setsListSaved.some((setSaved) => arraysEqual(setSaved.classIds, setToShowClassIds)),
@@ -153,15 +156,17 @@ const SetCard: React.FC<SetCardProps> = ({
       <View style={[setCardStyle, borderColor && { borderColor }]}>
         <SetCardHeader {...headerProps} />
 
-        <SetImagesModal setToShowClassIds={setToShowClassIds} />
+        <SetImagesModal setToShowClassIds={setToShowClassIds} isCollapsed={isCollapsed} />
 
-        <SetCardActionButtons
-          actionNamesList={config.actionNamesList}
-          setToShowId={setToShowId}
-          situation={situation}
-          isSaved={isSaved}
-          handleEditPress={handleEditPress}
-        />
+        {!isCollapsed && (
+          <SetCardActionButtons
+            actionNamesList={config.actionNamesList}
+            setToShowId={setToShowId}
+            situation={situation}
+            isSaved={isSaved}
+            handleEditPress={handleEditPress}
+          />
+        )}
       </View>
       {config.showStatSliderResult && setToShowStats !== null && (
         <StatGaugeSetCardsContainer setToShowStats={setToShowStats} containerStyle={setCardStyle} />

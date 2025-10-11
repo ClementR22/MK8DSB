@@ -5,9 +5,10 @@ import SetImagesContainer from "./SetImagesContainer";
 
 interface SetImagesModalProps {
   setToShowClassIds: number[];
+  isCollapsed: boolean;
 }
 
-const SetImagesModal: React.FC<SetImagesModalProps> = ({ setToShowClassIds }) => {
+const SetImagesModal: React.FC<SetImagesModalProps> = ({ setToShowClassIds, isCollapsed }) => {
   const [isImagesModalVisible, setIsImagesModalVisible] = useState(false);
 
   const openModal = useCallback(() => {
@@ -21,7 +22,12 @@ const SetImagesModal: React.FC<SetImagesModalProps> = ({ setToShowClassIds }) =>
   return (
     <>
       <Pressable onPress={openModal} style={styles.pressable}>
-        <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="icon" onPress={openModal} />
+        <SetImagesContainer
+          setToShowClassIds={setToShowClassIds}
+          mode="icon"
+          isCollapsed={isCollapsed}
+          onPress={openModal}
+        />
       </Pressable>
 
       <Modal
