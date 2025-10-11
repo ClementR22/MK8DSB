@@ -70,7 +70,7 @@ npx expo run:android
 ## 🗺 Roadmap
 
 - [x] Stable Android release  
-- [ ] Stable Android release   
+- [ ] Stable iOS release   
 - [ ] Play Store release  
 
 ---
