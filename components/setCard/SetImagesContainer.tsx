@@ -17,7 +17,7 @@ const IMAGE_SIZE_IN_MODAL = MAX_WIDTH_IN_MODAL / MAX_NUMBER_OF_IMAGE;
 
 const PADDING_VERTICAL_CONTAINER = 7;
 const GAP_CONTAINER = 14;
-const HEIGHT_CONTAINER_ICON_MODE = IMAGE_SIZE_IN_SET_CARD * 4 + PADDING_VERTICAL_CONTAINER * 2 + GAP_CONTAINER * 3;
+// const HEIGHT_CONTAINER_ICON_MODE = IMAGE_SIZE_IN_SET_CARD * 4 + PADDING_VERTICAL_CONTAINER * 2 + GAP_CONTAINER * 3;
 
 interface SetImageCategoryData {
   category: string;
@@ -33,8 +33,13 @@ interface SetImagesContainerProps {
   onPress?: () => void;
 }
 
-const SetImagesContainer: React.FC<SetImagesContainerProps> = ({ setToShowClassIds, mode, onPress = undefined }) => {
-  const data: SetImageCategoryData[] = useMemo(() => {
+const SetImagesContainer: React.FC<SetImagesContainerProps> = ({
+  setToShowClassIds,
+  mode,
+  isCollapsed = false,
+  onPress,
+}) => {
+  const data = useMemo<SetImageCategoryData[]>(() => {
     return categories.map((category: Category, index: number) => {
       const matchedElements = elementsData.filter((element) => element.classId === setToShowClassIds[index]);
 
@@ -50,22 +55,33 @@ const SetImagesContainer: React.FC<SetImagesContainerProps> = ({ setToShowClassI
 
   const imageSize = mode === "icon" ? IMAGE_SIZE_IN_SET_CARD : IMAGE_SIZE_IN_MODAL;
 
+  const imageStyle = useMemo(
+    () => ({
+      width: imageSize,
+      height: imageSize,
+    }),
+    [imageSize]
+  );
+
   return (
-    <View style={[styles.container, mode === "icon" && { height: HEIGHT_CONTAINER_ICON_MODE }]}>
+    <View style={[styles.container, isCollapsed && styles.containerCollapsed]}>
       {data.map((item) => (
         <View key={item.category} style={styles.category}>
-          {item.elements.map(({ name, image }, index) => (
-            <Tooltip key={`${item.category}-${index}`} tooltipText={name} onPress={onPress} style={styles.tooltip}>
-              <Image
-                source={image}
-                style={{
-                  width: imageSize,
-                  height: imageSize,
-                }}
-                resizeMode="contain"
-              />
-            </Tooltip>
-          ))}
+          {item.elements.map(
+            ({ name, image }, index) =>
+              (!isCollapsed || index === 0) && (
+                <Tooltip key={`${item.category}-${index}`} tooltipText={name} onPress={onPress} style={styles.tooltip}>
+                  <Image
+                    source={image}
+                    style={{
+                      width: imageSize,
+                      height: imageSize,
+                    }}
+                    resizeMode="contain"
+                  />
+                </Tooltip>
+              )
+          )}
         </View>
       ))}
     </View>
@@ -77,6 +93,7 @@ const styles = StyleSheet.create({
     paddingVertical: PADDING_VERTICAL_CONTAINER,
     gap: GAP_CONTAINER,
   },
+  containerCollapsed: { gap: 0, flexDirection: "row", justifyContent: "space-around" },
   category: {
     flexDirection: "row",
     justifyContent: "center",

@@ -4,7 +4,7 @@ import { ScreenName } from "@/contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
-import { actionNamesList } from "@/components/setCard/SetCard";
+import { actionNamesList } from "./useSetCardConfig";
 
 interface ActionProps {
   title: string;

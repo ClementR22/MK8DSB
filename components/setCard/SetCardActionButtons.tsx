@@ -2,7 +2,7 @@ import React from "react";
 import BoxContainer from "../../primitiveComponents/BoxContainer";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
-import { actionNamesList } from "./SetCard";
+import { actionNamesList } from "@/hooks/useSetCardConfig";
 import { ScreenName } from "@/contexts/ScreenContext";
 
 interface SetCardActionButtonsProps {

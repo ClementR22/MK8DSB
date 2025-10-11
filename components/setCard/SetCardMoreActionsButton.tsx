@@ -3,9 +3,11 @@ import { Menu } from "react-native-paper";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import { actionNamesList } from "./SetCard";
+import { actionNamesList } from "@/hooks/useSetCardConfig";
 import { ScreenName } from "@/contexts/ScreenContext";
 import useGeneralStore from "@/stores/useGeneralStore";
+import { translateToLanguage } from "@/translations/translations";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 interface SetCardMoreActionsButtonProps {
   moreActionNamesList: actionNamesList;
@@ -18,6 +20,8 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
   setToShowId,
   situation,
 }) => {
+  const language = useLanguageStore((state) => state.language);
+
   const [visible, setVisible] = useState(false);
 
   const actionIconPropsList = useActionIconPropsList(moreActionNamesList, setToShowId, situation);
@@ -51,7 +55,7 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
           <Menu.Item
             key={name}
             onPress={() => handleMenuItemPress(onPress)}
-            title={title}
+            title={translateToLanguage(title, language)}
             leadingIcon={({ color, size }) => <Icon type={type} name={name} size={size} color={color || "black"} />}
           />
         );

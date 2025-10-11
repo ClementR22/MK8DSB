@@ -1,7 +1,7 @@
 import { ScreenName } from "@/contexts/ScreenContext";
 import { usePathname } from "expo-router";
 
-export const getScreenNameFromPath = (): ScreenName | null => {
+export const useScreenNameFromPath = (): ScreenName | null => {
   const pathname = usePathname();
   if (pathname === "/") return "search";
   // Using .includes() is less precise, consider exact matches or regex if paths become complex

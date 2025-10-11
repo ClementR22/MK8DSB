@@ -4,13 +4,13 @@ import React, { memo } from "react";
 import { View, StyleSheet } from "react-native";
 import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
 import { ScreenName } from "@/contexts/ScreenContext";
-import { actionNamesList } from "./SetCard";
+import { actionNamesList } from "@/hooks/useSetCardConfig";
 import SetNameInput from "../textInput/SetNameInput";
 import { BUTTON_SIZE } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-export interface SetCardHeaderProps {
+interface SetCardHeaderProps {
   isNameEditable: boolean;
   setToShowName: string;
   setToShowId: string;

@@ -311,12 +311,12 @@ const translations = {
     MKTVParafoilGlider: "MKTV Parafoil Glider",
 
     // Help modals
-    "Guide des Sets Favoris" : "Favorite Sets guide",
-    "Guide du Set Builder" : "Set Builder guide",
+    "Guide des Sets Favoris": "Favorite Sets guide",
+    "Guide du Set Builder": "Set Builder guide",
     "Guide du Comparateur de Sets": "Set Comparator guide",
 
     // Misc
-    Warning: "Warning"
+    Warning: "Warning",
   },
 
   fr: {
@@ -402,7 +402,7 @@ const translations = {
     LoadTheSet: "Charger le set",
     LoadTheStatsToSearchScreen: "Charger les stats dans l'écran de recherche",
     LoadTheSetToDisplayScreen: "Charger le set dans l'écran de comparaison",
-    Copy: "Copy",
+    Copy: "Copier",
     ImportACopiedSet: "Importer un set copié",
     MoreActions: "Plus d'actions",
     Help: "Aide",
@@ -613,10 +613,10 @@ const translations = {
 
     // Help modals
     "Guide des Sets Favoris": "Guide des Sets Favoris",
-    "Guide du Set Builder" : "Guide du Set Builder",
+    "Guide du Set Builder": "Guide du Set Builder",
     "Guide du Comparateur de Sets": "Guide du Comparateur de Sets",
 
     // Misc
-    Warning: "Attention"
+    Warning: "Attention",
   },
 };
