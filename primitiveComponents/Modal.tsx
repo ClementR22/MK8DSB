@@ -142,8 +142,8 @@ const Modal = ({
             {<ModalButton text={closeButtonText} onPress={actualOnPressClose} />}
           </View>
         </Pressable>
-        <Toast config={toastConfig} />
       </Pressable>
+      <Toast config={toastConfig} bottomOffset={0} />
     </NativeModal>
   );
 };

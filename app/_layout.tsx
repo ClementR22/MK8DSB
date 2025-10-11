@@ -168,7 +168,7 @@ export default function TabLayout() {
           </Tabs>
           <ModalEditSet />
           <ModalLoadSet />
-          <Toast config={toastConfig} />
+          <Toast config={toastConfig} bottomOffset={59} />
         </PaperProvider>
       </SafeAreaView>
     </SafeAreaProvider>
