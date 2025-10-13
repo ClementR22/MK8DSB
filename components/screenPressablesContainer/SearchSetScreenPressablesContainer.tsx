@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { categories } from "@/data/elements/elementsData";
 import { setsData } from "@/data/setsData";
@@ -19,6 +19,7 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 import StatSelector from "../statSelector/StatSelector";
 import useGeneralStore from "@/stores/useGeneralStore";
+import ButtonIconWithBadge from "../sortModeSelector/ButtonIconWithBadge";
 
 interface SearchSetScreenPressablesContainerProps {
   scrollviewSetsCardsRef: React.RefObject<any>;
@@ -39,6 +40,11 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
 
   const [chosenBodytype, setChosenBodytype] = useState<Set<Bodytype>>(new Set());
   const [disableSearch, setDisableSearch] = useState(false);
+
+  const numberOfSelectedClassIds = useMemo(
+    () => Object.values(selectedClassIdsByCategory).reduce((count, category) => count + category.size, 0),
+    [selectedClassIdsByCategory]
+  );
 
   useEffect(() => {
     if (disableSearch) {
@@ -162,7 +168,12 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
       <ButtonAndModal
         modalTitle="Filters"
         customTrigger={
-          <ButtonIcon tooltipText="ChooseFilters" iconName="pin" iconType={IconType.MaterialCommunityIcons} />
+          <ButtonIconWithBadge
+            tooltipText="ChooseFilters"
+            iconName="pin"
+            iconType={IconType.MaterialCommunityIcons}
+            badgeText={numberOfSelectedClassIds}
+          />
         }
       >
         <PannelPaginated

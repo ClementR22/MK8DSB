@@ -10,7 +10,7 @@ import {
   statNamesSpeed,
 } from "@/data/stats/statsData";
 import TooltipMenu from "../TooltipMenu";
-import ButtonIconSort from "./ButtonIconSort";
+import ButtonIconWithBadge from "./ButtonIconWithBadge";
 import {
   BORDER_RADIUS_INF,
   BUTTON_SIZE,
@@ -78,13 +78,12 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
       <TooltipMenu
         key={key}
         trigger={
-          <ButtonIconSort
+          <ButtonIconWithBadge
             tooltipText={tooltipText}
             iconName={triggerIconName}
             iconType={triggerIconType}
             direction={statNames.includes(activeSort) ? currentDirection : undefined}
             isBadge={statNames.includes(activeSort)}
-            badgeContainerStyle={styles.badgeContainer}
           />
         }
       >
@@ -92,7 +91,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
           const config = sortButtonsConfig[name];
           const isActive = name === activeSort;
           return (
-            <ButtonIconSort
+            <ButtonIconWithBadge
               key={name}
               onPress={() => handlePress(name)}
               tooltipText={name}
@@ -101,7 +100,6 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
               iconBackgroundColor={config.iconBackgroundColor}
               direction={isActive ? currentDirection : undefined}
               isBadge={isActive}
-              badgeContainerStyle={styles.badgeContainer}
             />
           );
         })}
@@ -126,7 +124,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
       // Boutons normaux
       const isActive = name === activeSort;
       return (
-        <ButtonIconSort
+        <ButtonIconWithBadge
           key={name}
           onPress={() => handlePress(name)}
           tooltipText={name}
@@ -134,7 +132,6 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
           iconType={iconConfig.iconType}
           direction={isActive ? currentDirection : undefined}
           isBadge={isActive}
-          badgeContainerStyle={styles.badgeContainer}
         />
       );
     });
@@ -173,17 +170,6 @@ const styles = StyleSheet.create({
   spaceAround: {
     justifyContent: "space-around",
     flex: 1,
-  },
-  badgeContainer: {
-    position: "absolute",
-    top: -2,
-    right: -5,
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 1,
-    borderRadius: BORDER_RADIUS_INF,
-    width: 20,
-    height: 20,
   },
 });
 
