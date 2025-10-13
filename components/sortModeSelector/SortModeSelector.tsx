@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { sortButtonsConfig } from "@/config/sortButtonsConfig";
 import { StatNameSort } from "@/data/stats/statsTypes";
@@ -33,9 +33,10 @@ interface SortModeSelectorProps {
   sortNumber: number;
   setSortNumber: (number: number) => void;
   sortCase: "element" | "set";
+  containerStyle?: ViewStyle;
 }
 
-const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortModeSelectorProps) => {
+const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSortNumber, sortCase, containerStyle }) => {
   const screenName = useScreen();
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
@@ -48,6 +49,8 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
   const [activeSort, setActiveSort] = useState<StatNameSort>(
     getSortNameFromSortNumber(sortNumber) || statNamesSortDefault[0]
   );
+
+  console.log({ currentDirection, activeSort });
 
   const handlePress = useCallback(
     (name: StatNameSort) => {
@@ -139,28 +142,32 @@ const SortModeSelector = memo(({ sortNumber, setSortNumber, sortCase }: SortMode
     });
   }, [statNamesSortDefault, activeSort, currentDirection, handlePress, createTooltipMenu]);
 
+  console.log({ NEEDS_SCROLL });
   const Wrapper = NEEDS_SCROLL ? ScrollView : View;
-  const wrapperProps = NEEDS_SCROLL ? { horizontal: true, scrollEnabled: isScrollEnable } : {};
+  const wrapperProps = NEEDS_SCROLL
+    ? {
+        horizontal: true,
+        scrollEnabled: isScrollEnable,
+        contentContainerStyle: containerStyle,
+      }
+    : { style: containerStyle };
 
   return (
-    <View style={styles.wrapper}>
-      <Wrapper {...wrapperProps}>
-        <Pressable
-          style={[
-            styles.container,
-            { paddingHorizontal: screenName === "search" ? GAP_SORT_MODE_SELECTOR : PADDING_BOX_CONTAINER },
-            !NEEDS_SCROLL && styles.spaceAround,
-          ]}
-        >
-          {mainButtons}
-        </Pressable>
-      </Wrapper>
-    </View>
+    <Wrapper {...wrapperProps}>
+      <Pressable
+        style={[
+          styles.container,
+          { paddingHorizontal: screenName === "search" ? GAP_SORT_MODE_SELECTOR : PADDING_BOX_CONTAINER },
+          !NEEDS_SCROLL && styles.spaceAround,
+        ]}
+      >
+        {mainButtons}
+      </Pressable>
+    </Wrapper>
   );
-});
+};
 
 const styles = StyleSheet.create({
-  wrapper: { width: "100%" },
   container: {
     flexDirection: "row",
     alignItems: "center",
@@ -168,6 +175,7 @@ const styles = StyleSheet.create({
   },
   spaceAround: {
     justifyContent: "space-around",
+    flex: 1,
   },
   badgeContainer: {
     position: "absolute",

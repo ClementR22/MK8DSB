@@ -61,10 +61,12 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
     });
   }, [categoryElementsSorted, numberOfPages]);
 
+  const isFilterMode = selectionMode === "multiple";
+
   const selectedClassId = usePressableElementsStore((state) => {
-    return selectionMode === "single"
-      ? state.selectedClassIdsByCategory[selectedCategory]
-      : state.multiSelectedClassIdsByCategory[selectedCategory];
+    return isFilterMode
+      ? state.multiSelectedClassIdsByCategory[selectedCategory]
+      : state.selectedClassIdsByCategory[selectedCategory];
   });
 
   const selectElementsByClassId = usePressableElementsStore((state) => state.selectElementsByClassId);
@@ -74,8 +76,8 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
   );
 
   const handleSelectElement = useMemo(
-    () => (selectionMode === "single" ? selectElementsByClassId : toggleMultiSelectElementsByClassId),
-    [selectElementsByClassId, toggleMultiSelectElementsByClassId, selectionMode]
+    () => (isFilterMode ? toggleMultiSelectElementsByClassId : selectElementsByClassId),
+    [selectElementsByClassId, toggleMultiSelectElementsByClassId, isFilterMode]
   );
 
   const toggleOpenSortView = useCallback(() => setIsOpenSortView((prev) => !prev), []);
@@ -124,7 +126,7 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
     <>
       {children}
       <View style={styles.middleContainer}>
-        {selectionMode !== "single" && (
+        {isFilterMode && (
           <>
             <View style={styles.buttonToggleWrapper}>
               <ButtonIcon
@@ -138,7 +140,7 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
           </>
         )}
         <View style={styles.controlsContainer}>
-          {isOpenSortView || selectionMode === "single" ? (
+          {isOpenSortView || !isFilterMode ? (
             <SortModeSelector sortNumber={sortNumber} setSortNumber={setSortNumber} sortCase="element" />
           ) : (
             <View style={styles.bodytypeSelectorWrapper}>
@@ -181,7 +183,7 @@ const styles = StyleSheet.create({
     height: 54,
   },
   buttonToggleWrapper: { marginHorizontal: GAP_SORT_MODE_SELECTOR },
-  controlsContainer: { justifyContent: "center", flexGrow: 1, flexShrink: 1 },
+  controlsContainer: { flex: 1 },
   bodytypeSelectorWrapper: { marginHorizontal: GAP_SORT_MODE_SELECTOR },
   paginatedWrapperContainer: {
     borderRadius: BORDER_RADIUS_STANDARD,

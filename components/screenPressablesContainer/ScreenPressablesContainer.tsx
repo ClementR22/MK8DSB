@@ -1,12 +1,12 @@
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import React, { memo, ReactNode, useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import SortModeSelector from "../sortModeSelector/SortModeSelector";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useSetsStore from "@/stores/useSetsStore";
 import { useScreen } from "@/contexts/ScreenContext";
-import { BORDER_RADIUS_CONTAINER_LOWEST } from "@/utils/designTokens";
+import { BORDER_RADIUS_CONTAINER_LOWEST, BUTTON_SIZE, PADDING_BOX_CONTAINER } from "@/utils/designTokens";
 import Separator from "../Separator";
 import { box_shadow_z1 } from "../styles/shadow";
 
@@ -40,6 +40,7 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
       borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}
       paddingHorizontal={0}
       boxShadow={box_shadow_z1}
+      gap={0}
     >
       {children && (
         <View
@@ -63,16 +64,29 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
       )}
       {(isOpenSortView || isInGalleryScreen) && (
         <>
-          {children && <Separator direction="horizontal" />}
-          <SortModeSelector
-            sortNumber={sortNumber}
-            setSortNumber={setSortNumber}
-            sortCase={isInGalleryScreen ? "element" : "set"}
-          />
+          {children && <Separator direction="horizontal" wrapperStyle={styles.separatorWrapper} />}
+          <View
+            style={{
+              height: BUTTON_SIZE + PADDING_BOX_CONTAINER,
+              justifyContent: "flex-end",
+            }}
+          >
+            <SortModeSelector
+              sortNumber={sortNumber}
+              setSortNumber={setSortNumber}
+              sortCase={isInGalleryScreen ? "element" : "set"}
+              containerStyle={styles.sortModeSelectorWrapper}
+            />
+          </View>
         </>
       )}
     </BoxContainer>
   );
 };
 
-export default ScreenPressablesContainer;
+const styles = StyleSheet.create({
+  separatorWrapper: { marginTop: PADDING_BOX_CONTAINER },
+  sortModeSelectorWrapper: { alignItems: "flex-end", flexDirection: "row" },
+});
+
+export default memo(ScreenPressablesContainer);
