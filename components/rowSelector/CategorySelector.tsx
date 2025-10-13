@@ -32,15 +32,19 @@ const CategorySelector: React.FC<CategorySelectorProps> = memo(
         onSelect={onCategoryPress}
         buttonStyle={styles.button}
         activeStyle={activeStyle}
-        containerStyle={!isInGalleryScreen && [styles.container, { backgroundColor: theme.surface_container_high }]}
+        containerStyle={
+          isInGalleryScreen
+            ? styles.containerGallery
+            : [styles.containerPannel, { backgroundColor: theme.surface_container_high }]
+        }
       />
     );
   }
 );
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
+  containerGallery: { flex: 1 },
+  containerPannel: {
     borderRadius: BORDER_RADIUS_CATEGORY_SELECTOR, // Use a larger, more prominent radius
     borderWidth: BORDER_WIDTH_CATEGORY_SELECTOR, // Use consistent spacing token
     borderColor: "transparent",

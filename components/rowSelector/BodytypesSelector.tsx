@@ -5,6 +5,7 @@ import IconSelector from "./IconSelector";
 import { bodytypeImageSources } from "@/assets/images/bodytypeImageSources";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { StyleSheet } from "react-native";
+import { GAP_ELEMENTS_GRID } from "@/utils/designTokens";
 
 interface BodytypesSelectorProps {
   selectedBodytypes: Set<Bodytype>;
@@ -49,7 +50,7 @@ const BodytypesSelector: React.FC<BodytypesSelectorProps> = ({ selectedBodytypes
 };
 
 const styles = StyleSheet.create({
-  container: { justifyContent: "space-between" },
+  container: { gap: GAP_ELEMENTS_GRID },
   button: { width: 63 },
 });
 

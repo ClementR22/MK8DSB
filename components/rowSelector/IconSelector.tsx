@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderWidth: 3,
     borderColor: "transparent",
+    flex: 1,
   },
   image: {
     width: BUTTON_SIZE,

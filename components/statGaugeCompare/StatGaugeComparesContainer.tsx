@@ -6,6 +6,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import StatGaugeCompare from "./StatGaugeCompare";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import { box_shadow_z1 } from "../styles/shadow";
+import { BORDER_RADIUS_CONTAINER_LOWEST } from "@/utils/designTokens";
 
 interface StatGaugeComparesContainerProps {
   setsColorsMap: Map<string, string>;
@@ -33,7 +34,7 @@ const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({
   }, [resultStats, setsListDisplayed, setsColorsMap, theme.surface_variant]);
 
   return (
-    <BoxContainer gap={7} boxShadow={box_shadow_z1}>
+    <BoxContainer gap={7} boxShadow={box_shadow_z1} borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}>
       {data.map(({ name, setsIdAndValueWithColor }) => {
         return (
           <StatGaugeCompare
