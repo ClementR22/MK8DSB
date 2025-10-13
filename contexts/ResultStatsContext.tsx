@@ -3,7 +3,6 @@ import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore"
 import { resultStatsSaveScreenInit } from "@/config/resultStatsInit";
 import { deepCompareStatArrays } from "@/utils/deepCompare";
 import { StatName } from "@/data/stats/statsTypes";
-import useSetsStore from "@/stores/useSetsStore";
 import { useScreen } from "./ScreenContext";
 
 export type ResultStat = {
@@ -28,7 +27,7 @@ export const ResultStatsProvider: React.FC<ResultStatsProviderProps> = ({ childr
   const screenName = useScreen();
   const resultStatsDefault = useResultStatsDefaultStore((state) => state.resultStatsDefault);
 
-  const [resultStats, setResultStats] = useState<ResultStats>(
+  const [resultStats, setResultStats] = useState<ResultStats>(() =>
     screenName === "save" ? resultStatsSaveScreenInit : resultStatsDefault
   );
 
@@ -36,11 +35,9 @@ export const ResultStatsProvider: React.FC<ResultStatsProviderProps> = ({ childr
 
   // useEffect est exécuté au lancement ET à chaque changement de resultStatsDefault dans les settings
   useEffect(() => {
-    if (isResultStatsSync && screenName === "search") {
-      return;
-    } else if (screenName === "save") {
-      return;
-    } else if (!deepCompareStatArrays(resultStatsDefault, resultStats)) {
+    if (isResultStatsSync && screenName === "search") return;
+
+    if (!deepCompareStatArrays(resultStatsDefault, resultStats)) {
       setResultStats(resultStatsDefault);
     }
   }, [resultStatsDefault]);
@@ -56,6 +53,10 @@ export const ResultStatsProvider: React.FC<ResultStatsProviderProps> = ({ childr
   return <ResultStatsContext.Provider value={contextValue}>{children}</ResultStatsContext.Provider>;
 };
 
-export const useResultStats = () => {
-  return useContext(ResultStatsContext);
+export const useResultStats = (): ResultStatsContextType => {
+  const context = useContext(ResultStatsContext);
+  if (!context) {
+    throw new Error("useResultStats must be used within ResultStatsProvider");
+  }
+  return context;
 };
