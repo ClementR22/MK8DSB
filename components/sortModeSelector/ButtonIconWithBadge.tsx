@@ -9,7 +9,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 interface ButtonIconWithBadgeProps extends ButtonIconProps {
   iconBackgroundColor?: string;
   // if the badge content is a number, then give it as badgeText
-  badgeText?: string;
+  badgeText?: string | number;
   // but if the badge content up/down arrow icon, then use direction
   direction?: "asc" | "desc";
   isBadge?: boolean;

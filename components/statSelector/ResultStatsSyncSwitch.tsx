@@ -1,8 +1,12 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
-import Switch from "../../primitiveComponents/Switch";
 import { ResultStats } from "@/contexts/ResultStatsContext";
 import { ChosenStat } from "@/stores/useSetsStore";
+import { translate } from "@/translations/translations";
+import ToggleSwitch from "toggle-switch-react-native";
+import { useThemeStore } from "@/stores/useThemeStore";
+import { StyleSheet, View } from "react-native";
+import Text from "@/primitiveComponents/Text";
 
 interface ResultStatsSyncSwitchProps {
   resultStats: ResultStats;
@@ -19,39 +23,51 @@ const ResultStatsSyncSwitch: React.FC<ResultStatsSyncSwitchProps> = ({
   setResultStatsBeforeSync,
   chosenStats,
 }) => {
+  const theme = useThemeStore((state) => state.theme);
   const isResultStatsSync = useResultStatsDefaultStore((state) => state.isResultStatsSync);
   const setIsResultStatsSync = useResultStatsDefaultStore((state) => state.setIsResultStatsSync);
 
   // Gestion du toggle du switch
-  const handleToggleSwitch = useCallback(() => {
-    if (!isResultStatsSync) {
-      // Activation du mode synchronisé
-      setResultStatsBeforeSync(resultStats);
-      setResultStats(chosenStats);
-      setIsResultStatsSync(true);
-    } else {
-      // Désactivation du mode synchronisé
-      setResultStats(resultStatsBeforeSync);
-      setIsResultStatsSync(false);
-    }
-  }, [
-    isResultStatsSync,
-    resultStats,
-    resultStatsBeforeSync,
-    chosenStats,
-    setResultStatsBeforeSync,
-    setResultStats,
-    setIsResultStatsSync,
-  ]);
+  const handleToggleSwitch = useCallback(
+    (newIsResultStatsSync: boolean) => {
+      setIsResultStatsSync(newIsResultStatsSync);
+
+      if (newIsResultStatsSync) {
+        // Activation du mode synchronisé
+        setResultStatsBeforeSync(resultStats);
+        setResultStats(chosenStats);
+      } else {
+        // Désactivation du mode synchronisé
+        setResultStats(resultStatsBeforeSync);
+      }
+    },
+    [resultStats, resultStatsBeforeSync, chosenStats, setResultStatsBeforeSync, setResultStats, setIsResultStatsSync]
+  );
 
   // Auto-sync quand les chosenStats changent et que le mode sync est actif
   useEffect(() => {
     if (isResultStatsSync) {
       setResultStats(chosenStats);
     }
-  }, [chosenStats, isResultStatsSync]);
+  }, [chosenStats, setResultStats]);
 
-  return <Switch value={isResultStatsSync} onToggleSwitch={handleToggleSwitch} switchLabel="MatchDesiredStats" />;
+  return (
+    <View style={styles.container}>
+      <ToggleSwitch
+        isOn={isResultStatsSync}
+        onColor={theme.primary}
+        offColor={theme.outline_variant}
+        size="medium"
+        onToggle={handleToggleSwitch}
+      />
+      <Text role="title" size="small">
+        {translate("MatchDesiredStats")}
+      </Text>
+    </View>
+  );
 };
 
+const styles = StyleSheet.create({
+  container: { flexDirection: "row", alignItems: "center", gap: 12, marginBottom: 5 },
+});
 export default React.memo(ResultStatsSyncSwitch);
