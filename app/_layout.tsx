@@ -6,7 +6,6 @@ import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Appearance } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
-import * as NavigationBar from "expo-navigation-bar";
 
 // Components
 import CustomHeader from "@/components/CustomHeader";
@@ -100,14 +99,13 @@ export default function TabLayout() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1, backgroundColor: theme.surface }} edges={["top"]}>
+      <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
         <PaperProvider>
-          <StatusBar style={theme.theme_surface} />
+          <StatusBar style={theme.theme_surface} backgroundColor={theme.surface} />
           <Tabs
             screenOptions={{
               tabBarActiveTintColor: theme.primary,
               tabBarInactiveTintColor: theme.on_surface_variant, // Explicitly set inactive color from theme
-              headerShown: true,
               sceneStyle: {
                 // For the content area behind the header/tab bar
                 backgroundColor: theme.surface,
@@ -168,7 +166,7 @@ export default function TabLayout() {
           </Tabs>
           <ModalEditSet />
           <ModalLoadSet />
-          <Toast config={toastConfig} bottomOffset={59} />
+          <Toast config={toastConfig} bottomOffset={59} swipeable={false} />
         </PaperProvider>
       </SafeAreaView>
     </SafeAreaProvider>

@@ -12,9 +12,9 @@ export default function InfoToast({ text1 }: InfoToastProps) {
   const insets = useSafeAreaInsets();
 
   const bottomOffset = insets.bottom;
-
+  console.log("bottomOffset", bottomOffset);
   return (
-    <View style={[styles.toast, { bottom: bottomOffset }]}>
+    <View style={[styles.toast, { marginBottom: bottomOffset }]}>
       <Text role="body" size="medium" inverse>
         {text1}
       </Text>
@@ -24,7 +24,6 @@ export default function InfoToast({ text1 }: InfoToastProps) {
 
 const styles = StyleSheet.create({
   toast: {
-    position: "absolute",
     width: "90%",
     backgroundColor: "#323232",
     paddingHorizontal: 16,
