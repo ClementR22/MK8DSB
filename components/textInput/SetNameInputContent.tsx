@@ -8,6 +8,7 @@ interface SetNameInputContentProps {
   onChangeText: (text: string) => void;
   onEndEditing: () => void;
   editable?: boolean;
+  onFocus?: () => void;
 }
 
 const SetNameInputContent: React.FC<SetNameInputContentProps> = ({
@@ -15,6 +16,7 @@ const SetNameInputContent: React.FC<SetNameInputContentProps> = ({
   onChangeText,
   onEndEditing,
   editable = true,
+  onFocus,
 }) => {
   const theme = useThemeStore((state) => state.theme);
 
@@ -36,6 +38,7 @@ const SetNameInputContent: React.FC<SetNameInputContentProps> = ({
         onChangeText={onChangeText}
         onBlur={onEndEditing}
         editable={editable}
+        onFocus={onFocus}
       />
     </View>
   );

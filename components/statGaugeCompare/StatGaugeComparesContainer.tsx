@@ -10,10 +10,9 @@ import { BORDER_RADIUS_CONTAINER_LOWEST } from "@/utils/designTokens";
 
 interface StatGaugeComparesContainerProps {
   setsColorsMap: Map<string, string>;
-  scrollToSetCard: (id: string) => void;
 }
 
-const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({ setsColorsMap, scrollToSetCard }) => {
+const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({ setsColorsMap }) => {
   const theme = useThemeStore((state) => state.theme);
   const { resultStats } = useResultStats();
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
@@ -36,14 +35,7 @@ const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({
   return (
     <BoxContainer gap={7} boxShadow={box_shadow_z1} borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}>
       {data.map(({ name, setsIdAndValueWithColor }) => {
-        return (
-          <StatGaugeCompare
-            key={name}
-            name={name}
-            setsIdAndValue={setsIdAndValueWithColor}
-            scrollToSetCard={scrollToSetCard}
-          />
-        );
+        return <StatGaugeCompare key={name} name={name} setsIdAndValue={setsIdAndValueWithColor} />;
       })}
     </BoxContainer>
   );

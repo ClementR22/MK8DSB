@@ -17,6 +17,7 @@ import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import { StyleSheet, View } from "react-native";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
+import { SetCardsScrollProvider } from "@/contexts/SetCardsScrollContext";
 
 const DisplaySetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -86,13 +87,6 @@ const DisplaySetScreen = () => {
     [setsListDisplayed, setsColorsMap, theme.surface_variant, theme.surface_container_high]
   );
 
-  // Mémoïsation du handler scrollToSetCard
-  const scrollToSetCard = useCallback((id: string) => {
-    if (scrollRef.current && scrollRef.current.scrollToSetCard) {
-      scrollRef.current.scrollToSetCard(id);
-    }
-  }, []);
-
   return (
     <ScreenProvider screenName="display">
       <ResultStatsProvider>
@@ -108,13 +102,15 @@ const DisplaySetScreen = () => {
             />
           </ScreenPressablesContainer>
 
-          <SetCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
+          <SetCardsScrollProvider scrollRef={scrollRef}>
+            <SetCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
 
-          <View style={styles.mainButtonWrapper}>
-            <StatSelector triggerButtonText="DisplayedStats" />
-          </View>
+            <View style={styles.mainButtonWrapper}>
+              <StatSelector triggerButtonText="DisplayedStats" />
+            </View>
 
-          <StatGaugeComparesContainer setsColorsMap={setsColorsMap} scrollToSetCard={scrollToSetCard} />
+            <StatGaugeComparesContainer setsColorsMap={setsColorsMap} />
+          </SetCardsScrollProvider>
         </ScrollViewScreen>
       </ResultStatsProvider>
     </ScreenProvider>

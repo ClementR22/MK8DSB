@@ -44,7 +44,6 @@ const HelpDisplaySetScreen = () => {
               { id: "2", value: 3, color: "#3498DB" },
               { id: "3", value: 7, color: "#2ECC71" },
             ]}
-            scrollToSetCard={() => {}}
           />
           <Text role="body" size="large" fontStyle="italic">
             Chaque couleur = un set différent. Appuyez sur une barre pour naviguer vers le set correspondant.

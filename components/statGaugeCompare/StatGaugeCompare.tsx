@@ -7,6 +7,7 @@ import { StatName } from "@/data/stats/statsTypes";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 import Text from "@/primitiveComponents/Text";
 import { translateToLanguage } from "@/translations/translations";
+import { useSetCardsScroll } from "@/contexts/SetCardsScrollContext";
 export interface SetIdAndStatValue {
   id: string;
   value: number;
@@ -16,13 +17,13 @@ export interface SetIdAndStatValue {
 interface StatGaugeCompareProps {
   name: StatName;
   setsIdAndValue: SetIdAndStatValue[];
-  scrollToSetCard: (id: string) => void;
 }
 
-const StatGaugeCompare: React.FC<StatGaugeCompareProps> = ({ setsIdAndValue, name, scrollToSetCard }) => {
+const StatGaugeCompare: React.FC<StatGaugeCompareProps> = ({ setsIdAndValue, name }) => {
   const language = useLanguageStore((state) => state.language);
 
   const { setCardStyle } = useSetCardStyle("100%");
+  const { scrollToSetCard } = useSetCardsScroll();
 
   return (
     <View style={[setCardStyle, { paddingTop: 3 }]}>

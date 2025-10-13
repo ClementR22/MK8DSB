@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { ScrollView } from "react-native";
 import SetCardsContainer from "@/components/setCard/SetCardsContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
@@ -9,6 +9,7 @@ import ButtonImportSet from "@/components/managingSetsButton/ButtonImportSet";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
 import StatSelector from "@/components/statSelector/StatSelector";
+import { SetCardsScrollProvider } from "@/contexts/SetCardsScrollContext";
 
 const SavedSetScreen: React.FC = () => {
   const setsListSaved = useSetsStore((state) => state.setsListSaved);
@@ -16,6 +17,8 @@ const SavedSetScreen: React.FC = () => {
 
   const sortNumberSavedSets = useSetsStore((state) => state.sortNumberSavedSets);
   const setSortNumberSavedSets = useSetsStore((state) => state.setSortNumberSavedSets);
+
+  const scrollRef = useRef(null); // Ref pour SetCardsContainer
 
   return (
     <ScreenProvider screenName="save">
@@ -26,7 +29,9 @@ const SavedSetScreen: React.FC = () => {
             <StatSelector />
           </ScreenPressablesContainer>
 
-          <SetCardsContainer setsToShow={setsListSaved} />
+          <SetCardsScrollProvider scrollRef={scrollRef}>
+            <SetCardsContainer ref={scrollRef} setsToShow={setsListSaved} />
+          </SetCardsScrollProvider>
         </ScrollViewScreen>
       </ResultStatsProvider>
     </ScreenProvider>

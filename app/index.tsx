@@ -21,6 +21,7 @@ import { BORDER_RADIUS_CONTAINER_LOWEST, PADDING_SEARCH_CONTAINER } from "@/util
 import ScrollViewScreen, { ScrollViewScreenHandles } from "@/components/ScrollViewScreen";
 import { box_shadow_z1 } from "@/components/styles/shadow";
 import Text from "@/primitiveComponents/Text";
+import { SetCardsScrollProvider } from "@/contexts/SetCardsScrollContext";
 
 const SearchSetScreen: React.FC = () => {
   const scrollviewSetsCardsRef = useRef<SetCardsContainerHandles>(null);
@@ -108,7 +109,9 @@ const SearchSetScreen: React.FC = () => {
             scrollviewMainRef={scrollviewMainRef}
           />
 
-          <SetCardsContainer ref={scrollviewSetsCardsRef} setsToShow={setsListFound} />
+          <SetCardsScrollProvider scrollRef={scrollviewSetsCardsRef}>
+            <SetCardsContainer ref={scrollviewSetsCardsRef} setsToShow={setsListFound} />
+          </SetCardsScrollProvider>
         </ScrollViewScreen>
       </ResultStatsProvider>
     </ScreenProvider>

@@ -31,9 +31,7 @@ const SetCardHeader: React.FC<SetCardHeaderProps> = ({
 
   return (
     <View style={styles.headerContainer}>
-      <View style={StyleSheet.flatten(styles.nameContainer)}>
-        <SetNameInput setToShowName={setToShowName} setToShowId={setToShowId} editable={isNameEditable} />
-      </View>
+      <SetNameInput setToShowName={setToShowName} setToShowId={setToShowId} editable={isNameEditable} />
 
       {setToShowPercentage && (
         <Text role="title" size="medium" weight="bold" color={theme.primary}>
@@ -61,13 +59,6 @@ const styles = StyleSheet.create({
     height: BUTTON_SIZE, // taille du buttonIcon
     gap: 10,
     marginBottom: 5,
-  },
-  nameContainer: {
-    flexDirection: "row",
-    flex: 1,
-    height: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
   },
 });
 
