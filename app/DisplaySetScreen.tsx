@@ -25,7 +25,7 @@ const DisplaySetScreen = () => {
   const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
-  const [sortNumber, setSortNumber] = useState(0);
+  const [sortNumber, setSortNumber] = useState(2);
 
   const isSetCardsCollapsed = useGeneralStore((state) => state.isSetCardsCollapsed);
   const toggleIsSetCardsCollapsed = useGeneralStore((state) => state.toggleIsSetCardsCollapsed);

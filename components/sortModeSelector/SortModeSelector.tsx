@@ -50,8 +50,6 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
     getSortNameFromSortNumber(sortNumber) || statNamesSortDefault[0]
   );
 
-  console.log({ currentDirection, activeSort });
-
   const handlePress = useCallback(
     (name: StatNameSort) => {
       const isActive = activeSort === name;
@@ -142,7 +140,6 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
     });
   }, [statNamesSortDefault, activeSort, currentDirection, handlePress, createTooltipMenu]);
 
-  console.log({ NEEDS_SCROLL });
   const Wrapper = NEEDS_SCROLL ? ScrollView : View;
   const wrapperProps = NEEDS_SCROLL
     ? {
@@ -190,4 +187,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SortModeSelector;
+export default memo(SortModeSelector);
