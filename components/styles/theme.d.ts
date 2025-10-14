@@ -35,4 +35,5 @@ export interface ThemeColor {
   boxShadow: string;
   primary_hover: string;
   inactive_dot: string;
+  toast_background_color: string;
 }

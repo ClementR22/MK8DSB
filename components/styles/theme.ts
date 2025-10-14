@@ -52,6 +52,8 @@ export const light_theme: ThemeColor = {
   primary_hover: "rgba(103, 80, 164, 0.08)",
 
   inactive_dot: "#A0A0A0",
+
+  toast_background_color: "#323232",
 };
 
 export const dark_theme: ThemeColor = {
@@ -100,4 +102,6 @@ export const dark_theme: ThemeColor = {
   primary_hover: "rgba(103, 80, 164, 0.08)",
 
   inactive_dot: "#555555",
+
+  toast_background_color: "#3C3C3C",
 };
