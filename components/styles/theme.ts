@@ -92,7 +92,7 @@ export const dark_theme: ThemeColor = {
   surface_tint: "#D0BCFF",
 
   outline: "#938F99",
-  outline_variant: "#938F99", // ancien #49454F
+  outline_variant: "#49454F",
 
   scrim: "#000000",
   boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.25)", // Exemple avec "#000000"
