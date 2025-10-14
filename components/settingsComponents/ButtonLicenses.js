@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Pressable, View, Linking, StyleSheet } from "react-native";
+import { Pressable, Linking, StyleSheet, ScrollView } from "react-native";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import { licensesLinks } from "@/data/licensesLinks";
 import Text from "@/primitiveComponents/Text";
@@ -8,24 +8,24 @@ import { vh } from "../styles/theme";
 const ButtonLicenses = () => {
   return (
     <ButtonAndModal modalTitle="Licenses" triggerButtonText="OpenSourceLicenses">
-      <FlatList
-        data={Object.entries(licensesLinks)}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item }) => {
+      <ScrollView
+        contentContainerStyle={styles.flatListContainer}
+        style={{
+          marginVertical: 10,
+          maxHeight: vh * 0.5,
+        }}
+      >
+        {Object.entries(licensesLinks).map((item, index) => {
           const [licenseName, licenseUrl] = item;
           return (
-            <Pressable onPress={() => Linking.openURL(licenseUrl)} style={styles.licenseItem}>
+            <Pressable key={index} onPress={() => Linking.openURL(licenseUrl)} style={styles.licenseItem}>
               <Text role="title" size="small" color="blue">
                 {licenseName}
               </Text>
             </Pressable>
           );
-        }}
-        contentContainerStyle={styles.flatListContainer}
-        style={{
-          marginVertical: 10,
-        }}
-      />
+        })}
+      </ScrollView>
     </ButtonAndModal>
   );
 };
@@ -33,8 +33,7 @@ const ButtonLicenses = () => {
 const styles = StyleSheet.create({
   flatListContainer: {
     alignSelf: "center",
-    width: "90%", // Cette propriété assure que la FlatList prend toute la largeur disponible
-    height: vh * 0.5,
+    width: "90%",
   },
   licenseItem: {
     paddingVertical: 10,

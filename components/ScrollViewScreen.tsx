@@ -1,7 +1,6 @@
 import { useContainerLowestStyle } from "@/hooks/useScreenStyle";
-import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView } from "react-native";
 
 interface ScrollViewScreenProps {
   scrollEnabled: boolean;
