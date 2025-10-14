@@ -8,7 +8,6 @@ import { nanoid } from "nanoid";
 // Data and Types
 import { statNames } from "@/data/stats/statsData";
 import { ScreenName } from "@/contexts/ScreenContext";
-import { ResultStats } from "@/contexts/ResultStatsContext";
 import { StatName } from "@/data/stats/statsTypes";
 
 // Utilities
@@ -25,6 +24,7 @@ import { CHOSEN_STATS_DEFAULT_SELECTED, SORT_NUMBER_SAVED_SETS_DEFAULT } from "@
 import { arraysEqual } from "@/utils/deepCompare";
 import { router } from "expo-router";
 import useGeneralStore from "./useGeneralStore";
+import { checkFormatSetImported } from "@/utils/checkFormatSetImported";
 
 const MAX_NUMBER_SETS_DISPLAY = 10;
 export interface ChosenStat {
@@ -463,7 +463,7 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
   },
 
   importSet: (clipboardContent: string, screenName: ScreenName) => {
-    let parsedSet;
+    let parsedSet: unknown;
 
     try {
       parsedSet = JSON.parse(clipboardContent);
@@ -471,24 +471,11 @@ const useSetsStore = create<SetsStoreState>((set, get) => ({
       throw new Error("IncorrectFormat");
     }
 
-    if (typeof parsedSet !== "object" || Array.isArray(parsedSet) || parsedSet === null) {
+    if (!checkFormatSetImported(parsedSet)) {
       throw new Error("IncorrectFormat");
     }
 
-    const { name, classIds } = parsedSet;
-
-    if (typeof name !== "string" || name.trim() === "") {
-      throw new Error("IncorrectFormat");
-    }
-
-    if (!Array.isArray(classIds) || classIds.some((id) => typeof id !== "number")) {
-      throw new Error("IncorrectFormat");
-    }
-
-    const stats = getSetStatsFromClassIds(classIds);
-    if (!stats || stats.length === 0) {
-      throw new Error("ThisSetDoesNotExist");
-    }
+    const stats = getSetStatsFromClassIds(parsedSet.classIds);
 
     const set = { ...parsedSet, id: nanoid(8), stats };
 

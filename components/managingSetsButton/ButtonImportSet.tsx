@@ -16,28 +16,28 @@ const ButtonImportSet: React.FC<ButtonImportSetProps> = ({ screenName }) => {
   const importSet = useSetsStore((state) => state.importSet);
   const language = useLanguageStore((state) => state.language);
 
-  const handlePaste = async () => {
+  const handleImport = async () => {
     try {
       const clipboardContent = await Clipboard.getStringAsync();
 
-      if (!clipboardContent || clipboardContent.trim() === "") {
+      if (!clipboardContent?.trim()) {
         throw new Error("ClipboardIsEmpty");
       }
 
-      // La validation JSON et structure est maintenant dans `importSet` :
       importSet(clipboardContent, screenName);
     } catch (e) {
-      const text =
-        translateToLanguage("ImportError", language) +
-        translateToLanguage(":", language) +
-        translateToLanguage(e.message, language);
+      const errorMessage = e instanceof Error ? e.message : "UnknownError";
+      const text = `${translateToLanguage("ImportError", language)}${translateToLanguage(
+        ":",
+        language
+      )}${translateToLanguage(errorMessage, language)}`;
       showToast(text);
     }
   };
 
   return (
     <ButtonIcon
-      onPress={handlePaste}
+      onPress={handleImport}
       tooltipText="ImportACopiedSet"
       iconName="paste"
       iconType={IconType.FontAwesome5}
