@@ -85,19 +85,6 @@ jobs:
           echo "${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.value}}" > nightly-version.txt
           echo "value=$(cat nightly-version.txt)" >> "$GITHUB_OUTPUT"
 
-      # génère un app.json à partir du app.config.ts
-      - name: Generate app.json from config
-        run: npx expo config --type prebuild > app.json
-
-      # MAJ version dans app.json généré
-      - name: Update app.json version
-        if: ${{!inputs.stable}}
-        uses: jossef/action-set-json-field@v2.1
-        with:
-          file: app.json
-          field: expo.version
-          value: ${{steps.nightly-version.outputs.value}}
-
       - name: Clean Android build
         run: |
           cd android && ./gradlew clean && cd ..
