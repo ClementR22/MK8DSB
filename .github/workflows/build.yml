@@ -28,6 +28,9 @@ on:
         required: false
         description: Description
 
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+
 jobs:
   check-description:
     runs-on: ubuntu-latest
@@ -70,7 +73,7 @@ jobs:
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           repository: ClementR22/MK8DSB
-          excludes: 'prerelease'
+          excludes: "prerelease"
 
       - name: Get latest commit hash
         id: get-latest-commit
@@ -82,6 +85,11 @@ jobs:
           echo "${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.value}}" > nightly-version.txt
           echo "value=$(cat nightly-version.txt)" >> "$GITHUB_OUTPUT"
 
+      # génère un app.json à partir du app.config.ts
+      - name: Generate app.json from config
+        run: npx expo config --type json > app.json
+
+      # MAJ version dans app.json généré
       - name: Update app.json version
         if: ${{!inputs.stable}}
         uses: jossef/action-set-json-field@v2.1
@@ -90,21 +98,13 @@ jobs:
           field: expo.version
           value: ${{steps.nightly-version.outputs.value}}
 
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Build apk
+      - name: Build apk (local)
         run: eas build --non-interactive --platform android --profile preview --local
 
       - name: Store build name
         id: build-name
         run: echo "value=mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk" >> "$GITHUB_OUTPUT"
-          
+
       - name: Rename build
         run: mv build-*.apk ${{steps.build-name.outputs.value}}
 
@@ -125,6 +125,9 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
+      - name: Clear cache manually
+        run: rm -rf ~/.npm ~/.gradle
+
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
@@ -138,20 +141,19 @@ jobs:
       - name: Upload nightly release
         uses: andelf/nightly-release@main
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           tag_name: nightly
-          name: 'Nightly release ${{steps.nightly-version.outputs.value}}'
+          name: "Nightly release ${{steps.nightly-version.outputs.value}}"
           draft: false
           prerelease: true
           body: |
-            Unstable release, things may break and you may loose your settings or data
-            **Use with caution**
+            Unstable release, things may break and you may lose your settings or data.
+            **Use with caution.**
             ${{inputs.description}}
           files: |
             mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk
             sha256sum.txt
-
 
   release:
     if: ${{inputs.stable}}
@@ -165,19 +167,19 @@ jobs:
         uses: reecetech/version-increment@2024.10.1
         id: version
         with:
-          scheme: 'semver'
+          scheme: "semver"
           increment: ${{inputs.version-bump}}
-          tag_prefix: 'v'
+          tag_prefix: "v"
 
       - name: Bump package.json and app.json version
         uses: NoAccount1/gh-action-bump-version@master
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           version-type: ${{inputs.version-bump}}
-          skip-tag: 'true'
-          bump-policy: 'ignore'
-          commit-message: 'CI : bumps `package.json` to version ${{steps.version.outputs.v-version}}'
+          skip-tag: "true"
+          bump-policy: "ignore"
+          commit-message: "CI : bumps `package.json` to version ${{steps.version.outputs.v-version}}"
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
@@ -194,7 +196,7 @@ jobs:
       - name: Upload stable release
         uses: softprops/action-gh-release@v1
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           name: MK8DSB ${{steps.version.outputs.v-version}}
           tag_name: ${{steps.version.outputs.v-version}}
