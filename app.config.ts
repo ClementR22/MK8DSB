@@ -28,11 +28,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     edgeToEdgeEnabled: true,
   },
   androidNavigationBar: {
-    backgroundColor: "red",
+    backgroundColor: "#FF0000", // Changé de "red" à "#FF0000"
   },
   androidStatusBar: {
     translucent: true,
-    backgroundColor: "transparent",
+    backgroundColor: "#00000000", // Changé de "transparent" à "#00000000"
   },
   web: {
     bundler: "metro",
