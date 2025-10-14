@@ -35,13 +35,8 @@ export default function TabLayout() {
   const fetchSetsSaved = useSetsStore((state) => state.fetchSetsSaved);
   const theme = useThemeStore((state) => state.theme);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
-  const setStatusBarHeight = useGeneralStore((state) => state.setStatusBarHeight);
 
   // --- Effects ---
-
-  useEffect(() => {
-    setStatusBarHeight(RNStatusBar.currentHeight);
-  }, []);
 
   // Effect to listen for system theme changes
   useEffect(() => {
@@ -99,9 +94,9 @@ export default function TabLayout() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
+      <SafeAreaView style={{ flex: 1 }} edges={[]}>
         <PaperProvider>
-          <StatusBar style={theme.theme_surface} backgroundColor={theme.surface} />
+          <StatusBar style={theme.theme_surface} />
           <Tabs
             screenOptions={{
               tabBarActiveTintColor: theme.primary,

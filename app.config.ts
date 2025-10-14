@@ -27,13 +27,19 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     package: "com.clement_rayer.MK8DSB",
     edgeToEdgeEnabled: true,
   },
-  androidNavigationBar: { enforceContrast: true },
+  androidNavigationBar: {
+    backgroundColor: "red",
+  },
+  androidStatusBar: {
+    translucent: true,
+    backgroundColor: "transparent",
+  },
   web: {
     bundler: "metro",
     output: "static",
     favicon: "./assets/images/favicon.png",
   },
-  plugins: ["expo-router", "expo-localization", "./plugins/withAndroidTransparentNavigation"],
+  plugins: ["expo-router", "expo-localization"],
   experiments: {
     typedRoutes: true,
   },

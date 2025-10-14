@@ -17,7 +17,6 @@
     "app",
     "components",
     "babel.config.js",
-    "stores/usePressableElementsStore.ts",
-    "plugins/withAndroidTransparentNavigation.js"
+    "stores/usePressableElementsStore.ts"
   ]
 }

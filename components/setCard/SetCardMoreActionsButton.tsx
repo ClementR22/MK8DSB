@@ -5,9 +5,9 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { actionNamesList } from "@/hooks/useSetCardConfig";
 import { ScreenName } from "@/contexts/ScreenContext";
-import useGeneralStore from "@/stores/useGeneralStore";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface SetCardMoreActionsButtonProps {
   moreActionNamesList: actionNamesList;
@@ -32,7 +32,7 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
     onPressAction();
   }, []);
 
-  const menuVerticalOffset = useGeneralStore((state) => state.statusBarHeight);
+  const menuVerticalOffset = useSafeAreaInsets().top;
 
   return (
     <Menu

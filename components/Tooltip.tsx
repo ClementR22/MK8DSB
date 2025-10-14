@@ -7,6 +7,7 @@ import React, { useCallback, useRef, useState } from "react";
 import { Pressable, StyleSheet, ViewStyle } from "react-native";
 import Popover, { PopoverMode, PopoverPlacement } from "react-native-popover-view";
 import { Placement } from "react-native-popover-view/dist/Types";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export type TooltipPlacementType = Placement | "top" | "right" | "bottom" | "left" | "auto" | "floating" | "center";
 
@@ -35,10 +36,10 @@ const Tooltip: React.FC<TooltipProps> = ({
 
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
 
-  const getTooltipVerticalOffset = useGeneralStore((state) => state.getTooltipVerticalOffset);
+  const menuVerticalOffset = useSafeAreaInsets().top;
 
   const openPopover = useCallback(() => {
-    setTooltipOffset(getTooltipVerticalOffset());
+    setTooltipOffset(menuVerticalOffset);
     setShowPopover(true);
     setIsScrollEnable(false);
 
@@ -62,7 +63,6 @@ const Tooltip: React.FC<TooltipProps> = ({
       </Pressable>
 
       <Popover
-        mode={PopoverMode.RN_MODAL}
         backgroundStyle={{ backgroundColor: "transparent" }}
         placement={placement as Placement}
         isVisible={showPopover}

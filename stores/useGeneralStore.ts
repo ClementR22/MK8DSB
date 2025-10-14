@@ -15,11 +15,6 @@ interface GeneralStoreState {
   isAnyModalVisible: boolean;
   setIsAnyModalVisible: (newIsAnyModalVisible: boolean) => void;
 
-  statusBarHeight: number;
-  setStatusBarHeight: (newStatusBarHeight: number) => void;
-
-  getTooltipVerticalOffset: () => number;
-
   resultsNumber: number;
   setResultsNumber: (newResultsNumber: number) => void;
 
@@ -48,11 +43,6 @@ const useGeneralStore = create<GeneralStoreState>((set, get) => ({
   setIsAnyModalVisible: (newIsAnyModalVisible: boolean) => {
     set({ isAnyModalVisible: newIsAnyModalVisible });
   },
-
-  statusBarHeight: 0,
-  setStatusBarHeight: (newStatusBarHeight: number) => set({ statusBarHeight: newStatusBarHeight }),
-
-  getTooltipVerticalOffset: () => (get().isAnyModalVisible ? -get().statusBarHeight : 0),
 
   resultsNumber: RESULTS_NUMBER_DEFAULT,
   setResultsNumber: async (newResultsNumber: number) => {

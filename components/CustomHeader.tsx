@@ -5,6 +5,7 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useThemeStore } from "@/stores/useThemeStore";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { box_shadow_z1 } from "./styles/shadow";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface CustomHeaderProps {
   icon: string;
@@ -23,8 +24,10 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ children, icon, helpCompone
 
   const iconType = getIconType(icon);
 
+  const statusBarHeight = useSafeAreaInsets().top;
+
   return (
-    <View style={[styles.container, { backgroundColor: theme.surface_container }]}>
+    <View style={[styles.container, { backgroundColor: theme.surface_container, paddingTop: statusBarHeight }]}>
       <Icon type={iconType} name={icon} size={24} color={theme.on_surface} style={styles.icon} />
       <View style={{ flex: 1, alignItems: "flex-start" }}>
         <Text role="headline" size="large">
@@ -39,7 +42,6 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ children, icon, helpCompone
 
 const styles = StyleSheet.create({
   container: {
-    height: 64,
     flexDirection: "row",
     alignItems: "center",
     paddingEnd: 15,
@@ -50,7 +52,7 @@ const styles = StyleSheet.create({
     height: 48,
     padding: 12,
     marginRight: 4,
-    marginLeft: 16
+    marginLeft: 16,
   },
 });
 
