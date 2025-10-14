@@ -7,7 +7,6 @@ import { actionNamesList } from "@/hooks/useSetCardConfig";
 import { ScreenName } from "@/contexts/ScreenContext";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface SetCardMoreActionsButtonProps {
   moreActionNamesList: actionNamesList;
@@ -32,8 +31,6 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
     onPressAction();
   }, []);
 
-  const menuVerticalOffset = useSafeAreaInsets().top;
-
   return (
     <Menu
       visible={visible}
@@ -47,7 +44,6 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
         />
       }
       anchorPosition="bottom"
-      style={{ marginTop: -menuVerticalOffset }}
     >
       {actionIconPropsList.map((actionProps) => {
         const { title, name, type, onPress } = actionProps;

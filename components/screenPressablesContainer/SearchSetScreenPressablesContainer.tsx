@@ -16,7 +16,7 @@ import { nanoid } from "nanoid";
 import { SetFoundObject } from "@/stores/useSetsStore";
 import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
+import { MARGIN_CONTAINER_LOWEST, PADDING_SEARCH_CONTAINER } from "@/utils/designTokens";
 import StatSelector from "../statSelector/StatSelector";
 import useGeneralStore from "@/stores/useGeneralStore";
 import ButtonIconWithBadge from "../sortModeSelector/ButtonIconWithBadge";
@@ -192,10 +192,13 @@ const styles = StyleSheet.create({
   screenPressablesContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: MARGIN_CONTAINER_LOWEST * 1.5,
-    gap: 15,
+    marginHorizontal: MARGIN_CONTAINER_LOWEST,
+    paddingHorizontal: PADDING_SEARCH_CONTAINER,
+    gap: MARGIN_CONTAINER_LOWEST,
   },
 });
+
+// 24
 
 SearchSetScreenPressablesContainer.displayName = "SearchSetScreenPressablesContainer";
 

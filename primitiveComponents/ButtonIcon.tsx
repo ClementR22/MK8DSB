@@ -1,15 +1,15 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
-import { TooltipPlacementType } from "@/components/Tooltip";
 import IconContainer from "./IconContainer";
 import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
+import { Placement } from "react-native-popover-view/dist/Types";
 
 export interface ButtonIconProps {
   onPress?: (event?: Event) => void;
   tooltipText?: string;
-  toolTipPlacement?: TooltipPlacementType;
+  toolTipPlacement?: Placement;
   iconName: string;
   iconType: IconType;
   buttonSize?: number;

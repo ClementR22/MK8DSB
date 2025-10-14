@@ -1,12 +1,13 @@
 import React from "react";
 import { Pressable, ViewStyle } from "react-native";
-import Tooltip, { TooltipPlacementType } from "@/components/Tooltip";
+import Tooltip from "@/components/Tooltip";
+import { Placement } from "react-native-popover-view/dist/Types";
 
 type ButtonBaseProps = {
   children: React.ReactNode;
   onPress: () => void;
   tooltipText?: string;
-  placement?: TooltipPlacementType;
+  placement?: Placement;
   containerStyle?: ViewStyle | ViewStyle[];
   disabled?: boolean;
   [key: string]: any; // autres props à passer
@@ -16,7 +17,7 @@ const ButtonBase = ({
   children,
   onPress,
   tooltipText,
-  placement = "top",
+  placement = Placement.TOP,
   containerStyle,
   disabled = false,
   ...props
