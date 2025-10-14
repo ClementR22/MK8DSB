@@ -87,7 +87,7 @@ jobs:
 
       # génère un app.json à partir du app.config.ts
       - name: Generate app.json from config
-        run: npx expo config --type json > app.json
+        run: npx expo config --type prebuild > app.json
 
       # MAJ version dans app.json généré
       - name: Update app.json version
@@ -98,8 +98,13 @@ jobs:
           field: expo.version
           value: ${{steps.nightly-version.outputs.value}}
 
+      - name: Clean Android build
+        run: |
+          cd android && ./gradlew clean && cd ..
+          rm -rf android/app/build
+
       - name: Build apk (local)
-        run: eas build --non-interactive --platform android --profile preview --local
+        run: eas build --non-interactive --platform android --profile preview --local || exit 1
 
       - name: Store build name
         id: build-name
