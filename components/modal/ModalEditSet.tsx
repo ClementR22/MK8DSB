@@ -3,8 +3,8 @@ import useModalsStore from "@/stores/useModalsStore";
 import Modal from "../../primitiveComponents/Modal";
 import PannelPaginated from "../elementPickerCompact/PannelPaginated";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import useSetsStore from "@/stores/useSetsStore";
 import { useScreenNameFromPath } from "@/hooks/useScreenNameFromPath";
+import useSetsListStore from "@/stores/useSetsListStore";
 
 const ModalEditSet: React.FC = () => {
   const isEditModalVisible = useModalsStore((state) => state.isEditModalVisible);
@@ -12,7 +12,7 @@ const ModalEditSet: React.FC = () => {
   const isSetsListUpdated = usePressableElementsStore((state) => state.isSetsListUpdated);
   const selectedClassIdsByCategory = usePressableElementsStore((state) => state.selectedClassIdsByCategory);
   const setIsSetsListUpdated = usePressableElementsStore((state) => state.setIsSetsListUpdated);
-  const updateSetsList = useSetsStore((state) => state.updateSetsList);
+  const updateSetsList = useSetsListStore((state) => state.updateSetsList);
   const screenName = useScreenNameFromPath();
 
   const handleCloseEditModal = useCallback(() => {

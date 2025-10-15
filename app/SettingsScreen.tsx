@@ -8,11 +8,9 @@ import ButtonLicenses from "@/components/settingsComponents/ButtonLicenses";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import Button from "@/primitiveComponents/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import useSetsStore from "@/stores/useSetsStore";
 import { useResetSettings } from "@/hooks/useResetSettings";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import ButtonDeleteAllSetsInMemory from "@/components/settingsComponents/ButtonDeleteAllSetsInMemory";
-import { View } from "react-native";
 import StatSelector from "@/components/statSelector/StatSelector";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
@@ -22,12 +20,13 @@ import Text from "@/primitiveComponents/Text";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import showToast from "@/utils/showToast";
+import useSetsPersistenceStore from "@/stores/useSetsPersistenceStore";
 
 const SettingsScreen: React.FC = () => {
   const language = useLanguageStore((state) => state.language);
 
   const resetSettings = useResetSettings();
-  const deleteAllSavedSets = useSetsStore((state) => state.deleteAllSavedSets);
+  const deleteAllSavedSets = useSetsPersistenceStore((state) => state.deleteAllSavedSets);
 
   const handleDelete = () => {
     deleteAllSavedSets();

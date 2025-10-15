@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useMemo, useState, useCallback } from "react";
 import SetCardsContainer from "@/components/setCard/SetCardsContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import useSetsStore from "@/stores/useSetsStore";
+import useSetsListStore from "@/stores/useSetsListStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { SET_CARD_COLOR_PALETTE } from "@/constants/Colors"; // Importez la palette et la fonction de fallback
 import { StatName } from "@/data/stats/statsTypes";
@@ -23,7 +23,7 @@ const DisplaySetScreen = () => {
   const theme = useThemeStore((state) => state.theme);
 
   const scrollRef = useRef(null); // Ref pour SetCardsContainer
-  const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
+  const setsListDisplayed = useSetsListStore((state) => state.setsListDisplayed);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const [sortNumber, setSortNumber] = useState(2);

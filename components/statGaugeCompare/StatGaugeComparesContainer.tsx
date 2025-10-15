@@ -2,11 +2,11 @@ import React, { useMemo } from "react";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useResultStats } from "@/contexts/ResultStatsContext";
 import { statNames } from "@/data/stats/statsData";
-import useSetsStore from "@/stores/useSetsStore";
 import StatGaugeCompare from "./StatGaugeCompare";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import { box_shadow_z1 } from "../styles/shadow";
 import { BORDER_RADIUS_CONTAINER_LOWEST } from "@/utils/designTokens";
+import useSetsListStore from "@/stores/useSetsListStore";
 
 interface StatGaugeComparesContainerProps {
   setsColorsMap: Map<string, string>;
@@ -15,7 +15,7 @@ interface StatGaugeComparesContainerProps {
 const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({ setsColorsMap }) => {
   const theme = useThemeStore((state) => state.theme);
   const { resultStats } = useResultStats();
-  const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
+  const setsListDisplayed = useSetsListStore((state) => state.setsListDisplayed);
 
   const data = useMemo(() => {
     const statIndexMap = new Map(statNames.map((name, index) => [name, index]));

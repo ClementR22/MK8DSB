@@ -5,7 +5,6 @@ import { setsData } from "@/data/setsData";
 import { translateToLanguage } from "@/translations/translations";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import useSetsStore from "@/stores/useSetsStore";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
@@ -13,13 +12,14 @@ import PannelPaginated from "../elementPickerCompact/PannelPaginated";
 import ElementsDeselector from "../elementPickerCompact/ElementsDeselector";
 import "react-native-get-random-values";
 import { nanoid } from "nanoid";
-import { SetFoundObject } from "@/stores/useSetsStore";
 import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { MARGIN_CONTAINER_LOWEST, PADDING_SEARCH_CONTAINER } from "@/utils/designTokens";
 import StatSelector from "../statSelector/StatSelector";
 import useGeneralStore from "@/stores/useGeneralStore";
 import ButtonIconWithBadge from "../sortModeSelector/ButtonIconWithBadge";
+import useStatsStore from "@/stores/useStatsStore";
+import useSetsListStore, { SetFoundObject } from "@/stores/useSetsListStore";
 
 interface SearchSetScreenPressablesContainerProps {
   scrollviewSetsCardsRef: React.RefObject<any>;
@@ -32,8 +32,8 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
 }) => {
   const language = useLanguageStore((state) => state.language);
 
-  const chosenStats = useSetsStore((state) => state.chosenStats);
-  const setSetsListFound = useSetsStore((state) => state.setSetsListFound);
+  const chosenStats = useStatsStore((state) => state.chosenStats);
+  const setSetsListFound = useSetsListStore((state) => state.setSetsListFound);
   const resultsNumber = useGeneralStore((state) => state.resultsNumber);
   const selectedClassIdsByCategory = usePressableElementsStore((state) => state.multiSelectedClassIdsByCategory);
   const setIsLoading = useGeneralStore((state) => state.setIsLoading);

@@ -4,7 +4,6 @@ import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
 import useModalsStore from "@/stores/useModalsStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import useSetsStore from "@/stores/useSetsStore";
 import SetImagesModal from "./SetImagesModal";
 import StatGaugeSetCardsContainer from "../statGauge/StatGaugeSetCardsContainer";
 import { arraysEqual } from "@/utils/deepCompare";
@@ -13,6 +12,7 @@ import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 import { SET_CARD_WIDTH } from "@/utils/designTokens";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { useSetCardConfig } from "@/hooks/useSetCardConfig";
+import useSetsListStore from "@/stores/useSetsListStore";
 
 export interface SetData {
   name: string;
@@ -53,7 +53,7 @@ const SetCard: React.FC<SetCardProps> = ({
   const isSetCardsCollapsed = useGeneralStore((state) => state.isSetCardsCollapsed);
   const isCollapsed = screenName === "display" && isSetCardsCollapsed;
 
-  const setsListSaved = useSetsStore((state) => state.setsListSaved);
+  const setsListSaved = useSetsListStore((state) => state.setsListSaved);
 
   const isSaved = useMemo(
     () => setsListSaved.some((setSaved) => arraysEqual(setSaved.classIds, setToShowClassIds)),
@@ -61,7 +61,7 @@ const SetCard: React.FC<SetCardProps> = ({
   );
 
   const updateSelectionFromSet = usePressableElementsStore((state) => state.updateSelectionFromSet);
-  const setSetCardEditedId = useSetsStore((state) => state.setSetCardEditedId);
+  const setSetCardEditedId = useSetsListStore((state) => state.setSetCardEditedId);
   const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
 
   const config = useSetCardConfig(situation, hideRemoveSet, screenName);

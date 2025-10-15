@@ -10,7 +10,6 @@ import ButtonLoadSet from "@/components/managingSetsButton/ButtonLoadSet";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
-import useSetsStore from "@/stores/useSetsStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { statNamesCompact } from "@/data/stats/statsData";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
@@ -22,6 +21,8 @@ import ScrollViewScreen, { ScrollViewScreenHandles } from "@/components/ScrollVi
 import { box_shadow_z1 } from "@/components/styles/shadow";
 import Text from "@/primitiveComponents/Text";
 import { SetCardsScrollProvider } from "@/contexts/SetCardsScrollContext";
+import useStatsStore from "@/stores/useStatsStore";
+import useSetsListStore from "@/stores/useSetsListStore";
 
 const SearchSetScreen: React.FC = () => {
   const scrollviewSetsCardsRef = useRef<SetCardsContainerHandles>(null);
@@ -40,8 +41,8 @@ const SearchSetScreen: React.FC = () => {
   }, [shouldScrollToTop, resetScrollToTop]);
 
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
-  const chosenStats = useSetsStore((state) => state.chosenStats);
-  const setsListFound = useSetsStore((state) => state.setsListFound);
+  const chosenStats = useStatsStore((state) => state.chosenStats);
+  const setsListFound = useSetsListStore((state) => state.setsListFound);
 
   const [isReduceStatSliders, setIsReduceStatSliders] = useState(false);
   const toggleReduceStatSliders = useCallback(() => {

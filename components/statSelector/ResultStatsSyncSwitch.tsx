@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import { ResultStats } from "@/contexts/ResultStatsContext";
-import { ChosenStat } from "@/stores/useSetsStore";
+import { ChosenStat } from "@/stores/useStatsStore";
 import { translate } from "@/translations/translations";
 import ToggleSwitch from "toggle-switch-react-native";
 import { useThemeStore } from "@/stores/useThemeStore";

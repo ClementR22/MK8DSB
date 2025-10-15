@@ -18,8 +18,8 @@ import HelpDisplaySetScreen from "@/components/helpScreens/HelpDisplaySetScreen"
 import HelpSavedSetScreen from "@/components/helpScreens/HelpSavedSetScreen";
 
 // Stores
-import useSetsStore from "@/stores/useSetsStore";
 import { useThemeStore } from "@/stores/useThemeStore";
+import useSetsPersistenceStore from "@/stores/useSetsPersistenceStore";
 
 // Utils & Hooks
 import { translateToLanguage } from "@/translations/translations";
@@ -32,7 +32,7 @@ import { box_shadow_z2 } from "@/components/styles/shadow";
 export default function TabLayout() {
   // --- Zustand Store Selections ---
   // Select only the parts of the state that are needed
-  const fetchSetsSaved = useSetsStore((state) => state.fetchSetsSaved);
+  const fetchSetsSaved = useSetsPersistenceStore((state) => state.fetchSetsSaved);
   const theme = useThemeStore((state) => state.theme);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
 

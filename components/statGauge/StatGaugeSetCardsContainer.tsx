@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import { useScreen } from "@/contexts/ScreenContext";
-import useSetsStore from "@/stores/useSetsStore";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import { statNamesCompact } from "@/data/stats/statsData";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import StatGaugeContainer from "./StatGaugeContainer";
 import StatGaugeSetCardBar from "./StatGaugeSetCardBar";
+import useStatsStore from "@/stores/useStatsStore";
 
 interface StatGaugeSetCardsContainerProps {
   setToShowStats: number[];
@@ -17,7 +17,7 @@ const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({
   const isInSearchScreen = screenName === "search";
   const { resultStats } = useResultStats();
 
-  const chosenStats = useSetsStore((state) => state.chosenStats);
+  const chosenStats = useStatsStore((state) => state.chosenStats);
 
   const sliderContent = useMemo(() => {
     const filteredResultStats = resultStats.filter((stat) => stat.checked);

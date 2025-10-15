@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
 import { Slider } from "@miblanchard/react-native-slider";
 import useGeneralStore from "@/stores/useGeneralStore";
-import useSetsStore from "@/stores/useSetsStore";
+import useStatsStore from "@/stores/useStatsStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -33,8 +33,8 @@ const StatSliderContent = ({
   const theme = useThemeStore((state) => state.theme);
   const language = useLanguageStore((state) => state.language);
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
-  const updateStatValue = useSetsStore((state) => state.updateStatValue);
-  const removeStat = useSetsStore((state) => state.removeStat);
+  const updateStatValue = useStatsStore((state) => state.updateStatValue);
+  const removeStat = useStatsStore((state) => state.removeStat);
   const [tempValue, setTempValue] = useState(value);
 
   // Mémoïsation stricte des handlers

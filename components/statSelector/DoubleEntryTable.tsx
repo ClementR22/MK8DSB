@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from "react";
 import { View, StyleSheet, ScrollView, Pressable } from "react-native";
 import { Checkbox, DataTable } from "react-native-paper";
 import { ResultStat } from "@/contexts/ResultStatsContext";
-import { ChosenStat } from "@/stores/useSetsStore";
+import { ChosenStat } from "@/stores/useStatsStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { translateToLanguage } from "@/translations/translations";
 import { useThemeStore } from "@/stores/useThemeStore";

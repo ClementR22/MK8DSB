@@ -1,11 +1,13 @@
 import { IconType } from "react-native-dynamic-vector-icons";
 import { useCallback, useMemo } from "react";
 import { ScreenName } from "@/contexts/ScreenContext";
-import useSetsStore from "@/stores/useSetsStore";
+import useSetsActionsStore from "@/stores/useSetsActionsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
 import { actionNamesList } from "./useSetCardConfig";
 import showToast from "@/utils/showToast";
+import { useSetImportExport } from "@/stores/useSetImportExport";
+import useSetsListStore from "@/stores/useSetsListStore";
 
 interface ActionProps {
   title: string;
@@ -18,80 +20,72 @@ type ActionIconPropsMap = ActionProps[];
 
 export function useActionIconPropsList(
   actionNamesToGenerate: actionNamesList,
-  setToShowId: string,
+  setId: string,
   situation: ScreenName | "load",
   handleEditPress?: () => void,
   isSaved?: boolean
 ): ActionIconPropsMap {
-  const loadSetSaveToSearch = useSetsStore((state) => state.loadSetSaveToSearch);
-  const loadSetSaveToDisplay = useSetsStore((state) => state.loadSetSaveToDisplay);
-  const loadSetSearchToDisplay = useSetsStore((state) => state.loadSetSearchToDisplay);
-  const loadSetDisplayToSearch = useSetsStore((state) => state.loadSetDisplayToSearch);
-  const removeSet = useSetsStore((state) => state.removeSet);
-  const exportSet = useSetsStore((state) => state.exportSet);
-  const setSetCardEditedId = useSetsStore((state) => state.setSetCardEditedId);
-  const saveSet = useSetsStore((state) => state.saveSet);
-  const unSaveSet = useSetsStore((state) => state.unSaveSet);
+  const loadSetSaveToSearch = useSetsActionsStore((state) => state.loadSetSaveToSearch);
+  const loadSetSaveToDisplay = useSetsActionsStore((state) => state.loadSetSaveToDisplay);
+  const loadSetSearchToDisplay = useSetsActionsStore((state) => state.loadSetSearchToDisplay);
+  const loadSetDisplayToSearch = useSetsActionsStore((state) => state.loadSetDisplayToSearch);
+  const removeSet = useSetsListStore((state) => state.removeSet);
+  const setSetCardEditedId = useSetsListStore((state) => state.setSetCardEditedId);
+  const saveSet = useSetsActionsStore((state) => state.saveSet);
+  const unSaveSet = useSetsActionsStore((state) => state.unSaveSet);
   const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
   const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
 
   const handleSavePress = useCallback(() => {
     if (!isSaved) {
-      saveSet(situation as ScreenName, setToShowId);
+      saveSet(situation as ScreenName, setId);
       showToast("Succès" + " " + "Le set a été enregistré");
     } else {
-      unSaveSet(situation as ScreenName, setToShowId);
+      unSaveSet(situation as ScreenName, setId);
       showToast("Succès" + " " + "Le set a été supprimé des favoris.");
     }
-  }, [setSetCardEditedId, setToShowId, situation, setIsRenameSetModalVisible, saveSet, isSaved]);
+  }, [setSetCardEditedId, setId, situation, setIsRenameSetModalVisible, saveSet, isSaved]);
 
   const handleRemovePress = useCallback(() => {
     if (situation !== "load") {
-      removeSet(setToShowId, situation);
+      removeSet(setId, situation);
       if (situation === "save") {
         showToast("Succès" + " " + "Le set a été supprimé des favoris.");
       }
     }
-  }, [removeSet, setToShowId, situation]);
+  }, [removeSet, setId, situation]);
 
-  const handleExportPress = useCallback(() => {
-    if (situation !== "load") {
-      try {
-        exportSet(setToShowId, situation);
-        showToast("Succès" + " " + "le set a été copié dans le presse-papier !");
-      } catch (e) {
-        showToast("ERRor" + e);
-      }
-    }
-  }, [exportSet, setToShowId, situation]);
+  const handleExportPress = () => {
+    useSetImportExport().handleExport(setId, situation as ScreenName);
+  };
 
   const handleLoadSaveToSearchPress = useCallback(() => {
-    if (setToShowId !== null && setToShowId !== undefined) {
-      loadSetSaveToSearch(setToShowId);
+    if (setId !== null && setId !== undefined) {
+      loadSetSaveToSearch(setId);
       showToast("Succès" + " " + "Les stats du set ont été chargées");
     }
     setIsLoadSetModalVisible(false);
-  }, [loadSetSaveToSearch, setToShowId, setIsLoadSetModalVisible]);
+  }, [loadSetSaveToSearch, setId, setIsLoadSetModalVisible]);
 
   const handleLoadSaveToDisplayPress = useCallback(() => {
-    if (setToShowId !== null && setToShowId !== undefined) {
-      loadSetSaveToDisplay(setToShowId);
+    if (setId !== null && setId !== undefined) {
+      loadSetSaveToDisplay(setId);
     }
     setIsLoadSetModalVisible(false);
-  }, [loadSetSaveToDisplay, setToShowId, setIsLoadSetModalVisible]);
+  }, [loadSetSaveToDisplay, setId, setIsLoadSetModalVisible]);
 
   const handleLoadSearchToDisplayPress = useCallback(() => {
-    if (setToShowId !== null && setToShowId !== undefined) {
-      loadSetSearchToDisplay(setToShowId);
+    if (setId !== null && setId !== undefined) {
+      loadSetSearchToDisplay(setId);
     }
-  }, [loadSetSearchToDisplay, setToShowId]);
+  }, [loadSetSearchToDisplay, setId]);
 
   const handleLoadDisplayToSearchPress = useCallback(() => {
-    if (setToShowId !== null && setToShowId !== undefined) {
-      loadSetDisplayToSearch(setToShowId);
+    if (setId !== null && setId !== undefined) {
+      loadSetDisplayToSearch(setId);
       showToast("Succès" + " " + "Les stats du set ont été chargées");
     }
-  }, [loadSetDisplayToSearch, setToShowId]);
+  }, [loadSetDisplayToSearch, setId]);
 
   const allPossibleActionDefs = useMemo(
     () => ({
@@ -151,7 +145,7 @@ export function useActionIconPropsList(
       },
     }),
     [
-      setToShowId,
+      setId,
       situation,
       handleEditPress,
       isSaved,

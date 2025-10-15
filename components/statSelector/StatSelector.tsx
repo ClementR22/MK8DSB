@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import DoubleEntryTable, { ColumnName } from "./DoubleEntryTable";
-import useSetsStore, { ChosenStat } from "@/stores/useSetsStore";
+import useStatsStore, { ChosenStat } from "@/stores/useStatsStore";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import { useScreen } from "@/contexts/ScreenContext";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
@@ -67,7 +67,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, children
 
   const { resultStats, setResultStats } = useResultStats();
   const { resultStatsDefault, setResultStatsDefault, isResultStatsSync } = useResultStatsDefaultStore();
-  const { chosenStats, setChosenStats } = useSetsStore();
+  const { chosenStats, setChosenStats } = useStatsStore();
 
   const [statListsInModal, setStatListsInModal] = useState<Record<string, StatList>>({});
   const [isModalVisible, setIsModalVisible] = useState(false);

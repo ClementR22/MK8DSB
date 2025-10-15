@@ -4,11 +4,11 @@ import React, { memo, ReactNode, useCallback, useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native";
 import SortModeSelector from "../sortModeSelector/SortModeSelector";
 import { IconType } from "react-native-dynamic-vector-icons";
-import useSetsStore from "@/stores/useSetsStore";
 import { useScreen } from "@/contexts/ScreenContext";
 import { BORDER_RADIUS_CONTAINER_LOWEST, BUTTON_SIZE, PADDING_BOX_CONTAINER } from "@/utils/designTokens";
 import Separator from "../Separator";
 import { box_shadow_z1 } from "../styles/shadow";
+import useSetsListStore from "@/stores/useSetsListStore";
 
 interface ScreenPressablesContainerProps {
   sortNumber: number;
@@ -27,7 +27,7 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
   const [isOpenSortView, setIsOpenSortView] = useState(false);
   const toggleOpenSortView = useCallback(() => setIsOpenSortView((prev) => !prev), []);
 
-  const sortSetsList = useSetsStore((state) => state.sortSetsList);
+  const sortSetsList = useSetsListStore((state) => state.sortSetsList);
   useEffect(() => {
     if (!isInGalleryScreen) {
       sortSetsList(screenName, sortNumber);

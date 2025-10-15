@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
-import useSetsStore from "@/stores/useSetsStore";
 import StatSliderContent from "./StatSliderContent";
 import { StatName } from "@/data/stats/statsTypes";
+import useStatsStore from "@/stores/useStatsStore";
 
 interface StatSliderProps {
   name: StatName;
@@ -10,7 +10,7 @@ interface StatSliderProps {
 }
 
 const StatSlider = ({ name, value, statFilterNumber }: StatSliderProps) => {
-  const setStatFilterNumber = useSetsStore((state) => state.setStatFilterNumber);
+  const setStatFilterNumber = useStatsStore((state) => state.setStatFilterNumber);
 
   const setStatFilterNumberWithName = useCallback(
     (newNumber: number) => setStatFilterNumber(name, newNumber),

@@ -3,8 +3,8 @@ import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore"
 import { useThemeStore } from "@/stores/useThemeStore";
 import { resultStatsDefaultInit } from "./resultStatsInit";
 import useGeneralStore from "@/stores/useGeneralStore";
-import useSetsStore from "@/stores/useSetsStore";
 import { IS_RESULT_STATS_SYNC, RESULTS_NUMBER_DEFAULT, SORT_NUMBER_SAVED_SETS_DEFAULT } from "@/constants/constants";
+import useSetsPersistenceStore from "@/stores/useSetsPersistenceStore";
 
 type SettingKey =
   | "language"
@@ -24,7 +24,7 @@ export function useSettingsMap(): Record<SettingKey, SettingsEntry> {
   const setIsResultStatsSync = useResultStatsDefaultStore((state) => state.setIsResultStatsSync);
   const setResultStatsDefault = useResultStatsDefaultStore((state) => state.setResultStatsDefault);
   const setTheme = useThemeStore((state) => state.setTheme);
-  const setSortNumberSavedSets = useSetsStore((state) => state.setSortNumberSavedSets);
+  const setSortNumberSavedSets = useSetsPersistenceStore((state) => state.setSortNumberSavedSets);
   const setResultsNumber = useGeneralStore((state) => state.setResultsNumber);
 
   return {

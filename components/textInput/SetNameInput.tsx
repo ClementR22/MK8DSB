@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { useScreen } from "../../contexts/ScreenContext";
-import useSetsStore from "@/stores/useSetsStore";
+import useSetsListStore from "@/stores/useSetsListStore";
 import SetNameInputContent from "./SetNameInputContent";
 import { useSetCardsScroll } from "@/contexts/SetCardsScrollContext";
 import showToast from "@/utils/showToast";
@@ -18,8 +18,7 @@ const SetNameInput: React.FC<SetNameInputProps> = ({ setToShowName, setToShowId,
   const language = useLanguageStore((state) => state.language);
 
   const screenName = useScreen();
-  const renameSet = useSetsStore((state) => state.renameSet);
-  const checkNameUnique = useSetsStore((state) => state.checkNameUnique);
+  const renameSet = useSetsListStore((state) => state.renameSet);
   const { scrollToSetCard } = useSetCardsScroll();
 
   const [localName, setLocalName] = useState(setToShowName);

@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { ScrollView } from "react-native";
-import useSetsStore, { MAX_NUMBER_SETS_DISPLAY } from "@/stores/useSetsStore";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import showToast from "@/utils/showToast";
-import { translateToLanguage } from "@/translations/translations";
 import { formatErrorMessage } from "@/utils/formatErrorMessage";
+import useSetsListStore, { MAX_NUMBER_SETS_DISPLAY } from "@/stores/useSetsListStore";
 
 interface ButtonAddSetProps {
   scrollRef: React.RefObject<ScrollView>;
@@ -15,8 +14,8 @@ interface ButtonAddSetProps {
 const ButtonAddSet: React.FC<ButtonAddSetProps> = ({ scrollRef }) => {
   const language = useLanguageStore((state) => state.language);
 
-  const addNewSetInDisplay = useSetsStore((state) => state.addNewSetInDisplay);
-  const setsListDisplayed = useSetsStore((state) => state.setsListDisplayed);
+  const addNewSetInDisplay = useSetsListStore((state) => state.addNewSetInDisplay);
+  const setsListDisplayed = useSetsListStore((state) => state.setsListDisplayed);
 
   const timeoutRef = useRef(null);
 
