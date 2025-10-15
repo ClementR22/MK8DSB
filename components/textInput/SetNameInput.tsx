@@ -3,6 +3,10 @@ import { useScreen } from "../../contexts/ScreenContext";
 import useSetsStore from "@/stores/useSetsStore";
 import SetNameInputContent from "./SetNameInputContent";
 import { useSetCardsScroll } from "@/contexts/SetCardsScrollContext";
+import showToast from "@/utils/showToast";
+import { formatErrorMessage } from "@/utils/formatErrorMessage";
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import { translateToLanguage } from "@/translations/translations";
 
 interface SetNameInputProps {
   setToShowName: string;
@@ -11,6 +15,8 @@ interface SetNameInputProps {
 }
 
 const SetNameInput: React.FC<SetNameInputProps> = ({ setToShowName, setToShowId, editable = true }) => {
+  const language = useLanguageStore((state) => state.language);
+
   const screenName = useScreen();
   const renameSet = useSetsStore((state) => state.renameSet);
   const checkNameUnique = useSetsStore((state) => state.checkNameUnique);
@@ -26,15 +32,16 @@ const SetNameInput: React.FC<SetNameInputProps> = ({ setToShowName, setToShowId,
     }
 
     if (localName !== setToShowName) {
-      // si le nom a bien changé
-      const isNameUnique = checkNameUnique(localName, screenName);
-      if (isNameUnique) {
+      try {
         renameSet(localName, screenName, setToShowId);
-      } else {
+        showToast(translateToLanguage("SetRenamed", language));
+      } catch (e) {
+        showToast(formatErrorMessage(e, language));
         setLocalName(setToShowName);
+        return;
       }
     }
-  }, [localName, setToShowName, renameSet, screenName, setToShowId]);
+  }, [localName, setToShowName, renameSet, screenName, setToShowId, language]);
 
   const handleFocus = useCallback(() => {
     scrollToSetCard(setToShowId);

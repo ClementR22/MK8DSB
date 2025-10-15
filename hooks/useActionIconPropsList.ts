@@ -5,6 +5,7 @@ import useSetsStore from "@/stores/useSetsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
 import { actionNamesList } from "./useSetCardConfig";
+import showToast from "@/utils/showToast";
 
 interface ActionProps {
   title: string;
@@ -34,26 +35,40 @@ export function useActionIconPropsList(
   const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
   const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
 
-  const handleSavePress = useCallback(
-    () => (!isSaved ? saveSet(situation as ScreenName, setToShowId) : unSaveSet(situation as ScreenName, setToShowId)),
-    [setSetCardEditedId, setToShowId, situation, setIsRenameSetModalVisible, saveSet, isSaved]
-  );
+  const handleSavePress = useCallback(() => {
+    if (!isSaved) {
+      saveSet(situation as ScreenName, setToShowId);
+      showToast("Succès" + " " + "Le set a été enregistré");
+    } else {
+      unSaveSet(situation as ScreenName, setToShowId);
+      showToast("Succès" + " " + "Le set a été supprimé des favoris.");
+    }
+  }, [setSetCardEditedId, setToShowId, situation, setIsRenameSetModalVisible, saveSet, isSaved]);
 
   const handleRemovePress = useCallback(() => {
     if (situation !== "load") {
       removeSet(setToShowId, situation);
+      if (situation === "save") {
+        showToast("Succès" + " " + "Le set a été supprimé des favoris.");
+      }
     }
   }, [removeSet, setToShowId, situation]);
 
   const handleExportPress = useCallback(() => {
     if (situation !== "load") {
-      exportSet(setToShowId, situation);
+      try {
+        exportSet(setToShowId, situation);
+        showToast("Succès" + " " + "le set a été copié dans le presse-papier !");
+      } catch (e) {
+        showToast("ERRor" + e);
+      }
     }
   }, [exportSet, setToShowId, situation]);
 
   const handleLoadSaveToSearchPress = useCallback(() => {
     if (setToShowId !== null && setToShowId !== undefined) {
       loadSetSaveToSearch(setToShowId);
+      showToast("Succès" + " " + "Les stats du set ont été chargées");
     }
     setIsLoadSetModalVisible(false);
   }, [loadSetSaveToSearch, setToShowId, setIsLoadSetModalVisible]);
@@ -74,6 +89,7 @@ export function useActionIconPropsList(
   const handleLoadDisplayToSearchPress = useCallback(() => {
     if (setToShowId !== null && setToShowId !== undefined) {
       loadSetDisplayToSearch(setToShowId);
+      showToast("Succès" + " " + "Les stats du set ont été chargées");
     }
   }, [loadSetDisplayToSearch, setToShowId]);
 

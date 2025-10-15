@@ -21,12 +21,18 @@ import { box_shadow_z1 } from "@/components/styles/shadow";
 import Text from "@/primitiveComponents/Text";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import showToast from "@/utils/showToast";
 
 const SettingsScreen: React.FC = () => {
   const language = useLanguageStore((state) => state.language);
 
   const resetSettings = useResetSettings();
   const deleteAllSavedSets = useSetsStore((state) => state.deleteAllSavedSets);
+
+  const handleDelete = () => {
+    deleteAllSavedSets();
+    showToast("Succès" + " " + "Tous les sets sauvegardés ont été supprimés !");
+  };
 
   // Mémoïsation des handlers DEBUG
   const handleShowMemory = useCallback(async () => {
@@ -66,7 +72,7 @@ const SettingsScreen: React.FC = () => {
 
             <ButtonResetSettings resetSettings={resetSettings} />
 
-            <ButtonDeleteAllSetsInMemory deleteAllSavedSets={deleteAllSavedSets} />
+            <ButtonDeleteAllSetsInMemory deleteAllSavedSets={handleDelete} />
 
             <Text role="label" size="large">
               DEBUG

@@ -7,6 +7,7 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import showToast from "@/utils/showToast";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
+import { formatErrorMessage } from "@/utils/formatErrorMessage";
 
 interface ButtonImportSetProps {
   screenName: ScreenName;
@@ -25,13 +26,18 @@ const ButtonImportSet: React.FC<ButtonImportSetProps> = ({ screenName }) => {
       }
 
       importSet(clipboardContent, screenName);
+      switch (screenName) {
+        case "search":
+          showToast("Succès" + " " + "Les stats du set ont été chargées");
+
+        case "display":
+          showToast(translateToLanguage("Succès" + " " + "Le set a été ajouté à l'écran de comparaison", language));
+        case "save":
+          showToast(translateToLanguage("Succès" + " " + "Le set a été chargé dans les favoris", language));
+          showToast("Succès" + " " + "Le set a été chargé dans les favoris");
+      }
     } catch (e) {
-      const errorMessage = e instanceof Error ? e.message : "UnknownError";
-      const text = `${translateToLanguage("ImportError", language)}${translateToLanguage(
-        ":",
-        language
-      )}${translateToLanguage(errorMessage, language)}`;
-      showToast(text);
+      showToast(formatErrorMessage(e, language, "ImportError"));
     }
   };
 

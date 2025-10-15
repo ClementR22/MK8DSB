@@ -47,13 +47,8 @@ const translations = {
     // text
     Language: "Language",
     Theme: "Theme",
-    ImportError: "Import error",
-    ClipboardIsEmpty: "clipboard is empty",
-    IncorrectFormat: "incorrect format",
-    ThisSetDoesNotExist: "this set does not exist",
-    UnknownError: "unknown error",
-    DeleteAllSetsInMemoryText: "Do you really want to delete all saved sets?",
     ResetSettingsText: "Do you really want to reset settings?",
+    DeleteAllSetsInMemoryText: "Do you really want to delete all saved sets?",
     Selected: "Selected",
     chosenStats: "param.",
     resultStats: "disp.",
@@ -114,6 +109,16 @@ const translations = {
     StatsOfTheSet: "Stats of the set",
     StatsOfTheSets: "Stats of the sets",
     close: "Close",
+
+    // toast text
+    ImportError: "Import error",
+    ClipboardIsEmpty: "clipboard is empty",
+    IncorrectFormat: "incorrect format",
+    ThisSetDoesNotExist: "this set does not exist",
+    UnknownError: "unknown error",
+    Error: "Error",
+    SetLimitReached: "set limit reached",
+    TheSettingsHaveBeenReset: "The settings have been reset",
 
     // other
     ":": ": ",
@@ -349,13 +354,8 @@ const translations = {
     // text
     Language: "Langue",
     Theme: "Theme",
-    ImportError: "Erreur d'importation",
-    ClipboardIsEmpty: "presse-papiers vide",
-    IncorrectFormat: "format incorrect",
-    ThisSetDoesNotExist: "ce set n'existe pas",
-    UnknownError: "erreur inconnue",
-    DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
     ResetSettingsText: "Souhaitez-vous vraiment réinitialiser les préférences ?",
+    DeleteAllSetsInMemoryText: "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
     Selected: "Sélectionnés",
     chosenStats: "param.",
     resultStats: "affich.",
@@ -376,7 +376,7 @@ const translations = {
     ConfigureDefaultStats: "Configurer les stats affichées par défault",
     SendFeedback: "Faire un retour",
     OpenSourceLicenses: "Licences Open Source",
-    ResetSettings: "Réinitialiser les paramètres",
+    ResetSettings: "Réinitialiser les préférences",
     DeleteAllSetsInMemory: "Supprimer tous les sets enregistrés",
     Confirm: "Confirmer",
     Cancel: "Annuler",
@@ -416,6 +416,16 @@ const translations = {
     StatsOfTheSet: "Stats du set",
     StatsOfTheSets: "Stats des sets",
     close: "Fermer",
+
+    // toast text
+    ImportError: "Erreur d'importation",
+    ClipboardIsEmpty: "presse-papiers vide",
+    IncorrectFormat: "format incorrect",
+    ThisSetDoesNotExist: "ce set n'existe pas",
+    UnknownError: "erreur inconnue",
+    Error: "Erreur",
+    SetLimitReached: "limite de sets atteinte",
+    TheSettingsHaveBeenReset: "Les préférences ont été réinitialisées",
 
     // other
     ":": " : ",
