@@ -27,6 +27,10 @@ on:
       description:
         required: false
         description: Description
+      reset-cache:
+        type: boolean
+        default: false
+        description: Delete cache ?
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
@@ -85,7 +89,10 @@ jobs:
           echo "${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.value}}" > nightly-version.txt
           echo "value=$(cat nightly-version.txt)" >> "$GITHUB_OUTPUT"
 
+      # TODO: Add app.json update
+
       - name: Clean Android build
+        if: ${{inputs.reset-cache}}
         run: |
           cd android && ./gradlew clean && cd ..
           rm -rf android/app/build
@@ -118,6 +125,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clear cache manually
+        if: ${{inputs.reset-cache}}
         run: rm -rf ~/.npm ~/.gradle
 
       - name: Download artifacts
@@ -133,7 +141,7 @@ jobs:
       - name: Upload nightly release
         uses: andelf/nightly-release@main
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{github.token}}
         with:
           tag_name: nightly
           name: "Nightly release ${{steps.nightly-version.outputs.value}}"
