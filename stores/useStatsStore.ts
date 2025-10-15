@@ -19,7 +19,6 @@ export interface StatsStoreState {
 
   setChosenStats: (newChosenStats: ChosenStat[]) => void;
   updateStatValue: (name: StatName, newValue: number) => void;
-  removeStat: (name: StatName) => void;
   setStatFilterNumber: (statName: string, newState: number) => void;
   loadStatsFromSet: (stats: number[]) => void;
 }
@@ -40,16 +39,6 @@ const useStatsStore = create<StatsStoreState>((set, get) => ({
     set((state) => ({
       chosenStats: state.chosenStats.map((stat) => (stat.name === name ? { ...stat, value: newValue } : stat)),
     })),
-
-  removeStat: (name) => {
-    set((state) => {
-      const newChosenStats = state.chosenStats.map((stat) =>
-        stat.name === name ? { ...stat, checked: false, value: null, statFilterNumber: 0 } : stat
-      );
-      const hasChecked = newChosenStats.some((stat) => stat.checked);
-      return hasChecked ? { ...state, chosenStats: newChosenStats } : state;
-    });
-  },
 
   setStatFilterNumber: (statName, newState) => {
     set((state) => ({

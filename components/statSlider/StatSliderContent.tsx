@@ -34,7 +34,6 @@ const StatSliderContent = ({
   const language = useLanguageStore((state) => state.language);
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
   const updateStatValue = useStatsStore((state) => state.updateStatValue);
-  const removeStat = useStatsStore((state) => state.removeStat);
   const [tempValue, setTempValue] = useState(value);
 
   // Mémoïsation stricte des handlers
@@ -70,10 +69,6 @@ const StatSliderContent = ({
     [styles, theme]
   );
 
-  const handleRemove = useCallback(() => {
-    removeStat(name);
-  }, [removeStat, name]);
-
   return (
     <Pressable
       style={StyleSheet.flatten([
@@ -83,7 +78,6 @@ const StatSliderContent = ({
           borderColor: getStatSliderBorderColor(statFilterNumber, theme),
         },
       ])}
-      onLongPress={handleRemove}
     >
       <View style={styles.containerLeft}>
         <View style={styles.textWrapper}>
