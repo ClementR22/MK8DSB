@@ -95,11 +95,11 @@ jobs:
 
       - name: Update app.config.ts - Nightly
         if: ${{!inputs.stable}}
-        run: sed -i app.config.ts -e 's|{{VERSION}}|${{ steps.nightly-version.outputs.value }}'
+        run: sed -i app.config.ts -e 's|{{VERSION}}|${{ steps.nightly-version.outputs.value }}|g'
       
       - name: Update app.config.ts - Stable
         if: ${{inputs.stable}}
-        run: sed -i app.config.ts -e 's|{{VERSION}}|${{ steps.get-latest-tag.outputs.release }}'
+        run: sed -i app.config.ts -e 's|{{VERSION}}|${{ steps.get-latest-tag.outputs.release }}|g'
 
       - name: Clean Android build
         if: ${{inputs.reset-cache}}
