@@ -6,7 +6,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   owner: "lentrepriz",
   name: "MK8DSB",
   slug: "MK8DSB",
-  version: "0.0.1",
+  version: "{{VERSION}}",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   scheme: "myapp",

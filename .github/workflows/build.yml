@@ -93,7 +93,13 @@ jobs:
           echo "${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.value}}" > nightly-version.txt
           echo "value=$(cat nightly-version.txt)" >> "$GITHUB_OUTPUT"
 
-      # TODO: Add app.json update
+      - name: Update app.config.ts - Nightly
+        if: ${{!inputs.stable}}
+        run: sed -i app.config.ts -e 's|{{VERSION}}|${{ steps.nightly-version.outputs.value }}'
+      
+      - name: Update app.config.ts - Stable
+        if: ${{inputs.stable}}
+        run: sed -i app.config.ts -e 's|{{VERSION}}|${{ steps.get-latest-tag.outputs.release }}'
 
       - name: Clean Android build
         if: ${{inputs.reset-cache}}
