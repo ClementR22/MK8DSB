@@ -108,6 +108,7 @@ jobs:
           rm -rf android/app/build
 
       - name: Build apk (local)
+        if: ${{!inputs.skip-build}}
         run: eas build --non-interactive --platform android --profile preview --local || exit 1
 
       - name: Store build name
