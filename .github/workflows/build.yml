@@ -19,18 +19,22 @@ on:
           - minor
           - patch
         default: patch
+      reset-cache:
+        type: boolean
+        default: false
+        description: Delete cache ?
+      skip-build:
+        type: boolean
+        default: false
+        description: Skip APK build ?
       is-draft:
         type: boolean
-        description: Is release a draft ?
+        description: Draft release ?
         required: false
         default: false
       description:
         required: false
         description: Description
-      reset-cache:
-        type: boolean
-        default: false
-        description: Delete cache ?
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
