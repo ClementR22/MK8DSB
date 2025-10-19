@@ -7,9 +7,12 @@ import { getBonusColor } from "@/utils/getBonusColor";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { BORDER_RADIUS_STAT_GAUGE_CONTAINER, HEIGHT_STAT_GAUGE_CONTAINER } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
+import Tooltip from "../Tooltip";
+import { StatName } from "@/data/stats/statsTypes";
+import { statNamesCompact } from "@/data/stats/statsData";
 
 interface StatGaugeContainerProps {
-  name: string;
+  name: StatName;
   value: number;
   statFilterNumber?: number;
   chosenValue?: number;
@@ -69,7 +72,8 @@ const StatGaugeContainer = ({
   }, [bonusEnabled, toggleAllStatGaugeBonuses]);
 
   return (
-    <Pressable
+    <Tooltip
+      tooltipText={name}
       style={[
         styles.container,
         {
@@ -88,7 +92,7 @@ const StatGaugeContainer = ({
         ]}
       >
         <Text role="label" size="large">
-          {translate(name)}
+          {translate(statNamesCompact[name])}
         </Text>
       </View>
 
@@ -108,7 +112,7 @@ const StatGaugeContainer = ({
           </Text>
         </View>
       )}
-    </Pressable>
+    </Tooltip>
   );
 };
 

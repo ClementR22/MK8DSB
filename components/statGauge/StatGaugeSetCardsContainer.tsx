@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import { useScreen } from "@/contexts/ScreenContext";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
-import { statNamesCompact } from "@/data/stats/statsData";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import StatGaugeContainer from "./StatGaugeContainer";
 import StatGaugeSetCardBar from "./StatGaugeSetCardBar";
@@ -28,7 +27,6 @@ const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({
 
     return filteredResultStats.map((stat: ResultStat) => {
       const originalIndex = resultStats.findIndex((item) => item.name === stat.name);
-      const compactName = statNamesCompact[stat.name];
       const statValue = stats[originalIndex];
 
       let chosenValue: number | undefined = undefined;
@@ -39,7 +37,7 @@ const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({
       return (
         <StatGaugeContainer
           key={stat.name}
-          name={compactName}
+          name={stat.name}
           value={statValue}
           isInSetCard={true}
           chosenValue={chosenValue}

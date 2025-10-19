@@ -59,7 +59,7 @@ const HelpSearchSetScreen = () => {
             Les sets sont classés par score de correspondance
           </Text>
           <View style={{ width: SET_CARD_WIDTH - PADDING_SET_CARD * 2 }}>
-            <StatGaugeContainer name="SG" value={4} isInSetCard={true} chosenValue={5} bonusEnabled={true}>
+            <StatGaugeContainer name="speedGround" value={4} isInSetCard={true} chosenValue={5} bonusEnabled={true}>
               <StatGaugeSetCardBar obtainedValue={4} chosenValue={5} isInSearchScreen={true} />
             </StatGaugeContainer>
           </View>

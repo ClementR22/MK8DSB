@@ -11,7 +11,6 @@ import { ScreenProvider } from "@/contexts/ScreenContext";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { statNamesCompact } from "@/data/stats/statsData";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import StatGaugeContainer from "@/components/statGauge/StatGaugeContainer";
@@ -57,7 +56,7 @@ const SearchSetScreen: React.FC = () => {
         return (
           <StatGaugeContainer
             key={`statSlider-${stat.name}-compact`}
-            name={statNamesCompact[stat.name]}
+            name={stat.name}
             value={stat.value}
             statFilterNumber={stat.statFilterNumber}
           >

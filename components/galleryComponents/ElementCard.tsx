@@ -8,9 +8,10 @@ import StatGaugeRelativeBar from "../statGauge/StatGaugeRelativeBar";
 import StatGaugeContainer from "../statGauge/StatGaugeContainer";
 import StatGaugeBar from "../statGauge/StatGaugeBar";
 import Text from "@/primitiveComponents/Text";
+import { StatName } from "@/data/stats/statsTypes";
 
 type ElementStat = {
-  name: string;
+  name: StatName;
   value: number;
 };
 

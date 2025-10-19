@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Category, ElementData } from "@/data/elements/elementsTypes";
 import { classesStatsByCategory } from "@/data/elements/elementsStats";
-import { statNames, statNamesCompact } from "@/data/stats/statsData";
+import { statNames } from "@/data/stats/statsData";
 import { translateToLanguage } from "@/translations/translations";
 
 export const useSelectedElementData = (
@@ -20,7 +20,7 @@ export const useSelectedElementData = (
     const statsArray = classesStatsByCategory[selectedCategory].get(currentElement.classId);
     const stats = statsArray
       ? statNames.map((statName, index) => ({
-          name: statNamesCompact[statName],
+          name: statName,
           value: statsArray[index],
         }))
       : [];
