@@ -2,7 +2,7 @@ import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Data and Types
-import { SetObject } from "./useSetsListStore";
+import { SetProps } from "./useSetsListStore";
 
 // Utilities
 import {
@@ -18,10 +18,10 @@ export interface SetsPersistenceStoreState {
 
   setSortNumberSavedSets: (newSortNumberSavedSets: number) => Promise<void>;
   fetchSetsSavedKeys: () => Promise<string[]>;
-  fetchSetsSaved: () => Promise<SetObject[]>;
-  saveSetInMemory: (setToSave: SetObject) => Promise<void>;
+  fetchSetsSaved: () => Promise<SetProps[]>;
+  saveSetInMemory: (setToSave: SetProps) => Promise<void>;
   removeSetInMemory: (keyToRemove: string) => Promise<void>;
-  updateSetInMemory: (setObj: SetObject) => Promise<void>;
+  updateSetInMemory: (setObj: SetProps) => Promise<void>;
   deleteAllSavedSets: () => Promise<void>;
   loadSortNumberFromMemory: () => Promise<void>;
 }
@@ -42,7 +42,7 @@ const useSetsPersistenceStore = create<SetsPersistenceStoreState>((set, get) => 
   fetchSetsSaved: async () => {
     const setsKeys = await get().fetchSetsSavedKeys();
     const setsData = await AsyncStorage.multiGet(setsKeys);
-    const setsDataParsed: SetObject[] = setsData
+    const setsDataParsed: SetProps[] = setsData
       .map(([, value]) => {
         try {
           return value ? JSON.parse(value) : null;
@@ -51,7 +51,7 @@ const useSetsPersistenceStore = create<SetsPersistenceStoreState>((set, get) => 
           return null;
         }
       })
-      .filter((set) => set !== null) as SetObject[];
+      .filter((set) => set !== null) as SetProps[];
 
     return setsDataParsed;
   },

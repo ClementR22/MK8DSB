@@ -13,13 +13,13 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import { SetObject } from "@/stores/useSetsListStore";
+import { SetProps } from "@/stores/useSetsListStore";
 import Placeholder from "./Placeholder";
 import { BORDER_RADIUS_CONTAINER_LOWEST, MARGIN_CONTAINER_LOWEST, PADDING_STANDARD } from "@/utils/designTokens";
 import { box_shadow_z1 } from "../styles/shadow";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 
-interface SetWithColor extends SetObject {
+interface SetWithColor extends SetProps {
   color?: string;
 }
 
@@ -111,10 +111,10 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
       return setsToShow.map((set: SetWithColor) => (
         <SetCard
           key={set.id}
-          setToShowName={set.name}
-          setToShowClassIds={set.classIds}
-          setToShowStats={set.stats}
-          setToShowId={set.id}
+          name={set.name}
+          classIds={set.classIds}
+          stats={set.stats}
+          id={set.id}
           isInLoadSetModal={isInLoadSetModal}
           screenNameFromProps={screenNameFromProps}
           hideRemoveSet={hideRemoveSet}

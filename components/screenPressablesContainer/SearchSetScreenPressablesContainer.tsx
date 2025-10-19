@@ -19,7 +19,7 @@ import StatSelector from "../statSelector/StatSelector";
 import useGeneralStore from "@/stores/useGeneralStore";
 import ButtonIconWithBadge from "../sortModeSelector/ButtonIconWithBadge";
 import useStatsStore from "@/stores/useStatsStore";
-import useSetsListStore, { SetFoundObject } from "@/stores/useSetsListStore";
+import useSetsListStore, { SetProps } from "@/stores/useSetsListStore";
 
 interface SearchSetScreenPressablesContainerProps {
   scrollviewSetsCardsRef: React.RefObject<any>;
@@ -58,9 +58,9 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
     const chosenStatsFilterNumber = chosenStats.map((stat) => stat.statFilterNumber);
     const chosenClassIds = selectedClassIdsByCategory;
 
-    const gaps: { setId: string; gap: number }[] = [];
+    const gaps: { id: string; gap: number }[] = [];
 
-    setsData.forEach((setData, setId) => {
+    setsData.forEach((setData, id) => {
       const { classIds, stats, bodytypes } = setData;
 
       const isOneElementNonAccepted = categories.some((categoryKey, index) => {
@@ -102,7 +102,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
       });
 
       if (validSet) {
-        gaps.push({ setId, gap });
+        gaps.push({ id, gap });
       }
     });
 
@@ -115,14 +115,14 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
       const setsFoundIdGap = gaps.slice(0, realResultsNumber);
       const worstGap = chosenStatsChecked.filter((checked) => checked).length;
 
-      const setsFound: SetFoundObject[] = setsFoundIdGap.map(({ setId, gap }, index) => {
+      const setsFound: SetProps[] = setsFoundIdGap.map(({ id, gap }, index) => {
         const percentage = 100 * (1 - Math.sqrt(gap / worstGap));
         const percentageRounded = Number(percentage.toPrecision(3));
-        const { bodytypes, ...setFoundData } = setsData.get(setId);
+        const { bodytypes, ...setFoundData } = setsData.get(id);
         return {
           ...setFoundData,
           id: nanoid(8),
-          name: `${translateToLanguage("SetFound", language)} ${index + 1}`,
+          name: `${translateToLanguage("SetFound", language)} (${index + 1})`,
           percentage: percentageRounded,
         };
       });

@@ -20,7 +20,7 @@ export interface StatsStoreState {
   setChosenStats: (newChosenStats: ChosenStat[]) => void;
   updateStatValue: (name: StatName, newValue: number) => void;
   setStatFilterNumber: (statName: string, newState: number) => void;
-  loadStatsFromSet: (stats: number[]) => void;
+  loadSetStats: (stats: number[]) => void;
 }
 
 const useStatsStore = create<StatsStoreState>((set, get) => ({
@@ -48,7 +48,7 @@ const useStatsStore = create<StatsStoreState>((set, get) => ({
     }));
   },
 
-  loadStatsFromSet: (stats) => {
+  loadSetStats: (stats) => {
     set((state) => ({
       chosenStats: state.chosenStats.map((stat, i) => ({
         ...stat,

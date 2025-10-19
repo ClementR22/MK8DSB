@@ -28,7 +28,7 @@ const SettingsScreen: React.FC = () => {
   const resetSettings = useResetSettings();
   const deleteAllSavedSets = useSetsPersistenceStore((state) => state.deleteAllSavedSets);
 
-  const handleDelete = () => {
+  const handleDeleteAllSavedSets = () => {
     deleteAllSavedSets();
     showToast("Succès" + " " + "Tous les sets sauvegardés ont été supprimés !");
   };
@@ -71,7 +71,7 @@ const SettingsScreen: React.FC = () => {
 
             <ButtonResetSettings resetSettings={resetSettings} />
 
-            <ButtonDeleteAllSetsInMemory deleteAllSavedSets={handleDelete} />
+            <ButtonDeleteAllSetsInMemory deleteAllSavedSets={handleDeleteAllSavedSets} />
 
             <Text role="label" size="large">
               DEBUG

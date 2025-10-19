@@ -8,9 +8,9 @@ export const useSetImportExport = () => {
   const exportSet = useSetsActionsStore((state) => state.exportSet);
   const importSet = useSetsActionsStore((state) => state.importSet);
 
-  const handleExport = async (id: string, screenName: ScreenName) => {
+  const handleExport = async (screenName: ScreenName, id: string) => {
     try {
-      exportSet(id, screenName);
+      exportSet(screenName, id);
       showToast("Set copié dans le presse-papier", "success");
     } catch (error) {
       showToast("Erreur lors de l'export", "error");

@@ -8,11 +8,11 @@ import StatGaugeSetCardBar from "./StatGaugeSetCardBar";
 import useStatsStore from "@/stores/useStatsStore";
 
 interface StatGaugeSetCardsContainerProps {
-  setToShowStats: number[];
+  stats: number[];
   containerStyle: ViewStyle;
 }
 
-const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({ setToShowStats, containerStyle }) => {
+const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({ stats, containerStyle }) => {
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
   const { resultStats } = useResultStats();
@@ -29,7 +29,7 @@ const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({
     return filteredResultStats.map((stat: ResultStat) => {
       const originalIndex = resultStats.findIndex((item) => item.name === stat.name);
       const compactName = statNamesCompact[stat.name];
-      const statValue = setToShowStats[originalIndex];
+      const statValue = stats[originalIndex];
 
       let chosenValue: number | undefined = undefined;
       if (isInSearchScreen && chosenStats[originalIndex]?.checked) {
@@ -53,7 +53,7 @@ const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({
         </StatGaugeContainer>
       );
     });
-  }, [resultStats, setToShowStats, isInSearchScreen, chosenStats]);
+  }, [resultStats, stats, isInSearchScreen, chosenStats]);
 
   if (!sliderContent) {
     return null;

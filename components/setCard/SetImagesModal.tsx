@@ -4,11 +4,11 @@ import Modal from "@/primitiveComponents/Modal";
 import SetImagesContainer from "./SetImagesContainer";
 
 interface SetImagesModalProps {
-  setToShowClassIds: number[];
+  classIds: number[];
   isCollapsed: boolean;
 }
 
-const SetImagesModal: React.FC<SetImagesModalProps> = ({ setToShowClassIds, isCollapsed }) => {
+const SetImagesModal: React.FC<SetImagesModalProps> = ({ classIds, isCollapsed }) => {
   const [isImagesModalVisible, setIsImagesModalVisible] = useState(false);
 
   const openModal = useCallback(() => {
@@ -22,12 +22,7 @@ const SetImagesModal: React.FC<SetImagesModalProps> = ({ setToShowClassIds, isCo
   return (
     <>
       <Pressable onPress={openModal} style={styles.pressable}>
-        <SetImagesContainer
-          setToShowClassIds={setToShowClassIds}
-          mode="icon"
-          isCollapsed={isCollapsed}
-          onPress={openModal}
-        />
+        <SetImagesContainer classIds={classIds} mode="icon" isCollapsed={isCollapsed} onPress={openModal} />
       </Pressable>
 
       <Modal
@@ -36,7 +31,7 @@ const SetImagesModal: React.FC<SetImagesModalProps> = ({ setToShowClassIds, isCo
         setIsModalVisible={setIsImagesModalVisible}
         onClose={closeModal}
       >
-        <SetImagesContainer setToShowClassIds={setToShowClassIds} mode="modal" />
+        <SetImagesContainer classIds={classIds} mode="modal" />
       </Modal>
     </>
   );

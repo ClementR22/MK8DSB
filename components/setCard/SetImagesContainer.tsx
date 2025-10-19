@@ -27,21 +27,16 @@ interface SetImageCategoryData {
 type ModeType = "icon" | "modal";
 
 interface SetImagesContainerProps {
-  setToShowClassIds: number[];
+  classIds: number[];
   mode: ModeType;
   isCollapsed?: boolean;
   onPress?: () => void;
 }
 
-const SetImagesContainer: React.FC<SetImagesContainerProps> = ({
-  setToShowClassIds,
-  mode,
-  isCollapsed = false,
-  onPress,
-}) => {
+const SetImagesContainer: React.FC<SetImagesContainerProps> = ({ classIds, mode, isCollapsed = false, onPress }) => {
   const data = useMemo<SetImageCategoryData[]>(() => {
     return categories.map((category: Category, index: number) => {
-      const matchedElements = elementsData.filter((element) => element.classId === setToShowClassIds[index]);
+      const matchedElements = elementsData.filter((element) => element.classId === classIds[index]);
 
       return {
         category: category,
@@ -51,7 +46,7 @@ const SetImagesContainer: React.FC<SetImagesContainerProps> = ({
         })),
       };
     });
-  }, [setToShowClassIds]);
+  }, [classIds]);
 
   const imageSize = mode === "icon" ? IMAGE_SIZE_IN_SET_CARD : IMAGE_SIZE_IN_MODAL;
 

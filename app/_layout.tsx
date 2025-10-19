@@ -25,14 +25,13 @@ import useSetsPersistenceStore from "@/stores/useSetsPersistenceStore";
 import { translateToLanguage } from "@/translations/translations";
 import { useLoadSettings } from "@/hooks/useLoadSettings";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import useGeneralStore from "@/stores/useGeneralStore";
 import { toastConfig } from "@/config/toastConfig";
 import { box_shadow_z2 } from "@/components/styles/shadow";
+import useSetsActionsStore from "@/stores/useSetsActionsStore";
 
 export default function TabLayout() {
   // --- Zustand Store Selections ---
-  // Select only the parts of the state that are needed
-  const fetchSetsSaved = useSetsPersistenceStore((state) => state.fetchSetsSaved);
+  const loadSetsSaved = useSetsActionsStore((state) => state.loadSetsSaved);
   const theme = useThemeStore((state) => state.theme);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
 
@@ -42,12 +41,12 @@ export default function TabLayout() {
   useEffect(() => {
     const listener = Appearance.addChangeListener(updateSystemTheme);
     return () => listener.remove();
-  }, [updateSystemTheme]); // Only re-run if updateSystemTheme function identity changes
+  }, [updateSystemTheme]);
 
   // Effect to fetch saved sets on mount
   useEffect(() => {
-    fetchSetsSaved();
-  }, [fetchSetsSaved]); // Only re-run if fetchSetsSaved function identity changes
+    loadSetsSaved();
+  }, [loadSetsSaved]);
 
   // Custom hook for loading settings (assuming it has its own internal effects)
   useLoadSettings();
@@ -100,7 +99,7 @@ export default function TabLayout() {
           <Tabs
             screenOptions={{
               tabBarActiveTintColor: theme.primary,
-              tabBarInactiveTintColor: theme.on_surface_variant, // Explicitly set inactive color from theme
+              tabBarInactiveTintColor: theme.on_surface_variant,
               sceneStyle: {
                 // For the content area behind the header/tab bar
                 backgroundColor: theme.surface,
@@ -117,7 +116,7 @@ export default function TabLayout() {
               options={{
                 title: translateToLanguage("FindSetTabTitle", language),
                 tabBarIcon: ({ color }) => <Entypo name={"magnifying-glass"} size={24} color={color} />,
-                header: renderSearchHeader, // Use the memoized header function
+                header: renderSearchHeader,
               }}
             />
             <Tabs.Screen

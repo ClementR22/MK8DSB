@@ -9,42 +9,42 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import { translateToLanguage } from "@/translations/translations";
 
 interface SetNameInputProps {
-  setToShowName: string;
-  setToShowId: string;
+  name: string;
+  id: string;
   editable?: boolean;
 }
 
-const SetNameInput: React.FC<SetNameInputProps> = ({ setToShowName, setToShowId, editable = true }) => {
+const SetNameInput: React.FC<SetNameInputProps> = ({ name, id, editable = true }) => {
   const language = useLanguageStore((state) => state.language);
 
   const screenName = useScreen();
   const renameSet = useSetsListStore((state) => state.renameSet);
   const { scrollToSetCard } = useSetCardsScroll();
 
-  const [localName, setLocalName] = useState(setToShowName);
+  const [localName, setLocalName] = useState(name);
 
   const handleEndEditing = useCallback(() => {
     if (!localName.trim()) {
       // si le nouveau nom est vide
-      setLocalName(setToShowName); // on remet le nom initial
+      setLocalName(name); // on remet le nom initial
       return;
     }
 
-    if (localName !== setToShowName) {
+    if (localName !== name) {
       try {
-        renameSet(localName, screenName, setToShowId);
+        renameSet(localName, screenName, id);
         showToast(translateToLanguage("SetRenamed", language));
       } catch (e) {
         showToast(formatErrorMessage(e, language));
-        setLocalName(setToShowName);
+        setLocalName(name);
         return;
       }
     }
-  }, [localName, setToShowName, renameSet, screenName, setToShowId, language]);
+  }, [localName, name, screenName, id, language, renameSet]);
 
   const handleFocus = useCallback(() => {
-    scrollToSetCard(setToShowId);
-  }, [scrollToSetCard, setToShowId]);
+    scrollToSetCard(id);
+  }, [id, scrollToSetCard]);
 
   return (
     <SetNameInputContent

@@ -6,7 +6,7 @@ import { router } from "expo-router";
 
 // Data and Types
 import { ScreenName } from "@/contexts/ScreenContext";
-import { SetObject, SetFoundObject } from "./useSetsListStore";
+import { MAX_NUMBER_SETS_DISPLAY, MAX_NUMBER_SETS_SAVE, SetProps } from "./useSetsListStore";
 
 // Utilities
 import { getSetStatsFromClassIds } from "@/utils/getSetStatsFromClassIds";
@@ -20,130 +20,131 @@ import useSetsPersistenceStore from "./useSetsPersistenceStore";
 import useGeneralStore from "./useGeneralStore";
 
 export interface SetsActionsStoreState {
-  loadSetToSearch: (set: SetObject) => void;
-  loadSetSaveToSearch: (id: string) => void;
-  loadSetDisplayToSearch: (id: string) => void;
-  loadSetSaveToDisplay: (id: string) => void;
-  loadSetSearchToDisplay: (id: string) => void;
-  saveSet: (screenName: ScreenName, id: string) => Promise<void>;
+  loadSetCard: (params: {
+    source?: ScreenName;
+    id?: string;
+    s?: SetProps;
+    target: ScreenName;
+    forceName?: boolean;
+  }) => SetProps;
+  loadToSearch: (params: { source?: ScreenName; id?: string; s?: SetProps }) => void;
+  loadToDisplay: (params: { source: ScreenName; id: string }) => void;
+  loadSetsSaved: () => void;
+  saveSet: (source: ScreenName, id: string) => Promise<void>;
   unSaveSet: (screenName: ScreenName, id: string) => Promise<void>;
-  renameSetWithPersistence: (newName: string, screenName: ScreenName, id: string) => Promise<void>;
-  updateSetsListWithPersistence: (pressedClassIds: Record<string, number>, screenName: ScreenName) => Promise<void>;
-  exportSet: (id: string, screenName: ScreenName) => void;
+  exportSet: (screenName: ScreenName, id: string) => void;
   importSet: (clipboardContent: string, screenName: ScreenName) => void;
-  initializeSavedSets: () => Promise<void>;
-  deleteAllSavedSetsComplete: () => Promise<void>;
 }
 
 const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
-  loadSetToSearch: (setToLoad) => {
-    useStatsStore.getState().loadStatsFromSet(setToLoad.stats);
+  loadSetCard: (params: {
+    source?: ScreenName;
+    id?: string;
+    s?: SetProps;
+    target: ScreenName;
+    forceName?: boolean;
+  }) => {
+    const { source, id, s: providedSet, target, forceName = false } = params;
+
+    // on récupère s depuis les props ou bien on le calcule
+    // et on retire percentage
+    let s: SetProps;
+    if (providedSet) {
+      const { percentage, ...set } = providedSet;
+      s = set;
+    } else {
+      const { percentage, ...set } = useSetsListStore.getState().getSet(source, id);
+      s = set;
+    }
+    // on change l'id car dans l'appli, il ne doit pas y avoir 2 sets avec le même id
+    s.id = nanoid(8);
+
+    const setsListTarget = useSetsListStore.getState().getSetsList(target).setsList;
+
+    const isNameUnique = useSetsListStore.getState().checkNameUnique(s.name, target);
+
+    if (!isNameUnique) {
+      if (!forceName) {
+        throw new Error("NameAlreadyExists");
+      } else {
+        const baseName = s.name;
+        const newIndex = 0;
+        const newName = useSetsListStore.getState().generateUniqueName(baseName, newIndex, target);
+
+        s.name = newName;
+      }
+    }
+
+    if (
+      (target === "display" && setsListTarget.length >= MAX_NUMBER_SETS_DISPLAY) ||
+      (target === "save" && setsListTarget.length >= MAX_NUMBER_SETS_SAVE)
+    ) {
+      throw new Error("SetLimitReachedInThisScreen");
+    }
+
+    const newSetsListTarget = [...setsListTarget, s];
+
+    const setSetsListTarget = useSetsListStore.getState().getSetSetsList(target);
+    setSetsListTarget(newSetsListTarget);
+    return s;
+  },
+
+  loadToSearch: (params: { source?: ScreenName; id?: string; s?: SetProps }) => {
+    const { source, id, s: providedSet } = params;
+
+    // on récupère s depuis les props ou bien on le calcule
+    // pas nécessaire de retirer percentage
+    let s: SetProps;
+    if (providedSet) {
+      s = providedSet;
+    } else {
+      s = useSetsListStore.getState().getSet(source, id);
+    }
+
+    useStatsStore.getState().loadSetStats(s.stats);
+
     router.push({ pathname: "/", params: { scrollToTop: "true" } });
     useGeneralStore.getState().setShouldScrollToTop();
   },
 
-  loadSetSaveToSearch: (id) => {
-    const setFromSaved = useSetsListStore.getState().setsListSaved.find((set) => set.id === id);
-    if (!setFromSaved) {
-      throw new Error("Le set sauvegardé n'a pas été trouvé.");
-    }
-    get().loadSetToSearch(setFromSaved);
+  loadToDisplay: (params: { source: ScreenName; id: string }) => {
+    const { source, id } = params;
+
+    get().loadSetCard({ source, id, target: "display" });
   },
 
-  loadSetDisplayToSearch: (id) => {
-    const setFromDisplay = useSetsListStore.getState().setsListDisplayed.find((set) => set.id === id);
-    if (!setFromDisplay) {
-      throw new Error("Le set affiché n'a pas été trouvé.");
-    }
-    get().loadSetToSearch(setFromDisplay);
+  loadSetsSaved: async () => {
+    const setsSaved = await useSetsPersistenceStore.getState().fetchSetsSaved();
+    useSetsListStore.getState().setSetsListSaved(setsSaved);
   },
 
-  loadSetSaveToDisplay: (id) => {
-    const setFromSaved = useSetsListStore.getState().setsListSaved.find((set) => set.id === id);
-    if (!setFromSaved) {
-      throw new Error("Le set sauvegardé n'a pas été trouvé");
-    }
-    useSetsListStore.getState().addSetToDisplay(setFromSaved);
-  },
-
-  loadSetSearchToDisplay: (id) => {
-    const setSelected = useSetsListStore.getState().setsListFound.find((set) => set.id === id);
-    if (!setSelected) {
-      throw new Error("Le set trouvé n'a pas été trouvé");
-    }
-    const { percentage, ...setToLoad } = setSelected;
-    useSetsListStore.getState().addSetToDisplay(setToLoad);
-  },
-
-  saveSet: async (screenName, id) => {
-    const { setsList } = useSetsListStore.getState().getSetsListFromScreenName(screenName);
-
-    const setSelected = setsList.find((set) => set.id === id);
-    if (!setSelected) {
-      throw new Error("Le set n'existe pas");
-    }
-
-    const { percentage, ...setToSave } = setSelected as SetFoundObject;
-
-    const isNameUnique = useSetsListStore.getState().checkNameUnique(setToSave.name, "save");
-    if (!isNameUnique) {
-      throw new Error("NameAlreadyExists");
-    }
-
-    useSetsListStore.getState().addSetToSaved(setToSave);
-    await useSetsPersistenceStore.getState().saveSetInMemory(setToSave);
-  },
-
-  unSaveSet: async (screenName: ScreenName, id) => {
-    const { setsList } = useSetsListStore.getState().getSetsListFromScreenName(screenName);
-    const classIds = setsList.find((set) => set.id === id).classIds;
+  saveSet: async (source: ScreenName, id: string) => {
+    const s = get().loadSetCard({ source, id, target: "save" });
 
     const setsListSaved = useSetsListStore.getState().setsListSaved;
-    const setsToRemove = setsListSaved.filter((set) => arraysEqual(set.classIds, classIds));
+    if (setsListSaved.length >= MAX_NUMBER_SETS_SAVE) {
+      throw new Error("SetLimitReachedInThisScreen");
+    }
 
-    for (const set of setsToRemove) {
-      useSetsListStore.getState().removeSet(set.id, "save");
-      await useSetsPersistenceStore.getState().removeSetInMemory(set.id);
+    await useSetsPersistenceStore.getState().saveSetInMemory(s);
+  },
+
+  unSaveSet: async (screenName: ScreenName, id: string) => {
+    const classIds = useSetsListStore.getState().getSet(screenName, id).classIds;
+
+    const setsListSaved = useSetsListStore.getState().setsListSaved;
+    const setsToRemove = setsListSaved.filter((s) => arraysEqual(s.classIds, classIds));
+
+    for (const s of setsToRemove) {
+      useSetsListStore.getState().removeSet(s.id, "save");
+      await useSetsPersistenceStore.getState().removeSetInMemory(s.id);
     }
   },
 
-  renameSetWithPersistence: async (newName, screenName, id) => {
-    const { isSaveScreen } = useSetsListStore.getState().getSetsListFromScreenName(screenName);
+  exportSet: (screenName, id) => {
+    const s = useSetsListStore.getState().getSet(screenName, id);
 
-    useSetsListStore.getState().renameSet(newName, screenName, id);
-
-    if (isSaveScreen) {
-      const setRenamed = useSetsListStore.getState().setsListSaved.find((set) => set.id === id);
-      if (setRenamed) {
-        await useSetsPersistenceStore.getState().updateSetInMemory(setRenamed);
-      }
-    }
-  },
-
-  updateSetsListWithPersistence: async (pressedClassIdsObj, screenName) => {
-    const { isSaveScreen } = useSetsListStore.getState().getSetsListFromScreenName(screenName);
-    const setCardEditedId = useSetsListStore.getState().setCardEditedId;
-
-    useSetsListStore.getState().updateSetsList(pressedClassIdsObj, screenName);
-
-    if (isSaveScreen) {
-      const setUpdated = useSetsListStore.getState().setsListSaved.find((set) => set.id === setCardEditedId);
-      if (setUpdated) {
-        await useSetsPersistenceStore.getState().updateSetInMemory(setUpdated);
-      }
-    }
-  },
-
-  exportSet: (id, screenName) => {
-    const { setsList } = useSetsListStore.getState().getSetsListFromScreenName(screenName);
-
-    const setObjToExport = setsList.find((set) => set.id === id);
-    if (!setObjToExport) {
-      throw new Error("Le set à exporter n'existe pas.");
-    }
-
-    const { name, classIds } = setObjToExport;
-    const json = JSON.stringify({ name, classIds });
+    const json = JSON.stringify({ name: s.name, classIds: s.classIds });
     Clipboard.setStringAsync(json);
   },
 
@@ -157,31 +158,20 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
     }
 
     if (!checkFormatSetImported(parsedSet)) {
-      throw new Error("IncorrectFormat");
+      return;
     }
 
     const stats = getSetStatsFromClassIds(parsedSet.classIds);
-    const set = { ...parsedSet, id: nanoid(8), stats };
+    const s = { ...parsedSet, id: nanoid(8), stats };
 
     if (screenName === "search") {
-      get().loadSetToSearch(set);
-    } else if (screenName === "display") {
-      useSetsListStore.getState().addSetToDisplay(set);
+      get().loadToSearch({ s });
     } else {
-      useSetsListStore.getState().addSetToSaved(set);
-      useSetsPersistenceStore.getState().saveSetInMemory(set);
+      get().loadSetCard({ s, target: screenName, forceName: true });
+      if (screenName === "save") {
+        useSetsPersistenceStore.getState().saveSetInMemory(s);
+      }
     }
-  },
-
-  initializeSavedSets: async () => {
-    const setsDataParsed = await useSetsPersistenceStore.getState().fetchSetsSaved();
-    useSetsListStore.getState().setSetsListSaved(setsDataParsed);
-    await useSetsPersistenceStore.getState().loadSortNumberFromMemory();
-  },
-
-  deleteAllSavedSetsComplete: async () => {
-    useSetsListStore.getState().setSetsListSaved([]);
-    await useSetsPersistenceStore.getState().deleteAllSavedSets();
   },
 }));
 

@@ -4,7 +4,7 @@ import React, { memo } from "react";
 import { View, StyleSheet } from "react-native";
 import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
 import { ScreenName } from "@/contexts/ScreenContext";
-import { actionNamesList } from "@/hooks/useSetCardConfig";
+import { ActionNamesList } from "@/hooks/useSetCardConfig";
 import SetNameInput from "../textInput/SetNameInput";
 import { BUTTON_SIZE } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
@@ -12,26 +12,26 @@ import { useThemeStore } from "@/stores/useThemeStore";
 
 interface SetCardHeaderProps {
   isNameEditable: boolean;
-  setToShowName: string;
-  setToShowId: string;
+  name: string;
+  screenName: ScreenName;
+  id: string;
   setToShowPercentage?: number;
-  moreActionNamesList?: actionNamesList;
-  situation: ScreenName | "load";
+  moreActionNamesList?: ActionNamesList;
 }
 
 const SetCardHeader: React.FC<SetCardHeaderProps> = ({
   isNameEditable,
-  setToShowName,
-  setToShowId,
+  name,
+  screenName,
+  id,
   setToShowPercentage,
   moreActionNamesList,
-  situation,
 }) => {
   const theme = useThemeStore((state) => state.theme);
 
   return (
     <View style={styles.headerContainer}>
-      <SetNameInput setToShowName={setToShowName} setToShowId={setToShowId} editable={isNameEditable} />
+      <SetNameInput name={name} id={id} editable={isNameEditable} />
 
       {setToShowPercentage && (
         <Text role="title" size="medium" weight="bold" color={theme.primary}>
@@ -40,11 +40,7 @@ const SetCardHeader: React.FC<SetCardHeaderProps> = ({
       )}
 
       {moreActionNamesList && (
-        <SetCardMoreActionsButton
-          moreActionNamesList={moreActionNamesList}
-          setToShowId={setToShowId}
-          situation={situation}
-        />
+        <SetCardMoreActionsButton moreActionNamesList={moreActionNamesList} id={id} screenName={screenName} />
       )}
     </View>
   );

@@ -4,10 +4,12 @@ import { ScreenName } from "@/contexts/ScreenContext";
 import useSetsActionsStore from "@/stores/useSetsActionsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
-import { actionNamesList } from "./useSetCardConfig";
+import { ActionName, ActionNamesList } from "./useSetCardConfig";
 import showToast from "@/utils/showToast";
-import { useSetImportExport } from "@/stores/useSetImportExport";
+import { useSetImportExport } from "@/hooks/useSetImportExport";
 import useSetsListStore from "@/stores/useSetsListStore";
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import usePressableElementsStore from "@/stores/usePressableElementsStore";
 
 interface ActionProps {
   title: string;
@@ -19,87 +21,91 @@ interface ActionProps {
 type ActionIconPropsMap = ActionProps[];
 
 export function useActionIconPropsList(
-  actionNamesToGenerate: actionNamesList,
-  setId: string,
-  situation: ScreenName | "load",
-  handleEditPress?: () => void,
+  actionNamesToGenerate: ActionNamesList,
+  screenName: ScreenName,
+  isInLoadModal: boolean,
+  id: string,
   isSaved?: boolean
 ): ActionIconPropsMap {
-  const loadSetSaveToSearch = useSetsActionsStore((state) => state.loadSetSaveToSearch);
-  const loadSetSaveToDisplay = useSetsActionsStore((state) => state.loadSetSaveToDisplay);
-  const loadSetSearchToDisplay = useSetsActionsStore((state) => state.loadSetSearchToDisplay);
-  const loadSetDisplayToSearch = useSetsActionsStore((state) => state.loadSetDisplayToSearch);
-  const removeSet = useSetsListStore((state) => state.removeSet);
+  const s = useSetsListStore((state) => state.getSet(screenName, id));
+
+  const language = useLanguageStore((state) => state.language);
+
+  const updateSelectionFromSet = usePressableElementsStore((state) => state.updateSelectionFromSet);
   const setSetCardEditedId = useSetsListStore((state) => state.setSetCardEditedId);
+  const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
+  const loadToSearch = useSetsActionsStore((state) => state.loadToSearch);
+  const loadToDisplay = useSetsActionsStore((state) => state.loadToDisplay);
   const saveSet = useSetsActionsStore((state) => state.saveSet);
   const unSaveSet = useSetsActionsStore((state) => state.unSaveSet);
-  const setIsRenameSetModalVisible = useModalsStore((state) => state.setIsRenameSetModalVisible);
+  const removeSet = useSetsListStore((state) => state.removeSet);
+  const handleExport = useSetImportExport().handleExport;
   const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
+
+  const handleEditPress = useCallback(() => {
+    setSetCardEditedId(id);
+    updateSelectionFromSet(s?.classIds);
+    setIsEditModalVisible(true);
+  }, [id, s?.classIds, setSetCardEditedId, updateSelectionFromSet, setIsEditModalVisible]);
+
+  const handleLoadToSearchPress = useCallback(() => {
+    loadToSearch({ source: screenName, id });
+    showToast("Succès" + " " + "Les stats du set ont été chargées");
+
+    setIsLoadSetModalVisible(false);
+  }, [screenName, id, loadToSearch, setIsLoadSetModalVisible]);
+
+  const handleLoadToDisplayPress = useCallback(() => {
+    try {
+      loadToDisplay({ source: screenName, id });
+      showToast("Succès" + " " + "Le set a été chargé dans l'écran de comparaison");
+    } catch (e) {
+      showToast(e.message);
+    }
+
+    setIsLoadSetModalVisible(false);
+  }, [screenName, id, loadToDisplay, setIsLoadSetModalVisible]);
 
   const handleSavePress = useCallback(() => {
     if (!isSaved) {
-      saveSet(situation as ScreenName, setId);
+      saveSet(screenName, id);
       showToast("Succès" + " " + "Le set a été enregistré");
     } else {
-      unSaveSet(situation as ScreenName, setId);
+      unSaveSet(screenName, id);
       showToast("Succès" + " " + "Le set a été supprimé des favoris.");
     }
-  }, [setSetCardEditedId, setId, situation, setIsRenameSetModalVisible, saveSet, isSaved]);
+  }, [screenName, id, isSaved, saveSet, unSaveSet]);
 
   const handleRemovePress = useCallback(() => {
-    if (situation !== "load") {
-      removeSet(setId, situation);
-      if (situation === "save") {
-        showToast("Succès" + " " + "Le set a été supprimé des favoris.");
-      }
+    removeSet(id, screenName);
+    if (screenName === "save") {
+      showToast("Succès" + " " + "Le set a été supprimé des favoris.");
     }
-  }, [removeSet, setId, situation]);
+  }, [screenName, id, removeSet]);
 
-  const handleExportPress = () => {
-    useSetImportExport().handleExport(setId, situation as ScreenName);
-  };
+  const handleExportPress = useCallback(() => {
+    handleExport(screenName, id);
+  }, [screenName, id, handleExport]);
 
-  const handleLoadSaveToSearchPress = useCallback(() => {
-    if (setId !== null && setId !== undefined) {
-      loadSetSaveToSearch(setId);
-      showToast("Succès" + " " + "Les stats du set ont été chargées");
-    }
-    setIsLoadSetModalVisible(false);
-  }, [loadSetSaveToSearch, setId, setIsLoadSetModalVisible]);
-
-  const handleLoadSaveToDisplayPress = useCallback(() => {
-    if (setId !== null && setId !== undefined) {
-      loadSetSaveToDisplay(setId);
-    }
-    setIsLoadSetModalVisible(false);
-  }, [loadSetSaveToDisplay, setId, setIsLoadSetModalVisible]);
-
-  const handleLoadSearchToDisplayPress = useCallback(() => {
-    if (setId !== null && setId !== undefined) {
-      loadSetSearchToDisplay(setId);
-    }
-  }, [loadSetSearchToDisplay, setId]);
-
-  const handleLoadDisplayToSearchPress = useCallback(() => {
-    if (setId !== null && setId !== undefined) {
-      loadSetDisplayToSearch(setId);
-      showToast("Succès" + " " + "Les stats du set ont été chargées");
-    }
-  }, [loadSetDisplayToSearch, setId]);
-
-  const allPossibleActionDefs = useMemo(
-    () => ({
+  const actionIconPropsList: ActionIconPropsMap = useMemo(() => {
+    const allActionsDefs: Record<ActionName, ActionProps> = {
       edit: {
         title: "Edit",
         name: "edit",
         type: IconType.MaterialIcons,
         onPress: handleEditPress,
       },
-      remove: {
-        title: "Remove",
-        name: "close",
-        type: IconType.AntDesign,
-        onPress: handleRemovePress,
+      loadToSearch: {
+        title: isInLoadModal ? "LoadTheStats" : "LoadTheStatsToSearchScreen",
+        name: isInLoadModal ? "download" : "magnify",
+        type: IconType.MaterialCommunityIcons,
+        onPress: handleLoadToSearchPress,
+      },
+      loadToDisplay: {
+        title: isInLoadModal ? "LoadTheSet" : "LoadTheSetToDisplayScreen",
+        name: isInLoadModal ? "download" : "compare",
+        type: IconType.MaterialCommunityIcons,
+        onPress: handleLoadToDisplayPress,
       },
       save: {
         title: "Save",
@@ -107,34 +113,10 @@ export function useActionIconPropsList(
         type: IconType.MaterialCommunityIcons,
         onPress: handleSavePress,
       },
-      loadSaveToSearch: {
-        title: situation === "load" ? "LoadTheStats" : "LoadTheStatsToSearchScreen",
-        name: situation === "save" ? "magnify" : "download",
-        type: IconType.MaterialCommunityIcons,
-        onPress: handleLoadSaveToSearchPress,
-      },
-      loadSaveToDisplay: {
-        title: situation === "load" ? "LoadTheSet" : "LoadTheSetToDisplayScreen",
-        name: situation === "save" ? "compare" : "download",
-        type: IconType.MaterialCommunityIcons,
-        onPress: handleLoadSaveToDisplayPress,
-      },
-      loadSearchToDisplay: {
-        title: "LoadTheSetToDisplayScreen",
-        name: "compare",
-        type: IconType.MaterialCommunityIcons,
-        onPress: handleLoadSearchToDisplayPress,
-      },
-      loadDisplayToSearch: {
-        title: "LoadTheStatsToSearchScreen",
-        name: "magnify",
-        type: IconType.MaterialCommunityIcons,
-        onPress: handleLoadDisplayToSearchPress,
-      },
-      removeInMemory: {
+      remove: {
         title: "Remove",
-        name: "trash-can",
-        type: IconType.MaterialCommunityIcons,
+        name: screenName === "save" ? "trash-can" : "close",
+        type: screenName === "save" ? IconType.MaterialCommunityIcons : IconType.AntDesign,
         onPress: handleRemovePress,
       },
       export: {
@@ -143,34 +125,27 @@ export function useActionIconPropsList(
         type: IconType.MaterialCommunityIcons,
         onPress: handleExportPress,
       },
-    }),
-    [
-      setId,
-      situation,
-      handleEditPress,
-      isSaved,
-      handleSavePress,
-      handleRemovePress,
-      handleExportPress,
-      handleLoadSaveToSearchPress,
-      handleLoadSaveToDisplayPress,
-      handleLoadSearchToDisplayPress,
-      handleLoadDisplayToSearchPress,
-    ]
-  );
+    };
 
-  const actionIconPropsList = useMemo(() => {
-    const selectedActions: ActionIconPropsMap = [];
-    actionNamesToGenerate.forEach((actionName) => {
-      const actionDef = allPossibleActionDefs[actionName];
-      if (actionDef) {
-        selectedActions.push(actionDef);
-      } else {
-        console.warn(`Action definition for "${actionName}" not found in useActionIconPropsList.`);
-      }
-    });
-    return selectedActions;
-  }, [actionNamesToGenerate, allPossibleActionDefs]);
+    return actionNamesToGenerate.map((actionName) => allActionsDefs[actionName]);
+  }, [
+    actionNamesToGenerate,
+    id,
+    screenName,
+    isInLoadModal,
+    isSaved,
+    s?.classIds,
+    setSetCardEditedId,
+    updateSelectionFromSet,
+    setIsEditModalVisible,
+    loadToSearch,
+    loadToDisplay,
+    saveSet,
+    unSaveSet,
+    removeSet,
+    setIsLoadSetModalVisible,
+    handleExport,
+  ]);
 
   return actionIconPropsList;
 }

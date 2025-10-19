@@ -1,15 +1,14 @@
 import { useMemo } from "react";
 
-export type actionNamesList = string[];
+export type ActionName = "edit" | "loadToSearch" | "loadToDisplay" | "save" | "remove" | "export";
+export type ActionNamesList = ActionName[];
 
 interface SetCardSituationConfig {
   isNameEditable: boolean;
   showStatSliderResult: boolean;
-  actionNamesList: actionNamesList;
-  moreActionNamesList?: actionNamesList;
 }
 
-const situationConfigs: Record<string, Omit<SetCardSituationConfig, "actionNamesList" | "moreActionNamesList">> = {
+const situationConfigs: Record<string, SetCardSituationConfig> = {
   search: {
     isNameEditable: true,
     showStatSliderResult: true,
@@ -28,24 +27,24 @@ const situationConfigs: Record<string, Omit<SetCardSituationConfig, "actionNames
   },
 };
 
-const BASE_ACTIONS_SEARCH: actionNamesList = ["export", "loadSearchToDisplay", "save"];
-const BASE_ACTIONS_DISPLAY: actionNamesList = ["edit", "loadDisplayToSearch", "save"];
-const BASE_ACTIONS_SAVE: actionNamesList = ["edit", "loadSaveToSearch", "loadSaveToDisplay"];
-const BASE_MORE_ACTIONS_SAVE: actionNamesList = ["export", "removeInMemory"];
-const MORE_ACTIONS_DISPLAY_COMMON: actionNamesList = ["export"]; // Common actions for display more list
+const BASE_ACTIONS_SEARCH: ActionNamesList = ["export", "loadToDisplay", "save"];
+const BASE_ACTIONS_DISPLAY: ActionNamesList = ["edit", "loadToSearch", "save"];
+const BASE_ACTIONS_SAVE: ActionNamesList = ["edit", "loadToSearch", "loadToDisplay"];
+const MORE_ACTIONS_DISPLAY_COMMON: ActionNamesList = ["export"]; // Common actions for display more list
+const BASE_MORE_ACTIONS_SAVE: ActionNamesList = ["export", "remove"];
 
 export const useSetCardConfig = (situation, hideRemoveSet, screenName) => {
   return useMemo(() => {
     const base = situationConfigs[situation];
-    let actionNames: actionNamesList;
-    let moreActionNames: actionNamesList | undefined;
+    let actionNames: ActionNamesList;
+    let moreActionNames: ActionNamesList | undefined;
 
     if (situation === "load") {
-      actionNames = [screenName === "search" ? "loadSaveToSearch" : "loadSaveToDisplay"];
+      actionNames = [screenName === "search" ? "loadToSearch" : "loadToDisplay"];
       moreActionNames = undefined;
     } else if (situation === "display") {
       actionNames = BASE_ACTIONS_DISPLAY;
-      const dynamicMore: string[] = [];
+      const dynamicMore: ActionNamesList = [];
       if (!hideRemoveSet) {
         dynamicMore.push("remove");
       }

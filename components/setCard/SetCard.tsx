@@ -22,11 +22,11 @@ export interface SetData {
 }
 
 interface SetCardProps {
-  setToShowName: string;
-  setToShowClassIds: number[];
-  setToShowStats?: number[] | null;
+  name: string;
+  classIds: number[];
+  stats?: number[] | null;
   setToShowPercentage?: number;
-  setToShowId: string;
+  id: string;
   isInLoadSetModal?: boolean;
   screenNameFromProps?: ScreenName;
   hideRemoveSet?: boolean;
@@ -35,11 +35,11 @@ interface SetCardProps {
 }
 
 const SetCard: React.FC<SetCardProps> = ({
-  setToShowName,
-  setToShowClassIds,
-  setToShowStats = null,
+  name,
+  classIds,
+  stats = null,
   setToShowPercentage = undefined,
-  setToShowId,
+  id,
   isInLoadSetModal = false,
   screenNameFromProps,
   hideRemoveSet = false,
@@ -56,54 +56,44 @@ const SetCard: React.FC<SetCardProps> = ({
   const setsListSaved = useSetsListStore((state) => state.setsListSaved);
 
   const isSaved = useMemo(
-    () => setsListSaved.some((setSaved) => arraysEqual(setSaved.classIds, setToShowClassIds)),
-    [setsListSaved, setToShowClassIds]
+    () => setsListSaved.some((setSaved) => arraysEqual(setSaved.classIds, classIds)),
+    [setsListSaved, classIds]
   );
-
-  const updateSelectionFromSet = usePressableElementsStore((state) => state.updateSelectionFromSet);
-  const setSetCardEditedId = useSetsListStore((state) => state.setSetCardEditedId);
-  const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
 
   const config = useSetCardConfig(situation, hideRemoveSet, screenName);
 
   const { setCardStyle } = useSetCardStyle(SET_CARD_WIDTH);
-
-  const handleEditPress = useCallback(() => {
-    setSetCardEditedId(setToShowId);
-    updateSelectionFromSet(setToShowClassIds);
-    setIsEditModalVisible(true);
-  }, [setSetCardEditedId, updateSelectionFromSet, setIsEditModalVisible, setToShowClassIds, setToShowId]);
 
   return (
     <View style={styles.wrapper} onLayout={onLayout}>
       <View style={[setCardStyle, borderColor && { borderColor }]}>
         <SetCardHeader
           isNameEditable={config.isNameEditable}
-          setToShowName={setToShowName}
-          setToShowId={setToShowId}
+          name={name}
+          screenName={screenName}
+          id={id}
           setToShowPercentage={setToShowPercentage}
           moreActionNamesList={
             isCollapsed
               ? [...(config.moreActionNamesList ?? []), ...config.actionNamesList]
               : config.moreActionNamesList
           }
-          situation={situation}
         />
 
-        <SetImagesModal setToShowClassIds={setToShowClassIds} isCollapsed={isCollapsed} />
+        <SetImagesModal classIds={classIds} isCollapsed={isCollapsed} />
 
         {!isCollapsed && (
           <SetCardActionButtons
             actionNamesList={config.actionNamesList}
-            setToShowId={setToShowId}
-            situation={situation}
+            id={id}
+            screenName={screenName}
+            isInLoadModal={isInLoadSetModal}
             isSaved={isSaved}
-            handleEditPress={handleEditPress}
           />
         )}
       </View>
-      {config.showStatSliderResult && setToShowStats !== null && (
-        <StatGaugeSetCardsContainer setToShowStats={setToShowStats} containerStyle={setCardStyle} />
+      {config.showStatSliderResult && stats !== null && (
+        <StatGaugeSetCardsContainer stats={stats} containerStyle={setCardStyle} />
       )}
     </View>
   );

@@ -3,27 +3,23 @@ import { Menu } from "react-native-paper";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import { actionNamesList } from "@/hooks/useSetCardConfig";
+import { ActionNamesList } from "@/hooks/useSetCardConfig";
 import { ScreenName } from "@/contexts/ScreenContext";
 import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
 interface SetCardMoreActionsButtonProps {
-  moreActionNamesList: actionNamesList;
-  setToShowId: string;
-  situation: ScreenName | "load";
+  moreActionNamesList: ActionNamesList;
+  id: string;
+  screenName: ScreenName;
 }
 
-const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({
-  moreActionNamesList,
-  setToShowId,
-  situation,
-}) => {
+const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({ moreActionNamesList, id, screenName }) => {
   const language = useLanguageStore((state) => state.language);
 
   const [visible, setVisible] = useState(false);
 
-  const actionIconPropsList = useActionIconPropsList(moreActionNamesList, setToShowId, situation);
+  const actionIconPropsList = useActionIconPropsList(moreActionNamesList, screenName, false, id);
 
   // Mémoïsation du handler pour éviter de recréer la fonction à chaque render
   const handleMenuItemPress = useCallback((onPressAction: () => void) => {

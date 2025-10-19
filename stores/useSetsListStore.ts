@@ -11,40 +11,41 @@ import { ScreenName } from "@/contexts/ScreenContext";
 import { getSetStatsFromClassIds } from "@/utils/getSetStatsFromClassIds";
 import { SortableElement, sortElements } from "@/utils/sortElements";
 import { DEFAULT_SETS } from "@/constants/defaultSets";
+import useSetsPersistenceStore from "./useSetsPersistenceStore";
 
 export const MAX_NUMBER_SETS_DISPLAY = 10;
+export const MAX_NUMBER_SETS_SAVE = 30;
 
-export interface SetObject {
+export interface SetProps {
   id: string;
   name: string;
   classIds: number[];
   stats: number[];
+  percentage?: number;
 }
-
-export interface SetFoundObject extends SetObject {
-  percentage: number;
-}
-
 export interface SetsListStoreState {
-  setsListFound: SetFoundObject[];
-  setsListDisplayed: SetObject[];
-  setsListSaved: SetObject[];
+  setsListFound: SetProps[];
+  setsListDisplayed: SetProps[];
+  setsListSaved: SetProps[];
   setCardEditedId: string;
   setKeyInDisplay: number;
 
-  getSetsListFromScreenName: (screenName: ScreenName) => {
-    setsList: SetObject[] | SetFoundObject[];
+  getSetsList: (screenName: ScreenName) => {
+    setsList: SetProps[] | SetProps[];
     setsListName: string;
-    isSaveScreen: boolean;
   };
-  setSetsListFound: (newSetsList: SetFoundObject[]) => void;
-  setSetsListSaved: (newSetsList: SetObject[]) => void;
+  getSetSetsList: (screenName: ScreenName) => (newSetsList: SetProps[]) => void;
+
+  getSet: (screenName: ScreenName, id: string) => SetProps;
+
+  setSetsListFound: (newSetsList: SetProps[]) => void;
+  setSetsListDisplayed: (newSetsList: SetProps[]) => void;
+  setSetsListSaved: (newSetsList: SetProps[]) => void;
   setSetCardEditedId: (id: string) => void;
   addNewSetInDisplay: () => void;
-  addSetToDisplay: (setToAdd: SetObject) => void;
-  addSetToSaved: (setToAdd: SetObject) => void;
   removeSet: (id: string, screenName: ScreenName) => void;
-  checkNameUnique: (name: string, screenName: ScreenName) => boolean;
+  checkNameUnique: (setName: string, screenName: ScreenName) => boolean;
+  generateUniqueName: (baseName: string, newIndexInit: number, target: ScreenName) => string;
   renameSet: (newName: string, screenName: ScreenName, id: string) => void;
   updateSetsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => void;
   sortSetsList: (screenName: ScreenName, sortNumber: number) => void;
@@ -60,9 +61,8 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
   setCardEditedId: null,
   setKeyInDisplay: 2,
 
-  getSetsListFromScreenName: (screenName) => {
+  getSetsList: (screenName) => {
     let setsListName: string;
-    let isSaveScreen = false;
 
     switch (screenName) {
       case "search":
@@ -73,15 +73,41 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
         break;
       case "save":
         setsListName = "setsListSaved";
-        isSaveScreen = true;
         break;
     }
 
     const setsList = get()[setsListName];
-    return { setsList, setsListName, isSaveScreen };
+    return { setsList, setsListName };
+  },
+
+  getSetSetsList: (screenName: ScreenName) => {
+    let setSetsListName: string;
+
+    switch (screenName) {
+      case "search":
+        setSetsListName = "setSetsListFound";
+        break;
+      case "display":
+        setSetsListName = "setSetsListDisplayed";
+        break;
+      case "save":
+        setSetsListName = "setSetsListSaved";
+        break;
+    }
+
+    const setSetsList = get()[setSetsListName];
+    return setSetsList;
+  },
+
+  getSet: (screenName: ScreenName, id: string) => {
+    const setList = get().getSetsList(screenName).setsList;
+    const s = setList.find((s) => s.id === id);
+    return s;
   },
 
   setSetsListFound: (newSetsList) => set({ setsListFound: newSetsList }),
+
+  setSetsListDisplayed: (newSetsList) => set({ setsListDisplayed: newSetsList }),
 
   setSetsListSaved: (newSetsList) => set({ setsListSaved: newSetsList }),
 
@@ -94,20 +120,8 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
       throw new Error("SetLimitReached");
     }
 
-    let newIndex = get().setKeyInDisplay;
-    let newName: string;
-    let attempts = 0;
-    const MAX_ATTEMPTS = 20;
-
-    do {
-      newIndex++;
-      newName = `Set ${newIndex}`;
-      attempts++;
-
-      if (attempts > MAX_ATTEMPTS) {
-        throw new Error("CannotGenerateUniqueName");
-      }
-    } while (!get().checkNameUnique(newName, "display"));
+    const newIndex = get().setKeyInDisplay;
+    const newName = get().generateUniqueName("Set", newIndex, "display");
 
     set((state) => {
       return {
@@ -117,95 +131,89 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
     });
   },
 
-  addSetToDisplay: (setToAdd) => {
-    const isNameUnique = get().checkNameUnique(setToAdd.name, "display");
+  removeSet: (id, screenName) => {
+    const { setsList, setsListName } = get().getSetsList(screenName);
+    const newList = setsList.filter((set) => set.id !== id);
+    set({ [setsListName]: newList });
+  },
+
+  checkNameUnique: (setName, screenName) => {
+    // ne lance pas d'error
+    const { setsList } = get().getSetsList(screenName);
+
+    const isNameUnique = !setsList.some((set) => set.name === setName);
+    return isNameUnique;
+  },
+
+  generateUniqueName: (baseName: string, newIndexInit: number, target: ScreenName) => {
+    let newIndex = newIndexInit;
+    let newName: string;
+    let attempts = 0;
+    const MAX_ATTEMPTS = 20;
+
+    do {
+      newIndex++;
+      newName = `${baseName} (${newIndex})`;
+      attempts++;
+
+      if (attempts > MAX_ATTEMPTS) {
+        throw new Error("CannotGenerateUniqueName");
+      }
+    } while (!get().checkNameUnique(newName, target));
+
+    return newName;
+  },
+
+  renameSet: (newName, screenName, id) => {
+    const { setsList, setsListName } = get().getSetsList(screenName);
+
+    const isNameUnique = get().checkNameUnique(newName, screenName);
     if (!isNameUnique) {
       throw new Error("NameAlreadyExists");
     }
 
-    if (get().setsListDisplayed.length >= MAX_NUMBER_SETS_DISPLAY) {
-      throw new Error("SetLimitReached");
-    }
+    const s = get().getSet(screenName, id);
+    const newSet = { ...s, name: newName };
 
-    const setToAddWithNewId = { ...setToAdd, id: nanoid(8) };
-    set((state) => ({
-      setsListDisplayed: [...state.setsListDisplayed, setToAddWithNewId],
-    }));
-  },
-
-  addSetToSaved: (setToAdd) => {
-    let nameUnique = setToAdd.name;
-    let newIndex = 0;
-
-    while (!get().checkNameUnique(nameUnique, "save")) {
-      nameUnique = `${setToAdd.name} (${newIndex})`;
-      newIndex++;
-    }
-
-    const setToAddWithNewId = { ...setToAdd, name: nameUnique, id: nanoid(8) };
-
-    set((state) => ({
-      setsListSaved: [...state.setsListSaved, setToAddWithNewId],
-    }));
-
-    return setToAddWithNewId;
-  },
-
-  removeSet: (id, screenName) => {
-    const { setsList, setsListName } = get().getSetsListFromScreenName(screenName);
-    const newList = setsList.filter((set) => set.id !== id);
-    set({ [setsListName]: newList } as any);
-  },
-
-  checkNameUnique: (name, screenName) => {
-    const { setsList } = get().getSetsListFromScreenName(screenName);
-    return !setsList.some((set) => set.name === name);
-  },
-
-  renameSet: (newName, screenName, setToShowId) => {
-    const { setsList, setsListName } = get().getSetsListFromScreenName(screenName);
-
-    const isNewNameUniqueExceptCurrent = setsList.every((set) => {
-      return set.name !== newName;
-    });
-
-    if (!isNewNameUniqueExceptCurrent) {
-      throw new Error("NameAlreadyExists");
-    }
-
-    const setsListUpdated = setsList.map((set: SetObject) => {
-      if (set.id === setToShowId) {
-        return { ...set, name: newName };
+    const newSetsList = setsList.map((s: SetProps) => {
+      if (s.id === id) {
+        return newSet;
       }
-      return set;
+      return s;
     });
 
-    set({ [setsListName]: setsListUpdated } as any);
+    set({ [setsListName]: newSetsList });
+
+    if (screenName === "save") {
+      useSetsPersistenceStore.getState().saveSetInMemory(newSet);
+    }
   },
 
   updateSetsList: (pressedClassIdsObj, screenName) => {
-    const { setsList, setsListName } = get().getSetsListFromScreenName(screenName);
+    const { setsList, setsListName } = get().getSetsList(screenName);
     const newClassIds = Object.values(pressedClassIdsObj);
-    const setCardEditedId = get().setCardEditedId;
+    const id = get().setCardEditedId;
+    const s = get().getSet(screenName, id);
+    const newSet = { ...s, classIds: newClassIds, stats: getSetStatsFromClassIds(newClassIds) };
 
-    const setsListUpdated = setsList.map((set) => {
-      if (set.id === setCardEditedId) {
-        return {
-          ...set,
-          classIds: newClassIds,
-          stats: getSetStatsFromClassIds(newClassIds),
-        };
+    const setsListUpdated = setsList.map((s) => {
+      if (s.id === id) {
+        return newSet;
       }
-      return set;
+      return s;
     });
 
-    set({ [setsListName]: setsListUpdated } as any);
+    set({ [setsListName]: setsListUpdated });
+
+    if (screenName === "save") {
+      useSetsPersistenceStore.getState().saveSetInMemory(newSet);
+    }
   },
 
   sortSetsList: (screenName, sortNumber) => {
-    const { setsList, setsListName } = get().getSetsListFromScreenName(screenName);
+    const { setsList, setsListName } = get().getSetsList(screenName);
 
-    const setsListSortable: SortableElement[] = setsList.map((setObj: SetObject) => {
+    const setsListSortable: SortableElement[] = setsList.map((setObj: SetProps) => {
       const statsArray = setObj.stats;
       const mappedStats: Partial<SortableElement> = {};
 

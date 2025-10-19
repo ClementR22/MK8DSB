@@ -2,7 +2,7 @@ import React from "react";
 import { ScreenName } from "@/contexts/ScreenContext";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import { useSetImportExport } from "@/stores/useSetImportExport";
+import { useSetImportExport } from "@/hooks/useSetImportExport";
 
 interface ButtonImportSetProps {
   screenName: ScreenName;

@@ -2,25 +2,25 @@ import React from "react";
 import BoxContainer from "../../primitiveComponents/BoxContainer";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
-import { actionNamesList } from "@/hooks/useSetCardConfig";
+import { ActionNamesList } from "@/hooks/useSetCardConfig";
 import { ScreenName } from "@/contexts/ScreenContext";
 
 interface SetCardActionButtonsProps {
-  actionNamesList: actionNamesList;
-  setToShowId: string;
-  situation: ScreenName | "load";
+  actionNamesList: ActionNamesList;
+  id: string;
+  screenName: ScreenName;
+  isInLoadModal: boolean;
   isSaved: boolean;
-  handleEditPress: () => void;
 }
 
 const SetCardActionButtons: React.FC<SetCardActionButtonsProps> = ({
   actionNamesList,
-  setToShowId,
-  situation,
+  id,
+  screenName,
+  isInLoadModal,
   isSaved,
-  handleEditPress,
 }) => {
-  const actionIconPropsList = useActionIconPropsList(actionNamesList, setToShowId, situation, handleEditPress, isSaved);
+  const actionIconPropsList = useActionIconPropsList(actionNamesList, screenName, isInLoadModal, id, isSaved);
 
   return (
     <BoxContainer
