@@ -30,7 +30,7 @@ const SettingsScreen: React.FC = () => {
 
   const handleDeleteAllSavedSets = () => {
     deleteAllSavedSets();
-    showToast("Succès" + " " + "Tous les sets sauvegardés ont été supprimés !");
+    showToast("Tous les sets sauvegardés ont été supprimés !");
   };
 
   // Mémoïsation des handlers DEBUG

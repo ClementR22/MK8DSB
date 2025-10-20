@@ -9,12 +9,8 @@ export const useSetImportExport = () => {
   const importSet = useSetsActionsStore((state) => state.importSet);
 
   const handleExport = async (screenName: ScreenName, id: string) => {
-    try {
-      exportSet(screenName, id);
-      showToast("Set copié dans le presse-papier", "success");
-    } catch (error) {
-      showToast("Erreur lors de l'export", "error");
-    }
+    exportSet(screenName, id);
+    showToast("Set copié dans le presse-papier", "success");
   };
 
   const handleImport = async (screenName: ScreenName) => {
@@ -22,37 +18,10 @@ export const useSetImportExport = () => {
       const clipboardContent = await Clipboard.getStringAsync();
       importSet(clipboardContent, screenName);
       showToast("Set importé avec succès", "success");
-    } catch (error) {
-      const message = error.message === "IncorrectFormat" ? "Format incorrect" : "Erreur lors de l'import";
-      showToast(message, "error");
+    } catch (e) {
+      showToast(e.message, "error");
     }
   };
 
   return { handleExport, handleImport };
 };
-
-/*
-const handleImport = async () => {
-    try {
-      const clipboardContent = await Clipboard.getStringAsync();
-
-      if (!clipboardContent?.trim()) {
-        throw new Error("ClipboardIsEmpty");
-      }
-
-      importSet(clipboardContent, screenName);
-      switch (screenName) {
-        case "search":
-          showToast("Succès" + " " + "Les stats du set ont été chargées");
-
-        case "display":
-          showToast(translateToLanguage("Succès" + " " + "Le set a été ajouté à l'écran de comparaison", language));
-        case "save":
-          showToast(translateToLanguage("Succès" + " " + "Le set a été chargé dans les favoris", language));
-          showToast("Succès" + " " + "Le set a été chargé dans les favoris");
-      }
-    } catch (e) {
-      showToast(formatErrorMessage(e, language, "ImportError"));
-    }
-  };
-*/

@@ -5,9 +5,5 @@ export const getSetStatsFromClassIds = (classIds: number[]): number[] => {
   const id: string = classIds.join("-");
   const setData = setsData.get(id);
 
-  if (!setData?.stats) {
-    throw new Error("ThisSetDoesNotExist");
-  }
-
-  return setData.stats;
+  return setData?.stats;
 };

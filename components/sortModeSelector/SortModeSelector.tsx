@@ -22,6 +22,7 @@ import { useScreen } from "@/contexts/ScreenContext";
 import { getCurrentDirection, getSortNameFromSortNumber, sortNameMap } from "@/utils/getSortNameFromSortNumber";
 import { vw } from "../styles/theme";
 import { IconType } from "react-native-dynamic-vector-icons";
+import showToast from "@/utils/showToast";
 
 // Constants
 const NUMBER_OF_BUTTONS = 8;
@@ -62,6 +63,8 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
       if (newOrderInfo) {
         setSortNumber(newDirection === "asc" ? newOrderInfo.asc : newOrderInfo.desc);
       }
+
+      showToast(name + newDirection);
     },
     [activeSort, currentDirection, setSortNumber]
   );

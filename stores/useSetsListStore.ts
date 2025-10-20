@@ -101,6 +101,7 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
 
   getSet: (screenName: ScreenName, id: string) => {
     const setList = get().getSetsList(screenName).setsList;
+
     const s = setList.find((s) => s.id === id);
     return s;
   },
@@ -193,6 +194,7 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
     const { setsList, setsListName } = get().getSetsList(screenName);
     const newClassIds = Object.values(pressedClassIdsObj);
     const id = get().setCardEditedId;
+
     const s = get().getSet(screenName, id);
     const newSet = { ...s, classIds: newClassIds, stats: getSetStatsFromClassIds(newClassIds) };
 

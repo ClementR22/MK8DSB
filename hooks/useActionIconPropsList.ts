@@ -27,7 +27,8 @@ export function useActionIconPropsList(
   id: string,
   isSaved?: boolean
 ): ActionIconPropsMap {
-  const s = useSetsListStore((state) => state.getSet(screenName, id));
+  const source = isInLoadModal ? "save" : screenName;
+  const s = useSetsListStore((state) => state.getSet(source, id));
 
   const language = useLanguageStore((state) => state.language);
 
@@ -49,43 +50,49 @@ export function useActionIconPropsList(
   }, [id, s?.classIds, setSetCardEditedId, updateSelectionFromSet, setIsEditModalVisible]);
 
   const handleLoadToSearchPress = useCallback(() => {
-    loadToSearch({ source: screenName, id });
-    showToast("Succès" + " " + "Les stats du set ont été chargées");
+    loadToSearch({ source, id });
+    showToast("Les stats du set ont été chargées");
 
     setIsLoadSetModalVisible(false);
-  }, [screenName, id, loadToSearch, setIsLoadSetModalVisible]);
+  }, [source, id, loadToSearch, setIsLoadSetModalVisible]);
 
   const handleLoadToDisplayPress = useCallback(() => {
     try {
-      loadToDisplay({ source: screenName, id });
-      showToast("Succès" + " " + "Le set a été chargé dans l'écran de comparaison");
+      loadToDisplay({ source, id });
+      showToast("Le set a été chargé dans l'écran de comparaison");
     } catch (e) {
       showToast(e.message);
     }
 
     setIsLoadSetModalVisible(false);
-  }, [screenName, id, loadToDisplay, setIsLoadSetModalVisible]);
+  }, [source, id, loadToDisplay, setIsLoadSetModalVisible]);
 
   const handleSavePress = useCallback(() => {
-    if (!isSaved) {
-      saveSet(screenName, id);
-      showToast("Succès" + " " + "Le set a été enregistré");
-    } else {
-      unSaveSet(screenName, id);
-      showToast("Succès" + " " + "Le set a été supprimé des favoris.");
+    try {
+      if (!isSaved) {
+        saveSet(source, id);
+        showToast("Succès" + " " + "Le set a été enregistré");
+      } else {
+        unSaveSet(source, id);
+        showToast("Succès" + " " + "Le set a été supprimé des favoris.");
+      }
+    } catch (e) {
+      showToast(e.message);
     }
-  }, [screenName, id, isSaved, saveSet, unSaveSet]);
+  }, [source, id, isSaved, saveSet, unSaveSet]);
 
   const handleRemovePress = useCallback(() => {
-    removeSet(id, screenName);
-    if (screenName === "save") {
+    removeSet(id, source);
+    if (source === "save") {
       showToast("Succès" + " " + "Le set a été supprimé des favoris.");
+    } else {
+      showToast("Succès" + " " + "Le set a été supprimé");
     }
-  }, [screenName, id, removeSet]);
+  }, [source, id, removeSet]);
 
   const handleExportPress = useCallback(() => {
-    handleExport(screenName, id);
-  }, [screenName, id, handleExport]);
+    handleExport(source, id);
+  }, [source, id, handleExport]);
 
   const actionIconPropsList: ActionIconPropsMap = useMemo(() => {
     const allActionsDefs: Record<ActionName, ActionProps> = {
@@ -115,8 +122,8 @@ export function useActionIconPropsList(
       },
       remove: {
         title: "Remove",
-        name: screenName === "save" ? "trash-can" : "close",
-        type: screenName === "save" ? IconType.MaterialCommunityIcons : IconType.AntDesign,
+        name: source === "save" ? "trash-can" : "close",
+        type: source === "save" ? IconType.MaterialCommunityIcons : IconType.AntDesign,
         onPress: handleRemovePress,
       },
       export: {
@@ -131,7 +138,7 @@ export function useActionIconPropsList(
   }, [
     actionNamesToGenerate,
     id,
-    screenName,
+    source,
     isInLoadModal,
     isSaved,
     s?.classIds,

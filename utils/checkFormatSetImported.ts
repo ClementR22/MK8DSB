@@ -19,9 +19,5 @@ export const checkFormatSetImported = (obj: unknown): obj is ImportedSet => {
     set.classIds.length > 0 &&
     set.classIds.every((id) => typeof id === "number");
 
-  if (!isCorrectFormat) {
-    throw new Error("IncorrectFormat");
-  }
-
   return isCorrectFormat;
 };

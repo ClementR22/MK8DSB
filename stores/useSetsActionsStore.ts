@@ -61,6 +61,15 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
 
     const setsListTarget = useSetsListStore.getState().getSetsList(target).setsList;
 
+    // vérification de la limit de sets
+    if (
+      (target === "display" && setsListTarget.length >= MAX_NUMBER_SETS_DISPLAY) ||
+      (target === "save" && setsListTarget.length >= MAX_NUMBER_SETS_SAVE)
+    ) {
+      throw new Error("SetLimitReachedInThisScreen");
+    }
+
+    // verification du nom unique
     const isNameUnique = useSetsListStore.getState().checkNameUnique(s.name, target);
 
     if (!isNameUnique) {
@@ -73,13 +82,6 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
 
         s.name = newName;
       }
-    }
-
-    if (
-      (target === "display" && setsListTarget.length >= MAX_NUMBER_SETS_DISPLAY) ||
-      (target === "save" && setsListTarget.length >= MAX_NUMBER_SETS_SAVE)
-    ) {
-      throw new Error("SetLimitReachedInThisScreen");
     }
 
     const newSetsListTarget = [...setsListTarget, s];
@@ -158,10 +160,15 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
     }
 
     if (!checkFormatSetImported(parsedSet)) {
-      return;
+      throw new Error("IncorrectFormat");
     }
 
     const stats = getSetStatsFromClassIds(parsedSet.classIds);
+
+    if (!stats) {
+      throw new Error("ThisSetDoesNotExist");
+    }
+
     const s = { ...parsedSet, id: nanoid(8), stats };
 
     if (screenName === "search") {
