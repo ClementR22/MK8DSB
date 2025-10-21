@@ -6,6 +6,7 @@ import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Appearance } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
+import "@/i18n";
 
 // Components
 import CustomHeader from "@/components/CustomHeader";

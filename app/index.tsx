@@ -22,8 +22,11 @@ import Text from "@/primitiveComponents/Text";
 import { SetCardsScrollProvider } from "@/contexts/SetCardsScrollContext";
 import useStatsStore from "@/stores/useStatsStore";
 import useSetsListStore from "@/stores/useSetsListStore";
+import { useTranslation } from "react-i18next";
 
 const SearchSetScreen: React.FC = () => {
+  const { t } = useTranslation();
+
   const scrollviewSetsCardsRef = useRef<SetCardsContainerHandles>(null);
   const scrollviewMainRef = useRef<ScrollViewScreenHandles>(null);
 
@@ -79,6 +82,9 @@ const SearchSetScreen: React.FC = () => {
     <ScreenProvider screenName="search">
       <ResultStatsProvider>
         <ScrollViewScreen scrollEnabled={isScrollEnable} ref={scrollviewMainRef}>
+          <Text role="headline" size="large">
+            {t("welcome")}
+          </Text>
           <BoxContainer
             borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}
             padding={PADDING_SEARCH_CONTAINER}

@@ -3,18 +3,11 @@ import { create } from "zustand";
 import { dark_theme, light_theme } from "@/components/styles/theme";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 
-// --- Constants ---
-export const themeList = [
-  { label: "Dark", value: "dark" },
-  { label: "Light", value: "light" },
-  { label: "System", value: "system" },
-];
-
 const THEME_STORAGE_KEY = "theme"; // Define a constant for the storage key
 
 // --- Types ---
 type Theme = typeof light_theme;
-type ThemeMode = "light" | "dark" | "system";
+export type ThemeMode = "light" | "dark" | "system";
 
 type ThemeStore = {
   theme: Theme;

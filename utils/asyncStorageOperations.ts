@@ -9,7 +9,7 @@ export const saveThingInMemory = async (thingKey: string, newThing: any) => {
   }
 };
 
-export const loadThingFromMemory = async (thingKey: string, setThing: any) => {
+export const loadThingFromMemory = async (thingKey: string, setThing?: any) => {
   const savedThing = await AsyncStorage.getItem(thingKey);
 
   if (savedThing != null && savedThing != "undefined") {
@@ -20,7 +20,11 @@ export const loadThingFromMemory = async (thingKey: string, setThing: any) => {
     } else {
       savedThingParsed = JSON.parse(savedThing);
     }
-    setThing(savedThingParsed);
+    if (setThing) {
+      setThing(savedThingParsed);
+    } else {
+      return savedThingParsed;
+    }
   }
 };
 

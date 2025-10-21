@@ -1,16 +1,16 @@
 import React, { useMemo } from "react";
 import { Picker as NativePicker } from "@react-native-picker/picker";
-import { translate, translateToLanguage } from "@/translations/translations";
 import { View, StyleSheet, Platform } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import Icon from "react-native-vector-icons/MaterialIcons"; // Assure-toi d’avoir installé react-native-vector-icons
-import { BORDER_RADIUS_STANDARD } from "@/utils/designTokens";
+import { useTranslation } from "react-i18next";
 import Text from "@/primitiveComponents/Text";
+import { BORDER_RADIUS_STANDARD } from "@/utils/designTokens";
 import { typography } from "./styles/typography";
 
 interface PickerItem {
-  label: string;
+  label: string; // clé de traduction (ex. "settings.language.english")
   value: string;
 }
 
@@ -18,40 +18,43 @@ interface PickerProps {
   value: string;
   setValue: (value: string | number) => void;
   itemList: PickerItem[];
-  pickerTitle: string;
+  pickerTitle: string; // clé de traduction (ex. "settings.language.title")
+  namespace: string;
 }
 
-const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle }) => {
+const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle, namespace }) => {
   const theme = useThemeStore((state) => state.theme);
-  const language = useLanguageStore((state) => state.language);
+
+  const { t, i18n } = useTranslation(namespace);
 
   const transformedItems = useMemo(() => {
     return itemList.map((item) => (
-      <NativePicker.Item key={item.value} label={translateToLanguage(item.label, language)} value={item.value} />
+      <NativePicker.Item
+        key={item.value}
+        label={t(item.label)} // traduction directe
+        value={item.value}
+      />
     ));
-  }, [itemList, language]);
+  }, [itemList, t]);
 
   return (
     <View style={styles.container}>
       <Text role="title" size="small" style={styles.title}>
-        {translate(pickerTitle)}
+        {t(pickerTitle)}
       </Text>
 
       <View style={[styles.pickerWrapper, { backgroundColor: theme.surface, borderColor: theme.outline }]}>
         <NativePicker
           selectedValue={value}
-          onValueChange={(itemValue) => {
-            setValue(itemValue);
-          }}
+          onValueChange={setValue}
           style={[styles.pickerInput, { color: theme.on_surface }]}
           itemStyle={Platform.OS === "ios" ? { color: theme.on_surface } : undefined}
           mode="dropdown"
-          dropdownIconColor={Platform.OS === "android" ? "transparent" : undefined} // masque l'icône native sur Android
+          dropdownIconColor={Platform.OS === "android" ? "transparent" : undefined}
         >
           {transformedItems}
         </NativePicker>
 
-        {/* Custom chevron icon */}
         <Icon name="arrow-drop-down" size={24} color={theme.on_surface} style={styles.chevronIcon} />
       </View>
     </View>
