@@ -1,8 +1,11 @@
 {
+  "colon": ": ",
+
   "desiredStats": "Desired stats",
 
   "selected": "Selected",
 
+  "matchDesiredStats": "Match desired stats",
   "chosenStats": "param.",
   "resultStats": "disp.",
 

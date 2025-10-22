@@ -1,5 +1,4 @@
 import React from "react";
-import { translate } from "@/translations/translations";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import { useThemeStore } from "@/stores/useThemeStore";
 import Text from "@/primitiveComponents/Text";
@@ -10,15 +9,15 @@ const ButtonDeleteAllSetsInMemory = ({ deleteAllSavedSets }) => {
 
   return (
     <ButtonAndModal
-      triggerButtonText="DeleteAllSetsInMemory"
+      triggerButtonText="deleteAllSetsInMemory"
       secondButtonProps={{
-        text: "Confirm",
+        text: "confirm",
         onPress: deleteAllSavedSets,
         buttonColor: theme.error,
         buttonTextColor: theme.on_error,
       }}
       secondButtonType="danger"
-      closeButtonText="Cancel"
+      closeButtonText="cancel"
       buttonColor={theme.error}
       buttonTextColor={theme.on_error}
     >
@@ -28,8 +27,8 @@ const ButtonDeleteAllSetsInMemory = ({ deleteAllSavedSets }) => {
         size={48}
         color={theme.error}
       />
-      <Text role="headline" size="large" color={theme.error} textAlign="center">
-        {translate("Warning")}
+      <Text role="headline" size="large" color={theme.error} textAlign="center" namespace="text">
+        warning
       </Text>
       <Text
         role="body"
@@ -38,8 +37,9 @@ const ButtonDeleteAllSetsInMemory = ({ deleteAllSavedSets }) => {
         textAlign="center"
         color={theme.on_error_container}
         style={{ padding: 20 }}
+        namespace="text"
       >
-        {translate("DeleteAllSetsInMemoryText")}
+        deleteAllSetsInMemoryText
       </Text>
     </ButtonAndModal>
   );

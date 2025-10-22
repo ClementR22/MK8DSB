@@ -1,6 +1,6 @@
 {
   "search": "Search",
-  "matchDesiredStats": "Match desired stats",
+  "displayedStats": "Displayed stats",
   "numberOfSearchResults": "Number of search results",
   "configureDefaultStats": "Configure default displayed stats",
   "sendFeedback": "Send feedback",
@@ -10,5 +10,14 @@
   "confirm": "Confirm",
   "cancel": "Cancel",
   "close": "Close",
-  "ok": "OK"
+  "ok": "OK",
+
+  "edit": "Edit",
+  "remove": "Remove",
+  "save": "Save",
+  "loadTheStats": "Load the stats",
+  "loadTheSet": "Load the set",
+  "loadTheStatsToSearchScreen": "Load the stats to search screen",
+  "loadTheSetToDisplayScreen": "Load the set to compare screen",
+  "copy": "Copy"
 }

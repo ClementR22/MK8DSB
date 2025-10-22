@@ -2,9 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { ScrollView } from "react-native";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import showToast from "@/utils/showToast";
-import { formatErrorMessage } from "@/utils/formatErrorMessage";
 import useSetsListStore, { MAX_NUMBER_SETS_DISPLAY } from "@/stores/useSetsListStore";
 
 interface ButtonAddSetProps {
@@ -12,8 +10,6 @@ interface ButtonAddSetProps {
 }
 
 const ButtonAddSet: React.FC<ButtonAddSetProps> = ({ scrollRef }) => {
-  const language = useLanguageStore((state) => state.language);
-
   const addNewSetInDisplay = useSetsListStore((state) => state.addNewSetInDisplay);
   const setsListDisplayed = useSetsListStore((state) => state.setsListDisplayed);
 
@@ -25,14 +21,14 @@ const ButtonAddSet: React.FC<ButtonAddSetProps> = ({ scrollRef }) => {
     try {
       addNewSetInDisplay();
     } catch (e) {
-      showToast(formatErrorMessage(e, language));
+      showToast(e);
       return; // Ne pas scroller en cas d'erreur
     }
 
     timeoutRef.current = setTimeout(() => {
       scrollRef?.current?.scrollToEnd({ animated: true });
     }, 50);
-  }, [addNewSetInDisplay, language, scrollRef]);
+  }, [addNewSetInDisplay, scrollRef]);
 
   useEffect(() => {
     return () => clearTimeout(timeoutRef.current);

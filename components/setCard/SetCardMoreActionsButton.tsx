@@ -5,8 +5,7 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { ActionNamesList } from "@/hooks/useSetCardConfig";
 import { ScreenName } from "@/contexts/ScreenContext";
-import { translateToLanguage } from "@/translations/translations";
-import { useLanguageStore } from "@/stores/useLanguageStore";
+import { useTranslation } from "react-i18next";
 
 interface SetCardMoreActionsButtonProps {
   moreActionNamesList: ActionNamesList;
@@ -15,7 +14,7 @@ interface SetCardMoreActionsButtonProps {
 }
 
 const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({ moreActionNamesList, id, screenName }) => {
-  const language = useLanguageStore((state) => state.language);
+  const { t } = useTranslation("button");
 
   const [visible, setVisible] = useState(false);
 
@@ -34,7 +33,7 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({ mor
       anchor={
         <ButtonIcon
           onPress={() => setVisible(true)}
-          tooltipText={"MoreActions"}
+          tooltipText={"moreActions"}
           iconName={"more-vert"}
           iconType={IconType.MaterialIcons}
         />
@@ -47,7 +46,7 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({ mor
           <Menu.Item
             key={name}
             onPress={() => handleMenuItemPress(onPress)}
-            title={translateToLanguage(title, language)}
+            title={t(title)}
             leadingIcon={({ color, size }) => <Icon type={type} name={name} size={size} color={color || "black"} />}
           />
         );

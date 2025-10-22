@@ -26,7 +26,14 @@ const ElementPicker: React.FC<ElementPickerProps> = ({ name, imageUrl, onPress, 
         <Image style={defaultStyles.image} source={imageUrl} resizeMode="contain" />
       </View>
       {!isCollapsed && (
-        <Text role="title" size="small" color={style.textColorDynamic} numberOfLines={1} style={{marginLeft: 12}}>
+        <Text
+          role="title"
+          size="small"
+          color={style.textColorDynamic}
+          numberOfLines={1}
+          style={{ marginLeft: 12 }}
+          namespace="elements"
+        >
           {name}
         </Text>
       )}

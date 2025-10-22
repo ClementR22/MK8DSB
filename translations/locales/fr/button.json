@@ -1,6 +1,6 @@
 {
   "search": "Chercher",
-  "matchDesiredStats": "Copier les stats paramétrées",
+  "displayedStats": "Displayed stats",
   "numberOfSearchResults": "Nombre de résultats de recherche",
   "configureDefaultStats": "Configurer les stats affichées par défault",
   "sendFeedback": "Faire un retour",
@@ -11,5 +11,14 @@
   "cancel": "Annuler",
   "close": "Fermer",
   "ok": "OK",
-  "all": "Toutes"
+  "all": "Toutes",
+
+  "edit": "Editer",
+  "remove": "Supprimer",
+  "save": "Enregistrer",
+  "loadTheStats": "Charger les stats",
+  "loadTheSet": "Charger le set",
+  "loadTheStatsToSearchScreen": "Charger les stats dans l'écran de recherche",
+  "loadTheSetToDisplayScreen": "Charger le set dans l'écran de comparaison",
+  "copy": "Copier"
 }

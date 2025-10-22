@@ -2,8 +2,6 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { categories } from "@/data/elements/elementsData";
 import { setsData } from "@/data/setsData";
-import { translateToLanguage } from "@/translations/translations";
-import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
@@ -13,13 +11,13 @@ import ElementsDeselector from "../elementPickerCompact/ElementsDeselector";
 import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import { MARGIN_CONTAINER_LOWEST, PADDING_SEARCH_CONTAINER } from "@/utils/designTokens";
 import StatSelector from "../statSelector/StatSelector";
 import useGeneralStore from "@/stores/useGeneralStore";
 import ButtonIconWithBadge from "../sortModeSelector/ButtonIconWithBadge";
 import useStatsStore from "@/stores/useStatsStore";
 import useSetsListStore, { SetProps } from "@/stores/useSetsListStore";
+import { useTranslation } from "react-i18next";
 
 interface SearchSetScreenPressablesContainerProps {
   scrollviewSetsCardsRef: React.RefObject<any>;
@@ -30,7 +28,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
   scrollviewSetsCardsRef,
   scrollviewMainRef,
 }) => {
-  const language = useLanguageStore((state) => state.language);
+  const { t } = useTranslation("text");
 
   const chosenStats = useStatsStore((state) => state.chosenStats);
   const setSetsListFound = useSetsListStore((state) => state.setSetsListFound);
@@ -122,7 +120,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
         return {
           ...setFoundData,
           id: nanoid(8),
-          name: `${translateToLanguage("SetFound", language)} (${index + 1})`,
+          name: `${t("SetFound")} (${index + 1})`,
           percentage: percentageRounded,
         };
       });
@@ -162,7 +160,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
         disabled={disableSearch}
         flex={1}
       >
-        {translateToLanguage("Search", language)}
+        search
       </Button>
 
       <ButtonAndModal

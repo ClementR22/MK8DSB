@@ -34,7 +34,7 @@ const StatGaugeBar = ({ value, contextId }: StatGaugeBarProps) => {
         ]}
       >
         {showValueInside && (
-          <Text role="label" size="large" inverse style={styles.valueLabelInsidePosition}>
+          <Text role="label" size="large" inverse style={styles.valueLabelInsidePosition} namespace="not">
             {value}
           </Text>
         )}
@@ -42,7 +42,7 @@ const StatGaugeBar = ({ value, contextId }: StatGaugeBarProps) => {
 
       {/* Valeur en dehors de la barre */}
       {!showValueInside && (
-        <Text role="label" size="large" style={styles.valueLabelOutsidePosition}>
+        <Text role="label" size="large" style={styles.valueLabelOutsidePosition} namespace="not">
           {value}
         </Text>
       )}

@@ -28,6 +28,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = memo(
     return (
       <IconSelector<Category>
         options={categoryOptions}
+        namespace="categories"
         selectedValues={selectedCategory}
         onSelect={onCategoryPress}
         buttonStyle={styles.button}

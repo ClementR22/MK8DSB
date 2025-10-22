@@ -1,4 +1,3 @@
-import { translateToLanguage } from "@/translations/translations";
 import React, { useCallback, useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import ButtonMultiStateToggle from "../ButtonMultiStateToggle";
@@ -7,7 +6,6 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import useStatsStore from "@/stores/useStatsStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import { StatName } from "@/data/stats/statsTypes";
 import { BORDER_RADIUS_INF, BORDER_RADIUS_STAT_GAUGE_CONTAINER, BUTTON_SIZE } from "@/utils/designTokens";
 import { box_shadow_z1 } from "../styles/shadow";
@@ -31,7 +29,7 @@ const StatSliderContent = ({
   disabled = false,
 }: StatSliderContentProps) => {
   const theme = useThemeStore((state) => state.theme);
-  const language = useLanguageStore((state) => state.language);
+
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
   const updateStatValue = useStatsStore((state) => state.updateStatValue);
   const [tempValue, setTempValue] = useState(value);
@@ -81,11 +79,11 @@ const StatSliderContent = ({
     >
       <View style={styles.containerLeft}>
         <View style={styles.textWrapper}>
-          <Text role="title" size="medium" numberOfLines={1} ellipsizeMode="tail">
-            {translateToLanguage(name, language)}
+          <Text role="title" size="medium" numberOfLines={1} ellipsizeMode="tail" namespace="stats">
+            {name}
           </Text>
-          <Text role="title" size="medium" style={styles.separatorText}>
-            {translateToLanguage(":", language)}
+          <Text role="title" size="medium" style={styles.separatorText} namespace="text">
+            colon
           </Text>
         </View>
 
@@ -106,7 +104,7 @@ const StatSliderContent = ({
       </View>
       <View style={styles.containerRight}>
         <View style={styles.valueWrapper}>
-          <Text role="title" size="medium">
+          <Text role="title" size="medium" namespace="not">
             {tempValue}
           </Text>
         </View>

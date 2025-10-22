@@ -3,8 +3,6 @@ import { View, StyleSheet, ScrollView, Pressable } from "react-native";
 import { Checkbox, DataTable } from "react-native-paper";
 import { ResultStat } from "@/contexts/ResultStatsContext";
 import { ChosenStat } from "@/stores/useStatsStore";
-import { useLanguageStore } from "@/stores/useLanguageStore";
-import { translateToLanguage } from "@/translations/translations";
 import { useThemeStore } from "@/stores/useThemeStore";
 import Text from "@/primitiveComponents/Text";
 
@@ -27,17 +25,16 @@ const TableRow = React.memo<{
   statName: string;
   columns: Column[];
   labelFlex: number;
-  language: string;
   disabled: boolean;
   onToggleStat: (statName: string, columnName: ColumnName) => void;
   statsMap: Map<string, Map<string, boolean>>;
-}>(({ statName, columns, labelFlex, language, disabled, onToggleStat, statsMap }) => {
+}>(({ statName, columns, labelFlex, disabled, onToggleStat, statsMap }) => {
   return (
     <Pressable>
       <DataTable.Row style={styles.row}>
         <DataTable.Cell style={{ flex: labelFlex }}>
-          <Text role="title" size="small">
-            {translateToLanguage(statName, language)}
+          <Text role="title" size="small" namespace="stats">
+            {statName}
           </Text>
         </DataTable.Cell>
 
@@ -63,7 +60,6 @@ const TableRow = React.memo<{
 TableRow.displayName = "TableRow";
 
 const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleStat, disabled }) => {
-  const language = useLanguageStore((state) => state.language);
   const theme = useThemeStore((state) => state.theme);
 
   // Extraire les noms des stats une seule fois
@@ -93,27 +89,22 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleSt
         statName={statName}
         columns={columns}
         labelFlex={labelFlex}
-        language={language}
         disabled={disabled}
         onToggleStat={onToggleStat}
         statsMap={statsMap}
       />
     ),
-    [columns, labelFlex, language, disabled, onToggleStat, statsMap]
+    [columns, labelFlex, disabled, onToggleStat, statsMap]
   );
 
   return (
     <DataTable>
       <DataTable.Header style={styles.header}>
-        <DataTable.Title style={{ flex: labelFlex }}>
-          <Text role="title" size="small">
-            {""}
-          </Text>
-        </DataTable.Title>
+        <DataTable.Title style={{ flex: labelFlex }}>{""}</DataTable.Title>
         {columns.map(({ columnName }) => (
           <DataTable.Title key={columnName} style={styles.headerCell}>
-            <Text role="title" size="small">
-              {translateToLanguage(columnName, language)}
+            <Text role="title" size="small" namespace="text">
+              {columnName}
             </Text>
           </DataTable.Title>
         ))}

@@ -56,7 +56,15 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
     >
       {iconProps && <Icon type={iconProps.type} name={iconProps.name} size={24} color={theme.on_primary} />}
-      <Text role="title" size="small" weight="semibold" textAlign="center" color={buttonTextColor} inverse>
+      <Text
+        role="title"
+        size="small"
+        weight="semibold"
+        textAlign="center"
+        color={buttonTextColor}
+        inverse
+        namespace="button"
+      >
         {children}
       </Text>
     </ButtonBase>

@@ -49,7 +49,7 @@ const ButtonIconWithBadge: React.FC<ButtonIconWithBadgeProps> = memo(
                 color={badgeIconColor}
               />
             ) : (
-              <Text role="title" size="small">
+              <Text role="title" size="small" namespace="not">
                 {badgeText}
               </Text>
             )}

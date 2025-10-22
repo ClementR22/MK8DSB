@@ -47,7 +47,7 @@ const ElementCard: React.FC<ElementCardProps> = memo(({ name, stats, category })
         },
       ]}
     >
-      <Text role="headline" size="small" weight="bold" style={styles.textWrapper}>
+      <Text role="headline" size="small" weight="bold" style={styles.textWrapper} namespace="elements">
         {name}
       </Text>
 

@@ -2,7 +2,6 @@ import React, { memo, ReactElement, useCallback, useState } from "react";
 import { GestureResponderEvent } from "react-native";
 import Modal from "@/primitiveComponents/Modal";
 import Button from "../../primitiveComponents/Button";
-import { translate } from "@/translations/translations";
 
 interface ButtonAndModalProps {
   // Le contenu principal du modal. Peut être un composant, du texte, etc.
@@ -28,7 +27,13 @@ interface ButtonAndModalProps {
   // Type de confirmation demandée
   secondButtonType?: "danger" | null;
   // ou juste ses prps
-  secondButtonProps?: { text: string; onPress: () => void; tooltipText: string };
+  secondButtonProps?: {
+    text: string;
+    onPress: () => void;
+    tooltipText?: string;
+    buttonColor?: string;
+    buttonTextColor?: string;
+  };
   closeAfterSecondButton?: boolean;
   secondButtonPosition?: "left" | "right";
   onModalClose?: () => void;
@@ -84,7 +89,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
       onPress={openModal}
       tooltipText={undefined}
     >
-      {translate(triggerButtonText)}
+      {triggerButtonText}
     </Button>
   );
 

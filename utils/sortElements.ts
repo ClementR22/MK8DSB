@@ -1,5 +1,6 @@
 // utils/sortElements.ts
-import { translateToLanguage } from "@/translations/translations";
+import i18n from "@/translations";
+import { TFunction } from "i18next";
 
 // Define a common interface for elements that can be sorted.
 // This interface should reflect the properties available on your actual ElementDataCharacter, ElementDataBody, etc.
@@ -32,7 +33,11 @@ export interface SortableElement {
  * @param language The language to use for alphabetical sorting.
  * @returns A new array with the elements sorted according to the specified strategy.
  */
-export const sortElements = <T extends SortableElement>(elements: T[], sortNumber: number, language?: string): T[] => {
+export const sortElements = <T extends SortableElement>(
+  elements: T[],
+  sortNumber: number,
+  t: TFunction = ((key: string) => key) as unknown as TFunction
+): T[] => {
   // Always create a shallow copy to ensure the original array is not mutated.
   const sortableElements = [...elements];
 
@@ -45,8 +50,8 @@ export const sortElements = <T extends SortableElement>(elements: T[], sortNumbe
     1: (a, b) => b.id - a.id, // ID Descending (1)
 
     // Name
-    2: (a, b) => translateToLanguage(a.name, language).localeCompare(translateToLanguage(b.name, language)), // Name A-Z (2)
-    3: (a, b) => translateToLanguage(b.name, language).localeCompare(translateToLanguage(a.name, language)), // Name Z-A (3)
+    2: (a, b) => t(a.name).localeCompare(t(b.name)), // Name A-Z (2)
+    3: (a, b) => t(b.name).localeCompare(t(a.name)), // Name Z-A (3)
 
     // Speed Ground
     4: (a, b) => (a.speedGround || 0) - (b.speedGround || 0), // Speed Ground Ascending (6)

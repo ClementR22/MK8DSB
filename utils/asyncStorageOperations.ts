@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import showToast from "./showToast";
 
 export const saveThingInMemory = async (thingKey: string, newThing: any) => {
   try {
@@ -54,7 +53,6 @@ export const deleteAllTheMemory = async () => {
   try {
     const allKeys = await AsyncStorage.getAllKeys();
     allKeys.forEach(async (thingKey) => await AsyncStorage.removeItem(thingKey));
-    showToast("Lamemoireaetesupprimee");
   } catch (e) {
     console.error("Erreur lors de la suppression : ", e);
   }

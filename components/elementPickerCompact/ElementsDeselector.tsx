@@ -3,11 +3,9 @@ import React, { memo, useEffect, useMemo, useRef } from "react";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { elementsDataByClassId } from "@/data/elements/elementsData";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import { Pressable, ScrollView, View } from "react-native";
 import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
 import { StyleSheet } from "react-native";
-import { translateToLanguage } from "@/translations/translations";
 import ElementPickerCompact from "./ElementPickerCompact";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { BORDER_RADIUS_MODAL_CHILDREN_CONTAINER } from "@/utils/designTokens";
@@ -18,7 +16,6 @@ const ELEMENTS_CONTAINER_PADDING = 6;
 
 const ElementsDeselector: React.FC = () => {
   const theme = useThemeStore((state) => state.theme);
-  const language = useLanguageStore((state) => state.language);
 
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
@@ -69,8 +66,8 @@ const ElementsDeselector: React.FC = () => {
         },
       ])}
     >
-      <Text role="title" size="small" weight="bold" style={styles.deselectorTitle}>
-        {translateToLanguage("Selected", language)}
+      <Text role="title" size="small" weight="bold" style={styles.deselectorTitle} namespace="text">
+        selected
       </Text>
 
       {isEmpty ? (
@@ -81,8 +78,9 @@ const ElementsDeselector: React.FC = () => {
           textAlign="center"
           fontStyle="italic"
           style={styles.noItemsText}
+          namespace="placeholder"
         >
-          {translateToLanguage("None", language)}
+          none
         </Text>
       ) : (
         <ScrollView ref={scrollViewRef} horizontal persistentScrollbar scrollEnabled={isScrollEnable}>

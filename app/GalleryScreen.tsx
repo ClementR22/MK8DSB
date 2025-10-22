@@ -2,40 +2,40 @@ import React, { useState, useEffect, useMemo, useCallback, memo } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import CategorySelector from "@/components/rowSelector/CategorySelector";
 import { Category } from "@/data/elements/elementsTypes";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { sortElements } from "@/utils/sortElements";
 import ElementCard from "@/components/galleryComponents/ElementCard";
 import ElementsList from "@/components/galleryComponents/ElementsList";
-import { useSelectedElementData } from "@/hooks/useSelectedElementData";
+import { getSelectedElementData } from "@/utils/getSelectedElementData";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { useContainerLowestStyle } from "@/hooks/useScreenStyle";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 import Pannel from "@/components/galleryComponents/Pannel";
 import Animated, { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
+import i18n from "@/translations";
+import { useTranslation } from "react-i18next";
 
 // --- Main GalleryScreen Component ---
 const GalleryScreen = () => {
+  const { t } = useTranslation("elements");
+
   const [selectedElementId, setSelectedElementId] = useState(0);
   const [isLeftPannelExpanded, setIsLeftPannelExpanded] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [sortNumber, setSortNumber] = useState(0);
 
-  const language = useLanguageStore((state) => state.language);
-
   const categoryElementsSorted = useMemo(
-    () => sortElements(elementsDataByCategory[selectedCategory], sortNumber, language),
-    [selectedCategory, sortNumber, language]
+    () => sortElements(elementsDataByCategory[selectedCategory], sortNumber, t),
+    [selectedCategory, sortNumber, t]
   );
 
   const overlayOpacity = useSharedValue(isLeftPannelExpanded ? 0.5 : 0);
 
-  const { selectedElementName, selectedElementStats } = useSelectedElementData(
+  const { selectedElementName, selectedElementStats } = getSelectedElementData(
     categoryElementsSorted,
     selectedElementId,
-    selectedCategory,
-    language
+    selectedCategory
   );
 
   const handleElementPickerPress = useCallback(

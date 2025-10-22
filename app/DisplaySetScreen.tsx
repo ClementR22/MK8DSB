@@ -106,7 +106,7 @@ const DisplaySetScreen = () => {
             <SetCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
 
             <View style={styles.mainButtonWrapper}>
-              <StatSelector triggerButtonText="DisplayedStats" />
+              <StatSelector triggerButtonText="displayedStats" />
             </View>
 
             <StatGaugeComparesContainer setsColorsMap={setsColorsMap} />

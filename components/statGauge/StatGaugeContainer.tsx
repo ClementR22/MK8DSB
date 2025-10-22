@@ -2,7 +2,6 @@ import React, { useCallback, useMemo } from "react";
 import { View, StyleSheet, Pressable } from "react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
-import { translate } from "@/translations/translations";
 import { getBonusColor } from "@/utils/getBonusColor";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { BORDER_RADIUS_STAT_GAUGE_CONTAINER, HEIGHT_STAT_GAUGE_CONTAINER } from "@/utils/designTokens";
@@ -91,8 +90,8 @@ const StatGaugeContainer = ({
           },
         ]}
       >
-        <Text role="label" size="large">
-          {translate(statNamesCompact[name])}
+        <Text role="label" size="large" namespace="stats">
+          {statNamesCompact[name]}
         </Text>
       </View>
 
@@ -107,7 +106,7 @@ const StatGaugeContainer = ({
             },
           ]}
         >
-          <Text role="label" size="large" color={showAllStatGaugeBonuses && bonusColor}>
+          <Text role="label" size="large" color={showAllStatGaugeBonuses && bonusColor} namespace="not">
             {displayedValue}
           </Text>
         </View>

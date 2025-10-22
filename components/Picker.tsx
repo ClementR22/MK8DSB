@@ -3,7 +3,6 @@ import { Picker as NativePicker } from "@react-native-picker/picker";
 import { View, StyleSheet, Platform } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useTranslation } from "react-i18next";
 import Text from "@/primitiveComponents/Text";
 import { BORDER_RADIUS_STANDARD } from "@/utils/designTokens";
@@ -39,8 +38,8 @@ const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle,
 
   return (
     <View style={styles.container}>
-      <Text role="title" size="small" style={styles.title}>
-        {t(pickerTitle)}
+      <Text role="title" size="small" style={styles.title} namespace={namespace}>
+        {pickerTitle}
       </Text>
 
       <View style={[styles.pickerWrapper, { backgroundColor: theme.surface, borderColor: theme.outline }]}>

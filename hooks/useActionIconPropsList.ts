@@ -8,7 +8,6 @@ import { ActionName, ActionNamesList } from "./useSetCardConfig";
 import showToast from "@/utils/showToast";
 import { useSetImportExport } from "@/hooks/useSetImportExport";
 import useSetsListStore from "@/stores/useSetsListStore";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 
 interface ActionProps {
@@ -29,8 +28,6 @@ export function useActionIconPropsList(
 ): ActionIconPropsMap {
   const source = isInLoadModal ? "save" : screenName;
   const s = useSetsListStore((state) => state.getSet(source, id));
-
-  const language = useLanguageStore((state) => state.language);
 
   const updateSelectionFromSet = usePressableElementsStore((state) => state.updateSelectionFromSet);
   const setSetCardEditedId = useSetsListStore((state) => state.setSetCardEditedId);
@@ -97,37 +94,37 @@ export function useActionIconPropsList(
   const actionIconPropsList: ActionIconPropsMap = useMemo(() => {
     const allActionsDefs: Record<ActionName, ActionProps> = {
       edit: {
-        title: "Edit",
+        title: "edit",
         name: "edit",
         type: IconType.MaterialIcons,
         onPress: handleEditPress,
       },
       loadToSearch: {
-        title: isInLoadModal ? "LoadTheStats" : "LoadTheStatsToSearchScreen",
+        title: isInLoadModal ? "loadTheStats" : "loadTheStatsToSearchScreen",
         name: isInLoadModal ? "download" : "magnify",
         type: IconType.MaterialCommunityIcons,
         onPress: handleLoadToSearchPress,
       },
       loadToDisplay: {
-        title: isInLoadModal ? "LoadTheSet" : "LoadTheSetToDisplayScreen",
+        title: isInLoadModal ? "loadTheSet" : "loadTheSetToDisplayScreen",
         name: isInLoadModal ? "download" : "compare",
         type: IconType.MaterialCommunityIcons,
         onPress: handleLoadToDisplayPress,
       },
       save: {
-        title: "Save",
+        title: "save",
         name: isSaved ? "heart" : "heart-outline",
         type: IconType.MaterialCommunityIcons,
         onPress: handleSavePress,
       },
       remove: {
-        title: "Remove",
+        title: "remove",
         name: source === "save" ? "trash-can" : "close",
         type: source === "save" ? IconType.MaterialCommunityIcons : IconType.AntDesign,
         onPress: handleRemovePress,
       },
       export: {
-        title: "Copy",
+        title: "copy",
         name: "clipboard-outline",
         type: IconType.MaterialCommunityIcons,
         onPress: handleExportPress,

@@ -12,7 +12,6 @@ import SetCard from "./SetCard";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import { SetProps } from "@/stores/useSetsListStore";
 import Placeholder from "./Placeholder";
 import { BORDER_RADIUS_CONTAINER_LOWEST, MARGIN_CONTAINER_LOWEST, PADDING_STANDARD } from "@/utils/designTokens";
@@ -74,7 +73,6 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
     }));
 
     const theme = useThemeStore((state) => state.theme);
-    const language = useLanguageStore((state) => state.language);
     const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
     const screenName = useScreen();
     const isLoading = useGeneralStore((state) => state.isLoading);
@@ -96,12 +94,12 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
 
       if (screenName === "search") {
         if (!hasShownSearchQuestionIcon) {
-          return <Placeholder type={"SearchEmpty"} />;
+          return <Placeholder type="searchEmpty" />;
         }
-        return <Placeholder type={"SearchNotFound"} />;
+        return <Placeholder type="searchNotFound" />;
       }
-      return <Placeholder type={"SavedEmpty"} />;
-    }, [noSetToShow, screenName, language, theme.on_surface, hasShownSearchQuestionIcon]);
+      return <Placeholder type="savedEmpty" />;
+    }, [noSetToShow, screenName, theme.on_surface, hasShownSearchQuestionIcon]);
 
     const memoizedSetCards = useMemo(() => {
       if (noSetToShow) {

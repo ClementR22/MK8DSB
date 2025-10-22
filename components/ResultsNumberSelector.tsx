@@ -43,8 +43,8 @@ const ResultsNumberSelector = () => {
 
   return (
     <ButtonAndModal
-      modalTitle="NumberOfSearchResults"
-      triggerButtonText="NumberOfSearchResults"
+      modalTitle="numberOfSearchResults"
+      triggerButtonText="numberOfSearchResults"
       isModalVisibleProp={isModalVisible}
       setIsModalVisibleProp={setIsModalVisible}
     >
@@ -55,7 +55,7 @@ const ResultsNumberSelector = () => {
           iconType={IconType.MaterialCommunityIcons}
           disabled={!canDecrement}
         />
-        <Text role="display" size="medium" textAlign="center" style={styles.resultsNumberText}>
+        <Text role="display" size="medium" textAlign="center" style={styles.resultsNumberText} namespace="not">
           {resultsNumberInModal}
         </Text>
         <ButtonIcon

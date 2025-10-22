@@ -29,7 +29,7 @@ const StatGaugeCompareBar = ({ value, color, scrollToThisSetCard }: StatGaugeCom
           ])}
         />
       </View>
-      <Text role="label" size="large" style={styles.text}>
+      <Text role="label" size="large" style={styles.text} namespace="not">
         {value}
       </Text>
     </Pressable>

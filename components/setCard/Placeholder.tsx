@@ -3,16 +3,15 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import Text from "@/primitiveComponents/Text";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { translate } from "@/translations/translations";
 
 interface PlaceholderProps {
-  type: "SearchEmpty" | "SearchNotFound" | "SavedEmpty";
+  type: "searchEmpty" | "searchNotFound" | "savedEmpty";
 }
 
 const iconName = {
-  SearchEmpty: "chat-question",
-  SearchNotFound: "home-flood",
-  SavedEmpty: "heart-multiple",
+  searchEmpty: "chat-question",
+  searchNotFound: "home-flood",
+  savedEmpty: "heart-multiple",
 };
 
 function Placeholder({ type }: PlaceholderProps) {
@@ -20,8 +19,8 @@ function Placeholder({ type }: PlaceholderProps) {
 
   return (
     <BoxContainer height={200}>
-      <Text role="title" size="large" textAlign="center">
-        {translate(type)}
+      <Text role="title" size="large" textAlign="center" namespace="placeholder">
+        {type}
       </Text>
       <MaterialCommunityIcons
         // @ts-ignore

@@ -5,8 +5,6 @@ import HelpModal from "./HelpModal";
 import StatSliderPreview from "../statSlider/StatSliderPreview";
 import { PADDING_SET_CARD, SET_CARD_WIDTH } from "@/utils/designTokens";
 import Button from "@/primitiveComponents/Button";
-import { useLanguageStore } from "@/stores/useLanguageStore";
-import { translateToLanguage } from "@/translations/translations";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
 import StatGaugeContainer from "../statGauge/StatGaugeContainer";
 import StatGaugeSetCardBar from "../statGauge/StatGaugeSetCardBar";
@@ -16,12 +14,10 @@ import HelpSection from "../helpComponents/HelpSection";
 import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
 
 const HelpSearchSetScreen = () => {
-  const language = useLanguageStore((state) => state.language);
-
   return (
     <HelpModal title="Guide du Set Builder">
-      <Text role="body" size="large" textAlign="center">
-        <Text role="body" size="large" weight="bold">
+      <Text role="body" size="large" textAlign="center" namespace="helpsearch">
+        <Text role="body" size="large" weight="bold" namespace="helpsearch">
           Créez la combinaison idéale
         </Text>
         {"\n"}
@@ -40,22 +36,22 @@ const HelpSearchSetScreen = () => {
 
         <HelpStepItem key={2} stepChar={"2"} title="Ajustez les valeurs et la tolérance">
           <StatSliderPreview name="speedGround" />
-          <Text role="body" size="large">
+          <Text role="body" size="large" namespace="helpsearch">
             appuyez longuement pour supprimer
           </Text>
-          <Text role="body" size="large" fontStyle="italic">
+          <Text role="body" size="large" fontStyle="italic" namespace="helpsearch">
             {"≈ : valeur approximative" + "\n" + "= : valeur exacte" + "\n" + "≥ : valeur minimale"}
           </Text>
         </HelpStepItem>
 
         <HelpStepItem key={3} stepChar={"3"} title={"Lancez la recherche"} alignItems="center">
           <Button onPress={() => {}} iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
-            {translateToLanguage("Search", language)}
+            search
           </Button>
         </HelpStepItem>
 
         <HelpStepItem key={4} stepChar={"4"} title="Analysez les résultats" alignItems="center">
-          <Text role="body" size="large">
+          <Text role="body" size="large" namespace="helpsearch">
             Les sets sont classés par score de correspondance
           </Text>
           <View style={{ width: SET_CARD_WIDTH - PADDING_SET_CARD * 2 }}>
@@ -63,7 +59,7 @@ const HelpSearchSetScreen = () => {
               <StatGaugeSetCardBar obtainedValue={4} chosenValue={5} isInSearchScreen={true} />
             </StatGaugeContainer>
           </View>
-          <Text role="body" size="large" fontStyle="italic">
+          <Text role="body" size="large" fontStyle="italic" namespace="helpsearch">
             Appuyez sur une barre pour voir l'écart avec votre critère
           </Text>
         </HelpStepItem>
@@ -121,7 +117,7 @@ const HelpSearchSetScreen = () => {
       </HelpSection>
 
       <HelpHighlightBox type="tips" title="Conseil pratique">
-        <Text role="body" size="large">
+        <Text role="body" size="large" namespace="helpsearch">
           Commencez avec 2-3 statistiques principales pour des résultats plus pertinents
         </Text>
       </HelpHighlightBox>

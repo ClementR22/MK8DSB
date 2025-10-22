@@ -81,9 +81,6 @@ const SearchSetScreen: React.FC = () => {
     <ScreenProvider screenName="search">
       <ResultStatsProvider>
         <ScrollViewScreen scrollEnabled={isScrollEnable} ref={scrollviewMainRef}>
-          <Text role="headline" size="large">
-            {t("welcome")}
-          </Text>
           <BoxContainer
             borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}
             padding={PADDING_SEARCH_CONTAINER}
@@ -98,8 +95,8 @@ const SearchSetScreen: React.FC = () => {
               />
 
               <View style={styles.headerTextContainer}>
-                <Text role="headline" size="medium">
-                  {t("desiredStats")}
+                <Text role="headline" size="medium" namespace="text">
+                  desiredStats
                 </Text>
               </View>
 

@@ -15,9 +15,9 @@ interface TextProps {
   inverse?: boolean;
   numberOfLines?: number;
   ellipsizeMode?: "clip" | "head" | "middle" | "tail";
-  namespace: string | string[];
+  namespace: string | string[] | "not";
   style?: StyleProp<TextStyle>;
-  children: string;
+  children: React.ReactNode;
 }
 
 const Text: React.FC<TextProps> = ({
@@ -57,7 +57,7 @@ const Text: React.FC<TextProps> = ({
 
   return (
     <RNText style={textStyle} numberOfLines={numberOfLines} ellipsizeMode={ellipsizeMode}>
-      {t(children)}
+      {namespace === "not" ? children : t(children as string)}
     </RNText>
   );
 };

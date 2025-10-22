@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo } from "react";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import { ResultStats } from "@/contexts/ResultStatsContext";
 import { ChosenStat } from "@/stores/useStatsStore";
-import { translate } from "@/translations/translations";
 import ToggleSwitch from "toggle-switch-react-native";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { StyleSheet, View } from "react-native";
@@ -60,8 +59,8 @@ const ResultStatsSyncSwitch: React.FC<ResultStatsSyncSwitchProps> = ({
         size="medium"
         onToggle={handleToggleSwitch}
       />
-      <Text role="title" size="small">
-        {translate("MatchDesiredStats")}
+      <Text role="title" size="small" namespace="text">
+        matchDesiredStats
       </Text>
     </View>
   );

@@ -34,7 +34,7 @@ const SetCardHeader: React.FC<SetCardHeaderProps> = ({
       <SetNameInput name={name} id={id} editable={isNameEditable} />
 
       {setToShowPercentage && (
-        <Text role="title" size="medium" weight="bold" color={theme.primary}>
+        <Text role="title" size="medium" weight="bold" color={theme.primary} namespace="not">
           {setToShowPercentage}%
         </Text>
       )}

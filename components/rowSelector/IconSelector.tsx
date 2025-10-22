@@ -7,6 +7,7 @@ interface IconSelectorProps<T extends string> {
     name: T;
     imageUrl: ImageSourcePropType;
   }[];
+  namespace: string;
   selectedValues: Set<T> | T;
   onSelect: (value: T) => void;
   buttonStyle?: { flex: number } | { width: number };
@@ -19,6 +20,7 @@ const BUTTON_SIZE = 50;
 
 const IconSelector = <T extends string>({
   options,
+  namespace,
   selectedValues,
   onSelect,
   buttonStyle,
@@ -35,6 +37,7 @@ const IconSelector = <T extends string>({
           <Tooltip
             key={option.name}
             tooltipText={option.name}
+            namespace={namespace}
             onPress={() => onSelect(option.name)}
             style={[styles.button, buttonStyle, isActive && activeStyle]}
           >

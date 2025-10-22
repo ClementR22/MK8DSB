@@ -3,7 +3,7 @@ import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import LanguageSelector from "@/components/settingsComponents/LanguageSelector";
 import ThemeSelector from "@/components/settingsComponents/ThemeSelector";
 import ButtonResetSettings from "@/components/settingsComponents/ButtonResetSettings";
-import ButtonSendFeedback from "@/components/settingsComponents/ButtonSendFeedbackButton";
+import ButtonSendFeedback from "@/components/settingsComponents/ButtonSendFeedback";
 import ButtonLicenses from "@/components/settingsComponents/ButtonLicenses";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import Button from "@/primitiveComponents/Button";
@@ -17,15 +17,10 @@ import ScrollViewScreen from "@/components/ScrollViewScreen";
 import ResultsNumberSelector from "@/components/ResultsNumberSelector";
 import { box_shadow_z1 } from "@/components/styles/shadow";
 import Text from "@/primitiveComponents/Text";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import showToast from "@/utils/showToast";
 import useSetsPersistenceStore from "@/stores/useSetsPersistenceStore";
-import { useTranslation } from "react-i18next";
 
 const SettingsScreen: React.FC = () => {
-  const language = useLanguageStore((state) => state.language);
-  const { t } = useTranslation("common");
-
   const resetSettings = useResetSettings();
   const deleteAllSavedSets = useSetsPersistenceStore((state) => state.deleteAllSavedSets);
 
@@ -64,7 +59,7 @@ const SettingsScreen: React.FC = () => {
 
             <ResultsNumberSelector />
 
-            <StatSelector triggerButtonText="ConfigureDefaultStats">
+            <StatSelector triggerButtonText="configureDefaultStats">
               <Text role="title" size="small" namespace="text">
                 appliedOnMountForSetBuilderAndComparator
               </Text>

@@ -1,6 +1,4 @@
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { translateToLanguage } from "@/translations/translations";
 import React, { memo, useMemo } from "react";
 import { FlatList } from "react-native";
 import ElementPicker from "./ElementPicker";
@@ -17,7 +15,6 @@ interface ElementPickerSelectorProps {
 const ElementsList: React.FC<ElementPickerSelectorProps> = memo(
   ({ categoryElementsSorted, selectedElementId, isLeftPannelExpanded, onElementPickerPress }) => {
     const theme = useThemeStore((state) => state.theme);
-    const language = useLanguageStore((state) => state.language);
 
     const { activeStyle, inactiveStyle } = useMemo(
       () => ({
@@ -41,7 +38,7 @@ const ElementsList: React.FC<ElementPickerSelectorProps> = memo(
           const elementPickerStyle = isSelected ? activeStyle : inactiveStyle;
           return (
             <ElementPicker
-              name={translateToLanguage(item.name, language)}
+              name={item.name}
               imageUrl={item.imageUrl}
               onPress={() => onElementPickerPress(item.id)}
               isSelected={isSelected}

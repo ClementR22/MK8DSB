@@ -14,7 +14,6 @@ const LanguageSelector = () => {
 
   const [languageMode, setLanguageMode_] = useState<LanguageMode>(selectedLanguage);
   const setLanguageMode = (newLanguageMode: LanguageMode) => {
-    console.log({ newLanguageMode });
     changeLanguage(newLanguageMode);
     saveThingInMemory("language", newLanguageMode);
   };

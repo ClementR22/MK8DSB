@@ -1,9 +1,12 @@
 {
+  "colon": " : ",
+
   "desiredStats": "Stats désirées",
 
   "theme": "Theme",
   "selected": "Sélectionnés",
 
+  "matchDesiredStats": "Copier les stats paramétrées",
   "chosenStats": "param.",
   "resultStats": "affich.",
 

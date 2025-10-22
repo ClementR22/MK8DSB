@@ -7,7 +7,7 @@ import { vh } from "../styles/theme";
 
 const ButtonLicenses = () => {
   return (
-    <ButtonAndModal modalTitle="Licenses" triggerButtonText="OpenSourceLicenses">
+    <ButtonAndModal modalTitle="licenses" triggerButtonText="openSourceLicenses">
       <ScrollView
         contentContainerStyle={styles.flatListContainer}
         style={{
@@ -19,7 +19,7 @@ const ButtonLicenses = () => {
           const [licenseName, licenseUrl] = item;
           return (
             <Pressable key={index} onPress={() => Linking.openURL(licenseUrl)} style={styles.licenseItem}>
-              <Text role="title" size="small" color="blue">
+              <Text role="title" size="small" color="blue" namespace="not">
                 {licenseName}
               </Text>
             </Pressable>

@@ -1,6 +1,5 @@
 import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo } from "react";
 import { Modal as NativeModal, Pressable, StyleSheet, View } from "react-native";
-import { translate } from "@/translations/translations";
 import Button from "@/primitiveComponents/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -30,7 +29,7 @@ const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, butto
       minWidth={100}
       tooltipText={tooltipText}
     >
-      {translate(text)}
+      {text}
     </Button>
   );
 });
@@ -45,7 +44,13 @@ interface ModalProps {
   // on peut donner un composant
   secondButton?: ReactElement<{ onComplete?: () => void }>;
   // ou uniquement ses props
-  secondButtonProps?: { text: string; onPress: () => void | boolean; tooltipText?: string };
+  secondButtonProps?: {
+    text: string;
+    onPress: () => void | boolean;
+    tooltipText?: string;
+    buttonColor?: string;
+    buttonTextColor?: string;
+  };
   closeAfterSecondButton?: boolean;
   secondButtonPosition?: "left" | "right";
   withoutChildrenContainer?: boolean;
@@ -57,7 +62,7 @@ const Modal = ({
   setIsModalVisible,
   children,
   onClose,
-  closeButtonText = "Close",
+  closeButtonText = "close",
   secondButton,
   secondButtonProps,
   closeAfterSecondButton = true,
@@ -124,8 +129,8 @@ const Modal = ({
           onStartShouldSetResponder={handleContainerResponder}
         >
           {modalTitle && (
-            <Text role="headline" size="small" textAlign="center" style={styles.titleCenter}>
-              {translate(modalTitle)}
+            <Text role="headline" size="small" textAlign="center" style={styles.titleCenter} namespace="modal">
+              {modalTitle}
             </Text>
           )}
 

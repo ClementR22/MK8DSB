@@ -1,7 +1,6 @@
 import Text from "@/primitiveComponents/Text";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { useThemeStore } from "@/stores/useThemeStore";
-import { translate } from "@/translations/translations";
 import { CORNER_EXTRA_SMALL } from "@/utils/designTokens";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, ViewStyle } from "react-native";
@@ -11,6 +10,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface TooltipProps {
   tooltipText: string;
+  namespace?: string;
   onPress?: () => void;
   style?: ViewStyle | ViewStyle[];
   placement?: Placement;
@@ -20,6 +20,7 @@ interface TooltipProps {
 
 const Tooltip: React.FC<TooltipProps> = ({
   tooltipText,
+  namespace,
   onPress = null,
   style,
   placement = PopoverPlacement.TOP,
@@ -87,8 +88,9 @@ const Tooltip: React.FC<TooltipProps> = ({
                 color: theme.inverse_on_surface,
               },
             ]}
+            namespace={namespace || "tooltip"}
           >
-            {translate(tooltipText)}
+            {tooltipText}
           </Text>
         )}
       </Popover>

@@ -45,7 +45,7 @@ const getTriggerConfig = (screenName: string) => {
 
   const customTrigger = isSearchOrSave ? (
     <ButtonIcon
-      tooltipText="DisplayedStatsInSets"
+      tooltipText="displayedStatsInSets"
       iconName="checkbox-multiple-marked"
       iconType={IconType.MaterialCommunityIcons}
     />
@@ -53,10 +53,10 @@ const getTriggerConfig = (screenName: string) => {
 
   const modalTitle =
     screenName === "search" || screenName === "save"
-      ? "DisplayedStatsInSets"
+      ? "displayedStatsInSets"
       : screenName === "display"
-      ? "DisplayedStats"
-      : "DefaultDisplayedStats";
+      ? "displayedStats"
+      : "defaultDisplayedStats";
 
   return { customTrigger, modalTitle };
 };

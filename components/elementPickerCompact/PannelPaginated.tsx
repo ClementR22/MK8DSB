@@ -5,7 +5,6 @@ import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { Category } from "@/data/elements/elementsTypes";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import SortModeSelector from "../sortModeSelector/SortModeSelector";
-import { useLanguageStore } from "@/stores/useLanguageStore";
 import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
@@ -22,6 +21,7 @@ import {
   PADDING_PANNEL_PAGINATED,
 } from "@/utils/designTokens";
 import Separator from "../Separator";
+import { useTranslation } from "react-i18next";
 
 interface ElementPickerCompactSelectorPannelProps {
   selectionMode?: "single" | "multiple";
@@ -36,8 +36,9 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
   setSelectedBodytypes,
   children,
 }) => {
+  const { t } = useTranslation("elements");
+
   const theme = useThemeStore((state) => state.theme);
-  const language = useLanguageStore((state) => state.language);
   const pagerRef = useRef<PagerView>(null);
 
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
@@ -46,8 +47,8 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
   const [currentPage, setCurrentPage] = useState(0);
 
   const categoryElementsSorted = useMemo(
-    () => sortElements(elementsDataByCategory[selectedCategory], sortNumber, language),
-    [selectedCategory, sortNumber, language]
+    () => sortElements(elementsDataByCategory[selectedCategory], sortNumber, t),
+    [selectedCategory, sortNumber, t]
   );
 
   const numberOfPages = useMemo(() => {

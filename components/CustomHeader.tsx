@@ -9,8 +9,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface CustomHeaderProps {
   icon: string;
+  title: string;
   helpComponent?: React.ReactElement;
-  children: React.ReactNode;
 }
 
 function getIconType(icon: string) {
@@ -19,7 +19,7 @@ function getIconType(icon: string) {
   return IconType.MaterialCommunityIcons; // fallback
 }
 
-const CustomHeader: React.FC<CustomHeaderProps> = ({ children, icon, helpComponent }) => {
+const CustomHeader: React.FC<CustomHeaderProps> = ({ icon, title, helpComponent }) => {
   const theme = useThemeStore((state) => state.theme);
 
   const iconType = getIconType(icon);
@@ -30,8 +30,8 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ children, icon, helpCompone
     <View style={[styles.container, { backgroundColor: theme.surface_container, paddingTop: statusBarHeight }]}>
       <Icon type={iconType} name={icon} size={24} color={theme.on_surface} style={styles.icon} />
       <View style={{ flex: 1, alignItems: "flex-start" }}>
-        <Text role="headline" size="large">
-          {children}
+        <Text role="headline" size="large" namespace="screens">
+          {title}
         </Text>
       </View>
 

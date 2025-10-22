@@ -17,7 +17,7 @@ const ModalLoadSet = () => {
 
   return (
     <Modal
-      modalTitle="LoadASavedSet"
+      modalTitle="loadASavedSet"
       isModalVisible={isLoadSetModalVisible}
       setIsModalVisible={setIsLoadSetModalVisible}
       secondButton={<ButtonImportSet screenName={screenName} />}
