@@ -17,13 +17,14 @@ import ScrollViewScreen from "@/components/ScrollViewScreen";
 import ResultsNumberSelector from "@/components/ResultsNumberSelector";
 import { box_shadow_z1 } from "@/components/styles/shadow";
 import Text from "@/primitiveComponents/Text";
-import { translateToLanguage } from "@/translations/translations";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import showToast from "@/utils/showToast";
 import useSetsPersistenceStore from "@/stores/useSetsPersistenceStore";
+import { useTranslation } from "react-i18next";
 
 const SettingsScreen: React.FC = () => {
   const language = useLanguageStore((state) => state.language);
+  const { t } = useTranslation("common");
 
   const resetSettings = useResetSettings();
   const deleteAllSavedSets = useSetsPersistenceStore((state) => state.deleteAllSavedSets);
@@ -53,6 +54,10 @@ const SettingsScreen: React.FC = () => {
       <ResultStatsProvider>
         <ScrollViewScreen scrollEnabled={true}>
           <BoxContainer alignItems={"stretch"} boxShadow={box_shadow_z1}>
+            <Text role="body" size="medium" namespace="common">
+              welcome
+            </Text>
+
             <LanguageSelector />
 
             <ThemeSelector />
@@ -60,8 +65,8 @@ const SettingsScreen: React.FC = () => {
             <ResultsNumberSelector />
 
             <StatSelector triggerButtonText="ConfigureDefaultStats">
-              <Text role="title" size="small">
-                {translateToLanguage("AppliedOnMountForSetBuilderAndComparator", language)}
+              <Text role="title" size="small" namespace="text">
+                appliedOnMountForSetBuilderAndComparator
               </Text>
             </StatSelector>
 
@@ -73,9 +78,6 @@ const SettingsScreen: React.FC = () => {
 
             <ButtonDeleteAllSetsInMemory deleteAllSavedSets={handleDeleteAllSavedSets} />
 
-            <Text role="label" size="large">
-              DEBUG
-            </Text>
             <Button onPress={handleShowMemory}>show memory</Button>
 
             <Button onPress={handleRemoveMemory}>remvove memory</Button>

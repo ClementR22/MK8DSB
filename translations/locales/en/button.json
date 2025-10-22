@@ -1,0 +1,14 @@
+{
+  "search": "Search",
+  "matchDesiredStats": "Match desired stats",
+  "numberOfSearchResults": "Number of search results",
+  "configureDefaultStats": "Configure default displayed stats",
+  "sendFeedback": "Send feedback",
+  "openSourceLicenses": "Open Source Licenses",
+  "resetSettings": "Reset settings",
+  "deleteAllSetsInMemory": "Delete all saved sets",
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "close": "Close",
+  "ok": "OK"
+}

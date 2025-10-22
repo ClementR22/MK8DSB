@@ -1,0 +1,10 @@
+{
+  "character": "Personnage",
+  "body": "Carrosserie",
+  "kart": "Kart",
+  "bike": "Moto",
+  "sportBike": "Moto de sport",
+  "ATV": "Quad",
+  "wheel": "Roue",
+  "glider": "Aile"
+}

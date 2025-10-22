@@ -1,0 +1,10 @@
+{
+  "character": "Character",
+  "body": "Body",
+  "kart": "Kart",
+  "bike": "Bike",
+  "sportBike": "Sport bike",
+  "ATV": "ATV",
+  "wheel": "Wheel",
+  "glider": "Glider"
+}

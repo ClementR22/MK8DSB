@@ -25,7 +25,7 @@ interface PickerProps {
 const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle, namespace }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const { t, i18n } = useTranslation(namespace);
+  const { t } = useTranslation(namespace);
 
   const transformedItems = useMemo(() => {
     return itemList.map((item) => (

@@ -1,0 +1,15 @@
+{
+  "search": "Chercher",
+  "matchDesiredStats": "Copier les stats paramétrées",
+  "numberOfSearchResults": "Nombre de résultats de recherche",
+  "configureDefaultStats": "Configurer les stats affichées par défault",
+  "sendFeedback": "Faire un retour",
+  "openSourceLicenses": "Licences Open Source",
+  "resetSettings": "Réinitialiser les préférences",
+  "deleteAllSetsInMemory": "Supprimer tous les sets enregistrés",
+  "confirm": "Confirmer",
+  "cancel": "Annuler",
+  "close": "Fermer",
+  "ok": "OK",
+  "all": "Toutes"
+}

@@ -1,0 +1,30 @@
+{
+  "speedGround": "Vitesse sol (VS)",
+  "speedAntiGravity": "Vitesse anti-gravité (VAG)",
+  "speedWater": "Vitesse eau (VE)",
+  "speedAir": "Vitesse air (VA)",
+  "acceleration": "Accélération (Acc)",
+  "weight": "Poids (Poi)",
+  "handlingGround": "Maniabilité sol (MS)",
+  "handlingAntiGravity": "Maniabilité anti-gravité (MAG)",
+  "handlingWater": "Maniabilité eau (ME)",
+  "handlingAir": "Maniabilité air (MA)",
+  "traction": "Adhérence (Adh)",
+  "miniTurbo": "Mini-turbo (MT)",
+
+  "speed": "Vitesse",
+  "handling": "Maniabilité",
+
+  "SG": "VS",
+  "SAG": "VAG",
+  "SW": "VE",
+  "SA": "VA",
+  "Acc": "Acc",
+  "Wei": "Poi",
+  "HG": "MS",
+  "HAG": "MAG",
+  "HW": "ME",
+  "HA": "MA",
+  "Tra": "Adh",
+  "MT": "MT"
+}

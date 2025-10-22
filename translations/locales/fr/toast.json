@@ -1,0 +1,14 @@
+{
+  "success": "Succès",
+  "error": "Erreur",
+
+  "importError": "Erreur d'importation",
+  "clipboardIsEmpty": "presse-papiers vide",
+  "incorrectFormat": "format incorrect",
+  "thisSetDoesNotExist": "ce set n'existe pas",
+  "unknownError": "erreur inconnue",
+
+  "setLimitReached": "limite de sets atteinte",
+
+  "theSettingsHaveBeenReset": "Les préférences ont été réinitialisées"
+}

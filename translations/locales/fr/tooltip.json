@@ -1,0 +1,32 @@
+{
+  "help": "Aide",
+
+  "developSliders": "Développer les curseurs",
+  "reduceSliders": "Reduire les curseurs",
+  "developSets": "Développer les sets",
+  "reduceSets": "Réduire les sets",
+
+  "loadStatsOfASet": "Charger les stats d'un set",
+  "loadASet": "Charger un set",
+  "importACopiedSet": "Importer un set copié",
+
+  "addASet": "Ajouter un set",
+
+  "changeCondition": "Fixer une condition",
+
+  "chooseFilters": "Choisissez des filtres",
+  "filterBodytypes": "Filtrer des types de carroseries",
+
+  "sortSets": "Trier les sets",
+  "sortElements": "Trier les éléments",
+
+  "edit": "Editer",
+  "remove": "Supprimer",
+  "save": "Enregistrer",
+  "loadTheStats": "Charger les stats",
+  "loadTheSet": "Charger le set",
+  "loadTheStatsToSearchScreen": "Charger les stats dans l'écran de recherche",
+  "loadTheSetToDisplayScreen": "Charger le set dans l'écran de comparaison",
+  "copy": "Copier",
+  "moreActions": "Plus d'actions"
+}

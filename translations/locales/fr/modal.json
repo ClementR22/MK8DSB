@@ -1,0 +1,13 @@
+{
+  "filters": "Filtres",
+  "selectASet": "Selectionner un set",
+
+  "displayedStatsInSets": "Stats affichées dans les sets",
+  "displayedStats": "Stats affichées",
+
+  "loadASavedSet": "Charger un set enregistré",
+
+  "numberOfSearchResults": "Nombre de résultats de recherche",
+  "defaultDisplayedStats": "Stats affichées par défault dans les sets",
+  "licenses": "Licences"
+}

@@ -1,0 +1,16 @@
+{
+  "desiredStats": "Desired stats",
+
+  "selected": "Selected",
+
+  "chosenStats": "param.",
+  "resultStats": "disp.",
+
+  "resetSettingsText": "Do you really want to reset settings?",
+  "deleteAllSetsInMemoryText": "Do you really want to delete all saved sets?",
+  "appliedOnMountForSetBuilderAndComparator": "Applied on mount for Set builder and Comparator",
+
+  "SetFound": "Set found",
+
+  "warning": "Warning"
+}

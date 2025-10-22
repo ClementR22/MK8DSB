@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getSystemLanguage } from "@/i18n";
+import { getSystemLanguage } from "@/translations";
 import { loadThingFromMemory } from "@/utils/asyncStorageOperations";
 
 const LANGUAGE_KEY = "language";

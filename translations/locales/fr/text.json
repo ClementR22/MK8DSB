@@ -1,0 +1,17 @@
+{
+  "desiredStats": "Stats désirées",
+
+  "theme": "Theme",
+  "selected": "Sélectionnés",
+
+  "chosenStats": "param.",
+  "resultStats": "affich.",
+
+  "resetSettingsText": "Souhaitez-vous vraiment réinitialiser les préférences ?",
+  "deleteAllSetsInMemoryText": "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
+  "appliedOnMountForSetBuilderAndComparator": "Appliquées au démarrage pour le Set builder et le Comparateur",
+
+  "setFound": "Set trouvé",
+
+  "warning": "Attention"
+}

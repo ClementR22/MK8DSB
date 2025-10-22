@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { loadThingFromMemory } from "@/utils/asyncStorageOperations";
 import { useSettingsMap } from "@/config/settingsMap";
-import { getLanguageToUse } from "@/i18n";
+import { getLanguageToUse } from "@/translations";
 import i18next from "i18next";
 
 export const useLoadSettings = () => {
@@ -9,7 +9,6 @@ export const useLoadSettings = () => {
 
   const loadLanguage = async () => {
     const language = await getLanguageToUse();
-    console.log("laaaangage", language);
     await i18next.changeLanguage(language);
   };
 

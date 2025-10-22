@@ -3,7 +3,6 @@ import { StyleSheet, View } from "react-native";
 
 // Components import
 import StatSlider from "@/components/statSlider/StatSlider";
-import { translate } from "@/translations/translations";
 import SetCardsContainer, { SetCardsContainerHandles } from "@/components/setCard/SetCardsContainer";
 import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
 import ButtonLoadSet from "@/components/managingSetsButton/ButtonLoadSet";
@@ -25,7 +24,7 @@ import useSetsListStore from "@/stores/useSetsListStore";
 import { useTranslation } from "react-i18next";
 
 const SearchSetScreen: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "text"]);
 
   const scrollviewSetsCardsRef = useRef<SetCardsContainerHandles>(null);
   const scrollviewMainRef = useRef<ScrollViewScreenHandles>(null);
@@ -100,7 +99,7 @@ const SearchSetScreen: React.FC = () => {
 
               <View style={styles.headerTextContainer}>
                 <Text role="headline" size="medium">
-                  {translate("DesiredStats")}
+                  {t("desiredStats")}
                 </Text>
               </View>
 

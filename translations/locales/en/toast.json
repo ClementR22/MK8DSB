@@ -1,0 +1,14 @@
+{
+  "success": "Success",
+  "error": "Error",
+
+  "importError": "Import error",
+  "clipboardIsEmpty": "Clipboard is empty",
+  "incorrectFormat": "Incorrect format",
+  "thisSetDoesNotExist": "This set does not exist",
+  "unknownError": "Unknown error",
+
+  "setLimitReached": "Set limit reached",
+
+  "theSettingsHaveBeenReset": "The settings have been reset"
+}

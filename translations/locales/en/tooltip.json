@@ -1,0 +1,32 @@
+{
+  "help": "Help",
+
+  "developSliders": "Develop sliders",
+  "reduceSliders": "Reduce sliders",
+  "developSets": "Develop sets",
+  "reduceSets": "Reduce sets",
+
+  "loadStatsOfASet": "Load a set's stats",
+  "loadASet": "Load a set",
+  "importACopiedSet": "Import a copied set",
+
+  "addASet": "Add a set",
+
+  "changeCondition": "Fix a condition",
+
+  "chooseFilters": "Choose some filters",
+  "filterBodytypes": "Filter body types",
+
+  "sortSets": "Sort sets",
+  "sortElements": "Sort elements",
+
+  "edit": "Edit",
+  "remove": "Remove",
+  "save": "Save",
+  "loadTheStats": "Load the stats",
+  "loadTheSet": "Load the set",
+  "loadTheStatsToSearchScreen": "Load the stats to search screen",
+  "loadTheSetToDisplayScreen": "Load the set to compare screen",
+  "copy": "Copy",
+  "moreActions": "More actions"
+}
