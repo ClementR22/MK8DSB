@@ -150,19 +150,19 @@ jobs:
         run: echo "value=$(cat nightly-version.txt)" >> "$GITHUB_OUTPUT"
 
       - name: Upload nightly release
-        uses: andelf/nightly-release@main
+        uses: ncipollo/release-action@v1
         env:
           GITHUB_TOKEN: ${{github.token}}
         with:
-          tag_name: nightly
+          tag: nightly-${{steps.nightly-version.outputs.value}}
           name: "Nightly release ${{steps.nightly-version.outputs.value}}"
-          draft: false
+          draft: ${{inputs.is-draft}}
           prerelease: true
           body: |
             Unstable release, things may break and you may lose your settings or data.
             **Use with caution.**
             ${{inputs.description}}
-          files: |
+          artifacts: |
             mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk
             sha256sum.txt
 
@@ -205,14 +205,15 @@ jobs:
         run: mv app-release.apk mk8dsb_${{steps.version.outputs.v-version}}.apk
 
       - name: Upload stable release
-        uses: softprops/action-gh-release@v1
+        uses: ncipollo/release-action@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           name: MK8DSB ${{steps.version.outputs.v-version}}
-          tag_name: ${{steps.version.outputs.v-version}}
+          tag: ${{steps.version.outputs.v-version}}
           body: ${{inputs.description}}
           draft: ${{inputs.is-draft}}
-          files: |
+          prerelease: false
+          artifacts: |
             ./mk8dsb_${{steps.version.outputs.v-version}}.apk
             ./sha256sum.txt
