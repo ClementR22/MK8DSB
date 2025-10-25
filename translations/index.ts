@@ -27,19 +27,42 @@ i18n.use(initReactI18next).init({
   resources,
   lng: "en",
   fallbackLng: "en",
+  ns: [
+    "button",
+    "categories",
+    "common",
+    "elements",
+    "helpmodal",
+    "language",
+    "modal",
+    "placeholder",
+    "screens",
+    "sort",
+    "stats",
+    "text",
+    "theme",
+    "toast",
+    "tooltip",
+  ],
+  defaultNS: "common",
+  nsSeparator: ":",
+  keySeparator: false,
+
   interpolation: {
     escapeValue: false, // React s'en charge
   },
 
   saveMissing: true,
   missingKeyHandler: (lngs, ns, key, fallbackValue) => {
+    console.log("missingKeyHandler");
+    console.log(lngs, ns, key, fallbackValue);
     console.error(`🚨 Traduction manquante: "${key}" (namespace: ${ns})`);
     // Optionnel: envoyer à un service de monitoring
     // Sentry.captureMessage(`Missing translation: ${key}`);
   },
   // Affiche la clé manquante au lieu de rien
   parseMissingKeyHandler: (key) => {
-    return `⚠️ MISSING: ${key}`;
+    return `⚠️ MISSING  ${key}`;
   },
 });
 

@@ -6,23 +6,24 @@ import Text from "@/primitiveComponents/Text";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 interface InfoToastProps {
-  text1?: string;
+  text1: string;
 }
 
-export default function InfoToast({ text1 }: InfoToastProps) {
+const InfoToast = ({ text1 }: InfoToastProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   const insets = useSafeAreaInsets();
   const bottomOffset = insets.bottom;
 
+  // pas de traduction ici, déjà fait dans showToast.ts
   return (
     <View style={[styles.toast, { backgroundColor: theme.toast_background_color, marginBottom: bottomOffset }]}>
-      <Text role="body" size="medium" color="white">
+      <Text role="body" size="medium" color="white" namespace="not">
         {text1}
       </Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   toast: {
@@ -32,3 +33,5 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
 });
+
+export default React.memo(InfoToast);

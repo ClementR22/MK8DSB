@@ -64,7 +64,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
         setSortNumber(newDirection === "asc" ? newOrderInfo.asc : newOrderInfo.desc);
       }
 
-      showToast(name + newDirection);
+      showToast(`stats:${name} sort:${newDirection}`);
     },
     [activeSort, currentDirection, setSortNumber]
   );

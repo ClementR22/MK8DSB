@@ -48,7 +48,7 @@ export function useActionIconPropsList(
 
   const handleLoadToSearchPress = useCallback(() => {
     loadToSearch({ source, id });
-    showToast("Les stats du set ont été chargées");
+    showToast("setStatsHaveBeenLoaded", "success");
 
     setIsLoadSetModalVisible(false);
   }, [source, id, loadToSearch, setIsLoadSetModalVisible]);
@@ -56,9 +56,9 @@ export function useActionIconPropsList(
   const handleLoadToDisplayPress = useCallback(() => {
     try {
       loadToDisplay({ source, id });
-      showToast("Le set a été chargé dans l'écran de comparaison");
+      showToast("setHasBeenLoadedInTheComparator", "success");
     } catch (e) {
-      showToast(e.message);
+      showToast(e.message, "error");
     }
 
     setIsLoadSetModalVisible(false);
@@ -68,23 +68,19 @@ export function useActionIconPropsList(
     try {
       if (!isSaved) {
         saveSet(source, id);
-        showToast("Succès" + " " + "Le set a été enregistré");
+        showToast("setHasBeenSaved", "success");
       } else {
         unSaveSet(source, id);
-        showToast("Succès" + " " + "Le set a été supprimé des favoris.");
+        showToast("setHasBeenUnSaved", "success");
       }
     } catch (e) {
-      showToast(e.message);
+      showToast(e.message, "error");
     }
   }, [source, id, isSaved, saveSet, unSaveSet]);
 
   const handleRemovePress = useCallback(() => {
     removeSet(id, source);
-    if (source === "save") {
-      showToast("Succès" + " " + "Le set a été supprimé des favoris.");
-    } else {
-      showToast("Succès" + " " + "Le set a été supprimé");
-    }
+    showToast("setHasBeenDeleted", "success");
   }, [source, id, removeSet]);
 
   const handleExportPress = useCallback(() => {

@@ -1,5 +1,7 @@
 {
   "id": "Number",
   "name": "Name",
-  "classId": "Class"
+  "classId": "Class",
+  "asc": "ascending",
+  "desc": "descending"
 }

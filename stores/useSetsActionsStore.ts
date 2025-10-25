@@ -66,7 +66,7 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
       (target === "display" && setsListTarget.length >= MAX_NUMBER_SETS_DISPLAY) ||
       (target === "save" && setsListTarget.length >= MAX_NUMBER_SETS_SAVE)
     ) {
-      throw new Error("SetLimitReachedInThisScreen");
+      throw new Error("setLimitReachedInThisScreen");
     }
 
     // verification du nom unique
@@ -74,7 +74,7 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
 
     if (!isNameUnique) {
       if (!forceName) {
-        throw new Error("NameAlreadyExists");
+        throw new Error("nameAlreadyExists");
       } else {
         const baseName = s.name;
         const newIndex = 0;
@@ -121,14 +121,18 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
   },
 
   saveSet: async (source: ScreenName, id: string) => {
-    const s = get().loadSetCard({ source, id, target: "save" });
+    try {
+      const s = get().loadSetCard({ source, id, target: "save" });
 
-    const setsListSaved = useSetsListStore.getState().setsListSaved;
-    if (setsListSaved.length >= MAX_NUMBER_SETS_SAVE) {
-      throw new Error("SetLimitReachedInThisScreen");
+      const setsListSaved = useSetsListStore.getState().setsListSaved;
+      if (setsListSaved.length >= MAX_NUMBER_SETS_SAVE) {
+        throw new Error("setLimitReachedInThisScreen");
+      }
+
+      await useSetsPersistenceStore.getState().saveSetInMemory(s);
+    } catch (e) {
+      console.log(e);
     }
-
-    await useSetsPersistenceStore.getState().saveSetInMemory(s);
   },
 
   unSaveSet: async (screenName: ScreenName, id: string) => {
@@ -156,17 +160,17 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
     try {
       parsedSet = JSON.parse(clipboardContent);
     } catch (err) {
-      throw new Error("IncorrectFormat");
+      throw new Error("incorrectFormat");
     }
 
     if (!checkFormatSetImported(parsedSet)) {
-      throw new Error("IncorrectFormat");
+      throw new Error("incorrectFormat");
     }
 
     const stats = getSetStatsFromClassIds(parsedSet.classIds);
 
     if (!stats) {
-      throw new Error("ThisSetDoesNotExist");
+      throw new Error("thisSetDoesNotExist");
     }
 
     const s = { ...parsedSet, id: nanoid(8), stats };

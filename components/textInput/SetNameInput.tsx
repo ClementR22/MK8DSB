@@ -28,9 +28,9 @@ const SetNameInput: React.FC<SetNameInputProps> = ({ name, id, editable = true }
     if (localName !== name) {
       try {
         renameSet(localName, screenName, id);
-        showToast("setRenamed");
+        showToast("setRenamed", "success");
       } catch (e) {
-        showToast(e);
+        showToast(e.message, "error");
         setLocalName(name);
         return;
       }

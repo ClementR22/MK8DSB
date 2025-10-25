@@ -10,14 +10,18 @@ export const useSetImportExport = () => {
 
   const handleExport = async (screenName: ScreenName, id: string) => {
     exportSet(screenName, id);
-    showToast("Set copié dans le presse-papier", "success");
+    showToast("setCopiedInClipboard", "success");
   };
 
   const handleImport = async (screenName: ScreenName) => {
     try {
       const clipboardContent = await Clipboard.getStringAsync();
       importSet(clipboardContent, screenName);
-      showToast("Set importé avec succès", "success");
+      if (screenName === "search") {
+        showToast("statsImported", "success");
+      } else {
+        showToast("setImported", "success");
+      }
     } catch (e) {
       showToast(e.message, "error");
     }

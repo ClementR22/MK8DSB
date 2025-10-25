@@ -9,6 +9,6 @@ export const useResetSettings = () => {
       return setState(defaultValue);
     });
 
-    showToast("TheSettingsHaveBeenReset");
+    showToast("theSettingsHaveBeenReset", "success");
   };
 };

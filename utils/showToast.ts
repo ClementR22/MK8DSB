@@ -1,21 +1,22 @@
 import i18n from "@/translations";
-import ToastManager from "./ToastManager";
+import ToastManager, { ToastType } from "./ToastManager";
 
-type ToastType = "success" | "error";
+function showToast(messageKey: string, type?: ToastType) {
+  console.log({ messageKey, type });
+  const keys = messageKey.split(" ");
 
-function showToast(messageKey = "Ceci est une alerte temporaire 👋", type?: ToastType) {
-  const translated = i18n.exists(messageKey) ? i18n.t(messageKey) : messageKey;
+  const translatedParts = keys.map((key) => i18n.t(key, { ns: "toast" })); // "toast" en fallback
 
   let prefix = "";
   if (type === "error") {
-    prefix = i18n.t("common:errorPrefix", { defaultValue: "Erreur :" }) + " ";
+    prefix = i18n.t("toast:error") + i18n.t("text:colon");
   } else if (type === "success") {
-    prefix = i18n.t("common:successPrefix", { defaultValue: "Succès :" }) + " ";
+    prefix = i18n.t("toast:success") + i18n.t("text:colon");
   }
 
-  const finalMessage = prefix + translated;
+  const finalMessage = prefix + translatedParts.join(" ");
 
-  ToastManager.show(finalMessage, type);
+  ToastManager.show(finalMessage);
 }
 
 export default showToast;

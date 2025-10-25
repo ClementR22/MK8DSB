@@ -118,7 +118,7 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
 
   addNewSetInDisplay: () => {
     if (get().setsListDisplayed.length >= MAX_NUMBER_SETS_DISPLAY) {
-      throw new Error("SetLimitReached");
+      throw new Error("setLimitReached");
     }
 
     const newIndex = get().setKeyInDisplay;
@@ -158,7 +158,7 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
       attempts++;
 
       if (attempts > MAX_ATTEMPTS) {
-        throw new Error("CannotGenerateUniqueName");
+        throw new Error("cannotGenerateUniqueName");
       }
     } while (!get().checkNameUnique(newName, target));
 
@@ -170,7 +170,7 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
 
     const isNameUnique = get().checkNameUnique(newName, screenName);
     if (!isNameUnique) {
-      throw new Error("NameAlreadyExists");
+      throw new Error("nameAlreadyExists");
     }
 
     const s = get().getSet(screenName, id);

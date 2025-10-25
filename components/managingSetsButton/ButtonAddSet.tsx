@@ -21,7 +21,7 @@ const ButtonAddSet: React.FC<ButtonAddSetProps> = ({ scrollRef }) => {
     try {
       addNewSetInDisplay();
     } catch (e) {
-      showToast(e);
+      showToast(e.message, "error");
       return; // Ne pas scroller en cas d'erreur
     }
 

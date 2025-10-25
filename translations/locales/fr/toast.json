@@ -2,7 +2,7 @@
   "success": "Succès",
   "error": "Erreur",
 
-  "importError": "Erreur d'importation",
+  "importError": "erreur d'importation",
   "clipboardIsEmpty": "presse-papiers vide",
   "incorrectFormat": "format incorrect",
   "thisSetDoesNotExist": "ce set n'existe pas",
@@ -10,5 +10,19 @@
 
   "setLimitReached": "limite de sets atteinte",
 
-  "theSettingsHaveBeenReset": "Les préférences ont été réinitialisées"
+  "theSettingsHaveBeenReset": "les préférences ont été réinitialisées",
+  "allSavedSetsHaveBeenDeleted": "tous les sets sauvegardés ont été supprimés !",
+
+  "setRenamed": "set renommé",
+  "nameAlreadyExists": "ce nom existe déjà",
+  "setStatsHaveBeenLoaded": "les stats du set ont été chargées",
+  "setHasBeenLoadedInTheComparator": "le set a été chargé dans le comparateur",
+  "setHasBeenSaved": "le set a été enregistré",
+  "setHasBeenUnSaved": "le set a été retiré des favoris",
+  "setHasBeenDeleted": "le set a été supprimé",
+  "setCopiedInClipboard": "set copié dans le presse-papier",
+  "setImported": "set importé",
+  "statsImported": "stats du set importées",
+  "setLimitReachedInThisScreen": "limite de sets atteinte",
+  "cannotGenerateUniqueName": "impossible de générer un nouveau nom"
 }
