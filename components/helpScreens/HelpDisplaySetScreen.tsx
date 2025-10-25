@@ -12,10 +12,10 @@ import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
 const HelpDisplaySetScreen = () => {
   return (
     <HelpModal title="Guide du Comparateur de Sets">
-      <Text role="body" size="large" textAlign="center">
-        <Text role="body" size="large" weight="bold">
-          Comparez
-        </Text>{" "}
+      <Text role="body" size="large" weight="bold" namespace="helpDisplay">
+        Comparez
+      </Text>
+      <Text role="body" size="large" textAlign="center" namespace="helpDisplay">
         jusqu'à 12 sets simultanément pour identifier le set qui vous convient.
       </Text>
 
@@ -45,7 +45,7 @@ const HelpDisplaySetScreen = () => {
               { id: "3", value: 7, color: "#2ECC71" },
             ]}
           />
-          <Text role="body" size="large" fontStyle="italic">
+          <Text role="body" size="large" fontStyle="italic" namespace="helpDisplay">
             Chaque couleur = un set différent. Appuyez sur une barre pour naviguer vers le set correspondant.
           </Text>
         </HelpStepItem>
@@ -85,7 +85,7 @@ const HelpDisplaySetScreen = () => {
             iconType={IconType.MaterialCommunityIcons}
             description="Selectionner le tri qui vous convient"
           />
-          <Text role="body" size="large" fontStyle="italic">
+          <Text role="body" size="large" fontStyle="italic" namespace="helpDisplay">
             Cliquez longuement sur un bouton de tri pour afficher son nom
           </Text>
         </HelpStepItem>
@@ -112,7 +112,7 @@ const HelpDisplaySetScreen = () => {
       </HelpSection>
 
       <HelpHighlightBox type="tips" title="Conseil pratique">
-        <Text role="body" size="large">
+        <Text role="body" size="large" namespace="helpDisplay">
           Limitez-vous à 2-3 sets pour une comparaison claire, et concentrez-vous sur vos statistiques prioritaires.
         </Text>
       </HelpHighlightBox>

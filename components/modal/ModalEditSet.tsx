@@ -32,7 +32,7 @@ const ModalEditSet: React.FC = () => {
 
   return (
     <Modal
-      modalTitle="SelectASet"
+      modalTitle="selectASet"
       isModalVisible={isEditModalVisible}
       setIsModalVisible={setIsEditModalVisible}
       onClose={handleCloseEditModal}

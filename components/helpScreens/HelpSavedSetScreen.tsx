@@ -9,10 +9,10 @@ import HelpSection from "../helpComponents/HelpSection";
 const HelpFavoritesScreen = () => {
   return (
     <HelpModal title="Guide des Sets Favoris">
-      <Text role="body" size="large" textAlign="center">
-        <Text role="body" size="large" weight="bold">
-          Centralisez et organisez
-        </Text>{" "}
+      <Text role="body" size="large" weight="bold" namespace="helpSave">
+        Centralisez et organisez
+      </Text>
+      <Text role="body" size="large" textAlign="center" namespace="helpSave">
         tous vos sets préférés pour y accéder rapidement.
       </Text>
 
@@ -54,7 +54,7 @@ const HelpFavoritesScreen = () => {
             iconType={IconType.MaterialCommunityIcons}
             description="Selectionner le tri qui vous convient"
           />
-          <Text role="body" size="large" fontStyle="italic">
+          <Text role="body" size="large" fontStyle="italic" namespace="helpSave">
             Cliquez longuement sur un bouton de tri pour afficher son nom
           </Text>
         </HelpStepItem>

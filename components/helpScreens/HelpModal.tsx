@@ -1,14 +1,9 @@
 import React, { useMemo } from "react";
-import { ScrollView, View, Pressable } from "react-native";
+import { ScrollView, Pressable } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
-import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
-import HelpStepItem from "../helpComponents/HelpStepItem";
-import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import { StyleSheet } from "react-native";
-import Text from "@/primitiveComponents/Text";
-import Separator from "../Separator";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 export type HelpContentItem = {

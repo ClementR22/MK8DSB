@@ -164,7 +164,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
       </Button>
 
       <ButtonAndModal
-        modalTitle="Filters"
+        modalTitle="filters"
         customTrigger={
           <ButtonIconWithBadge
             tooltipText="ChooseFilters"

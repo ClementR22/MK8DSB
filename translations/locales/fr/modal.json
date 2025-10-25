@@ -7,6 +7,8 @@
 
   "loadASavedSet": "Charger un set enregistré",
 
+  "guideSetBuilder": "Guide du Set Builder",
+
   "numberOfSearchResults": "Nombre de résultats de recherche",
   "defaultDisplayedStats": "Stats affichées par défault dans les sets",
   "licenses": "Licences"

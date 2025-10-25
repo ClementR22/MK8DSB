@@ -15,12 +15,11 @@ import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
 
 const HelpSearchSetScreen = () => {
   return (
-    <HelpModal title="Guide du Set Builder">
+    <HelpModal title="guideSetBuilder">
+      <Text role="body" size="large" weight="bold" namespace="helpsearch">
+        Créez la combinaison idéale
+      </Text>
       <Text role="body" size="large" textAlign="center" namespace="helpsearch">
-        <Text role="body" size="large" weight="bold" namespace="helpsearch">
-          Créez la combinaison idéale
-        </Text>
-        {"\n"}
         en définissant les statistiques que vous souhaitez. L'algorithme trouvera pour vous les meilleurs sets
         correspondants.
       </Text>
