@@ -19,7 +19,7 @@ const StepCircle = ({ number, size = 24 }: StepCircleProps) => {
         { width: size, height: size, borderRadius: BORDER_RADIUS_INF, backgroundColor: theme.primary },
       ]}
     >
-      <Text role="body" size="large" inverse>
+      <Text role="body" size="large" inverse namespace="not">
         {number}
       </Text>
     </View>

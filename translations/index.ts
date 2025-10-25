@@ -30,9 +30,10 @@ i18n.use(initReactI18next).init({
   ns: [
     "button",
     "categories",
-    "common",
     "elements",
-    "helpmodal",
+    "helpSearch",
+    "helpDisplay",
+    "helpSave",
     "language",
     "modal",
     "placeholder",

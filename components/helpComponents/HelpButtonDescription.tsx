@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import IconContainer from "@/primitiveComponents/IconContainer";
-import { useThemeStore } from "@/stores/useThemeStore";
 import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
 
@@ -11,6 +10,7 @@ interface HelpButtonDescriptionProps {
   iconType: IconType;
   containerSize?: number;
   description: string;
+  namespace: string;
 }
 
 const HelpButtonDescription = ({
@@ -18,9 +18,8 @@ const HelpButtonDescription = ({
   iconType,
   containerSize = BUTTON_SIZE,
   description,
+  namespace,
 }: HelpButtonDescriptionProps) => {
-  const theme = useThemeStore((state) => state.theme);
-
   return (
     <View style={styles.container}>
       <View style={styles.iconWrapper}>
@@ -33,7 +32,7 @@ const HelpButtonDescription = ({
       </View>
 
       <View style={{ flex: 1, gap: 10, justifyContent: "center" }}>
-        <Text role="body" size="large">
+        <Text role="body" size="large" namespace={namespace}>
           {description}
         </Text>
       </View>

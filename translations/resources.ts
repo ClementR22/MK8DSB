@@ -2,7 +2,9 @@ import enButton from "./locales/en/button.json";
 import enCategories from "./locales/en/categories.json";
 import enCommon from "./locales/en/common.json";
 import enElements from "./locales/en/elements.json";
-import enHelpmodal from "./locales/en/helpmodal.json";
+import enHelpSearch from "./locales/en/helpSearch.json";
+import enHelpDisplay from "./locales/en/helpDisplay.json";
+import enHelpSave from "./locales/en/helpSave.json";
 import enLanguage from "./locales/en/language.json";
 import enModal from "./locales/en/modal.json";
 import enPlaceholder from "./locales/en/placeholder.json";
@@ -18,7 +20,9 @@ import frButton from "./locales/fr/button.json";
 import frCategories from "./locales/fr/categories.json";
 import frCommon from "./locales/fr/common.json";
 import frElements from "./locales/fr/elements.json";
-import frHelpmodal from "./locales/fr/helpmodal.json";
+import frHelpSearch from "./locales/fr/helpSearch.json";
+import frHelpDisplay from "./locales/fr/helpDisplay.json";
+import frHelpSave from "./locales/fr/helpSave.json";
 import frLanguage from "./locales/fr/language.json";
 import frModal from "./locales/fr/modal.json";
 import frPlaceholder from "./locales/fr/placeholder.json";
@@ -36,7 +40,9 @@ export const resources = {
     categories: enCategories,
     common: enCommon,
     elements: enElements,
-    helpmodal: enHelpmodal,
+    helpSearch: enHelpSearch,
+    helpDisplay: enHelpDisplay,
+    helpSave: enHelpSave,
     language: enLanguage,
     modal: enModal,
     placeholder: enPlaceholder,
@@ -54,7 +60,9 @@ export const resources = {
     categories: frCategories,
     common: frCommon,
     elements: frElements,
-    helpmodal: frHelpmodal,
+    helpSearch: frHelpSearch,
+    helpDisplay: frHelpDisplay,
+    helpSave: frHelpSave,
     language: frLanguage,
     modal: frModal,
     placeholder: frPlaceholder,

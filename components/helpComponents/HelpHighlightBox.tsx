@@ -8,11 +8,12 @@ export type BoxType = "info" | "result" | "tips";
 
 interface HelpHighlightBoxProps {
   type: BoxType;
-  title?: string;
+  title: string;
+  namespace: string;
   children: ReactNode;
 }
 
-const HelpHighlightBox = ({ children, type, title }: HelpHighlightBoxProps) => {
+const HelpHighlightBox = ({ type, title, namespace, children }: HelpHighlightBoxProps) => {
   const { backgroundColor, borderColor, textColor } = HELP_HIGHLIGHT_BOX_COLORS[type];
 
   if (!children) return;
@@ -28,10 +29,10 @@ const HelpHighlightBox = ({ children, type, title }: HelpHighlightBoxProps) => {
         },
       ]}
     >
-      <Text role="title" size="medium" color={textColor} textAlign="center">
+      <Text role="title" size="medium" color={textColor} textAlign="center" namespace={namespace}>
         {title}
       </Text>
-      <Text role="body" size="large" color={textColor} textAlign="center">
+      <Text role="body" size="large" color={textColor} textAlign="center" namespace={namespace}>
         {children}
       </Text>
     </View>

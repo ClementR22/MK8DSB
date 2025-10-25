@@ -112,9 +112,7 @@ const HelpDisplaySetScreen = () => {
       </HelpSection>
 
       <HelpHighlightBox type="tips" title="Conseil pratique">
-        <Text role="body" size="large" namespace="helpDisplay">
-          Limitez-vous à 2-3 sets pour une comparaison claire, et concentrez-vous sur vos statistiques prioritaires.
-        </Text>
+        Limitez-vous à 2-3 sets pour une comparaison claire, et concentrez-vous sur vos statistiques prioritaires.
       </HelpHighlightBox>
     </HelpModal>
   );

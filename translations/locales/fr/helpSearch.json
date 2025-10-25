@@ -1,0 +1,40 @@
+{
+  "Pick the stats you want": "Sélectionnez vos statistiques",
+  ", and let the algorithm find the perfect sets for you.": ", et laissez l'algorithme dénicher pour vous les meilleurs sets.",
+
+  "How to use the Set Builder": "Comment utiliser\nle Set Builder",
+  "Choose your criteria": "Choisissez vos critères",
+  "Add/remove a statistic": "Ajoutez/supprimez une statistique",
+  "Adjust values and tolerance": "Ajustez les valeurs et la tolérance",
+
+  "approximate value": "valeur approximative",
+  "exact value": "valeur exacte",
+  "minimum value": "valeur minimale",
+
+  "Start the search": "Lancez la recherche",
+
+  "Review the results": "Analysez les résultats",
+  "Sets are ranked by matching score": "Les sets sont triés par score de correspondance",
+  "Tap a bar to view the gap with your criteria": "Touchez sur une barre pour voir l'écart avec votre critère",
+  "Advanced options": "Options avancées",
+  "Customize the display": "Personnalisez l'affichage",
+  "Choose which stats to show in the results": "Choisissez les stats visibles dans les résultats",
+
+  "Filters (option)": "Filtres (option)",
+  "Lock a character, kart, wheels, or glider": "Imposez un personnage, un kart, des roues ou une aile",
+
+  "Reuse a set's stats": "Réutilisez les stats d'un set",
+  "Open your favorites collection": "Ouvrez votre collection de sets favoris",
+
+  "Import a set's stats to find variations": "Importez les stats d'un set pour chercher des variantes",
+
+  "Results management": "Gestion des résultats",
+  "Save to favorites": "Ajoutez aux favoris",
+
+  "Move to the set comparator": "Déplacez vers le Comparateur de sets",
+  "Export the set": "Exportez le set",
+
+  "Pro tip": "Conseil pratique",
+
+  "Start with 2–3 key stats for more relevant results": "Commencez avec 2-3 statistiques principales pour des résultats plus pertinents"
+}

@@ -7,17 +7,18 @@ import Text from "@/primitiveComponents/Text";
 interface HelpStepItemProps {
   stepChar: number | string;
   title: string;
+  namespace: string;
   alignItems?: "flex-start" | "center" | "flex-end";
   children: React.ReactNode;
 }
 
-const HelpStepItem = ({ stepChar, title, alignItems, children }: HelpStepItemProps) => {
+const HelpStepItem = ({ stepChar, title, namespace, alignItems, children }: HelpStepItemProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconWrapper}>{<StepCircle number={stepChar} />}</View>
 
       <View style={styles.contentContainer}>
-        <Text role="label" size="large">
+        <Text role="label" size="large" namespace={namespace}>
           {title}
         </Text>
 
