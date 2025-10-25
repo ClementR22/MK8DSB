@@ -1,5 +1,5 @@
 import i18n from "i18next";
-import * as Localization from "react-native-localize";
+import * as Localization from "expo-localization";
 import { initReactI18next } from "react-i18next";
 import { resources } from "./resources";
 
