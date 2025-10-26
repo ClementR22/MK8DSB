@@ -101,7 +101,7 @@ const HelpDisplaySetScreen = () => {
         <HelpButtonDescription
           iconName="magnify"
           iconType={IconType.MaterialCommunityIcons}
-          description="Copier les stats dans le Set Builder et utiliser comme base de recherche"
+          description="Copier les stats dans le Chercheur de builds et utiliser comme base de recherche"
         />
 
         <HelpButtonDescription

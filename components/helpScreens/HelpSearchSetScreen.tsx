@@ -25,7 +25,7 @@ const helpSearchSetScreen = () => {
         </Text>
       </Text>
 
-      <HelpSection title="How to use the Set Builder" namespace="helpSearch" contentType="step">
+      <HelpSection title="How to use the Build finder" namespace="helpSearch" contentType="step">
         <HelpStepItem key={1} stepChar={"1"} title="Choose your criteria" namespace="helpSearch">
           <HelpButtonDescription
             iconName="plus"

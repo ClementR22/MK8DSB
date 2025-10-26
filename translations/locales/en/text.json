@@ -11,9 +11,9 @@
 
   "resetSettingsText": "Do you really want to reset settings?",
   "deleteAllSetsInMemoryText": "Do you really want to delete all saved sets?",
-  "appliedOnMountForSetBuilderAndComparator": "Applied on mount for Set builder and Comparator",
+  "appliedOnMountForSetBuilderAndComparator": "Applied on mount for Build finder and Comparator",
 
-  "SetFound": "Set found",
+  "setFound": "Set found",
 
   "warning": "Warning"
 }

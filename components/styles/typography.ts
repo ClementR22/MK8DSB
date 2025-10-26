@@ -9,24 +9,24 @@ export const display = {
 export const headline = {
   large: { fontSize: 25, fontWeight: "700", lineHeight: 40, letterSpacing: 0 },
   medium: { fontSize: 24, fontWeight: "600", lineHeight: 36, letterSpacing: 0 },
-  small: { fontSize: 24, fontWeight: "400", lineHeight: 32, letterSpacing: 0 }, // ← Pour "Set builder"
+  small: { fontSize: 24, fontWeight: "400", lineHeight: 32, letterSpacing: 0 },
 };
 
 export const title = {
   large: { fontSize: 22, fontWeight: "700", lineHeight: 28, letterSpacing: 0 },
-  medium: { fontSize: 20, fontWeight: "600", lineHeight: 26, letterSpacing: 0.15 }, // ← Pour "Stats souhaitées"
+  medium: { fontSize: 20, fontWeight: "600", lineHeight: 26, letterSpacing: 0.15 },
   small: { fontSize: 16, fontWeight: "400", lineHeight: 20, letterSpacing: 0.1 },
 };
 
 export const label = {
-  large: { fontSize: 18, fontWeight: "600", lineHeight: 20, letterSpacing: 0.1 }, // ← Pour statGauge
+  large: { fontSize: 18, fontWeight: "600", lineHeight: 20, letterSpacing: 0.1 },
   // medium: { fontSize: 16, fontWeight: "400", lineHeight: 16, letterSpacing: 0.5 },
-  //  small: { fontSize: 16, fontWeight: "500", lineHeight: 16, letterSpacing: 0.5 }, // ← Pour bottom navigation
+  //  small: { fontSize: 16, fontWeight: "500", lineHeight: 16, letterSpacing: 0.5 },
 };
 
 export const body = {
-  large: { fontSize: 16, fontWeight: "400", lineHeight: 20, letterSpacing: 0.5 }, // ← Pour valeurs inputs
-  medium: { fontSize: 14, fontWeight: "400", lineHeight: 20, letterSpacing: 0.25 }, // ← Pour texte descriptif
+  large: { fontSize: 16, fontWeight: "400", lineHeight: 20, letterSpacing: 0.5 },
+  medium: { fontSize: 14, fontWeight: "400", lineHeight: 20, letterSpacing: 0.25 },
   // small: { fontSize: 12, fontWeight: "400", lineHeight: 16, letterSpacing: 0.4 },
 };
 

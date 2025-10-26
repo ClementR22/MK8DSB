@@ -1,13 +1,13 @@
 {
-  "findSetTitle": "Set builder",
+  "findSetTitle": "Finder",
   "displaySetTitle": "Comparator",
-  "savedSetTitle": "Favorites",
+  "savedSetTitle": "Collection",
   "galleryTitle": "Gallery",
   "settingsTitle": "Settings",
 
-  "findSetTabTitle": "Find",
-  "displaySetTabTitle": "Compare",
-  "savedSetTabTitle": "Favorite",
+  "findSetTabTitle": "Finder",
+  "displaySetTabTitle": "Comparator",
+  "savedSetTabTitle": "Collection",
   "galleryTabTitle": "Gallery",
   "settingsTabTitle": "Settings"
 }

@@ -120,7 +120,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
         return {
           ...setFoundData,
           id: nanoid(8),
-          name: `${t("SetFound")} (${index + 1})`,
+          name: `${t("setFound")} (${index + 1})`,
           percentage: percentageRounded,
         };
       });

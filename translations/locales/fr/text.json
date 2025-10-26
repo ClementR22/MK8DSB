@@ -12,7 +12,7 @@
 
   "resetSettingsText": "Souhaitez-vous vraiment réinitialiser les préférences ?",
   "deleteAllSetsInMemoryText": "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
-  "appliedOnMountForSetBuilderAndComparator": "Appliquées au démarrage pour le Set builder et le Comparateur",
+  "appliedOnMountForSetBuilderAndComparator": "Appliquées au démarrage pour le Chercheur de builds et le Comparateur",
 
   "setFound": "Set trouvé",
 
