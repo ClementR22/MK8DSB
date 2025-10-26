@@ -3,7 +3,7 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 import DoubleEntryTable, { ColumnName } from "./DoubleEntryTable";
 import useStatsStore, { ChosenStat } from "@/stores/useStatsStore";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
-import { useScreen } from "@/contexts/ScreenContext";
+import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
@@ -40,22 +40,24 @@ const getColumnsConfig = (screenName: string): Omit<StatListColumn, "checkList" 
   return [{ columnName: "resultStats", keepOneSelected: false }];
 };
 
-const getTriggerConfig = (screenName: string) => {
+const getTriggerConfig = (screenName: ScreenName) => {
   const isSearchOrSave = screenName === "search" || screenName === "save";
 
   const customTrigger = isSearchOrSave ? (
     <ButtonIcon
-      tooltipText="displayedStatsInSets"
+      tooltipText={screenName === "search" ? "desiredStatsAndStatsInSets" : "displayedStatsInSets"}
       iconName="checkbox-multiple-marked"
       iconType={IconType.MaterialCommunityIcons}
     />
   ) : null;
 
   const modalTitle =
-    screenName === "search" || screenName === "save"
-      ? "displayedStatsInSets"
+    screenName === "search"
+      ? "desiredStatsAndStatsInSets"
       : screenName === "display"
       ? "displayedStats"
+      : screenName === "save"
+      ? "displayedStatsInSets"
       : "defaultDisplayedStats";
 
   return { customTrigger, modalTitle };

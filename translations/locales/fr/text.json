@@ -4,10 +4,12 @@
   "desiredStats": "Stats désirées",
 
   "theme": "Theme",
+  "language": "Langue",
+
   "selected": "Sélectionnés",
 
   "matchDesiredStats": "Copier les stats paramétrées",
-  "chosenStats": "param.",
+  "chosenStats": "desir.",
   "resultStats": "affich.",
 
   "resetSettingsText": "Souhaitez-vous vraiment réinitialiser les préférences ?",

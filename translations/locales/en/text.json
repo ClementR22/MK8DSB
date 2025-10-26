@@ -3,10 +3,13 @@
 
   "desiredStats": "Desired stats",
 
+  "theme": "Theme",
+  "language": "Language",
+
   "selected": "Selected",
 
   "matchDesiredStats": "Match desired stats",
-  "chosenStats": "param.",
+  "chosenStats": "desir.",
   "resultStats": "disp.",
 
   "resetSettingsText": "Do you really want to reset settings?",
