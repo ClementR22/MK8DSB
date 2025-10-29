@@ -21,7 +21,7 @@
   "setHasBeenUnSaved": "le build a été retiré des favoris",
   "setHasBeenDeleted": "le build a été supprimé",
   "setCopiedInClipboard": "build copié dans le presse-papier",
-  "setImported": "build importé",
+  "buildImported": "build importé",
   "statsImported": "stats du build importées",
   "setLimitReachedInThisScreen": "limite de builds atteinte",
   "cannotGenerateUniqueName": "impossible de générer un nouveau nom"

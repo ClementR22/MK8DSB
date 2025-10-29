@@ -100,10 +100,10 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   },
 
   getSet: (screenName: ScreenName, id: string) => {
-    const setList = get().getBuildsList(screenName).buildsList;
+    const buildsList = get().getBuildsList(screenName).buildsList;
 
-    const s = setList.find((s) => s.id === id);
-    return s;
+    const build = buildsList.find((build) => build.id === id);
+    return build;
   },
 
   setBuildsListFound: (newBuildsList) => set({ buildsListFound: newBuildsList }),
@@ -173,14 +173,14 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
       throw new Error("nameAlreadyExists");
     }
 
-    const s = get().getSet(screenName, id);
-    const newSet = { ...s, name: newName };
+    const build = get().getSet(screenName, id);
+    const newSet = { ...build, name: newName };
 
-    const newBuildsList = buildsList.map((s: Build) => {
-      if (s.id === id) {
+    const newBuildsList = buildsList.map((build: Build) => {
+      if (build.id === id) {
         return newSet;
       }
-      return s;
+      return build;
     });
 
     set({ [buildsListName]: newBuildsList });
@@ -195,14 +195,14 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     const newClassIds = Object.values(pressedClassIdsObj);
     const id = get().setCardEditedId;
 
-    const s = get().getSet(screenName, id);
-    const newSet = { ...s, classIds: newClassIds, stats: getBuildStatsFromClassIds(newClassIds) };
+    const build = get().getSet(screenName, id);
+    const newSet = { ...build, classIds: newClassIds, stats: getBuildStatsFromClassIds(newClassIds) };
 
-    const buildsListUpdated = buildsList.map((s) => {
-      if (s.id === id) {
+    const buildsListUpdated = buildsList.map((build) => {
+      if (build.id === id) {
         return newSet;
       }
-      return s;
+      return build;
     });
 
     set({ [buildsListName]: buildsListUpdated });

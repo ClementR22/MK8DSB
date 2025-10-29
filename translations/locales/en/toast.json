@@ -21,7 +21,7 @@
   "setHasBeenUnSaved": "build has been unsaved",
   "setHasBeenDeleted": "build hase been deleted",
   "setCopiedInClipboard": "build copied in clipboard",
-  "setImported": "build imported",
+  "buildImported": "build imported",
   "statsImported": "build's stats imported",
   "setLimitReachedInThisScreen": "build limit reached",
   "cannotGenerateUniqueName": "cannot generate new name"

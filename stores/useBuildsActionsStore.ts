@@ -32,8 +32,8 @@ export interface BuildsActionsStoreState {
   loadBuildsSaved: () => void;
   saveSet: (source: ScreenName, id: string) => Promise<void>;
   unSaveSet: (screenName: ScreenName, id: string) => Promise<void>;
-  exportSet: (screenName: ScreenName, id: string) => void;
-  importSet: (clipboardContent: string, screenName: ScreenName) => void;
+  exportBuild: (screenName: ScreenName, id: string) => void;
+  importBuild: (clipboardContent: string, screenName: ScreenName) => void;
 }
 
 const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
@@ -147,14 +147,14 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     }
   },
 
-  exportSet: (screenName, id) => {
+  exportBuild: (screenName, id) => {
     const build = useBuildsListStore.getState().getSet(screenName, id);
 
     const json = JSON.stringify({ name: build.name, classIds: build.classIds });
     Clipboard.setStringAsync(json);
   },
 
-  importSet: (clipboardContent: string, screenName: ScreenName) => {
+  importBuild: (clipboardContent: string, screenName: ScreenName) => {
     let parsedSet: unknown;
 
     try {

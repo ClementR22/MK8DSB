@@ -27,7 +27,7 @@ export function useActionIconPropsList(
   isSaved?: boolean
 ): ActionIconPropsMap {
   const source = isInLoadModal ? "save" : screenName;
-  const s = useBuildsListStore((state) => state.getSet(source, id));
+  const build = useBuildsListStore((state) => state.getSet(source, id));
 
   const updateSelectionFromSet = usePressableElementsStore((state) => state.updateSelectionFromSet);
   const setBuildCardEditedId = useBuildsListStore((state) => state.setBuildCardEditedId);
@@ -42,9 +42,9 @@ export function useActionIconPropsList(
 
   const handleEditPress = useCallback(() => {
     setBuildCardEditedId(id);
-    updateSelectionFromSet(s?.classIds);
+    updateSelectionFromSet(build?.classIds);
     setIsEditModalVisible(true);
-  }, [id, s?.classIds, setBuildCardEditedId, updateSelectionFromSet, setIsEditModalVisible]);
+  }, [id, build?.classIds, setBuildCardEditedId, updateSelectionFromSet, setIsEditModalVisible]);
 
   const handleLoadToSearchPress = useCallback(() => {
     loadToSearch({ source, id });
@@ -134,7 +134,7 @@ export function useActionIconPropsList(
     source,
     isInLoadModal,
     isSaved,
-    s?.classIds,
+    build?.classIds,
     setBuildCardEditedId,
     updateSelectionFromSet,
     setIsEditModalVisible,
