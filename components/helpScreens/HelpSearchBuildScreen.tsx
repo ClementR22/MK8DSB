@@ -13,7 +13,7 @@ import HelpStepItem from "../helpComponents/HelpStepItem";
 import HelpSection from "../helpComponents/HelpSection";
 import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
 
-const HelpSearchSetScreen = () => {
+const HelpSearchBuildScreen = () => {
   return (
     <HelpModal title="guideBuildFinder">
       {/* Intro */}
@@ -171,4 +171,4 @@ const HelpSearchSetScreen = () => {
   );
 };
 
-export default memo(HelpSearchSetScreen);
+export default memo(HelpSearchBuildScreen);

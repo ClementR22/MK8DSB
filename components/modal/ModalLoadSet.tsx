@@ -5,10 +5,10 @@ import ButtonImportSet from "../managingSetsButton/ButtonImportSet"; // Assuming
 import Modal from "@/primitiveComponents/Modal"; // Assuming correct path
 import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore"; // Ensure this is correctly typed and implemented
 import { useScreenNameFromPath } from "@/hooks/useScreenNameFromPath";
-import useSetsListStore from "@/stores/useSetsListStore";
+import useBuildsListStore from "@/stores/useBuildsListStore";
 
 const ModalLoadSet = () => {
-  const setsListSaved = useSetsListStore((state) => state.setsListSaved);
+  const setsListSaved = useBuildsListStore((state) => state.setsListSaved);
 
   const isLoadSetModalVisible = useModalLoadSetStore((state) => state.isLoadSetModalVisible);
   const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);

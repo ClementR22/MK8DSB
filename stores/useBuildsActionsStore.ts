@@ -6,7 +6,7 @@ import { router } from "expo-router";
 
 // Data and Types
 import { ScreenName } from "@/contexts/ScreenContext";
-import { MAX_NUMBER_SETS_DISPLAY, MAX_NUMBER_SETS_SAVE, SetProps } from "./useSetsListStore";
+import { MAX_NUMBER_SETS_DISPLAY, MAX_NUMBER_SETS_SAVE, Build } from "./useBuildsListStore";
 
 // Utilities
 import { getSetStatsFromClassIds } from "@/utils/getSetStatsFromClassIds";
@@ -15,19 +15,19 @@ import { checkFormatSetImported } from "@/utils/checkFormatSetImported";
 
 // Stores
 import useStatsStore from "./useStatsStore";
-import useSetsListStore from "./useSetsListStore";
-import useSetsPersistenceStore from "./useSetsPersistenceStore";
+import useBuildsListStore from "./useBuildsListStore";
+import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 import useGeneralStore from "./useGeneralStore";
 
-export interface SetsActionsStoreState {
+export interface BuildsActionsStoreState {
   loadSetCard: (params: {
     source?: ScreenName;
     id?: string;
-    build?: SetProps;
+    build?: Build;
     target: ScreenName;
     forceName?: boolean;
-  }) => SetProps;
-  loadToSearch: (params: { source?: ScreenName; id?: string; build?: SetProps }) => void;
+  }) => Build;
+  loadToSearch: (params: { source?: ScreenName; id?: string; build?: Build }) => void;
   loadToDisplay: (params: { source: ScreenName; id: string }) => void;
   loadSetsSaved: () => void;
   saveSet: (source: ScreenName, id: string) => Promise<void>;
@@ -36,11 +36,11 @@ export interface SetsActionsStoreState {
   importSet: (clipboardContent: string, screenName: ScreenName) => void;
 }
 
-const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
+const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
   loadSetCard: (params: {
     source?: ScreenName;
     id?: string;
-    build?: SetProps;
+    build?: Build;
     target: ScreenName;
     forceName?: boolean;
   }) => {
@@ -48,18 +48,18 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
 
     // on récupère build depuis les props ou bien on le calcule
     // et on retire percentage
-    let build: SetProps;
+    let build: Build;
     if (providedBuild) {
       const { percentage, ...build_ } = providedBuild;
       build = build_;
     } else {
-      const { percentage, ...build_ } = useSetsListStore.getState().getSet(source, id);
+      const { percentage, ...build_ } = useBuildsListStore.getState().getSet(source, id);
       build = build_;
     }
     // on change l'id car dans l'appli, il ne doit pas y avoir 2 builds avec le même id
     build.id = nanoid(8);
 
-    const setsListTarget = useSetsListStore.getState().getSetsList(target).setsList;
+    const setsListTarget = useBuildsListStore.getState().getBuildsList(target).setsList;
 
     // vérification de la limit de builds
     if (
@@ -70,7 +70,7 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
     }
 
     // verification du nom unique
-    const isNameUnique = useSetsListStore.getState().checkNameUnique(build.name, target);
+    const isNameUnique = useBuildsListStore.getState().checkNameUnique(build.name, target);
 
     if (!isNameUnique) {
       if (!forceName) {
@@ -78,29 +78,29 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
       } else {
         const baseName = build.name;
         const newIndex = 0;
-        const newName = useSetsListStore.getState().generateUniqueName(baseName, newIndex, target);
+        const newName = useBuildsListStore.getState().generateUniqueName(baseName, newIndex, target);
 
         build.name = newName;
       }
     }
 
-    const newSetsListTarget = [...setsListTarget, build];
+    const newBuildsListTarget = [...setsListTarget, build];
 
-    const setSetsListTarget = useSetsListStore.getState().getSetSetsList(target);
-    setSetsListTarget(newSetsListTarget);
+    const setBuildsListTarget = useBuildsListStore.getState().getSetBuildsList(target);
+    setBuildsListTarget(newBuildsListTarget);
     return build;
   },
 
-  loadToSearch: (params: { source?: ScreenName; id?: string; build?: SetProps }) => {
+  loadToSearch: (params: { source?: ScreenName; id?: string; build?: Build }) => {
     const { source, id, build: providedBuild } = params;
 
     // on récupère build depuis les props ou bien on le calcule
     // pas nécessaire de retirer percentage
-    let build: SetProps;
+    let build: Build;
     if (providedBuild) {
       build = providedBuild;
     } else {
-      build = useSetsListStore.getState().getSet(source, id);
+      build = useBuildsListStore.getState().getSet(source, id);
     }
 
     useStatsStore.getState().loadSetStats(build.stats);
@@ -116,39 +116,39 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
   },
 
   loadSetsSaved: async () => {
-    const setsSaved = await useSetsPersistenceStore.getState().fetchSetsSaved();
-    useSetsListStore.getState().setSetsListSaved(setsSaved);
+    const setsSaved = await useBuildsPersistenceStore.getState().fetchSetsSaved();
+    useBuildsListStore.getState().setBuildsListSaved(setsSaved);
   },
 
   saveSet: async (source: ScreenName, id: string) => {
     try {
       const build = get().loadSetCard({ source, id, target: "save" });
 
-      const setsListSaved = useSetsListStore.getState().setsListSaved;
+      const setsListSaved = useBuildsListStore.getState().setsListSaved;
       if (setsListSaved.length >= MAX_NUMBER_SETS_SAVE) {
         throw new Error("setLimitReachedInThisScreen");
       }
 
-      await useSetsPersistenceStore.getState().saveSetInMemory(build);
+      await useBuildsPersistenceStore.getState().saveSetInMemory(build);
     } catch (e) {
       console.log(e);
     }
   },
 
   unSaveSet: async (screenName: ScreenName, id: string) => {
-    const classIds = useSetsListStore.getState().getSet(screenName, id).classIds;
+    const classIds = useBuildsListStore.getState().getSet(screenName, id).classIds;
 
-    const setsListSaved = useSetsListStore.getState().setsListSaved;
+    const setsListSaved = useBuildsListStore.getState().setsListSaved;
     const setsToRemove = setsListSaved.filter((build) => arraysEqual(build.classIds, classIds));
 
     for (const build of setsToRemove) {
-      useSetsListStore.getState().removeSet(build.id, "save");
-      await useSetsPersistenceStore.getState().removeSetInMemory(build.id);
+      useBuildsListStore.getState().removeSet(build.id, "save");
+      await useBuildsPersistenceStore.getState().removeSetInMemory(build.id);
     }
   },
 
   exportSet: (screenName, id) => {
-    const build = useSetsListStore.getState().getSet(screenName, id);
+    const build = useBuildsListStore.getState().getSet(screenName, id);
 
     const json = JSON.stringify({ name: build.name, classIds: build.classIds });
     Clipboard.setStringAsync(json);
@@ -180,10 +180,10 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
     } else {
       get().loadSetCard({ build, target: screenName, forceName: true });
       if (screenName === "save") {
-        useSetsPersistenceStore.getState().saveSetInMemory(build);
+        useBuildsPersistenceStore.getState().saveSetInMemory(build);
       }
     }
   },
 }));
 
-export default useSetsActionsStore;
+export default useBuildsActionsStore;

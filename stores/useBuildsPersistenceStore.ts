@@ -2,7 +2,7 @@ import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Data and Types
-import { SetProps } from "./useSetsListStore";
+import { Build } from "./useBuildsListStore";
 
 // Utilities
 import {
@@ -13,20 +13,20 @@ import {
 } from "@/utils/asyncStorageOperations";
 import { SORT_NUMBER_SAVED_SETS_DEFAULT } from "@/constants/constants";
 
-export interface SetsPersistenceStoreState {
+export interface BuildsPersistenceStoreState {
   sortNumberSavedSets: number;
 
   setSortNumberSavedSets: (newSortNumberSavedSets: number) => Promise<void>;
   fetchSetsSavedKeys: () => Promise<string[]>;
-  fetchSetsSaved: () => Promise<SetProps[]>;
-  saveSetInMemory: (setToSave: SetProps) => Promise<void>;
+  fetchSetsSaved: () => Promise<Build[]>;
+  saveSetInMemory: (setToSave: Build) => Promise<void>;
   removeSetInMemory: (keyToRemove: string) => Promise<void>;
-  updateSetInMemory: (setObj: SetProps) => Promise<void>;
+  updateSetInMemory: (setObj: Build) => Promise<void>;
   deleteAllSavedSets: () => Promise<void>;
   loadSortNumberFromMemory: () => Promise<void>;
 }
 
-const useSetsPersistenceStore = create<SetsPersistenceStoreState>((set, get) => ({
+const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get) => ({
   sortNumberSavedSets: SORT_NUMBER_SAVED_SETS_DEFAULT,
 
   setSortNumberSavedSets: async (newSortNumberSavedSets) => {
@@ -42,7 +42,7 @@ const useSetsPersistenceStore = create<SetsPersistenceStoreState>((set, get) => 
   fetchSetsSaved: async () => {
     const setsKeys = await get().fetchSetsSavedKeys();
     const setsData = await AsyncStorage.multiGet(setsKeys);
-    const setsDataParsed: SetProps[] = setsData
+    const setsDataParsed: Build[] = setsData
       .map(([, value]) => {
         try {
           return value ? JSON.parse(value) : null;
@@ -51,7 +51,7 @@ const useSetsPersistenceStore = create<SetsPersistenceStoreState>((set, get) => 
           return null;
         }
       })
-      .filter((build) => build !== null) as SetProps[];
+      .filter((build) => build !== null) as Build[];
 
     return setsDataParsed;
   },
@@ -81,4 +81,4 @@ const useSetsPersistenceStore = create<SetsPersistenceStoreState>((set, get) => 
   },
 }));
 
-export default useSetsPersistenceStore;
+export default useBuildsPersistenceStore;

@@ -20,12 +20,9 @@ import { box_shadow_z1 } from "@/components/styles/shadow";
 import Text from "@/primitiveComponents/Text";
 import { SetCardsScrollProvider } from "@/contexts/SetCardsScrollContext";
 import useStatsStore from "@/stores/useStatsStore";
-import useSetsListStore from "@/stores/useSetsListStore";
-import { useTranslation } from "react-i18next";
+import useBuildsListStore from "@/stores/useBuildsListStore";
 
-const SearchSetScreen: React.FC = () => {
-  const { t } = useTranslation(["common", "text"]);
-
+const SearchBuildScreen: React.FC = () => {
   const scrollviewSetsCardsRef = useRef<SetCardsContainerHandles>(null);
   const scrollviewMainRef = useRef<ScrollViewScreenHandles>(null);
 
@@ -43,7 +40,7 @@ const SearchSetScreen: React.FC = () => {
 
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
   const chosenStats = useStatsStore((state) => state.chosenStats);
-  const setsListFound = useSetsListStore((state) => state.setsListFound);
+  const setsListFound = useBuildsListStore((state) => state.setsListFound);
 
   const [isReduceStatSliders, setIsReduceStatSliders] = useState(false);
   const toggleReduceStatSliders = useCallback(() => {
@@ -120,9 +117,9 @@ const SearchSetScreen: React.FC = () => {
   );
 };
 
-SearchSetScreen.displayName = "SearchSetScreen";
+SearchBuildScreen.displayName = "SearchBuildScreen";
 
-export default React.memo(SearchSetScreen);
+export default React.memo(SearchBuildScreen);
 
 const styles = StyleSheet.create({
   searchContainerPressablesContainer: { flexDirection: "row", width: "100%", alignItems: "center", padding: 3 },

@@ -12,13 +12,13 @@ import SetCard from "./SetCard";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
-import { SetProps } from "@/stores/useSetsListStore";
+import { Build } from "@/stores/useBuildsListStore";
 import Placeholder from "./Placeholder";
 import { BORDER_RADIUS_CONTAINER_LOWEST, MARGIN_CONTAINER_LOWEST, PADDING_STANDARD } from "@/utils/designTokens";
 import { box_shadow_z1 } from "../styles/shadow";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 
-interface SetWithColor extends SetProps {
+interface SetWithColor extends Build {
   color?: string;
 }
 
@@ -40,7 +40,7 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
     const scrollViewRef = useRef<ScrollView>(null);
     const setCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
 
-    // La logique d'availableColorsRef et son useEffect ont été déplacés dans DisplaySetScreen
+    // La logique d'availableColorsRef et son useEffect ont été déplacés dans DisplayBuildScreen
 
     const onSetCardLayout = useCallback((id: string, event: LayoutChangeEvent) => {
       const { x, width } = event.nativeEvent.layout;

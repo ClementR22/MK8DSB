@@ -3,15 +3,15 @@ import { ScrollView } from "react-native";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import showToast from "@/utils/showToast";
-import useSetsListStore, { MAX_NUMBER_SETS_DISPLAY } from "@/stores/useSetsListStore";
+import useBuildsListStore, { MAX_NUMBER_SETS_DISPLAY } from "@/stores/useBuildsListStore";
 
 interface ButtonAddSetProps {
   scrollRef: React.RefObject<ScrollView>;
 }
 
 const ButtonAddSet: React.FC<ButtonAddSetProps> = ({ scrollRef }) => {
-  const addNewSetInDisplay = useSetsListStore((state) => state.addNewSetInDisplay);
-  const setsListDisplayed = useSetsListStore((state) => state.setsListDisplayed);
+  const addNewSetInDisplay = useBuildsListStore((state) => state.addNewSetInDisplay);
+  const setsListDisplayed = useBuildsListStore((state) => state.setsListDisplayed);
 
   const timeoutRef = useRef(null);
 

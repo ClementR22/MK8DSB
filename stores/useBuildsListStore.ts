@@ -10,58 +10,58 @@ import { ScreenName } from "@/contexts/ScreenContext";
 // Utilities
 import { getSetStatsFromClassIds } from "@/utils/getSetStatsFromClassIds";
 import { SortableElement, sortElements } from "@/utils/sortElements";
-import { DEFAULT_SETS } from "@/constants/defaultSets";
-import useSetsPersistenceStore from "./useSetsPersistenceStore";
+import { DEFAULT_BUILDS } from "@/constants/defaultBuilds";
+import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 
 export const MAX_NUMBER_SETS_DISPLAY = 10;
 export const MAX_NUMBER_SETS_SAVE = 30;
 
-export interface SetProps {
+export interface Build {
   id: string;
   name: string;
   classIds: number[];
   stats: number[];
   percentage?: number;
 }
-export interface SetsListStoreState {
-  setsListFound: SetProps[];
-  setsListDisplayed: SetProps[];
-  setsListSaved: SetProps[];
+export interface BuildsListStoreState {
+  setsListFound: Build[];
+  setsListDisplayed: Build[];
+  setsListSaved: Build[];
   setCardEditedId: string;
   setKeyInDisplay: number;
 
-  getSetsList: (screenName: ScreenName) => {
-    setsList: SetProps[] | SetProps[];
+  getBuildsList: (screenName: ScreenName) => {
+    setsList: Build[] | Build[];
     setsListName: string;
   };
-  getSetSetsList: (screenName: ScreenName) => (newSetsList: SetProps[]) => void;
+  getSetBuildsList: (screenName: ScreenName) => (newBuildsList: Build[]) => void;
 
-  getSet: (screenName: ScreenName, id: string) => SetProps;
+  getSet: (screenName: ScreenName, id: string) => Build;
 
-  setSetsListFound: (newSetsList: SetProps[]) => void;
-  setSetsListDisplayed: (newSetsList: SetProps[]) => void;
-  setSetsListSaved: (newSetsList: SetProps[]) => void;
+  setBuildsListFound: (newBuildsList: Build[]) => void;
+  setBuildsListDisplayed: (newBuildsList: Build[]) => void;
+  setBuildsListSaved: (newBuildsList: Build[]) => void;
   setSetCardEditedId: (id: string) => void;
   addNewSetInDisplay: () => void;
   removeSet: (id: string, screenName: ScreenName) => void;
   checkNameUnique: (setName: string, screenName: ScreenName) => boolean;
   generateUniqueName: (baseName: string, newIndexInit: number, target: ScreenName) => string;
   renameSet: (newName: string, screenName: ScreenName, id: string) => void;
-  updateSetsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => void;
-  sortSetsList: (screenName: ScreenName, sortNumber: number) => void;
+  updateBuildsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => void;
+  sortBuildsList: (screenName: ScreenName, sortNumber: number) => void;
 }
 
-const useSetsListStore = create<SetsListStoreState>((set, get) => ({
+const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   setsListFound: [],
   setsListDisplayed: [
-    { id: nanoid(8), ...DEFAULT_SETS.set1 },
-    { id: nanoid(8), ...DEFAULT_SETS.set2 },
+    { id: nanoid(8), ...DEFAULT_BUILDS.set1 },
+    { id: nanoid(8), ...DEFAULT_BUILDS.set2 },
   ],
   setsListSaved: [],
   setCardEditedId: null,
   setKeyInDisplay: 2,
 
-  getSetsList: (screenName) => {
+  getBuildsList: (screenName) => {
     let setsListName: string;
 
     switch (screenName) {
@@ -80,37 +80,37 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
     return { setsList, setsListName };
   },
 
-  getSetSetsList: (screenName: ScreenName) => {
-    let setSetsListName: string;
+  getSetBuildsList: (screenName: ScreenName) => {
+    let setBuildsListName: string;
 
     switch (screenName) {
       case "search":
-        setSetsListName = "setSetsListFound";
+        setBuildsListName = "setBuildsListFound";
         break;
       case "display":
-        setSetsListName = "setSetsListDisplayed";
+        setBuildsListName = "setBuildsListDisplayed";
         break;
       case "save":
-        setSetsListName = "setSetsListSaved";
+        setBuildsListName = "setBuildsListSaved";
         break;
     }
 
-    const setSetsList = get()[setSetsListName];
-    return setSetsList;
+    const setBuildsList = get()[setBuildsListName];
+    return setBuildsList;
   },
 
   getSet: (screenName: ScreenName, id: string) => {
-    const setList = get().getSetsList(screenName).setsList;
+    const setList = get().getBuildsList(screenName).setsList;
 
     const s = setList.find((s) => s.id === id);
     return s;
   },
 
-  setSetsListFound: (newSetsList) => set({ setsListFound: newSetsList }),
+  setBuildsListFound: (newBuildsList) => set({ setsListFound: newBuildsList }),
 
-  setSetsListDisplayed: (newSetsList) => set({ setsListDisplayed: newSetsList }),
+  setBuildsListDisplayed: (newBuildsList) => set({ setsListDisplayed: newBuildsList }),
 
-  setSetsListSaved: (newSetsList) => set({ setsListSaved: newSetsList }),
+  setBuildsListSaved: (newBuildsList) => set({ setsListSaved: newBuildsList }),
 
   setSetCardEditedId: (id) => {
     set({ setCardEditedId: id });
@@ -127,20 +127,20 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
     set((state) => {
       return {
         setKeyInDisplay: newIndex,
-        setsListDisplayed: [...state.setsListDisplayed, { ...DEFAULT_SETS.set1, id: nanoid(8), name: newName }],
+        setsListDisplayed: [...state.setsListDisplayed, { ...DEFAULT_BUILDS.set1, id: nanoid(8), name: newName }],
       };
     });
   },
 
   removeSet: (id, screenName) => {
-    const { setsList, setsListName } = get().getSetsList(screenName);
+    const { setsList, setsListName } = get().getBuildsList(screenName);
     const newList = setsList.filter((build) => build.id !== id);
     set({ [setsListName]: newList });
   },
 
   checkNameUnique: (setName, screenName) => {
     // ne lance pas d'error
-    const { setsList } = get().getSetsList(screenName);
+    const { setsList } = get().getBuildsList(screenName);
 
     const isNameUnique = !setsList.some((build) => build.name === setName);
     return isNameUnique;
@@ -166,7 +166,7 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
   },
 
   renameSet: (newName, screenName, id) => {
-    const { setsList, setsListName } = get().getSetsList(screenName);
+    const { setsList, setsListName } = get().getBuildsList(screenName);
 
     const isNameUnique = get().checkNameUnique(newName, screenName);
     if (!isNameUnique) {
@@ -176,22 +176,22 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
     const s = get().getSet(screenName, id);
     const newSet = { ...s, name: newName };
 
-    const newSetsList = setsList.map((s: SetProps) => {
+    const newBuildsList = setsList.map((s: Build) => {
       if (s.id === id) {
         return newSet;
       }
       return s;
     });
 
-    set({ [setsListName]: newSetsList });
+    set({ [setsListName]: newBuildsList });
 
     if (screenName === "save") {
-      useSetsPersistenceStore.getState().saveSetInMemory(newSet);
+      useBuildsPersistenceStore.getState().saveSetInMemory(newSet);
     }
   },
 
-  updateSetsList: (pressedClassIdsObj, screenName) => {
-    const { setsList, setsListName } = get().getSetsList(screenName);
+  updateBuildsList: (pressedClassIdsObj, screenName) => {
+    const { setsList, setsListName } = get().getBuildsList(screenName);
     const newClassIds = Object.values(pressedClassIdsObj);
     const id = get().setCardEditedId;
 
@@ -208,14 +208,14 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
     set({ [setsListName]: setsListUpdated });
 
     if (screenName === "save") {
-      useSetsPersistenceStore.getState().saveSetInMemory(newSet);
+      useBuildsPersistenceStore.getState().saveSetInMemory(newSet);
     }
   },
 
-  sortSetsList: (screenName, sortNumber) => {
-    const { setsList, setsListName } = get().getSetsList(screenName);
+  sortBuildsList: (screenName, sortNumber) => {
+    const { setsList, setsListName } = get().getBuildsList(screenName);
 
-    const setsListSortable: SortableElement[] = setsList.map((setObj: SetProps) => {
+    const setsListSortable: SortableElement[] = setsList.map((setObj: Build) => {
       const statsArray = setObj.stats;
       const mappedStats: Partial<SortableElement> = {};
 
@@ -244,4 +244,4 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
   },
 }));
 
-export default useSetsListStore;
+export default useBuildsListStore;

@@ -13,26 +13,25 @@ import ModalEditSet from "@/components/modal/ModalEditSet";
 import ModalLoadSet from "@/components/modal/ModalLoadSet";
 import Toast from "react-native-toast-message";
 // Help Components - Memoized for performance
-import HelpSearchSetScreen from "@/components/helpScreens/HelpSearchSetScreen";
-import HelpDisplaySetScreen from "@/components/helpScreens/HelpDisplaySetScreen";
-import HelpSavedSetScreen from "@/components/helpScreens/HelpSavedSetScreen";
+import HelpSearchBuildScreen from "@/components/helpScreens/HelpSearchBuildScreen";
+import HelpDisplayBuildScreen from "@/components/helpScreens/HelpDisplayBuildScreen";
+import HelpSavedBuildScreen from "@/components/helpScreens/HelpSavedBuildScreen";
 
 // Stores
 import { useThemeStore } from "@/stores/useThemeStore";
-import useSetsPersistenceStore from "@/stores/useSetsPersistenceStore";
 
 // Utils & Hooks
 import { useLoadSettings } from "@/hooks/useLoadSettings";
 import { toastConfig } from "@/config/toastConfig";
 import { box_shadow_z2 } from "@/components/styles/shadow";
-import useSetsActionsStore from "@/stores/useSetsActionsStore";
+import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
 import { useTranslation } from "react-i18next";
 
 export default function TabLayout() {
   const { t } = useTranslation("screens");
 
   // --- Zustand Store Selections ---
-  const loadSetsSaved = useSetsActionsStore((state) => state.loadSetsSaved);
+  const loadSetsSaved = useBuildsActionsStore((state) => state.loadSetsSaved);
   const theme = useThemeStore((state) => state.theme);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
 
@@ -54,17 +53,17 @@ export default function TabLayout() {
 
   // Use useCallback for header functions to prevent unnecessary re-renders of CustomHeader
   const renderSearchHeader = useCallback(
-    () => <CustomHeader icon="magnify" title="findSetTitle" helpComponent={<HelpSearchSetScreen />} />,
+    () => <CustomHeader icon="magnify" title="findSetTitle" helpComponent={<HelpSearchBuildScreen />} />,
     []
   ); // Dependencies for useCallback
 
   const renderDisplayHeader = useCallback(
-    () => <CustomHeader icon="compare" title="displaySetTitle" helpComponent={<HelpDisplaySetScreen />} />,
+    () => <CustomHeader icon="compare" title="displaySetTitle" helpComponent={<HelpDisplayBuildScreen />} />,
     []
   );
 
   const renderSavedHeader = useCallback(
-    () => <CustomHeader icon="cards-outline" title="savedSetTitle" helpComponent={<HelpSavedSetScreen />} />,
+    () => <CustomHeader icon="cards-outline" title="savedSetTitle" helpComponent={<HelpSavedBuildScreen />} />,
     []
   );
 
@@ -101,7 +100,7 @@ export default function TabLayout() {
               }}
             />
             <Tabs.Screen
-              name="DisplaySetScreen"
+              name="DisplayBuildScreen"
               options={{
                 title: t("displaySetTabTitle"),
                 tabBarIcon: ({ color }) => <MaterialCommunityIcons name="compare" size={24} color={color} />,
@@ -109,7 +108,7 @@ export default function TabLayout() {
               }}
             />
             <Tabs.Screen
-              name="SavedSetScreen"
+              name="SavedBuildScreen"
               options={{
                 title: t("savedSetTabTitle"),
                 tabBarIcon: ({ color, focused }) => (

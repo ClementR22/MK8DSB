@@ -9,7 +9,7 @@ import HelpStepItem from "../helpComponents/HelpStepItem";
 import HelpSection from "../helpComponents/HelpSection";
 import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
 
-const HelpDisplaySetScreen = () => {
+const HelpDisplayBuildScreen = () => {
   return (
     <HelpModal title="guideBuildComparator">
       {/* Intro */}
@@ -141,4 +141,4 @@ const HelpDisplaySetScreen = () => {
   );
 };
 
-export default memo(HelpDisplaySetScreen);
+export default memo(HelpDisplayBuildScreen);

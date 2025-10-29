@@ -10,7 +10,7 @@ import Button from "@/primitiveComponents/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useResetSettings } from "@/hooks/useResetSettings";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
-import ButtonDeleteAllSetsInMemory from "@/components/settingsComponents/ButtonDeleteAllSetsInMemory";
+import ButtonDeleteAllBuildsInMemory from "@/components/settingsComponents/ButtonDeleteAllBuildsInMemory";
 import StatSelector from "@/components/statSelector/StatSelector";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
@@ -18,11 +18,11 @@ import ResultsNumberSelector from "@/components/ResultsNumberSelector";
 import { box_shadow_z1 } from "@/components/styles/shadow";
 import Text from "@/primitiveComponents/Text";
 import showToast from "@/utils/showToast";
-import useSetsPersistenceStore from "@/stores/useSetsPersistenceStore";
+import useBuildsPersistenceStore from "@/stores/useBuildsPersistenceStore";
 
 const SettingsScreen: React.FC = () => {
   const resetSettings = useResetSettings();
-  const deleteAllSavedSets = useSetsPersistenceStore((state) => state.deleteAllSavedSets);
+  const deleteAllSavedSets = useBuildsPersistenceStore((state) => state.deleteAllSavedSets);
 
   const handleDeleteAllSavedSets = () => {
     deleteAllSavedSets();
@@ -71,7 +71,7 @@ const SettingsScreen: React.FC = () => {
 
             <ButtonResetSettings resetSettings={resetSettings} />
 
-            <ButtonDeleteAllSetsInMemory deleteAllSavedSets={handleDeleteAllSavedSets} />
+            <ButtonDeleteAllBuildsInMemory deleteAllSavedSets={handleDeleteAllSavedSets} />
 
             <Button onPress={handleShowMemory}>show memory</Button>
 

@@ -24,8 +24,8 @@ export type PressableElementsStore = {
     selectionMode: "single" | "multiple"
   ) => selectedClassIdsByCategory | multiSelectedClassIdsByCategory;
 
-  isSetsListUpdated: boolean;
-  setIsSetsListUpdated: (newIsSetsListUpdated: boolean) => void;
+  isBuildsListUpdated: boolean;
+  setIsBuildsListUpdated: (newIsBuildsListUpdated: boolean) => void;
 
   updateSelectionFromSet: (setClassIds: number[]) => void;
 
@@ -53,10 +53,10 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
     }
   },
 
-  isSetsListUpdated: true,
+  isBuildsListUpdated: true,
 
-  setIsSetsListUpdated: (newIsSetsListUpdated) => {
-    set({ isSetsListUpdated: newIsSetsListUpdated });
+  setIsBuildsListUpdated: (newIsBuildsListUpdated) => {
+    set({ isBuildsListUpdated: newIsBuildsListUpdated });
   },
 
   updateSelectionFromSet: (setClassIds) => {
@@ -98,7 +98,7 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
           ...currentSelected,
           [category]: classId,
         },
-        isSetsListUpdated: false,
+        isBuildsListUpdated: false,
       };
     });
   },

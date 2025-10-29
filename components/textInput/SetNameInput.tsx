@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useScreen } from "../../contexts/ScreenContext";
-import useSetsListStore from "@/stores/useSetsListStore";
+import useBuildsListStore from "@/stores/useBuildsListStore";
 import SetNameInputContent from "./SetNameInputContent";
 import { useSetCardsScroll } from "@/contexts/SetCardsScrollContext";
 import showToast from "@/utils/showToast";
@@ -13,7 +13,7 @@ interface SetNameInputProps {
 
 const SetNameInput: React.FC<SetNameInputProps> = ({ name, id, editable = true }) => {
   const screenName = useScreen();
-  const renameSet = useSetsListStore((state) => state.renameSet);
+  const renameSet = useBuildsListStore((state) => state.renameSet);
   const { scrollToSetCard } = useSetCardsScroll();
 
   const [localName, setLocalName] = useState(name);

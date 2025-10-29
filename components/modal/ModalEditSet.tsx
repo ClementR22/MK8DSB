@@ -4,29 +4,29 @@ import Modal from "../../primitiveComponents/Modal";
 import PannelPaginated from "../elementPickerCompact/PannelPaginated";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { useScreenNameFromPath } from "@/hooks/useScreenNameFromPath";
-import useSetsListStore from "@/stores/useSetsListStore";
+import useBuildsListStore from "@/stores/useBuildsListStore";
 
 const ModalEditSet: React.FC = () => {
   const isEditModalVisible = useModalsStore((state) => state.isEditModalVisible);
   const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
-  const isSetsListUpdated = usePressableElementsStore((state) => state.isSetsListUpdated);
+  const isBuildsListUpdated = usePressableElementsStore((state) => state.isBuildsListUpdated);
   const selectedClassIdsByCategory = usePressableElementsStore((state) => state.selectedClassIdsByCategory);
-  const setIsSetsListUpdated = usePressableElementsStore((state) => state.setIsSetsListUpdated);
-  const updateSetsList = useSetsListStore((state) => state.updateSetsList);
+  const setIsBuildsListUpdated = usePressableElementsStore((state) => state.setIsBuildsListUpdated);
+  const updateBuildsList = useBuildsListStore((state) => state.updateBuildsList);
   const screenName = useScreenNameFromPath();
 
   const handleCloseEditModal = useCallback(() => {
-    if (!isSetsListUpdated) {
-      updateSetsList(selectedClassIdsByCategory, screenName);
-      setIsSetsListUpdated(true);
+    if (!isBuildsListUpdated) {
+      updateBuildsList(selectedClassIdsByCategory, screenName);
+      setIsBuildsListUpdated(true);
     }
     setIsEditModalVisible(false);
   }, [
-    isSetsListUpdated,
+    isBuildsListUpdated,
     selectedClassIdsByCategory,
     screenName,
-    updateSetsList,
-    setIsSetsListUpdated,
+    updateBuildsList,
+    setIsBuildsListUpdated,
     setIsEditModalVisible,
   ]);
 

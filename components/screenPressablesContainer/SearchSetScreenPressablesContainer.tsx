@@ -16,7 +16,7 @@ import StatSelector from "../statSelector/StatSelector";
 import useGeneralStore from "@/stores/useGeneralStore";
 import ButtonIconWithBadge from "../sortModeSelector/ButtonIconWithBadge";
 import useStatsStore from "@/stores/useStatsStore";
-import useSetsListStore, { SetProps } from "@/stores/useSetsListStore";
+import useBuildsListStore, { Build } from "@/stores/useBuildsListStore";
 import { useTranslation } from "react-i18next";
 
 interface SearchSetScreenPressablesContainerProps {
@@ -31,7 +31,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
   const { t } = useTranslation("text");
 
   const chosenStats = useStatsStore((state) => state.chosenStats);
-  const setSetsListFound = useSetsListStore((state) => state.setSetsListFound);
+  const setBuildsListFound = useBuildsListStore((state) => state.setBuildsListFound);
   const resultsNumber = useGeneralStore((state) => state.resultsNumber);
   const selectedClassIdsByCategory = usePressableElementsStore((state) => state.multiSelectedClassIdsByCategory);
   const setIsLoading = useGeneralStore((state) => state.setIsLoading);
@@ -107,13 +107,13 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
     gaps.sort((a, b) => a.gap - b.gap);
 
     if (gaps.length === 0) {
-      setSetsListFound([]);
+      setBuildsListFound([]);
     } else {
       const realResultsNumber = Math.min(resultsNumber, gaps.length);
       const setsFoundIdGap = gaps.slice(0, realResultsNumber);
       const worstGap = chosenStatsChecked.filter((checked) => checked).length;
 
-      const setsFound: SetProps[] = setsFoundIdGap.map(({ id, gap }, index) => {
+      const setsFound: Build[] = setsFoundIdGap.map(({ id, gap }, index) => {
         const percentage = 100 * (1 - Math.sqrt(gap / worstGap));
         const percentageRounded = Number(percentage.toPrecision(3));
         const { bodytypes, ...setFoundData } = setsData.get(id);
@@ -125,7 +125,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
         };
       });
 
-      setSetsListFound(setsFound);
+      setBuildsListFound(setsFound);
     }
   };
 

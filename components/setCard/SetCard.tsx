@@ -12,7 +12,7 @@ import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 import { SET_CARD_WIDTH } from "@/utils/designTokens";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { useSetCardConfig } from "@/hooks/useSetCardConfig";
-import useSetsListStore from "@/stores/useSetsListStore";
+import useBuildsListStore from "@/stores/useBuildsListStore";
 
 export interface SetData {
   name: string;
@@ -53,7 +53,7 @@ const SetCard: React.FC<SetCardProps> = ({
   const isSetCardsCollapsed = useGeneralStore((state) => state.isSetCardsCollapsed);
   const isCollapsed = screenName === "display" && isSetCardsCollapsed;
 
-  const setsListSaved = useSetsListStore((state) => state.setsListSaved);
+  const setsListSaved = useBuildsListStore((state) => state.setsListSaved);
 
   const isSaved = useMemo(
     () => setsListSaved.some((setSaved) => arraysEqual(setSaved.classIds, classIds)),

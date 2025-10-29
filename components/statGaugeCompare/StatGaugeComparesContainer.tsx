@@ -6,7 +6,7 @@ import StatGaugeCompare from "./StatGaugeCompare";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import { box_shadow_z1 } from "../styles/shadow";
 import { BORDER_RADIUS_CONTAINER_LOWEST } from "@/utils/designTokens";
-import useSetsListStore from "@/stores/useSetsListStore";
+import useBuildsListStore from "@/stores/useBuildsListStore";
 
 interface StatGaugeComparesContainerProps {
   setsColorsMap: Map<string, string>;
@@ -15,7 +15,7 @@ interface StatGaugeComparesContainerProps {
 const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({ setsColorsMap }) => {
   const theme = useThemeStore((state) => state.theme);
   const { resultStats } = useResultStats();
-  const setsListDisplayed = useSetsListStore((state) => state.setsListDisplayed);
+  const setsListDisplayed = useBuildsListStore((state) => state.setsListDisplayed);
 
   const data = useMemo(() => {
     const statIndexMap = new Map(statNames.map((name, index) => [name, index]));

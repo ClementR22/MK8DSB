@@ -13,7 +13,7 @@
   "resultStats": "disp.",
 
   "resetSettingsText": "Do you really want to reset settings?",
-  "deleteAllSetsInMemoryText": "Do you really want to delete all saved builds?",
+  "deleteAllBuildsInMemoryText": "Do you really want to delete all saved builds?",
   "appliedOnMountForSetBuilderAndComparator": "Applied on mount for Build finder and Comparator",
 
   "buildFound": "Build found",

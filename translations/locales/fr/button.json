@@ -6,7 +6,7 @@
   "sendFeedback": "Faire un retour",
   "openSourceLicenses": "Licences Open Source",
   "resetSettings": "Réinitialiser les préférences",
-  "deleteAllSetsInMemory": "Supprimer tous les builds enregistrés",
+  "deleteAllBuildsInMemory": "Supprimer tous les builds enregistrés",
   "confirm": "Confirmer",
   "cancel": "Annuler",
   "close": "Fermer",

@@ -1,13 +1,13 @@
 import { IconType } from "react-native-dynamic-vector-icons";
 import { useCallback, useMemo } from "react";
 import { ScreenName } from "@/contexts/ScreenContext";
-import useSetsActionsStore from "@/stores/useSetsActionsStore";
+import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
 import { ActionName, ActionNamesList } from "./useSetCardConfig";
 import showToast from "@/utils/showToast";
 import { useSetImportExport } from "@/hooks/useSetImportExport";
-import useSetsListStore from "@/stores/useSetsListStore";
+import useBuildsListStore from "@/stores/useBuildsListStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 
 interface ActionProps {
@@ -27,16 +27,16 @@ export function useActionIconPropsList(
   isSaved?: boolean
 ): ActionIconPropsMap {
   const source = isInLoadModal ? "save" : screenName;
-  const s = useSetsListStore((state) => state.getSet(source, id));
+  const s = useBuildsListStore((state) => state.getSet(source, id));
 
   const updateSelectionFromSet = usePressableElementsStore((state) => state.updateSelectionFromSet);
-  const setSetCardEditedId = useSetsListStore((state) => state.setSetCardEditedId);
+  const setSetCardEditedId = useBuildsListStore((state) => state.setSetCardEditedId);
   const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
-  const loadToSearch = useSetsActionsStore((state) => state.loadToSearch);
-  const loadToDisplay = useSetsActionsStore((state) => state.loadToDisplay);
-  const saveSet = useSetsActionsStore((state) => state.saveSet);
-  const unSaveSet = useSetsActionsStore((state) => state.unSaveSet);
-  const removeSet = useSetsListStore((state) => state.removeSet);
+  const loadToSearch = useBuildsActionsStore((state) => state.loadToSearch);
+  const loadToDisplay = useBuildsActionsStore((state) => state.loadToDisplay);
+  const saveSet = useBuildsActionsStore((state) => state.saveSet);
+  const unSaveSet = useBuildsActionsStore((state) => state.unSaveSet);
+  const removeSet = useBuildsListStore((state) => state.removeSet);
   const handleExport = useSetImportExport().handleExport;
   const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
 

@@ -1,4 +1,3 @@
-import { ScreenName } from "@/contexts/ScreenContext";
 import { create } from "zustand";
 
 interface ModalLoadSetState {

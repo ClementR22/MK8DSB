@@ -1,4 +1,4 @@
-export const DEFAULT_SETS = {
+export const DEFAULT_BUILDS = {
   set1: {
     name: "Build (1)",
     classIds: [9, 16, 30, 39],

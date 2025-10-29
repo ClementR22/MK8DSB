@@ -8,7 +8,7 @@ import { useScreen } from "@/contexts/ScreenContext";
 import { BORDER_RADIUS_CONTAINER_LOWEST, BUTTON_SIZE, PADDING_BOX_CONTAINER } from "@/utils/designTokens";
 import Separator from "../Separator";
 import { box_shadow_z1 } from "../styles/shadow";
-import useSetsListStore from "@/stores/useSetsListStore";
+import useBuildsListStore from "@/stores/useBuildsListStore";
 
 interface ScreenPressablesContainerProps {
   sortNumber: number;
@@ -27,10 +27,10 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
   const [isOpenSortView, setIsOpenSortView] = useState(false);
   const toggleOpenSortView = useCallback(() => setIsOpenSortView((prev) => !prev), []);
 
-  const sortSetsList = useSetsListStore((state) => state.sortSetsList);
+  const sortBuildsList = useBuildsListStore((state) => state.sortBuildsList);
   useEffect(() => {
     if (!isInGalleryScreen) {
-      sortSetsList(screenName, sortNumber);
+      sortBuildsList(screenName, sortNumber);
     }
   }, [sortNumber]);
 

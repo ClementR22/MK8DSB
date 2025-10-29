@@ -1,5 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
-import { ScrollView } from "react-native";
+import React, { useRef } from "react";
 import SetCardsContainer from "@/components/setCard/SetCardsContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
@@ -9,15 +8,15 @@ import ScreenPressablesContainer from "@/components/screenPressablesContainer/Sc
 import ScrollViewScreen from "@/components/ScrollViewScreen";
 import StatSelector from "@/components/statSelector/StatSelector";
 import { SetCardsScrollProvider } from "@/contexts/SetCardsScrollContext";
-import useSetsListStore from "@/stores/useSetsListStore";
-import useSetsPersistenceStore from "@/stores/useSetsPersistenceStore";
+import useBuildsListStore from "@/stores/useBuildsListStore";
+import useBuildsPersistenceStore from "@/stores/useBuildsPersistenceStore";
 
-const SavedSetScreen: React.FC = () => {
-  const setsListSaved = useSetsListStore((state) => state.setsListSaved);
+const SavedBuildScreen: React.FC = () => {
+  const setsListSaved = useBuildsListStore((state) => state.setsListSaved);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
-  const sortNumberSavedSets = useSetsPersistenceStore((state) => state.sortNumberSavedSets);
-  const setSortNumberSavedSets = useSetsPersistenceStore((state) => state.setSortNumberSavedSets);
+  const sortNumberSavedSets = useBuildsPersistenceStore((state) => state.sortNumberSavedSets);
+  const setSortNumberSavedSets = useBuildsPersistenceStore((state) => state.setSortNumberSavedSets);
 
   const scrollRef = useRef(null); // Ref pour SetCardsContainer
 
@@ -39,6 +38,6 @@ const SavedSetScreen: React.FC = () => {
   );
 };
 
-SavedSetScreen.displayName = "SavedSetScreen";
+SavedBuildScreen.displayName = "SavedBuildScreen";
 
-export default React.memo(SavedSetScreen);
+export default React.memo(SavedBuildScreen);

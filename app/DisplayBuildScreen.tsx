@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useMemo, useState, useCallback } from "react";
 import SetCardsContainer from "@/components/setCard/SetCardsContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import useSetsListStore from "@/stores/useSetsListStore";
+import useBuildsListStore from "@/stores/useBuildsListStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { SET_CARD_COLOR_PALETTE } from "@/constants/Colors"; // Importez la palette et la fonction de fallback
 import { StatName } from "@/data/stats/statsTypes";
@@ -19,11 +19,11 @@ import { StyleSheet, View } from "react-native";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 import { SetCardsScrollProvider } from "@/contexts/SetCardsScrollContext";
 
-const DisplaySetScreen = () => {
+const DisplayBuildScreen = () => {
   const theme = useThemeStore((state) => state.theme);
 
   const scrollRef = useRef(null); // Ref pour SetCardsContainer
-  const setsListDisplayed = useSetsListStore((state) => state.setsListDisplayed);
+  const setsListDisplayed = useBuildsListStore((state) => state.setsListDisplayed);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const [sortNumber, setSortNumber] = useState(2);
@@ -122,4 +122,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(DisplaySetScreen);
+export default React.memo(DisplayBuildScreen);
