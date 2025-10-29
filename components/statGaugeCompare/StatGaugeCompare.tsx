@@ -4,7 +4,7 @@ import StatGaugeCompareBar from "./StatGaugeCompareBar";
 import { StatName } from "@/data/stats/statsTypes";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
 import Text from "@/primitiveComponents/Text";
-import { useSetCardsScroll } from "@/contexts/SetCardsScrollContext";
+import { useBuildCardsScroll } from "@/contexts/BuildCardsScrollContext";
 export interface SetIdAndStatValue {
   id: string;
   value: number;
@@ -18,7 +18,7 @@ interface StatGaugeCompareProps {
 
 const StatGaugeCompare: React.FC<StatGaugeCompareProps> = ({ setsIdAndValue, name }) => {
   const { setCardStyle } = useSetCardStyle("100%");
-  const { scrollToSetCard } = useSetCardsScroll();
+  const { scrollToBuildCard } = useBuildCardsScroll();
 
   return (
     <View style={[setCardStyle, { paddingTop: 3 }]}>
@@ -28,7 +28,12 @@ const StatGaugeCompare: React.FC<StatGaugeCompareProps> = ({ setsIdAndValue, nam
 
       <View style={styles.statBarsContainer}>
         {setsIdAndValue.map(({ id, value, color }) => (
-          <StatGaugeCompareBar key={id} value={value} color={color} scrollToThisSetCard={() => scrollToSetCard(id)} />
+          <StatGaugeCompareBar
+            key={id}
+            value={value}
+            color={color}
+            scrollToThisBuildCard={() => scrollToBuildCard(id)}
+          />
         ))}
       </View>
     </View>

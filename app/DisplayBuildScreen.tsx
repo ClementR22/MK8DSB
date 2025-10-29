@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useMemo, useState, useCallback } from "react";
-import SetCardsContainer from "@/components/setCard/SetCardsContainer";
+import BuildCardsContainer from "@/components/setCard/BuildCardsContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -16,12 +16,12 @@ import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import { StyleSheet, View } from "react-native";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
-import { SetCardsScrollProvider } from "@/contexts/SetCardsScrollContext";
+import { BuildCardsScrollProvider } from "@/contexts/BuildCardsScrollContext";
 
 const DisplayBuildScreen = () => {
   const theme = useThemeStore((state) => state.theme);
 
-  const scrollRef = useRef(null); // Ref pour SetCardsContainer
+  const scrollRef = useRef(null); // Ref pour BuildCardsContainer
   const setsListDisplayed = useBuildsListStore((state) => state.setsListDisplayed);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
@@ -100,15 +100,15 @@ const DisplayBuildScreen = () => {
             />
           </ScreenPressablesContainer>
 
-          <SetCardsScrollProvider scrollRef={scrollRef}>
-            <SetCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
+          <BuildCardsScrollProvider scrollRef={scrollRef}>
+            <BuildCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
 
             <View style={styles.mainButtonWrapper}>
               <StatSelector triggerButtonText="displayedStats" />
             </View>
 
             <StatGaugeComparesContainer setsColorsMap={setsColorsMap} />
-          </SetCardsScrollProvider>
+          </BuildCardsScrollProvider>
         </ScrollViewScreen>
       </ResultStatsProvider>
     </ScreenProvider>

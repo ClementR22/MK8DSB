@@ -6,12 +6,12 @@ import StatGaugeContainer from "./StatGaugeContainer";
 import StatGaugeSetCardBar from "./StatGaugeSetCardBar";
 import useStatsStore from "@/stores/useStatsStore";
 
-interface StatGaugeSetCardsContainerProps {
+interface StatGaugeBuildCardsContainerProps {
   stats: number[];
   containerStyle: ViewStyle;
 }
 
-const StatGaugeSetCardsContainer: React.FC<StatGaugeSetCardsContainerProps> = ({ stats, containerStyle }) => {
+const StatGaugeBuildCardsContainer: React.FC<StatGaugeBuildCardsContainerProps> = ({ stats, containerStyle }) => {
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
   const { resultStats } = useResultStats();
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(StatGaugeSetCardsContainer);
+export default React.memo(StatGaugeBuildCardsContainer);

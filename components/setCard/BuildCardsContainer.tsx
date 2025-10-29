@@ -8,7 +8,7 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
-import SetCard from "./SetCard";
+import BuildCard from "./BuildCard";
 import { useThemeStore } from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
@@ -22,20 +22,20 @@ interface SetWithColor extends Build {
   color?: string;
 }
 
-interface SetCardsContainerProps {
+interface BuildCardsContainerProps {
   setsToShow: SetWithColor[];
   isInLoadSetModal?: boolean;
   screenNameFromProps?: ScreenName;
   hideRemoveSet?: boolean;
 }
 
-export interface SetCardsContainerHandles {
+export interface BuildCardsContainerHandles {
   scrollToStart: () => void;
   scrollToEnd: () => void;
-  scrollToSetCard: (id: string) => void; // Scroll par ID
+  scrollToBuildCard: (id: string) => void; // Scroll par ID
 }
 
-const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainerProps>(
+const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsContainerProps>(
   ({ setsToShow, isInLoadSetModal = false, screenNameFromProps, hideRemoveSet }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
     const setCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
@@ -47,7 +47,7 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
       setCardLayouts.current.set(id, { x, width }); // Utilisez l'ID build comme clé
     }, []);
 
-    const scrollToSetCardHandler = useCallback(
+    const scrollToBuildCardHandler = useCallback(
       (id: string) => {
         const layout = setCardLayouts.current.get(id);
         if (scrollViewRef.current && layout) {
@@ -68,7 +68,7 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
       scrollToEnd: () => {
         scrollViewRef.current?.scrollToEnd({ animated: true });
       },
-      scrollToSetCard: scrollToSetCardHandler,
+      scrollToBuildCard: scrollToBuildCardHandler,
     }));
 
     const theme = useThemeStore((state) => state.theme);
@@ -106,7 +106,7 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
       }
 
       return setsToShow.map((build: SetWithColor) => (
-        <SetCard
+        <BuildCard
           key={build.id}
           name={build.name}
           classIds={build.classIds}
@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(SetCardsContainer);
+export default memo(BuildCardsContainer);

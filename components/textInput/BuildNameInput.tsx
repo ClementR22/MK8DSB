@@ -1,20 +1,20 @@
 import React, { useState, useCallback } from "react";
 import { useScreen } from "../../contexts/ScreenContext";
 import useBuildsListStore from "@/stores/useBuildsListStore";
-import SetNameInputContent from "./SetNameInputContent";
-import { useSetCardsScroll } from "@/contexts/SetCardsScrollContext";
+import BuildNameInputContent from "./BuildNameInputContent";
+import { useBuildCardsScroll } from "@/contexts/BuildCardsScrollContext";
 import showToast from "@/utils/showToast";
 
-interface SetNameInputProps {
+interface BuildNameInputProps {
   name: string;
   id: string;
   editable?: boolean;
 }
 
-const SetNameInput: React.FC<SetNameInputProps> = ({ name, id, editable = true }) => {
+const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, id, editable = true }) => {
   const screenName = useScreen();
   const renameSet = useBuildsListStore((state) => state.renameSet);
-  const { scrollToSetCard } = useSetCardsScroll();
+  const { scrollToBuildCard } = useBuildCardsScroll();
 
   const [localName, setLocalName] = useState(name);
 
@@ -38,11 +38,11 @@ const SetNameInput: React.FC<SetNameInputProps> = ({ name, id, editable = true }
   }, [localName, name, screenName, id, renameSet]);
 
   const handleFocus = useCallback(() => {
-    scrollToSetCard(id);
-  }, [id, scrollToSetCard]);
+    scrollToBuildCard(id);
+  }, [id, scrollToBuildCard]);
 
   return (
-    <SetNameInputContent
+    <BuildNameInputContent
       value={localName}
       onChangeText={setLocalName}
       onEndEditing={handleEndEditing}
@@ -52,6 +52,6 @@ const SetNameInput: React.FC<SetNameInputProps> = ({ name, id, editable = true }
   );
 };
 
-SetNameInput.displayName = "SetNameInput";
+BuildNameInput.displayName = "BuildNameInput";
 
-export default React.memo(SetNameInput);
+export default React.memo(BuildNameInput);

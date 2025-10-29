@@ -1,6 +1,6 @@
 // components/modal/ModalLoadBuild.tsx
 import React, { memo } from "react"; // Import 'memo'
-import SetCardsContainer from "../setCard/SetCardsContainer"; // Assuming correct path
+import BuildCardsContainer from "../setCard/BuildCardsContainer"; // Assuming correct path
 import ButtonImportSet from "../managingSetsButton/ButtonImportSet"; // Assuming correct path
 import Modal from "@/primitiveComponents/Modal"; // Assuming correct path
 import { useModalLoadBuildStore } from "@/stores/useModalLoadBuildStore"; // Ensure this is correctly typed and implemented
@@ -23,7 +23,7 @@ const ModalLoadBuild = () => {
       secondButton={<ButtonImportSet screenName={screenName} />}
       withoutChildrenContainer
     >
-      <SetCardsContainer setsToShow={setsListSaved} isInLoadSetModal={true} screenNameFromProps={screenName} />
+      <BuildCardsContainer setsToShow={setsListSaved} isInLoadSetModal={true} screenNameFromProps={screenName} />
     </Modal>
   );
 };

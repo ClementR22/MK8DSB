@@ -8,7 +8,7 @@ import { statNames } from "@/data/stats/statsData";
 import { ScreenName } from "@/contexts/ScreenContext";
 
 // Utilities
-import { getSetStatsFromClassIds } from "@/utils/getSetStatsFromClassIds";
+import { getBuildStatsFromClassIds } from "@/utils/getBuildStatsFromClassIds";
 import { SortableElement, sortElements } from "@/utils/sortElements";
 import { DEFAULT_BUILDS } from "@/constants/defaultBuilds";
 import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
@@ -196,7 +196,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     const id = get().setCardEditedId;
 
     const s = get().getSet(screenName, id);
-    const newSet = { ...s, classIds: newClassIds, stats: getSetStatsFromClassIds(newClassIds) };
+    const newSet = { ...s, classIds: newClassIds, stats: getBuildStatsFromClassIds(newClassIds) };
 
     const setsListUpdated = setsList.map((s) => {
       if (s.id === id) {

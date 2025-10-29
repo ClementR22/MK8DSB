@@ -1,11 +1,11 @@
-// components/SetCard/SetCardHeader.tsx
+// components/BuildCard/SetCardHeader.tsx
 
 import React, { memo } from "react";
 import { View, StyleSheet } from "react-native";
 import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
 import { ScreenName } from "@/contexts/ScreenContext";
 import { ActionNamesList } from "@/hooks/useSetCardConfig";
-import SetNameInput from "../textInput/SetNameInput";
+import BuildNameInput from "../textInput/BuildNameInput";
 import { BUTTON_SIZE } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
 import { useThemeStore } from "@/stores/useThemeStore";
@@ -31,7 +31,7 @@ const SetCardHeader: React.FC<SetCardHeaderProps> = ({
 
   return (
     <View style={styles.headerContainer}>
-      <SetNameInput name={name} id={id} editable={isNameEditable} />
+      <BuildNameInput name={name} id={id} editable={isNameEditable} />
 
       {setToShowPercentage && (
         <Text role="title" size="medium" weight="bold" color={theme.primary} namespace="not">

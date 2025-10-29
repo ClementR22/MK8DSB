@@ -9,7 +9,7 @@ import { ScreenName } from "@/contexts/ScreenContext";
 import { MAX_NUMBER_SETS_DISPLAY, MAX_NUMBER_SETS_SAVE, Build } from "./useBuildsListStore";
 
 // Utilities
-import { getSetStatsFromClassIds } from "@/utils/getSetStatsFromClassIds";
+import { getBuildStatsFromClassIds } from "@/utils/getBuildStatsFromClassIds";
 import { arraysEqual } from "@/utils/deepCompare";
 import { checkFormatSetImported } from "@/utils/checkFormatSetImported";
 
@@ -167,7 +167,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       throw new Error("incorrectFormat");
     }
 
-    const stats = getSetStatsFromClassIds(parsedSet.classIds);
+    const stats = getBuildStatsFromClassIds(parsedSet.classIds);
 
     if (!stats) {
       throw new Error("thisSetDoesNotExist");

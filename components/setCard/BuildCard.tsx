@@ -1,11 +1,9 @@
-import React, { useMemo, useCallback, memo } from "react";
+import React, { useMemo, memo } from "react";
 import { LayoutChangeEvent, View, StyleSheet } from "react-native";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import SetCardActionButtons from "./SetCardActionButtons";
-import useModalsStore from "@/stores/useModalsStore";
-import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import SetImagesModal from "./SetImagesModal";
-import StatGaugeSetCardsContainer from "../statGauge/StatGaugeSetCardsContainer";
+import StatGaugeBuildCardsContainer from "../statGauge/StatGaugeBuildCardsContainer";
 import { arraysEqual } from "@/utils/deepCompare";
 import SetCardHeader from "./SetCardHeader";
 import { useSetCardStyle } from "@/hooks/useSetCardStyle";
@@ -14,14 +12,7 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import { useSetCardConfig } from "@/hooks/useSetCardConfig";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 
-export interface SetData {
-  name: string;
-  classIds: number[];
-  stats: number[] | null;
-  percentage?: number | undefined;
-}
-
-interface SetCardProps {
+interface BuildCardProps {
   name: string;
   classIds: number[];
   stats?: number[] | null;
@@ -34,7 +25,7 @@ interface SetCardProps {
   borderColor?: string;
 }
 
-const SetCard: React.FC<SetCardProps> = ({
+const BuildCard: React.FC<BuildCardProps> = ({
   name,
   classIds,
   stats = null,
@@ -93,7 +84,7 @@ const SetCard: React.FC<SetCardProps> = ({
         )}
       </View>
       {config.showStatSliderResult && stats !== null && (
-        <StatGaugeSetCardsContainer stats={stats} containerStyle={setCardStyle} />
+        <StatGaugeBuildCardsContainer stats={stats} containerStyle={setCardStyle} />
       )}
     </View>
   );
@@ -103,4 +94,4 @@ const styles = StyleSheet.create({
   wrapper: { gap: 8 },
 });
 
-export default memo(SetCard);
+export default memo(BuildCard);

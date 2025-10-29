@@ -41,8 +41,8 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
 
   fetchSetsSaved: async () => {
     const setsKeys = await get().fetchSetsSavedKeys();
-    const setsData = await AsyncStorage.multiGet(setsKeys);
-    const setsDataParsed: Build[] = setsData
+    const buildsData = await AsyncStorage.multiGet(setsKeys);
+    const buildsDataParsed: Build[] = buildsData
       .map(([, value]) => {
         try {
           return value ? JSON.parse(value) : null;
@@ -53,7 +53,7 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
       })
       .filter((build) => build !== null) as Build[];
 
-    return setsDataParsed;
+    return buildsDataParsed;
   },
 
   saveSetInMemory: async (setToSave) => {

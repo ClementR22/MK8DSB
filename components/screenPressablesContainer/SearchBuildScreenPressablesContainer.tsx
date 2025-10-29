@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { categories } from "@/data/elements/elementsData";
-import { setsData } from "@/data/setsData";
+import { buildsData } from "@/data/buildsData";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
@@ -19,12 +19,12 @@ import useStatsStore from "@/stores/useStatsStore";
 import useBuildsListStore, { Build } from "@/stores/useBuildsListStore";
 import { useTranslation } from "react-i18next";
 
-interface SearchSetScreenPressablesContainerProps {
+interface SearchBuildScreenPressablesContainerProps {
   scrollviewSetsCardsRef: React.RefObject<any>;
   scrollviewMainRef: React.RefObject<any>;
 }
 
-const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesContainerProps> = ({
+const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressablesContainerProps> = ({
   scrollviewSetsCardsRef,
   scrollviewMainRef,
 }) => {
@@ -58,8 +58,8 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
 
     const gaps: { id: string; gap: number }[] = [];
 
-    setsData.forEach((setData, id) => {
-      const { classIds, stats, bodytypes } = setData;
+    buildsData.forEach((buildData, id) => {
+      const { classIds, stats, bodytypes } = buildData;
 
       const isOneElementNonAccepted = categories.some((categoryKey, index) => {
         if (chosenClassIds[categoryKey].size === 0) {
@@ -116,7 +116,7 @@ const SearchSetScreenPressablesContainer: React.FC<SearchSetScreenPressablesCont
       const setsFound: Build[] = setsFoundIdGap.map(({ id, gap }, index) => {
         const percentage = 100 * (1 - Math.sqrt(gap / worstGap));
         const percentageRounded = Number(percentage.toPrecision(3));
-        const { bodytypes, ...setFoundData } = setsData.get(id);
+        const { bodytypes, ...setFoundData } = buildsData.get(id);
         return {
           ...setFoundData,
           id: nanoid(8),
@@ -198,6 +198,6 @@ const styles = StyleSheet.create({
 
 // 24
 
-SearchSetScreenPressablesContainer.displayName = "SearchSetScreenPressablesContainer";
+SearchBuildScreenPressablesContainer.displayName = "SearchBuildScreenPressablesContainer";
 
-export default React.memo(SearchSetScreenPressablesContainer);
+export default React.memo(SearchBuildScreenPressablesContainer);

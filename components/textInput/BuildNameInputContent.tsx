@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { typography } from "../styles/typography";
 
-interface SetNameInputContentProps {
+interface BuildNameInputContentProps {
   value: string;
   onChangeText: (text: string) => void;
   onEndEditing: () => void;
@@ -11,7 +11,7 @@ interface SetNameInputContentProps {
   onFocus?: () => void;
 }
 
-const SetNameInputContent: React.FC<SetNameInputContentProps> = ({
+const BuildNameInputContent: React.FC<BuildNameInputContentProps> = ({
   value,
   onChangeText,
   onEndEditing,
@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
   },
 });
 
-SetNameInputContent.displayName = "SetNameInputContent";
+BuildNameInputContent.displayName = "BuildNameInputContent";
 
-export default React.memo(SetNameInputContent);
+export default React.memo(BuildNameInputContent);

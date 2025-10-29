@@ -27,7 +27,7 @@ const StatGaugeContainer = ({
   value,
   statFilterNumber = 0,
   chosenValue,
-  isInSetCard = false,
+  isInBuildCard= false,
   bonusEnabled = false,
   children,
 }: StatGaugeContainerProps) => {
@@ -97,7 +97,7 @@ const StatGaugeContainer = ({
 
       {children}
 
-      {isInSetCard && (
+      {isInBuildCard&& (
         <View
           style={[
             styles.textWrapper,

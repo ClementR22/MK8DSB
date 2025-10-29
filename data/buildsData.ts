@@ -1,4 +1,4 @@
-export const setsData = new Map([
+export const buildsData = new Map([
   [
     "0-16-30-39",
     {

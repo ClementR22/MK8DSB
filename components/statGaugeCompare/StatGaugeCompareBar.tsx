@@ -7,12 +7,12 @@ import Text from "@/primitiveComponents/Text";
 interface StatGaugeCompareBarProps {
   value: number;
   color?: string;
-  scrollToThisSetCard: () => void;
+  scrollToThisBuildCard: () => void;
 }
 
 const MAX_STAT_VALUE = 6;
 
-const StatGaugeCompareBar = ({ value, color, scrollToThisSetCard }: StatGaugeCompareBarProps) => {
+const StatGaugeCompareBar = ({ value, color, scrollToThisBuildCard }: StatGaugeCompareBarProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   // Largeur du segment intérieur, clampée et calculée une seule fois par changement de value
@@ -20,7 +20,7 @@ const StatGaugeCompareBar = ({ value, color, scrollToThisSetCard }: StatGaugeCom
   const innerFillWidth = `${(clampedValue / MAX_STAT_VALUE) * 100}%` as DimensionValue;
 
   return (
-    <Pressable style={styles.container} onPress={scrollToThisSetCard}>
+    <Pressable style={styles.container} onPress={scrollToThisBuildCard}>
       <View style={[styles.sliderTrack, { backgroundColor: theme.surface_container_highest }]}>
         <View
           style={StyleSheet.flatten([
