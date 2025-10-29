@@ -3,7 +3,7 @@ import { useScreen } from "@/contexts/ScreenContext";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import StatGaugeContainer from "./StatGaugeContainer";
-import StatGaugeSetCardBar from "./StatGaugeSetCardBar";
+import StatGaugeBuildCardBar from "./StatGaugeBuildCardBar";
 import useStatsStore from "@/stores/useStatsStore";
 
 interface StatGaugeBuildCardsContainerProps {
@@ -39,11 +39,11 @@ const StatGaugeBuildCardsContainer: React.FC<StatGaugeBuildCardsContainerProps> 
           key={stat.name}
           name={stat.name}
           value={statValue}
-          isInSetCard={true}
+          isInBuildCard={true}
           chosenValue={chosenValue}
           bonusEnabled={isInSearchScreen}
         >
-          <StatGaugeSetCardBar
+          <StatGaugeBuildCardBar
             obtainedValue={statValue}
             chosenValue={chosenValue}
             isInSearchScreen={isInSearchScreen}

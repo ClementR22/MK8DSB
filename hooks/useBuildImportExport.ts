@@ -1,10 +1,10 @@
-// hooks/useSetImportExport.ts
+// hooks/useBuildImportExport.ts
 import * as Clipboard from "expo-clipboard";
 import { ScreenName } from "@/contexts/ScreenContext";
 import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
 import showToast from "@/utils/showToast";
 
-export const useSetImportExport = () => {
+export const useBuildImportExport = () => {
   const exportSet = useBuildsActionsStore((state) => state.exportSet);
   const importSet = useBuildsActionsStore((state) => state.importSet);
 

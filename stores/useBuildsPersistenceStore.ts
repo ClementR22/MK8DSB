@@ -6,42 +6,42 @@ import { Build } from "./useBuildsListStore";
 
 // Utilities
 import {
-  deleteAllSavedSetsInMemory,
-  getOnlySetsSavedKeysFromMemory,
+  deleteAllSavedBuildsInMemory,
+  getOnlyBuildsSavedKeysFromMemory,
   loadThingFromMemory,
   saveThingInMemory,
 } from "@/utils/asyncStorageOperations";
-import { SORT_NUMBER_SAVED_SETS_DEFAULT } from "@/constants/constants";
+import { SORT_NUMBER_SAVED_BUILDS_DEFAULT } from "@/constants/constants";
 
 export interface BuildsPersistenceStoreState {
-  sortNumberSavedSets: number;
+  sortNumberSavedBuilds: number;
 
-  setSortNumberSavedSets: (newSortNumberSavedSets: number) => Promise<void>;
-  fetchSetsSavedKeys: () => Promise<string[]>;
-  fetchSetsSaved: () => Promise<Build[]>;
+  setSortNumberSavedBuilds: (newSortNumberSavedBuilds: number) => Promise<void>;
+  fetchBuildsSavedKeys: () => Promise<string[]>;
+  fetchBuildsSaved: () => Promise<Build[]>;
   saveSetInMemory: (setToSave: Build) => Promise<void>;
   removeSetInMemory: (keyToRemove: string) => Promise<void>;
   updateSetInMemory: (setObj: Build) => Promise<void>;
-  deleteAllSavedSets: () => Promise<void>;
+  deleteAllSavedBuilds: () => Promise<void>;
   loadSortNumberFromMemory: () => Promise<void>;
 }
 
 const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get) => ({
-  sortNumberSavedSets: SORT_NUMBER_SAVED_SETS_DEFAULT,
+  sortNumberSavedBuilds: SORT_NUMBER_SAVED_BUILDS_DEFAULT,
 
-  setSortNumberSavedSets: async (newSortNumberSavedSets) => {
-    await saveThingInMemory("sortNumberSavedSets", newSortNumberSavedSets);
-    set({ sortNumberSavedSets: newSortNumberSavedSets });
+  setSortNumberSavedBuilds: async (newSortNumberSavedBuilds) => {
+    await saveThingInMemory("sortNumberSavedBuilds", newSortNumberSavedBuilds);
+    set({ sortNumberSavedBuilds: newSortNumberSavedBuilds });
   },
 
-  fetchSetsSavedKeys: async () => {
-    const setsKeys = await getOnlySetsSavedKeysFromMemory();
-    return setsKeys;
+  fetchBuildsSavedKeys: async () => {
+    const buildsKeys = await getOnlyBuildsSavedKeysFromMemory();
+    return buildsKeys;
   },
 
-  fetchSetsSaved: async () => {
-    const setsKeys = await get().fetchSetsSavedKeys();
-    const buildsData = await AsyncStorage.multiGet(setsKeys);
+  fetchBuildsSaved: async () => {
+    const buildsKeys = await get().fetchBuildsSavedKeys();
+    const buildsData = await AsyncStorage.multiGet(buildsKeys);
     const buildsDataParsed: Build[] = buildsData
       .map(([, value]) => {
         try {
@@ -72,12 +72,12 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
     await saveThingInMemory(String(setObj.id), setObj);
   },
 
-  deleteAllSavedSets: async () => {
-    await deleteAllSavedSetsInMemory();
+  deleteAllSavedBuilds: async () => {
+    await deleteAllSavedBuildsInMemory();
   },
 
   loadSortNumberFromMemory: async () => {
-    await loadThingFromMemory("sortNumberSavedSets", get().setSortNumberSavedSets);
+    await loadThingFromMemory("sortNumberSavedBuilds", get().setSortNumberSavedBuilds);
   },
 }));
 

@@ -6,12 +6,12 @@ import { router } from "expo-router";
 
 // Data and Types
 import { ScreenName } from "@/contexts/ScreenContext";
-import { MAX_NUMBER_SETS_DISPLAY, MAX_NUMBER_SETS_SAVE, Build } from "./useBuildsListStore";
+import { MAX_NUMBER_BUILDS_DISPLAY, MAX_NUMBER_BUILDS_SAVE, Build } from "./useBuildsListStore";
 
 // Utilities
 import { getBuildStatsFromClassIds } from "@/utils/getBuildStatsFromClassIds";
 import { arraysEqual } from "@/utils/deepCompare";
-import { checkFormatSetImported } from "@/utils/checkFormatSetImported";
+import { checkFormatBuildImported } from "@/utils/checkFormatBuildImported";
 
 // Stores
 import useStatsStore from "./useStatsStore";
@@ -20,7 +20,7 @@ import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 import useGeneralStore from "./useGeneralStore";
 
 export interface BuildsActionsStoreState {
-  loadSetCard: (params: {
+  loadBuildCard: (params: {
     source?: ScreenName;
     id?: string;
     build?: Build;
@@ -29,7 +29,7 @@ export interface BuildsActionsStoreState {
   }) => Build;
   loadToSearch: (params: { source?: ScreenName; id?: string; build?: Build }) => void;
   loadToDisplay: (params: { source: ScreenName; id: string }) => void;
-  loadSetsSaved: () => void;
+  loadBuildsSaved: () => void;
   saveSet: (source: ScreenName, id: string) => Promise<void>;
   unSaveSet: (screenName: ScreenName, id: string) => Promise<void>;
   exportSet: (screenName: ScreenName, id: string) => void;
@@ -37,7 +37,7 @@ export interface BuildsActionsStoreState {
 }
 
 const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
-  loadSetCard: (params: {
+  loadBuildCard: (params: {
     source?: ScreenName;
     id?: string;
     build?: Build;
@@ -59,12 +59,12 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     // on change l'id car dans l'appli, il ne doit pas y avoir 2 builds avec le même id
     build.id = nanoid(8);
 
-    const setsListTarget = useBuildsListStore.getState().getBuildsList(target).setsList;
+    const buildsListTarget = useBuildsListStore.getState().getBuildsList(target).buildsList;
 
     // vérification de la limit de builds
     if (
-      (target === "display" && setsListTarget.length >= MAX_NUMBER_SETS_DISPLAY) ||
-      (target === "save" && setsListTarget.length >= MAX_NUMBER_SETS_SAVE)
+      (target === "display" && buildsListTarget.length >= MAX_NUMBER_BUILDS_DISPLAY) ||
+      (target === "save" && buildsListTarget.length >= MAX_NUMBER_BUILDS_SAVE)
     ) {
       throw new Error("setLimitReachedInThisScreen");
     }
@@ -84,7 +84,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       }
     }
 
-    const newBuildsListTarget = [...setsListTarget, build];
+    const newBuildsListTarget = [...buildsListTarget, build];
 
     const setBuildsListTarget = useBuildsListStore.getState().getSetBuildsList(target);
     setBuildsListTarget(newBuildsListTarget);
@@ -112,20 +112,20 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
   loadToDisplay: (params: { source: ScreenName; id: string }) => {
     const { source, id } = params;
 
-    get().loadSetCard({ source, id, target: "display" });
+    get().loadBuildCard({ source, id, target: "display" });
   },
 
-  loadSetsSaved: async () => {
-    const setsSaved = await useBuildsPersistenceStore.getState().fetchSetsSaved();
-    useBuildsListStore.getState().setBuildsListSaved(setsSaved);
+  loadBuildsSaved: async () => {
+    const buildsSaved = await useBuildsPersistenceStore.getState().fetchBuildsSaved();
+    useBuildsListStore.getState().setBuildsListSaved(buildsSaved);
   },
 
   saveSet: async (source: ScreenName, id: string) => {
     try {
-      const build = get().loadSetCard({ source, id, target: "save" });
+      const build = get().loadBuildCard({ source, id, target: "save" });
 
-      const setsListSaved = useBuildsListStore.getState().setsListSaved;
-      if (setsListSaved.length >= MAX_NUMBER_SETS_SAVE) {
+      const buildsListSaved = useBuildsListStore.getState().buildsListSaved;
+      if (buildsListSaved.length >= MAX_NUMBER_BUILDS_SAVE) {
         throw new Error("setLimitReachedInThisScreen");
       }
 
@@ -138,10 +138,10 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
   unSaveSet: async (screenName: ScreenName, id: string) => {
     const classIds = useBuildsListStore.getState().getSet(screenName, id).classIds;
 
-    const setsListSaved = useBuildsListStore.getState().setsListSaved;
-    const setsToRemove = setsListSaved.filter((build) => arraysEqual(build.classIds, classIds));
+    const buildsListSaved = useBuildsListStore.getState().buildsListSaved;
+    const buildsToRemove = buildsListSaved.filter((build) => arraysEqual(build.classIds, classIds));
 
-    for (const build of setsToRemove) {
+    for (const build of buildsToRemove) {
       useBuildsListStore.getState().removeSet(build.id, "save");
       await useBuildsPersistenceStore.getState().removeSetInMemory(build.id);
     }
@@ -163,7 +163,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       throw new Error("incorrectFormat");
     }
 
-    if (!checkFormatSetImported(parsedSet)) {
+    if (!checkFormatBuildImported(parsedSet)) {
       throw new Error("incorrectFormat");
     }
 
@@ -178,7 +178,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     if (screenName === "search") {
       get().loadToSearch({ build });
     } else {
-      get().loadSetCard({ build, target: screenName, forceName: true });
+      get().loadBuildCard({ build, target: screenName, forceName: true });
       if (screenName === "save") {
         useBuildsPersistenceStore.getState().saveSetInMemory(build);
       }

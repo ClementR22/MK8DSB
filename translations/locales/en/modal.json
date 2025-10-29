@@ -2,8 +2,8 @@
   "filters": "Filters",
   "selectABuild": "Select a build",
 
-  "desiredStatsAndStatsInSets": "Desired stats and displayed stats in builds",
-  "displayedStatsInSets": "Displayed stats in builds",
+  "desiredStatsAndStatsInBuilds": "Desired stats and displayed stats in builds",
+  "displayedStatsInBuilds": "Displayed stats in builds",
   "displayedStats": "Displayed stats",
 
   "loadASavedSet": "Load a saved build",

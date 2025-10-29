@@ -3,7 +3,7 @@ import {
   StatNameCompareDefault,
   StatNameHandling,
   StatNameSortElementDefault,
-  StatNameSortSetCardDefault,
+  StatNameSortBuildCardDefault,
   StatNameSpeed,
 } from "./statsTypes";
 
@@ -46,8 +46,8 @@ export const statNamesCompareDefault: StatNameCompareDefault[] = [
   "miniTurbo",
 ];
 
-export const statNamesSortSetCardDefault: StatNameSortSetCardDefault[] = ["name", ...statNamesCompareDefault];
-export const statNamesSortElementDefault: StatNameSortElementDefault[] = ["id", ...statNamesSortSetCardDefault];
+export const statNamesSortBuildCardDefault: StatNameSortBuildCardDefault[] = ["name", ...statNamesCompareDefault];
+export const statNamesSortElementDefault: StatNameSortElementDefault[] = ["id", ...statNamesSortBuildCardDefault];
 
 export const statNamesSpeed: StatNameSpeed[] = ["speedGround", "speedAntiGravity", "speedWater", "speedAir"];
 

@@ -1,15 +1,15 @@
 import React, { useMemo, memo } from "react";
 import { LayoutChangeEvent, View, StyleSheet } from "react-native";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
-import SetCardActionButtons from "./SetCardActionButtons";
-import SetImagesModal from "./SetImagesModal";
+import BuildCardActionButtons from "./BuildCardActionButtons";
+import BuildImagesModal from "./BuildImagesModal";
 import StatGaugeBuildCardsContainer from "../statGauge/StatGaugeBuildCardsContainer";
 import { arraysEqual } from "@/utils/deepCompare";
-import SetCardHeader from "./SetCardHeader";
-import { useSetCardStyle } from "@/hooks/useSetCardStyle";
-import { SET_CARD_WIDTH } from "@/utils/designTokens";
+import BuildCardHeader from "./BuildCardHeader";
+import { useBuildCardStyle } from "@/hooks/useBuildCardStyle";
+import { BUILD_CARD_WIDTH } from "@/utils/designTokens";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { useSetCardConfig } from "@/hooks/useSetCardConfig";
+import { useBuildCardConfig } from "@/hooks/useBuildCardConfig";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 
 interface BuildCardProps {
@@ -20,7 +20,7 @@ interface BuildCardProps {
   id: string;
   isInLoadSetModal?: boolean;
   screenNameFromProps?: ScreenName;
-  hideRemoveSet?: boolean;
+  hideRemoveBuild?: boolean;
   onLayout?: (event: LayoutChangeEvent) => void;
   borderColor?: string;
 }
@@ -33,7 +33,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
   id,
   isInLoadSetModal = false,
   screenNameFromProps,
-  hideRemoveSet = false,
+  hideRemoveBuild = false,
   onLayout,
   borderColor,
 }) => {
@@ -41,24 +41,24 @@ const BuildCard: React.FC<BuildCardProps> = ({
   const screenName = screenNameFromProps ?? contextScreenName;
   const situation = isInLoadSetModal ? "load" : screenName;
 
-  const isSetCardsCollapsed = useGeneralStore((state) => state.isSetCardsCollapsed);
-  const isCollapsed = screenName === "display" && isSetCardsCollapsed;
+  const isBuildCardsCollapsed = useGeneralStore((state) => state.isBuildCardsCollapsed);
+  const isCollapsed = screenName === "display" && isBuildCardsCollapsed;
 
-  const setsListSaved = useBuildsListStore((state) => state.setsListSaved);
+  const buildsListSaved = useBuildsListStore((state) => state.buildsListSaved);
 
   const isSaved = useMemo(
-    () => setsListSaved.some((setSaved) => arraysEqual(setSaved.classIds, classIds)),
-    [setsListSaved, classIds]
+    () => buildsListSaved.some((build) => arraysEqual(build.classIds, classIds)),
+    [buildsListSaved, classIds]
   );
 
-  const config = useSetCardConfig(situation, hideRemoveSet, screenName);
+  const config = useBuildCardConfig(situation, hideRemoveBuild, screenName);
 
-  const { setCardStyle } = useSetCardStyle(SET_CARD_WIDTH);
+  const { setCardStyle } = useBuildCardStyle(BUILD_CARD_WIDTH);
 
   return (
     <View style={styles.wrapper} onLayout={onLayout}>
       <View style={[setCardStyle, borderColor && { borderColor }]}>
-        <SetCardHeader
+        <BuildCardHeader
           isNameEditable={config.isNameEditable}
           name={name}
           screenName={screenName}
@@ -71,10 +71,10 @@ const BuildCard: React.FC<BuildCardProps> = ({
           }
         />
 
-        <SetImagesModal classIds={classIds} isCollapsed={isCollapsed} />
+        <BuildImagesModal classIds={classIds} isCollapsed={isCollapsed} />
 
         {!isCollapsed && (
-          <SetCardActionButtons
+          <BuildCardActionButtons
             actionNamesList={config.actionNamesList}
             id={id}
             screenName={screenName}

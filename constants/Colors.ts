@@ -25,7 +25,7 @@ export const Colors = {
   },
 };
 
-export const SET_CARD_COLOR_PALETTE = [
+export const BUILD_CARD_COLOR_PALETTE = [
   "#E74C3C", // Rouge Écarlate
   "#3498DB", // Bleu Ciel Profond
   "#2ECC71", // Vert Émeraude

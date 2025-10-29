@@ -3,11 +3,11 @@ import { View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal from "./HelpModal";
 import StatSliderPreview from "../statSlider/StatSliderPreview";
-import { PADDING_SET_CARD, SET_CARD_WIDTH } from "@/utils/designTokens";
+import { PADDING_BUILD_CARD, BUILD_CARD_WIDTH } from "@/utils/designTokens";
 import Button from "@/primitiveComponents/Button";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
 import StatGaugeContainer from "../statGauge/StatGaugeContainer";
-import StatGaugeSetCardBar from "../statGauge/StatGaugeSetCardBar";
+import StatGaugeBuildCardBar from "../statGauge/StatGaugeBuildCardBar";
 import Text from "@/primitiveComponents/Text";
 import HelpStepItem from "../helpComponents/HelpStepItem";
 import HelpSection from "../helpComponents/HelpSection";
@@ -94,9 +94,9 @@ const HelpSearchBuildScreen = () => {
           <Text role="body" size="large" namespace="helpSearch">
             how_to_use.step.review_results.ranked_by_score
           </Text>
-          <View style={{ width: SET_CARD_WIDTH - PADDING_SET_CARD * 2 }}>
-            <StatGaugeContainer name="speedGround" value={4} isInSetCard={true} chosenValue={5} bonusEnabled={true}>
-              <StatGaugeSetCardBar obtainedValue={4} chosenValue={5} isInSearchScreen={true} />
+          <View style={{ width: BUILD_CARD_WIDTH - PADDING_BUILD_CARD * 2 }}>
+            <StatGaugeContainer name="speedGround" value={4} isInBuildCard={true} chosenValue={5} bonusEnabled={true}>
+              <StatGaugeBuildCardBar obtainedValue={4} chosenValue={5} isInSearchScreen={true} />
             </StatGaugeContainer>
           </View>
           <Text role="body" size="large" fontStyle="italic" namespace="helpSearch">

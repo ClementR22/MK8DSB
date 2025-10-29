@@ -2,10 +2,10 @@ import React from "react";
 import BoxContainer from "../../primitiveComponents/BoxContainer";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
-import { ActionNamesList } from "@/hooks/useSetCardConfig";
+import { ActionNamesList } from "@/hooks/useBuildCardConfig";
 import { ScreenName } from "@/contexts/ScreenContext";
 
-interface SetCardActionButtonsProps {
+interface BuildCardActionButtonsProps {
   actionNamesList: ActionNamesList;
   id: string;
   screenName: ScreenName;
@@ -13,7 +13,7 @@ interface SetCardActionButtonsProps {
   isSaved: boolean;
 }
 
-const SetCardActionButtons: React.FC<SetCardActionButtonsProps> = ({
+const BuildCardActionButtons: React.FC<BuildCardActionButtonsProps> = ({
   actionNamesList,
   id,
   screenName,
@@ -37,4 +37,4 @@ const SetCardActionButtons: React.FC<SetCardActionButtonsProps> = ({
   );
 };
 
-export default React.memo(SetCardActionButtons);
+export default React.memo(BuildCardActionButtons);

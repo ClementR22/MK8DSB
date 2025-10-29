@@ -1,14 +1,14 @@
 // components/modal/ModalLoadBuild.tsx
 import React, { memo } from "react"; // Import 'memo'
-import BuildCardsContainer from "../setCard/BuildCardsContainer"; // Assuming correct path
-import ButtonImportSet from "../managingSetsButton/ButtonImportSet"; // Assuming correct path
+import BuildCardsContainer from "../buildCard/BuildCardsContainer"; // Assuming correct path
+import ButtonImportBuild from "../managingBuildsButton/ButtonImportBuild"; // Assuming correct path
 import Modal from "@/primitiveComponents/Modal"; // Assuming correct path
 import { useModalLoadBuildStore } from "@/stores/useModalLoadBuildStore"; // Ensure this is correctly typed and implemented
 import { useScreenNameFromPath } from "@/hooks/useScreenNameFromPath";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 
 const ModalLoadBuild = () => {
-  const setsListSaved = useBuildsListStore((state) => state.setsListSaved);
+  const buildsListSaved = useBuildsListStore((state) => state.buildsListSaved);
 
   const isLoadBuildModalVisible = useModalLoadBuildStore((state) => state.isLoadBuildModalVisible);
   const setIsLoadBuildModalVisible = useModalLoadBuildStore((state) => state.setIsLoadBuildModalVisible);
@@ -20,10 +20,10 @@ const ModalLoadBuild = () => {
       modalTitle="loadASavedSet"
       isModalVisible={isLoadBuildModalVisible}
       setIsModalVisible={setIsLoadBuildModalVisible}
-      secondButton={<ButtonImportSet screenName={screenName} />}
+      secondButton={<ButtonImportBuild screenName={screenName} />}
       withoutChildrenContainer
     >
-      <BuildCardsContainer setsToShow={setsListSaved} isInLoadSetModal={true} screenNameFromProps={screenName} />
+      <BuildCardsContainer buildsToShow={buildsListSaved} isInLoadSetModal={true} screenNameFromProps={screenName} />
     </Modal>
   );
 };

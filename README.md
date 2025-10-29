@@ -7,8 +7,8 @@
 [![Stars](https://img.shields.io/github/stars/ClementR22/MK8DSB.svg)](../../stargazers)  
 [![Release](https://img.shields.io/github/v/release/ClementR22/MK8DSB?label=pre-release%20release)](https://github.com/ClementR22/MK8DSB/releases)
 
-🎮 **Mario Kart 8 Deluxe Set Builder** is a mobile app designed to help players **optimize their kart, wheels, glider, and character combinations** in *Mario Kart 8 Deluxe*.  
-Whether you want more speed, better handling, or the perfect balance, this app helps you build the set that fits your playstyle.  
+🎮 **Mario Kart 8 Deluxe Set Builder** is a mobile app designed to help players **optimize their kart, wheels, glider, and character combinations** in _Mario Kart 8 Deluxe_.  
+Whether you want more speed, better handling, or the perfect balance, this app helps you build the set that fits your playstyle.
 
 ---
 
@@ -22,34 +22,35 @@ You can download the latest Android APK from the GitHub Releases page:
 ## ⚠️ Project Status
 
 🚧 This project is currently **unstable** and subject to changes.  
-Feedback and contributions are welcome via [issues](../../issues) and [pull requests](../../pulls).  
+Feedback and contributions are welcome via [issues](../../issues) and [pull requests](../../pulls).
 
 ---
 
 ## ✨ Features
 
-- Build a complete set (character, kart, wheels, glider)  
-- View and compare stats for each set  
-- Save your favorite sets 
+-   Build a complete set (character, kart, wheels, glider)
+-   View and compare stats for each set
+-   Save your favorite builds
 
 ---
 
 ## 📸 Screenshots
 
-*(Add some app screenshots or a demo GIF here)*  
-
+_(Add some app screenshots or a demo GIF here)_
 
 ---
 
 ## 📦 Installation & Usage
 
 ### Requirements
-- [Node.js](https://nodejs.org/)  
-- [npm](https://www.npmjs.com/)  
-- [Expo](https://expo.dev/)  
-- Android SDK *(if you want to build locally for Android)*  
+
+-   [Node.js](https://nodejs.org/)
+-   [npm](https://www.npmjs.com/)
+-   [Expo](https://expo.dev/)
+-   Android SDK _(if you want to build locally for Android)_
 
 ### Run the app
+
 ```bash
 # Clone the project
 git clone https://github.com/ClementR22/MK8DSB.git
@@ -69,17 +70,18 @@ npx expo run:android
 
 ## 🗺 Roadmap
 
-- [x] Stable Android release  
-- [ ] Stable iOS release   
-- [ ] Play Store release  
+-   [x] Stable Android release
+-   [ ] Stable iOS release
+-   [ ] Play Store release
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome!  
-- Open an [issue](../../issues) to report a bug or suggest a feature  
-- Submit a [pull request](../../pulls) with improvements  
+Contributions are welcome!
+
+-   Open an [issue](../../issues) to report a bug or suggest a feature
+-   Submit a [pull request](../../pulls) with improvements
 
 ---
 
@@ -93,4 +95,4 @@ For feedback or suggestions:
 ## 📜 License
 
 Distributed under the MIT License.  
-See [LICENSE](./LICENSE) for details.  
+See [LICENSE](./LICENSE) for details.

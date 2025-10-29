@@ -31,7 +31,7 @@ export default function TabLayout() {
   const { t } = useTranslation("screens");
 
   // --- Zustand Store Selections ---
-  const loadSetsSaved = useBuildsActionsStore((state) => state.loadSetsSaved);
+  const loadBuildsSaved = useBuildsActionsStore((state) => state.loadBuildsSaved);
   const theme = useThemeStore((state) => state.theme);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
 
@@ -45,8 +45,8 @@ export default function TabLayout() {
 
   // Effect to fetch saved builds on mount
   useEffect(() => {
-    loadSetsSaved();
-  }, [loadSetsSaved]);
+    loadBuildsSaved();
+  }, [loadBuildsSaved]);
 
   // Custom hook for loading settings (assuming it has its own internal effects)
   useLoadSettings();

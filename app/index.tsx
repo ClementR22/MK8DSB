@@ -3,9 +3,9 @@ import { StyleSheet, View } from "react-native";
 
 // Components import
 import StatSlider from "@/components/statSlider/StatSlider";
-import BuildCardsContainer, { BuildCardsContainerHandles } from "@/components/setCard/BuildCardsContainer";
+import BuildCardsContainer, { BuildCardsContainerHandles } from "@/components/buildCard/BuildCardsContainer";
 import SearchBuildScreenPressablesContainer from "@/components/screenPressablesContainer/SearchBuildScreenPressablesContainer";
-import ButtonLoadBuild from "@/components/managingSetsButton/ButtonLoadBuild";
+import ButtonLoadBuild from "@/components/managingBuildsButton/ButtonLoadBuild";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
@@ -23,7 +23,7 @@ import useStatsStore from "@/stores/useStatsStore";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 
 const SearchBuildScreen: React.FC = () => {
-  const scrollviewSetsCardsRef = useRef<BuildCardsContainerHandles>(null);
+  const scrollviewBuildsCardsRef = useRef<BuildCardsContainerHandles>(null);
   const scrollviewMainRef = useRef<ScrollViewScreenHandles>(null);
 
   const shouldScrollToTop = useGeneralStore((state) => state.shouldScrollToTop);
@@ -40,7 +40,7 @@ const SearchBuildScreen: React.FC = () => {
 
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
   const chosenStats = useStatsStore((state) => state.chosenStats);
-  const setsListFound = useBuildsListStore((state) => state.setsListFound);
+  const buildsListFound = useBuildsListStore((state) => state.buildsListFound);
 
   const [isReduceStatSliders, setIsReduceStatSliders] = useState(false);
   const toggleReduceStatSliders = useCallback(() => {
@@ -104,12 +104,12 @@ const SearchBuildScreen: React.FC = () => {
             {renderedSliders}
           </BoxContainer>
           <SearchBuildScreenPressablesContainer
-            scrollviewSetsCardsRef={scrollviewSetsCardsRef}
+            scrollviewBuildsCardsRef={scrollviewBuildsCardsRef}
             scrollviewMainRef={scrollviewMainRef}
           />
 
-          <BuildCardsScrollProvider scrollRef={scrollviewSetsCardsRef}>
-            <BuildCardsContainer ref={scrollviewSetsCardsRef} setsToShow={setsListFound} />
+          <BuildCardsScrollProvider scrollRef={scrollviewBuildsCardsRef}>
+            <BuildCardsContainer ref={scrollviewBuildsCardsRef} buildsToShow={buildsListFound} />
           </BuildCardsScrollProvider>
         </ScrollViewScreen>
       </ResultStatsProvider>

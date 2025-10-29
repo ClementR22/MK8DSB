@@ -27,13 +27,13 @@ export const loadThingFromMemory = async (thingKey: string, setThing?: any) => {
   }
 };
 
-export const getOnlySetsSavedKeysFromMemory = async () => {
+export const getOnlyBuildsSavedKeysFromMemory = async () => {
   const excludedKeys = [
     "language",
     "theme",
     "isResultStatsSync",
     "resultStatsDefault",
-    "sortNumberSavedSets",
+    "sortNumberSavedBuilds",
     "resultsNumber",
   ];
   const keys = await AsyncStorage.getAllKeys();
@@ -58,10 +58,10 @@ export const deleteAllTheMemory = async () => {
   }
 };
 
-export const deleteAllSavedSetsInMemory = async () => {
+export const deleteAllSavedBuildsInMemory = async () => {
   try {
-    const setsKeys = await getOnlySetsSavedKeysFromMemory();
-    setsKeys.forEach(async (thingKey) => await AsyncStorage.removeItem(thingKey));
+    const buildsKeys = await getOnlyBuildsSavedKeysFromMemory();
+    buildsKeys.forEach(async (thingKey) => await AsyncStorage.removeItem(thingKey));
   } catch (e) {
     console.error("Erreur lors de la suppression : ", e);
   }

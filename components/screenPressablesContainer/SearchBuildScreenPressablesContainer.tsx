@@ -20,12 +20,12 @@ import useBuildsListStore, { Build } from "@/stores/useBuildsListStore";
 import { useTranslation } from "react-i18next";
 
 interface SearchBuildScreenPressablesContainerProps {
-  scrollviewSetsCardsRef: React.RefObject<any>;
+  scrollviewBuildsCardsRef: React.RefObject<any>;
   scrollviewMainRef: React.RefObject<any>;
 }
 
 const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressablesContainerProps> = ({
-  scrollviewSetsCardsRef,
+  scrollviewBuildsCardsRef,
   scrollviewMainRef,
 }) => {
   const { t } = useTranslation("text");
@@ -110,10 +110,10 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
       setBuildsListFound([]);
     } else {
       const realResultsNumber = Math.min(resultsNumber, gaps.length);
-      const setsFoundIdGap = gaps.slice(0, realResultsNumber);
+      const buildsFoundIdGap = gaps.slice(0, realResultsNumber);
       const worstGap = chosenStatsChecked.filter((checked) => checked).length;
 
-      const setsFound: Build[] = setsFoundIdGap.map(({ id, gap }, index) => {
+      const buildsFound: Build[] = buildsFoundIdGap.map(({ id, gap }, index) => {
         const percentage = 100 * (1 - Math.sqrt(gap / worstGap));
         const percentageRounded = Number(percentage.toPrecision(3));
         const { bodytypes, ...setFoundData } = buildsData.get(id);
@@ -125,13 +125,13 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
         };
       });
 
-      setBuildsListFound(setsFound);
+      setBuildsListFound(buildsFound);
     }
   };
 
   const handleSearch = useCallback(() => {
     setIsLoading(true);
-    scrollviewSetsCardsRef?.current?.scrollToStart();
+    scrollviewBuildsCardsRef?.current?.scrollToStart();
 
     setDisableSearch(true);
 
@@ -147,7 +147,7 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
       // Terminer le loading
       setIsLoading(false);
     }, 50); // 50ms suffit pour que l'UI se rafraîchisse
-  }, [search, scrollviewSetsCardsRef, scrollviewMainRef]);
+  }, [search, scrollviewBuildsCardsRef, scrollviewMainRef]);
 
   return (
     <View style={styles.screenPressablesContainer}>

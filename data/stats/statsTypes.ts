@@ -23,5 +23,5 @@ export type StatNameHandling = Extract<
 >;
 
 export type StatNameCompareDefault = Exclude<StatNameCompare, StatNameSpeed | StatNameHandling>;
-export type StatNameSortSetCardDefault = Exclude<StatNameSort, StatNameSpeed | StatNameHandling>;
-export type StatNameSortElementDefault = "id" | StatNameSortSetCardDefault;
+export type StatNameSortBuildCardDefault = Exclude<StatNameSort, StatNameSpeed | StatNameHandling>;
+export type StatNameSortElementDefault = "id" | StatNameSortBuildCardDefault;

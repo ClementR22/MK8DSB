@@ -4,9 +4,9 @@ import { ScreenName } from "@/contexts/ScreenContext";
 import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
 import useModalsStore from "@/stores/useModalsStore";
 import { useModalLoadBuildStore } from "@/stores/useModalLoadBuildStore";
-import { ActionName, ActionNamesList } from "./useSetCardConfig";
+import { ActionName, ActionNamesList } from "./useBuildCardConfig";
 import showToast from "@/utils/showToast";
-import { useSetImportExport } from "@/hooks/useSetImportExport";
+import { useBuildImportExport } from "@/hooks/useBuildImportExport";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 
@@ -30,21 +30,21 @@ export function useActionIconPropsList(
   const s = useBuildsListStore((state) => state.getSet(source, id));
 
   const updateSelectionFromSet = usePressableElementsStore((state) => state.updateSelectionFromSet);
-  const setSetCardEditedId = useBuildsListStore((state) => state.setSetCardEditedId);
+  const setBuildCardEditedId = useBuildsListStore((state) => state.setBuildCardEditedId);
   const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
   const loadToSearch = useBuildsActionsStore((state) => state.loadToSearch);
   const loadToDisplay = useBuildsActionsStore((state) => state.loadToDisplay);
   const saveSet = useBuildsActionsStore((state) => state.saveSet);
   const unSaveSet = useBuildsActionsStore((state) => state.unSaveSet);
   const removeSet = useBuildsListStore((state) => state.removeSet);
-  const handleExport = useSetImportExport().handleExport;
+  const handleExport = useBuildImportExport().handleExport;
   const setIsLoadBuildModalVisible = useModalLoadBuildStore((state) => state.setIsLoadBuildModalVisible);
 
   const handleEditPress = useCallback(() => {
-    setSetCardEditedId(id);
+    setBuildCardEditedId(id);
     updateSelectionFromSet(s?.classIds);
     setIsEditModalVisible(true);
-  }, [id, s?.classIds, setSetCardEditedId, updateSelectionFromSet, setIsEditModalVisible]);
+  }, [id, s?.classIds, setBuildCardEditedId, updateSelectionFromSet, setIsEditModalVisible]);
 
   const handleLoadToSearchPress = useCallback(() => {
     loadToSearch({ source, id });
@@ -135,7 +135,7 @@ export function useActionIconPropsList(
     isInLoadModal,
     isSaved,
     s?.classIds,
-    setSetCardEditedId,
+    setBuildCardEditedId,
     updateSelectionFromSet,
     setIsEditModalVisible,
     loadToSearch,

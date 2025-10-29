@@ -5,13 +5,13 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
-interface StatGaugeSetCardBarProps {
+interface StatGaugeBuildCardBarProps {
   obtainedValue: number;
   chosenValue?: number;
   isInSearchScreen?: boolean;
 }
 
-const StatGaugeSetCardBar: React.FC<StatGaugeSetCardBarProps> = ({
+const StatGaugeBuildCardBar: React.FC<StatGaugeBuildCardBarProps> = ({
   obtainedValue,
   chosenValue,
   isInSearchScreen = false,
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(StatGaugeSetCardBar);
+export default React.memo(StatGaugeBuildCardBar);

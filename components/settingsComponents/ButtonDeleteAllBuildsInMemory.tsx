@@ -4,7 +4,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import Text from "@/primitiveComponents/Text";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
-const ButtonDeleteAllBuildsInMemory = ({ deleteAllSavedSets }) => {
+const ButtonDeleteAllBuildsInMemory = ({ deleteAllSavedBuilds }) => {
   const theme = useThemeStore((state) => state.theme);
 
   return (
@@ -12,7 +12,7 @@ const ButtonDeleteAllBuildsInMemory = ({ deleteAllSavedSets }) => {
       triggerButtonText="deleteAllBuildsInMemory"
       secondButtonProps={{
         text: "confirm",
-        onPress: deleteAllSavedSets,
+        onPress: deleteAllSavedBuilds,
         buttonColor: theme.error,
         buttonTextColor: theme.on_error,
       }}

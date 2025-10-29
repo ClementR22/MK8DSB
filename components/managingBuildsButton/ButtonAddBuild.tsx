@@ -3,19 +3,19 @@ import { ScrollView } from "react-native";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import showToast from "@/utils/showToast";
-import useBuildsListStore, { MAX_NUMBER_SETS_DISPLAY } from "@/stores/useBuildsListStore";
+import useBuildsListStore, { MAX_NUMBER_BUILDS_DISPLAY } from "@/stores/useBuildsListStore";
 
-interface ButtonAddSetProps {
+interface ButtonAddBuildProps {
   scrollRef: React.RefObject<ScrollView>;
 }
 
-const ButtonAddSet: React.FC<ButtonAddSetProps> = ({ scrollRef }) => {
+const ButtonAddBuild: React.FC<ButtonAddBuildProps> = ({ scrollRef }) => {
   const addNewSetInDisplay = useBuildsListStore((state) => state.addNewSetInDisplay);
-  const setsListDisplayed = useBuildsListStore((state) => state.setsListDisplayed);
+  const buildsListDisplayed = useBuildsListStore((state) => state.buildsListDisplayed);
 
   const timeoutRef = useRef(null);
 
-  const disabled = useMemo(() => setsListDisplayed.length >= MAX_NUMBER_SETS_DISPLAY, [setsListDisplayed.length]);
+  const disabled = useMemo(() => buildsListDisplayed.length >= MAX_NUMBER_BUILDS_DISPLAY, [buildsListDisplayed.length]);
 
   const handleAdd = useCallback(() => {
     try {
@@ -45,4 +45,4 @@ const ButtonAddSet: React.FC<ButtonAddSetProps> = ({ scrollRef }) => {
   );
 };
 
-export default React.memo(ButtonAddSet);
+export default React.memo(ButtonAddBuild);

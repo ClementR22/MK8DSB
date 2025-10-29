@@ -22,11 +22,11 @@ import useBuildsPersistenceStore from "@/stores/useBuildsPersistenceStore";
 
 const SettingsScreen: React.FC = () => {
   const resetSettings = useResetSettings();
-  const deleteAllSavedSets = useBuildsPersistenceStore((state) => state.deleteAllSavedSets);
+  const deleteAllSavedBuilds = useBuildsPersistenceStore((state) => state.deleteAllSavedBuilds);
 
-  const handleDeleteAllSavedSets = () => {
-    deleteAllSavedSets();
-    showToast("allSavedSetsHaveBeenDeleted", "success");
+  const handleDeleteAllSavedBuilds = () => {
+    deleteAllSavedBuilds();
+    showToast("allSavedBuildsHaveBeenDeleted", "success");
   };
 
   // Mémoïsation des handlers DEBUG
@@ -71,7 +71,7 @@ const SettingsScreen: React.FC = () => {
 
             <ButtonResetSettings resetSettings={resetSettings} />
 
-            <ButtonDeleteAllBuildsInMemory deleteAllSavedSets={handleDeleteAllSavedSets} />
+            <ButtonDeleteAllBuildsInMemory deleteAllSavedBuilds={handleDeleteAllSavedBuilds} />
 
             <Button onPress={handleShowMemory}>show memory</Button>
 

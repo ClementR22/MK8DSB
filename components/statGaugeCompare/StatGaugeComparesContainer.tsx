@@ -9,13 +9,13 @@ import { BORDER_RADIUS_CONTAINER_LOWEST } from "@/utils/designTokens";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 
 interface StatGaugeComparesContainerProps {
-  setsColorsMap: Map<string, string>;
+  buildsColorsMap: Map<string, string>;
 }
 
-const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({ setsColorsMap }) => {
+const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({ buildsColorsMap }) => {
   const theme = useThemeStore((state) => state.theme);
   const { resultStats } = useResultStats();
-  const setsListDisplayed = useBuildsListStore((state) => state.setsListDisplayed);
+  const buildsListDisplayed = useBuildsListStore((state) => state.buildsListDisplayed);
 
   const data = useMemo(() => {
     const statIndexMap = new Map(statNames.map((name, index) => [name, index]));
@@ -24,18 +24,18 @@ const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({
       .filter((stat) => stat.checked)
       .map((stat) => ({
         name: stat.name,
-        setsIdAndValueWithColor: setsListDisplayed.map((build) => ({
+        buildsIdAndValueWithColor: buildsListDisplayed.map((build) => ({
           id: build.id,
           value: build.stats[statIndexMap.get(stat.name)!],
-          color: setsColorsMap.get(build.id) || theme.surface_variant,
+          color: buildsColorsMap.get(build.id) || theme.surface_variant,
         })),
       }));
-  }, [resultStats, setsListDisplayed, setsColorsMap, theme.surface_variant]);
+  }, [resultStats, buildsListDisplayed, buildsColorsMap, theme.surface_variant]);
 
   return (
     <BoxContainer gap={7} boxShadow={box_shadow_z1} borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}>
-      {data.map(({ name, setsIdAndValueWithColor }) => {
-        return <StatGaugeCompare key={name} name={name} setsIdAndValue={setsIdAndValueWithColor} />;
+      {data.map(({ name, buildsIdAndValueWithColor }) => {
+        return <StatGaugeCompare key={name} name={name} buildsIdAndValue={buildsIdAndValueWithColor} />;
       })}
     </BoxContainer>
   );

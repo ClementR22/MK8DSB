@@ -3,7 +3,7 @@ interface ImportedSet {
   classIds: number[];
 }
 
-export const checkFormatSetImported = (obj: unknown): obj is ImportedSet => {
+export const checkFormatBuildImported = (obj: unknown): obj is ImportedSet => {
   if (typeof obj !== "object" || Array.isArray(obj) || obj === null) {
     return false;
   }

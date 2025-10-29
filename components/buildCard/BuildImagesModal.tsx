@@ -1,14 +1,14 @@
 import React, { useCallback, useState } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import Modal from "@/primitiveComponents/Modal";
-import SetImagesContainer from "./SetImagesContainer";
+import BuildImagesContainer from "./BuildImagesContainer";
 
-interface SetImagesModalProps {
+interface BuildImagesModalProps {
   classIds: number[];
   isCollapsed: boolean;
 }
 
-const SetImagesModal: React.FC<SetImagesModalProps> = ({ classIds, isCollapsed }) => {
+const BuildImagesModal: React.FC<BuildImagesModalProps> = ({ classIds, isCollapsed }) => {
   const [isImagesModalVisible, setIsImagesModalVisible] = useState(false);
 
   const openModal = useCallback(() => {
@@ -22,7 +22,7 @@ const SetImagesModal: React.FC<SetImagesModalProps> = ({ classIds, isCollapsed }
   return (
     <>
       <Pressable onPress={openModal} style={styles.pressable}>
-        <SetImagesContainer classIds={classIds} mode="icon" isCollapsed={isCollapsed} onPress={openModal} />
+        <BuildImagesContainer classIds={classIds} mode="icon" isCollapsed={isCollapsed} onPress={openModal} />
       </Pressable>
 
       <Modal
@@ -31,7 +31,7 @@ const SetImagesModal: React.FC<SetImagesModalProps> = ({ classIds, isCollapsed }
         setIsModalVisible={setIsImagesModalVisible}
         onClose={closeModal}
       >
-        <SetImagesContainer classIds={classIds} mode="modal" />
+        <BuildImagesContainer classIds={classIds} mode="modal" />
       </Modal>
     </>
   );
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(SetImagesModal);
+export default React.memo(BuildImagesModal);

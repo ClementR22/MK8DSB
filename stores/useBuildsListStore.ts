@@ -13,8 +13,8 @@ import { SortableElement, sortElements } from "@/utils/sortElements";
 import { DEFAULT_BUILDS } from "@/constants/defaultBuilds";
 import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 
-export const MAX_NUMBER_SETS_DISPLAY = 10;
-export const MAX_NUMBER_SETS_SAVE = 30;
+export const MAX_NUMBER_BUILDS_DISPLAY = 10;
+export const MAX_NUMBER_BUILDS_SAVE = 30;
 
 export interface Build {
   id: string;
@@ -24,15 +24,15 @@ export interface Build {
   percentage?: number;
 }
 export interface BuildsListStoreState {
-  setsListFound: Build[];
-  setsListDisplayed: Build[];
-  setsListSaved: Build[];
+  buildsListFound: Build[];
+  buildsListDisplayed: Build[];
+  buildsListSaved: Build[];
   setCardEditedId: string;
   setKeyInDisplay: number;
 
   getBuildsList: (screenName: ScreenName) => {
-    setsList: Build[] | Build[];
-    setsListName: string;
+    buildsList: Build[] | Build[];
+    buildsListName: string;
   };
   getSetBuildsList: (screenName: ScreenName) => (newBuildsList: Build[]) => void;
 
@@ -41,7 +41,7 @@ export interface BuildsListStoreState {
   setBuildsListFound: (newBuildsList: Build[]) => void;
   setBuildsListDisplayed: (newBuildsList: Build[]) => void;
   setBuildsListSaved: (newBuildsList: Build[]) => void;
-  setSetCardEditedId: (id: string) => void;
+  setBuildCardEditedId: (id: string) => void;
   addNewSetInDisplay: () => void;
   removeSet: (id: string, screenName: ScreenName) => void;
   checkNameUnique: (setName: string, screenName: ScreenName) => boolean;
@@ -52,32 +52,32 @@ export interface BuildsListStoreState {
 }
 
 const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
-  setsListFound: [],
-  setsListDisplayed: [
+  buildsListFound: [],
+  buildsListDisplayed: [
     { id: nanoid(8), ...DEFAULT_BUILDS.set1 },
     { id: nanoid(8), ...DEFAULT_BUILDS.set2 },
   ],
-  setsListSaved: [],
+  buildsListSaved: [],
   setCardEditedId: null,
   setKeyInDisplay: 2,
 
   getBuildsList: (screenName) => {
-    let setsListName: string;
+    let buildsListName: string;
 
     switch (screenName) {
       case "search":
-        setsListName = "setsListFound";
+        buildsListName = "buildsListFound";
         break;
       case "display":
-        setsListName = "setsListDisplayed";
+        buildsListName = "buildsListDisplayed";
         break;
       case "save":
-        setsListName = "setsListSaved";
+        buildsListName = "buildsListSaved";
         break;
     }
 
-    const setsList = get()[setsListName];
-    return { setsList, setsListName };
+    const buildsList = get()[buildsListName];
+    return { buildsList, buildsListName };
   },
 
   getSetBuildsList: (screenName: ScreenName) => {
@@ -100,24 +100,24 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   },
 
   getSet: (screenName: ScreenName, id: string) => {
-    const setList = get().getBuildsList(screenName).setsList;
+    const setList = get().getBuildsList(screenName).buildsList;
 
     const s = setList.find((s) => s.id === id);
     return s;
   },
 
-  setBuildsListFound: (newBuildsList) => set({ setsListFound: newBuildsList }),
+  setBuildsListFound: (newBuildsList) => set({ buildsListFound: newBuildsList }),
 
-  setBuildsListDisplayed: (newBuildsList) => set({ setsListDisplayed: newBuildsList }),
+  setBuildsListDisplayed: (newBuildsList) => set({ buildsListDisplayed: newBuildsList }),
 
-  setBuildsListSaved: (newBuildsList) => set({ setsListSaved: newBuildsList }),
+  setBuildsListSaved: (newBuildsList) => set({ buildsListSaved: newBuildsList }),
 
-  setSetCardEditedId: (id) => {
+  setBuildCardEditedId: (id) => {
     set({ setCardEditedId: id });
   },
 
   addNewSetInDisplay: () => {
-    if (get().setsListDisplayed.length >= MAX_NUMBER_SETS_DISPLAY) {
+    if (get().buildsListDisplayed.length >= MAX_NUMBER_BUILDS_DISPLAY) {
       throw new Error("setLimitReached");
     }
 
@@ -127,22 +127,22 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     set((state) => {
       return {
         setKeyInDisplay: newIndex,
-        setsListDisplayed: [...state.setsListDisplayed, { ...DEFAULT_BUILDS.set1, id: nanoid(8), name: newName }],
+        buildsListDisplayed: [...state.buildsListDisplayed, { ...DEFAULT_BUILDS.set1, id: nanoid(8), name: newName }],
       };
     });
   },
 
   removeSet: (id, screenName) => {
-    const { setsList, setsListName } = get().getBuildsList(screenName);
-    const newList = setsList.filter((build) => build.id !== id);
-    set({ [setsListName]: newList });
+    const { buildsList, buildsListName } = get().getBuildsList(screenName);
+    const newList = buildsList.filter((build) => build.id !== id);
+    set({ [buildsListName]: newList });
   },
 
   checkNameUnique: (setName, screenName) => {
     // ne lance pas d'error
-    const { setsList } = get().getBuildsList(screenName);
+    const { buildsList } = get().getBuildsList(screenName);
 
-    const isNameUnique = !setsList.some((build) => build.name === setName);
+    const isNameUnique = !buildsList.some((build) => build.name === setName);
     return isNameUnique;
   },
 
@@ -166,7 +166,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   },
 
   renameSet: (newName, screenName, id) => {
-    const { setsList, setsListName } = get().getBuildsList(screenName);
+    const { buildsList, buildsListName } = get().getBuildsList(screenName);
 
     const isNameUnique = get().checkNameUnique(newName, screenName);
     if (!isNameUnique) {
@@ -176,14 +176,14 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     const s = get().getSet(screenName, id);
     const newSet = { ...s, name: newName };
 
-    const newBuildsList = setsList.map((s: Build) => {
+    const newBuildsList = buildsList.map((s: Build) => {
       if (s.id === id) {
         return newSet;
       }
       return s;
     });
 
-    set({ [setsListName]: newBuildsList });
+    set({ [buildsListName]: newBuildsList });
 
     if (screenName === "save") {
       useBuildsPersistenceStore.getState().saveSetInMemory(newSet);
@@ -191,21 +191,21 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   },
 
   updateBuildsList: (pressedClassIdsObj, screenName) => {
-    const { setsList, setsListName } = get().getBuildsList(screenName);
+    const { buildsList, buildsListName } = get().getBuildsList(screenName);
     const newClassIds = Object.values(pressedClassIdsObj);
     const id = get().setCardEditedId;
 
     const s = get().getSet(screenName, id);
     const newSet = { ...s, classIds: newClassIds, stats: getBuildStatsFromClassIds(newClassIds) };
 
-    const setsListUpdated = setsList.map((s) => {
+    const buildsListUpdated = buildsList.map((s) => {
       if (s.id === id) {
         return newSet;
       }
       return s;
     });
 
-    set({ [setsListName]: setsListUpdated });
+    set({ [buildsListName]: buildsListUpdated });
 
     if (screenName === "save") {
       useBuildsPersistenceStore.getState().saveSetInMemory(newSet);
@@ -213,9 +213,9 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   },
 
   sortBuildsList: (screenName, sortNumber) => {
-    const { setsList, setsListName } = get().getBuildsList(screenName);
+    const { buildsList, buildsListName } = get().getBuildsList(screenName);
 
-    const setsListSortable: SortableElement[] = setsList.map((setObj: Build) => {
+    const buildsListSortable: SortableElement[] = buildsList.map((setObj: Build) => {
       const statsArray = setObj.stats;
       const mappedStats: Partial<SortableElement> = {};
 
@@ -232,15 +232,15 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
       } as SortableElement;
     });
 
-    const setsListSorted = sortElements(setsListSortable, sortNumber);
-    const setsListSortedLight = setsListSorted.map((setSorted) => ({
-      id: setSorted.id,
-      name: setSorted.name,
-      classIds: setSorted.classIds,
-      stats: setSorted.stats,
+    const buildsListSorted = sortElements(buildsListSortable, sortNumber);
+    const buildsListSortedLight = buildsListSorted.map((build) => ({
+      id: build.id,
+      name: build.name,
+      classIds: build.classIds,
+      stats: build.stats,
     }));
 
-    set({ [setsListName]: setsListSortedLight });
+    set({ [buildsListName]: buildsListSortedLight });
   },
 }));
 

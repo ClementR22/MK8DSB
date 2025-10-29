@@ -3,8 +3,8 @@
 
   "developSliders": "Develop sliders",
   "reduceSliders": "Reduce sliders",
-  "developSets": "Develop builds",
-  "reduceSets": "Reduce builds",
+  "developBuilds": "Develop builds",
+  "reduceBuilds": "Reduce builds",
 
   "loadStatsOfASet": "Load a build's stats",
   "loadASet": "Load a build",
@@ -17,7 +17,7 @@
   "chooseFilters": "Choose some filters",
   "filterBodytypes": "Filter body types",
 
-  "sortSets": "Sort builds",
+  "sortBuilds": "Sort builds",
   "sortElements": "Sort elements",
 
   "edit": "Edit",

@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useMemo, useState, useCallback } from "react";
-import BuildCardsContainer from "@/components/setCard/BuildCardsContainer";
+import BuildCardsContainer from "@/components/buildCard/BuildCardsContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { SET_CARD_COLOR_PALETTE } from "@/constants/Colors";
+import { BUILD_CARD_COLOR_PALETTE } from "@/constants/Colors";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
-import ButtonAddSet from "@/components/managingSetsButton/ButtonAddSet";
-import ButtonLoadBuild from "@/components/managingSetsButton/ButtonLoadBuild";
+import ButtonAddBuild from "@/components/managingBuildsButton/ButtonAddBuild";
+import ButtonLoadBuild from "@/components/managingBuildsButton/ButtonLoadBuild";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import StatGaugeComparesContainer from "@/components/statGaugeCompare/StatGaugeComparesContainer";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
@@ -22,18 +22,18 @@ const DisplayBuildScreen = () => {
   const theme = useThemeStore((state) => state.theme);
 
   const scrollRef = useRef(null); // Ref pour BuildCardsContainer
-  const setsListDisplayed = useBuildsListStore((state) => state.setsListDisplayed);
+  const buildsListDisplayed = useBuildsListStore((state) => state.buildsListDisplayed);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const [sortNumber, setSortNumber] = useState(2);
 
-  const isSetCardsCollapsed = useGeneralStore((state) => state.isSetCardsCollapsed);
-  const toggleIsSetCardsCollapsed = useGeneralStore((state) => state.toggleIsSetCardsCollapsed);
+  const isBuildCardsCollapsed = useGeneralStore((state) => state.isBuildCardsCollapsed);
+  const toggleIsBuildCardsCollapsed = useGeneralStore((state) => state.toggleIsBuildCardsCollapsed);
 
   // État local pour stocker l'association nom du build -> Couleur
-  const [setsColorsMap, setSetsColorsMap] = useState<Map<string, string>>(() => new Map());
+  const [buildsColorsMap, setBuildsColorsMap] = useState<Map<string, string>>(() => new Map());
   // Ref pour suivre les couleurs disponibles dans la palette (ne déclenche pas de re-render)
-  const availableColorsRef = useRef<string[]>([...SET_CARD_COLOR_PALETTE]);
+  const availableColorsRef = useRef<string[]>([...BUILD_CARD_COLOR_PALETTE]);
 
   // --- Logique d'attribution des couleurs déplacée ici ---
   useEffect(() => {
@@ -41,19 +41,19 @@ const DisplayBuildScreen = () => {
     const colorsCurrentlyInUse = new Set<string>(); // Garde une trace des couleurs utilisées dans le cycle actuel
 
     // 1. Réutiliser les couleurs pour les builds qui sont toujours présents
-    setsListDisplayed.forEach(({ id }) => {
-      const existingColor = setsColorsMap.get(id);
-      if (existingColor && SET_CARD_COLOR_PALETTE.includes(existingColor)) {
+    buildsListDisplayed.forEach(({ id }) => {
+      const existingColor = buildsColorsMap.get(id);
+      if (existingColor && BUILD_CARD_COLOR_PALETTE.includes(existingColor)) {
         newColorsMap.set(id, existingColor);
         colorsCurrentlyInUse.add(existingColor);
       }
     });
 
     // 2. Mettre à jour le pool de couleurs disponibles
-    availableColorsRef.current = SET_CARD_COLOR_PALETTE.filter((color) => !colorsCurrentlyInUse.has(color));
+    availableColorsRef.current = BUILD_CARD_COLOR_PALETTE.filter((color) => !colorsCurrentlyInUse.has(color));
 
     // 3. Attribuer de nouvelles couleurs aux builds qui n'en ont pas (nouveaux builds)
-    setsListDisplayed.forEach((build) => {
+    buildsListDisplayed.forEach((build) => {
       if (!newColorsMap.has(build.id)) {
         if (availableColorsRef.current.length > 0) {
           const assignedColor = availableColorsRef.current.shift(); // Prend la première couleur disponible
@@ -69,20 +69,20 @@ const DisplayBuildScreen = () => {
 
     // Mettre à jour l'état du composant avec la nouvelle map de couleurs
     // Cette mise à jour déclenchera un re-render, et les enfants auront la map à jour.
-    setSetsColorsMap(newColorsMap);
-  }, [setsListDisplayed]);
+    setBuildsColorsMap(newColorsMap);
+  }, [buildsListDisplayed]);
 
   // --- Fin Logique d'attribution des couleurs ---
 
-  const hideRemoveSet = setsListDisplayed.length === 1;
+  const hideRemoveBuild = buildsListDisplayed.length === 1;
 
-  const setsWithColor = useMemo(
+  const buildsWithColor = useMemo(
     () =>
-      setsListDisplayed.map((build) => ({
+      buildsListDisplayed.map((build) => ({
         ...build,
-        color: setsColorsMap?.get(build.id) || theme.surface_variant || theme.surface_container_high,
+        color: buildsColorsMap?.get(build.id) || theme.surface_variant || theme.surface_container_high,
       })),
-    [setsListDisplayed, setsColorsMap, theme.surface_variant, theme.surface_container_high]
+    [buildsListDisplayed, buildsColorsMap, theme.surface_variant, theme.surface_container_high]
   );
 
   return (
@@ -90,24 +90,24 @@ const DisplayBuildScreen = () => {
       <ResultStatsProvider>
         <ScrollViewScreen scrollEnabled={isScrollEnable}>
           <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
-            <ButtonAddSet scrollRef={scrollRef} />
+            <ButtonAddBuild scrollRef={scrollRef} />
             <ButtonLoadBuild tooltipText="LoadASet" />
             <ButtonIcon
-              onPress={toggleIsSetCardsCollapsed}
-              iconName={isSetCardsCollapsed ? "chevron-down" : "chevron-up"}
+              onPress={toggleIsBuildCardsCollapsed}
+              iconName={isBuildCardsCollapsed ? "chevron-down" : "chevron-up"}
               iconType={IconType.MaterialCommunityIcons}
-              tooltipText={isSetCardsCollapsed ? "DevelopSets" : "ReduceSets"}
+              tooltipText={isBuildCardsCollapsed ? "DevelopBuilds" : "ReduceBuilds"}
             />
           </ScreenPressablesContainer>
 
           <BuildCardsScrollProvider scrollRef={scrollRef}>
-            <BuildCardsContainer ref={scrollRef} setsToShow={setsWithColor} hideRemoveSet={hideRemoveSet} />
+            <BuildCardsContainer ref={scrollRef} buildsToShow={buildsWithColor} hideRemoveBuild={hideRemoveBuild} />
 
             <View style={styles.mainButtonWrapper}>
               <StatSelector triggerButtonText="displayedStats" />
             </View>
 
-            <StatGaugeComparesContainer setsColorsMap={setsColorsMap} />
+            <StatGaugeComparesContainer buildsColorsMap={buildsColorsMap} />
           </BuildCardsScrollProvider>
         </ScrollViewScreen>
       </ResultStatsProvider>

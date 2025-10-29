@@ -3,12 +3,12 @@ import { useMemo } from "react";
 export type ActionName = "edit" | "loadToSearch" | "loadToDisplay" | "save" | "remove" | "export";
 export type ActionNamesList = ActionName[];
 
-interface SetCardSituationConfig {
+interface BuildCardSituationConfig {
   isNameEditable: boolean;
   showStatSliderResult: boolean;
 }
 
-const situationConfigs: Record<string, SetCardSituationConfig> = {
+const situationConfigs: Record<string, BuildCardSituationConfig> = {
   search: {
     isNameEditable: true,
     showStatSliderResult: true,
@@ -33,7 +33,7 @@ const BASE_ACTIONS_SAVE: ActionNamesList = ["edit", "loadToSearch", "loadToDispl
 const MORE_ACTIONS_DISPLAY_COMMON: ActionNamesList = ["export"]; // Common actions for display more list
 const BASE_MORE_ACTIONS_SAVE: ActionNamesList = ["export", "remove"];
 
-export const useSetCardConfig = (situation, hideRemoveSet, screenName) => {
+export const useBuildCardConfig = (situation, hideRemoveBuild, screenName) => {
   return useMemo(() => {
     const base = situationConfigs[situation];
     let actionNames: ActionNamesList;
@@ -45,7 +45,7 @@ export const useSetCardConfig = (situation, hideRemoveSet, screenName) => {
     } else if (situation === "display") {
       actionNames = BASE_ACTIONS_DISPLAY;
       const dynamicMore: ActionNamesList = [];
-      if (!hideRemoveSet) {
+      if (!hideRemoveBuild) {
         dynamicMore.push("remove");
       }
 
@@ -67,5 +67,5 @@ export const useSetCardConfig = (situation, hideRemoveSet, screenName) => {
       actionNamesList: actionNames,
       moreActionNamesList: moreActionNames,
     };
-  }, [situation, hideRemoveSet, screenName]);
+  }, [situation, hideRemoveBuild, screenName]);
 };

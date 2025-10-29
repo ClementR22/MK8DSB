@@ -15,7 +15,7 @@ interface StatGaugeContainerProps {
   value: number;
   statFilterNumber?: number;
   chosenValue?: number;
-  isInSetCard?: boolean;
+  isInBuildCard?: boolean;
   bonusEnabled?: boolean;
   children: React.ReactElement;
 }
@@ -27,7 +27,7 @@ const StatGaugeContainer = ({
   value,
   statFilterNumber = 0,
   chosenValue,
-  isInBuildCard= false,
+  isInBuildCard = false,
   bonusEnabled = false,
   children,
 }: StatGaugeContainerProps) => {
@@ -97,7 +97,7 @@ const StatGaugeContainer = ({
 
       {children}
 
-      {isInBuildCard&& (
+      {isInBuildCard && (
         <View
           style={[
             styles.textWrapper,

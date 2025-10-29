@@ -23,10 +23,10 @@ interface SetWithColor extends Build {
 }
 
 interface BuildCardsContainerProps {
-  setsToShow: SetWithColor[];
+  buildsToShow: SetWithColor[];
   isInLoadSetModal?: boolean;
   screenNameFromProps?: ScreenName;
-  hideRemoveSet?: boolean;
+  hideRemoveBuild?: boolean;
 }
 
 export interface BuildCardsContainerHandles {
@@ -36,13 +36,13 @@ export interface BuildCardsContainerHandles {
 }
 
 const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsContainerProps>(
-  ({ setsToShow, isInLoadSetModal = false, screenNameFromProps, hideRemoveSet }, ref) => {
+  ({ buildsToShow, isInLoadSetModal = false, screenNameFromProps, hideRemoveBuild }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
     const setCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
 
     // La logique d'availableColorsRef et son useEffect ont été déplacés dans DisplayBuildScreen
 
-    const onSetCardLayout = useCallback((id: string, event: LayoutChangeEvent) => {
+    const onBuildCardLayout = useCallback((id: string, event: LayoutChangeEvent) => {
       const { x, width } = event.nativeEvent.layout;
       setCardLayouts.current.set(id, { x, width }); // Utilisez l'ID build comme clé
     }, []);
@@ -78,7 +78,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
 
     const [hasShownSearchQuestionIcon, setHasShownSearchQuestionIcon] = useState(false);
 
-    const noSetToShow = setsToShow.length === 0;
+    const noSetToShow = buildsToShow.length === 0;
 
     const calculatedContentWidth: DimensionValue | undefined = noSetToShow || isLoading ? "100%" : undefined;
 
@@ -100,12 +100,12 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
       return <Placeholder type="savedEmpty" />;
     }, [noSetToShow, screenName, theme.on_surface, hasShownSearchQuestionIcon]);
 
-    const memoizedSetCards = useMemo(() => {
+    const memoizedBuildCards = useMemo(() => {
       if (noSetToShow) {
         return null;
       }
 
-      return setsToShow.map((build: SetWithColor) => (
+      return buildsToShow.map((build: SetWithColor) => (
         <BuildCard
           key={build.id}
           name={build.name}
@@ -114,13 +114,13 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
           id={build.id}
           isInLoadSetModal={isInLoadSetModal}
           screenNameFromProps={screenNameFromProps}
-          hideRemoveSet={hideRemoveSet}
+          hideRemoveBuild={hideRemoveBuild}
           setToShowPercentage={(build as any).percentage ?? undefined}
-          onLayout={(event) => onSetCardLayout(build.id, event)}
+          onLayout={(event) => onBuildCardLayout(build.id, event)}
           borderColor={build.color}
         />
       ));
-    }, [setsToShow, isInLoadSetModal, screenNameFromProps, hideRemoveSet, onSetCardLayout]);
+    }, [buildsToShow, isInLoadSetModal, screenNameFromProps, hideRemoveBuild, onBuildCardLayout]);
 
     return (
       <ScrollView
@@ -145,7 +145,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
           ) : noSetToShow ? (
             placeHolder
           ) : (
-            memoizedSetCards
+            memoizedBuildCards
           )}
         </Pressable>
       </ScrollView>

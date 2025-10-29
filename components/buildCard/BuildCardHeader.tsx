@@ -1,16 +1,14 @@
-// components/BuildCard/SetCardHeader.tsx
-
 import React, { memo } from "react";
 import { View, StyleSheet } from "react-native";
-import SetCardMoreActionsButton from "./SetCardMoreActionsButton";
+import BuildCardMoreActionsButton from "./BuildCardMoreActionsButton";
 import { ScreenName } from "@/contexts/ScreenContext";
-import { ActionNamesList } from "@/hooks/useSetCardConfig";
+import { ActionNamesList } from "@/hooks/useBuildCardConfig";
 import BuildNameInput from "../textInput/BuildNameInput";
 import { BUTTON_SIZE } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-interface SetCardHeaderProps {
+interface BuildCardHeaderProps {
   isNameEditable: boolean;
   name: string;
   screenName: ScreenName;
@@ -19,7 +17,7 @@ interface SetCardHeaderProps {
   moreActionNamesList?: ActionNamesList;
 }
 
-const SetCardHeader: React.FC<SetCardHeaderProps> = ({
+const BuildCardHeader: React.FC<BuildCardHeaderProps> = ({
   isNameEditable,
   name,
   screenName,
@@ -40,7 +38,7 @@ const SetCardHeader: React.FC<SetCardHeaderProps> = ({
       )}
 
       {moreActionNamesList && (
-        <SetCardMoreActionsButton moreActionNamesList={moreActionNamesList} id={id} screenName={screenName} />
+        <BuildCardMoreActionsButton moreActionNamesList={moreActionNamesList} id={id} screenName={screenName} />
       )}
     </View>
   );
@@ -58,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(SetCardHeader);
+export default memo(BuildCardHeader);

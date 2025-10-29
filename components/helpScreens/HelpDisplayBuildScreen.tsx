@@ -45,7 +45,7 @@ const HelpDisplayBuildScreen = () => {
         <HelpStepItem key={3} stepChar="3" title="how_to_use_comparator.step.view_differences" namespace="helpDisplay">
           <StatGaugeCompare
             name="speedGround"
-            setsIdAndValue={[
+            buildsIdAndValue={[
               { id: "1", value: 5, color: "#E74C3C" },
               { id: "2", value: 3, color: "#3498DB" },
               { id: "3", value: 7, color: "#2ECC71" },

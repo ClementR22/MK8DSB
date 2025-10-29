@@ -3,17 +3,21 @@ import { Menu } from "react-native-paper";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import { ActionNamesList } from "@/hooks/useSetCardConfig";
+import { ActionNamesList } from "@/hooks/useBuildCardConfig";
 import { ScreenName } from "@/contexts/ScreenContext";
 import { useTranslation } from "react-i18next";
 
-interface SetCardMoreActionsButtonProps {
+interface BuildCardMoreActionsButtonProps {
   moreActionNamesList: ActionNamesList;
   id: string;
   screenName: ScreenName;
 }
 
-const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({ moreActionNamesList, id, screenName }) => {
+const BuildCardMoreActionsButton: React.FC<BuildCardMoreActionsButtonProps> = ({
+  moreActionNamesList,
+  id,
+  screenName,
+}) => {
   const { t } = useTranslation("button");
 
   const [visible, setVisible] = useState(false);
@@ -55,4 +59,4 @@ const SetCardMoreActionsButton: React.FC<SetCardMoreActionsButtonProps> = ({ mor
   );
 };
 
-export default React.memo(SetCardMoreActionsButton);
+export default React.memo(BuildCardMoreActionsButton);

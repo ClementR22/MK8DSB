@@ -11,7 +11,7 @@
   "setLimitReached": "limite de buildsds atteinte",
 
   "theSettingsHaveBeenReset": "les préférences ont été réinitialisées",
-  "allSavedSetsHaveBeenDeleted": "tous les builds sauvegardés ont été supprimés !",
+  "allSavedBuildsHaveBeenDeleted": "tous les builds sauvegardés ont été supprimés !",
 
   "setRenamed": "build renommé",
   "nameAlreadyExists": "ce nom existe déjà",

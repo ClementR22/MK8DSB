@@ -2,14 +2,14 @@ import React from "react";
 import { ScreenName } from "@/contexts/ScreenContext";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import { useSetImportExport } from "@/hooks/useSetImportExport";
+import { useBuildImportExport } from "@/hooks/useBuildImportExport";
 
-interface ButtonImportSetProps {
+interface ButtonImportBuildProps {
   screenName: ScreenName;
 }
 
-const ButtonImportSet: React.FC<ButtonImportSetProps> = ({ screenName }) => {
-  const handleImport = useSetImportExport().handleImport;
+const ButtonImportBuild: React.FC<ButtonImportBuildProps> = ({ screenName }) => {
+  const handleImport = useBuildImportExport().handleImport;
 
   return (
     <ButtonIcon
@@ -21,4 +21,4 @@ const ButtonImportSet: React.FC<ButtonImportSetProps> = ({ screenName }) => {
   );
 };
 
-export default ButtonImportSet;
+export default ButtonImportBuild;

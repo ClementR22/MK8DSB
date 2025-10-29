@@ -6,7 +6,7 @@ import { StatNameSort } from "@/data/stats/statsTypes";
 import {
   statNamesHandling,
   statNamesSortElementDefault,
-  statNamesSortSetCardDefault,
+  statNamesSortBuildCardDefault,
   statNamesSpeed,
 } from "@/data/stats/statsData";
 import TooltipMenu from "../TooltipMenu";
@@ -42,7 +42,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const statNamesSortDefault = useMemo(
-    () => (sortCase === "element" ? statNamesSortElementDefault : statNamesSortSetCardDefault),
+    () => (sortCase === "element" ? statNamesSortElementDefault : statNamesSortBuildCardDefault),
     [sortCase]
   );
 
