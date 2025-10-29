@@ -3,12 +3,11 @@ import SetCardsContainer from "@/components/setCard/SetCardsContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { SET_CARD_COLOR_PALETTE } from "@/constants/Colors"; // Importez la palette et la fonction de fallback
-import { StatName } from "@/data/stats/statsTypes";
+import { SET_CARD_COLOR_PALETTE } from "@/constants/Colors";
 import { useThemeStore } from "@/stores/useThemeStore";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
 import ButtonAddSet from "@/components/managingSetsButton/ButtonAddSet";
-import ButtonLoadSet from "@/components/managingSetsButton/ButtonLoadSet";
+import ButtonLoadBuild from "@/components/managingSetsButton/ButtonLoadBuild";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import StatGaugeComparesContainer from "@/components/statGaugeCompare/StatGaugeComparesContainer";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
@@ -92,7 +91,7 @@ const DisplayBuildScreen = () => {
         <ScrollViewScreen scrollEnabled={isScrollEnable}>
           <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
             <ButtonAddSet scrollRef={scrollRef} />
-            <ButtonLoadSet tooltipText="LoadASet" />
+            <ButtonLoadBuild tooltipText="LoadASet" />
             <ButtonIcon
               onPress={toggleIsSetCardsCollapsed}
               iconName={isSetCardsCollapsed ? "chevron-down" : "chevron-up"}

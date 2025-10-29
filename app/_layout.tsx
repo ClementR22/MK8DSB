@@ -9,8 +9,8 @@ import { PaperProvider } from "react-native-paper";
 
 // Components
 import CustomHeader from "@/components/CustomHeader";
-import ModalEditSet from "@/components/modal/ModalEditSet";
-import ModalLoadSet from "@/components/modal/ModalLoadSet";
+import ModalEditBuild from "@/components/modal/ModalEditBuild";
+import ModalLoadBuild from "@/components/modal/ModalLoadBuild";
 import Toast from "react-native-toast-message";
 // Help Components - Memoized for performance
 import HelpSearchBuildScreen from "@/components/helpScreens/HelpSearchBuildScreen";
@@ -138,8 +138,8 @@ export default function TabLayout() {
               }}
             />
           </Tabs>
-          <ModalEditSet />
-          <ModalLoadSet />
+          <ModalEditBuild />
+          <ModalLoadBuild />
           <Toast config={toastConfig} bottomOffset={59} swipeable={false} />
         </PaperProvider>
       </SafeAreaView>

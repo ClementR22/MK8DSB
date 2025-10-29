@@ -5,7 +5,7 @@ import { StyleSheet, View } from "react-native";
 import StatSlider from "@/components/statSlider/StatSlider";
 import SetCardsContainer, { SetCardsContainerHandles } from "@/components/setCard/SetCardsContainer";
 import SearchSetScreenPressablesContainer from "@/components/screenPressablesContainer/SearchSetScreenPressablesContainer";
-import ButtonLoadSet from "@/components/managingSetsButton/ButtonLoadSet";
+import ButtonLoadBuild from "@/components/managingSetsButton/ButtonLoadBuild";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
@@ -97,7 +97,7 @@ const SearchBuildScreen: React.FC = () => {
                 </Text>
               </View>
 
-              <ButtonLoadSet tooltipText="LoadStatsOfASet" />
+              <ButtonLoadBuild tooltipText="LoadStatsOfASet" />
             </View>
 
             {/* Afficher les sliders memoisés */}

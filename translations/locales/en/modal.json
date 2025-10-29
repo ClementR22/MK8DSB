@@ -1,6 +1,6 @@
 {
   "filters": "Filters",
-  "selectASet": "Select a build",
+  "selectABuild": "Select a build",
 
   "desiredStatsAndStatsInSets": "Desired stats and displayed stats in builds",
   "displayedStatsInSets": "Displayed stats in builds",

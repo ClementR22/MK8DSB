@@ -3,7 +3,7 @@ import { useCallback, useMemo } from "react";
 import { ScreenName } from "@/contexts/ScreenContext";
 import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
 import useModalsStore from "@/stores/useModalsStore";
-import { useModalLoadSetStore } from "@/stores/useModalLoadSetStore";
+import { useModalLoadBuildStore } from "@/stores/useModalLoadBuildStore";
 import { ActionName, ActionNamesList } from "./useSetCardConfig";
 import showToast from "@/utils/showToast";
 import { useSetImportExport } from "@/hooks/useSetImportExport";
@@ -38,7 +38,7 @@ export function useActionIconPropsList(
   const unSaveSet = useBuildsActionsStore((state) => state.unSaveSet);
   const removeSet = useBuildsListStore((state) => state.removeSet);
   const handleExport = useSetImportExport().handleExport;
-  const setIsLoadSetModalVisible = useModalLoadSetStore((state) => state.setIsLoadSetModalVisible);
+  const setIsLoadBuildModalVisible = useModalLoadBuildStore((state) => state.setIsLoadBuildModalVisible);
 
   const handleEditPress = useCallback(() => {
     setSetCardEditedId(id);
@@ -50,8 +50,8 @@ export function useActionIconPropsList(
     loadToSearch({ source, id });
     showToast("setStatsHaveBeenLoaded", "success");
 
-    setIsLoadSetModalVisible(false);
-  }, [source, id, loadToSearch, setIsLoadSetModalVisible]);
+    setIsLoadBuildModalVisible(false);
+  }, [source, id, loadToSearch, setIsLoadBuildModalVisible]);
 
   const handleLoadToDisplayPress = useCallback(() => {
     try {
@@ -61,8 +61,8 @@ export function useActionIconPropsList(
       showToast(e.message, "error");
     }
 
-    setIsLoadSetModalVisible(false);
-  }, [source, id, loadToDisplay, setIsLoadSetModalVisible]);
+    setIsLoadBuildModalVisible(false);
+  }, [source, id, loadToDisplay, setIsLoadBuildModalVisible]);
 
   const handleSavePress = useCallback(() => {
     try {
@@ -143,7 +143,7 @@ export function useActionIconPropsList(
     saveSet,
     unSaveSet,
     removeSet,
-    setIsLoadSetModalVisible,
+    setIsLoadBuildModalVisible,
     handleExport,
   ]);
 

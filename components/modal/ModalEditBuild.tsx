@@ -6,7 +6,7 @@ import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { useScreenNameFromPath } from "@/hooks/useScreenNameFromPath";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 
-const ModalEditSet: React.FC = () => {
+const ModalEditBuild: React.FC = () => {
   const isEditModalVisible = useModalsStore((state) => state.isEditModalVisible);
   const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
   const isBuildsListUpdated = usePressableElementsStore((state) => state.isBuildsListUpdated);
@@ -32,7 +32,7 @@ const ModalEditSet: React.FC = () => {
 
   return (
     <Modal
-      modalTitle="selectASet"
+      modalTitle="selectABuild"
       isModalVisible={isEditModalVisible}
       setIsModalVisible={setIsEditModalVisible}
       onClose={handleCloseEditModal}
@@ -42,6 +42,6 @@ const ModalEditSet: React.FC = () => {
   );
 };
 
-ModalEditSet.displayName = "ModalEditSet";
+ModalEditBuild.displayName = "ModalEditBuild";
 
-export default memo(ModalEditSet);
+export default memo(ModalEditBuild);
