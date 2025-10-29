@@ -13,29 +13,31 @@ import HelpStepItem from "../helpComponents/HelpStepItem";
 import HelpSection from "../helpComponents/HelpSection";
 import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
 
-const helpSearchSetScreen = () => {
+const HelpSearchSetScreen = () => {
   return (
-    <HelpModal title="guideSetBuilder">
+    <HelpModal title="guideBuildFinder">
+      {/* Intro */}
       <Text role="body" size="large" textAlign="center" namespace="not">
         <Text role="body" size="large" weight="bold" namespace="helpSearch">
-          Pick the stats you want
+          intro.pick_stats
         </Text>
         <Text role="body" size="large" namespace="helpSearch">
-          , and let the algorithm find the perfect sets for you.
+          intro.find_sets
         </Text>
       </Text>
 
-      <HelpSection title="How to use the Build finder" namespace="helpSearch" contentType="step">
-        <HelpStepItem key={1} stepChar={"1"} title="Choose your criteria" namespace="helpSearch">
+      {/* Section 1 — How to use */}
+      <HelpSection title="how_to_use.title" namespace="helpSearch" contentType="step">
+        <HelpStepItem key={1} stepChar="1" title="how_to_use.step.choose_criteria" namespace="helpSearch">
           <HelpButtonDescription
             iconName="plus"
             iconType={IconType.MaterialCommunityIcons}
-            description="Add/remove a statistic"
+            description="how_to_use.step.choose_criteria.add_stat"
             namespace="helpSearch"
           />
         </HelpStepItem>
 
-        <HelpStepItem key={2} stepChar={"2"} title="Adjust values and tolerance" namespace="helpSearch">
+        <HelpStepItem key={2} stepChar="2" title="how_to_use.step.adjust_values" namespace="helpSearch">
           <StatSliderPreview name="speedGround" />
           <Text role="body" size="large" fontStyle="italic" namespace="not">
             {"≈"}
@@ -43,7 +45,7 @@ const helpSearchSetScreen = () => {
               colon
             </Text>
             <Text role="body" size="large" namespace="helpSearch">
-              approximate value
+              value_type.approximate
             </Text>
             {"\n"}
             {"="}
@@ -51,7 +53,7 @@ const helpSearchSetScreen = () => {
               colon
             </Text>
             <Text role="body" size="large" namespace="helpSearch">
-              exact value
+              value_type.exact
             </Text>
             {"\n"}
             {"≥"}
@@ -59,20 +61,38 @@ const helpSearchSetScreen = () => {
               colon
             </Text>
             <Text role="body" size="large" namespace="helpSearch">
-              minimum value
+              value_type.minimum
             </Text>
           </Text>
         </HelpStepItem>
 
-        <HelpStepItem key={3} stepChar={"3"} title="Start the search" alignItems="center" namespace="helpSearch">
-          <Button onPress={() => {}} iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}>
+        <HelpStepItem
+          key={3}
+          stepChar="3"
+          title="how_to_use.step.start_search"
+          alignItems="center"
+          namespace="helpSearch"
+        >
+          <Button
+            onPress={() => {}}
+            iconProps={{
+              type: IconType.MaterialCommunityIcons,
+              name: "magnify",
+            }}
+          >
             search
           </Button>
         </HelpStepItem>
 
-        <HelpStepItem key={4} stepChar={"4"} title="Review the results" alignItems="center" namespace="helpSearch">
+        <HelpStepItem
+          key={4}
+          stepChar="4"
+          title="how_to_use.step.review_results"
+          alignItems="center"
+          namespace="helpSearch"
+        >
           <Text role="body" size="large" namespace="helpSearch">
-            Sets are ranked by matching score
+            how_to_use.step.review_results.ranked_by_score
           </Text>
           <View style={{ width: SET_CARD_WIDTH - PADDING_SET_CARD * 2 }}>
             <StatGaugeContainer name="speedGround" value={4} isInSetCard={true} chosenValue={5} bonusEnabled={true}>
@@ -80,74 +100,75 @@ const helpSearchSetScreen = () => {
             </StatGaugeContainer>
           </View>
           <Text role="body" size="large" fontStyle="italic" namespace="helpSearch">
-            Tap a bar to view the gap with your criteria
+            how_to_use.step.review_results.tap_to_view_gap
           </Text>
         </HelpStepItem>
       </HelpSection>
 
-      <HelpSection title="Advanced options" namespace="helpSearch" contentType="step">
-        <HelpStepItem key={"A"} stepChar={"A"} title="Customize the display" namespace="helpSearch">
+      {/* Section 2 — Advanced options */}
+      <HelpSection title="advanced_options.title" namespace="helpSearch" contentType="step">
+        <HelpStepItem key="A" stepChar="A" title="advanced_options.step.customize_display" namespace="helpSearch">
           <HelpButtonDescription
             iconName="checkbox-multiple-marked"
             iconType={IconType.MaterialCommunityIcons}
-            description="Choose which stats to show in the results"
+            description="advanced_options.step.customize_display.choose_stats_to_show"
             namespace="helpSearch"
           />
         </HelpStepItem>
 
-        <HelpStepItem key={"B"} stepChar={"B"} title="Filters (option)" namespace="helpSearch">
+        <HelpStepItem key="B" stepChar="B" title="advanced_options.step.filters" namespace="helpSearch">
           <HelpButtonDescription
             iconName="pin"
             iconType={IconType.MaterialCommunityIcons}
-            description="Lock a character, kart, wheels, or glider"
+            description="advanced_options.step.filters.lock_item"
             namespace="helpSearch"
           />
         </HelpStepItem>
 
-        <HelpStepItem key={"C"} stepChar={"C"} title="Reuse a set's stats" namespace="helpSearch">
+        <HelpStepItem key="C" stepChar="C" title="advanced_options.step.reuse_stats" namespace="helpSearch">
           <HelpButtonDescription
             iconName="cards-outline"
             iconType={IconType.MaterialCommunityIcons}
-            description="Open your favorites collection"
+            description="advanced_options.step.reuse_stats.open_favorites"
             namespace="helpSearch"
           />
           <HelpButtonDescription
             iconName="download"
             iconType={IconType.MaterialCommunityIcons}
-            description="Import a set's stats to find variations"
+            description="advanced_options.step.reuse_stats.import_variations"
             namespace="helpSearch"
           />
         </HelpStepItem>
       </HelpSection>
 
-      <HelpSection title="Results management" namespace="helpSearch" contentType="button">
+      {/* Section 3 — Results management */}
+      <HelpSection title="results_management.title" namespace="helpSearch" contentType="button">
         <HelpButtonDescription
           iconName="heart-outline"
           iconType={IconType.MaterialCommunityIcons}
-          description="Save to favorites"
+          description="results_management.save_to_favorites"
           namespace="helpSearch"
         />
-
         <HelpButtonDescription
           iconName="compare"
           iconType={IconType.MaterialCommunityIcons}
-          description="Move to the set comparator"
+          description="results_management.move_to_comparator"
           namespace="helpSearch"
         />
-
         <HelpButtonDescription
           iconName="clipboard-outline"
           iconType={IconType.MaterialCommunityIcons}
-          description="Export the set"
+          description="results_management.export_set"
           namespace="helpSearch"
         />
       </HelpSection>
 
-      <HelpHighlightBox type="tips" title="Pro tip" namespace="helpSearch">
-        Start with 2–3 key stats for more relevant results
+      {/* Tips */}
+      <HelpHighlightBox type="tips" title="tips.title" namespace="helpSearch">
+        tips.start_with_key_stats
       </HelpHighlightBox>
     </HelpModal>
   );
 };
 
-export default memo(helpSearchSetScreen);
+export default memo(HelpSearchSetScreen);

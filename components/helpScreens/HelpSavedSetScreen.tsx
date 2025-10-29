@@ -8,87 +8,96 @@ import HelpSection from "../helpComponents/HelpSection";
 
 const HelpFavoritesScreen = () => {
   return (
-    <HelpModal title="Guide des Sets Favoris">
-      <Text role="body" size="large" weight="bold" namespace="helpSave">
-        Centralisez et organisez
-      </Text>
-      <Text role="body" size="large" textAlign="center" namespace="helpSave">
-        tous vos sets préférés pour y accéder rapidement.
+    <HelpModal title="guideBuildCollection">
+      {/* Intro */}
+      <Text role="body" size="large" textAlign="center" namespace="not">
+        <Text role="body" size="large" weight="bold" namespace="helpSave">
+          intro.centralize
+        </Text>
+        <Text role="body" size="large" textAlign="center" namespace="helpSave">
+          intro.description
+        </Text>
       </Text>
 
-      <HelpSection title="🎯 Comment gérer vos sets favoris" contentType="step">
-        <HelpStepItem key={1} stepChar={"1"} title="Enregister un nouveau set">
+      <HelpSection title="how_to_use_favorites.title" contentType="step" namespace="helpSave">
+        <HelpStepItem stepChar={"1"} title="how_to_use_favorites.step.save_set" namespace="helpSave">
           <HelpButtonDescription
             iconName="heart-outline"
             iconType={IconType.MaterialCommunityIcons}
-            description="Après avoir trouvé un set qui vous convient, enregistrez-le pour le retrouver ici"
+            description="how_to_use_favorites.step.save_set.label_description"
+            namespace="helpSave"
           />
         </HelpStepItem>
 
-        <HelpStepItem key={2} stepChar={"2"} title="Modifier les stats à afficher">
+        <HelpStepItem stepChar={"2"} title="how_to_use_favorites.step.choose_stats" namespace="helpSave">
           <HelpButtonDescription
             iconName="checkbox-multiple-marked"
             iconType={IconType.MaterialCommunityIcons}
-            description="Choisissez les statistiques à afficher"
+            description="how_to_use_favorites.step.choose_stats.label_description"
+            namespace="helpSave"
           />
         </HelpStepItem>
       </HelpSection>
 
-      <HelpSection title="⚙️ Options avancées" contentType="step">
-        <HelpStepItem key={"A"} stepChar={"A"} title="Importer un nouveau set">
+      <HelpSection title="advanced_options.title" contentType="step" namespace="helpSave">
+        <HelpStepItem stepChar={"A"} title="advanced_options.step.import_set" namespace="helpSave">
           <HelpButtonDescription
             iconName="paste"
             iconType={IconType.FontAwesome5}
-            description="Importer un set copié dans le presse-papier"
+            description="advanced_options.step.import_set.label_description"
+            namespace="helpSave"
           />
         </HelpStepItem>
 
-        <HelpStepItem key={"B"} stepChar={"B"} title="Trier les sets">
+        <HelpStepItem stepChar={"B"} title="advanced_options.step.sort_sets" namespace="helpSave">
           <HelpButtonDescription
             iconName="sort"
             iconType={IconType.MaterialCommunityIcons}
-            description="Ouvrez les différents tris possibles"
+            description="advanced_options.step.sort_sets.label_open_sorts"
+            namespace="helpSave"
           />
           <HelpButtonDescription
             iconName="sort-alphabetical-ascending"
             iconType={IconType.MaterialCommunityIcons}
-            description="Selectionner le tri qui vous convient"
+            description="advanced_options.step.sort_sets.label_select_sort"
+            namespace="helpSave"
           />
           <Text role="body" size="large" fontStyle="italic" namespace="helpSave">
-            Cliquez longuement sur un bouton de tri pour afficher son nom
+            advanced_options.step.sort_sets.label_long_press_hint
           </Text>
         </HelpStepItem>
       </HelpSection>
 
-      <HelpSection title="⚙️ Actions disponibles" contentType="button">
+      <HelpSection title="actions.title" contentType="button" namespace="helpSave">
         <HelpButtonDescription
           iconName="pencil"
           iconType={IconType.MaterialCommunityIcons}
-          description="Modifier les éléments du set (personnage, kart, roues, ailes)"
+          description="actions.label_edit_elements"
+          namespace="helpSave"
         />
-
         <HelpButtonDescription
           iconName="compare"
           iconType={IconType.MaterialCommunityIcons}
-          description="Ajouter au comparateur de sets"
+          description="actions.label_add_to_comparator"
+          namespace="helpSave"
         />
-
         <HelpButtonDescription
           iconName="magnify"
           iconType={IconType.MaterialCommunityIcons}
-          description="Copier les stats dans le Chercheur de builds et utiliser comme base de recherche"
+          description="actions.label_copy_to_finder"
+          namespace="helpSave"
         />
-
         <HelpButtonDescription
           iconName="clipboard-outline"
           iconType={IconType.MaterialCommunityIcons}
-          description="Exporter le set"
+          description="actions.label_export_set"
+          namespace="helpSave"
         />
-
         <HelpButtonDescription
           iconName="trash-can"
           iconType={IconType.MaterialCommunityIcons}
-          description="Supprimer le set de vos favoris"
+          description="actions.label_delete_set"
+          namespace="helpSave"
         />
       </HelpSection>
     </HelpModal>

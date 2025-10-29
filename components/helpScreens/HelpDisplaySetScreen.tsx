@@ -11,32 +11,38 @@ import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
 
 const HelpDisplaySetScreen = () => {
   return (
-    <HelpModal title="Guide du Comparateur de Sets">
-      <Text role="body" size="large" weight="bold" namespace="helpDisplay">
-        Comparez
-      </Text>
-      <Text role="body" size="large" textAlign="center" namespace="helpDisplay">
-        jusqu'à 12 sets simultanément pour identifier le set qui vous convient.
+    <HelpModal title="guideBuildComparator">
+      {/* Intro */}
+      <Text role="body" size="large" textAlign="center" namespace="not">
+        <Text role="body" size="large" weight="bold" namespace="helpDisplay">
+          intro.compare_sets
+        </Text>
+        <Text role="body" size="large" textAlign="center" namespace="helpDisplay">
+          intro.compare_description
+        </Text>
       </Text>
 
-      <HelpSection title="🎯 Comment utiliser le Comparateur" contentType="step">
-        <HelpStepItem key={1} stepChar={"1"} title="Ajoutez vos sets à comparer">
+      {/* Section 1 — How to use */}
+      <HelpSection title="how_to_use_comparator.title" namespace="helpDisplay" contentType="step">
+        <HelpStepItem key={1} stepChar="1" title="how_to_use_comparator.step.add_sets" namespace="helpDisplay">
           <HelpButtonDescription
             iconName="plus"
             iconType={IconType.MaterialCommunityIcons}
-            description="Créer un nouveau set"
+            description="how_to_use_comparator.step.add_sets.label_create_set"
+            namespace="helpDisplay"
           />
         </HelpStepItem>
 
-        <HelpStepItem key={2} stepChar={"2"} title="Modifiez les sets rapidement">
+        <HelpStepItem key={2} stepChar="2" title="how_to_use_comparator.step.edit_sets" namespace="helpDisplay">
           <HelpButtonDescription
             iconName="pencil"
             iconType={IconType.MaterialCommunityIcons}
-            description="Cliquez sur le crayon pour modifier les éléments d'un set"
+            description="how_to_use_comparator.step.edit_sets.label_edit_elements"
+            namespace="helpDisplay"
           />
         </HelpStepItem>
 
-        <HelpStepItem key={3} stepChar={"3"} title="Visualisez les différences">
+        <HelpStepItem key={3} stepChar="3" title="how_to_use_comparator.step.view_differences" namespace="helpDisplay">
           <StatGaugeCompare
             name="speedGround"
             setsIdAndValue={[
@@ -46,73 +52,90 @@ const HelpDisplaySetScreen = () => {
             ]}
           />
           <Text role="body" size="large" fontStyle="italic" namespace="helpDisplay">
-            Chaque couleur = un set différent. Appuyez sur une barre pour naviguer vers le set correspondant.
+            how_to_use_comparator.step.view_differences.label_each_color
+          </Text>
+          <Text role="body" size="large" fontStyle="italic" namespace="helpDisplay">
+            how_to_use_comparator.step.view_differences.label_tap_to_navigate
           </Text>
         </HelpStepItem>
 
-        <HelpStepItem key={4} stepChar={"4"} title="Modifier les stats à comparer">
+        <HelpStepItem key={4} stepChar="4" title="how_to_use_comparator.step.choose_stats" namespace="helpDisplay">
           <HelpButtonDescription
             iconName="plus"
             iconType={IconType.MaterialCommunityIcons}
-            description="Choisissez les statistiques à afficher"
+            description="how_to_use_comparator.step.choose_stats.label_select_stats"
+            namespace="helpDisplay"
             containerSize={PAGES_NAVIGATOR_DOTS_BUTTON_SIZE}
           />
         </HelpStepItem>
       </HelpSection>
 
-      <HelpSection title="⚙️ Options avancées" contentType="step">
-        <HelpStepItem key={"A"} stepChar={"A"} title="Importer un set depuis les favoris">
+      {/* Section 2 — Advanced options */}
+      <HelpSection title="advanced_options_comparator.title" namespace="helpDisplay" contentType="step">
+        <HelpStepItem
+          key="A"
+          stepChar="A"
+          title="advanced_options_comparator.step.import_from_favorites"
+          namespace="helpDisplay"
+        >
           <HelpButtonDescription
             iconName="cards-outline"
             iconType={IconType.MaterialCommunityIcons}
-            description="Ouvrez votre collection de sets favoris"
+            description="advanced_options_comparator.step.import_from_favorites.label_open_collection"
+            namespace="helpDisplay"
           />
           <HelpButtonDescription
             iconName="download"
             iconType={IconType.MaterialCommunityIcons}
-            description="Importer un set enregistré pour le comparer"
+            description="advanced_options_comparator.step.import_from_favorites.label_import_set"
+            namespace="helpDisplay"
           />
         </HelpStepItem>
 
-        <HelpStepItem key={"B"} stepChar={"B"} title="Trier les sets">
+        <HelpStepItem key="B" stepChar="B" title="advanced_options_comparator.step.sort_sets" namespace="helpDisplay">
           <HelpButtonDescription
             iconName="sort"
             iconType={IconType.MaterialCommunityIcons}
-            description="Ouvrez les différents tris possibles"
+            description="advanced_options_comparator.step.sort_sets.label_open_sorts"
+            namespace="helpDisplay"
           />
           <HelpButtonDescription
             iconName="sort-alphabetical-ascending"
             iconType={IconType.MaterialCommunityIcons}
-            description="Selectionner le tri qui vous convient"
+            description="advanced_options_comparator.step.sort_sets.label_select_sort"
+            namespace="helpDisplay"
           />
           <Text role="body" size="large" fontStyle="italic" namespace="helpDisplay">
-            Cliquez longuement sur un bouton de tri pour afficher son nom
+            advanced_options_comparator.step.sort_sets.label_long_press_hint
           </Text>
         </HelpStepItem>
       </HelpSection>
 
-      <HelpSection title="💾 Actions disponibles" contentType="button">
+      {/* Section 3 — Actions */}
+      <HelpSection title="actions_comparator.title" namespace="helpDisplay" contentType="button">
         <HelpButtonDescription
           iconName="heart-outline"
           iconType={IconType.MaterialCommunityIcons}
-          description="Sauvegarder dans vos favoris"
+          description="actions_comparator.label_save_to_favorites"
+          namespace="helpDisplay"
         />
-
         <HelpButtonDescription
           iconName="magnify"
           iconType={IconType.MaterialCommunityIcons}
-          description="Copier les stats dans le Chercheur de builds et utiliser comme base de recherche"
+          description="actions_comparator.label_copy_to_finder"
+          namespace="helpDisplay"
         />
-
         <HelpButtonDescription
           iconName="clipboard-outline"
           iconType={IconType.MaterialCommunityIcons}
-          description="Exporter le set"
+          description="actions_comparator.label_export_set"
+          namespace="helpDisplay"
         />
       </HelpSection>
 
-      <HelpHighlightBox type="tips" title="Conseil pratique">
-        Limitez-vous à 2-3 sets pour une comparaison claire, et concentrez-vous sur vos statistiques prioritaires.
+      {/* Tips */}
+      <HelpHighlightBox type="tips" title="tips_comparator.title" namespace="helpDisplay">
+        tips_comparator.limit_sets
       </HelpHighlightBox>
     </HelpModal>
   );

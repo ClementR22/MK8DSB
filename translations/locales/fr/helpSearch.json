@@ -1,40 +1,41 @@
 {
-  "Pick the stats you want": "Sélectionnez vos statistiques",
-  ", and let the algorithm find the perfect sets for you.": ", et laissez l'algorithme dénicher pour vous les meilleurs sets.",
+  "intro.pick_stats": "Sélectionnez vos statistiques",
+  "intro.find_sets": ", et laissez l'algorithme dénicher pour vous les meilleurs sets.",
 
-  "How to use the Build finder": "Comment utiliser\nle Chercheur de builds",
-  "Choose your criteria": "Choisissez vos critères",
-  "Add/remove a statistic": "Ajoutez/supprimez une statistique",
-  "Adjust values and tolerance": "Ajustez les valeurs et la tolérance",
+  "how_to_use.title": "Comment utiliser\nle Chercheur de builds",
 
-  "approximate value": "valeur approximative",
-  "exact value": "valeur exacte",
-  "minimum value": "valeur minimale",
+  "how_to_use.step.choose_criteria": "Choisissez vos critères",
+  "how_to_use.step.choose_criteria.add_stat": "Ajoutez/supprimez une statistique",
 
-  "Start the search": "Lancez la recherche",
+  "how_to_use.step.adjust_values": "Ajustez les valeurs et la tolérance",
 
-  "Review the results": "Analysez les résultats",
-  "Sets are ranked by matching score": "Les sets sont triés par score de correspondance",
-  "Tap a bar to view the gap with your criteria": "Touchez sur une barre pour voir l'écart avec votre critère",
-  "Advanced options": "Options avancées",
-  "Customize the display": "Personnalisez l'affichage",
-  "Choose which stats to show in the results": "Choisissez les stats visibles dans les résultats",
+  "value_type.approximate": "valeur approximative",
+  "value_type.exact": "valeur exacte",
+  "value_type.minimum": "valeur minimale",
 
-  "Filters (option)": "Filtres (option)",
-  "Lock a character, kart, wheels, or glider": "Imposez un personnage, un kart, des roues ou une aile",
+  "how_to_use.step.start_search": "Lancez la recherche",
 
-  "Reuse a set's stats": "Réutilisez les stats d'un set",
-  "Open your favorites collection": "Ouvrez votre collection de sets favoris",
+  "how_to_use.step.review_results": "Analysez les résultats",
+  "how_to_use.step.review_results.ranked_by_score": "Les sets sont triés par score de correspondance",
+  "how_to_use.step.review_results.tap_to_view_gap": "Touchez une barre pour voir l'écart avec votre critère",
 
-  "Import a set's stats to find variations": "Importez les stats d'un set pour chercher des variantes",
+  "advanced_options.title": "Options avancées",
 
-  "Results management": "Gestion des résultats",
-  "Save to favorites": "Ajoutez aux favoris",
+  "advanced_options.step.customize_display": "Personnalisez l'affichage",
+  "advanced_options.step.customize_display.choose_stats_to_show": "Choisissez les statistiques visibles dans les résultats",
 
-  "Move to the set comparator": "Déplacez vers le Comparateur de sets",
-  "Export the set": "Exportez le set",
+  "advanced_options.step.filters": "Filtres (option)",
+  "advanced_options.step.filters.lock_item": "Imposez un personnage, un kart, des roues ou une aile",
 
-  "Pro tip": "Conseil pratique",
+  "advanced_options.step.reuse_stats": "Réutilisez les statistiques d’un set",
+  "advanced_options.step.reuse_stats.open_favorites": "Ouvrez votre collection de sets favoris",
+  "advanced_options.step.reuse_stats.import_variations": "Importez les statistiques d’un set pour chercher des variantes",
 
-  "Start with 2–3 key stats for more relevant results": "Commencez avec 2-3 statistiques principales pour des résultats plus pertinents"
+  "results_management.title": "Gestion des résultats",
+  "results_management.save_to_favorites": "Ajoutez aux favoris",
+  "results_management.move_to_comparator": "Déplacez vers le comparateur de sets",
+  "results_management.export_set": "Exportez le set",
+
+  "tips.title": "Conseil pratique",
+  "tips.start_with_key_stats": "Commencez avec 2–3 statistiques principales pour des résultats plus pertinents"
 }

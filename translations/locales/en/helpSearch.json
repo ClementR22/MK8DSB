@@ -1,40 +1,41 @@
 {
-  "Pick the stats you want": "Pick the stats you want",
-  ", and let the algorithm find the perfect sets for you.": ", and let the algorithm find the perfect sets for you.",
+  "intro.pick_stats": "Pick the stats you want",
+  "intro.find_sets": ", and let the algorithm find the perfect sets for you.",
 
-  "How to use the Build finder": "How to use the Build finder",
-  "Choose your criteria": "Choose your criteria",
-  "Add/remove a statistic": "Add/remove a statistic",
-  "Adjust values and tolerance": "Adjust values and tolerance",
+  "how_to_use.title": "How to use the Build Finder",
 
-  "approximate value": "approximate value",
-  "exact value": "exact value",
-  "minimum value": "minimum value",
+  "how_to_use.step.choose_criteria": "Choose your criteria",
+  "how_to_use.step.choose_criteria.add_stat": "Add/remove a statistic",
 
-  "Start the search": "Start the search",
+  "how_to_use.step.adjust_values": "Adjust values and tolerance",
 
-  "Review the results": "Review the results",
-  "Sets are ranked by matching score": "Sets are ranked by matching score",
-  "Tap a bar to view the gap with your criteria": "Tap a bar to view the gap with your criteria",
-  "Advanced options": "Advanced options",
-  "Customize the display": "Customize the display",
-  "Choose which stats to show in the results": "Choose which stats to show in the results",
+  "value_type.approximate": "approximate value",
+  "value_type.exact": "exact value",
+  "value_type.minimum": "minimum value",
 
-  "Filters (option)": "Filters (option)",
-  "Lock a character, kart, wheels, or glider": "Lock a character, kart, wheels, or glider",
+  "how_to_use.step.start_search": "Start the search",
 
-  "Reuse a set's stats": "Reuse a set's stats",
-  "Open your favorites collection": "Open your favorites collection",
+  "how_to_use.step.review_results": "Review the results",
+  "how_to_use.step.review_results.ranked_by_score": "Sets are ranked by matching score",
+  "how_to_use.step.review_results.tap_to_view_gap": "Tap a bar to view the gap with your criteria",
 
-  "Import a set's stats to find variations": "Import a set's stats to find variations",
+  "advanced_options.title": "Advanced options",
 
-  "Results management": "Results management",
-  "Save to favorites": "Save to favorites",
+  "advanced_options.step.customize_display": "Customize the display",
+  "advanced_options.step.customize_display.choose_stats_to_show": "Choose which stats to show in the results",
 
-  "Move to the set comparator": "Move to the set comparator",
-  "Export the set": "Export the set",
+  "advanced_options.step.filters": "Filters (option)",
+  "advanced_options.step.filters.lock_item": "Lock a character, kart, wheels, or glider",
 
-  "Pro tip": "Pro tip",
+  "advanced_options.step.reuse_stats": "Reuse a set's stats",
+  "advanced_options.step.reuse_stats.open_favorites": "Open your favorites collection",
+  "advanced_options.step.reuse_stats.import_variations": "Import a set's stats to find variations",
 
-  "Start with 2–3 key stats for more relevant results": "Start with 2–3 key stats for more relevant results"
+  "results_management.title": "Results management",
+  "results_management.save_to_favorites": "Save to favorites",
+  "results_management.move_to_comparator": "Move to the set comparator",
+  "results_management.export_set": "Export the set",
+
+  "tips.title": "Pro tip",
+  "tips.start_with_key_stats": "Start with 2–3 key stats for more relevant results"
 }

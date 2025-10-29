@@ -8,7 +8,9 @@
 
   "loadASavedSet": "Load a saved set",
 
-  "guideSetBuilder": "Build finder guide",
+  "guideBuildFinder": "Build finder guide",
+  "guideBuildComparator": "Build comparator guide",
+  "guideBuildCollection": "Build collection guide",
 
   "numberOfSearchResults": "Number of search results",
   "defaultDisplayedStats": "Default displayed stats in sets",

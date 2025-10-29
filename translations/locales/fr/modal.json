@@ -8,7 +8,9 @@
 
   "loadASavedSet": "Charger un set enregistré",
 
-  "guideSetBuilder": "Guide du Chercheur de builds",
+  "guideBuildFinder": "Guide du Chercheur de builds",
+  "guideBuildComparator": "Guide du Comparateur de builds",
+  "guideBuildCollection": "Guide de la collection de builds",
 
   "numberOfSearchResults": "Nombre de résultats de recherche",
   "defaultDisplayedStats": "Stats affichées par défault dans les sets",
