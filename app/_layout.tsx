@@ -44,7 +44,7 @@ export default function TabLayout() {
     return () => listener.remove();
   }, [updateSystemTheme]);
 
-  // Effect to fetch saved sets on mount
+  // Effect to fetch saved builds on mount
   useEffect(() => {
     loadSetsSaved();
   }, [loadSetsSaved]);

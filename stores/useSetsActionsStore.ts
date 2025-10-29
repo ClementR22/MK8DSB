@@ -56,12 +56,12 @@ const useSetsActionsStore = create<SetsActionsStoreState>((set, get) => ({
       const { percentage, ...build_ } = useSetsListStore.getState().getSet(source, id);
       build = build_;
     }
-    // on change l'id car dans l'appli, il ne doit pas y avoir 2 sets avec le même id
+    // on change l'id car dans l'appli, il ne doit pas y avoir 2 builds avec le même id
     build.id = nanoid(8);
 
     const setsListTarget = useSetsListStore.getState().getSetsList(target).setsList;
 
-    // vérification de la limit de sets
+    // vérification de la limit de builds
     if (
       (target === "display" && setsListTarget.length >= MAX_NUMBER_SETS_DISPLAY) ||
       (target === "save" && setsListTarget.length >= MAX_NUMBER_SETS_SAVE)

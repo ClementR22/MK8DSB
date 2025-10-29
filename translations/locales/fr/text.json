@@ -13,10 +13,10 @@
   "resultStats": "affich.",
 
   "resetSettingsText": "Souhaitez-vous vraiment réinitialiser les préférences ?",
-  "deleteAllSetsInMemoryText": "Souhaitez-vous vraiment supprimer tous les sets enregistrés ?",
+  "deleteAllSetsInMemoryText": "Souhaitez-vous vraiment supprimer tous les buildsds enregistrés ?",
   "appliedOnMountForSetBuilderAndComparator": "Appliquées au démarrage pour le Chercheur de builds et le Comparateur",
 
-  "setFound": "Set trouvé",
+  "buildFound": "Build trouvé",
 
   "warning": "Attention"
 }

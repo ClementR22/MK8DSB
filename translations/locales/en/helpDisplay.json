@@ -1,13 +1,13 @@
 {
-  "intro.compare_sets": "Compare up to 12 sets ",
+  "intro.compare_sets": "Compare up to 12 builds ",
   "intro.compare_description": "at once to find the one that suits you best.",
 
-  "how_to_use_comparator.title": "How to use the Set Comparator",
+  "how_to_use_comparator.title": "How to use the Build comparator",
 
-  "how_to_use_comparator.step.add_sets": "Add your sets to compare",
+  "how_to_use_comparator.step.add_sets": "Add your builds to compare",
   "how_to_use_comparator.step.add_sets.label_create_set": "Create a new build",
 
-  "how_to_use_comparator.step.edit_sets": "Edit sets quickly",
+  "how_to_use_comparator.step.edit_sets": "Edit builds quickly",
   "how_to_use_comparator.step.edit_sets.label_edit_elements": "Tap the pencil to edit a set’s elements",
 
   "how_to_use_comparator.step.view_differences": "View the differences",
@@ -23,7 +23,7 @@
   "advanced_options_comparator.step.import_from_favorites.label_open_collection": "Open your favorites collection",
   "advanced_options_comparator.step.import_from_favorites.label_import_set": "Import a saved build to compare",
 
-  "advanced_options_comparator.step.sort_sets": "Sort the sets",
+  "advanced_options_comparator.step.sort_sets": "Sort the builds",
   "advanced_options_comparator.step.sort_sets.label_open_sorts": "Open available sort options",
   "advanced_options_comparator.step.sort_sets.label_select_sort": "Select the sorting mode that fits you best",
   "advanced_options_comparator.step.sort_sets.label_long_press_hint": "Long-press a sort button to view its name",
@@ -34,5 +34,5 @@
   "actions_comparator.label_export_set": "Export the build",
 
   "tips_comparator.title": "Pro tip",
-  "tips_comparator.limit_sets": "Limit to 2–3 sets for clearer comparison and focus on your key stats"
+  "tips_comparator.limit_sets": "Limit to 2–3 builds for clearer comparison and focus on your key stats"
 }

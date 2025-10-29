@@ -122,7 +122,7 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
     }
 
     const newIndex = get().setKeyInDisplay;
-    const newName = get().generateUniqueName("Set", newIndex, "display");
+    const newName = get().generateUniqueName("Build", newIndex, "display");
 
     set((state) => {
       return {
@@ -135,7 +135,7 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
   removeSet: (id, screenName) => {
     const { setsList, setsListName } = get().getSetsList(screenName);
     const newList = setsList.filter((build) => build.id !== id);
-    build({ [setsListName]: newList });
+    set({ [setsListName]: newList });
   },
 
   checkNameUnique: (setName, screenName) => {

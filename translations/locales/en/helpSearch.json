@@ -1,6 +1,6 @@
 {
   "intro.pick_stats": "Pick the stats you want",
-  "intro.find_sets": ", and let the algorithm find the perfect sets for you.",
+  "intro.find_sets": ", and let the algorithm find the perfect builds for you.",
 
   "how_to_use.title": "How to use the Build Finder",
 
@@ -16,7 +16,7 @@
   "how_to_use.step.start_search": "Start the search",
 
   "how_to_use.step.review_results": "Review the results",
-  "how_to_use.step.review_results.ranked_by_score": "Sets are ranked by matching score",
+  "how_to_use.step.review_results.ranked_by_score": "Builds are ranked by matching score",
   "how_to_use.step.review_results.tap_to_view_gap": "Tap a bar to view the gap with your criteria",
 
   "advanced_options.title": "Advanced options",

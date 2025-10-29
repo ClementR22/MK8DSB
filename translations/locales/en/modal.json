@@ -2,8 +2,8 @@
   "filters": "Filters",
   "selectASet": "Select a build",
 
-  "desiredStatsAndStatsInSets": "Desired stats and displayed stats in sets",
-  "displayedStatsInSets": "Displayed stats in sets",
+  "desiredStatsAndStatsInSets": "Desired stats and displayed stats in builds",
+  "displayedStatsInSets": "Displayed stats in builds",
   "displayedStats": "Displayed stats",
 
   "loadASavedSet": "Load a saved build",
@@ -13,6 +13,6 @@
   "guideBuildCollection": "Build collection guide",
 
   "numberOfSearchResults": "Number of search results",
-  "defaultDisplayedStats": "Default displayed stats in sets",
+  "defaultDisplayedStats": "Default displayed stats in builds",
   "licenses": "Licenses"
 }

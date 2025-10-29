@@ -45,6 +45,7 @@ const BodytypesSelector: React.FC<BodytypesSelectorProps> = ({ selectedBodytypes
       activeStyle={activeStyle}
       buttonStyle={styles.button}
       containerStyle={styles.container}
+      namespace="categories"
     />
   );
 };

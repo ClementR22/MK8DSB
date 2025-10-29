@@ -3,8 +3,8 @@
 
   "developSliders": "Développer les curseurs",
   "reduceSliders": "Reduire les curseurs",
-  "developSets": "Développer les sets",
-  "reduceSets": "Réduire les sets",
+  "developSets": "Développer les builds",
+  "reduceSets": "Réduire les builds",
 
   "loadStatsOfASet": "Charger les stats d'un build",
   "loadASet": "Charger un build",
@@ -17,7 +17,7 @@
   "chooseFilters": "Choisissez des filtres",
   "filterBodytypes": "Filtrer des types de carroseries",
 
-  "sortSets": "Trier les sets",
+  "sortSets": "Trier les builds",
   "sortElements": "Trier les éléments",
 
   "edit": "Editer",

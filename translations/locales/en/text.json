@@ -13,10 +13,10 @@
   "resultStats": "disp.",
 
   "resetSettingsText": "Do you really want to reset settings?",
-  "deleteAllSetsInMemoryText": "Do you really want to delete all saved sets?",
+  "deleteAllSetsInMemoryText": "Do you really want to delete all saved builds?",
   "appliedOnMountForSetBuilderAndComparator": "Applied on mount for Build finder and Comparator",
 
-  "setFound": "Set found",
+  "buildFound": "Build found",
 
   "warning": "Warning"
 }

@@ -8,8 +8,8 @@ import { TFunction } from "i18next";
 export interface SortableElement {
   id: number;
   name: string;
-  classIds?: number[]; // on le conserve pour le tri des sets
-  stats?: number[]; // on le conserve pour le tri des sets
+  classIds?: number[]; // on le conserve pour le tri des builds
+  stats?: number[]; // on le conserve pour le tri des builds
   speedGround?: number;
   speedAntiGravity?: number;
   speedWater?: number;

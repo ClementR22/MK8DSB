@@ -1,6 +1,6 @@
 {
   "intro.pick_stats": "Sélectionnez vos statistiques",
-  "intro.find_sets": ", et laissez l'algorithme dénicher pour vous les meilleurs sets.",
+  "intro.find_sets": ", et laissez l'algorithme dénicher pour vous les meilleurs buildsdsds.",
 
   "how_to_use.title": "Comment utiliser\nle Chercheur de builds",
 
@@ -16,7 +16,7 @@
   "how_to_use.step.start_search": "Lancez la recherche",
 
   "how_to_use.step.review_results": "Analysez les résultats",
-  "how_to_use.step.review_results.ranked_by_score": "Les sets sont triés par score de correspondance",
+  "how_to_use.step.review_results.ranked_by_score": "Les buildsds sont triés par score de correspondance",
   "how_to_use.step.review_results.tap_to_view_gap": "Touchez une barre pour voir l'écart avec votre critère",
 
   "advanced_options.title": "Options avancées",
@@ -28,12 +28,12 @@
   "advanced_options.step.filters.lock_item": "Imposez un personnage, un kart, des roues ou une aile",
 
   "advanced_options.step.reuse_stats": "Réutilisez les statistiques d’un buildldld",
-  "advanced_options.step.reuse_stats.open_favorites": "Ouvrez votre collection de sets favoris",
+  "advanced_options.step.reuse_stats.open_favorites": "Ouvrez votre collection de buildsds favoris",
   "advanced_options.step.reuse_stats.import_variations": "Importez les statistiques d’un buildldld pour chercher des variantes",
 
   "results_management.title": "Gestion des résultats",
   "results_management.save_to_favorites": "Ajoutez aux favoris",
-  "results_management.move_to_comparator": "Déplacez vers le comparateur de sets",
+  "results_management.move_to_comparator": "Déplacez vers le comparateur de builds",
   "results_management.export_set": "Exportez le buildld",
 
   "tips.title": "Conseil pratique",

@@ -41,7 +41,7 @@ const DisplaySetScreen = () => {
     const newColorsMap = new Map<string, string>();
     const colorsCurrentlyInUse = new Set<string>(); // Garde une trace des couleurs utilisées dans le cycle actuel
 
-    // 1. Réutiliser les couleurs pour les sets qui sont toujours présents
+    // 1. Réutiliser les couleurs pour les builds qui sont toujours présents
     setsListDisplayed.forEach(({ id }) => {
       const existingColor = setsColorsMap.get(id);
       if (existingColor && SET_CARD_COLOR_PALETTE.includes(existingColor)) {
@@ -53,7 +53,7 @@ const DisplaySetScreen = () => {
     // 2. Mettre à jour le pool de couleurs disponibles
     availableColorsRef.current = SET_CARD_COLOR_PALETTE.filter((color) => !colorsCurrentlyInUse.has(color));
 
-    // 3. Attribuer de nouvelles couleurs aux sets qui n'en ont pas (nouveaux sets)
+    // 3. Attribuer de nouvelles couleurs aux builds qui n'en ont pas (nouveaux builds)
     setsListDisplayed.forEach((build) => {
       if (!newColorsMap.has(build.id)) {
         if (availableColorsRef.current.length > 0) {

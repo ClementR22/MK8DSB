@@ -2,8 +2,8 @@
   "filters": "Filtres",
   "selectASet": "Selectionner un buildldld",
 
-  "desiredStatsAndStatsInSets": "Stats desirées et stats affichées dans les sets",
-  "displayedStatsInSets": "Stats affichées dans les sets",
+  "desiredStatsAndStatsInSets": "Stats desirées et stats affichées dans les builds",
+  "displayedStatsInSets": "Stats affichées dans les builds",
   "displayedStats": "Stats affichées",
 
   "loadASavedSet": "Charger un buildld enregistré",
@@ -13,6 +13,6 @@
   "guideBuildCollection": "Guide de la collection de builds",
 
   "numberOfSearchResults": "Nombre de résultats de recherche",
-  "defaultDisplayedStats": "Stats affichées par défault dans les sets",
+  "defaultDisplayedStats": "Stats affichées par défault dans les builds",
   "licenses": "Licences"
 }

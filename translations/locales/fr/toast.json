@@ -8,10 +8,10 @@
   "thisSetDoesNotExist": "ce build n'existe pas",
   "unknownError": "erreur inconnue",
 
-  "setLimitReached": "limite de sets atteinte",
+  "setLimitReached": "limite de buildsds atteinte",
 
   "theSettingsHaveBeenReset": "les préférences ont été réinitialisées",
-  "allSavedSetsHaveBeenDeleted": "tous les sets sauvegardés ont été supprimés !",
+  "allSavedSetsHaveBeenDeleted": "tous les builds sauvegardés ont été supprimés !",
 
   "setRenamed": "build renommé",
   "nameAlreadyExists": "ce nom existe déjà",
@@ -23,6 +23,6 @@
   "setCopiedInClipboard": "build copié dans le presse-papier",
   "setImported": "build importé",
   "statsImported": "stats du build importées",
-  "setLimitReachedInThisScreen": "limite de sets atteinte",
+  "setLimitReachedInThisScreen": "limite de builds atteinte",
   "cannotGenerateUniqueName": "impossible de générer un nouveau nom"
 }

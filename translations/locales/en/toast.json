@@ -11,7 +11,7 @@
   "setLimitReached": "build limit reached",
 
   "theSettingsHaveBeenReset": "the settings have been reset",
-  "allSavedSetsHaveBeenDeleted": "all saved sets have been deleted",
+  "allSavedSetsHaveBeenDeleted": "all saved builds have been deleted",
 
   "setRenamed": "build renamed",
   "nameAlreadyExists": "name already exists",
