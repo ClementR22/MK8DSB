@@ -46,7 +46,7 @@ const StatGaugeRelativeBar = ({ value, maxValue = 6 }: StatGaugeRelativeBarProps
       >
         {/* Valeur à l'intérieur de la barre */}
         {showValueInside && (
-          <Text role="label" size="large" style={value > 0 ? { right: -5 } : { left: 5 }}>
+          <Text role="label" size="large" style={value > 0 ? { right: -5 } : { left: 5 }} namespace="not">
             {value > 0 ? `+${value}` : value}
           </Text>
         )}
@@ -64,6 +64,7 @@ const StatGaugeRelativeBar = ({ value, maxValue = 6 }: StatGaugeRelativeBarProps
               ? { position: "absolute", right: gaugeWidth / 2 + fillWidth + 4 }
               : { left: gaugeWidth / 2 + fillWidth + 6 }
           }
+          namespace="not"
         >
           {value > 0 ? `+${value}` : value}
         </Text>
