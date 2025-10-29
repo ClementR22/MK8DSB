@@ -32,20 +32,19 @@ interface SetCardsContainerProps {
 export interface SetCardsContainerHandles {
   scrollToStart: () => void;
   scrollToEnd: () => void;
-  scrollToSetCard: (id: string) => void; // Scroll par ID (ou nom de set)
+  scrollToSetCard: (id: string) => void; // Scroll par ID
 }
 
 const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainerProps>(
   ({ setsToShow, isInLoadSetModal = false, screenNameFromProps, hideRemoveSet }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
-    // Utilisez set.name comme clé pour la map des layouts, cohérent avec setsColorsMap
     const setCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
 
     // La logique d'availableColorsRef et son useEffect ont été déplacés dans DisplaySetScreen
 
     const onSetCardLayout = useCallback((id: string, event: LayoutChangeEvent) => {
       const { x, width } = event.nativeEvent.layout;
-      setCardLayouts.current.set(id, { x, width }); // Utilisez l'ID/Nom du set comme clé
+      setCardLayouts.current.set(id, { x, width }); // Utilisez l'ID build comme clé
     }, []);
 
     const scrollToSetCardHandler = useCallback(
@@ -106,19 +105,19 @@ const SetCardsContainer = forwardRef<SetCardsContainerHandles, SetCardsContainer
         return null;
       }
 
-      return setsToShow.map((set: SetWithColor) => (
+      return setsToShow.map((build: SetWithColor) => (
         <SetCard
-          key={set.id}
-          name={set.name}
-          classIds={set.classIds}
-          stats={set.stats}
-          id={set.id}
+          key={build.id}
+          name={build.name}
+          classIds={build.classIds}
+          stats={build.stats}
+          id={build.id}
           isInLoadSetModal={isInLoadSetModal}
           screenNameFromProps={screenNameFromProps}
           hideRemoveSet={hideRemoveSet}
-          setToShowPercentage={(set as any).percentage ?? undefined}
-          onLayout={(event) => onSetCardLayout(set.id, event)}
-          borderColor={set.color}
+          setToShowPercentage={(build as any).percentage ?? undefined}
+          onLayout={(event) => onSetCardLayout(build.id, event)}
+          borderColor={build.color}
         />
       ));
     }, [setsToShow, isInLoadSetModal, screenNameFromProps, hideRemoveSet, onSetCardLayout]);

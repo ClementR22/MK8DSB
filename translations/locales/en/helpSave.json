@@ -3,23 +3,23 @@
   "intro.description": "all your favorite sets for quick access.",
 
   "how_to_use_favorites.title": "How to manage your favorite sets",
-  "how_to_use_favorites.step.save_set": "Save a new set",
-  "how_to_use_favorites.step.save_set.label_description": "After finding a set you like, save it here to access it easily later",
+  "how_to_use_favorites.step.save_set": "Save a new build",
+  "how_to_use_favorites.step.save_set.label_description": "After finding a build you like, save it here to access it easily later",
   "how_to_use_favorites.step.choose_stats": "Edit displayed stats",
   "how_to_use_favorites.step.choose_stats.label_description": "Choose which stats to display",
 
   "advanced_options.title": "Advanced options",
-  "advanced_options.step.import_set": "Import a new set",
-  "advanced_options.step.import_set.label_description": "Import a set copied to your clipboard",
+  "advanced_options.step.import_set": "Import a new build",
+  "advanced_options.step.import_set.label_description": "Import a build copied to your clipboard",
   "advanced_options.step.sort_sets": "Sort sets",
   "advanced_options.step.sort_sets.label_open_sorts": "Open the available sorting options",
   "advanced_options.step.sort_sets.label_select_sort": "Select the sorting method that suits you",
   "advanced_options.step.sort_sets.label_long_press_hint": "Long press a sorting button to display its name",
 
   "actions.title": "Available actions",
-  "actions.label_edit_elements": "Edit set elements (character, kart, wheels, glider)",
-  "actions.label_add_to_comparator": "Add to set comparator",
+  "actions.label_edit_elements": "Edit build elements (character, kart, wheels, glider)",
+  "actions.label_add_to_comparator": "Add to build comparator",
   "actions.label_copy_to_finder": "Copy stats to the Build Finder and use as a base",
-  "actions.label_export_set": "Export the set",
-  "actions.label_delete_set": "Remove the set from your favorites"
+  "actions.label_export_set": "Export the build",
+  "actions.label_delete_set": "Remove the build from your favorites"
 }

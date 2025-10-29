@@ -6,11 +6,11 @@
   "developSets": "Développer les sets",
   "reduceSets": "Réduire les sets",
 
-  "loadStatsOfASet": "Charger les stats d'un set",
-  "loadASet": "Charger un set",
-  "importACopiedSet": "Importer un set copié",
+  "loadStatsOfASet": "Charger les stats d'un build",
+  "loadASet": "Charger un build",
+  "importACopiedSet": "Importer un build copié",
 
-  "addASet": "Ajouter un set",
+  "addASet": "Ajouter un build",
 
   "changeCondition": "Fixer une condition",
 
@@ -23,9 +23,9 @@
   "edit": "Editer",
   "save": "Enregistrer",
   "loadTheStats": "Charger les stats",
-  "loadTheSet": "Charger le set",
+  "loadTheSet": "Charger le build",
   "loadTheStatsToSearchScreen": "Charger les stats dans l'écran de recherche",
-  "loadTheSetToDisplayScreen": "Charger le set dans l'écran de comparaison",
+  "loadTheSetToDisplayScreen": "Charger le build dans l'écran de comparaison",
   "copy": "Copier",
   "moreActions": "Plus d'actions"
 }

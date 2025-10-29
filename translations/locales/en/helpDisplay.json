@@ -5,23 +5,23 @@
   "how_to_use_comparator.title": "How to use the Set Comparator",
 
   "how_to_use_comparator.step.add_sets": "Add your sets to compare",
-  "how_to_use_comparator.step.add_sets.label_create_set": "Create a new set",
+  "how_to_use_comparator.step.add_sets.label_create_set": "Create a new build",
 
   "how_to_use_comparator.step.edit_sets": "Edit sets quickly",
   "how_to_use_comparator.step.edit_sets.label_edit_elements": "Tap the pencil to edit a set’s elements",
 
   "how_to_use_comparator.step.view_differences": "View the differences",
-  "how_to_use_comparator.step.view_differences.label_each_color": "Each color = a different set",
-  "how_to_use_comparator.step.view_differences.label_tap_to_navigate": "Tap a bar to jump to the corresponding set",
+  "how_to_use_comparator.step.view_differences.label_each_color": "Each color = a different build",
+  "how_to_use_comparator.step.view_differences.label_tap_to_navigate": "Tap a bar to jump to the corresponding build",
 
   "how_to_use_comparator.step.choose_stats": "Edit the compared stats",
   "how_to_use_comparator.step.choose_stats.label_select_stats": "Choose which stats to display",
 
   "advanced_options_comparator.title": "Advanced options",
 
-  "advanced_options_comparator.step.import_from_favorites": "Import a set from favorites",
+  "advanced_options_comparator.step.import_from_favorites": "Import a build from favorites",
   "advanced_options_comparator.step.import_from_favorites.label_open_collection": "Open your favorites collection",
-  "advanced_options_comparator.step.import_from_favorites.label_import_set": "Import a saved set to compare",
+  "advanced_options_comparator.step.import_from_favorites.label_import_set": "Import a saved build to compare",
 
   "advanced_options_comparator.step.sort_sets": "Sort the sets",
   "advanced_options_comparator.step.sort_sets.label_open_sorts": "Open available sort options",
@@ -31,7 +31,7 @@
   "actions_comparator.title": "Available actions",
   "actions_comparator.label_save_to_favorites": "Save to favorites",
   "actions_comparator.label_copy_to_finder": "Copy stats to the Build Finder and use as a base",
-  "actions_comparator.label_export_set": "Export the set",
+  "actions_comparator.label_export_set": "Export the build",
 
   "tips_comparator.title": "Pro tip",
   "tips_comparator.limit_sets": "Limit to 2–3 sets for clearer comparison and focus on your key stats"

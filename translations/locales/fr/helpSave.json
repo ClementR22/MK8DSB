@@ -3,23 +3,23 @@
   "intro.description": "tous vos sets préférés pour y accéder rapidement.",
 
   "how_to_use_favorites.title": "Comment gérer vos sets favoris",
-  "how_to_use_favorites.step.save_set": "Enregistrer un nouveau set",
-  "how_to_use_favorites.step.save_set.label_description": "Après avoir trouvé un set qui vous convient, enregistrez-le pour le retrouver ici",
+  "how_to_use_favorites.step.save_set": "Enregistrer un nouveau buildld",
+  "how_to_use_favorites.step.save_set.label_description": "Après avoir trouvé un buildld qui vous convient, enregistrez-le pour le retrouver ici",
   "how_to_use_favorites.step.choose_stats": "Modifier les stats à afficher",
   "how_to_use_favorites.step.choose_stats.label_description": "Choisissez les statistiques à afficher",
 
   "advanced_options.title": "Options avancées",
-  "advanced_options.step.import_set": "Importer un nouveau set",
-  "advanced_options.step.import_set.label_description": "Importer un set copié dans le presse-papier",
+  "advanced_options.step.import_set": "Importer un nouveau build",
+  "advanced_options.step.import_set.label_description": "Importer un build copié dans le presse-papier",
   "advanced_options.step.sort_sets": "Trier les sets",
   "advanced_options.step.sort_sets.label_open_sorts": "Ouvrez les différents tris possibles",
   "advanced_options.step.sort_sets.label_select_sort": "Sélectionnez le tri qui vous convient",
   "advanced_options.step.sort_sets.label_long_press_hint": "Cliquez longuement sur un bouton de tri pour afficher son nom",
 
   "actions.title": "Actions disponibles",
-  "actions.label_edit_elements": "Modifier les éléments du set (personnage, kart, roues, ailes)",
+  "actions.label_edit_elements": "Modifier les éléments du build (personnage, kart, roues, ailes)",
   "actions.label_add_to_comparator": "Ajouter au comparateur de sets",
   "actions.label_copy_to_finder": "Copier les stats dans le Chercheur de builds et utiliser comme base de recherche",
-  "actions.label_export_set": "Exporter le set",
-  "actions.label_delete_set": "Supprimer le set de vos favoris"
+  "actions.label_export_set": "Exporter le build",
+  "actions.label_delete_set": "Supprimer le build de vos favoris"
 }

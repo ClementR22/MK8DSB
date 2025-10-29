@@ -31,7 +31,7 @@ const DisplaySetScreen = () => {
   const isSetCardsCollapsed = useGeneralStore((state) => state.isSetCardsCollapsed);
   const toggleIsSetCardsCollapsed = useGeneralStore((state) => state.toggleIsSetCardsCollapsed);
 
-  // État local pour stocker l'association nom du set -> Couleur
+  // État local pour stocker l'association nom du build -> Couleur
   const [setsColorsMap, setSetsColorsMap] = useState<Map<string, string>>(() => new Map());
   // Ref pour suivre les couleurs disponibles dans la palette (ne déclenche pas de re-render)
   const availableColorsRef = useRef<string[]>([...SET_CARD_COLOR_PALETTE]);
@@ -43,7 +43,6 @@ const DisplaySetScreen = () => {
 
     // 1. Réutiliser les couleurs pour les sets qui sont toujours présents
     setsListDisplayed.forEach(({ id }) => {
-      // Utilisez set.name comme clé, comme dans votre code, mais l'ID est recommandé si le nom n'est pas unique.
       const existingColor = setsColorsMap.get(id);
       if (existingColor && SET_CARD_COLOR_PALETTE.includes(existingColor)) {
         newColorsMap.set(id, existingColor);
@@ -55,16 +54,16 @@ const DisplaySetScreen = () => {
     availableColorsRef.current = SET_CARD_COLOR_PALETTE.filter((color) => !colorsCurrentlyInUse.has(color));
 
     // 3. Attribuer de nouvelles couleurs aux sets qui n'en ont pas (nouveaux sets)
-    setsListDisplayed.forEach((set) => {
-      if (!newColorsMap.has(set.id)) {
+    setsListDisplayed.forEach((build) => {
+      if (!newColorsMap.has(build.id)) {
         if (availableColorsRef.current.length > 0) {
           const assignedColor = availableColorsRef.current.shift(); // Prend la première couleur disponible
           if (assignedColor) {
-            newColorsMap.set(set.id, assignedColor);
+            newColorsMap.set(build.id, assignedColor);
             colorsCurrentlyInUse.add(assignedColor); // Marque comme utilisée
           }
         } else {
-          console.warn(`Plus de couleurs uniques disponibles pour le set ${set.name}`);
+          console.warn(`Plus de couleurs uniques disponibles pour le build ${build.name}`);
         }
       }
     });
@@ -80,9 +79,9 @@ const DisplaySetScreen = () => {
 
   const setsWithColor = useMemo(
     () =>
-      setsListDisplayed.map((set) => ({
-        ...set,
-        color: setsColorsMap?.get(set.id) || theme.surface_variant || theme.surface_container_high,
+      setsListDisplayed.map((build) => ({
+        ...build,
+        color: setsColorsMap?.get(build.id) || theme.surface_variant || theme.surface_container_high,
       })),
     [setsListDisplayed, setsColorsMap, theme.surface_variant, theme.surface_container_high]
   );

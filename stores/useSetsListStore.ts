@@ -134,15 +134,15 @@ const useSetsListStore = create<SetsListStoreState>((set, get) => ({
 
   removeSet: (id, screenName) => {
     const { setsList, setsListName } = get().getSetsList(screenName);
-    const newList = setsList.filter((set) => set.id !== id);
-    set({ [setsListName]: newList });
+    const newList = setsList.filter((build) => build.id !== id);
+    build({ [setsListName]: newList });
   },
 
   checkNameUnique: (setName, screenName) => {
     // ne lance pas d'error
     const { setsList } = get().getSetsList(screenName);
 
-    const isNameUnique = !setsList.some((set) => set.name === setName);
+    const isNameUnique = !setsList.some((build) => build.name === setName);
     return isNameUnique;
   },
 

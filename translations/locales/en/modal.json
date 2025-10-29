@@ -1,12 +1,12 @@
 {
   "filters": "Filters",
-  "selectASet": "Select a set",
+  "selectASet": "Select a build",
 
   "desiredStatsAndStatsInSets": "Desired stats and displayed stats in sets",
   "displayedStatsInSets": "Displayed stats in sets",
   "displayedStats": "Displayed stats",
 
-  "loadASavedSet": "Load a saved set",
+  "loadASavedSet": "Load a saved build",
 
   "guideBuildFinder": "Build finder guide",
   "guideBuildComparator": "Build comparator guide",

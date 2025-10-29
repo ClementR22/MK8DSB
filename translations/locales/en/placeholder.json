@@ -1,8 +1,8 @@
 {
-  "searchEmpty": "Search your dream set",
-  "searchNotFound": "No set found with theses stats",
+  "searchEmpty": "Search your dream build",
+  "searchNotFound": "No build found with theses stats",
   "savedEmpty": "Find here your favorite sets",
-  "NoSetFound...": "No set found...",
+  "NoSetFound...": "No build found...",
   "yourFavoriteSetsWillAppearHere": "Your favorite sets will appear here",
   "none": "None"
 }

@@ -47,11 +47,11 @@ const useSetsPersistenceStore = create<SetsPersistenceStoreState>((set, get) => 
         try {
           return value ? JSON.parse(value) : null;
         } catch (e) {
-          console.error("Error parsing saved set:", e);
+          console.error("Error parsing saved build:", e);
           return null;
         }
       })
-      .filter((set) => set !== null) as SetProps[];
+      .filter((build) => build !== null) as SetProps[];
 
     return setsDataParsed;
   },
@@ -64,7 +64,7 @@ const useSetsPersistenceStore = create<SetsPersistenceStoreState>((set, get) => 
     if (keyToRemove) {
       await AsyncStorage.removeItem(keyToRemove);
     } else {
-      console.warn(`Attempted to remove set ${keyToRemove}, but no key found.`);
+      console.warn(`Attempted to remove build ${keyToRemove}, but no key found.`);
     }
   },
 

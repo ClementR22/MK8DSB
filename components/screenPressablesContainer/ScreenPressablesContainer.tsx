@@ -74,7 +74,7 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
             <SortModeSelector
               sortNumber={sortNumber}
               setSortNumber={setSortNumber}
-              sortCase={isInGalleryScreen ? "element" : "set"}
+              sortCase={isInGalleryScreen ? "element" : "build"}
               containerStyle={styles.sortModeSelectorWrapper}
             />
           </View>

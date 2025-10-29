@@ -16,8 +16,8 @@
   "remove": "Remove",
   "save": "Save",
   "loadTheStats": "Load the stats",
-  "loadTheSet": "Load the set",
+  "loadTheSet": "Load the build",
   "loadTheStatsToSearchScreen": "Load the stats to search screen",
-  "loadTheSetToDisplayScreen": "Load the set to compare screen",
+  "loadTheSetToDisplayScreen": "Load the build to compare screen",
   "copy": "Copy"
 }

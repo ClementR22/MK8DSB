@@ -18,7 +18,7 @@ const StatGaugeSetCardBar: React.FC<StatGaugeSetCardBarProps> = ({
 }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const { getWidth, handleGaugeLayout } = useGaugeMetrics("stat-gauge-set-card");
+  const { getWidth, handleGaugeLayout } = useGaugeMetrics("stat-gauge-build-card");
 
   const stylesDynamic = useStatGaugeStyles();
 

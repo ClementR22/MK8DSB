@@ -33,7 +33,7 @@ const NEEDS_SCROLL = CONTENT_WIDTH > vw - 2 * MARGIN_CONTAINER_LOWEST;
 interface SortModeSelectorProps {
   sortNumber: number;
   setSortNumber: (number: number) => void;
-  sortCase: "element" | "set";
+  sortCase: "element" | "build";
   containerStyle?: ViewStyle;
 }
 

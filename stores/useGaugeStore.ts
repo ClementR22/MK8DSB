@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { LayoutChangeEvent } from "react-native";
 import { MAX_STAT_VALUE } from "@/constants/constants";
 
-export type ContextId = "stat-gauge-compact" | "stat-gauge-set-card" | "stat-gauge-gallery";
+export type ContextId = "stat-gauge-compact" | "stat-gauge-build-card" | "stat-gauge-gallery";
 
 interface GaugeStore {
   gaugeWidths: Record<ContextId, number>;
@@ -14,7 +14,7 @@ interface GaugeStore {
 export const useGaugeStore = create<GaugeStore>((set, get) => ({
   gaugeWidths: {
     "stat-gauge-compact": 0,
-    "stat-gauge-set-card": 0,
+    "stat-gauge-build-card": 0,
     "stat-gauge-gallery": 0,
   },
 

@@ -24,10 +24,10 @@ const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({
       .filter((stat) => stat.checked)
       .map((stat) => ({
         name: stat.name,
-        setsIdAndValueWithColor: setsListDisplayed.map((set) => ({
-          id: set.id,
-          value: set.stats[statIndexMap.get(stat.name)!],
-          color: setsColorsMap.get(set.id) || theme.surface_variant,
+        setsIdAndValueWithColor: setsListDisplayed.map((build) => ({
+          id: build.id,
+          value: build.stats[statIndexMap.get(stat.name)!],
+          color: setsColorsMap.get(build.id) || theme.surface_variant,
         })),
       }));
   }, [resultStats, setsListDisplayed, setsColorsMap, theme.surface_variant]);

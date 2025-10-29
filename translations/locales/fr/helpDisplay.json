@@ -5,23 +5,23 @@
   "how_to_use_comparator.title": "Comment utiliser le Comparateur de Sets",
 
   "how_to_use_comparator.step.add_sets": "Ajoutez vos sets à comparer",
-  "how_to_use_comparator.step.add_sets.label_create_set": "Créer un nouveau set",
+  "how_to_use_comparator.step.add_sets.label_create_set": "Créer un nouveau build",
 
   "how_to_use_comparator.step.edit_sets": "Modifiez les sets rapidement",
-  "how_to_use_comparator.step.edit_sets.label_edit_elements": "Cliquez sur le crayon pour modifier les éléments d’un set",
+  "how_to_use_comparator.step.edit_sets.label_edit_elements": "Cliquez sur le crayon pour modifier les éléments d’un build",
 
   "how_to_use_comparator.step.view_differences": "Visualisez les différences",
-  "how_to_use_comparator.step.view_differences.label_each_color": "Chaque couleur = un set différent",
-  "how_to_use_comparator.step.view_differences.label_tap_to_navigate": "Appuyez sur une barre pour naviguer vers le set correspondant",
+  "how_to_use_comparator.step.view_differences.label_each_color": "Chaque couleur = un build différent",
+  "how_to_use_comparator.step.view_differences.label_tap_to_navigate": "Appuyez sur une barre pour naviguer vers le build correspondant",
 
   "how_to_use_comparator.step.choose_stats": "Modifier les statistiques à comparer",
   "how_to_use_comparator.step.choose_stats.label_select_stats": "Choisissez les statistiques à afficher",
 
   "advanced_options_comparator.title": "Options avancées",
 
-  "advanced_options_comparator.step.import_from_favorites": "Importer un set depuis les favoris",
+  "advanced_options_comparator.step.import_from_favorites": "Importer un build depuis les favoris",
   "advanced_options_comparator.step.import_from_favorites.label_open_collection": "Ouvrez votre collection de sets favoris",
-  "advanced_options_comparator.step.import_from_favorites.label_import_set": "Importer un set enregistré pour le comparer",
+  "advanced_options_comparator.step.import_from_favorites.label_import_set": "Importer un build enregistré pour le comparer",
 
   "advanced_options_comparator.step.sort_sets": "Trier les sets",
   "advanced_options_comparator.step.sort_sets.label_open_sorts": "Ouvrez les différents tris possibles",
@@ -31,7 +31,7 @@
   "actions_comparator.title": "Actions disponibles",
   "actions_comparator.label_save_to_favorites": "Sauvegarder dans vos favoris",
   "actions_comparator.label_copy_to_finder": "Copier les stats dans le Chercheur de builds et utiliser comme base",
-  "actions_comparator.label_export_set": "Exporter le set",
+  "actions_comparator.label_export_set": "Exporter le buildld",
 
   "tips_comparator.title": "Conseil pratique",
   "tips_comparator.limit_sets": "Limitez-vous à 2–3 sets pour une comparaison claire, et concentrez-vous sur vos statistiques prioritaires"

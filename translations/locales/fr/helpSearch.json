@@ -27,14 +27,14 @@
   "advanced_options.step.filters": "Filtres (option)",
   "advanced_options.step.filters.lock_item": "Imposez un personnage, un kart, des roues ou une aile",
 
-  "advanced_options.step.reuse_stats": "Réutilisez les statistiques d’un set",
+  "advanced_options.step.reuse_stats": "Réutilisez les statistiques d’un buildldld",
   "advanced_options.step.reuse_stats.open_favorites": "Ouvrez votre collection de sets favoris",
-  "advanced_options.step.reuse_stats.import_variations": "Importez les statistiques d’un set pour chercher des variantes",
+  "advanced_options.step.reuse_stats.import_variations": "Importez les statistiques d’un buildldld pour chercher des variantes",
 
   "results_management.title": "Gestion des résultats",
   "results_management.save_to_favorites": "Ajoutez aux favoris",
   "results_management.move_to_comparator": "Déplacez vers le comparateur de sets",
-  "results_management.export_set": "Exportez le set",
+  "results_management.export_set": "Exportez le buildld",
 
   "tips.title": "Conseil pratique",
   "tips.start_with_key_stats": "Commencez avec 2–3 statistiques principales pour des résultats plus pertinents"
