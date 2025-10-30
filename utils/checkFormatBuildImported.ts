@@ -1,9 +1,9 @@
-interface ImportedSet {
+interface ImportedBuild {
   name: string;
   classIds: number[];
 }
 
-export const checkFormatBuildImported = (obj: unknown): obj is ImportedSet => {
+export const checkFormatBuildImported = (obj: unknown): obj is ImportedBuild => {
   if (typeof obj !== "object" || Array.isArray(obj) || obj === null) {
     return false;
   }

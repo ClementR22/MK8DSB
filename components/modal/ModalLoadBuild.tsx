@@ -23,7 +23,7 @@ const ModalLoadBuild = () => {
       secondButton={<ButtonImportBuild screenName={screenName} />}
       withoutChildrenContainer
     >
-      <BuildCardsContainer buildsToShow={buildsListSaved} isInLoadSetModal={true} screenNameFromProps={screenName} />
+      <BuildCardsContainer builds={buildsListSaved} isInLoadSetModal={true} screenNameFromProps={screenName} />
     </Modal>
   );
 };

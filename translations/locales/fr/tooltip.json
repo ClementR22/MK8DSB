@@ -23,9 +23,9 @@
   "edit": "Editer",
   "save": "Enregistrer",
   "loadTheStats": "Charger les stats",
-  "loadTheSet": "Charger le build",
+  "loadTheBuild": "Charger le build",
   "loadTheStatsToSearchScreen": "Charger les stats dans l'écran de recherche",
-  "loadTheSetToDisplayScreen": "Charger le build dans l'écran de comparaison",
+  "loadTheBuildToDisplayScreen": "Charger le build dans l'écran de comparaison",
   "copy": "Copier",
   "moreActions": "Plus d'actions"
 }

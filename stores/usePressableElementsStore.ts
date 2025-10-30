@@ -27,7 +27,7 @@ export type PressableElementsStore = {
   isBuildsListUpdated: boolean;
   setIsBuildsListUpdated: (newIsBuildsListUpdated: boolean) => void;
 
-  updateSelectionFromSet: (setClassIds: number[]) => void;
+  updateSelectionFromBuild: (classIds: number[]) => void;
 
   selectElementsByClassId: (category: Category, classId: number) => void;
   toggleMultiSelectElementsByClassId: (category: Category, elementId: number) => void;
@@ -59,7 +59,7 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
     set({ isBuildsListUpdated: newIsBuildsListUpdated });
   },
 
-  updateSelectionFromSet: (setClassIds) => {
+  updateSelectionFromBuild: (classIds) => {
     set((state) => {
       const newSelected: selectedClassIdsByCategory = {
         character: null,
@@ -69,7 +69,7 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
       };
 
       categories.forEach((catName, index) => {
-        newSelected[catName as Category] = setClassIds[index];
+        newSelected[catName as Category] = classIds[index];
       });
 
       const areEqual =

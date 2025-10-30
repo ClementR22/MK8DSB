@@ -37,8 +37,8 @@ export const getOnlyBuildsSavedKeysFromMemory = async () => {
     "resultsNumber",
   ];
   const keys = await AsyncStorage.getAllKeys();
-  const onlySetKeys = keys.filter((k) => !excludedKeys.includes(k));
-  return onlySetKeys;
+  const onlyBuildsKeys = keys.filter((k) => !excludedKeys.includes(k));
+  return onlyBuildsKeys;
 };
 
 export const deleteThingInMemory = async (thingKey) => {

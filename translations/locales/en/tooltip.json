@@ -23,9 +23,9 @@
   "edit": "Edit",
   "save": "Save",
   "loadTheStats": "Load the stats",
-  "loadTheSet": "Load the build",
+  "loadTheBuild": "Load the build",
   "loadTheStatsToSearchScreen": "Load the stats to search screen",
-  "loadTheSetToDisplayScreen": "Load the build to compare screen",
+  "loadTheBuildToDisplayScreen": "Load the build to compare screen",
   "copy": "Copy",
   "moreActions": "More actions"
 }

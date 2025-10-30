@@ -97,7 +97,7 @@ const SearchBuildScreen: React.FC = () => {
           />
 
           <BuildCardsScrollProvider scrollRef={scrollviewBuildsCardsRef}>
-            <BuildCardsContainer ref={scrollviewBuildsCardsRef} buildsToShow={buildsListFound} />
+            <BuildCardsContainer ref={scrollviewBuildsCardsRef} builds={buildsListFound} />
           </BuildCardsScrollProvider>
         </ScrollViewScreen>
       </ResultStatsProvider>

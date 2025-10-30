@@ -19,9 +19,9 @@ export interface BuildsPersistenceStoreState {
   setSortNumberSavedBuilds: (newSortNumberSavedBuilds: number) => Promise<void>;
   fetchBuildsSavedKeys: () => Promise<string[]>;
   fetchBuildsSaved: () => Promise<Build[]>;
-  saveSetInMemory: (setToSave: Build) => Promise<void>;
-  removeSetInMemory: (keyToRemove: string) => Promise<void>;
-  updateSetInMemory: (setObj: Build) => Promise<void>;
+  saveBuildInMemory: (build: Build) => Promise<void>;
+  removeBuildInMemory: (keyToRemove: string) => Promise<void>;
+  updateBuildInMemory: (build: Build) => Promise<void>;
   deleteAllSavedBuilds: () => Promise<void>;
   loadSortNumberFromMemory: () => Promise<void>;
 }
@@ -56,11 +56,11 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
     return buildsDataParsed;
   },
 
-  saveSetInMemory: async (setToSave) => {
-    await saveThingInMemory(setToSave.id, setToSave);
+  saveBuildInMemory: async (build) => {
+    await saveThingInMemory(build.id, build);
   },
 
-  removeSetInMemory: async (keyToRemove) => {
+  removeBuildInMemory: async (keyToRemove) => {
     if (keyToRemove) {
       await AsyncStorage.removeItem(keyToRemove);
     } else {
@@ -68,8 +68,8 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
     }
   },
 
-  updateSetInMemory: async (setObj) => {
-    await saveThingInMemory(String(setObj.id), setObj);
+  updateBuildInMemory: async (build) => {
+    await saveThingInMemory(String(build.id), build);
   },
 
   deleteAllSavedBuilds: async () => {

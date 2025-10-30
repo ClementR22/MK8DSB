@@ -30,7 +30,7 @@ const SavedBuildScreen: React.FC = () => {
           </ScreenPressablesContainer>
 
           <BuildCardsScrollProvider scrollRef={scrollRef}>
-            <BuildCardsContainer ref={scrollRef} buildsToShow={buildsListSaved} />
+            <BuildCardsContainer ref={scrollRef} builds={buildsListSaved} />
           </BuildCardsScrollProvider>
         </ScrollViewScreen>
       </ResultStatsProvider>

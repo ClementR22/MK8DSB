@@ -10,7 +10,7 @@ interface ButtonAddBuildProps {
 }
 
 const ButtonAddBuild: React.FC<ButtonAddBuildProps> = ({ scrollRef }) => {
-  const addNewSetInDisplay = useBuildsListStore((state) => state.addNewSetInDisplay);
+  const addNewBuildInDisplay = useBuildsListStore((state) => state.addNewBuildInDisplay);
   const buildsListDisplayed = useBuildsListStore((state) => state.buildsListDisplayed);
 
   const timeoutRef = useRef(null);
@@ -19,7 +19,7 @@ const ButtonAddBuild: React.FC<ButtonAddBuildProps> = ({ scrollRef }) => {
 
   const handleAdd = useCallback(() => {
     try {
-      addNewSetInDisplay();
+      addNewBuildInDisplay();
     } catch (e) {
       showToast(e.message, "error");
       return; // Ne pas scroller en cas d'erreur
@@ -28,7 +28,7 @@ const ButtonAddBuild: React.FC<ButtonAddBuildProps> = ({ scrollRef }) => {
     timeoutRef.current = setTimeout(() => {
       scrollRef?.current?.scrollToEnd({ animated: true });
     }, 50);
-  }, [addNewSetInDisplay, scrollRef]);
+  }, [addNewBuildInDisplay, scrollRef]);
 
   useEffect(() => {
     return () => clearTimeout(timeoutRef.current);

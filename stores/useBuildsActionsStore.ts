@@ -30,8 +30,8 @@ export interface BuildsActionsStoreState {
   loadToSearch: (params: { source?: ScreenName; id?: string; build?: Build }) => void;
   loadToDisplay: (params: { source: ScreenName; id: string }) => void;
   loadBuildsSaved: () => void;
-  saveSet: (source: ScreenName, id: string) => Promise<void>;
-  unSaveSet: (screenName: ScreenName, id: string) => Promise<void>;
+  saveBuild: (source: ScreenName, id: string) => Promise<void>;
+  unSaveBuild: (screenName: ScreenName, id: string) => Promise<void>;
   exportBuild: (screenName: ScreenName, id: string) => void;
   importBuild: (clipboardContent: string, screenName: ScreenName) => void;
 }
@@ -53,7 +53,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       const { percentage, ...build_ } = providedBuild;
       build = build_;
     } else {
-      const { percentage, ...build_ } = useBuildsListStore.getState().getSet(source, id);
+      const { percentage, ...build_ } = useBuildsListStore.getState().getBuild(source, id);
       build = build_;
     }
     // on change l'id car dans l'appli, il ne doit pas y avoir 2 builds avec le même id
@@ -66,7 +66,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       (target === "display" && buildsListTarget.length >= MAX_NUMBER_BUILDS_DISPLAY) ||
       (target === "save" && buildsListTarget.length >= MAX_NUMBER_BUILDS_SAVE)
     ) {
-      throw new Error("setLimitReachedInThisScreen");
+      throw new Error("buildLimitReachedInThisScreen");
     }
 
     // verification du nom unique
@@ -100,10 +100,10 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     if (providedBuild) {
       build = providedBuild;
     } else {
-      build = useBuildsListStore.getState().getSet(source, id);
+      build = useBuildsListStore.getState().getBuild(source, id);
     }
 
-    useStatsStore.getState().loadSetStats(build.stats);
+    useStatsStore.getState().loadBuildStats(build.stats);
 
     router.push({ pathname: "/", params: { scrollToTop: "true" } });
     useGeneralStore.getState().setShouldScrollToTop();
@@ -123,67 +123,67 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     useBuildsListStore.getState().setBuildsListSaved(buildsSaved);
   },
 
-  saveSet: async (source: ScreenName, id: string) => {
+  saveBuild: async (source: ScreenName, id: string) => {
     try {
       const build = get().loadBuildCard({ source, id, target: "save" });
 
       const buildsListSaved = useBuildsListStore.getState().buildsListSaved;
       if (buildsListSaved.length >= MAX_NUMBER_BUILDS_SAVE) {
-        throw new Error("setLimitReachedInThisScreen");
+        throw new Error("buildLimitReachedInThisScreen");
       }
 
-      await useBuildsPersistenceStore.getState().saveSetInMemory(build);
+      await useBuildsPersistenceStore.getState().saveBuildInMemory(build);
     } catch (e) {
       console.log(e);
     }
   },
 
-  unSaveSet: async (screenName: ScreenName, id: string) => {
-    const classIds = useBuildsListStore.getState().getSet(screenName, id).classIds;
+  unSaveBuild: async (screenName: ScreenName, id: string) => {
+    const classIds = useBuildsListStore.getState().getBuild(screenName, id).classIds;
 
     const buildsListSaved = useBuildsListStore.getState().buildsListSaved;
     const buildsToRemove = buildsListSaved.filter((build) => arraysEqual(build.classIds, classIds));
 
     for (const build of buildsToRemove) {
-      useBuildsListStore.getState().removeSet(build.id, "save");
-      await useBuildsPersistenceStore.getState().removeSetInMemory(build.id);
+      useBuildsListStore.getState().removeBuild(build.id, "save");
+      await useBuildsPersistenceStore.getState().removeBuildInMemory(build.id);
     }
   },
 
   exportBuild: (screenName, id) => {
-    const build = useBuildsListStore.getState().getSet(screenName, id);
+    const build = useBuildsListStore.getState().getBuild(screenName, id);
 
     const json = JSON.stringify({ name: build.name, classIds: build.classIds });
     Clipboard.setStringAsync(json);
   },
 
   importBuild: (clipboardContent: string, screenName: ScreenName) => {
-    let parsedSet: unknown;
+    let parsedBuild: unknown;
 
     try {
-      parsedSet = JSON.parse(clipboardContent);
+      parsedBuild = JSON.parse(clipboardContent);
     } catch (err) {
       throw new Error("incorrectFormat");
     }
 
-    if (!checkFormatBuildImported(parsedSet)) {
+    if (!checkFormatBuildImported(parsedBuild)) {
       throw new Error("incorrectFormat");
     }
 
-    const stats = getBuildStatsFromClassIds(parsedSet.classIds);
+    const stats = getBuildStatsFromClassIds(parsedBuild.classIds);
 
     if (!stats) {
-      throw new Error("thisSetDoesNotExist");
+      throw new Error("thisBuildDoesNotExist");
     }
 
-    const build = { ...parsedSet, id: nanoid(8), stats };
+    const build = { ...parsedBuild, id: nanoid(8), stats };
 
     if (screenName === "search") {
       get().loadToSearch({ build });
     } else {
       get().loadBuildCard({ build, target: screenName, forceName: true });
       if (screenName === "save") {
-        useBuildsPersistenceStore.getState().saveSetInMemory(build);
+        useBuildsPersistenceStore.getState().saveBuildInMemory(build);
       }
     }
   },

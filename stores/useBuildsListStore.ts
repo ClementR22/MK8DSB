@@ -27,8 +27,8 @@ export interface BuildsListStoreState {
   buildsListFound: Build[];
   buildsListDisplayed: Build[];
   buildsListSaved: Build[];
-  setCardEditedId: string;
-  setKeyInDisplay: number;
+  buildEditedId: string;
+  buildIndexInComparator: number;
 
   getBuildsList: (screenName: ScreenName) => {
     buildsList: Build[] | Build[];
@@ -36,17 +36,17 @@ export interface BuildsListStoreState {
   };
   getSetBuildsList: (screenName: ScreenName) => (newBuildsList: Build[]) => void;
 
-  getSet: (screenName: ScreenName, id: string) => Build;
+  getBuild: (screenName: ScreenName, id: string) => Build;
 
   setBuildsListFound: (newBuildsList: Build[]) => void;
   setBuildsListDisplayed: (newBuildsList: Build[]) => void;
   setBuildsListSaved: (newBuildsList: Build[]) => void;
-  setBuildCardEditedId: (id: string) => void;
-  addNewSetInDisplay: () => void;
-  removeSet: (id: string, screenName: ScreenName) => void;
-  checkNameUnique: (setName: string, screenName: ScreenName) => boolean;
+  setBuildEditedId: (id: string) => void;
+  addNewBuildInDisplay: () => void;
+  removeBuild: (id: string, screenName: ScreenName) => void;
+  checkNameUnique: (buildName: string, screenName: ScreenName) => boolean;
   generateUniqueName: (baseName: string, newIndexInit: number, target: ScreenName) => string;
-  renameSet: (newName: string, screenName: ScreenName, id: string) => void;
+  renameBuild: (newName: string, screenName: ScreenName, id: string) => void;
   updateBuildsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => void;
   sortBuildsList: (screenName: ScreenName, sortNumber: number) => void;
 }
@@ -54,12 +54,12 @@ export interface BuildsListStoreState {
 const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   buildsListFound: [],
   buildsListDisplayed: [
-    { id: nanoid(8), ...DEFAULT_BUILDS.set1 },
-    { id: nanoid(8), ...DEFAULT_BUILDS.set2 },
+    { id: nanoid(8), ...DEFAULT_BUILDS.build1 },
+    { id: nanoid(8), ...DEFAULT_BUILDS.build2 },
   ],
   buildsListSaved: [],
-  setCardEditedId: null,
-  setKeyInDisplay: 2,
+  buildEditedId: null,
+  buildIndexInComparator: 2,
 
   getBuildsList: (screenName) => {
     let buildsListName: string;
@@ -99,7 +99,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     return setBuildsList;
   },
 
-  getSet: (screenName: ScreenName, id: string) => {
+  getBuild: (screenName: ScreenName, id: string) => {
     const buildsList = get().getBuildsList(screenName).buildsList;
 
     const build = buildsList.find((build) => build.id === id);
@@ -112,37 +112,37 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
   setBuildsListSaved: (newBuildsList) => set({ buildsListSaved: newBuildsList }),
 
-  setBuildCardEditedId: (id) => {
-    set({ setCardEditedId: id });
+  setBuildEditedId: (id) => {
+    set({ buildEditedId: id });
   },
 
-  addNewSetInDisplay: () => {
+  addNewBuildInDisplay: () => {
     if (get().buildsListDisplayed.length >= MAX_NUMBER_BUILDS_DISPLAY) {
-      throw new Error("setLimitReached");
+      throw new Error("buildLimitReached");
     }
 
-    const newIndex = get().setKeyInDisplay;
+    const newIndex = get().buildIndexInComparator;
     const newName = get().generateUniqueName("Build", newIndex, "display");
 
     set((state) => {
       return {
-        setKeyInDisplay: newIndex,
-        buildsListDisplayed: [...state.buildsListDisplayed, { ...DEFAULT_BUILDS.set1, id: nanoid(8), name: newName }],
+        buildIndexInComparator: newIndex,
+        buildsListDisplayed: [...state.buildsListDisplayed, { ...DEFAULT_BUILDS.build1, id: nanoid(8), name: newName }],
       };
     });
   },
 
-  removeSet: (id, screenName) => {
+  removeBuild: (id, screenName) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
     const newList = buildsList.filter((build) => build.id !== id);
     set({ [buildsListName]: newList });
   },
 
-  checkNameUnique: (setName, screenName) => {
+  checkNameUnique: (buildName, screenName) => {
     // ne lance pas d'error
     const { buildsList } = get().getBuildsList(screenName);
 
-    const isNameUnique = !buildsList.some((build) => build.name === setName);
+    const isNameUnique = !buildsList.some((build) => build.name === buildName);
     return isNameUnique;
   },
 
@@ -165,7 +165,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     return newName;
   },
 
-  renameSet: (newName, screenName, id) => {
+  renameBuild: (newName, screenName, id) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
 
     const isNameUnique = get().checkNameUnique(newName, screenName);
@@ -173,12 +173,12 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
       throw new Error("nameAlreadyExists");
     }
 
-    const build = get().getSet(screenName, id);
-    const newSet = { ...build, name: newName };
+    const build = get().getBuild(screenName, id);
+    const newBuild = { ...build, name: newName };
 
     const newBuildsList = buildsList.map((build: Build) => {
       if (build.id === id) {
-        return newSet;
+        return newBuild;
       }
       return build;
     });
@@ -186,21 +186,21 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     set({ [buildsListName]: newBuildsList });
 
     if (screenName === "save") {
-      useBuildsPersistenceStore.getState().saveSetInMemory(newSet);
+      useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild);
     }
   },
 
   updateBuildsList: (pressedClassIdsObj, screenName) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
     const newClassIds = Object.values(pressedClassIdsObj);
-    const id = get().setCardEditedId;
+    const id = get().buildEditedId;
 
-    const build = get().getSet(screenName, id);
-    const newSet = { ...build, classIds: newClassIds, stats: getBuildStatsFromClassIds(newClassIds) };
+    const build = get().getBuild(screenName, id);
+    const newBuild = { ...build, classIds: newClassIds, stats: getBuildStatsFromClassIds(newClassIds) };
 
     const buildsListUpdated = buildsList.map((build) => {
       if (build.id === id) {
-        return newSet;
+        return newBuild;
       }
       return build;
     });
@@ -208,15 +208,15 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     set({ [buildsListName]: buildsListUpdated });
 
     if (screenName === "save") {
-      useBuildsPersistenceStore.getState().saveSetInMemory(newSet);
+      useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild);
     }
   },
 
   sortBuildsList: (screenName, sortNumber) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
 
-    const buildsListSortable: SortableElement[] = buildsList.map((setObj: Build) => {
-      const statsArray = setObj.stats;
+    const buildsListSortable: SortableElement[] = buildsList.map((build: Build) => {
+      const statsArray = build.stats;
       const mappedStats: Partial<SortableElement> = {};
 
       statNames.forEach((statName, index) => {
@@ -224,10 +224,10 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
       });
 
       return {
-        id: setObj.id,
-        name: setObj.name,
-        classIds: setObj.classIds,
-        stats: setObj.stats,
+        id: build.id,
+        name: build.name,
+        classIds: build.classIds,
+        stats: build.stats,
         ...mappedStats,
       } as SortableElement;
     });

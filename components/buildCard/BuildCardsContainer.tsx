@@ -18,12 +18,12 @@ import { BORDER_RADIUS_CONTAINER_LOWEST, MARGIN_CONTAINER_LOWEST, PADDING_STANDA
 import { box_shadow_z1 } from "../styles/shadow";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 
-interface SetWithColor extends Build {
-  color?: string;
+interface BuildWithColor extends Build {
+  color: string;
 }
 
 interface BuildCardsContainerProps {
-  buildsToShow: SetWithColor[];
+  builds: BuildWithColor[] | Build[];
   isInLoadSetModal?: boolean;
   screenNameFromProps?: ScreenName;
   hideRemoveBuild?: boolean;
@@ -36,7 +36,7 @@ export interface BuildCardsContainerHandles {
 }
 
 const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsContainerProps>(
-  ({ buildsToShow, isInLoadSetModal = false, screenNameFromProps, hideRemoveBuild }, ref) => {
+  ({ builds, isInLoadSetModal = false, screenNameFromProps, hideRemoveBuild }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
     const setCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
 
@@ -78,7 +78,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
 
     const [hasShownSearchQuestionIcon, setHasShownSearchQuestionIcon] = useState(false);
 
-    const noSetToShow = buildsToShow.length === 0;
+    const noSetToShow = builds.length === 0;
 
     const calculatedContentWidth: DimensionValue | undefined = noSetToShow || isLoading ? "100%" : undefined;
 
@@ -105,7 +105,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
         return null;
       }
 
-      return buildsToShow.map((build: SetWithColor) => (
+      return builds.map((build: BuildWithColor) => (
         <BuildCard
           key={build.id}
           name={build.name}
@@ -115,12 +115,12 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
           isInLoadSetModal={isInLoadSetModal}
           screenNameFromProps={screenNameFromProps}
           hideRemoveBuild={hideRemoveBuild}
-          setToShowPercentage={(build as any).percentage ?? undefined}
+          percentage={build.percentage ?? undefined}
           onLayout={(event) => onBuildCardLayout(build.id, event)}
           borderColor={build.color}
         />
       ));
-    }, [buildsToShow, isInLoadSetModal, screenNameFromProps, hideRemoveBuild, onBuildCardLayout]);
+    }, [builds, isInLoadSetModal, screenNameFromProps, hideRemoveBuild, onBuildCardLayout]);
 
     return (
       <ScrollView

@@ -13,7 +13,7 @@ interface BuildNameInputProps {
 
 const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, id, editable = true }) => {
   const screenName = useScreen();
-  const renameSet = useBuildsListStore((state) => state.renameSet);
+  const renameBuild = useBuildsListStore((state) => state.renameBuild);
   const { scrollToBuildCard } = useBuildCardsScroll();
 
   const [localName, setLocalName] = useState(name);
@@ -27,7 +27,7 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, id, editable = tr
 
     if (localName !== name) {
       try {
-        renameSet(localName, screenName, id);
+        renameBuild(localName, screenName, id);
         showToast("setRenamed", "success");
       } catch (e) {
         showToast(e.message, "error");
@@ -35,7 +35,7 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, id, editable = tr
         return;
       }
     }
-  }, [localName, name, screenName, id, renameSet]);
+  }, [localName, name, screenName, id, renameBuild]);
 
   const handleFocus = useCallback(() => {
     scrollToBuildCard(id);

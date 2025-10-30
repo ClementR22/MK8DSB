@@ -101,7 +101,7 @@ const DisplayBuildScreen = () => {
           </ScreenPressablesContainer>
 
           <BuildCardsScrollProvider scrollRef={scrollRef}>
-            <BuildCardsContainer ref={scrollRef} buildsToShow={buildsWithColor} hideRemoveBuild={hideRemoveBuild} />
+            <BuildCardsContainer ref={scrollRef} builds={buildsWithColor} hideRemoveBuild={hideRemoveBuild} />
 
             <View style={styles.mainButtonWrapper}>
               <StatSelector triggerButtonText="displayedStats" />

@@ -27,24 +27,24 @@ export function useActionIconPropsList(
   isSaved?: boolean
 ): ActionIconPropsMap {
   const source = isInLoadModal ? "save" : screenName;
-  const build = useBuildsListStore((state) => state.getSet(source, id));
+  const build = useBuildsListStore((state) => state.getBuild(source, id));
 
-  const updateSelectionFromSet = usePressableElementsStore((state) => state.updateSelectionFromSet);
-  const setBuildCardEditedId = useBuildsListStore((state) => state.setBuildCardEditedId);
+  const updateSelectionFromBuild = usePressableElementsStore((state) => state.updateSelectionFromBuild);
+  const setBuildEditedId = useBuildsListStore((state) => state.setBuildEditedId);
   const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
   const loadToSearch = useBuildsActionsStore((state) => state.loadToSearch);
   const loadToDisplay = useBuildsActionsStore((state) => state.loadToDisplay);
-  const saveSet = useBuildsActionsStore((state) => state.saveSet);
-  const unSaveSet = useBuildsActionsStore((state) => state.unSaveSet);
-  const removeSet = useBuildsListStore((state) => state.removeSet);
+  const saveBuild = useBuildsActionsStore((state) => state.saveBuild);
+  const unSaveBuild = useBuildsActionsStore((state) => state.unSaveBuild);
+  const removeBuild = useBuildsListStore((state) => state.removeBuild);
   const handleExport = useBuildImportExport().handleExport;
   const setIsLoadBuildModalVisible = useModalLoadBuildStore((state) => state.setIsLoadBuildModalVisible);
 
   const handleEditPress = useCallback(() => {
-    setBuildCardEditedId(id);
-    updateSelectionFromSet(build?.classIds);
+    setBuildEditedId(id);
+    updateSelectionFromBuild(build?.classIds);
     setIsEditModalVisible(true);
-  }, [id, build?.classIds, setBuildCardEditedId, updateSelectionFromSet, setIsEditModalVisible]);
+  }, [id, build?.classIds, setBuildEditedId, updateSelectionFromBuild, setIsEditModalVisible]);
 
   const handleLoadToSearchPress = useCallback(() => {
     loadToSearch({ source, id });
@@ -67,21 +67,21 @@ export function useActionIconPropsList(
   const handleSavePress = useCallback(() => {
     try {
       if (!isSaved) {
-        saveSet(source, id);
+        saveBuild(source, id);
         showToast("setHasBeenSaved", "success");
       } else {
-        unSaveSet(source, id);
+        unSaveBuild(source, id);
         showToast("setHasBeenUnSaved", "success");
       }
     } catch (e) {
       showToast(e.message, "error");
     }
-  }, [source, id, isSaved, saveSet, unSaveSet]);
+  }, [source, id, isSaved, saveBuild, unSaveBuild]);
 
   const handleRemovePress = useCallback(() => {
-    removeSet(id, source);
+    removeBuild(id, source);
     showToast("setHasBeenDeleted", "success");
-  }, [source, id, removeSet]);
+  }, [source, id, removeBuild]);
 
   const handleExportPress = useCallback(() => {
     handleExport(source, id);
@@ -102,7 +102,7 @@ export function useActionIconPropsList(
         onPress: handleLoadToSearchPress,
       },
       loadToDisplay: {
-        title: isInLoadModal ? "loadTheSet" : "loadTheSetToDisplayScreen",
+        title: isInLoadModal ? "loadTheBuild" : "loadTheBuildToDisplayScreen",
         name: isInLoadModal ? "download" : "compare",
         type: IconType.MaterialCommunityIcons,
         onPress: handleLoadToDisplayPress,
@@ -135,14 +135,14 @@ export function useActionIconPropsList(
     isInLoadModal,
     isSaved,
     build?.classIds,
-    setBuildCardEditedId,
-    updateSelectionFromSet,
+    setBuildEditedId,
+    updateSelectionFromBuild,
     setIsEditModalVisible,
     loadToSearch,
     loadToDisplay,
-    saveSet,
-    unSaveSet,
-    removeSet,
+    saveBuild,
+    unSaveBuild,
+    removeBuild,
     setIsLoadBuildModalVisible,
     handleExport,
   ]);

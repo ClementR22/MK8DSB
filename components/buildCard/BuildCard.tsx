@@ -16,7 +16,7 @@ interface BuildCardProps {
   name: string;
   classIds: number[];
   stats?: number[] | null;
-  setToShowPercentage?: number;
+  percentage?: number;
   id: string;
   isInLoadSetModal?: boolean;
   screenNameFromProps?: ScreenName;
@@ -29,7 +29,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
   name,
   classIds,
   stats = null,
-  setToShowPercentage = undefined,
+  percentage = undefined,
   id,
   isInLoadSetModal = false,
   screenNameFromProps,
@@ -63,7 +63,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
           name={name}
           screenName={screenName}
           id={id}
-          setToShowPercentage={setToShowPercentage}
+          percentage={percentage}
           moreActionNamesList={
             isCollapsed
               ? [...(config.moreActionNamesList ?? []), ...config.actionNamesList]

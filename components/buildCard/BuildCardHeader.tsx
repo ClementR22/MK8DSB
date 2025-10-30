@@ -13,7 +13,7 @@ interface BuildCardHeaderProps {
   name: string;
   screenName: ScreenName;
   id: string;
-  setToShowPercentage?: number;
+  percentage?: number;
   moreActionNamesList?: ActionNamesList;
 }
 
@@ -22,7 +22,7 @@ const BuildCardHeader: React.FC<BuildCardHeaderProps> = ({
   name,
   screenName,
   id,
-  setToShowPercentage,
+  percentage,
   moreActionNamesList,
 }) => {
   const theme = useThemeStore((state) => state.theme);
@@ -31,9 +31,9 @@ const BuildCardHeader: React.FC<BuildCardHeaderProps> = ({
     <View style={styles.headerContainer}>
       <BuildNameInput name={name} id={id} editable={isNameEditable} />
 
-      {setToShowPercentage && (
+      {percentage && (
         <Text role="title" size="medium" weight="bold" color={theme.primary} namespace="not">
-          {setToShowPercentage}%
+          {percentage}%
         </Text>
       )}
 
