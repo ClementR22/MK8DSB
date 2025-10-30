@@ -31,7 +31,7 @@
   "actions_comparator.title": "Actions disponibles",
   "actions_comparator.label_save_to_favorites": "Sauvegarder dans vos favoris",
   "actions_comparator.label_copy_to_finder": "Copier les stats dans le Chercheur de builds et utiliser comme base",
-  "actions_comparator.label_export_set": "Exporter le buildld",
+  "actions_comparator.label_export_set": "Exporter le build",
 
   "tips_comparator.title": "Conseil pratique",
   "tips_comparator.limit_sets": "Limitez-vous à 2–3 builds pour une comparaison claire, et concentrez-vous sur vos statistiques prioritaires"
