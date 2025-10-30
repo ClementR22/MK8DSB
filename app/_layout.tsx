@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Platform, StatusBar as RNStatusBar } from "react-native";
@@ -26,6 +26,7 @@ import { toastConfig } from "@/config/toastConfig";
 import { box_shadow_z2 } from "@/components/styles/shadow";
 import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
 import { useTranslation } from "react-i18next";
+import useBuildsListStore from "@/stores/useBuildsListStore";
 
 export default function TabLayout() {
   const { t } = useTranslation("screens");
@@ -34,6 +35,10 @@ export default function TabLayout() {
   const loadBuildsSaved = useBuildsActionsStore((state) => state.loadBuildsSaved);
   const theme = useThemeStore((state) => state.theme);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
+  const buildsListSaved = useBuildsListStore((state) => state.buildsListSaved);
+
+  // --- States ---
+  const [numberSavedBuilds, setNumberSavedBuilds] = useState(0);
 
   // --- Effects ---
 
@@ -50,6 +55,11 @@ export default function TabLayout() {
 
   // Custom hook for loading settings (assuming it has its own internal effects)
   useLoadSettings();
+
+  // update numberSavedBuilds
+  useEffect(() => {
+    setNumberSavedBuilds(buildsListSaved.length);
+  }, [buildsListSaved]);
 
   // Use useCallback for header functions to prevent unnecessary re-renders of CustomHeader
   const renderSearchHeader = useCallback(
@@ -114,6 +124,7 @@ export default function TabLayout() {
                 tabBarIcon: ({ color, focused }) => (
                   <MaterialCommunityIcons name={focused ? "cards" : "cards-outline"} size={24} color={color} />
                 ),
+                tabBarBadge: numberSavedBuilds,
                 header: renderSavedHeader,
               }}
             />

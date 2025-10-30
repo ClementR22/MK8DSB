@@ -2,7 +2,7 @@ import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Data and Types
-import { Build } from "./useBuildsListStore";
+import useBuildsListStore, { Build } from "./useBuildsListStore";
 
 // Utilities
 import {
@@ -73,6 +73,7 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
   },
 
   deleteAllSavedBuilds: async () => {
+    useBuildsListStore.getState().setBuildsListSaved([]);
     await deleteAllSavedBuildsInMemory();
   },
 
