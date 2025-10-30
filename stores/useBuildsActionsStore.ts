@@ -113,6 +113,9 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     const { source, id } = params;
 
     get().loadBuildCard({ source, id, target: "display" });
+
+    router.push({ pathname: "/DisplayBuildScreen", params: { scrollToTop: "true" } });
+    useGeneralStore.getState().setShouldScrollToTop();
   },
 
   loadBuildsSaved: async () => {

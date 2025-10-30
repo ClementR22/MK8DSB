@@ -26,18 +26,6 @@ const SearchBuildScreen: React.FC = () => {
   const scrollviewBuildsCardsRef = useRef<BuildCardsContainerHandles>(null);
   const scrollviewMainRef = useRef<ScrollViewScreenHandles>(null);
 
-  const shouldScrollToTop = useGeneralStore((state) => state.shouldScrollToTop);
-  const resetScrollToTop = useGeneralStore((state) => state.resetScrollToTop);
-
-  useEffect(() => {
-    if (shouldScrollToTop && scrollviewMainRef.current) {
-      setTimeout(() => {
-        scrollviewMainRef.current.scrollToStart();
-      }, 100);
-      resetScrollToTop(); // Réinitialiser le flag
-    }
-  }, [shouldScrollToTop, resetScrollToTop]);
-
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
   const chosenStats = useStatsStore((state) => state.chosenStats);
   const buildsListFound = useBuildsListStore((state) => state.buildsListFound);
