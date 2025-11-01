@@ -1,5 +1,5 @@
 export type BuildData = {
-  id: string;
+  dataId: string;
   classIds: number[];
   stats: number[];
   bodytypes: string[];

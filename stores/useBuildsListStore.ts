@@ -15,6 +15,7 @@ import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
 import useDeckStore from "./useDeckStore";
 import { deleteAllSavedBuildsInMemory } from "@/utils/asyncStorageOperations";
+import { getRandomDataId } from "@/utils/getRandomDataId";
 
 export const MAX_NUMBER_BUILDS_DISPLAY = 10;
 export const MAX_NUMBER_BUILDS_SAVE = 30;
@@ -126,8 +127,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     }
 
     const newIndex = get().buildIndexInComparator;
-    const newName = get().generateUniqueName("Build", newIndex, "display");
-    const dataId = DEFAULT_BUILDS.build1.dataId;
+    const dataId = getRandomDataId();
 
     set((state) => {
       return {
@@ -135,7 +135,6 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
         buildsListDisplayed: [...state.buildsListDisplayed, { id: nanoid(8), dataId: dataId }],
       };
     });
-    useDeckStore.getState().updateName(dataId, newName);
   },
 
   removeBuild: (id, screenName) => {
