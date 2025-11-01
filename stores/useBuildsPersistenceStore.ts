@@ -2,8 +2,7 @@ import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Data and Types
-import useBuildsListStore from "./useBuildsListStore";
-import { Build } from "@/data/builds/buildsTypes";
+import { Build, BuildPersistant } from "@/data/builds/buildsTypes";
 
 // Utilities
 import {
@@ -18,8 +17,8 @@ export interface BuildsPersistenceStoreState {
 
   setSortNumberSavedBuilds: (newSortNumberSavedBuilds: number) => Promise<void>;
   fetchBuildsSavedKeys: () => Promise<string[]>;
-  fetchBuildsSaved: () => Promise<Build[]>;
-  saveBuildInMemory: (build: Build) => Promise<void>;
+  fetchBuildsSaved: () => Promise<BuildPersistant[]>;
+  saveBuildInMemory: (build: Build, name: string) => Promise<void>;
   removeBuildInMemory: (keyToRemove: string) => Promise<void>;
   updateBuildInMemory: (build: Build) => Promise<void>;
   loadSortNumberFromMemory: () => Promise<void>;
@@ -41,7 +40,7 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
   fetchBuildsSaved: async () => {
     const buildsKeys = await get().fetchBuildsSavedKeys();
     const buildsValues = await AsyncStorage.multiGet(buildsKeys);
-    const buildsValuesParsed: Build[] = buildsValues
+    const buildsValuesParsed: BuildPersistant[] = buildsValues
       .map(([, value]) => {
         try {
           return value ? JSON.parse(value) : null;
@@ -50,13 +49,14 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
           return null;
         }
       })
-      .filter((build) => build !== null) as Build[];
+      .filter((BuildPersistant) => BuildPersistant !== null) as BuildPersistant[];
 
     return buildsValuesParsed;
   },
 
-  saveBuildInMemory: async (build) => {
-    await saveThingInMemory(build.id, build);
+  saveBuildInMemory: async (build, name) => {
+    const buildPersistant: BuildPersistant = { id: build.id, dataId: build.dataId, name: name };
+    await saveThingInMemory(build.id, buildPersistant);
   },
 
   removeBuildInMemory: async (keyToRemove) => {

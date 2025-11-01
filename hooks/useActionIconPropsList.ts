@@ -9,6 +9,7 @@ import showToast from "@/utils/showToast";
 import { useBuildImportExport } from "@/hooks/useBuildImportExport";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
+import { buildsDataMap } from "@/data/builds/buildsData";
 
 interface ActionProps {
   title: string;
@@ -42,9 +43,9 @@ export function useActionIconPropsList(
 
   const handleEditPress = useCallback(() => {
     setBuildEditedId(id);
-    updateSelectionFromBuild(build?.classIds);
+    updateSelectionFromBuild(buildsDataMap.get(build.dataId).stats);
     setIsEditBuildModalVisible(true);
-  }, [id, build?.classIds, setBuildEditedId, updateSelectionFromBuild, setIsEditBuildModalVisible]);
+  }, [id, build?.dataId, setBuildEditedId, updateSelectionFromBuild, setIsEditBuildModalVisible]);
 
   const handleLoadToSearchPress = useCallback(() => {
     loadToSearch({ source, id });
@@ -64,13 +65,14 @@ export function useActionIconPropsList(
     setIsLoadBuildModalVisible(false);
   }, [source, id, loadToDisplay, setIsLoadBuildModalVisible]);
 
-  const handleSavePress = useCallback(() => {
+  const handleSavePress = useCallback(async () => {
     try {
       if (!isSaved) {
-        saveBuild(source, id);
+        console.log("tyree");
+        await saveBuild(source, id);
         showToast("setHasBeenSaved", "success");
       } else {
-        unSaveBuild(source, id);
+        await unSaveBuild(source, id);
         showToast("setHasBeenUnSaved", "success");
       }
     } catch (e) {
@@ -134,7 +136,7 @@ export function useActionIconPropsList(
     source,
     isInLoadModal,
     isSaved,
-    build?.classIds,
+    build?.dataId,
     setBuildEditedId,
     updateSelectionFromBuild,
     setIsEditBuildModalVisible,

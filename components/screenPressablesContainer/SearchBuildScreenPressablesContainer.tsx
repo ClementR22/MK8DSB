@@ -119,7 +119,6 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
         const percentageRounded = Number(percentage.toPrecision(3));
         return {
           id: nanoid(8),
-          name: `${t("buildFound")} (${index + 1})`,
           dataId: dataId,
           percentage: percentageRounded,
         };

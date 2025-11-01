@@ -10,3 +10,9 @@ export type Build = {
   dataId: string; // référence vers les stats, etc.
   percentage?: number;
 };
+
+export type BuildPersistant = {
+  id: string;
+  dataId: string;
+  name: string;
+};

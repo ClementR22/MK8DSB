@@ -19,10 +19,11 @@ import { box_shadow_z1 } from "@/components/styles/shadow";
 import Text from "@/primitiveComponents/Text";
 import showToast from "@/utils/showToast";
 import useBuildsPersistenceStore from "@/stores/useBuildsPersistenceStore";
+import useBuildsListStore from "@/stores/useBuildsListStore";
 
 const SettingsScreen: React.FC = () => {
   const resetSettings = useResetSettings();
-  const deleteAllSavedBuilds = useBuildsPersistenceStore((state) => state.deleteAllSavedBuilds);
+  const deleteAllSavedBuilds = useBuildsListStore((state) => state.deleteAllSavedBuilds);
 
   const handleDeleteAllSavedBuilds = () => {
     deleteAllSavedBuilds();

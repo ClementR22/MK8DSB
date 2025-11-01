@@ -127,19 +127,29 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
     const newIndex = get().buildIndexInComparator;
     const newName = get().generateUniqueName("Build", newIndex, "display");
+    const dataId = DEFAULT_BUILDS.build1.dataId;
 
     set((state) => {
       return {
         buildIndexInComparator: newIndex,
-        buildsListDisplayed: [...state.buildsListDisplayed, { ...DEFAULT_BUILDS.build1, id: nanoid(8), name: newName }],
+        buildsListDisplayed: [...state.buildsListDisplayed, { id: nanoid(8), dataId: dataId }],
       };
     });
+    useDeckStore.getState().updateName(dataId, newName);
   },
 
   removeBuild: (id, screenName) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
+    console.log("danns le remvoe, id,", id);
+    console.log("removeBuild, buildsList", buildsList);
     const newList = buildsList.filter((build) => build.id !== id);
+    const build = buildsList.find((build) => build.id === id);
     set({ [buildsListName]: newList });
+
+    useDeckStore.getState().removeBuild(build.dataId);
+    if (screenName === "save") {
+      useBuildsPersistenceStore.getState().removeBuildInMemory(id);
+    }
   },
 
   checkNameUnique: (buildName, screenName) => {
@@ -193,7 +203,8 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     set({ [buildsListName]: newBuildsList });
 
     if (screenName === "save") {
-      useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild);
+      const name = useDeckStore.getState().deck.get(build.dataId).name;
+      useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild, name);
     }
 
     useDeckStore.getState().updateName(build.dataId, newName);
@@ -217,7 +228,8 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     set({ [buildsListName]: buildsListUpdated });
 
     if (screenName === "save") {
-      useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild);
+      const name = useDeckStore.getState().deck.get(build.dataId).name;
+      useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild, name);
     }
   },
 

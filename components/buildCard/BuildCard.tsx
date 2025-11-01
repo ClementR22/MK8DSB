@@ -1,16 +1,14 @@
-import React, { useMemo, memo } from "react";
-import { LayoutChangeEvent, View, StyleSheet } from "react-native";
+import React, { memo } from "react";
+import { LayoutChangeEvent, View, StyleSheet, Text } from "react-native";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import BuildCardActionButtons from "./BuildCardActionButtons";
 import BuildImagesModal from "./BuildImagesModal";
 import StatGaugeBuildCardsContainer from "../statGauge/StatGaugeBuildCardsContainer";
-import { arraysEqual } from "@/utils/deepCompare";
 import BuildCardHeader from "./BuildCardHeader";
 import { useBuildCardStyle } from "@/hooks/useBuildCardStyle";
 import { BUILD_CARD_WIDTH } from "@/utils/designTokens";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { useBuildCardConfig } from "@/hooks/useBuildCardConfig";
-import useBuildsListStore from "@/stores/useBuildsListStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
 import useDeckStore from "@/stores/useDeckStore";
 
@@ -35,8 +33,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
   onLayout,
   borderColor,
 }) => {
-  const name = useDeckStore((state) => state.deck).get(dataId)?.name || "a";
-
+  const { name, isSaved } = useDeckStore((state) => state.deck).get(dataId) || { name: "", isSaved: false };
   const buildData = buildsDataMap.get(dataId);
 
   const contextScreenName = useScreen();
@@ -46,8 +43,6 @@ const BuildCard: React.FC<BuildCardProps> = ({
   const isBuildCardsCollapsed = useGeneralStore((state) => state.isBuildCardsCollapsed);
   const isCollapsed = screenName === "display" && isBuildCardsCollapsed;
 
-  const buildsListSaved = useBuildsListStore((state) => state.buildsListSaved);
-
   const config = useBuildCardConfig(situation, hideRemoveBuild, screenName);
 
   const { setCardStyle } = useBuildCardStyle(BUILD_CARD_WIDTH);
@@ -55,6 +50,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
   return (
     <View style={styles.wrapper} onLayout={onLayout}>
       <View style={[setCardStyle, borderColor && { borderColor }]}>
+        <Text>{isSaved ? "ok" : "non"}</Text>
         <BuildCardHeader
           isNameEditable={config.isNameEditable}
           name={name}
@@ -76,7 +72,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
             id={id}
             screenName={screenName}
             isInLoadModal={isInLoadSetModal}
-            isSaved={false}
+            isSaved={isSaved}
           />
         )}
       </View>

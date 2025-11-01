@@ -1,9 +1,6 @@
-interface ImportedBuild {
-  name: string;
-  dataId: string;
-}
+import { BuildPersistant } from "@/data/builds/buildsTypes";
 
-export const checkFormatBuildImported = (obj: unknown): obj is ImportedBuild => {
+export const checkFormatBuildImported = (obj: unknown): obj is BuildPersistant => {
   if (typeof obj !== "object" || Array.isArray(obj) || obj === null) {
     return false;
   }

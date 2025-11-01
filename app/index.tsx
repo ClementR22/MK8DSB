@@ -21,6 +21,8 @@ import Text from "@/primitiveComponents/Text";
 import { BuildCardsScrollProvider } from "@/contexts/BuildCardsScrollContext";
 import useStatsStore from "@/stores/useStatsStore";
 import useBuildsListStore from "@/stores/useBuildsListStore";
+import Button from "@/primitiveComponents/Button";
+import useDeckStore from "@/stores/useDeckStore";
 
 const SearchBuildScreen: React.FC = () => {
   const scrollviewBuildsCardsRef = useRef<BuildCardsContainerHandles>(null);
@@ -62,10 +64,12 @@ const SearchBuildScreen: React.FC = () => {
     });
   }, [chosenStats, isReduceStatSliders]);
 
+  const deck = useDeckStore((state) => state.deck);
   return (
     <ScreenProvider screenName="search">
       <ResultStatsProvider>
         <ScrollViewScreen scrollEnabled={isScrollEnable} ref={scrollviewMainRef}>
+          <Button onPress={() => console.log(deck)}>ok</Button>
           <BoxContainer
             borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}
             padding={PADDING_SEARCH_CONTAINER}

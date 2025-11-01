@@ -19,7 +19,7 @@ import useBuildsListStore from "./useBuildsListStore";
 import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 import useGeneralStore from "./useGeneralStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
-import useDeckStore from "./useDeckStore";
+import useDeckStore, { BuildEntry } from "./useDeckStore";
 
 export interface BuildsActionsStoreState {
   loadBuildCard: (params: {
@@ -123,23 +123,33 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
   },
 
   loadBuildsSaved: async () => {
-    const buildsSaved = await useBuildsPersistenceStore.getState().fetchBuildsSaved();
-    useBuildsListStore.getState().setBuildsListSaved(buildsSaved);
+    const buildsPersistant = await useBuildsPersistenceStore.getState().fetchBuildsSaved();
+    console.log("buildsSaved", buildsPersistant);
+    const buildsListSaved: Build[] = [];
+    buildsPersistant.forEach((buildPersistant) => {
+      const build = { id: buildPersistant.id, dataId: buildPersistant.dataId };
+      buildsListSaved.push(build);
+    });
+    useBuildsListStore.getState().setBuildsListSaved(buildsListSaved);
+    useDeckStore.getState().loadBuildsSaved(buildsPersistant);
   },
 
   saveBuild: async (source: ScreenName, id: string) => {
-    try {
-      const build = get().loadBuildCard({ source, id, target: "save" });
-
-      const buildsListSaved = useBuildsListStore.getState().buildsListSaved;
-      if (buildsListSaved.length >= MAX_NUMBER_BUILDS_SAVE) {
-        throw new Error("buildLimitReachedInThisScreen");
-      }
-
-      await useBuildsPersistenceStore.getState().saveBuildInMemory(build);
-    } catch (e) {
-      console.log(e);
+    const buildsListSaved = useBuildsListStore.getState().buildsListSaved;
+    if (buildsListSaved.length >= MAX_NUMBER_BUILDS_SAVE) {
+      throw new Error("buildLimitReachedInThisScreen");
     }
+
+    const build = useBuildsListStore.getState().getBuild(source, id);
+
+    const name = useDeckStore.getState().deck.get(build.dataId)?.name;
+    if (!name) {
+      throw new Error("shouldRenameBuild");
+    }
+
+    get().loadBuildCard({ build: build, target: "save" });
+    await useBuildsPersistenceStore.getState().saveBuildInMemory(build, name);
+    useDeckStore.getState().saveBuild(build.dataId);
   },
 
   unSaveBuild: async (screenName: ScreenName, id: string) => {
@@ -156,6 +166,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       useBuildsListStore.getState().removeBuild(build.id, "save");
       await useBuildsPersistenceStore.getState().removeBuildInMemory(build.id);
     }
+    useDeckStore.getState().unSaveBuild(build.dataId);
   },
 
   exportBuild: (screenName, id) => {
@@ -186,7 +197,8 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     } else {
       get().loadBuildCard({ build, target: screenName, forceName: true });
       if (screenName === "save") {
-        useBuildsPersistenceStore.getState().saveBuildInMemory(build);
+        const name = useDeckStore.getState().deck.get(build.dataId).name;
+        useBuildsPersistenceStore.getState().saveBuildInMemory(build, name);
       }
     }
   },
