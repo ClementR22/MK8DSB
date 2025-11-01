@@ -12,9 +12,9 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import { useBuildCardConfig } from "@/hooks/useBuildCardConfig";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
+import useDeckStore from "@/stores/useDeckStore";
 
 interface BuildCardProps {
-  name: string;
   dataId: string;
   percentage?: number;
   id: string;
@@ -26,7 +26,6 @@ interface BuildCardProps {
 }
 
 const BuildCard: React.FC<BuildCardProps> = ({
-  name,
   dataId,
   percentage = undefined,
   id,
@@ -36,6 +35,8 @@ const BuildCard: React.FC<BuildCardProps> = ({
   onLayout,
   borderColor,
 }) => {
+  const name = useDeckStore((state) => state.deck).get(dataId)?.name || "a";
+
   const buildData = buildsDataMap.get(dataId);
 
   const contextScreenName = useScreen();

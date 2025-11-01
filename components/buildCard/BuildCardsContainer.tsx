@@ -108,7 +108,6 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
       return builds.map((build: BuildWithColor) => (
         <BuildCard
           key={build.id}
-          name={build.name}
           dataId={build.dataId}
           id={build.id}
           isInLoadSetModal={isInLoadSetModal}

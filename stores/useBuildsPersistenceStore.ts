@@ -2,11 +2,11 @@ import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Data and Types
-import useBuildsListStore, { Build } from "./useBuildsListStore";
+import useBuildsListStore from "./useBuildsListStore";
+import { Build } from "@/data/builds/buildsTypes";
 
 // Utilities
 import {
-  deleteAllSavedBuildsInMemory,
   getOnlyBuildsSavedKeysFromMemory,
   loadThingFromMemory,
   saveThingInMemory,
@@ -22,7 +22,6 @@ export interface BuildsPersistenceStoreState {
   saveBuildInMemory: (build: Build) => Promise<void>;
   removeBuildInMemory: (keyToRemove: string) => Promise<void>;
   updateBuildInMemory: (build: Build) => Promise<void>;
-  deleteAllSavedBuilds: () => Promise<void>;
   loadSortNumberFromMemory: () => Promise<void>;
 }
 
@@ -70,11 +69,6 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
 
   updateBuildInMemory: async (build) => {
     await saveThingInMemory(String(build.id), build);
-  },
-
-  deleteAllSavedBuilds: async () => {
-    useBuildsListStore.getState().setBuildsListSaved([]);
-    await deleteAllSavedBuildsInMemory();
   },
 
   loadSortNumberFromMemory: async () => {

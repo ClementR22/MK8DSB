@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useScreen } from "../../contexts/ScreenContext";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import BuildNameInputContent from "./BuildNameInputContent";
@@ -17,6 +17,8 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, id, editable = tr
   const { scrollToBuildCard } = useBuildCardsScroll();
 
   const [localName, setLocalName] = useState(name);
+
+  useEffect(() => setLocalName(name), [name]);
 
   const handleEndEditing = useCallback(() => {
     if (!localName.trim()) {

@@ -9,11 +9,12 @@ import { ScreenName } from "@/contexts/ScreenContext";
 import { Build } from "@/data/builds/buildsTypes";
 
 // Utilities
-import { getBuildStatsFromClassIds } from "@/utils/getBuildStatsFromClassIds";
 import { SortableElement, sortElements } from "@/utils/sortElements";
 import { DEFAULT_BUILDS } from "@/constants/defaultBuilds";
 import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
+import useDeckStore from "./useDeckStore";
+import { deleteAllSavedBuildsInMemory } from "@/utils/asyncStorageOperations";
 
 export const MAX_NUMBER_BUILDS_DISPLAY = 10;
 export const MAX_NUMBER_BUILDS_SAVE = 30;
@@ -36,6 +37,7 @@ export interface BuildsListStoreState {
   setBuildsListFound: (newBuildsList: Build[]) => void;
   setBuildsListDisplayed: (newBuildsList: Build[]) => void;
   setBuildsListSaved: (newBuildsList: Build[]) => void;
+  deleteAllSavedBuilds: () => Promise<void>;
   setBuildEditedId: (id: string) => void;
   addNewBuildInDisplay: () => void;
   removeBuild: (id: string, screenName: ScreenName) => void;
@@ -49,8 +51,8 @@ export interface BuildsListStoreState {
 const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   buildsListFound: [],
   buildsListDisplayed: [
-    { id: nanoid(8), ...DEFAULT_BUILDS.build1 },
-    { id: nanoid(8), ...DEFAULT_BUILDS.build2 },
+    { id: DEFAULT_BUILDS.build1.id, dataId: DEFAULT_BUILDS.build1.dataId },
+    { id: DEFAULT_BUILDS.build2.id, dataId: DEFAULT_BUILDS.build2.dataId },
   ],
   buildsListSaved: [],
   buildEditedId: null,
@@ -109,6 +111,11 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
   setBuildsListSaved: (newBuildsList) => set({ buildsListSaved: newBuildsList }),
 
+  deleteAllSavedBuilds: async () => {
+    useBuildsListStore.getState().setBuildsListSaved([]);
+    await deleteAllSavedBuildsInMemory();
+  },
+
   setBuildEditedId: (id) => {
     set({ buildEditedId: id });
   },
@@ -139,7 +146,10 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     // ne lance pas d'error
     const { buildsList } = get().getBuildsList(screenName);
 
-    const isNameUnique = !buildsList.some((build) => build.name === buildName);
+    const isNameUnique = !buildsList.some((build) => {
+      const name = useDeckStore.getState().deck.get(build.dataId)?.name;
+      return name === buildName;
+    });
     return isNameUnique;
   },
 
@@ -185,6 +195,8 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     if (screenName === "save") {
       useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild);
     }
+
+    useDeckStore.getState().updateName(build.dataId, newName);
   },
 
   updateBuildsList: (pressedClassIdsObj, screenName) => {
@@ -213,7 +225,10 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
 
     const buildsListSortable: SortableElement[] = buildsList.map((build: Build) => {
+      const buildName = useDeckStore.getState().deck.get(build.dataId)?.name;
+
       const buildData = buildsDataMap.get(build.dataId);
+
       const mappedStats: Partial<SortableElement> = {};
 
       statNames.forEach((statName, index) => {
@@ -221,7 +236,8 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
       });
 
       return {
-        name: build.name,
+        dataId: build.dataId,
+        name: buildName,
         classIds: buildData.classIds,
         stats: buildData.stats,
         ...mappedStats,
@@ -230,10 +246,9 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
     const buildsListSorted = sortElements(buildsListSortable, sortNumber);
     const buildsListSortedLight: Build[] = buildsListSorted.map((build) => {
-      const { id, dataId } = buildsList.find((bld) => bld.name === build.name);
+      const { id, dataId } = buildsList.find((bld) => bld.dataId === build.dataId);
       return {
         id: id,
-        name: build.name,
         dataId: dataId,
       };
     });

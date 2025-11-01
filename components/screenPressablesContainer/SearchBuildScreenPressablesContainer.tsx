@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { categories } from "@/data/elements/elementsData";
-import { buildsDataArray, buildsDataMap } from "@/data/builds/buildsData";
+import { buildsDataArray } from "@/data/builds/buildsData";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";

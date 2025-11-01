@@ -7,7 +7,6 @@ export type BuildData = {
 
 export type Build = {
   id: string; // stable unique ID
-  name: string;
   dataId: string; // référence vers les stats, etc.
   percentage?: number;
 };

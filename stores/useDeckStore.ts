@@ -1,48 +1,68 @@
-import { create } from "zustand";
+import { DEFAULT_BUILDS } from "@/constants/defaultBuilds";
 import { Build } from "@/data/builds/buildsTypes";
+import { create } from "zustand";
+
+type Origin = "user" | "stranger";
+
+type BuildEntry = { name: string; origin: Origin };
 
 type DeckState = {
-  deck: Record<string, Build>;
+  deck: Map<string, BuildEntry>;
 
-  addBuild: (build: Build) => void;
-  updateName: (id: string, name: string) => void;
-  updateBuildData: (id: string, newData: any) => void;
-  removeBuild: (id: string) => void;
+  addBuild: (build: Build, name: string, origin: Origin) => void;
+  updateName: (dataId: string, name: string) => void;
+  updateBuildData: (dataId: string, newData: any) => void;
+  removeBuild: (dataId: string) => void;
 };
 
 const useDeckStore = create<DeckState>((set, get) => ({
-  deck: {},
+  deck: new Map([
+    [DEFAULT_BUILDS.build1.dataId, { name: DEFAULT_BUILDS.build1.name, origin: "user" }],
+    [DEFAULT_BUILDS.build2.dataId, { name: DEFAULT_BUILDS.build2.name, origin: "user" }],
+  ]),
 
-  addBuild: (build) =>
-    set((state) => ({
-      deck: { ...state.deck, [build.id]: build },
-    })),
-
-  updateName: (id, name) =>
+  addBuild: (build, name, origin) =>
     set((state) => {
-      const build = state.deck[id];
-      if (!build) return state;
-      return { deck: { ...state.deck, [id]: { ...build, name } } };
-    }),
-
-  updateBuildData: (id, newDataId) =>
-    set((state) => {
-      const build = state.deck[id];
-      if (!build) return state;
+      const newDeck = state.deck;
+      newDeck.set(build.dataId, { name: name, origin: origin });
 
       return {
-        deck: {
-          ...state.deck,
-          [id]: { ...build, dataId: newDataId },
-        },
+        deck: newDeck,
       };
     }),
 
-  removeBuild: (id) =>
+  updateName: (dataId, name) =>
     set((state) => {
-      const newDeck = { ...state.deck };
-      delete newDeck[id];
+      const buildEntry = state.deck.get(dataId);
+      if (!buildEntry) return state;
+
+      const newDeck = new Map(state.deck);
+      newDeck.set(dataId, { ...buildEntry, name });
+
       return { deck: newDeck };
+    }),
+
+  updateBuildData: (formerDataId, newDataId) =>
+    set((state) => {
+      const deck = state.deck;
+
+      const buildEntry = state.deck.get(formerDataId);
+      if (!buildEntry) return state;
+
+      deck.delete(formerDataId);
+      deck.set(newDataId, buildEntry);
+
+      return {
+        deck: deck,
+      };
+    }),
+
+  removeBuild: (dataId) =>
+    set((state) => {
+      const deck = state.deck;
+      deck.delete(dataId);
+
+      return { deck: deck };
     }),
 }));
 

@@ -62,7 +62,7 @@ const DisplayBuildScreen = () => {
             colorsCurrentlyInUse.add(assignedColor); // Marque comme utilisée
           }
         } else {
-          console.warn(`Plus de couleurs uniques disponibles pour le build ${build.name}`);
+          console.warn(`Plus de couleurs uniques disponibles pour le build ${build.id}`);
         }
       }
     });

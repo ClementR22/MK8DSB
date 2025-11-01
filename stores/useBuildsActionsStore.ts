@@ -10,7 +10,6 @@ import { MAX_NUMBER_BUILDS_DISPLAY, MAX_NUMBER_BUILDS_SAVE } from "./useBuildsLi
 import { Build } from "@/data/builds/buildsTypes";
 
 // Utilities
-import { getBuildStatsFromClassIds } from "@/utils/getBuildStatsFromClassIds";
 import { arraysEqual } from "@/utils/deepCompare";
 import { checkFormatBuildImported } from "@/utils/checkFormatBuildImported";
 
@@ -20,6 +19,7 @@ import useBuildsListStore from "./useBuildsListStore";
 import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 import useGeneralStore from "./useGeneralStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
+import useDeckStore from "./useDeckStore";
 
 export interface BuildsActionsStoreState {
   loadBuildCard: (params: {
@@ -72,17 +72,17 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     }
 
     // verification du nom unique
-    const isNameUnique = useBuildsListStore.getState().checkNameUnique(build.name, target);
+    const name = useDeckStore.getState().deck.get(build.dataId)?.name;
+    const isNameUnique = useBuildsListStore.getState().checkNameUnique(name, target);
 
     if (!isNameUnique) {
       if (!forceName) {
         throw new Error("nameAlreadyExists");
       } else {
-        const baseName = build.name;
+        const baseName = name;
         const newIndex = 0;
         const newName = useBuildsListStore.getState().generateUniqueName(baseName, newIndex, target);
-
-        build.name = newName;
+        useDeckStore.getState().updateName(build.dataId, newName);
       }
     }
 
@@ -105,9 +105,9 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       build = useBuildsListStore.getState().getBuild(source, id);
     }
 
-    const buildData = buildsDataMap.get(build.dataId);
+    const stats = buildsDataMap.get(build.dataId).stats;
 
-    useStatsStore.getState().loadBuildStats(buildData.stats);
+    useStatsStore.getState().loadBuildStats(stats);
 
     router.push({ pathname: "/", params: { scrollToTop: "true" } });
     useGeneralStore.getState().setShouldScrollToTop();
@@ -144,7 +144,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
 
   unSaveBuild: async (screenName: ScreenName, id: string) => {
     const build = useBuildsListStore.getState().getBuild(screenName, id);
-    const classIds = buildsDataMap.get(build.dataId).classIds;
+    const classIds = buildsDataMap.get(build.dataId).classIds; // okkk
 
     const buildsListSaved = useBuildsListStore.getState().buildsListSaved;
     const buildsToRemove = buildsListSaved.filter((build) => {
@@ -160,8 +160,9 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
 
   exportBuild: (screenName, id) => {
     const build = useBuildsListStore.getState().getBuild(screenName, id);
+    const name = useDeckStore.getState().deck.get(build.dataId)?.name;
 
-    const json = JSON.stringify({ name: build.name, dataId: build.dataId });
+    const json = JSON.stringify({ name: name, dataId: build.dataId });
     Clipboard.setStringAsync(json);
   },
 
@@ -178,13 +179,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       throw new Error("incorrectFormat");
     }
 
-    const parsedBuildData = buildsDataMap.get(parsedBuild.dataId);
-
-    if (!parsedBuildData.stats) {
-      throw new Error("thisBuildDoesNotExist");
-    }
-
-    const build = { ...parsedBuild, id: nanoid(8) };
+    const build = { ...parsedBuild, id: nanoid(8) }; // okkk doit avoir un name ?
 
     if (screenName === "search") {
       get().loadToSearch({ build });
