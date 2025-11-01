@@ -2,7 +2,7 @@
 import React, { memo, useEffect, useMemo, useRef } from "react";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { elementsDataByClassId } from "@/data/elements/elementsData";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { Pressable, ScrollView, View } from "react-native";
 import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
 import { StyleSheet } from "react-native";

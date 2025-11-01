@@ -4,12 +4,12 @@ import DoubleEntryTable, { ColumnName } from "./DoubleEntryTable";
 import useStatsStore, { ChosenStat } from "@/stores/useStatsStore";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
-import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
+import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import { View } from "react-native";
 import ResultStatsSyncSwitch from "./ResultStatsSyncSwitch";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 
 export type StatList = ChosenStat[] | ResultStat[];
 

@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { StyleSheet } from "react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
 import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";

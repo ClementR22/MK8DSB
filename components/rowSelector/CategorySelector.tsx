@@ -3,7 +3,7 @@ import React, { memo, useMemo } from "react";
 import { Category } from "@/data/elements/elementsTypes";
 import IconSelector from "./IconSelector";
 import { categoryImageSources } from "@/assets/images/categoryImageSources";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { StyleSheet } from "react-native";
 import { BORDER_WIDTH_CATEGORY_SELECTOR, BORDER_RADIUS_CATEGORY_SELECTOR } from "@/utils/designTokens";
 import { box_shadow_z1 } from "@/components/styles/shadow";

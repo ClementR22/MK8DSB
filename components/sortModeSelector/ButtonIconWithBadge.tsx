@@ -1,6 +1,6 @@
 import ButtonIcon, { ButtonIconProps } from "@/primitiveComponents/ButtonIcon";
 import Text from "@/primitiveComponents/Text";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { BORDER_RADIUS_INF } from "@/utils/designTokens";
 import React, { memo, useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";

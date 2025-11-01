@@ -6,7 +6,7 @@ import { TFunction } from "i18next";
 // This interface should reflect the properties available on your actual ElementDataCharacter, ElementDataBody, etc.
 // Add all properties you might need for sorting (like various speed/handling stats).
 export interface SortableElement {
-  id: number;
+  id?: number;
   name: string;
   classIds?: number[]; // on le conserve pour le tri des builds
   stats?: number[]; // on le conserve pour le tri des builds

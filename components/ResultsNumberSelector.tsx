@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import ButtonIcon from "../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useGeneralStore from "@/stores/useGeneralStore";

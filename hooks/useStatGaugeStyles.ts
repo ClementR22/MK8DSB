@@ -1,4 +1,4 @@
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { BORDER_RADIUS_INF } from "@/utils/designTokens";
 import { useMemo } from "react";
 import { StyleSheet } from "react-native";

@@ -11,11 +11,11 @@ import { BUILD_CARD_WIDTH } from "@/utils/designTokens";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { useBuildCardConfig } from "@/hooks/useBuildCardConfig";
 import useBuildsListStore from "@/stores/useBuildsListStore";
+import { buildsDataMap } from "@/data/builds/buildsData";
 
 interface BuildCardProps {
   name: string;
-  classIds: number[];
-  stats?: number[] | null;
+  dataId: string;
   percentage?: number;
   id: string;
   isInLoadSetModal?: boolean;
@@ -27,8 +27,7 @@ interface BuildCardProps {
 
 const BuildCard: React.FC<BuildCardProps> = ({
   name,
-  classIds,
-  stats = null,
+  dataId,
   percentage = undefined,
   id,
   isInLoadSetModal = false,
@@ -37,6 +36,8 @@ const BuildCard: React.FC<BuildCardProps> = ({
   onLayout,
   borderColor,
 }) => {
+  const buildData = buildsDataMap.get(dataId);
+
   const contextScreenName = useScreen();
   const screenName = screenNameFromProps ?? contextScreenName;
   const situation = isInLoadSetModal ? "load" : screenName;
@@ -45,11 +46,6 @@ const BuildCard: React.FC<BuildCardProps> = ({
   const isCollapsed = screenName === "display" && isBuildCardsCollapsed;
 
   const buildsListSaved = useBuildsListStore((state) => state.buildsListSaved);
-
-  const isSaved = useMemo(
-    () => buildsListSaved.some((build) => arraysEqual(build.classIds, classIds)),
-    [buildsListSaved, classIds]
-  );
 
   const config = useBuildCardConfig(situation, hideRemoveBuild, screenName);
 
@@ -71,7 +67,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
           }
         />
 
-        <BuildImagesModal classIds={classIds} isCollapsed={isCollapsed} />
+        <BuildImagesModal classIds={buildData.classIds} isCollapsed={isCollapsed} />
 
         {!isCollapsed && (
           <BuildCardActionButtons
@@ -79,12 +75,12 @@ const BuildCard: React.FC<BuildCardProps> = ({
             id={id}
             screenName={screenName}
             isInLoadModal={isInLoadSetModal}
-            isSaved={isSaved}
+            isSaved={false}
           />
         )}
       </View>
-      {config.showStatSliderResult && stats !== null && (
-        <StatGaugeBuildCardsContainer stats={stats} containerStyle={setCardStyle} />
+      {config.showStatSliderResult && (
+        <StatGaugeBuildCardsContainer stats={buildData.stats} containerStyle={setCardStyle} />
       )}
     </View>
   );

@@ -1,5 +1,5 @@
-import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { resultStatsDefaultInit } from "./resultStatsInit";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { IS_RESULT_STATS_SYNC, RESULTS_NUMBER_DEFAULT, SORT_NUMBER_SAVED_BUILDS_DEFAULT } from "@/constants/constants";

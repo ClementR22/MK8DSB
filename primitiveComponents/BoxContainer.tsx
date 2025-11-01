@@ -1,6 +1,6 @@
 import React from "react";
 import { DimensionValue, StyleSheet, View, ViewStyle } from "react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { MARGIN_CONTAINER_LOWEST, PADDING_BOX_CONTAINER } from "@/utils/designTokens";
 
 interface BoxContainerProps {

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useState, ReactNode } from "react";
-import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
+import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
 import { resultStatsSaveScreenInit } from "@/config/resultStatsInit";
 import { deepCompareStatArrays } from "@/utils/deepCompare";
 import { StatName } from "@/data/stats/statsTypes";

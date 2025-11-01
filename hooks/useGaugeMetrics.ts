@@ -1,5 +1,5 @@
 import { MAX_STAT_VALUE } from "@/constants/constants";
-import { ContextId, useGaugeStore } from "@/stores/useGaugeStore";
+import useGaugeStore, { ContextId } from "@/stores/useGaugeStore";
 import { useCallback, useMemo } from "react";
 
 export const useGaugeMetrics = (contextId: ContextId) => {

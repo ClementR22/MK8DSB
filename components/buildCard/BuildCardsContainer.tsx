@@ -9,10 +9,10 @@ import {
   StyleSheet,
 } from "react-native";
 import BuildCard from "./BuildCard";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
-import { Build } from "@/stores/useBuildsListStore";
+import { Build } from "@/data/builds/buildsTypes";
 import Placeholder from "./Placeholder";
 import { BORDER_RADIUS_CONTAINER_LOWEST, MARGIN_CONTAINER_LOWEST, PADDING_STANDARD } from "@/utils/designTokens";
 import { box_shadow_z1 } from "../styles/shadow";
@@ -109,8 +109,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
         <BuildCard
           key={build.id}
           name={build.name}
-          classIds={build.classIds}
-          stats={build.stats}
+          dataId={build.dataId}
           id={build.id}
           isInLoadSetModal={isInLoadSetModal}
           screenNameFromProps={screenNameFromProps}

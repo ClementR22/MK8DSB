@@ -1,11 +1,13 @@
 import { create } from "zustand";
 
-interface ModalLoadBuildState {
+interface LoadBuildModaState {
   isLoadBuildModalVisible: boolean;
   setIsLoadBuildModalVisible: (visible: boolean) => void;
 }
 
-export const useModalLoadBuildStore = create<ModalLoadBuildState>((set) => ({
+const useLoadBuildModalStore = create<LoadBuildModaState>((set) => ({
   isLoadBuildModalVisible: false,
   setIsLoadBuildModalVisible: (visible: boolean) => set({ isLoadBuildModalVisible: visible }),
 }));
+
+export default useLoadBuildModalStore;

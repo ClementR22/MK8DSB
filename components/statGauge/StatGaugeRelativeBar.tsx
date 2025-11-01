@@ -1,4 +1,4 @@
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { getBonusColor } from "@/utils/getBonusColor";

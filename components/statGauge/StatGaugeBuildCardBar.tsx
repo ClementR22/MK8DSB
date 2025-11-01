@@ -1,7 +1,7 @@
 import { BONUS_COLOR, MALUS_COLOR } from "@/constants/Colors";
 import { useGaugeMetrics } from "@/hooks/useGaugeMetrics";
 import { useStatGaugeStyles } from "@/hooks/useStatGaugeStyles";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 

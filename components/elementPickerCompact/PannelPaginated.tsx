@@ -10,7 +10,7 @@ import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import BodytypesSelector from "../rowSelector/BodytypesSelector";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import CategorySelector from "../rowSelector/CategorySelector";
 import ElementsGrid, { ELEMENTS_GRID_HEIGHT, ELEMENTS_PER_PAGE } from "./ElementsGrid";
 import PagesNavigator from "./PagesNavigator";

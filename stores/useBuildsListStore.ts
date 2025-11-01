@@ -6,23 +6,18 @@ import { nanoid } from "nanoid";
 // Data and Types
 import { statNames } from "@/data/stats/statsData";
 import { ScreenName } from "@/contexts/ScreenContext";
+import { Build } from "@/data/builds/buildsTypes";
 
 // Utilities
 import { getBuildStatsFromClassIds } from "@/utils/getBuildStatsFromClassIds";
 import { SortableElement, sortElements } from "@/utils/sortElements";
 import { DEFAULT_BUILDS } from "@/constants/defaultBuilds";
 import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
+import { buildsDataMap } from "@/data/builds/buildsData";
 
 export const MAX_NUMBER_BUILDS_DISPLAY = 10;
 export const MAX_NUMBER_BUILDS_SAVE = 30;
 
-export interface Build {
-  id: string;
-  name: string;
-  classIds: number[];
-  stats: number[];
-  percentage?: number;
-}
 export interface BuildsListStoreState {
   buildsListFound: Build[];
   buildsListDisplayed: Build[];
@@ -59,7 +54,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   ],
   buildsListSaved: [],
   buildEditedId: null,
-  buildIndexInComparator: 2,
+  buildIndexInComparator: 2, // = get().buildsListDisplayed.length
 
   getBuildsList: (screenName) => {
     let buildsListName: string;
@@ -108,7 +103,9 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
   setBuildsListFound: (newBuildsList) => set({ buildsListFound: newBuildsList }),
 
-  setBuildsListDisplayed: (newBuildsList) => set({ buildsListDisplayed: newBuildsList }),
+  setBuildsListDisplayed: (newBuildsList) => {
+    return set({ buildsListDisplayed: newBuildsList });
+  },
 
   setBuildsListSaved: (newBuildsList) => set({ buildsListSaved: newBuildsList }),
 
@@ -192,11 +189,11 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
   updateBuildsList: (pressedClassIdsObj, screenName) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
-    const newClassIds = Object.values(pressedClassIdsObj);
+    const dataId = Object.values(pressedClassIdsObj).join("-");
     const id = get().buildEditedId;
 
     const build = get().getBuild(screenName, id);
-    const newBuild = { ...build, classIds: newClassIds, stats: getBuildStatsFromClassIds(newClassIds) };
+    const newBuild: Build = { ...build, dataId: dataId };
 
     const buildsListUpdated = buildsList.map((build) => {
       if (build.id === id) {
@@ -216,29 +213,30 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
 
     const buildsListSortable: SortableElement[] = buildsList.map((build: Build) => {
-      const statsArray = build.stats;
+      const buildData = buildsDataMap.get(build.dataId);
       const mappedStats: Partial<SortableElement> = {};
 
       statNames.forEach((statName, index) => {
-        mappedStats[statName] = statsArray[index];
+        mappedStats[statName] = buildData.stats[index];
       });
 
       return {
-        id: build.id,
         name: build.name,
-        classIds: build.classIds,
-        stats: build.stats,
+        classIds: buildData.classIds,
+        stats: buildData.stats,
         ...mappedStats,
       } as SortableElement;
     });
 
     const buildsListSorted = sortElements(buildsListSortable, sortNumber);
-    const buildsListSortedLight = buildsListSorted.map((build) => ({
-      id: build.id,
-      name: build.name,
-      classIds: build.classIds,
-      stats: build.stats,
-    }));
+    const buildsListSortedLight: Build[] = buildsListSorted.map((build) => {
+      const { id, dataId } = buildsList.find((bld) => bld.name === build.name);
+      return {
+        id: id,
+        name: build.name,
+        dataId: dataId,
+      };
+    });
 
     set({ [buildsListName]: buildsListSortedLight });
   },

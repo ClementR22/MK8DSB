@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { BUTTON_SIZE } from "@/utils/designTokens";
 
 interface IconContainerProps {

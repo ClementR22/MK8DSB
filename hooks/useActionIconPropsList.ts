@@ -2,8 +2,8 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import { useCallback, useMemo } from "react";
 import { ScreenName } from "@/contexts/ScreenContext";
 import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
-import useModalsStore from "@/stores/useModalsStore";
-import { useModalLoadBuildStore } from "@/stores/useModalLoadBuildStore";
+import useEditBuildModalStore from "@/stores/useEditBuildModalStore";
+import useLoadBuildModalStore from "@/stores/useLoadBuildModalStore";
 import { ActionName, ActionNamesList } from "./useBuildCardConfig";
 import showToast from "@/utils/showToast";
 import { useBuildImportExport } from "@/hooks/useBuildImportExport";
@@ -31,20 +31,20 @@ export function useActionIconPropsList(
 
   const updateSelectionFromBuild = usePressableElementsStore((state) => state.updateSelectionFromBuild);
   const setBuildEditedId = useBuildsListStore((state) => state.setBuildEditedId);
-  const setIsEditModalVisible = useModalsStore((state) => state.setIsEditModalVisible);
+  const setIsEditBuildModalVisible = useEditBuildModalStore((state) => state.setIsEditBuildModalVisible);
   const loadToSearch = useBuildsActionsStore((state) => state.loadToSearch);
   const loadToDisplay = useBuildsActionsStore((state) => state.loadToDisplay);
   const saveBuild = useBuildsActionsStore((state) => state.saveBuild);
   const unSaveBuild = useBuildsActionsStore((state) => state.unSaveBuild);
   const removeBuild = useBuildsListStore((state) => state.removeBuild);
   const handleExport = useBuildImportExport().handleExport;
-  const setIsLoadBuildModalVisible = useModalLoadBuildStore((state) => state.setIsLoadBuildModalVisible);
+  const setIsLoadBuildModalVisible = useLoadBuildModalStore((state) => state.setIsLoadBuildModalVisible);
 
   const handleEditPress = useCallback(() => {
     setBuildEditedId(id);
     updateSelectionFromBuild(build?.classIds);
-    setIsEditModalVisible(true);
-  }, [id, build?.classIds, setBuildEditedId, updateSelectionFromBuild, setIsEditModalVisible]);
+    setIsEditBuildModalVisible(true);
+  }, [id, build?.classIds, setBuildEditedId, updateSelectionFromBuild, setIsEditBuildModalVisible]);
 
   const handleLoadToSearchPress = useCallback(() => {
     loadToSearch({ source, id });
@@ -137,7 +137,7 @@ export function useActionIconPropsList(
     build?.classIds,
     setBuildEditedId,
     updateSelectionFromBuild,
-    setIsEditModalVisible,
+    setIsEditBuildModalVisible,
     loadToSearch,
     loadToDisplay,
     saveBuild,

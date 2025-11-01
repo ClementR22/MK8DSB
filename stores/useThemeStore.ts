@@ -17,7 +17,7 @@ type ThemeStore = {
 };
 
 // --- Store Implementation ---
-export const useThemeStore = create<ThemeStore>((set, get) => {
+const useThemeStore = create<ThemeStore>((set, get) => {
   // Helper function to determine the correct theme object
   const getTheme = (themeMode: ThemeMode): Theme => {
     switch (themeMode) {
@@ -55,3 +55,5 @@ export const useThemeStore = create<ThemeStore>((set, get) => {
     },
   };
 });
+
+export default useThemeStore;

@@ -1,6 +1,6 @@
 import React from "react";
 import { DimensionValue, View, ViewStyle } from "react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 
 interface SeparatorProps {
   direction: "vertical" | "horizontal";

@@ -6,7 +6,7 @@ import { ActionNamesList } from "@/hooks/useBuildCardConfig";
 import BuildNameInput from "../textInput/BuildNameInput";
 import { BUTTON_SIZE } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 
 interface BuildCardHeaderProps {
   isNameEditable: boolean;

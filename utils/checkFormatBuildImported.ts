@@ -1,6 +1,6 @@
 interface ImportedBuild {
   name: string;
-  classIds: number[];
+  dataId: string;
 }
 
 export const checkFormatBuildImported = (obj: unknown): obj is ImportedBuild => {
@@ -11,13 +11,14 @@ export const checkFormatBuildImported = (obj: unknown): obj is ImportedBuild => 
   const build = obj as Record<string, unknown>;
   const keys = Object.keys(build);
 
+  const dataIdRegex = /^\d+(?:-\d+){3}$/;
+  // signifie : un ou plusieurs chiffres, suivis de 3 répétitions de "-nombre"
+
   const isCorrectFormat =
     keys.length === 2 && // Exactement 2 clés
     typeof build.name === "string" &&
     build.name.trim() !== "" &&
-    Array.isArray(build.classIds) &&
-    build.classIds.length > 0 &&
-    build.classIds.every((id) => typeof id === "number");
-
+    typeof build.dataId === "string" &&
+    dataIdRegex.test(build.dataId);
   return isCorrectFormat;
 };

@@ -1,4 +1,4 @@
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import React, { memo, useMemo } from "react";
 import { FlatList } from "react-native";
 import ElementPicker from "./ElementPicker";

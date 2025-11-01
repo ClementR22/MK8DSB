@@ -9,8 +9,8 @@ import { PaperProvider } from "react-native-paper";
 
 // Components
 import CustomHeader from "@/components/CustomHeader";
-import ModalEditBuild from "@/components/modal/ModalEditBuild";
-import ModalLoadBuild from "@/components/modal/ModalLoadBuild";
+import EditBuildModal from "@/components/modal/EditBuildModal";
+import LoadBuildModal from "@/components/modal/LoadBuildModal";
 import Toast from "react-native-toast-message";
 // Help Components - Memoized for performance
 import HelpSearchBuildScreen from "@/components/helpScreens/HelpSearchBuildScreen";
@@ -18,7 +18,7 @@ import HelpDisplayBuildScreen from "@/components/helpScreens/HelpDisplayBuildScr
 import HelpSavedBuildScreen from "@/components/helpScreens/HelpSavedBuildScreen";
 
 // Stores
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 
 // Utils & Hooks
 import { useLoadSettings } from "@/hooks/useLoadSettings";
@@ -149,8 +149,8 @@ export default function TabLayout() {
               }}
             />
           </Tabs>
-          <ModalEditBuild />
-          <ModalLoadBuild />
+          <EditBuildModal />
+          <LoadBuildModal />
           <Toast config={toastConfig} bottomOffset={59} swipeable={false} />
         </PaperProvider>
       </SafeAreaView>

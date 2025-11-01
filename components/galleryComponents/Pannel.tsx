@@ -1,4 +1,4 @@
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import {
   BORDER_RADIUS_18,
   BORDER_RADIUS_INF,

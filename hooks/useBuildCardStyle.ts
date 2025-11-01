@@ -1,7 +1,7 @@
 // hooks/useBuildCardStyle.ts
 import { useMemo } from "react";
 import { DimensionValue, StyleSheet, ViewStyle } from "react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { BORDER_RADIUS_STANDARD, PADDING_BUILD_CARD } from "@/utils/designTokens";
 import { box_shadow_z1 } from "@/components/styles/shadow";
 

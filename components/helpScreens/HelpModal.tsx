@@ -4,7 +4,7 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import { StyleSheet } from "react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 
 export type HelpContentItem = {
   type: "title" | "highlight" | "step" | "feature" | "custom";

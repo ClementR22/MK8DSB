@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import { View, StyleSheet, Pressable } from "react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import { getBonusColor } from "@/utils/getBonusColor";
 import useGeneralStore from "@/stores/useGeneralStore";

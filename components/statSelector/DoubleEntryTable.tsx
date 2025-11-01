@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView, Pressable } from "react-native";
 import { Checkbox, DataTable } from "react-native-paper";
 import { ResultStat } from "@/contexts/ResultStatsContext";
 import { ChosenStat } from "@/stores/useStatsStore";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import Text from "@/primitiveComponents/Text";
 
 type CheckList = ChosenStat[] | ResultStat[];

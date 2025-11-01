@@ -3,7 +3,7 @@ import React, { memo, useCallback, useMemo } from "react";
 import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import IconSelector from "./IconSelector";
 import { bodytypeImageSources } from "@/assets/images/bodytypeImageSources";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { StyleSheet } from "react-native";
 import { GAP_ELEMENTS_GRID } from "@/utils/designTokens";
 

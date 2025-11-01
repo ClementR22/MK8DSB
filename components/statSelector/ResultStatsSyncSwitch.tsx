@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { useResultStatsDefaultStore } from "@/stores/useResultStatsDefaultStore";
+import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
 import { ResultStats } from "@/contexts/ResultStatsContext";
 import { ChosenStat } from "@/stores/useStatsStore";
 import ToggleSwitch from "toggle-switch-react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { StyleSheet, View } from "react-native";
 import Text from "@/primitiveComponents/Text";
 

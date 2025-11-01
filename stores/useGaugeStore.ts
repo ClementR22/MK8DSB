@@ -11,7 +11,7 @@ interface GaugeStore {
   createLayoutHandler: (contextId: ContextId) => (event: LayoutChangeEvent) => void;
 }
 
-export const useGaugeStore = create<GaugeStore>((set, get) => ({
+const useGaugeStore = create<GaugeStore>((set, get) => ({
   gaugeWidths: {
     "stat-gauge-compact": 0,
     "stat-gauge-build-card": 0,
@@ -33,3 +33,5 @@ export const useGaugeStore = create<GaugeStore>((set, get) => ({
     get().setGaugeWidth(contextId, width);
   },
 }));
+
+export default useGaugeStore;

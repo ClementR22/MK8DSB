@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { categories } from "@/data/elements/elementsData";
-import { buildsData } from "@/data/buildsData";
+import { buildsDataArray, buildsDataMap } from "@/data/builds/buildsData";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
@@ -16,7 +16,8 @@ import StatSelector from "../statSelector/StatSelector";
 import useGeneralStore from "@/stores/useGeneralStore";
 import ButtonIconWithBadge from "../sortModeSelector/ButtonIconWithBadge";
 import useStatsStore from "@/stores/useStatsStore";
-import useBuildsListStore, { Build } from "@/stores/useBuildsListStore";
+import useBuildsListStore from "@/stores/useBuildsListStore";
+import { Build } from "@/data/builds/buildsTypes";
 import { useTranslation } from "react-i18next";
 
 interface SearchBuildScreenPressablesContainerProps {
@@ -56,10 +57,10 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
     const chosenStatsFilterNumber = chosenStats.map((stat) => stat.statFilterNumber);
     const chosenClassIds = selectedClassIdsByCategory;
 
-    const gaps: { id: string; gap: number }[] = [];
+    const gaps: { dataId: string; gap: number }[] = [];
 
-    buildsData.forEach((buildData, id) => {
-      const { classIds, stats, bodytypes } = buildData;
+    for (const build of buildsDataArray) {
+      const { id: dataId, classIds, stats, bodytypes } = build;
 
       const isOneElementNonAccepted = categories.some((categoryKey, index) => {
         if (chosenClassIds[categoryKey].size === 0) {
@@ -100,9 +101,9 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
       });
 
       if (validSet) {
-        gaps.push({ id, gap });
+        gaps.push({ dataId, gap });
       }
-    });
+    }
 
     gaps.sort((a, b) => a.gap - b.gap);
 
@@ -113,14 +114,13 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
       const buildsFoundIdGap = gaps.slice(0, realResultsNumber);
       const worstGap = chosenStatsChecked.filter((checked) => checked).length;
 
-      const buildsFound: Build[] = buildsFoundIdGap.map(({ id, gap }, index) => {
+      const buildsFound: Build[] = buildsFoundIdGap.map(({ dataId, gap }, index) => {
         const percentage = 100 * (1 - Math.sqrt(gap / worstGap));
         const percentageRounded = Number(percentage.toPrecision(3));
-        const { bodytypes, ...setFoundData } = buildsData.get(id);
         return {
-          ...setFoundData,
           id: nanoid(8),
           name: `${t("buildFound")} (${index + 1})`,
+          dataId: dataId,
           percentage: percentageRounded,
         };
       });

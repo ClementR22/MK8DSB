@@ -1,10 +1,14 @@
 import React, { memo } from "react";
-import { useModalLoadBuildStore } from "@/stores/useModalLoadBuildStore";
+import useLoadBuildModalStore from "@/stores/useLoadBuildModalStore";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 
-const ButtonLoadBuild = ({ tooltipText }) => {
-  const setIsLoadBuildModalVisible = useModalLoadBuildStore((state) => state.setIsLoadBuildModalVisible);
+interface ButtonLoadBuildProps {
+  tooltipText: string;
+}
+
+const ButtonLoadBuild: React.FC<ButtonLoadBuildProps> = ({ tooltipText }) => {
+  const setIsLoadBuildModalVisible = useLoadBuildModalStore((state) => state.setIsLoadBuildModalVisible);
 
   return (
     <ButtonIcon

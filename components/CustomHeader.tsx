@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import Text from "@/primitiveComponents/Text";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { box_shadow_z1 } from "./styles/shadow";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

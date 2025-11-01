@@ -6,7 +6,8 @@ import { router } from "expo-router";
 
 // Data and Types
 import { ScreenName } from "@/contexts/ScreenContext";
-import { MAX_NUMBER_BUILDS_DISPLAY, MAX_NUMBER_BUILDS_SAVE, Build } from "./useBuildsListStore";
+import { MAX_NUMBER_BUILDS_DISPLAY, MAX_NUMBER_BUILDS_SAVE } from "./useBuildsListStore";
+import { Build } from "@/data/builds/buildsTypes";
 
 // Utilities
 import { getBuildStatsFromClassIds } from "@/utils/getBuildStatsFromClassIds";
@@ -18,6 +19,7 @@ import useStatsStore from "./useStatsStore";
 import useBuildsListStore from "./useBuildsListStore";
 import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 import useGeneralStore from "./useGeneralStore";
+import { buildsDataMap } from "@/data/builds/buildsData";
 
 export interface BuildsActionsStoreState {
   loadBuildCard: (params: {
@@ -103,7 +105,9 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       build = useBuildsListStore.getState().getBuild(source, id);
     }
 
-    useStatsStore.getState().loadBuildStats(build.stats);
+    const buildData = buildsDataMap.get(build.dataId);
+
+    useStatsStore.getState().loadBuildStats(buildData.stats);
 
     router.push({ pathname: "/", params: { scrollToTop: "true" } });
     useGeneralStore.getState().setShouldScrollToTop();
@@ -139,10 +143,14 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
   },
 
   unSaveBuild: async (screenName: ScreenName, id: string) => {
-    const classIds = useBuildsListStore.getState().getBuild(screenName, id).classIds;
+    const build = useBuildsListStore.getState().getBuild(screenName, id);
+    const classIds = buildsDataMap.get(build.dataId).classIds;
 
     const buildsListSaved = useBuildsListStore.getState().buildsListSaved;
-    const buildsToRemove = buildsListSaved.filter((build) => arraysEqual(build.classIds, classIds));
+    const buildsToRemove = buildsListSaved.filter((build) => {
+      const buildData = buildsDataMap.get(build.dataId);
+      return arraysEqual(buildData.classIds, classIds);
+    });
 
     for (const build of buildsToRemove) {
       useBuildsListStore.getState().removeBuild(build.id, "save");
@@ -153,7 +161,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
   exportBuild: (screenName, id) => {
     const build = useBuildsListStore.getState().getBuild(screenName, id);
 
-    const json = JSON.stringify({ name: build.name, classIds: build.classIds });
+    const json = JSON.stringify({ name: build.name, dataId: build.dataId });
     Clipboard.setStringAsync(json);
   },
 
@@ -170,13 +178,13 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       throw new Error("incorrectFormat");
     }
 
-    const stats = getBuildStatsFromClassIds(parsedBuild.classIds);
+    const parsedBuildData = buildsDataMap.get(parsedBuild.dataId);
 
-    if (!stats) {
+    if (!parsedBuildData.stats) {
       throw new Error("thisBuildDoesNotExist");
     }
 
-    const build = { ...parsedBuild, id: nanoid(8), stats };
+    const build = { ...parsedBuild, id: nanoid(8) };
 
     if (screenName === "search") {
       get().loadToSearch({ build });

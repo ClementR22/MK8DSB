@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Text as RNText, StyleProp } from "react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { fontWeights, TextRole, TextSize, TextWeight, typography } from "@/components/styles/typography";
 import { TextStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import { useTranslation } from "react-i18next";

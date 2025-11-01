@@ -1,6 +1,6 @@
 import Text from "@/primitiveComponents/Text";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { CORNER_EXTRA_SMALL } from "@/utils/designTokens";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, ViewStyle } from "react-native";

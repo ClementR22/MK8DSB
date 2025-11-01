@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Picker as NativePicker } from "@react-native-picker/picker";
 import { View, StyleSheet, Platform } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { useTranslation } from "react-i18next";
 import Text from "@/primitiveComponents/Text";
 import { BORDER_RADIUS_STANDARD } from "@/utils/designTokens";

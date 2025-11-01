@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { maxValues } from "@/data/classStats";
 import { Category } from "@/data/elements/elementsTypes";
 import { BORDER_RADIUS_18, LIST_ITEM_SPACING, PADDING_HORIZONTAL_ELEMENT_CARD } from "@/utils/designTokens";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import StatGaugeRelativeBar from "../statGauge/StatGaugeRelativeBar";
 import StatGaugeContainer from "../statGauge/StatGaugeContainer";
 import StatGaugeBar from "../statGauge/StatGaugeBar";

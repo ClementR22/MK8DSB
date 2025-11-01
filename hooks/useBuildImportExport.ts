@@ -3,7 +3,7 @@ import * as Clipboard from "expo-clipboard";
 import { ScreenName } from "@/contexts/ScreenContext";
 import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
 import showToast from "@/utils/showToast";
-import { useModalLoadBuildStore } from "@/stores/useModalLoadBuildStore";
+import useLoadBuildModalStore from "@/stores/useLoadBuildModalStore";
 
 export const useBuildImportExport = () => {
   const exportBuild = useBuildsActionsStore((state) => state.exportBuild);
@@ -26,7 +26,7 @@ export const useBuildImportExport = () => {
     } catch (e) {
       showToast(e.message, "error");
     }
-    useModalLoadBuildStore.getState().setIsLoadBuildModalVisible(false);
+    useLoadBuildModalStore.getState().setIsLoadBuildModalVisible(false);
   };
 
   return { handleExport, handleImport };

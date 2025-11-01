@@ -1,5 +1,5 @@
 import React from "react";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import Text from "@/primitiveComponents/Text";
 import { MaterialCommunityIcons } from "@expo/vector-icons";

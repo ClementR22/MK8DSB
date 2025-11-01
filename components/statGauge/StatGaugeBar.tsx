@@ -3,7 +3,7 @@ import { useGaugeMetrics } from "@/hooks/useGaugeMetrics";
 import { useStatGaugeStyles } from "@/hooks/useStatGaugeStyles";
 import Text from "@/primitiveComponents/Text";
 import { ContextId } from "@/stores/useGaugeStore";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 

@@ -1,7 +1,7 @@
 import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo } from "react";
 import { Modal as NativeModal, Pressable, StyleSheet, View } from "react-native";
 import Button from "@/primitiveComponents/Button";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import {
   BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,

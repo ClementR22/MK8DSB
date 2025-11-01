@@ -4,7 +4,7 @@ import { ScreenProvider } from "@/contexts/ScreenContext";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { BUILD_CARD_COLOR_PALETTE } from "@/constants/Colors";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
 import ButtonAddBuild from "@/components/managingBuildsButton/ButtonAddBuild";
 import ButtonLoadBuild from "@/components/managingBuildsButton/ButtonLoadBuild";

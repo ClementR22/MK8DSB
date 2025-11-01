@@ -1,6 +1,6 @@
 import React from "react";
 import ButtonAndModal from "../modal/ButtonAndModal";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import Text from "@/primitiveComponents/Text";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 

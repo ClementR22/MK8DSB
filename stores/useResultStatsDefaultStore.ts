@@ -14,7 +14,7 @@ interface ResultStatsDefaultStore {
   toggleCheckListResultStatsDefault: (name: string) => void;
 }
 
-export const useResultStatsDefaultStore = create<ResultStatsDefaultStore>((set, get) => ({
+const useResultStatsDefaultStore = create<ResultStatsDefaultStore>((set, get) => ({
   isResultStatsSync: IS_RESULT_STATS_SYNC,
 
   async setIsResultStatsSync(newValue) {
@@ -34,3 +34,5 @@ export const useResultStatsDefaultStore = create<ResultStatsDefaultStore>((set, 
     get().setResultStatsDefault(newList);
   },
 }));
+
+export default useResultStatsDefaultStore;

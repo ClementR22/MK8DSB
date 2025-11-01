@@ -1,9 +1,9 @@
-import { buildsData } from "@/data/buildsData";
+import { buildsDataMap } from "@/data/builds/buildsData";
 
 export const getBuildStatsFromClassIds = (classIds: number[]): number[] => {
-  // dans buildsData, les builds ont pour clé classIds.join("-")
+  // dans buildsDataMap, les builds ont pour clé classIds.join("-")
   const id: string = classIds.join("-");
-  const buildData = buildsData.get(id);
+  const buildData = buildsDataMap.get(id);
 
   return buildData?.stats;
 };

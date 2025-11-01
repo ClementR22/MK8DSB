@@ -1,6 +1,6 @@
 import React from "react";
 import { DimensionValue, Pressable, StyleSheet, View } from "react-native";
-import { useThemeStore } from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore";
 import { BORDER_RADIUS_INF } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
 
