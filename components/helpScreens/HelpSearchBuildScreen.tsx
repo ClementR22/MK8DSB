@@ -119,7 +119,7 @@ const HelpSearchBuildScreen = () => {
 
         <HelpStepItem key="B" stepChar="B" title="advanced_options.step.filters" namespace="helpSearch">
           <HelpButtonDescription
-            iconName="pin"
+            iconName="filter"
             iconType={IconType.MaterialCommunityIcons}
             description="advanced_options.step.filters.lock_item"
             namespace="helpSearch"

@@ -169,7 +169,7 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
         customTrigger={
           <ButtonIconWithBadge
             tooltipText="chooseFilters"
-            iconName="pin"
+            iconName="filter"
             iconType={IconType.MaterialCommunityIcons}
             badgeText={numberOfSelectedClassIds}
           />
