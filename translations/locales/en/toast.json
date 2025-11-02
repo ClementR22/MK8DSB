@@ -19,10 +19,12 @@
   "setHasBeenLoadedInTheComparator": "build have been loaded in the comparator",
   "setHasBeenSaved": "build has been saved",
   "setHasBeenUnSaved": "build has been unsaved",
-  "setHasBeenDeleted": "build hase been deleted",
+  "setHasBeenDeleted": "build has been deleted",
   "setCopiedInClipboard": "build copied in clipboard",
   "buildImported": "build imported",
   "statsImported": "build's stats imported",
   "buildLimitReachedInThisScreen": "build limit reached",
-  "cannotGenerateUniqueName": "cannot generate new name"
+  "cannotGenerateUniqueName": "cannot generate new name",
+  "buildNameRequiredForSaving": "you must enter a name to like a build",
+  "savedBuildCannotHaveEmptyName": "saved builds must have a name"
 }

@@ -144,7 +144,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
 
     const name = useDeckStore.getState().deck.get(build.dataId)?.name;
     if (!name) {
-      throw new Error("shouldRenameBuild");
+      throw new Error("buildNameRequiredForSaving");
     }
 
     get().loadBuildCard({ build: build, target: "save" });

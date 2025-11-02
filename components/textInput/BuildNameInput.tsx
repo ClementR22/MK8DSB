@@ -29,7 +29,7 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, id, editable = tr
       // si le nouveau nom est vide et si le build est saved
       if (isSaved) {
         setLocalName(name); // on remet le nom initiale
-        showToast("cant empty name for save", "error");
+        showToast("savedBuildCannotHaveEmptyName", "error");
         return; // et on s'arrete
       }
       // si le nouveau nom est vide (ou espaces) et si le build n'est pas saved
