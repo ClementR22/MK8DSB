@@ -1,5 +1,13 @@
 import React, { useState, memo, useMemo, useCallback, useRef } from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  FlatList,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import PagerView from "react-native-pager-view";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { Category } from "@/data/elements/elementsTypes";
@@ -40,6 +48,7 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
 
   const theme = useThemeStore((state) => state.theme);
   const pagerRef = useRef<PagerView>(null);
+  const flatlistRef = useRef<FlatList>(null);
 
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [sortNumber, setSortNumber] = useState(0);
@@ -93,6 +102,7 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
       setCurrentPage(newPage);
       isProgrammaticScroll.current = true;
       pagerRef.current?.setPage(newPage);
+      flatlistRef.current?.scrollToIndex({ index: newPage });
     },
     [currentPage]
   );
@@ -156,17 +166,37 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
           <CategorySelector selectedCategory={selectedCategory} onCategoryPress={handleCategoryChange} />
         </View>
 
-        <PagerView ref={pagerRef} style={styles.pagerView} initialPage={0} onPageSelected={handlePageSelected}>
-          {pages.map((pageElements, index) => (
-            <View key={`page-${index}`} style={styles.pageContainer}>
-              <ElementsGrid
-                elements={pageElements}
-                selectedClassId={selectedClassId}
-                onSelectElement={handleSelectElement}
-              />
-            </View>
-          ))}
-        </PagerView>
+        {Platform.OS === "web" ? (
+          <FlatList
+            ref={flatlistRef}
+            data={pages}
+            keyExtractor={(_, index) => index.toString()}
+            renderItem={({ item }) => {
+              return (
+                <ElementsGrid elements={item} selectedClassId={selectedClassId} onSelectElement={handleSelectElement} />
+              );
+            }}
+            horizontal
+            pagingEnabled
+            getItemLayout={(_, index) => ({
+              length: 300,
+              offset: 300 * index,
+              index,
+            })}
+          />
+        ) : (
+          <PagerView ref={pagerRef} style={styles.pagerView} initialPage={0} onPageSelected={handlePageSelected}>
+            {pages.map((pageElements, index) => (
+              <View key={`page-${index}`} style={styles.pageContainer}>
+                <ElementsGrid
+                  elements={pageElements}
+                  selectedClassId={selectedClassId}
+                  onSelectElement={handleSelectElement}
+                />
+              </View>
+            ))}
+          </PagerView>
+        )}
 
         <View style={styles.navigatorWrapper}>
           <PagesNavigator currentPage={currentPage} setCurrentPage={handleSetPage} numberOfPages={numberOfPages} />

@@ -3,14 +3,14 @@ import { create } from "zustand";
 import { categories } from "@/data/elements/elementsData";
 import { Category } from "@/data/elements/elementsTypes";
 
-export type selectedClassIdsByCategory = {
+type SelectedClassIdsByCategory = {
   character: number;
   body: number;
   wheel: number;
   glider: number;
 };
 
-export type multiSelectedClassIdsByCategory = {
+type MultiSelectedClassIdsByCategory = {
   character: Set<number>;
   body: Set<number>;
   wheel: Set<number>;
@@ -18,11 +18,11 @@ export type multiSelectedClassIdsByCategory = {
 };
 
 export type PressableElementsStore = {
-  selectedClassIdsByCategory: selectedClassIdsByCategory;
-  multiSelectedClassIdsByCategory: multiSelectedClassIdsByCategory;
+  selectedClassIdsByCategory: SelectedClassIdsByCategory;
+  multiSelectedClassIdsByCategory: MultiSelectedClassIdsByCategory;
   getSelectedClassIds: (
     selectionMode: "single" | "multiple"
-  ) => selectedClassIdsByCategory | multiSelectedClassIdsByCategory;
+  ) => SelectedClassIdsByCategory | MultiSelectedClassIdsByCategory;
 
   isBuildsListUpdated: boolean;
   setIsBuildsListUpdated: (newIsBuildsListUpdated: boolean) => void;
@@ -33,8 +33,8 @@ export type PressableElementsStore = {
   toggleMultiSelectElementsByClassId: (category: Category, elementId: number) => void;
 };
 
-const defaultSingleSelection: selectedClassIdsByCategory = { character: 9, body: 16, wheel: 30, glider: 39 };
-const defaultMultiSelection: multiSelectedClassIdsByCategory = {
+const defaultSingleSelection: SelectedClassIdsByCategory = { character: 9, body: 16, wheel: 30, glider: 39 };
+const defaultMultiSelection: MultiSelectedClassIdsByCategory = {
   character: new Set(),
   body: new Set(),
   wheel: new Set(),
@@ -61,7 +61,7 @@ const usePressableElementsStore = create<PressableElementsStore>((set, get) => (
 
   updateSelectionFromBuild: (classIds) => {
     set((state) => {
-      const newSelected: selectedClassIdsByCategory = {
+      const newSelected: SelectedClassIdsByCategory = {
         character: null,
         body: null,
         wheel: null,
