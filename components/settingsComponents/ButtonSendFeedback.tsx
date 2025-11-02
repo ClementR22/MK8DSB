@@ -8,7 +8,11 @@ const ButtonSendFeedback = React.memo(() => {
   const handleContactPress = useCallback(() => {
     Linking.openURL(url);
   }, []);
-  return <Button onPress={handleContactPress}>sendFeedback</Button>;
+  return (
+    <Button onPress={handleContactPress} tooltipText="sendFeedback">
+      sendFeedback
+    </Button>
+  );
 });
 
 export default ButtonSendFeedback;

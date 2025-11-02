@@ -17,7 +17,7 @@ interface ButtonProps {
   buttonColor?: string;
   buttonTextColor?: string;
   onPress: () => void;
-  tooltipText?: string;
+  tooltipText: string;
   iconProps?: IconProps;
   minWidth?: number;
   flex?: 1;

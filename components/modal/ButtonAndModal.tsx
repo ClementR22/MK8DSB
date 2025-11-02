@@ -20,6 +20,7 @@ interface ButtonAndModalProps {
   customTrigger?: React.ReactElement<{ onPress?: (event: GestureResponderEvent) => void } & Record<string, any>>;
   // Sinon on utilisera un Button avec le texte donné en props
   triggerButtonText?: string;
+  tooltipText: string;
   // Possibilité changer le texte du bouton fermer.
   closeButtonText?: string;
   // Composant pour le deuxieme bouton
@@ -30,7 +31,7 @@ interface ButtonAndModalProps {
   secondButtonProps?: {
     text: string;
     onPress: () => void;
-    tooltipText?: string;
+    tooltipText: string;
     buttonColor?: string;
     buttonTextColor?: string;
   };
@@ -48,6 +49,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
   setIsModalVisibleProp, // option
   customTrigger, // give a component OR
   triggerButtonText, // give just the text
+  tooltipText,
   closeButtonText = undefined,
   secondButton,
   secondButtonProps,
@@ -80,14 +82,14 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
 
   // Clonez le customTrigger pour injecter la prop onPress
   const triggerElement = customTrigger ? (
-    React.cloneElement(customTrigger, { onPress: openModal })
+    React.cloneElement(customTrigger, { onPress: openModal, tooltipText: tooltipText })
   ) : (
     <Button
       key={"ModalButton"}
       buttonColor={buttonColor}
       buttonTextColor={buttonTextColor}
       onPress={openModal}
-      tooltipText={undefined}
+      tooltipText={tooltipText}
     >
       {triggerButtonText}
     </Button>

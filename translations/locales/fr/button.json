@@ -1,9 +1,9 @@
 {
   "search": "Chercher",
-  "displayedStats": "Displayed stats",
+  "statsToCompare": "Stats à comparer",
   "numberOfSearchResults": "Nombre de résultats de recherche",
   "configureDefaultStats": "Configurer les stats affichées par défault",
-  "sendFeedback": "Faire un retour",
+  "sendFeedback": "Laisser un avis",
   "openSourceLicenses": "Licences Open Source",
   "resetSettings": "Réinitialiser les préférences",
   "deleteAllBuildsInMemory": "Supprimer tous les builds enregistrés",

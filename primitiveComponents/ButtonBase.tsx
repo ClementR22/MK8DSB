@@ -1,12 +1,12 @@
 import React from "react";
-import { Pressable, ViewStyle } from "react-native";
+import { ViewStyle } from "react-native";
 import Tooltip from "@/components/Tooltip";
 import { Placement } from "react-native-popover-view/dist/Types";
 
 type ButtonBaseProps = {
   children: React.ReactNode;
   onPress: () => void;
-  tooltipText?: string;
+  tooltipText: string;
   placement?: Placement;
   containerStyle?: ViewStyle | ViewStyle[];
   disabled?: boolean;
@@ -22,10 +22,11 @@ const ButtonBase = ({
   disabled = false,
   ...props
 }: ButtonBaseProps) => {
-  const Wrapper = tooltipText ? Tooltip : Pressable;
-
+  if (!tooltipText) {
+    console.error("tooltipText missing in buttonBase", children, onPress);
+  }
   return (
-    <Wrapper
+    <Tooltip
       onPress={onPress}
       style={containerStyle}
       tooltipText={tooltipText}
@@ -34,7 +35,7 @@ const ButtonBase = ({
       {...props}
     >
       {children}
-    </Wrapper>
+    </Tooltip>
   );
 };
 

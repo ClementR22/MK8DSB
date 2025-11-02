@@ -47,6 +47,7 @@ const ResultsNumberSelector = () => {
       triggerButtonText="numberOfSearchResults"
       isModalVisibleProp={isModalVisible}
       setIsModalVisibleProp={setIsModalVisible}
+      tooltipText="numberOfSearchResults"
     >
       <View style={styles.container}>
         <ButtonIcon
@@ -54,6 +55,7 @@ const ResultsNumberSelector = () => {
           iconName="minus"
           iconType={IconType.MaterialCommunityIcons}
           disabled={!canDecrement}
+          tooltipText="decrease"
         />
         <Text role="display" size="medium" textAlign="center" style={styles.resultsNumberText} namespace="not">
           {resultsNumberInModal}
@@ -63,6 +65,7 @@ const ResultsNumberSelector = () => {
           iconName="plus"
           iconType={IconType.MaterialCommunityIcons}
           disabled={!canIncrement}
+          tooltipText="increase"
         />
       </View>
     </ButtonAndModal>

@@ -1,6 +1,6 @@
 {
   "search": "Search",
-  "displayedStats": "Displayed stats",
+  "statsToCompare": "Stats to compare",
   "numberOfSearchResults": "Number of search results",
   "configureDefaultStats": "Configure default displayed stats",
   "sendFeedback": "Send feedback",

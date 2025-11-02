@@ -75,6 +75,7 @@ const HelpSearchBuildScreen = () => {
         >
           <Button
             onPress={() => {}}
+            tooltipText="search"
             iconProps={{
               type: IconType.MaterialCommunityIcons,
               name: "magnify",

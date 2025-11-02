@@ -10,8 +10,10 @@ const ButtonDeleteAllBuildsInMemory = ({ deleteAllSavedBuilds }) => {
   return (
     <ButtonAndModal
       triggerButtonText="deleteAllBuildsInMemory"
+      tooltipText="deleteAllBuildsInMemory"
       secondButtonProps={{
         text: "confirm",
+        tooltipText: "confirm",
         onPress: deleteAllSavedBuilds,
         buttonColor: theme.error,
         buttonTextColor: theme.on_error,

@@ -5,6 +5,7 @@ import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import { StyleSheet } from "react-native";
 import useThemeStore from "@/stores/useThemeStore";
+import { Placement } from "react-native-popover-view/dist/Types";
 
 export type HelpContentItem = {
   type: "title" | "highlight" | "step" | "feature" | "custom";
@@ -28,13 +29,15 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, children }) => {
         buttonSize={48}
         color={theme.on_surface}
         style={{ backgroundColor: "transparent" }}
+        tooltipText="help"
+        toolTipPlacement={Placement.LEFT}
       />
     ),
     []
   );
 
   return (
-    <ButtonAndModal customTrigger={customTrigger} modalTitle={title}>
+    <ButtonAndModal customTrigger={customTrigger} modalTitle={title} tooltipText="help">
       <ScrollView scrollEnabled={true} style={styles.scrollView}>
         <Pressable style={styles.container}>{children}</Pressable>
       </ScrollView>

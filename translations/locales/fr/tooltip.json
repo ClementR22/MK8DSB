@@ -12,10 +12,26 @@
 
   "addASet": "Ajouter un build",
 
+  "search": "Chercher des builds",
+
   "changeCondition": "Fixer une condition",
+
+  "desiredStatsAndStatsInBuilds": "Stats desirées et stats affichées dans les builds",
+  "statsToCompare": "Stats à comparer",
+  "displayedStatsInBuilds": "Stats affichées dans les builds",
+  "configureDefaultStats": "Configurer les stats affichées par défault",
 
   "chooseFilters": "Choisissez des filtres",
   "filterBodytypes": "Filtrer des types de carroseries",
+
+  "numberOfSearchResults": "Nombre de résultats de recherche",
+  "deleteAllBuildsInMemory": "Supprimer tous les builds enregistrés",
+  "resetSettings": "Réinitialiser les préférences",
+  "openSourceLicenses": "Licences Open Source",
+  "sendFeedback": "Laisser un avis",
+
+  "decrease": "Diminuer",
+  "increase": "Augmenter",
 
   "sortBuilds": "Trier les builds",
   "sortElements": "Trier les éléments",
@@ -27,5 +43,9 @@
   "loadTheStatsToSearchScreen": "Charger les stats dans l'écran de recherche",
   "loadTheBuildToDisplayScreen": "Charger le build dans l'écran de comparaison",
   "copy": "Copier",
-  "moreActions": "Plus d'actions"
+  "moreActions": "Plus d'actions",
+
+  "confirm": "Confirmer",
+  "cancel": "Retour",
+  "close": "Fermer"
 }

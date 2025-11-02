@@ -7,7 +7,7 @@ import { vh } from "../styles/theme";
 
 const ButtonLicenses = () => {
   return (
-    <ButtonAndModal modalTitle="licenses" triggerButtonText="openSourceLicenses">
+    <ButtonAndModal modalTitle="licenses" triggerButtonText="openSourceLicenses" tooltipText="openSourceLicenses">
       <ScrollView
         contentContainerStyle={styles.flatListContainer}
         style={{

@@ -15,7 +15,7 @@ import Text from "./Text";
 interface ModalButtonProps {
   text: string;
   onPress: () => void;
-  tooltipText?: string;
+  tooltipText: string;
   buttonColor?: string;
   buttonTextColor?: string;
 }
@@ -46,8 +46,8 @@ interface ModalProps {
   // ou uniquement ses props
   secondButtonProps?: {
     text: string;
-    onPress: () => void | boolean;
-    tooltipText?: string;
+    onPress: () => void;
+    tooltipText: string;
     buttonColor?: string;
     buttonTextColor?: string;
   };
@@ -144,7 +144,7 @@ const Modal = ({
 
           <View style={[styles.buttonContainer, { flexDirection: buttonContainerFlexDirection }]}>
             {renderSecondButton()}
-            {<ModalButton text={closeButtonText} onPress={actualOnPressClose} />}
+            {<ModalButton text={closeButtonText} onPress={actualOnPressClose} tooltipText={closeButtonText} />}
           </View>
         </Pressable>
       </Pressable>

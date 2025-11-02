@@ -151,11 +151,12 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
 
   return (
     <View style={styles.screenPressablesContainer}>
-      <StatSelector />
+      <StatSelector tooltipText="desiredStatsAndStatsInBuilds" />
 
       <Button
         key="button-search"
         onPress={handleSearch}
+        tooltipText="search"
         iconProps={{ type: IconType.MaterialCommunityIcons, name: "magnify" }}
         disabled={disableSearch}
         flex={1}
@@ -167,12 +168,13 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
         modalTitle="filters"
         customTrigger={
           <ButtonIconWithBadge
-            tooltipText="ChooseFilters"
+            tooltipText="chooseFilters"
             iconName="pin"
             iconType={IconType.MaterialCommunityIcons}
             badgeText={numberOfSelectedClassIds}
           />
         }
+        tooltipText="chooseFilters"
       >
         <PannelPaginated
           selectionMode="multiple"

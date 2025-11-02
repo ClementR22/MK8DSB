@@ -4,7 +4,7 @@
 
   "desiredStatsAndStatsInBuilds": "Desired stats and displayed stats in builds",
   "displayedStatsInBuilds": "Displayed stats in builds",
-  "displayedStats": "Displayed stats",
+  "statsToCompare": "Stats to compare",
 
   "loadASavedSet": "Load a saved build",
 

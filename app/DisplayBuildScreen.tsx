@@ -91,12 +91,12 @@ const DisplayBuildScreen = () => {
         <ScrollViewScreen scrollEnabled={isScrollEnable}>
           <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
             <ButtonAddBuild scrollRef={scrollRef} />
-            <ButtonLoadBuild tooltipText="LoadASet" />
+            <ButtonLoadBuild tooltipText="loadASet" />
             <ButtonIcon
               onPress={toggleIsBuildCardsCollapsed}
               iconName={isBuildCardsCollapsed ? "chevron-down" : "chevron-up"}
               iconType={IconType.MaterialCommunityIcons}
-              tooltipText={isBuildCardsCollapsed ? "DevelopBuilds" : "ReduceBuilds"}
+              tooltipText={isBuildCardsCollapsed ? "developBuilds" : "reduceBuilds"}
             />
           </ScreenPressablesContainer>
 
@@ -104,7 +104,7 @@ const DisplayBuildScreen = () => {
             <BuildCardsContainer ref={scrollRef} builds={buildsWithColor} hideRemoveBuild={hideRemoveBuild} />
 
             <View style={styles.mainButtonWrapper}>
-              <StatSelector triggerButtonText="displayedStats" />
+              <StatSelector triggerButtonText="statsToCompare" tooltipText="statsToCompare" />
             </View>
 
             <StatGaugeComparesContainer buildsColorsMap={buildsColorsMap} />

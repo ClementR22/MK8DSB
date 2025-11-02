@@ -22,6 +22,7 @@ type StatListColumn = {
 
 interface StatSelectorProps {
   triggerButtonText?: string;
+  tooltipText: string;
   children?: React.ReactNode;
 }
 
@@ -55,7 +56,7 @@ const getTriggerConfig = (screenName: ScreenName) => {
     screenName === "search"
       ? "desiredStatsAndStatsInBuilds"
       : screenName === "display"
-      ? "displayedStats"
+      ? "statsToCompare"
       : screenName === "save"
       ? "displayedStatsInBuilds"
       : "defaultDisplayedStats";
@@ -63,7 +64,7 @@ const getTriggerConfig = (screenName: ScreenName) => {
   return { customTrigger, modalTitle };
 };
 
-const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, children }) => {
+const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipText, children }) => {
   const theme = useThemeStore((state) => state.theme);
   const screenName = useScreen();
 
@@ -175,6 +176,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, children
     <ButtonAndModal
       customTrigger={screenConfig.triggerConfig.customTrigger}
       triggerButtonText={triggerButtonText}
+      tooltipText={tooltipText}
       modalTitle={screenConfig.triggerConfig.modalTitle}
       isModalVisibleProp={isModalVisible}
       setIsModalVisibleProp={setIsModalVisible}

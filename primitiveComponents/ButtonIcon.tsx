@@ -8,7 +8,7 @@ import { Placement } from "react-native-popover-view/dist/Types";
 
 export interface ButtonIconProps {
   onPress?: (event?: Event) => void;
-  tooltipText?: string;
+  tooltipText: string;
   toolTipPlacement?: Placement;
   iconName: string;
   iconType: IconType;

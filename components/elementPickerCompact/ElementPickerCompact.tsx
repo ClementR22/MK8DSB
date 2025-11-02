@@ -1,4 +1,3 @@
-// components/common/Item.tsx (ou un dossier approprié)
 import React, { memo } from "react";
 import { Image, ImageSourcePropType, StyleSheet, ViewStyle } from "react-native";
 import Tooltip from "../Tooltip";

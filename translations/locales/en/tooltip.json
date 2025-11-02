@@ -12,10 +12,26 @@
 
   "addASet": "Add a build",
 
+  "search": "Search builds",
+
   "changeCondition": "Fix a condition",
+
+  "desiredStatsAndStatsInBuilds": "Desired stats and displayed stats in builds",
+  "statsToCompare": "Stats to compare",
+  "displayedStatsInBuilds": "Displayed stats in builds",
+  "configureDefaultStats": "Configure default displayed stats",
 
   "chooseFilters": "Choose some filters",
   "filterBodytypes": "Filter body types",
+
+  "numberOfSearchResults": "Number of search results",
+  "deleteAllBuildsInMemory": "Delete all saved builds",
+  "resetSettings": "Reset settings",
+  "openSourceLicenses": "Open Source Licenses",
+  "sendFeedback": "Send feedback",
+
+  "decrease": "Decrease",
+  "increase": "Increase",
 
   "sortBuilds": "Sort builds",
   "sortElements": "Sort elements",
@@ -27,5 +43,9 @@
   "loadTheStatsToSearchScreen": "Load the stats to search screen",
   "loadTheBuildToDisplayScreen": "Load the build to compare screen",
   "copy": "Copy",
-  "moreActions": "More actions"
+  "moreActions": "More actions",
+
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "close": "Close"
 }

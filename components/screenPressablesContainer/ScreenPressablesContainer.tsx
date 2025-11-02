@@ -57,7 +57,7 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
               onPress={toggleOpenSortView}
               iconName="sort"
               iconType={IconType.MaterialCommunityIcons}
-              tooltipText="SortBuilds"
+              tooltipText="sortBuilds"
             />
           )}
         </View>

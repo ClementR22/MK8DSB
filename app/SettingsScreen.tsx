@@ -6,7 +6,6 @@ import ButtonResetSettings from "@/components/settingsComponents/ButtonResetSett
 import ButtonSendFeedback from "@/components/settingsComponents/ButtonSendFeedback";
 import ButtonLicenses from "@/components/settingsComponents/ButtonLicenses";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
-import Button from "@/primitiveComponents/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useResetSettings } from "@/hooks/useResetSettings";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
@@ -18,7 +17,6 @@ import ResultsNumberSelector from "@/components/ResultsNumberSelector";
 import { box_shadow_z1 } from "@/components/styles/shadow";
 import Text from "@/primitiveComponents/Text";
 import showToast from "@/utils/showToast";
-import useBuildsPersistenceStore from "@/stores/useBuildsPersistenceStore";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 
 const SettingsScreen: React.FC = () => {
@@ -50,17 +48,13 @@ const SettingsScreen: React.FC = () => {
       <ResultStatsProvider>
         <ScrollViewScreen scrollEnabled={true}>
           <BoxContainer alignItems={"stretch"} boxShadow={box_shadow_z1}>
-            <Text role="body" size="medium" namespace="common">
-              welcome
-            </Text>
-
             <LanguageSelector />
 
             <ThemeSelector />
 
             <ResultsNumberSelector />
 
-            <StatSelector triggerButtonText="configureDefaultStats">
+            <StatSelector triggerButtonText="configureDefaultStats" tooltipText="configureDefaultStats">
               <Text role="title" size="small" namespace="text">
                 appliedOnMountForSetBuilderAndComparator
               </Text>
@@ -73,10 +67,6 @@ const SettingsScreen: React.FC = () => {
             <ButtonResetSettings resetSettings={resetSettings} />
 
             <ButtonDeleteAllBuildsInMemory deleteAllSavedBuilds={handleDeleteAllSavedBuilds} />
-
-            <Button onPress={handleShowMemory}>show memory</Button>
-
-            <Button onPress={handleRemoveMemory}>remvove memory</Button>
           </BoxContainer>
         </ScrollViewScreen>
       </ResultStatsProvider>

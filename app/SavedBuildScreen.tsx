@@ -26,7 +26,7 @@ const SavedBuildScreen: React.FC = () => {
         <ScrollViewScreen scrollEnabled={isScrollEnable}>
           <ScreenPressablesContainer sortNumber={sortNumberSavedBuilds} setSortNumber={setSortNumberSavedBuilds}>
             <ButtonImportBuild screenName="save" />
-            <StatSelector />
+            <StatSelector tooltipText="displayedStatsInBuilds" />
           </ScreenPressablesContainer>
 
           <BuildCardsScrollProvider scrollRef={scrollRef}>

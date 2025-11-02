@@ -45,7 +45,6 @@ i18n.use(initReactI18next).init({
     "toast",
     "tooltip",
   ],
-  defaultNS: "common",
   nsSeparator: ":",
   keySeparator: false,
 
