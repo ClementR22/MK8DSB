@@ -34,10 +34,6 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
 }) => {
   const screenName = useScreen();
 
-  // inutile de donner isInLoadBuildModal à useActionIconPropsList donc on donne false
-  // idem pour isSaved
-  const [editActionProps] = useActionIconPropsList(["edit"], screenName, false, id, false);
-
   const data = useMemo<BuildImageCategoryData[]>(() => {
     return categories.map((category: Category, index: number) => {
       const matchedElements = elementsData.filter((element) => element.classId === classIds[index]);
@@ -52,8 +48,12 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
     });
   }, [classIds]);
 
+  // inutile de donner isSaved à useActionIconPropsList donc on donne false
+  const [editActionProps] = useActionIconPropsList(["edit"], screenName, isInLoadBuildModal, id, false);
+  const onImagesPress = !isInLoadBuildModal ? editActionProps.onPress : () => {};
+
   return (
-    <Pressable onPress={editActionProps.onPress} style={styles.pressable}>
+    <Pressable onPress={onImagesPress} style={styles.pressable}>
       <View style={[styles.container, isCollapsed && styles.containerCollapsed]}>
         {data.map((item) => (
           <View key={item.category} style={styles.category}>
@@ -64,7 +64,7 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
                     key={`${item.category}-${index}`}
                     tooltipText={name}
                     namespace="elements"
-                    onPress={editActionProps.onPress}
+                    onPress={onImagesPress}
                     style={styles.tooltip}
                   >
                     <Image source={image} style={styles.image} resizeMode="contain" />
