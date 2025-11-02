@@ -43,7 +43,7 @@ export function useActionIconPropsList(
 
   const handleEditPress = useCallback(() => {
     setBuildEditedId(id);
-    updateSelectionFromBuild(buildsDataMap.get(build.dataId).stats);
+    updateSelectionFromBuild(buildsDataMap.get(build.dataId).classIds);
     setIsEditBuildModalVisible(true);
   }, [id, build?.dataId, setBuildEditedId, updateSelectionFromBuild, setIsEditBuildModalVisible]);
 

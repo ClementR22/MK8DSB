@@ -205,9 +205,9 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     useDeckStore.getState().updateName(build.dataId, newName);
   },
 
-  updateBuildsList: (pressedClassIdsObj, screenName) => {
+  updateBuildsList: (selectedClassIdsByCategory, screenName) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
-    const dataId = Object.values(pressedClassIdsObj).join("-");
+    const dataId = Object.values(selectedClassIdsByCategory).join("-");
     const id = get().buildEditedId;
 
     const build = get().getBuild(screenName, id);
