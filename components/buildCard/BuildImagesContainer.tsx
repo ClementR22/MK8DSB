@@ -55,14 +55,6 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
 
   const imageSize = mode === "icon" ? IMAGE_SIZE_IN_BUILD_CARD : IMAGE_SIZE_IN_MODAL;
 
-  const imageStyle = useMemo(
-    () => ({
-      width: imageSize,
-      height: imageSize,
-    }),
-    [imageSize]
-  );
-
   return (
     <View style={[styles.container, isCollapsed && styles.containerCollapsed]}>
       {data.map((item) => (
@@ -70,7 +62,13 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
           {item.elements.map(
             ({ name, image }, index) =>
               (!isCollapsed || index === 0) && (
-                <Tooltip key={`${item.category}-${index}`} tooltipText={name} onPress={onPress} style={styles.tooltip}>
+                <Tooltip
+                  key={`${item.category}-${index}`}
+                  tooltipText={name}
+                  namespace="elements"
+                  onPress={onPress}
+                  style={styles.tooltip}
+                >
                   <Image
                     source={image}
                     style={{
