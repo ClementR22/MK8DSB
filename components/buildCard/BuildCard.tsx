@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { LayoutChangeEvent, View, StyleSheet } from "react-native";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import BuildCardActionButtons from "./BuildCardActionButtons";
-import BuildImagesModal from "./BuildImagesModal";
+import BuildImagesContainer from "./BuildImagesContainer";
 import StatGaugeBuildCardsContainer from "../statGauge/StatGaugeBuildCardsContainer";
 import BuildCardHeader from "./BuildCardHeader";
 import { useBuildCardStyle } from "@/hooks/useBuildCardStyle";
@@ -16,7 +16,7 @@ interface BuildCardProps {
   dataId: string;
   percentage?: number;
   id: string;
-  isInLoadSetModal?: boolean;
+  isInLoadBuildModal?: boolean;
   screenNameFromProps?: ScreenName;
   hideRemoveBuild?: boolean;
   onLayout?: (event: LayoutChangeEvent) => void;
@@ -27,7 +27,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
   dataId,
   percentage = undefined,
   id,
-  isInLoadSetModal = false,
+  isInLoadBuildModal = false,
   screenNameFromProps,
   hideRemoveBuild = false,
   onLayout,
@@ -41,7 +41,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
 
   const contextScreenName = useScreen();
   const screenName = screenNameFromProps ?? contextScreenName;
-  const situation = isInLoadSetModal ? "load" : screenName;
+  const situation = isInLoadBuildModal ? "load" : screenName;
 
   const isBuildCardsCollapsed = useGeneralStore((state) => state.isBuildCardsCollapsed);
   const isCollapsed = screenName === "display" && isBuildCardsCollapsed;
@@ -67,14 +67,19 @@ const BuildCard: React.FC<BuildCardProps> = ({
           }
         />
 
-        <BuildImagesModal classIds={buildData.classIds} isCollapsed={isCollapsed} />
+        <BuildImagesContainer
+          classIds={buildData.classIds}
+          isCollapsed={isCollapsed}
+          isInLoadBuildModal={isInLoadBuildModal}
+          id={id}
+        />
 
         {!isCollapsed && (
           <BuildCardActionButtons
             actionNamesList={config.actionNamesList}
             id={id}
             screenName={screenName}
-            isInLoadModal={isInLoadSetModal}
+            isInLoadBuildModal={isInLoadBuildModal}
             isSaved={isSaved}
           />
         )}

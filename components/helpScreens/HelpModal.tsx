@@ -37,7 +37,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, children }) => {
   );
 
   return (
-    <ButtonAndModal customTrigger={customTrigger} modalTitle={title} tooltipText="help">
+    <ButtonAndModal modalTitle={title} customTrigger={customTrigger} tooltipText="help">
       <ScrollView scrollEnabled={true} style={styles.scrollView}>
         <Pressable style={styles.container}>{children}</Pressable>
       </ScrollView>

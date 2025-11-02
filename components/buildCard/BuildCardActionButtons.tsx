@@ -9,7 +9,7 @@ interface BuildCardActionButtonsProps {
   actionNamesList: ActionNamesList;
   id: string;
   screenName: ScreenName;
-  isInLoadModal: boolean;
+  isInLoadBuildModal: boolean;
   isSaved: boolean;
 }
 
@@ -17,10 +17,10 @@ const BuildCardActionButtons: React.FC<BuildCardActionButtonsProps> = ({
   actionNamesList,
   id,
   screenName,
-  isInLoadModal,
+  isInLoadBuildModal,
   isSaved,
 }) => {
-  const actionIconPropsList = useActionIconPropsList(actionNamesList, screenName, isInLoadModal, id, isSaved);
+  const actionIconPropsList = useActionIconPropsList(actionNamesList, screenName, isInLoadBuildModal, id, isSaved);
 
   return (
     <BoxContainer

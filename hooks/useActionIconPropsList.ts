@@ -23,11 +23,11 @@ type ActionIconPropsMap = ActionProps[];
 export function useActionIconPropsList(
   actionNamesToGenerate: ActionNamesList,
   screenName: ScreenName,
-  isInLoadModal: boolean,
+  isInLoadBuildModal: boolean,
   id: string,
   isSaved?: boolean
 ): ActionIconPropsMap {
-  const source = isInLoadModal ? "save" : screenName;
+  const source = isInLoadBuildModal ? "save" : screenName;
   const build = useBuildsListStore((state) => state.getBuild(source, id));
 
   const updateSelectionFromBuild = usePressableElementsStore((state) => state.updateSelectionFromBuild);
@@ -97,14 +97,14 @@ export function useActionIconPropsList(
         onPress: handleEditPress,
       },
       loadToSearch: {
-        title: isInLoadModal ? "loadTheStats" : "loadTheStatsToSearchScreen",
-        name: isInLoadModal ? "download" : "magnify",
+        title: isInLoadBuildModal ? "loadTheStats" : "loadTheStatsToSearchScreen",
+        name: isInLoadBuildModal ? "download" : "magnify",
         type: IconType.MaterialCommunityIcons,
         onPress: handleLoadToSearchPress,
       },
       loadToDisplay: {
-        title: isInLoadModal ? "loadTheBuild" : "loadTheBuildToDisplayScreen",
-        name: isInLoadModal ? "download" : "compare",
+        title: isInLoadBuildModal ? "loadTheBuild" : "loadTheBuildToDisplayScreen",
+        name: isInLoadBuildModal ? "download" : "compare",
         type: IconType.MaterialCommunityIcons,
         onPress: handleLoadToDisplayPress,
       },
@@ -133,7 +133,7 @@ export function useActionIconPropsList(
     actionNamesToGenerate,
     id,
     source,
-    isInLoadModal,
+    isInLoadBuildModal,
     isSaved,
     build?.dataId,
     setBuildEditedId,

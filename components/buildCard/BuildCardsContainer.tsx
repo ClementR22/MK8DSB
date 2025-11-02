@@ -24,7 +24,7 @@ interface BuildWithColor extends Build {
 
 interface BuildCardsContainerProps {
   builds: BuildWithColor[] | Build[];
-  isInLoadSetModal?: boolean;
+  isInLoadBuildModal?: boolean;
   screenNameFromProps?: ScreenName;
   hideRemoveBuild?: boolean;
 }
@@ -36,7 +36,7 @@ export interface BuildCardsContainerHandles {
 }
 
 const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsContainerProps>(
-  ({ builds, isInLoadSetModal = false, screenNameFromProps, hideRemoveBuild }, ref) => {
+  ({ builds, isInLoadBuildModal = false, screenNameFromProps, hideRemoveBuild }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
     const setCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
 
@@ -110,7 +110,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
           key={build.id}
           dataId={build.dataId}
           id={build.id}
-          isInLoadSetModal={isInLoadSetModal}
+          isInLoadBuildModal={isInLoadBuildModal}
           screenNameFromProps={screenNameFromProps}
           hideRemoveBuild={hideRemoveBuild}
           percentage={build.percentage ?? undefined}
@@ -118,7 +118,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
           borderColor={build.color}
         />
       ));
-    }, [builds, isInLoadSetModal, screenNameFromProps, hideRemoveBuild, onBuildCardLayout]);
+    }, [builds, isInLoadBuildModal, screenNameFromProps, hideRemoveBuild, onBuildCardLayout]);
 
     return (
       <ScrollView

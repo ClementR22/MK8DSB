@@ -1,44 +1,43 @@
 import React, { useMemo } from "react";
-import { Image, StyleSheet, View } from "react-native";
-import { categories } from "@/data/elements/elementsData";
-import { elementsData } from "@/data/elements/elementsData";
-import { vw } from "../styles/theme";
+import { Image, Pressable, StyleSheet, View } from "react-native";
+import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
+import { useScreen } from "@/contexts/ScreenContext";
+import { BUILD_CARD_WIDTH, PADDING_BUILD_CARD } from "@/utils/designTokens";
 import { Category } from "@/data/elements/elementsTypes";
-import { PADDING_BUILD_CARD, BUILD_CARD_WIDTH } from "@/utils/designTokens";
+import { categories, elementsData } from "@/data/elements/elementsData";
 import Tooltip from "../Tooltip";
 
-const MODAL_WIDTH = vw * 0.9;
-const MAX_WIDTH_IN_MODAL = MODAL_WIDTH - 20;
 const MAX_WIDTH_IN_BUILD_CARD = BUILD_CARD_WIDTH - PADDING_BUILD_CARD * 2; // 200
 const MAX_NUMBER_OF_IMAGE = 5;
 
-const IMAGE_SIZE_IN_BUILD_CARD = MAX_WIDTH_IN_BUILD_CARD / MAX_NUMBER_OF_IMAGE; // 40
-const IMAGE_SIZE_IN_MODAL = MAX_WIDTH_IN_MODAL / MAX_NUMBER_OF_IMAGE;
+const IMAGE_SIZE = MAX_WIDTH_IN_BUILD_CARD / MAX_NUMBER_OF_IMAGE; // 40
 
 const PADDING_VERTICAL_CONTAINER = 7;
 const GAP_CONTAINER = 14;
-// const HEIGHT_CONTAINER_ICON_MODE = IMAGE_SIZE_IN_BUILD_CARD * 4 + PADDING_VERTICAL_CONTAINER * 2 + GAP_CONTAINER * 3;
+interface BuildImagesContainerProps {
+  classIds: number[];
+  isCollapsed: boolean;
+  isInLoadBuildModal: boolean;
+  id: string;
+}
 
 interface BuildImageCategoryData {
   category: string;
   elements: Array<{ name: string; image: any }>;
 }
 
-type ModeType = "icon" | "modal";
-
-interface BuildImagesContainerProps {
-  classIds: number[];
-  mode: ModeType;
-  isCollapsed?: boolean;
-  onPress?: () => void;
-}
-
 const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
   classIds,
-  mode,
-  isCollapsed = false,
-  onPress,
+  isCollapsed,
+  isInLoadBuildModal,
+  id,
 }) => {
+  const screenName = useScreen();
+
+  // inutile de donner isInLoadBuildModal à useActionIconPropsList donc on donne false
+  // idem pour isSaved
+  const [editActionProps] = useActionIconPropsList(["edit"], screenName, false, id, false);
+
   const data = useMemo<BuildImageCategoryData[]>(() => {
     return categories.map((category: Category, index: number) => {
       const matchedElements = elementsData.filter((element) => element.classId === classIds[index]);
@@ -53,40 +52,36 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
     });
   }, [classIds]);
 
-  const imageSize = mode === "icon" ? IMAGE_SIZE_IN_BUILD_CARD : IMAGE_SIZE_IN_MODAL;
-
   return (
-    <View style={[styles.container, isCollapsed && styles.containerCollapsed]}>
-      {data.map((item) => (
-        <View key={item.category} style={styles.category}>
-          {item.elements.map(
-            ({ name, image }, index) =>
-              (!isCollapsed || index === 0) && (
-                <Tooltip
-                  key={`${item.category}-${index}`}
-                  tooltipText={name}
-                  namespace="elements"
-                  onPress={onPress}
-                  style={styles.tooltip}
-                >
-                  <Image
-                    source={image}
-                    style={{
-                      width: imageSize,
-                      height: imageSize,
-                    }}
-                    resizeMode="contain"
-                  />
-                </Tooltip>
-              )
-          )}
-        </View>
-      ))}
-    </View>
+    <Pressable onPress={editActionProps.onPress} style={styles.pressable}>
+      <View style={[styles.container, isCollapsed && styles.containerCollapsed]}>
+        {data.map((item) => (
+          <View key={item.category} style={styles.category}>
+            {item.elements.map(
+              ({ name, image }, index) =>
+                (!isCollapsed || index === 0) && (
+                  <Tooltip
+                    key={`${item.category}-${index}`}
+                    tooltipText={name}
+                    namespace="elements"
+                    onPress={editActionProps.onPress}
+                    style={styles.tooltip}
+                  >
+                    <Image source={image} style={styles.image} resizeMode="contain" />
+                  </Tooltip>
+                )
+            )}
+          </View>
+        ))}
+      </View>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
+  pressable: {
+    width: "100%",
+  },
   container: {
     paddingVertical: PADDING_VERTICAL_CONTAINER,
     gap: GAP_CONTAINER,
@@ -98,6 +93,10 @@ const styles = StyleSheet.create({
   },
   tooltip: {
     alignItems: "center",
+  },
+  image: {
+    width: IMAGE_SIZE,
+    height: IMAGE_SIZE,
   },
 });
 
