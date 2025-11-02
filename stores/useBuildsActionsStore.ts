@@ -124,12 +124,12 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
 
   loadBuildsSaved: async () => {
     const buildsPersistant = await useBuildsPersistenceStore.getState().fetchBuildsSaved();
-    console.log("buildsSaved", buildsPersistant);
-    const buildsListSaved: Build[] = [];
-    buildsPersistant.forEach((buildPersistant) => {
-      const build = { id: buildPersistant.id, dataId: buildPersistant.dataId };
-      buildsListSaved.push(build);
-    });
+
+    const buildsListSaved: Build[] = buildsPersistant.map((buildPersistant) => ({
+      id: buildPersistant.id,
+      dataId: buildPersistant.dataId,
+    }));
+
     useBuildsListStore.getState().setBuildsListSaved(buildsListSaved);
     useDeckStore.getState().loadBuildsSaved(buildsPersistant);
   },

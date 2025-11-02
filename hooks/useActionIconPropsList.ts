@@ -68,7 +68,6 @@ export function useActionIconPropsList(
   const handleSavePress = useCallback(async () => {
     try {
       if (!isSaved) {
-        console.log("tyree");
         await saveBuild(source, id);
         showToast("setHasBeenSaved", "success");
       } else {

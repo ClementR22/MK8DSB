@@ -14,6 +14,7 @@ interface BuildCardHeaderProps {
   screenName: ScreenName;
   id: string;
   percentage?: number;
+  isSaved: boolean;
   moreActionNamesList?: ActionNamesList;
 }
 
@@ -23,13 +24,14 @@ const BuildCardHeader: React.FC<BuildCardHeaderProps> = ({
   screenName,
   id,
   percentage,
+  isSaved,
   moreActionNamesList,
 }) => {
   const theme = useThemeStore((state) => state.theme);
 
   return (
     <View style={styles.headerContainer}>
-      <BuildNameInput name={name} id={id} editable={isNameEditable} />
+      <BuildNameInput name={name} id={id} editable={isNameEditable} isSaved={isSaved} />
 
       {percentage && (
         <Text role="title" size="medium" weight="bold" color={theme.primary} namespace="not">

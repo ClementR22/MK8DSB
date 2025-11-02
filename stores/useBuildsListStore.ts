@@ -44,7 +44,7 @@ export interface BuildsListStoreState {
   removeBuild: (id: string, screenName: ScreenName) => void;
   checkNameUnique: (buildName: string, screenName: ScreenName) => boolean;
   generateUniqueName: (baseName: string, newIndexInit: number, target: ScreenName) => string;
-  renameBuild: (newName: string, screenName: ScreenName, id: string) => void;
+  renameBuild: (newName: string, screenName: ScreenName, id: string, isSaved: boolean) => void;
   updateBuildsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => void;
   sortBuildsList: (screenName: ScreenName, sortNumber: number) => void;
 }
@@ -139,15 +139,15 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
   removeBuild: (id, screenName) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
-    console.log("danns le remvoe, id,", id);
-    console.log("removeBuild, buildsList", buildsList);
+
     const newList = buildsList.filter((build) => build.id !== id);
-    const build = buildsList.find((build) => build.id === id);
     set({ [buildsListName]: newList });
 
-    useDeckStore.getState().removeBuild(build.dataId);
     if (screenName === "save") {
       useBuildsPersistenceStore.getState().removeBuildInMemory(id);
+      // mise à jour de la props isSaved dans useDeckStore
+      const dataId = buildsList.find((build) => build.id === id).dataId;
+      useDeckStore.getState().unSaveBuild(dataId);
     }
   },
 
@@ -181,29 +181,25 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     return newName;
   },
 
-  renameBuild: (newName, screenName, id) => {
-    const { buildsList, buildsListName } = get().getBuildsList(screenName);
+  renameBuild: (newName, screenName, id, isSaved) => {
+    const build = get().getBuild(screenName, id);
 
+    // si le nouveau nom est vide
+    if (!newName.trim()) {
+      useDeckStore.getState().removeBuildName(build.dataId); // on retire le nom de useDeckStore
+      newName = undefined;
+      return;
+    }
+
+    // pour la suite, newName est censé être non vide
     const isNameUnique = get().checkNameUnique(newName, screenName);
     if (!isNameUnique) {
       throw new Error("nameAlreadyExists");
     }
 
-    const build = get().getBuild(screenName, id);
-    const newBuild = { ...build, name: newName };
-
-    const newBuildsList = buildsList.map((build: Build) => {
-      if (build.id === id) {
-        return newBuild;
-      }
-      return build;
-    });
-
-    set({ [buildsListName]: newBuildsList });
-
-    if (screenName === "save") {
+    if (isSaved) {
       const name = useDeckStore.getState().deck.get(build.dataId).name;
-      useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild, name);
+      useBuildsPersistenceStore.getState().saveBuildInMemory(build, name);
     }
 
     useDeckStore.getState().updateName(build.dataId, newName);

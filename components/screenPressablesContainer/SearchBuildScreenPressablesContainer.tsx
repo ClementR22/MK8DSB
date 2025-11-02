@@ -60,7 +60,7 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
     const gaps: { dataId: string; gap: number }[] = [];
 
     for (const build of buildsDataArray) {
-      const { id: dataId, classIds, stats, bodytypes } = build;
+      const { dataId, classIds, stats, bodytypes } = build;
 
       const isOneElementNonAccepted = categories.some((categoryKey, index) => {
         if (chosenClassIds[categoryKey].size === 0) {
@@ -112,6 +112,7 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
     } else {
       const realResultsNumber = Math.min(resultsNumber, gaps.length);
       const buildsFoundIdGap = gaps.slice(0, realResultsNumber);
+
       const worstGap = chosenStatsChecked.filter((checked) => checked).length;
 
       const buildsFound: Build[] = buildsFoundIdGap.map(({ dataId, gap }, index) => {

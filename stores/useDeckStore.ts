@@ -11,7 +11,7 @@ type DeckState = {
 
   updateName: (dataId: string, name: string) => void;
   updateBuildData: (dataId: string, newData: any) => void;
-  removeBuild: (dataId: string) => void;
+  removeBuildName: (dataId: string) => void;
   saveBuild: (dataId: string) => void;
   unSaveBuild: (dataId: string) => void;
   loadBuildsSaved: (buildsSaved: BuildPersistant[]) => void;
@@ -49,7 +49,7 @@ const useDeckStore = create<DeckState>((set) => ({
       return { deck: newDeck };
     }),
 
-  removeBuild: (dataId) =>
+  removeBuildName: (dataId) =>
     set((state) => {
       const newDeck = new Map(state.deck);
       newDeck.delete(dataId);
@@ -70,9 +70,10 @@ const useDeckStore = create<DeckState>((set) => ({
   unSaveBuild: (dataId) =>
     set((state) => {
       const buildEntry = state.deck.get(dataId);
+      const newBuild = { ...buildEntry, isSaved: false };
 
       const newDeck = new Map(state.deck);
-      newDeck.set(dataId, { ...buildEntry, isSaved: false });
+      newDeck.set(dataId, newBuild);
 
       return { deck: newDeck };
     }),

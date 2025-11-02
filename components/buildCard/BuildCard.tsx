@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { LayoutChangeEvent, View, StyleSheet, Text } from "react-native";
+import { LayoutChangeEvent, View, StyleSheet } from "react-native";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import BuildCardActionButtons from "./BuildCardActionButtons";
 import BuildImagesModal from "./BuildImagesModal";
@@ -33,7 +33,10 @@ const BuildCard: React.FC<BuildCardProps> = ({
   onLayout,
   borderColor,
 }) => {
-  const { name, isSaved } = useDeckStore((state) => state.deck).get(dataId) || { name: "", isSaved: false };
+  const build = useDeckStore((state) => state.deck).get(dataId) || { name: "", isSaved: false, origin: "user" };
+
+  const { name, isSaved } = build;
+
   const buildData = buildsDataMap.get(dataId);
 
   const contextScreenName = useScreen();
@@ -50,13 +53,13 @@ const BuildCard: React.FC<BuildCardProps> = ({
   return (
     <View style={styles.wrapper} onLayout={onLayout}>
       <View style={[setCardStyle, borderColor && { borderColor }]}>
-        <Text>{isSaved ? "ok" : "non"}</Text>
         <BuildCardHeader
           isNameEditable={config.isNameEditable}
           name={name}
           screenName={screenName}
           id={id}
           percentage={percentage}
+          isSaved={isSaved}
           moreActionNamesList={
             isCollapsed
               ? [...(config.moreActionNamesList ?? []), ...config.actionNamesList]
