@@ -40,8 +40,8 @@
   "save": "Save",
   "loadTheStats": "Load the stats",
   "loadTheBuild": "Load the build",
-  "loadTheStatsToSearchScreen": "Load the stats to search screen",
-  "loadTheBuildToDisplayScreen": "Load the build to compare screen",
+  "loadTheStatsToSearchScreen": "Load the stats to the Finder",
+  "loadTheBuildToDisplayScreen": "Load the build to the Comparator",
   "copy": "Copy",
   "moreActions": "More actions",
 
