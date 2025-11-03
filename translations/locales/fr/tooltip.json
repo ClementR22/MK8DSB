@@ -47,5 +47,24 @@
 
   "confirm": "Confirmer",
   "cancel": "Retour",
-  "close": "Fermer"
+  "close": "Fermer",
+
+  "speedGround": "Vitesse sol (VS)",
+  "speedAntiGravity": "Vitesse anti-gravité (VAG)",
+  "speedWater": "Vitesse eau (VE)",
+  "speedAir": "Vitesse air (VA)",
+  "acceleration": "Accélération (Acc)",
+  "weight": "Poids (Poi)",
+  "handlingGround": "Maniabilité sol (MS)",
+  "handlingAntiGravity": "Maniabilité anti-gravité (MAG)",
+  "handlingWater": "Maniabilité eau (ME)",
+  "handlingAir": "Maniabilité air (MA)",
+  "traction": "Adhérence (Adh)",
+  "miniTurbo": "Mini-turbo (MT)",
+  "speed": "Vitesse",
+  "handling": "Maniabilité",
+  "id": "Numéro",
+  "name": "Nom",
+  "asc": "ascendant",
+  "desc": "descendant"
 }

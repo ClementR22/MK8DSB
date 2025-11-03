@@ -47,5 +47,24 @@
 
   "confirm": "Confirm",
   "cancel": "Cancel",
-  "close": "Close"
+  "close": "Close",
+
+  "speedGround": "Ground speed (GS)",
+  "speedAntiGravity": "Anti-gravity speed (AGS)",
+  "speedWater": "Water speed (WS)",
+  "speedAir": "Air speed (AS)",
+  "acceleration": "Acceleration (Acc)",
+  "weight": "Weight (Wei)",
+  "handlingGround": "Ground handling (GH)",
+  "handlingAntiGravity": "Anti-gravity handling (AGH)",
+  "handlingWater": "Water handling (WH)",
+  "handlingAir": "Air handling (AH)",
+  "traction": "Traction (Tra)",
+  "miniTurbo": "Mini-Turbo (MT)",
+  "speed": "Speed",
+  "handling": "Handling",
+  "id": "Number",
+  "name": "Name",
+  "asc": "ascending",
+  "desc": "descending"
 }

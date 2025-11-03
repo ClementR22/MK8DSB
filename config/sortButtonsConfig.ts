@@ -1,4 +1,4 @@
-import { StatNameSort } from "@/data/stats/statsTypes";
+import { SortName } from "@/data/stats/statsTypes";
 import { IconType } from "react-native-dynamic-vector-icons";
 
 // Define the type for the properties of a statistic icon
@@ -9,7 +9,7 @@ export interface SortButtonConfig {
 }
 
 // Merged configuration for all icons
-export const sortButtonsConfig: { [key in StatNameSort]: SortButtonConfig } = {
+export const sortButtonsConfig: { [key in SortName]: SortButtonConfig } = {
   // Sorting specific icons
   id: { iconName: "sort-numeric-ascending", iconType: IconType.MaterialCommunityIcons },
   name: { iconName: "sort-alphabetical-ascending", iconType: IconType.MaterialCommunityIcons },

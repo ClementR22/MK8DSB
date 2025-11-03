@@ -12,16 +12,16 @@ export type StatName =
   | "traction"
   | "miniTurbo";
 
-export type StatNameCompare = StatName | "speed" | "handling";
-export type StatNameSort = StatNameCompare | "id" | "name";
+export type StatNameSort = StatName | "speed" | "handling";
+export type SortName = StatNameSort | "id" | "name";
 
-export type StatNameSpeed = Extract<StatNameCompare, "speedGround" | "speedAntiGravity" | "speedWater" | "speedAir">;
+export type StatNameSpeed = Extract<StatNameSort, "speedGround" | "speedAntiGravity" | "speedWater" | "speedAir">;
 
 export type StatNameHandling = Extract<
-  StatNameCompare,
+  StatNameSort,
   "handlingGround" | "handlingAntiGravity" | "handlingWater" | "handlingAir"
 >;
 
-export type StatNameCompareDefault = Exclude<StatNameCompare, StatNameSpeed | StatNameHandling>;
-export type StatNameSortBuildCardDefault = Exclude<StatNameSort, StatNameSpeed | StatNameHandling>;
+export type StatNameCompareDefault = Exclude<StatNameSort, StatNameSpeed | StatNameHandling>;
+export type StatNameSortBuildCardDefault = Exclude<SortName, StatNameSpeed | StatNameHandling>;
 export type StatNameSortElementDefault = "id" | StatNameSortBuildCardDefault;

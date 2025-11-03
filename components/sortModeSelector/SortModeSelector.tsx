@@ -2,7 +2,7 @@ import React, { memo, useCallback, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { sortButtonsConfig } from "@/config/sortButtonsConfig";
-import { StatNameSort } from "@/data/stats/statsTypes";
+import { SortName } from "@/data/stats/statsTypes";
 import {
   statNamesHandling,
   statNamesSortElementDefault,
@@ -12,7 +12,6 @@ import {
 import TooltipMenu from "../TooltipMenu";
 import ButtonIconWithBadge from "./ButtonIconWithBadge";
 import {
-  BORDER_RADIUS_INF,
   BUTTON_SIZE,
   GAP_SORT_MODE_SELECTOR,
   MARGIN_CONTAINER_LOWEST,
@@ -47,12 +46,12 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
   );
 
   const [currentDirection, setCurrentDirection] = useState<"asc" | "desc">(getCurrentDirection(sortNumber));
-  const [activeSort, setActiveSort] = useState<StatNameSort>(
+  const [activeSort, setActiveSort] = useState<SortName>(
     getSortNameFromSortNumber(sortNumber) || statNamesSortDefault[0]
   );
 
   const handlePress = useCallback(
-    (name: StatNameSort) => {
+    (name: SortName) => {
       const isActive = activeSort === name;
       const newDirection = isActive ? (currentDirection === "asc" ? "desc" : "asc") : "asc";
 
@@ -73,7 +72,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
   const createTooltipMenu = useCallback(
     (
       key: string,
-      statNames: readonly StatNameSort[],
+      statNames: readonly SortName[],
       tooltipText: string,
       triggerIconName: string,
       triggerIconType: IconType

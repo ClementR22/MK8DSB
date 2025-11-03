@@ -1,4 +1,4 @@
-import { StatNameSort } from "@/data/stats/statsTypes";
+import { SortName } from "@/data/stats/statsTypes";
 
 export const sortNameMap: { [key: string]: { asc: number; desc: number } } = {
   id: { asc: 0, desc: 1 },
@@ -17,12 +17,12 @@ export const sortNameMap: { [key: string]: { asc: number; desc: number } } = {
   miniTurbo: { asc: 26, desc: 27 },
 };
 
-export function getSortNameFromSortNumber(sortNumber: number): StatNameSort | undefined {
+export function getSortNameFromSortNumber(sortNumber: number): SortName | undefined {
   for (const sortName in sortNameMap) {
     if (sortNameMap.hasOwnProperty(sortName)) {
       const { asc, desc } = sortNameMap[sortName];
       if (sortNumber === asc || sortNumber === desc) {
-        return sortName as StatNameSort;
+        return sortName as SortName;
       }
     }
   }
