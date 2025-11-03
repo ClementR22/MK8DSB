@@ -23,10 +23,10 @@ export const useBuildImportExport = () => {
       } else {
         showToast("buildImported", "success");
       }
+      useLoadBuildModalStore.getState().setIsLoadBuildModalVisible(false);
     } catch (e) {
       showToast(e.message, "error");
     }
-    useLoadBuildModalStore.getState().setIsLoadBuildModalVisible(false);
   };
 
   return { handleExport, handleImport };
