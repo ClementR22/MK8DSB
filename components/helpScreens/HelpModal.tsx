@@ -33,7 +33,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, children }) => {
         toolTipPlacement={Placement.LEFT}
       />
     ),
-    []
+    [theme.on_surface]
   );
 
   return (
