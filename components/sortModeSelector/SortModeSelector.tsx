@@ -12,6 +12,7 @@ import {
 import PopoverMenu from "../PopoverMenu";
 import ButtonIconWithBadge from "./ButtonIconWithBadge";
 import {
+  BORDER_RADIUS_STANDARD,
   BUTTON_SIZE,
   GAP_SORT_MODE_SELECTOR,
   MARGIN_CONTAINER_LOWEST,
@@ -89,6 +90,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
             isBadge={statNames.includes(activeSort)}
           />
         )}
+        style={styles.menuContainer}
       >
         {statNames.map((name) => {
           const config = sortButtonsConfig[name];
@@ -173,6 +175,12 @@ const styles = StyleSheet.create({
   spaceAround: {
     justifyContent: "space-around",
     flex: 1,
+  },
+  menuContainer: {
+    flexDirection: "row",
+    padding: GAP_SORT_MODE_SELECTOR,
+    gap: GAP_SORT_MODE_SELECTOR,
+    borderRadius: BORDER_RADIUS_STANDARD,
   },
 });
 
