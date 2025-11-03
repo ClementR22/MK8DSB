@@ -1,10 +1,10 @@
 {
   "success": "Succès",
   "error": "Erreur",
+  "importError": "Erreur d'importation",
 
-  "importError": "erreur d'importation",
   "clipboardIsEmpty": "presse-papiers vide",
-  "incorrectFormat": "format incorrect",
+  "incorrectFormat": "presse-papiers vide ou format incorrect",
   "thisBuildDoesNotExist": "ce build n'existe pas",
   "unknownError": "erreur inconnue",
 

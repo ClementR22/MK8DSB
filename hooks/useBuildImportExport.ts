@@ -25,7 +25,7 @@ export const useBuildImportExport = () => {
       }
       useLoadBuildModalStore.getState().setIsLoadBuildModalVisible(false);
     } catch (e) {
-      showToast(e.message, "error");
+      showToast(e.message, "importError");
     }
   };
 

@@ -4,7 +4,7 @@
 
 import Toast from "react-native-toast-message";
 
-export type ToastType = "success" | "error" | "info";
+export type ToastType = "success" | "error" | "importError" | "info";
 class ToastManager {
   constructor() {
     this.show = this.show.bind(this);
