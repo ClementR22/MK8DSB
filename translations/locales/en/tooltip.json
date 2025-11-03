@@ -64,7 +64,5 @@
   "speed": "Speed",
   "handling": "Handling",
   "id": "Number",
-  "name": "Name",
-  "asc": "ascending",
-  "desc": "descending"
+  "name": "Name"
 }

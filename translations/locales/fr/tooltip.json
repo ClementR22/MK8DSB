@@ -64,7 +64,5 @@
   "speed": "Vitesse",
   "handling": "Maniabilité",
   "id": "Numéro",
-  "name": "Nom",
-  "asc": "ascendant",
-  "desc": "descendant"
+  "name": "Nom"
 }
