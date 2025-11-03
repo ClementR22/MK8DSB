@@ -70,6 +70,7 @@ const Tooltip: React.FC<TooltipProps> = ({
         placement={placement}
         isVisible={showPopover}
         from={touchableRef}
+        onRequestClose={() => setShowPopover(false)}
         popoverStyle={{
           marginTop: isAnyModalVisible ? -statusBarHeight : 0,
           backgroundColor: theme.inverse_surface,

@@ -1,11 +1,13 @@
 // components/TooltipMenu.tsx
-import React from "react";
+import React, { ReactElement } from "react";
 import { View, StyleSheet } from "react-native";
 import Popover, { PopoverMode, PopoverPlacement } from "react-native-popover-view";
 import { Placement } from "react-native-popover-view/dist/Types";
 
+type TriggerCallback = (openMenu: () => void) => React.ReactElement;
+
 interface TooltipMenuProps {
-  trigger: React.ReactNode;
+  trigger: TriggerCallback | ReactElement;
   placement?: Placement;
   children: React.ReactNode;
 }
@@ -14,11 +16,13 @@ const TooltipMenu: React.FC<TooltipMenuProps> = ({ trigger, placement = PopoverP
   const [showPopover, setShowPopover] = React.useState(false);
   const triggerRef = React.useRef(null);
 
+  const openMenu = () => setShowPopover(true);
+
+  const triggerElement = typeof trigger === "function" ? trigger(openMenu) : trigger;
+
   return (
     <>
-      <View ref={triggerRef} onTouchEnd={() => setShowPopover(true)}>
-        {trigger}
-      </View>
+      <View ref={triggerRef}>{triggerElement}</View>
 
       <Popover
         mode={PopoverMode.RN_MODAL}
