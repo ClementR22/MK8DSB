@@ -8,7 +8,8 @@
 
   "selected": "Sélectionnés",
 
-  "matchDesiredStats": "Copier les stats paramétrées",
+  "matchDesiredStats": "Synchronisation : les stats désirées sont affichées dans les builds trouvés",
+  "unmatchDesiredStats": "Dissociation : les stats affichées dans les builds sont indépendantes",
   "chosenStats": "desir.",
   "resultStats": "affich.",
 
