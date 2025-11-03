@@ -9,7 +9,7 @@ import {
   statNamesSortBuildCardDefault,
   statNamesSpeed,
 } from "@/data/stats/statsData";
-import TooltipMenu from "../TooltipMenu";
+import PopoverMenu from "../PopoverMenu";
 import ButtonIconWithBadge from "./ButtonIconWithBadge";
 import {
   BUTTON_SIZE,
@@ -77,7 +77,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
       triggerIconName: string,
       triggerIconType: IconType
     ) => (
-      <TooltipMenu
+      <PopoverMenu
         key={key}
         trigger={(openMenu) => (
           <ButtonIconWithBadge
@@ -106,7 +106,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
             />
           );
         })}
-      </TooltipMenu>
+      </PopoverMenu>
     ),
     [activeSort, currentDirection, handlePress]
   );

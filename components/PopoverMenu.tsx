@@ -1,4 +1,4 @@
-// components/TooltipMenu.tsx
+// components/PopoverMenu.tsx
 import React, { ReactElement } from "react";
 import { View, StyleSheet } from "react-native";
 import Popover, { PopoverMode, PopoverPlacement } from "react-native-popover-view";
@@ -12,7 +12,7 @@ interface TooltipMenuProps {
   children: React.ReactNode;
 }
 
-const TooltipMenu: React.FC<TooltipMenuProps> = ({ trigger, placement = PopoverPlacement.AUTO, children }) => {
+const PopoverMenu: React.FC<TooltipMenuProps> = ({ trigger, placement = PopoverPlacement.AUTO, children }) => {
   const [showPopover, setShowPopover] = React.useState(false);
   const triggerRef = React.useRef(null);
 
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TooltipMenu;
+export default PopoverMenu;
