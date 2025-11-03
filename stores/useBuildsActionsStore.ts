@@ -173,6 +173,10 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     const build = useBuildsListStore.getState().getBuild(screenName, id);
     const name = useDeckStore.getState().deck.get(build.dataId)?.name;
 
+    if (!name) {
+      throw new Error("buildNameRequiredForSharing");
+    }
+
     const json = JSON.stringify({ name: name, dataId: build.dataId });
     Clipboard.setStringAsync(json);
   },

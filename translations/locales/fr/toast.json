@@ -20,11 +20,12 @@
   "setHasBeenSaved": "le build a été enregistré",
   "setHasBeenUnSaved": "le build a été retiré des favoris",
   "setHasBeenDeleted": "le build a été supprimé",
-  "setCopiedInClipboard": "build copié dans le presse-papier",
+  "setCopiedInClipboard": "build copié dans le presse-papier. Vous pouvez maintenant l'envoyez par message",
   "buildImported": "build importé",
   "statsImported": "stats du build importées",
   "buildLimitReachedInThisScreen": "limite de builds atteinte",
   "cannotGenerateUniqueName": "impossible de générer un nouveau nom",
-  "buildNameRequiredForSaving": "you devez entrer un nom pour liker un build",
+  "buildNameRequiredForSharing": "vous devez entrer un nom pour partager un build",
+  "buildNameRequiredForSaving": "vous devez entrer un nom pour liker un build",
   "savedBuildCannotHaveEmptyName": "les builds likés doivent avoir un nom"
 }

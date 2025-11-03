@@ -20,11 +20,12 @@
   "setHasBeenSaved": "build has been saved",
   "setHasBeenUnSaved": "build has been unsaved",
   "setHasBeenDeleted": "build has been deleted",
-  "setCopiedInClipboard": "build copied in clipboard",
+  "setCopiedInClipboard": "build copied to clipboard. You can now share it via message",
   "buildImported": "build imported",
   "statsImported": "build's stats imported",
   "buildLimitReachedInThisScreen": "build limit reached",
   "cannotGenerateUniqueName": "cannot generate new name",
+  "buildNameRequiredForSharing": "you must enter a name to share a build",
   "buildNameRequiredForSaving": "you must enter a name to like a build",
   "savedBuildCannotHaveEmptyName": "saved builds must have a name"
 }

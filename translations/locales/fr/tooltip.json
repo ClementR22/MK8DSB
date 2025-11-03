@@ -42,7 +42,7 @@
   "loadTheBuild": "Charger le build",
   "loadTheStatsToSearchScreen": "Charger les stats dans le Chercheur",
   "loadTheBuildToDisplayScreen": "Charger le build dans le Comparateur",
-  "copy": "Copier",
+  "export": "Exporter",
   "moreActions": "Plus d'actions",
 
   "confirm": "Confirmer",

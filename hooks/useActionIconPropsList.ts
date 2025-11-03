@@ -6,7 +6,6 @@ import useEditBuildModalStore from "@/stores/useEditBuildModalStore";
 import useLoadBuildModalStore from "@/stores/useLoadBuildModalStore";
 import { ActionName, ActionNamesList } from "./useBuildCardConfig";
 import showToast from "@/utils/showToast";
-import { useBuildImportExport } from "@/hooks/useBuildImportExport";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
@@ -38,7 +37,7 @@ export function useActionIconPropsList(
   const saveBuild = useBuildsActionsStore((state) => state.saveBuild);
   const unSaveBuild = useBuildsActionsStore((state) => state.unSaveBuild);
   const removeBuild = useBuildsListStore((state) => state.removeBuild);
-  const handleExport = useBuildImportExport().handleExport;
+  const exportBuild = useBuildsActionsStore((state) => state.exportBuild);
   const setIsLoadBuildModalVisible = useLoadBuildModalStore((state) => state.setIsLoadBuildModalVisible);
 
   const handleEditPress = useCallback(() => {
@@ -85,8 +84,13 @@ export function useActionIconPropsList(
   }, [source, id, removeBuild]);
 
   const handleExportPress = useCallback(() => {
-    handleExport(source, id);
-  }, [source, id, handleExport]);
+    try {
+      exportBuild(source, id);
+      showToast("setCopiedInClipboard", "success");
+    } catch (e) {
+      showToast(e.message, "error");
+    }
+  }, [source, id, exportBuild]);
 
   if (isInLoadBuildModal) {
     const actionIconPropsList: ActionIconPropsList = [
@@ -132,8 +136,8 @@ export function useActionIconPropsList(
         type: source === "save" ? IconType.MaterialCommunityIcons : IconType.AntDesign,
         onPress: handleRemovePress,
       },
-      export: {
-        title: "copy",
+      share: {
+        title: "share",
         name: "share",
         type: IconType.MaterialIcons,
         onPress: handleExportPress,
@@ -157,7 +161,7 @@ export function useActionIconPropsList(
     unSaveBuild,
     removeBuild,
     setIsLoadBuildModalVisible,
-    handleExport,
+    exportBuild,
   ]);
 
   return actionIconPropsList;

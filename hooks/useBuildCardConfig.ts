@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-export type ActionName = "edit" | "loadToSearch" | "loadToDisplay" | "save" | "remove" | "export";
+export type ActionName = "edit" | "loadToSearch" | "loadToDisplay" | "save" | "remove" | "share";
 export type ActionNamesList = ActionName[];
 
 interface BuildCardSituationConfig {
@@ -27,11 +27,11 @@ const situationConfigs: Record<string, BuildCardSituationConfig> = {
   },
 };
 
-const BASE_ACTIONS_SEARCH: ActionNamesList = ["export", "loadToDisplay", "save"];
+const BASE_ACTIONS_SEARCH: ActionNamesList = ["share", "loadToDisplay", "save"];
 const BASE_ACTIONS_DISPLAY: ActionNamesList = ["edit", "loadToSearch", "save"];
 const BASE_ACTIONS_SAVE: ActionNamesList = ["edit", "loadToSearch", "loadToDisplay"];
-const MORE_ACTIONS_DISPLAY_COMMON: ActionNamesList = ["export"]; // Common actions for display more list
-const BASE_MORE_ACTIONS_SAVE: ActionNamesList = ["export", "remove"];
+const MORE_ACTIONS_DISPLAY_COMMON: ActionNamesList = ["share"]; // Common actions for display more list
+const BASE_MORE_ACTIONS_SAVE: ActionNamesList = ["share", "remove"];
 
 export const useBuildCardConfig = (situation, hideRemoveBuild, screenName) => {
   return useMemo(() => {
