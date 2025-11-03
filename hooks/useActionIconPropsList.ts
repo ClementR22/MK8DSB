@@ -18,7 +18,7 @@ interface ActionProps {
   onPress: () => void;
 }
 
-type ActionIconPropsMap = ActionProps[];
+type ActionIconPropsList = ActionProps[];
 
 export function useActionIconPropsList(
   actionNamesToGenerate: ActionNamesList,
@@ -26,7 +26,7 @@ export function useActionIconPropsList(
   isInLoadBuildModal: boolean,
   id: string,
   isSaved?: boolean
-): ActionIconPropsMap {
+): ActionIconPropsList {
   const source = isInLoadBuildModal ? "save" : screenName;
   const build = useBuildsListStore((state) => state.getBuild(source, id));
 
@@ -49,20 +49,20 @@ export function useActionIconPropsList(
 
   const handleLoadToSearchPress = useCallback(() => {
     loadToSearch({ source, id });
-    showToast("setStatsHaveBeenLoaded", "success");
 
+    showToast("setStatsHaveBeenLoaded", "success");
     setIsLoadBuildModalVisible(false);
   }, [source, id, loadToSearch, setIsLoadBuildModalVisible]);
 
   const handleLoadToDisplayPress = useCallback(() => {
     try {
       loadToDisplay({ source, id });
+
       showToast("setHasBeenLoadedInTheComparator", "success");
+      setIsLoadBuildModalVisible(false);
     } catch (e) {
       showToast(e.message, "error");
     }
-
-    setIsLoadBuildModalVisible(false);
   }, [source, id, loadToDisplay, setIsLoadBuildModalVisible]);
 
   const handleSavePress = useCallback(async () => {
@@ -88,7 +88,19 @@ export function useActionIconPropsList(
     handleExport(source, id);
   }, [source, id, handleExport]);
 
-  const actionIconPropsList: ActionIconPropsMap = useMemo(() => {
+  if (isInLoadBuildModal) {
+    const actionIconPropsList: ActionIconPropsList = [
+      {
+        title: screenName === "search" ? "loadTheStats" : "loadTheBuild",
+        name: "check",
+        type: IconType.FontAwesome5,
+        onPress: screenName === "search" ? handleLoadToSearchPress : handleLoadToDisplayPress,
+      },
+    ];
+    return actionIconPropsList;
+  }
+
+  const actionIconPropsList: ActionIconPropsList = useMemo(() => {
     const allActionsDefs: Record<ActionName, ActionProps> = {
       edit: {
         title: "edit",
@@ -98,14 +110,14 @@ export function useActionIconPropsList(
       },
       loadToSearch: {
         title: isInLoadBuildModal ? "loadTheStats" : "loadTheStatsToSearchScreen",
-        name: isInLoadBuildModal ? "download" : "magnify",
-        type: IconType.MaterialCommunityIcons,
+        name: isInLoadBuildModal ? "check" : "magnify",
+        type: isInLoadBuildModal ? IconType.FontAwesome5 : IconType.MaterialCommunityIcons,
         onPress: handleLoadToSearchPress,
       },
       loadToDisplay: {
         title: isInLoadBuildModal ? "loadTheBuild" : "loadTheBuildToDisplayScreen",
-        name: isInLoadBuildModal ? "download" : "compare",
-        type: IconType.MaterialCommunityIcons,
+        name: isInLoadBuildModal ? "check" : "compare",
+        type: isInLoadBuildModal ? IconType.FontAwesome5 : IconType.MaterialCommunityIcons,
         onPress: handleLoadToDisplayPress,
       },
       save: {
@@ -122,8 +134,8 @@ export function useActionIconPropsList(
       },
       export: {
         title: "copy",
-        name: "clipboard-outline",
-        type: IconType.MaterialCommunityIcons,
+        name: "share",
+        type: IconType.MaterialIcons,
         onPress: handleExportPress,
       },
     };

@@ -15,8 +15,8 @@ const ButtonImportBuild: React.FC<ButtonImportBuildProps> = ({ screenName }) => 
     <ButtonIcon
       onPress={() => handleImport(screenName)}
       tooltipText="importACopiedSet"
-      iconName="paste"
-      iconType={IconType.FontAwesome5}
+      iconName="content-paste"
+      iconType={IconType.MaterialCommunityIcons}
     />
   );
 };
