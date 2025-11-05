@@ -185,8 +185,12 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
   importBuild: (clipboardContent: string, screenName: ScreenName) => {
     let parsedBuild: unknown;
 
+    // Cherche le premier JSON dans le texte
+    const match = clipboardContent.match(/\{[^{}]*\}/);
+
+    if (!match) return null;
     try {
-      parsedBuild = JSON.parse(clipboardContent);
+      parsedBuild = JSON.parse(match[0]);
     } catch (err) {
       throw new Error("incorrectFormat");
     }
