@@ -19,9 +19,9 @@
 
   "advanced_options_comparator.title": "Advanced options",
 
-  "advanced_options_comparator.step.import_from_favorites": "Import a build from favorites",
-  "advanced_options_comparator.step.import_from_favorites.label_open_collection": "Open your favorites collection",
-  "advanced_options_comparator.step.import_from_favorites.label_import_set": "Import a saved build to compare",
+  "advanced_options_comparator.step.import_from_collection": "Import a build from collection",
+  "advanced_options_comparator.step.import_from_collection.label_open_collection": "Open your collection",
+  "advanced_options_comparator.step.import_from_collection.label_import_set": "Import a saved build to compare",
 
   "advanced_options_comparator.step.sort_sets": "Sort the builds",
   "advanced_options_comparator.step.sort_sets.label_open_sorts": "Open available sort options",
@@ -29,7 +29,7 @@
   "advanced_options_comparator.step.sort_sets.label_long_press_hint": "Long-press a sort button to view its name",
 
   "actions_comparator.title": "Available actions",
-  "actions_comparator.label_save_to_favorites": "Save to favorites",
+  "actions_comparator.label_save_to_collection": "Save to collection",
   "actions_comparator.label_copy_to_finder": "Copy stats to the Build Finder and use as a base",
   "actions_comparator.label_export_set": "Export the build",
 

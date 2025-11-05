@@ -49,7 +49,7 @@ export function useActionIconPropsList(
   const handleLoadToSearchPress = useCallback(() => {
     loadToSearch({ source, id });
 
-    showToast("setStatsHaveBeenLoaded", "success");
+    showToast("buildStatsHaveBeenLoaded", "success");
     setIsLoadBuildModalVisible(false);
   }, [source, id, loadToSearch, setIsLoadBuildModalVisible]);
 
@@ -57,7 +57,7 @@ export function useActionIconPropsList(
     try {
       loadToDisplay({ source, id });
 
-      showToast("setHasBeenLoadedInTheComparator", "success");
+      showToast("buildHasBeenLoadedInTheComparator", "success");
       setIsLoadBuildModalVisible(false);
     } catch (e) {
       showToast(e.message, "error");
@@ -68,10 +68,10 @@ export function useActionIconPropsList(
     try {
       if (!isSaved) {
         await saveBuild(source, id);
-        showToast("setHasBeenSaved", "success");
+        showToast("buildHasBeenSaved", "success");
       } else {
         await unSaveBuild(source, id);
-        showToast("setHasBeenUnSaved", "success");
+        showToast("buildHasBeenUnsaved", "success");
       }
     } catch (e) {
       showToast(e.message, "error");
@@ -80,13 +80,13 @@ export function useActionIconPropsList(
 
   const handleRemovePress = useCallback(() => {
     removeBuild(id, source);
-    showToast("setHasBeenDeleted", "success");
+    showToast("buildHasBeenDeleted", "success");
   }, [source, id, removeBuild]);
 
   const handleExportPress = useCallback(() => {
     try {
       exportBuild(source, id);
-      showToast("setCopiedInClipboard", "success");
+      showToast("buildCopiedInClipboard", "success");
     } catch (e) {
       showToast(e.message, "error");
     }
@@ -126,7 +126,7 @@ export function useActionIconPropsList(
       },
       save: {
         title: "save",
-        name: isSaved ? "heart" : "heart-outline",
+        name: isSaved ? "content-save-check" : "content-save-outline",
         type: IconType.MaterialCommunityIcons,
         onPress: handleSavePress,
       },

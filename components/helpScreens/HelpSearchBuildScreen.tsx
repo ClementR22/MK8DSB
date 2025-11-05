@@ -130,7 +130,7 @@ const HelpSearchBuildScreen = () => {
           <HelpButtonDescription
             iconName="cards-outline"
             iconType={IconType.MaterialCommunityIcons}
-            description="advanced_options.step.reuse_stats.open_favorites"
+            description="advanced_options.step.reuse_stats.open_collection"
             namespace="helpSearch"
           />
           <HelpButtonDescription
@@ -145,9 +145,9 @@ const HelpSearchBuildScreen = () => {
       {/* Section 3 — Results management */}
       <HelpSection title="results_management.title" namespace="helpSearch" contentType="button">
         <HelpButtonDescription
-          iconName="heart-outline"
+          iconName="content-save"
           iconType={IconType.MaterialCommunityIcons}
-          description="results_management.save_to_favorites"
+          description="results_management.save_to_collection"
           namespace="helpSearch"
         />
         <HelpButtonDescription

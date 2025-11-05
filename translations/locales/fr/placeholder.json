@@ -1,8 +1,6 @@
 {
   "searchEmpty": "Recherchez le build de vos rêves",
   "searchNotFound": "Aucun build trouvé correspondant à ces stats",
-  "savedEmpty": "Retrouvez vos builds favoris ici",
-  "noSetFound": "Aucun build trouvé...",
-  "yourFavoriteBuildsWillAppearHere": "Vos builds favoris apparaîtrons ici",
+  "savedEmpty": "Retrouvez votre collection de builds ici",
   "none": "Aucun"
 }

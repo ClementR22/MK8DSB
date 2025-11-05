@@ -75,19 +75,19 @@ const HelpDisplayBuildScreen = () => {
         <HelpStepItem
           key="A"
           stepChar="A"
-          title="advanced_options_comparator.step.import_from_favorites"
+          title="advanced_options_comparator.step.import_from_collection"
           namespace="helpDisplay"
         >
           <HelpButtonDescription
             iconName="cards-outline"
             iconType={IconType.MaterialCommunityIcons}
-            description="advanced_options_comparator.step.import_from_favorites.label_open_collection"
+            description="advanced_options_comparator.step.import_from_collection.label_open_collection"
             namespace="helpDisplay"
           />
           <HelpButtonDescription
             iconName="download"
             iconType={IconType.MaterialCommunityIcons}
-            description="advanced_options_comparator.step.import_from_favorites.label_import_set"
+            description="advanced_options_comparator.step.import_from_collection.label_import_set"
             namespace="helpDisplay"
           />
         </HelpStepItem>
@@ -114,9 +114,9 @@ const HelpDisplayBuildScreen = () => {
       {/* Section 3 — Actions */}
       <HelpSection title="actions_comparator.title" namespace="helpDisplay" contentType="button">
         <HelpButtonDescription
-          iconName="heart-outline"
+          iconName="content-save"
           iconType={IconType.MaterialCommunityIcons}
-          description="actions_comparator.label_save_to_favorites"
+          description="actions_comparator.label_save_to_collection"
           namespace="helpDisplay"
         />
         <HelpButtonDescription

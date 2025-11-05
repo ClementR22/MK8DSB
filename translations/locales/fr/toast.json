@@ -8,24 +8,24 @@
   "thisBuildDoesNotExist": "ce build n'existe pas",
   "unknownError": "erreur inconnue",
 
-  "buildLimitReached": "limite de buildsds atteinte",
+  "buildLimitReached": "limite de builds atteinte",
 
   "theSettingsHaveBeenReset": "les préférences ont été réinitialisées",
   "allSavedBuildsHaveBeenDeleted": "tous les builds sauvegardés ont été supprimés !",
 
-  "setRenamed": "build renommé",
+  "buildRenamed": "build renommé",
   "nameAlreadyExists": "ce nom existe déjà",
-  "setStatsHaveBeenLoaded": "les stats du build ont été chargées",
-  "setHasBeenLoadedInTheComparator": "le build a été chargé dans le comparateur",
-  "setHasBeenSaved": "le build a été enregistré",
-  "setHasBeenUnSaved": "le build a été retiré des favoris",
-  "setHasBeenDeleted": "le build a été supprimé",
-  "setCopiedInClipboard": "build copié dans le presse-papier. Vous pouvez maintenant l'envoyez par message",
+  "buildStatsHaveBeenLoaded": "les stats du build ont été chargées",
+  "buildHasBeenLoadedInTheComparator": "le build a été chargé dans le comparateur",
+  "buildHasBeenSaved": "le build a été enregistré, cliquez sur 'Collection' pour le retrouver",
+  "buildHasBeenUnsaved": "le build a été retiré de votre collection",
+  "buildHasBeenDeleted": "le build a été supprimé",
+  "buildCopiedInClipboard": "build copié dans le presse-papier. Vous pouvez maintenant l'envoyez par message",
   "buildImported": "build importé",
   "statsImported": "stats du build importées",
   "buildLimitReachedInThisScreen": "limite de builds atteinte",
   "cannotGenerateUniqueName": "impossible de générer un nouveau nom",
   "buildNameRequiredForSharing": "vous devez entrer un nom pour partager un build",
-  "buildNameRequiredForSaving": "vous devez entrer un nom pour liker un build",
+  "buildNameRequiredForSaving": "vous devez entrer un nom pour enregister un build",
   "savedBuildCannotHaveEmptyName": "les builds likés doivent avoir un nom"
 }

@@ -19,21 +19,21 @@ const HelpFavoritesScreen = () => {
         </Text>
       </Text>
 
-      <HelpSection title="how_to_use_favorites.title" contentType="step" namespace="helpSave">
-        <HelpStepItem stepChar={"1"} title="how_to_use_favorites.step.save_set" namespace="helpSave">
+      <HelpSection title="how_to_use_collection.title" contentType="step" namespace="helpSave">
+        <HelpStepItem stepChar={"1"} title="how_to_use_collection.step.save_set" namespace="helpSave">
           <HelpButtonDescription
-            iconName="heart-outline"
+            iconName="content-save"
             iconType={IconType.MaterialCommunityIcons}
-            description="how_to_use_favorites.step.save_set.label_description"
+            description="how_to_use_collection.step.save_set.label_description"
             namespace="helpSave"
           />
         </HelpStepItem>
 
-        <HelpStepItem stepChar={"2"} title="how_to_use_favorites.step.choose_stats" namespace="helpSave">
+        <HelpStepItem stepChar={"2"} title="how_to_use_collection.step.choose_stats" namespace="helpSave">
           <HelpButtonDescription
             iconName="checkbox-multiple-marked"
             iconType={IconType.MaterialCommunityIcons}
-            description="how_to_use_favorites.step.choose_stats.label_description"
+            description="how_to_use_collection.step.choose_stats.label_description"
             namespace="helpSave"
           />
         </HelpStepItem>

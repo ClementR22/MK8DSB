@@ -14,7 +14,7 @@
   "resultStats": "affich.",
 
   "resetSettingsText": "Souhaitez-vous vraiment réinitialiser les préférences ?",
-  "deleteAllBuildsInMemoryText": "Souhaitez-vous vraiment supprimer tous les buildsds enregistrés ?",
+  "deleteAllBuildsInMemoryText": "Souhaitez-vous vraiment supprimer tous les builds enregistrés ?",
   "appliedOnMountForSetBuilderAndComparator": "Appliquées au démarrage pour le Chercheur de builds et le Comparateur",
 
   "buildFound": "Build trouvé",

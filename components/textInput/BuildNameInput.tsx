@@ -41,7 +41,7 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, id, editable = tr
     if (newName !== name) {
       try {
         renameBuild(localName, screenName, id, isSaved);
-        showToast("setRenamed", "success");
+        showToast("buildRenamed", "success");
       } catch (e) {
         showToast(e.message, "error");
         setLocalName(name);
