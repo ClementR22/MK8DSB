@@ -20,6 +20,7 @@ import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 import useGeneralStore from "./useGeneralStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
 import useDeckStore, { BuildEntry } from "./useDeckStore";
+import { t } from "i18next";
 
 export interface BuildsActionsStoreState {
   loadBuildCard: (params: {
@@ -178,7 +179,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     }
 
     const json = JSON.stringify({ name: name, dataId: build.dataId });
-    Clipboard.setStringAsync(json);
+    Clipboard.setStringAsync(json + "\n" + t("text:tutoImportation"));
   },
 
   importBuild: (clipboardContent: string, screenName: ScreenName) => {

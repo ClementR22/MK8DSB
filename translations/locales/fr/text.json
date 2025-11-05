@@ -19,5 +19,7 @@
 
   "buildFound": "Build trouvé",
 
-  "warning": "Attention"
+  "warning": "Attention",
+
+  "tutoImportation": "Copiez le texte, allez dans 'Collection' et cliquez sur le bouton 'Importer' (presse-papier)."
 }
