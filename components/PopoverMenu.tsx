@@ -11,7 +11,6 @@ interface TooltipMenuProps {
   trigger: TriggerCallback | ReactElement;
   placement?: Placement;
   isHideArrow?: boolean;
-  isAlignRight?: boolean;
   style: ViewStyle | ViewStyle[];
   children: ChildrenCallback | React.ReactNode;
 }
@@ -20,7 +19,6 @@ const PopoverMenu: React.FC<TooltipMenuProps> = ({
   trigger,
   placement = PopoverPlacement.AUTO,
   isHideArrow = false,
-  isAlignRight = false,
   style,
   children,
 }) => {

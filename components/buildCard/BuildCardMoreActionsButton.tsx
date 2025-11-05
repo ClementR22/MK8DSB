@@ -1,16 +1,15 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { ActionNamesList } from "@/hooks/useBuildCardConfig";
 import { ScreenName } from "@/contexts/ScreenContext";
 import { useTranslation } from "react-i18next";
 import PopoverMenu from "../PopoverMenu";
 import PopoverMenuItem from "../PopoverMenuItem";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import useThemeStore from "@/stores/useThemeStore";
 import { Placement } from "react-native-popover-view/dist/Types";
-import { useBuildCardsScroll } from "@/contexts/BuildCardsScrollContext";
 
 interface BuildCardMoreActionsButtonProps {
   moreActionNamesList: ActionNamesList;
@@ -26,8 +25,6 @@ const BuildCardMoreActionsButton: React.FC<BuildCardMoreActionsButtonProps> = ({
   const theme = useThemeStore((state) => state.theme);
   const { t } = useTranslation("button");
 
-  const { scrollToBuildCard } = useBuildCardsScroll();
-
   const actionIconPropsList = useActionIconPropsList(moreActionNamesList, screenName, false, id);
 
   return (
@@ -35,7 +32,6 @@ const BuildCardMoreActionsButton: React.FC<BuildCardMoreActionsButtonProps> = ({
       trigger={(openMenu) => (
         <ButtonIcon
           onPress={() => {
-            scrollToBuildCard(id);
             openMenu();
           }}
           tooltipText={"moreActions"}
@@ -45,7 +41,6 @@ const BuildCardMoreActionsButton: React.FC<BuildCardMoreActionsButtonProps> = ({
       )}
       placement={Placement.BOTTOM}
       isHideArrow
-      isAlignRight
       style={[styles.menuContainer, { backgroundColor: theme.surface_container }]}
     >
       {(closeMenu) =>
