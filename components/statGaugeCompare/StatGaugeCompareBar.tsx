@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   trackSegment: {
     height: "100%",
   },
-  text: { width: 40 },
+  text: { width: 45 },
 });
 
 export default React.memo(StatGaugeCompareBar);

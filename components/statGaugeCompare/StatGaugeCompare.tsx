@@ -21,7 +21,7 @@ const StatGaugeCompare: React.FC<StatGaugeCompareProps> = ({ buildsIdAndValue, n
   const { scrollToBuildCard } = useBuildCardsScroll();
 
   return (
-    <View style={[setCardStyle, { paddingTop: 3 }]}>
+    <View style={[setCardStyle, styles.container]}>
       <Text role="title" size="medium" style={styles.textWrapper} namespace="stats">
         {name}
       </Text>
@@ -41,6 +41,7 @@ const StatGaugeCompare: React.FC<StatGaugeCompareProps> = ({ buildsIdAndValue, n
 };
 
 const styles = StyleSheet.create({
+  container: { paddingTop: 3, paddingRight: 0, borderRightWidth: 0 },
   textWrapper: {
     marginBottom: 5, // Espacement entre le titre et les barres de stat
   },
