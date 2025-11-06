@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import { Picker as NativePicker } from "@react-native-picker/picker";
 import { View, StyleSheet, Platform } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import useThemeStore from "@/stores/useThemeStore";
 import { useTranslation } from "react-i18next";
 import Text from "@/primitiveComponents/Text";
@@ -53,8 +52,6 @@ const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle,
         >
           {transformedItems}
         </NativePicker>
-
-        <Icon name="arrow-drop-down" size={24} color={theme.on_surface} style={styles.chevronIcon} />
       </View>
     </View>
   );
