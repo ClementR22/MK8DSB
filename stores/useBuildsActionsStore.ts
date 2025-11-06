@@ -7,7 +7,7 @@ import { router } from "expo-router";
 // Data and Types
 import { ScreenName } from "@/contexts/ScreenContext";
 import { MAX_NUMBER_BUILDS_DISPLAY, MAX_NUMBER_BUILDS_SAVE } from "./useBuildsListStore";
-import { Build } from "@/data/builds/buildsTypes";
+import { Build, BuildPersistant } from "@/data/builds/buildsTypes";
 
 // Utilities
 import { arraysEqual } from "@/utils/deepCompare";
@@ -23,13 +23,7 @@ import useDeckStore, { BuildEntry } from "./useDeckStore";
 import { t } from "i18next";
 
 export interface BuildsActionsStoreState {
-  loadBuildCard: (params: {
-    source?: ScreenName;
-    id?: string;
-    build?: Build;
-    target: ScreenName;
-    forceName?: boolean;
-  }) => Build;
+  loadBuildCard: (params: { source?: ScreenName; id?: string; build?: Build; target: ScreenName }) => Build;
   loadToSearch: (params: { source?: ScreenName; id?: string; build?: Build }) => void;
   loadToDisplay: (params: { source: ScreenName; id: string }) => void;
   loadBuildsSaved: () => void;
@@ -40,14 +34,8 @@ export interface BuildsActionsStoreState {
 }
 
 const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
-  loadBuildCard: (params: {
-    source?: ScreenName;
-    id?: string;
-    build?: Build;
-    target: ScreenName;
-    forceName?: boolean;
-  }) => {
-    const { source, id, build: providedBuild, target, forceName = false } = params;
+  loadBuildCard: (params: { source?: ScreenName; id?: string; build?: Build; target: ScreenName }) => {
+    const { source, id, build: providedBuild, target } = params;
 
     // on récupère build depuis les props ou bien on le calcule
     // et on retire percentage
@@ -59,8 +47,11 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       const { percentage, ...build_ } = useBuildsListStore.getState().getBuild(source, id);
       build = build_;
     }
-    // on change l'id car dans l'appli, il ne doit pas y avoir 2 builds avec le même id
-    build.id = nanoid(8);
+
+    const name = useDeckStore.getState().deck.get(build.dataId)?.name;
+    if (!name) {
+      throw new Error("buildNameRequiredForLoading");
+    }
 
     const buildsListTarget = useBuildsListStore.getState().getBuildsList(target).buildsList;
 
@@ -72,22 +63,10 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       throw new Error("buildLimitReachedInThisScreen");
     }
 
-    // verification du nom unique
-    const name = useDeckStore.getState().deck.get(build.dataId)?.name;
-    const isNameUnique = useBuildsListStore.getState().checkNameUnique(name, target);
-
-    if (!isNameUnique) {
-      if (!forceName) {
-        throw new Error("nameAlreadyExists");
-      } else {
-        const baseName = name;
-        const newIndex = 0;
-        const newName = useBuildsListStore.getState().generateUniqueName(baseName, newIndex, target);
-        useDeckStore.getState().updateName(build.dataId, newName);
-      }
-    }
-
     const newBuildsListTarget = [...buildsListTarget, build];
+
+    // on change l'id car dans l'appli, il ne doit pas y avoir 2 builds avec le même id
+    build.id = nanoid(8);
 
     const setBuildsListTarget = useBuildsListStore.getState().getSetBuildsList(target);
     setBuildsListTarget(newBuildsListTarget);
@@ -199,12 +178,15 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       throw new Error("incorrectFormat");
     }
 
-    const build = { ...parsedBuild, id: nanoid(8) }; // okkk doit avoir un name ?
+    const build: BuildPersistant = { ...parsedBuild, id: nanoid(8) };
 
     if (screenName === "search") {
       get().loadToSearch({ build });
     } else {
-      get().loadBuildCard({ build, target: screenName, forceName: true });
+      const isNameFree = useDeckStore.getState().checkNameFree(build.name);
+      if (!isNameFree) {
+      }
+      get().loadBuildCard({ build, target: screenName });
       if (screenName === "save") {
         const name = useDeckStore.getState().deck.get(build.dataId).name;
         useBuildsPersistenceStore.getState().saveBuildInMemory(build, name);

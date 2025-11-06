@@ -29,8 +29,6 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
   scrollviewBuildsCardsRef,
   scrollviewMainRef,
 }) => {
-  const { t } = useTranslation("text");
-
   const chosenStats = useStatsStore((state) => state.chosenStats);
   const setBuildsListFound = useBuildsListStore((state) => state.setBuildsListFound);
   const resultsNumber = useGeneralStore((state) => state.resultsNumber);
@@ -71,34 +69,31 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
       });
 
       if (isOneElementNonAccepted) {
-        return;
+        continue;
       }
 
-      if (chosenBodytype.size !== 0) {
-        const isEveryBodytypeNonAccepted = !bodytypes.some((item: Bodytype) => chosenBodytype.has(item));
-        if (isEveryBodytypeNonAccepted) {
-          return;
-        }
-      }
+      if (chosenBodytype.size && !bodytypes.some((b) => chosenBodytype.has(b))) continue;
 
       let gap = 0;
       let validSet = true;
 
-      chosenStatsChecked.forEach((checked, statIndex) => {
-        if (checked) {
-          const setValue = stats[statIndex];
-          const chosenValue = Number(chosenStatsValue[statIndex]);
-          const statFilterNumber = chosenStatsFilterNumber[statIndex];
+      for (let statIndex = 0; statIndex < chosenStatsChecked.length; statIndex++) {
+        if (!chosenStatsChecked[statIndex]) continue;
 
-          if (statFilterNumber === 2 && setValue !== chosenValue) {
-            validSet = false;
-          } else if (statFilterNumber === 1 && setValue < chosenValue) {
-            validSet = false;
-          } else {
-            gap += ((chosenValue - setValue) / 6) ** 2;
-          }
+        const setValue = stats[statIndex];
+        const chosenValue = Number(chosenStatsValue[statIndex]);
+        const statFilterNumber = chosenStatsFilterNumber[statIndex];
+
+        if (statFilterNumber === 2 && setValue !== chosenValue) {
+          validSet = false;
+          break;
+        } else if (statFilterNumber === 1 && setValue < chosenValue) {
+          validSet = false;
+          break;
+        } else {
+          gap += ((chosenValue - setValue) / 6) ** 2;
         }
-      });
+      }
 
       if (validSet) {
         gaps.push({ dataId, gap });

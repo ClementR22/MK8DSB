@@ -14,7 +14,9 @@
   "allSavedBuildsHaveBeenDeleted": "all saved builds have been deleted",
 
   "buildRenamed": "the build renamed",
-  "nameAlreadyExists": "name already exists",
+  "nameAlreadyExists": "this name is already taken",
+  "buildUpdated": "build updated",
+  "buildAlreadyExistsWithTheName": "this build is already here, under the name: ",
   "buildStatsHaveBeenLoaded": "the build's stats have been loaded",
   "buildHasBeenLoadedInTheComparator": "the build have been loaded in the comparator",
   "buildHasBeenSaved": "the build has been saved, click on 'Collection' to find it",
@@ -24,8 +26,8 @@
   "buildImported": "build imported",
   "statsImported": "build's stats imported",
   "buildLimitReachedInThisScreen": "build limit reached",
-  "cannotGenerateUniqueName": "cannot generate new name",
   "buildNameRequiredForSharing": "you must enter a name to share a build",
   "buildNameRequiredForSaving": "you must enter a name to record a build",
-  "savedBuildCannotHaveEmptyName": "saved builds must have a name"
+  "buildNameRequiredForLoading": "you must enter a name to move a build",
+  "savedBuildCannotHaveEmptyName": "collection's builds must have a name"
 }

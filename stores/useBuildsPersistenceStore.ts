@@ -49,7 +49,7 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
           return null;
         }
       })
-      .filter((BuildPersistant) => BuildPersistant !== null) as BuildPersistant[];
+      .filter((buildPersistant) => buildPersistant !== null) as BuildPersistant[];
 
     return buildsValuesParsed;
   },

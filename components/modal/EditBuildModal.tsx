@@ -5,6 +5,7 @@ import PannelPaginated from "../elementPickerCompact/PannelPaginated";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { useScreenNameFromPath } from "@/hooks/useScreenNameFromPath";
 import useBuildsListStore from "@/stores/useBuildsListStore";
+import showToast from "@/utils/showToast";
 
 const EditBuildModal: React.FC = () => {
   const isEditBuildModalVisible = useEditBuildModalStore((state) => state.isEditBuildModalVisible);
@@ -17,8 +18,13 @@ const EditBuildModal: React.FC = () => {
 
   const handleCloseEditBuildModal = useCallback(() => {
     if (!isBuildsListUpdated) {
-      updateBuildsList(selectedClassIdsByCategory, screenName);
-      setIsBuildsListUpdated(true);
+      try {
+        updateBuildsList(selectedClassIdsByCategory, screenName);
+        setIsBuildsListUpdated(true);
+        showToast("buildUpdated", "success");
+      } catch (e) {
+        showToast(e.message, "error", e.buildName);
+      }
     }
     setIsEditBuildModalVisible(false);
   }, [

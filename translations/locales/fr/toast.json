@@ -14,7 +14,9 @@
   "allSavedBuildsHaveBeenDeleted": "tous les builds sauvegardés ont été supprimés !",
 
   "buildRenamed": "build renommé",
-  "nameAlreadyExists": "ce nom existe déjà",
+  "nameAlreadyExists": "ce nom est déjà pris",
+  "buildUpdated": "build mis à jour",
+  "buildAlreadyExistsWithTheName": "ce build est déjà présent, sous le nom : ",
   "buildStatsHaveBeenLoaded": "les stats du build ont été chargées",
   "buildHasBeenLoadedInTheComparator": "le build a été chargé dans le comparateur",
   "buildHasBeenSaved": "le build a été enregistré, cliquez sur 'Collection' pour le retrouver",
@@ -24,8 +26,8 @@
   "buildImported": "build importé",
   "statsImported": "stats du build importées",
   "buildLimitReachedInThisScreen": "limite de builds atteinte",
-  "cannotGenerateUniqueName": "impossible de générer un nouveau nom",
   "buildNameRequiredForSharing": "vous devez entrer un nom pour partager un build",
   "buildNameRequiredForSaving": "vous devez entrer un nom pour enregister un build",
-  "savedBuildCannotHaveEmptyName": "les builds likés doivent avoir un nom"
+  "buildNameRequiredForLoading": "vous devez entrer un nom pour déplacer un build",
+  "savedBuildCannotHaveEmptyName": "les builds de la collection doivent avoir un nom"
 }

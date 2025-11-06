@@ -1,8 +1,10 @@
+import { Bodytype } from "../bodytypes/bodytypesTypes";
+
 export type BuildData = {
   dataId: string;
   classIds: number[];
   stats: number[];
-  bodytypes: string[];
+  bodytypes: Bodytype[];
 };
 
 export type Build = {

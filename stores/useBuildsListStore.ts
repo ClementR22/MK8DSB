@@ -20,6 +20,16 @@ import { getRandomDataId } from "@/utils/getRandomDataId";
 export const MAX_NUMBER_BUILDS_DISPLAY = 10;
 export const MAX_NUMBER_BUILDS_SAVE = 30;
 
+class BuildAlreadyExistsError extends Error {
+  buildName: string;
+
+  constructor(buildName: string) {
+    super("buildAlreadyExistsWithTheName");
+    this.name = "BuildAlreadyExistsError";
+    this.buildName = buildName;
+  }
+}
+
 export interface BuildsListStoreState {
   buildsListFound: Build[];
   buildsListDisplayed: Build[];
@@ -42,11 +52,10 @@ export interface BuildsListStoreState {
   setBuildEditedId: (id: string) => void;
   addNewBuildInDisplay: () => void;
   removeBuild: (id: string, screenName: ScreenName) => void;
-  checkNameUnique: (buildName: string, screenName: ScreenName) => boolean;
-  generateUniqueName: (baseName: string, newIndexInit: number, target: ScreenName) => string;
   renameBuild: (newName: string, screenName: ScreenName, id: string, isSaved: boolean) => void;
   updateBuildsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => void;
   sortBuildsList: (screenName: ScreenName, sortNumber: number) => void;
+  findSameBuildInThisScreen: (dataId: string, buildsList: Build[]) => Build | undefined;
 }
 
 const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
@@ -151,36 +160,6 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     }
   },
 
-  checkNameUnique: (buildName, screenName) => {
-    // ne lance pas d'error
-    const { buildsList } = get().getBuildsList(screenName);
-
-    const isNameUnique = !buildsList.some((build) => {
-      const name = useDeckStore.getState().deck.get(build.dataId)?.name;
-      return name === buildName;
-    });
-    return isNameUnique;
-  },
-
-  generateUniqueName: (baseName: string, newIndexInit: number, target: ScreenName) => {
-    let newIndex = newIndexInit;
-    let newName: string;
-    let attempts = 0;
-    const MAX_ATTEMPTS = 20;
-
-    do {
-      newIndex++;
-      newName = `${baseName} (${newIndex})`;
-      attempts++;
-
-      if (attempts > MAX_ATTEMPTS) {
-        throw new Error("cannotGenerateUniqueName");
-      }
-    } while (!get().checkNameUnique(newName, target));
-
-    return newName;
-  },
-
   renameBuild: (newName, screenName, id, isSaved) => {
     const build = get().getBuild(screenName, id);
 
@@ -192,7 +171,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     }
 
     // pour la suite, newName est censé être non vide
-    const isNameUnique = get().checkNameUnique(newName, screenName);
+    const isNameUnique = useDeckStore.getState().checkNameFree(newName);
     if (!isNameUnique) {
       throw new Error("nameAlreadyExists");
     }
@@ -208,6 +187,13 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   updateBuildsList: (selectedClassIdsByCategory, screenName) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
     const dataId = Object.values(selectedClassIdsByCategory).join("-");
+
+    const sameBuild = get().findSameBuildInThisScreen(dataId, buildsList);
+    if (sameBuild) {
+      const buildName = useDeckStore.getState().deck.get(sameBuild.dataId)?.name;
+      throw new BuildAlreadyExistsError(buildName);
+    }
+
     const id = get().buildEditedId;
 
     const build = get().getBuild(screenName, id);
@@ -226,6 +212,8 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
       const name = useDeckStore.getState().deck.get(build.dataId).name;
       useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild, name);
     }
+
+    useDeckStore.getState().updateBuildData(build.dataId, dataId);
   },
 
   sortBuildsList: (screenName, sortNumber) => {
@@ -261,6 +249,11 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     });
 
     set({ [buildsListName]: buildsListSortedLight });
+  },
+
+  findSameBuildInThisScreen: (dataId, buildsList) => {
+    const sameBuild = buildsList.find((build) => build.dataId === dataId);
+    return sameBuild;
   },
 }));
 

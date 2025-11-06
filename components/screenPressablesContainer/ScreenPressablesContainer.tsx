@@ -30,6 +30,7 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
   const sortBuildsList = useBuildsListStore((state) => state.sortBuildsList);
   useEffect(() => {
     if (!isInGalleryScreen) {
+      console.log("ok");
       sortBuildsList(screenName, sortNumber);
     }
   }, [sortNumber]);
