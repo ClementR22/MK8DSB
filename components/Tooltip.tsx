@@ -27,6 +27,8 @@ const Tooltip: React.FC<TooltipProps> = ({
   disabled = false,
   children,
 }) => {
+  const theme = useThemeStore((state) => state.theme);
+
   const [showPopover, setShowPopover] = useState(false);
 
   const touchableRef = useRef(null);
@@ -55,8 +57,6 @@ const Tooltip: React.FC<TooltipProps> = ({
   useEffect(() => {
     return () => clearTimeout(timeoutRef.current);
   }, []);
-
-  const theme = useThemeStore((state) => state.theme);
 
   return (
     <>

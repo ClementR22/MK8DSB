@@ -56,7 +56,7 @@ const SettingsScreen: React.FC = () => {
 
             <StatSelector triggerButtonText="configureDefaultStats" tooltipText="configureDefaultStats">
               <Text role="title" size="small" namespace="text">
-                appliedOnMountForSetBuilderAndComparator
+                appliedWhenTheAppStarts
               </Text>
             </StatSelector>
 

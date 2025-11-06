@@ -15,7 +15,7 @@
 
   "resetSettingsText": "Souhaitez-vous vraiment réinitialiser les préférences ?",
   "deleteAllBuildsInMemoryText": "Souhaitez-vous vraiment supprimer tous les builds enregistrés ?",
-  "appliedOnMountForSetBuilderAndComparator": "Appliquées au démarrage pour le Chercheur de builds et le Comparateur",
+  "appliedWhenTheAppStarts": "Appliquées au démarrage de l'app",
 
   "buildFound": "Build trouvé",
 

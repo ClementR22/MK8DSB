@@ -45,10 +45,12 @@ const ElementsDeselector: React.FC = () => {
   }, [multiSelectedClassIdsStore, elementsDataByClassId]);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       // besoin d'un delai pour prendre en compte la nouvelle taille de BuildCardsContainer
-      scrollViewRef?.current?.scrollToEnd();
+      scrollViewRef.current?.scrollToEnd();
     }, 50);
+
+    return () => clearTimeout(timeoutId);
   }, [elementsToDisplay]);
 
   const { elementPickerDynamicStyle, activeBorderStyle } = useElementPickerStyle({
