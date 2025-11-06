@@ -16,6 +16,7 @@ import useDeckStore from "./useDeckStore";
 import { deleteAllSavedBuildsInMemory } from "@/utils/asyncStorageOperations";
 import { getRandomDataId } from "@/utils/getRandomDataId";
 import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
+import { t } from "i18next";
 
 export const MAX_NUMBER_BUILDS_DISPLAY = 10;
 export const MAX_NUMBER_BUILDS_SAVE = 30;
@@ -178,39 +179,50 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
       useBuildsPersistenceStore.getState().saveBuildInMemory(build, newName);
     }
 
-    useDeckStore.getState().updateName(build.buildDataId, newName);
+    useDeckStore.getState().setBuildName(build.buildDataId, newName);
   },
 
   updateBuildsList: (selectedClassIdsByCategory, screenName) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
-    const buildDataId = Object.values(selectedClassIdsByCategory).join("-");
 
-    const sameBuild = get().findSameBuildInThisScreen({ buildDataId, buildsList });
+    const formerBuildDataId = get().buildEditedDataId;
+
+    const newBuildDataId = Object.values(selectedClassIdsByCategory).join("-");
+
+    const sameBuild = get().findSameBuildInThisScreen({ buildDataId: newBuildDataId, buildsList: buildsList });
+    // si le build existe deja dans l'ecran, alors on annule la MAJ du build actuel
     if (sameBuild) {
       const buildName = useDeckStore.getState().deck.get(sameBuild.buildDataId)?.name;
       throw new BuildAlreadyExistsError(buildName);
     }
 
-    const buildEditedDataId = get().buildEditedDataId;
-
-    const newBuild: Build = { buildDataId: buildDataId };
+    const newBuild: Build = { buildDataId: newBuildDataId };
 
     const buildsListUpdated = buildsList.map((build) => {
-      if (build.buildDataId === buildEditedDataId) {
+      if (build.buildDataId === formerBuildDataId) {
         return newBuild;
       }
       return build;
     });
 
+    console.log("ok2", buildsList, buildsListUpdated);
+
     set({ [buildsListName]: buildsListUpdated });
 
-    if (screenName === "save") {
-      const name = useDeckStore.getState().deck.get(newBuild.buildDataId).name;
-      useBuildsPersistenceStore.getState().removeBuildInMemory(buildEditedDataId);
-      useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild, name);
-    }
+    const name = useDeckStore.getState().deck.get(formerBuildDataId).name;
+    console.log({ name });
 
-    useDeckStore.getState().updateBuildData(buildEditedDataId, buildDataId);
+    if (screenName === "save") {
+      useBuildsPersistenceStore.getState().removeBuildInMemory(formerBuildDataId);
+
+      useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild, name);
+
+      useDeckStore.getState().updateBuildDataId(formerBuildDataId, newBuildDataId);
+    } else {
+      // screenName == "display"
+      const newName = `${name} ${t("text:modified")}`;
+      useDeckStore.getState().setBuildName(newBuildDataId, newName);
+    }
   },
 
   sortBuildsList: (screenName, sortNumber) => {

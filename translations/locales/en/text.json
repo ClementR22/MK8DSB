@@ -21,5 +21,7 @@
 
   "warning": "Warning",
 
-  "tutoImportation": "Copy the text, go to 'Collection', and click the 'Import' (clipboard) button."
+  "tutoImportation": "Copy the text, go to 'Collection', and click the 'Import' (clipboard) button.",
+
+  "modified": "modified"
 }

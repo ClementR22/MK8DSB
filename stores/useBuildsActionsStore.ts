@@ -27,7 +27,7 @@ export interface BuildsActionsStoreState {
   loadToDisplay: (params: { source: ScreenName; buildDataId: string }) => void;
   loadBuildsSaved: () => void;
   saveBuild: (source: ScreenName, buildDataId: string) => Promise<void>;
-  unSaveBuild: (screenName: ScreenName, buildDataId: string) => void;
+  unSaveBuild: (buildDataId: string) => void;
   exportBuild: (screenName: ScreenName, buildDataId: string) => void;
   importBuild: (clipboardContent: string, screenName: ScreenName) => void;
 }
@@ -127,13 +127,8 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     useDeckStore.getState().saveBuild(build.buildDataId);
   },
 
-  unSaveBuild: (screenName: ScreenName, buildDataId: string) => {
-    const build = useBuildsListStore.getState().getBuild(screenName, buildDataId);
-    console.log("build", build);
-    console.log("ok1");
+  unSaveBuild: (buildDataId: string) => {
     useBuildsListStore.getState().removeBuild(buildDataId, "save");
-
-    console.log("ok4");
   },
 
   exportBuild: (screenName, buildDataId) => {

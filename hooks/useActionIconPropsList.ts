@@ -69,7 +69,7 @@ export function useActionIconPropsList(
         await saveBuild(source, buildDataId);
         showToast("buildHasBeenSaved", "success");
       } else {
-        await unSaveBuild(source, buildDataId);
+        await unSaveBuild(buildDataId);
         showToast("buildHasBeenUnsaved", "success");
       }
     } catch (e) {

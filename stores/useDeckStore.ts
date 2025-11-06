@@ -7,8 +7,8 @@ export type BuildEntry = { name: string; isSaved: boolean };
 type DeckState = {
   deck: Map<string, BuildEntry>;
 
-  updateName: (buildDataId: string, name: string) => void;
-  updateBuildData: (formerDataId: string, newDataId: string) => void;
+  setBuildName: (buildDataId: string, name: string) => void;
+  updateBuildDataId: (formerBuildDataId: string, newBuildDataId: string) => void;
   removeBuildName: (buildDataId: string) => void;
   saveBuild: (buildDataId: string) => void;
   unSaveBuild: (buildDataId: string) => void;
@@ -22,7 +22,7 @@ const useDeckStore = create<DeckState>((set, get) => ({
     [DEFAULT_BUILDS.build2.buildDataId, { name: DEFAULT_BUILDS.build2.name, isSaved: false }],
   ]),
 
-  updateName: (buildDataId, newName) =>
+  setBuildName: (buildDataId, newName) =>
     set((state) => {
       const buildEntry = state.deck.get(buildDataId);
       const updatedEntry: BuildEntry = buildEntry
@@ -34,14 +34,14 @@ const useDeckStore = create<DeckState>((set, get) => ({
       return { deck: newDeck };
     }),
 
-  updateBuildData: (formerDataId, newDataId) =>
+  updateBuildDataId: (formerBuildDataId, newBuildDataId) =>
     set((state) => {
-      const buildEntry = state.deck.get(formerDataId);
+      const buildEntry = state.deck.get(formerBuildDataId);
       if (!buildEntry) return state;
 
       const newDeck = new Map(state.deck);
-      newDeck.delete(formerDataId);
-      newDeck.set(newDataId, buildEntry);
+      newDeck.delete(formerBuildDataId);
+      newDeck.set(newBuildDataId, buildEntry);
       return { deck: newDeck };
     }),
 
