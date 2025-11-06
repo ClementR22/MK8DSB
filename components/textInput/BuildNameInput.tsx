@@ -4,6 +4,7 @@ import useBuildsListStore from "@/stores/useBuildsListStore";
 import BuildNameInputContent from "./BuildNameInputContent";
 import { useBuildCardsScroll } from "@/contexts/BuildCardsScrollContext";
 import showToast from "@/utils/showToast";
+import { NameAlreadyExistsError } from "@/errors/errors";
 
 interface BuildNameInputProps {
   name: string;
@@ -43,7 +44,11 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, id, editable = tr
         renameBuild(localName, screenName, id, isSaved);
         showToast("buildRenamed", "success");
       } catch (e) {
-        showToast(e.message, "error");
+        if (e instanceof NameAlreadyExistsError) {
+          showToast(e.message, "error", e.buildName);
+        } else {
+          showToast(e.message, "error");
+        }
         setLocalName(name);
         return;
       }

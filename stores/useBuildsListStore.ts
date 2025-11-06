@@ -1,7 +1,6 @@
 // Third-party libraries
 import { create } from "zustand";
 import "react-native-get-random-values";
-import { nanoid } from "nanoid";
 
 // Data and Types
 import { statNames } from "@/data/stats/statsData";
@@ -16,19 +15,10 @@ import { buildsDataMap } from "@/data/builds/buildsData";
 import useDeckStore from "./useDeckStore";
 import { deleteAllSavedBuildsInMemory } from "@/utils/asyncStorageOperations";
 import { getRandomDataId } from "@/utils/getRandomDataId";
+import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
 
 export const MAX_NUMBER_BUILDS_DISPLAY = 10;
 export const MAX_NUMBER_BUILDS_SAVE = 30;
-
-class BuildAlreadyExistsError extends Error {
-  buildName: string;
-
-  constructor(buildName: string) {
-    super("buildAlreadyExistsWithTheName");
-    this.name = "BuildAlreadyExistsError";
-    this.buildName = buildName;
-  }
-}
 
 export interface BuildsListStoreState {
   buildsListFound: Build[];
@@ -55,7 +45,11 @@ export interface BuildsListStoreState {
   renameBuild: (newName: string, screenName: ScreenName, id: string, isSaved: boolean) => void;
   updateBuildsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => void;
   sortBuildsList: (screenName: ScreenName, sortNumber: number) => void;
-  findSameBuildInThisScreen: (dataId: string, buildsList: Build[]) => Build | undefined;
+  findSameBuildInThisScreen: (props: {
+    dataId: string;
+    buildsList?: Build[];
+    screenName?: ScreenName;
+  }) => Build | undefined;
 }
 
 const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
@@ -122,7 +116,12 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   setBuildsListSaved: (newBuildsList) => set({ buildsListSaved: newBuildsList }),
 
   deleteAllSavedBuilds: async () => {
+    const unSaveBuild = useDeckStore.getState().unSaveBuild;
+    const buildsListSaved = useBuildsListStore.getState().buildsListSaved;
+    buildsListSaved.forEach((build) => unSaveBuild(build.dataId));
+
     useBuildsListStore.getState().setBuildsListSaved([]);
+
     await deleteAllSavedBuildsInMemory();
   },
 
@@ -141,7 +140,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     set((state) => {
       return {
         buildIndexInComparator: newIndex,
-        buildsListDisplayed: [...state.buildsListDisplayed, { id: nanoid(8), dataId: dataId }],
+        buildsListDisplayed: [...state.buildsListDisplayed, { id: dataId, dataId: dataId }], // okk
       };
     });
   },
@@ -151,11 +150,13 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
     const newList = buildsList.filter((build) => build.id !== id);
     set({ [buildsListName]: newList });
-
+    console.log("ok3");
     if (screenName === "save") {
       useBuildsPersistenceStore.getState().removeBuildInMemory(id);
       // mise à jour de la props isSaved dans useDeckStore
+      console.log("buildsList", buildsList);
       const dataId = buildsList.find((build) => build.id === id).dataId;
+      console.log("ok3.5");
       useDeckStore.getState().unSaveBuild(dataId);
     }
   },
@@ -171,9 +172,9 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     }
 
     // pour la suite, newName est censé être non vide
-    const isNameUnique = useDeckStore.getState().checkNameFree(newName);
-    if (!isNameUnique) {
-      throw new Error("nameAlreadyExists");
+    const isNameFree = useDeckStore.getState().checkNameFree(newName);
+    if (!isNameFree) {
+      throw new NameAlreadyExistsError(newName);
     }
 
     if (isSaved) {
@@ -188,7 +189,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
     const dataId = Object.values(selectedClassIdsByCategory).join("-");
 
-    const sameBuild = get().findSameBuildInThisScreen(dataId, buildsList);
+    const sameBuild = get().findSameBuildInThisScreen({ dataId, buildsList });
     if (sameBuild) {
       const buildName = useDeckStore.getState().deck.get(sameBuild.dataId)?.name;
       throw new BuildAlreadyExistsError(buildName);
@@ -251,7 +252,10 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     set({ [buildsListName]: buildsListSortedLight });
   },
 
-  findSameBuildInThisScreen: (dataId, buildsList) => {
+  findSameBuildInThisScreen: ({ dataId, buildsList, screenName }) => {
+    if (!buildsList) {
+      buildsList = get().getBuildsList(screenName).buildsList;
+    }
     const sameBuild = buildsList.find((build) => build.dataId === dataId);
     return sameBuild;
   },

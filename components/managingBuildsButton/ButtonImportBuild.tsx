@@ -6,6 +6,7 @@ import * as Clipboard from "expo-clipboard";
 import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
 import showToast from "@/utils/showToast";
 import useLoadBuildModalStore from "@/stores/useLoadBuildModalStore";
+import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
 
 interface ButtonImportBuildProps {
   screenName: ScreenName;
@@ -25,7 +26,11 @@ const ButtonImportBuild: React.FC<ButtonImportBuildProps> = ({ screenName }) => 
       }
       useLoadBuildModalStore.getState().setIsLoadBuildModalVisible(false);
     } catch (e) {
-      showToast(e.message, "importError");
+      if (e instanceof BuildAlreadyExistsError || e instanceof NameAlreadyExistsError) {
+        showToast(e.message, "importError", e.buildName);
+      } else {
+        showToast(e.message, "importError");
+      }
     }
   };
 

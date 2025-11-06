@@ -9,7 +9,6 @@ import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import PannelPaginated from "../elementPickerCompact/PannelPaginated";
 import ElementsDeselector from "../elementPickerCompact/ElementsDeselector";
 import "react-native-get-random-values";
-import { nanoid } from "nanoid";
 import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
 import { MARGIN_CONTAINER_LOWEST, PADDING_SEARCH_CONTAINER } from "@/utils/designTokens";
 import StatSelector from "../statSelector/StatSelector";
@@ -114,7 +113,7 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
         const percentage = 100 * (1 - Math.sqrt(gap / worstGap));
         const percentageRounded = Number(percentage.toPrecision(3));
         return {
-          id: nanoid(8),
+          id: dataId,
           dataId: dataId,
           percentage: percentageRounded,
         };

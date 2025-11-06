@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import * as Clipboard from "expo-clipboard";
 import "react-native-get-random-values";
-import { nanoid } from "nanoid";
 import { router } from "expo-router";
 
 // Data and Types
@@ -21,6 +20,7 @@ import useGeneralStore from "./useGeneralStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
 import useDeckStore, { BuildEntry } from "./useDeckStore";
 import { t } from "i18next";
+import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
 
 export interface BuildsActionsStoreState {
   loadBuildCard: (params: { source?: ScreenName; id?: string; build?: Build; target: ScreenName }) => Build;
@@ -28,7 +28,7 @@ export interface BuildsActionsStoreState {
   loadToDisplay: (params: { source: ScreenName; id: string }) => void;
   loadBuildsSaved: () => void;
   saveBuild: (source: ScreenName, id: string) => Promise<void>;
-  unSaveBuild: (screenName: ScreenName, id: string) => Promise<void>;
+  unSaveBuild: (screenName: ScreenName, id: string) => void;
   exportBuild: (screenName: ScreenName, id: string) => void;
   importBuild: (clipboardContent: string, screenName: ScreenName) => void;
 }
@@ -64,9 +64,6 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     }
 
     const newBuildsListTarget = [...buildsListTarget, build];
-
-    // on change l'id car dans l'appli, il ne doit pas y avoir 2 builds avec le même id
-    build.id = nanoid(8);
 
     const setBuildsListTarget = useBuildsListStore.getState().getSetBuildsList(target);
     setBuildsListTarget(newBuildsListTarget);
@@ -132,21 +129,13 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     useDeckStore.getState().saveBuild(build.dataId);
   },
 
-  unSaveBuild: async (screenName: ScreenName, id: string) => {
+  unSaveBuild: (screenName: ScreenName, id: string) => {
     const build = useBuildsListStore.getState().getBuild(screenName, id);
-    const classIds = buildsDataMap.get(build.dataId).classIds; // okkk
+    console.log("build", build);
+    console.log("ok1");
+    useBuildsListStore.getState().removeBuild(id, "save");
 
-    const buildsListSaved = useBuildsListStore.getState().buildsListSaved;
-    const buildsToRemove = buildsListSaved.filter((build) => {
-      const buildData = buildsDataMap.get(build.dataId);
-      return arraysEqual(buildData.classIds, classIds);
-    });
-
-    for (const build of buildsToRemove) {
-      useBuildsListStore.getState().removeBuild(build.id, "save");
-      await useBuildsPersistenceStore.getState().removeBuildInMemory(build.id);
-    }
-    useDeckStore.getState().unSaveBuild(build.dataId);
+    console.log("ok4");
   },
 
   exportBuild: (screenName, id) => {
@@ -178,14 +167,25 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       throw new Error("incorrectFormat");
     }
 
-    const build: BuildPersistant = { ...parsedBuild, id: nanoid(8) };
+    const build: BuildPersistant = { ...parsedBuild, id: parsedBuild.dataId }; // ok
 
     if (screenName === "search") {
       get().loadToSearch({ build });
     } else {
+      const sameBuild = useBuildsListStore
+        .getState()
+        .findSameBuildInThisScreen({ dataId: build.dataId, screenName: screenName });
+
+      if (sameBuild) {
+        const buildName = useDeckStore.getState().deck.get(sameBuild.dataId)?.name;
+        throw new BuildAlreadyExistsError(buildName);
+      }
+
       const isNameFree = useDeckStore.getState().checkNameFree(build.name);
       if (!isNameFree) {
+        throw new NameAlreadyExistsError(build.name);
       }
+
       get().loadBuildCard({ build, target: screenName });
       if (screenName === "save") {
         const name = useDeckStore.getState().deck.get(build.dataId).name;

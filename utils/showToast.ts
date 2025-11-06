@@ -1,7 +1,7 @@
 import i18n from "@/translations";
 import ToastManager, { ToastType } from "./ToastManager";
 
-function showToast(messageKey: string, type?: ToastType, messageExtension?: string) {
+function showToast(messageKey: string, type?: ToastType, messageExtension: string = "") {
   const keys = messageKey.split(" ");
 
   const translatedParts = keys.map((key) => i18n.t(key, { ns: "toast" })); // "toast" en fallback

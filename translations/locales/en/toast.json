@@ -14,7 +14,7 @@
   "allSavedBuildsHaveBeenDeleted": "all saved builds have been deleted",
 
   "buildRenamed": "the build renamed",
-  "nameAlreadyExists": "this name is already taken",
+  "nameAlreadyExists": "this name is already taken: ",
   "buildUpdated": "build updated",
   "buildAlreadyExistsWithTheName": "this build is already here, under the name: ",
   "buildStatsHaveBeenLoaded": "the build's stats have been loaded",
