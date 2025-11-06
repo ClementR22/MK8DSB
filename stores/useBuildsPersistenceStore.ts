@@ -20,7 +20,6 @@ export interface BuildsPersistenceStoreState {
   fetchBuildsSaved: () => Promise<BuildPersistant[]>;
   saveBuildInMemory: (build: Build, name: string) => Promise<void>;
   removeBuildInMemory: (keyToRemove: string) => Promise<void>;
-  updateBuildInMemory: (build: Build) => Promise<void>;
   loadSortNumberFromMemory: () => Promise<void>;
 }
 
@@ -55,8 +54,8 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
   },
 
   saveBuildInMemory: async (build, name) => {
-    const buildPersistant: BuildPersistant = { id: build.id, dataId: build.dataId, name: name };
-    await saveThingInMemory(build.id, buildPersistant);
+    const buildPersistant: BuildPersistant = { dataId: build.dataId, name: name };
+    await saveThingInMemory(build.dataId, buildPersistant);
   },
 
   removeBuildInMemory: async (keyToRemove) => {
@@ -65,10 +64,6 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
     } else {
       console.warn(`Attempted to remove build ${keyToRemove}, but no key found.`);
     }
-  },
-
-  updateBuildInMemory: async (build) => {
-    await saveThingInMemory(String(build.id), build);
   },
 
   loadSortNumberFromMemory: async () => {

@@ -13,19 +13,19 @@ import { Placement } from "react-native-popover-view/dist/Types";
 
 interface BuildCardMoreActionsButtonProps {
   moreActionNamesList: ActionNamesList;
-  id: string;
+  dataId: string;
   screenName: ScreenName;
 }
 
 const BuildCardMoreActionsButton: React.FC<BuildCardMoreActionsButtonProps> = ({
   moreActionNamesList,
-  id,
+  dataId,
   screenName,
 }) => {
   const theme = useThemeStore((state) => state.theme);
   const { t } = useTranslation("button");
 
-  const actionIconPropsList = useActionIconPropsList(moreActionNamesList, screenName, false, id);
+  const actionIconPropsList = useActionIconPropsList(moreActionNamesList, screenName, false, dataId);
 
   return (
     <PopoverMenu

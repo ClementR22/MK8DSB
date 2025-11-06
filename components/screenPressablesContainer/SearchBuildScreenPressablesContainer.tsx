@@ -113,7 +113,6 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
         const percentage = 100 * (1 - Math.sqrt(gap / worstGap));
         const percentageRounded = Number(percentage.toPrecision(3));
         return {
-          id: dataId,
           dataId: dataId,
           percentage: percentageRounded,
         };

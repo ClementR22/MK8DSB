@@ -107,14 +107,13 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
 
       return builds.map((build: BuildWithColor) => (
         <BuildCard
-          key={build.id}
+          key={build.dataId}
           dataId={build.dataId}
-          id={build.id}
           isInLoadBuildModal={isInLoadBuildModal}
           screenNameFromProps={screenNameFromProps}
           hideRemoveBuild={hideRemoveBuild}
           percentage={build.percentage ?? undefined}
-          onLayout={(event) => onBuildCardLayout(build.id, event)}
+          onLayout={(event) => onBuildCardLayout(build.dataId, event)}
           borderColor={build.color}
         />
       ));

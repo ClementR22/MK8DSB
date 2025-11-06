@@ -7,7 +7,7 @@ import { ScreenName } from "@/contexts/ScreenContext";
 
 interface BuildCardActionButtonsProps {
   actionNamesList: ActionNamesList;
-  id: string;
+  dataId: string;
   screenName: ScreenName;
   isInLoadBuildModal: boolean;
   isSaved: boolean;
@@ -15,12 +15,12 @@ interface BuildCardActionButtonsProps {
 
 const BuildCardActionButtons: React.FC<BuildCardActionButtonsProps> = ({
   actionNamesList,
-  id,
+  dataId,
   screenName,
   isInLoadBuildModal,
   isSaved,
 }) => {
-  const actionIconPropsList = useActionIconPropsList(actionNamesList, screenName, isInLoadBuildModal, id, isSaved);
+  const actionIconPropsList = useActionIconPropsList(actionNamesList, screenName, isInLoadBuildModal, dataId, isSaved);
 
   return (
     <BoxContainer

@@ -15,7 +15,6 @@ import useDeckStore from "@/stores/useDeckStore";
 interface BuildCardProps {
   dataId: string;
   percentage?: number;
-  id: string;
   isInLoadBuildModal?: boolean;
   screenNameFromProps?: ScreenName;
   hideRemoveBuild?: boolean;
@@ -26,7 +25,6 @@ interface BuildCardProps {
 const BuildCard: React.FC<BuildCardProps> = ({
   dataId,
   percentage = undefined,
-  id,
   isInLoadBuildModal = false,
   screenNameFromProps,
   hideRemoveBuild = false,
@@ -57,7 +55,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
           isNameEditable={config.isNameEditable}
           name={name}
           screenName={screenName}
-          id={id}
+          dataId={dataId}
           percentage={percentage}
           isSaved={isSaved}
           moreActionNamesList={
@@ -71,13 +69,13 @@ const BuildCard: React.FC<BuildCardProps> = ({
           classIds={buildData.classIds}
           isCollapsed={isCollapsed}
           isInLoadBuildModal={isInLoadBuildModal}
-          id={id}
+          dataId={dataId}
         />
 
         {!isCollapsed && (
           <BuildCardActionButtons
             actionNamesList={config.actionNamesList}
-            id={id}
+            dataId={dataId}
             screenName={screenName}
             isInLoadBuildModal={isInLoadBuildModal}
             isSaved={isSaved}

@@ -23,19 +23,19 @@ import { t } from "i18next";
 import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
 
 export interface BuildsActionsStoreState {
-  loadBuildCard: (params: { source?: ScreenName; id?: string; build?: Build; target: ScreenName }) => Build;
-  loadToSearch: (params: { source?: ScreenName; id?: string; build?: Build }) => void;
-  loadToDisplay: (params: { source: ScreenName; id: string }) => void;
+  loadBuildCard: (params: { source?: ScreenName; dataId?: string; build?: Build; target: ScreenName }) => Build;
+  loadToSearch: (params: { source?: ScreenName; dataId?: string; build?: Build }) => void;
+  loadToDisplay: (params: { source: ScreenName; dataId: string }) => void;
   loadBuildsSaved: () => void;
-  saveBuild: (source: ScreenName, id: string) => Promise<void>;
-  unSaveBuild: (screenName: ScreenName, id: string) => void;
-  exportBuild: (screenName: ScreenName, id: string) => void;
+  saveBuild: (source: ScreenName, dataId: string) => Promise<void>;
+  unSaveBuild: (screenName: ScreenName, dataId: string) => void;
+  exportBuild: (screenName: ScreenName, dataId: string) => void;
   importBuild: (clipboardContent: string, screenName: ScreenName) => void;
 }
 
 const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
-  loadBuildCard: (params: { source?: ScreenName; id?: string; build?: Build; target: ScreenName }) => {
-    const { source, id, build: providedBuild, target } = params;
+  loadBuildCard: (params: { source?: ScreenName; dataId?: string; build?: Build; target: ScreenName }) => {
+    const { source, dataId, build: providedBuild, target } = params;
 
     // on récupère build depuis les props ou bien on le calcule
     // et on retire percentage
@@ -44,7 +44,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       const { percentage, ...build_ } = providedBuild;
       build = build_;
     } else {
-      const { percentage, ...build_ } = useBuildsListStore.getState().getBuild(source, id);
+      const { percentage, ...build_ } = useBuildsListStore.getState().getBuild(source, dataId);
       build = build_;
     }
 
@@ -70,8 +70,8 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     return build;
   },
 
-  loadToSearch: (params: { source?: ScreenName; id?: string; build?: Build }) => {
-    const { source, id, build: providedBuild } = params;
+  loadToSearch: (params: { source?: ScreenName; dataId?: string; build?: Build }) => {
+    const { source, dataId, build: providedBuild } = params;
 
     // on récupère build depuis les props ou bien on le calcule
     // pas nécessaire de retirer percentage
@@ -79,7 +79,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     if (providedBuild) {
       build = providedBuild;
     } else {
-      build = useBuildsListStore.getState().getBuild(source, id);
+      build = useBuildsListStore.getState().getBuild(source, dataId);
     }
 
     const stats = buildsDataMap.get(build.dataId).stats;
@@ -90,10 +90,10 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     useGeneralStore.getState().setShouldScrollToTop();
   },
 
-  loadToDisplay: (params: { source: ScreenName; id: string }) => {
-    const { source, id } = params;
+  loadToDisplay: (params: { source: ScreenName; dataId: string }) => {
+    const { source, dataId } = params;
 
-    get().loadBuildCard({ source, id, target: "display" });
+    get().loadBuildCard({ source, dataId, target: "display" });
 
     router.push({ pathname: "/DisplayBuildScreen", params: { scrollToTop: "true" } });
     useGeneralStore.getState().setShouldScrollToTop();
@@ -103,7 +103,6 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     const buildsPersistant = await useBuildsPersistenceStore.getState().fetchBuildsSaved();
 
     const buildsListSaved: Build[] = buildsPersistant.map((buildPersistant) => ({
-      id: buildPersistant.id,
       dataId: buildPersistant.dataId,
     }));
 
@@ -111,13 +110,13 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     useDeckStore.getState().loadBuildsSaved(buildsPersistant);
   },
 
-  saveBuild: async (source: ScreenName, id: string) => {
+  saveBuild: async (source: ScreenName, dataId: string) => {
     const buildsListSaved = useBuildsListStore.getState().buildsListSaved;
     if (buildsListSaved.length >= MAX_NUMBER_BUILDS_SAVE) {
       throw new Error("buildLimitReachedInThisScreen");
     }
 
-    const build = useBuildsListStore.getState().getBuild(source, id);
+    const build = useBuildsListStore.getState().getBuild(source, dataId);
 
     const name = useDeckStore.getState().deck.get(build.dataId)?.name;
     if (!name) {
@@ -129,17 +128,17 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     useDeckStore.getState().saveBuild(build.dataId);
   },
 
-  unSaveBuild: (screenName: ScreenName, id: string) => {
-    const build = useBuildsListStore.getState().getBuild(screenName, id);
+  unSaveBuild: (screenName: ScreenName, dataId: string) => {
+    const build = useBuildsListStore.getState().getBuild(screenName, dataId);
     console.log("build", build);
     console.log("ok1");
-    useBuildsListStore.getState().removeBuild(id, "save");
+    useBuildsListStore.getState().removeBuild(dataId, "save");
 
     console.log("ok4");
   },
 
-  exportBuild: (screenName, id) => {
-    const build = useBuildsListStore.getState().getBuild(screenName, id);
+  exportBuild: (screenName, dataId) => {
+    const build = useBuildsListStore.getState().getBuild(screenName, dataId);
     const name = useDeckStore.getState().deck.get(build.dataId)?.name;
 
     if (!name) {
@@ -167,7 +166,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       throw new Error("incorrectFormat");
     }
 
-    const build: BuildPersistant = { ...parsedBuild, id: parsedBuild.dataId }; // ok
+    const build: BuildPersistant = { ...parsedBuild };
 
     if (screenName === "search") {
       get().loadToSearch({ build });

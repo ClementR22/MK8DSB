@@ -33,16 +33,16 @@ export interface BuildsListStoreState {
   };
   getSetBuildsList: (screenName: ScreenName) => (newBuildsList: Build[]) => void;
 
-  getBuild: (screenName: ScreenName, id: string) => Build;
+  getBuild: (screenName: ScreenName, dataId: string) => Build;
 
   setBuildsListFound: (newBuildsList: Build[]) => void;
   setBuildsListDisplayed: (newBuildsList: Build[]) => void;
   setBuildsListSaved: (newBuildsList: Build[]) => void;
   deleteAllSavedBuilds: () => Promise<void>;
-  setBuildEditedId: (id: string) => void;
+  setBuildEditedId: (dataId: string) => void;
   addNewBuildInDisplay: () => void;
-  removeBuild: (id: string, screenName: ScreenName) => void;
-  renameBuild: (newName: string, screenName: ScreenName, id: string, isSaved: boolean) => void;
+  removeBuild: (dataId: string, screenName: ScreenName) => void;
+  renameBuild: (newName: string, screenName: ScreenName, dataId: string, isSaved: boolean) => void;
   updateBuildsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => void;
   sortBuildsList: (screenName: ScreenName, sortNumber: number) => void;
   findSameBuildInThisScreen: (props: {
@@ -54,10 +54,7 @@ export interface BuildsListStoreState {
 
 const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   buildsListFound: [],
-  buildsListDisplayed: [
-    { id: DEFAULT_BUILDS.build1.id, dataId: DEFAULT_BUILDS.build1.dataId },
-    { id: DEFAULT_BUILDS.build2.id, dataId: DEFAULT_BUILDS.build2.dataId },
-  ],
+  buildsListDisplayed: [{ dataId: DEFAULT_BUILDS.build1.dataId }, { dataId: DEFAULT_BUILDS.build2.dataId }],
   buildsListSaved: [],
   buildEditedId: null,
   buildIndexInComparator: 2, // = get().buildsListDisplayed.length
@@ -100,10 +97,10 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     return setBuildsList;
   },
 
-  getBuild: (screenName: ScreenName, id: string) => {
+  getBuild: (screenName: ScreenName, dataId: string) => {
     const buildsList = get().getBuildsList(screenName).buildsList;
 
-    const build = buildsList.find((build) => build.id === id);
+    const build = buildsList.find((build) => build.dataId === dataId);
     return build;
   },
 
@@ -125,8 +122,8 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     await deleteAllSavedBuildsInMemory();
   },
 
-  setBuildEditedId: (id) => {
-    set({ buildEditedId: id });
+  setBuildEditedId: (dataId) => {
+    set({ buildEditedId: dataId });
   },
 
   addNewBuildInDisplay: () => {
@@ -140,29 +137,26 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     set((state) => {
       return {
         buildIndexInComparator: newIndex,
-        buildsListDisplayed: [...state.buildsListDisplayed, { id: dataId, dataId: dataId }], // okk
+        buildsListDisplayed: [...state.buildsListDisplayed, { dataId: dataId }], // okk
       };
     });
   },
 
-  removeBuild: (id, screenName) => {
+  removeBuild: (dataId, screenName) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
 
-    const newList = buildsList.filter((build) => build.id !== id);
+    const newList = buildsList.filter((build) => build.dataId !== dataId);
     set({ [buildsListName]: newList });
     console.log("ok3");
     if (screenName === "save") {
-      useBuildsPersistenceStore.getState().removeBuildInMemory(id);
+      useBuildsPersistenceStore.getState().removeBuildInMemory(dataId);
       // mise à jour de la props isSaved dans useDeckStore
-      console.log("buildsList", buildsList);
-      const dataId = buildsList.find((build) => build.id === id).dataId;
-      console.log("ok3.5");
       useDeckStore.getState().unSaveBuild(dataId);
     }
   },
 
-  renameBuild: (newName, screenName, id, isSaved) => {
-    const build = get().getBuild(screenName, id);
+  renameBuild: (newName, screenName, dataId, isSaved) => {
+    const build = get().getBuild(screenName, dataId);
 
     // si le nouveau nom est vide
     if (!newName.trim()) {
@@ -178,8 +172,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     }
 
     if (isSaved) {
-      const name = useDeckStore.getState().deck.get(build.dataId).name;
-      useBuildsPersistenceStore.getState().saveBuildInMemory(build, name);
+      useBuildsPersistenceStore.getState().saveBuildInMemory(build, newName);
     }
 
     useDeckStore.getState().updateName(build.dataId, newName);
@@ -195,13 +188,12 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
       throw new BuildAlreadyExistsError(buildName);
     }
 
-    const id = get().buildEditedId;
+    const buildEditedId = get().buildEditedId;
 
-    const build = get().getBuild(screenName, id);
-    const newBuild: Build = { ...build, dataId: dataId };
+    const newBuild: Build = { dataId: dataId };
 
     const buildsListUpdated = buildsList.map((build) => {
-      if (build.id === id) {
+      if (build.dataId === buildEditedId) {
         return newBuild;
       }
       return build;
@@ -210,11 +202,12 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     set({ [buildsListName]: buildsListUpdated });
 
     if (screenName === "save") {
-      const name = useDeckStore.getState().deck.get(build.dataId).name;
+      const name = useDeckStore.getState().deck.get(newBuild.dataId).name;
+      useBuildsPersistenceStore.getState().removeBuildInMemory(buildEditedId);
       useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild, name);
     }
 
-    useDeckStore.getState().updateBuildData(build.dataId, dataId);
+    useDeckStore.getState().updateBuildData(buildEditedId, dataId);
   },
 
   sortBuildsList: (screenName, sortNumber) => {
@@ -242,9 +235,8 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
     const buildsListSorted = sortElements(buildsListSortable, sortNumber);
     const buildsListSortedLight: Build[] = buildsListSorted.map((build) => {
-      const { id, dataId } = buildsList.find((bld) => bld.dataId === build.dataId);
+      const dataId = buildsList.find((bld) => bld.dataId === build.dataId).dataId;
       return {
-        id: id,
         dataId: dataId,
       };
     });

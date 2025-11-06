@@ -23,11 +23,10 @@ export function useActionIconPropsList(
   actionNamesToGenerate: ActionNamesList,
   screenName: ScreenName,
   isInLoadBuildModal: boolean,
-  id: string,
+  dataId: string,
   isSaved?: boolean
 ): ActionIconPropsList {
   const source = isInLoadBuildModal ? "save" : screenName;
-  const build = useBuildsListStore((state) => state.getBuild(source, id));
 
   const updateSelectionFromBuild = usePressableElementsStore((state) => state.updateSelectionFromBuild);
   const setBuildEditedId = useBuildsListStore((state) => state.setBuildEditedId);
@@ -41,56 +40,56 @@ export function useActionIconPropsList(
   const setIsLoadBuildModalVisible = useLoadBuildModalStore((state) => state.setIsLoadBuildModalVisible);
 
   const handleEditPress = useCallback(() => {
-    setBuildEditedId(id);
-    updateSelectionFromBuild(buildsDataMap.get(build.dataId).classIds);
+    setBuildEditedId(dataId);
+    updateSelectionFromBuild(buildsDataMap.get(dataId).classIds);
     setIsEditBuildModalVisible(true);
-  }, [id, build?.dataId, setBuildEditedId, updateSelectionFromBuild, setIsEditBuildModalVisible]);
+  }, [dataId, setBuildEditedId, updateSelectionFromBuild, setIsEditBuildModalVisible]);
 
   const handleLoadToSearchPress = useCallback(() => {
-    loadToSearch({ source, id });
+    loadToSearch({ source, dataId });
 
     showToast("buildStatsHaveBeenLoaded", "success");
     setIsLoadBuildModalVisible(false);
-  }, [source, id, loadToSearch, setIsLoadBuildModalVisible]);
+  }, [source, dataId, loadToSearch, setIsLoadBuildModalVisible]);
 
   const handleLoadToDisplayPress = useCallback(() => {
     try {
-      loadToDisplay({ source, id });
+      loadToDisplay({ source, dataId });
 
       showToast("buildHasBeenLoadedInTheComparator", "success");
       setIsLoadBuildModalVisible(false);
     } catch (e) {
       showToast(e.message, "error");
     }
-  }, [source, id, loadToDisplay, setIsLoadBuildModalVisible]);
+  }, [source, dataId, loadToDisplay, setIsLoadBuildModalVisible]);
 
   const handleSavePress = useCallback(async () => {
     try {
       if (!isSaved) {
-        await saveBuild(source, id);
+        await saveBuild(source, dataId);
         showToast("buildHasBeenSaved", "success");
       } else {
-        await unSaveBuild(source, id);
+        await unSaveBuild(source, dataId);
         showToast("buildHasBeenUnsaved", "success");
       }
     } catch (e) {
       showToast(e.message, "error");
     }
-  }, [source, id, isSaved, saveBuild, unSaveBuild]);
+  }, [source, dataId, isSaved, saveBuild, unSaveBuild]);
 
   const handleRemovePress = useCallback(() => {
-    removeBuild(id, source);
+    removeBuild(dataId, source);
     showToast("buildHasBeenDeleted", "success");
-  }, [source, id, removeBuild]);
+  }, [source, dataId, removeBuild]);
 
   const handleExportPress = useCallback(() => {
     try {
-      exportBuild(source, id);
+      exportBuild(source, dataId);
       showToast("buildCopiedInClipboard", "success");
     } catch (e) {
       showToast(e.message, "error");
     }
-  }, [source, id, exportBuild]);
+  }, [source, dataId, exportBuild]);
 
   if (isInLoadBuildModal) {
     const actionIconPropsList: ActionIconPropsList = [
@@ -147,11 +146,10 @@ export function useActionIconPropsList(
     return actionNamesToGenerate.map((actionName) => allActionsDefs[actionName]);
   }, [
     actionNamesToGenerate,
-    id,
+    dataId,
     source,
     isInLoadBuildModal,
     isSaved,
-    build?.dataId,
     setBuildEditedId,
     updateSelectionFromBuild,
     setIsEditBuildModalVisible,

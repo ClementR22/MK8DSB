@@ -18,7 +18,7 @@ interface BuildImagesContainerProps {
   classIds: number[];
   isCollapsed: boolean;
   isInLoadBuildModal: boolean;
-  id: string;
+  dataId: string;
 }
 
 interface BuildImageCategoryData {
@@ -30,7 +30,7 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
   classIds,
   isCollapsed,
   isInLoadBuildModal,
-  id,
+  dataId,
 }) => {
   const screenName = useScreen();
 
@@ -49,7 +49,7 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
   }, [classIds]);
 
   // inutile de donner isSaved à useActionIconPropsList donc on donne false
-  const [editActionProps] = useActionIconPropsList(["edit"], screenName, isInLoadBuildModal, id, false);
+  const [editActionProps] = useActionIconPropsList(["edit"], screenName, isInLoadBuildModal, dataId, false);
   const onImagesPress = !isInLoadBuildModal ? editActionProps.onPress : () => {};
 
   return (

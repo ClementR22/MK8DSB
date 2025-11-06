@@ -12,7 +12,7 @@ interface BuildCardHeaderProps {
   isNameEditable: boolean;
   name: string;
   screenName: ScreenName;
-  id: string;
+  dataId: string;
   percentage?: number;
   isSaved: boolean;
   moreActionNamesList?: ActionNamesList;
@@ -22,7 +22,7 @@ const BuildCardHeader: React.FC<BuildCardHeaderProps> = ({
   isNameEditable,
   name,
   screenName,
-  id,
+  dataId,
   percentage,
   isSaved,
   moreActionNamesList,
@@ -31,7 +31,7 @@ const BuildCardHeader: React.FC<BuildCardHeaderProps> = ({
 
   return (
     <View style={styles.headerContainer}>
-      <BuildNameInput name={name} id={id} editable={isNameEditable} isSaved={isSaved} />
+      <BuildNameInput name={name} dataId={dataId} editable={isNameEditable} isSaved={isSaved} />
 
       {percentage && (
         <Text role="title" size="medium" weight="bold" color={theme.primary} namespace="not">
@@ -40,7 +40,7 @@ const BuildCardHeader: React.FC<BuildCardHeaderProps> = ({
       )}
 
       {moreActionNamesList && (
-        <BuildCardMoreActionsButton moreActionNamesList={moreActionNamesList} id={id} screenName={screenName} />
+        <BuildCardMoreActionsButton moreActionNamesList={moreActionNamesList} dataId={dataId} screenName={screenName} />
       )}
     </View>
   );
