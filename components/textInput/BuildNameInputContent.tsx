@@ -6,17 +6,19 @@ import { typography } from "../styles/typography";
 interface BuildNameInputContentProps {
   value: string;
   onChangeText: (text: string) => void;
-  onEndEditing: () => void;
+  onEndEditingOrBlur: () => void;
   editable?: boolean;
   onFocus?: () => void;
+  inputRef?: React.RefObject<TextInput>;
 }
 
 const BuildNameInputContent: React.FC<BuildNameInputContentProps> = ({
   value,
   onChangeText,
-  onEndEditing,
+  onEndEditingOrBlur,
   editable = true,
   onFocus,
+  inputRef,
 }) => {
   const theme = useThemeStore((state) => state.theme);
 
@@ -27,6 +29,7 @@ const BuildNameInputContent: React.FC<BuildNameInputContentProps> = ({
       }}
     >
       <TextInput
+        ref={inputRef}
         style={[
           styles.textInput,
           {
@@ -36,9 +39,9 @@ const BuildNameInputContent: React.FC<BuildNameInputContentProps> = ({
         ]}
         value={value}
         onChangeText={onChangeText}
-        onBlur={onEndEditing}
         editable={editable}
         onFocus={onFocus}
+        onBlur={onEndEditingOrBlur}
       />
     </View>
   );

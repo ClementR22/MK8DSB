@@ -1,10 +1,12 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { useScreen } from "../../contexts/ScreenContext";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import BuildNameInputContent from "./BuildNameInputContent";
 import { useBuildCardsScroll } from "@/contexts/BuildCardsScrollContext";
 import showToast from "@/utils/showToast";
 import { NameAlreadyExistsError } from "@/errors/errors";
+import { useKeyboardDidHideWhileFocused } from "@/hooks/useKeyboardDidHideWhileFocused";
+import { TextInput } from "react-native";
 
 interface BuildNameInputProps {
   name: string;
@@ -19,24 +21,26 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, buildDataId, edit
   const { scrollToBuildCard } = useBuildCardsScroll();
 
   const [localName, setLocalName] = useState(name);
+  const [focused, setFocused] = useState(false);
 
-  useEffect(() => {
+  const inputRef = useRef<TextInput>(null);
+
+  // Synchroniser le state local si le nom change depuis l'extérieur
+  React.useEffect(() => {
     setLocalName(name);
   }, [name]);
 
-  const handleEndEditing = useCallback(() => {
-    let newName = localName;
-    if (!localName.trim()) {
-      // si le nouveau nom est vide et si le build est saved
+  const updateName = useCallback(() => {
+    let newName = localName.trim();
+
+    if (!newName) {
       if (isSaved) {
-        setLocalName(name); // on remet le nom initiale
+        setLocalName(name);
         showToast("savedBuildCannotHaveEmptyName", "error");
-        return; // et on s'arrete
+        return;
       }
-      // si le nouveau nom est vide (ou espaces) et si le build n'est pas saved
       newName = "";
-      setLocalName(newName); // on remet le nom vide
-      // et on va renommer le build
+      setLocalName(newName);
     }
 
     if (newName !== name) {
@@ -50,25 +54,37 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, buildDataId, edit
           showToast(e.message, "error");
         }
         setLocalName(name);
-        return;
       }
     }
   }, [localName, name, screenName, buildDataId, isSaved, renameBuild]);
 
+  // Hook pour ne déclencher que si l'input est focus
+  useKeyboardDidHideWhileFocused(updateName, focused, inputRef);
+
   const handleFocus = useCallback(() => {
+    setFocused(true);
     scrollToBuildCard(buildDataId);
   }, [buildDataId, scrollToBuildCard]);
 
+  const handleEndEditingOrBlur = useCallback(() => {
+    if (focused) {
+      setFocused(false);
+    }
+    // si on blur avant de fermer le keyboard,
+    // alors useKeyboardDidHideWhileFocused n'appelle par updateName
+    // donc on le fait ici
+    updateName();
+  }, []);
+
   return (
-    <>
-      <BuildNameInputContent
-        value={localName}
-        onChangeText={setLocalName}
-        onEndEditing={handleEndEditing}
-        editable={editable}
-        onFocus={handleFocus}
-      />
-    </>
+    <BuildNameInputContent
+      inputRef={inputRef}
+      value={localName}
+      onChangeText={setLocalName}
+      onEndEditingOrBlur={handleEndEditingOrBlur}
+      editable={editable}
+      onFocus={handleFocus}
+    />
   );
 };
 

@@ -151,7 +151,6 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
     const newList = buildsList.filter((build) => build.buildDataId !== buildDataId);
     set({ [buildsListName]: newList });
-    console.log("ok3");
     if (screenName === "save") {
       useBuildsPersistenceStore.getState().removeBuildInMemory(buildDataId);
       // mise à jour de la props isSaved dans useDeckStore
@@ -205,12 +204,9 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
       return build;
     });
 
-    console.log("ok2", buildsList, buildsListUpdated);
-
     set({ [buildsListName]: buildsListUpdated });
 
     const name = useDeckStore.getState().deck.get(formerBuildDataId).name;
-    console.log({ name });
 
     if (screenName === "save") {
       useBuildsPersistenceStore.getState().removeBuildInMemory(formerBuildDataId);

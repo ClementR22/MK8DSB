@@ -50,7 +50,7 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
 
   // inutile de donner isSaved à useActionIconPropsList donc on donne false
   const [editActionProps] = useActionIconPropsList(["edit"], screenName, isInLoadBuildModal, buildDataId, false);
-  const onImagesPress = !isInLoadBuildModal ? editActionProps.onPress : () => {};
+  const onImagesPress = !isInLoadBuildModal && screenName !== "search" ? editActionProps.onPress : () => {};
 
   return (
     <Pressable onPress={onImagesPress} style={styles.pressable}>
