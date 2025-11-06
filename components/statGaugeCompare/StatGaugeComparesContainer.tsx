@@ -26,11 +26,11 @@ const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({
       .map((stat) => ({
         name: stat.name,
         buildsIdAndValueWithColor: buildsListDisplayed.map((build) => {
-          const buildData = buildsDataMap.get(build.dataId);
+          const buildData = buildsDataMap.get(build.buildDataId);
           return {
-            id: build.dataId,
+            id: build.buildDataId,
             value: buildData.stats[statIndexMap.get(stat.name)!],
-            color: buildsColorsMap.get(build.dataId) || theme.surface_variant,
+            color: buildsColorsMap.get(build.buildDataId) || theme.surface_variant,
           };
         }),
       }));

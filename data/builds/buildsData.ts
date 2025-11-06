@@ -4,11 +4,11 @@ import { BuildData } from "./buildsTypes";
 export const buildsDataArray: BuildData[] = Object.entries(rawBuildsData).map(
   ([id, build]) =>
     ({
-      dataId: id,
+      buildDataId: id,
       ...build,
     } as BuildData)
 );
 
 export const buildsDataMap: Map<string, BuildData> = new Map(
-  buildsDataArray.map((buildData) => [buildData.dataId, buildData])
+  buildsDataArray.map((buildData) => [buildData.buildDataId, buildData])
 );

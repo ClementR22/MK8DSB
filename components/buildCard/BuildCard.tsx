@@ -13,7 +13,7 @@ import { buildsDataMap } from "@/data/builds/buildsData";
 import useDeckStore from "@/stores/useDeckStore";
 
 interface BuildCardProps {
-  dataId: string;
+  buildDataId: string;
   percentage?: number;
   isInLoadBuildModal?: boolean;
   screenNameFromProps?: ScreenName;
@@ -23,7 +23,7 @@ interface BuildCardProps {
 }
 
 const BuildCard: React.FC<BuildCardProps> = ({
-  dataId,
+  buildDataId,
   percentage = undefined,
   isInLoadBuildModal = false,
   screenNameFromProps,
@@ -31,11 +31,11 @@ const BuildCard: React.FC<BuildCardProps> = ({
   onLayout,
   borderColor,
 }) => {
-  const build = useDeckStore((state) => state.deck).get(dataId) || { name: "", isSaved: false, origin: "user" };
+  const build = useDeckStore((state) => state.deck).get(buildDataId) || { name: "", isSaved: false };
 
   const { name, isSaved } = build;
 
-  const buildData = buildsDataMap.get(dataId);
+  const buildData = buildsDataMap.get(buildDataId);
 
   const contextScreenName = useScreen();
   const screenName = screenNameFromProps ?? contextScreenName;
@@ -55,7 +55,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
           isNameEditable={config.isNameEditable}
           name={name}
           screenName={screenName}
-          dataId={dataId}
+          buildDataId={buildDataId}
           percentage={percentage}
           isSaved={isSaved}
           moreActionNamesList={
@@ -69,13 +69,13 @@ const BuildCard: React.FC<BuildCardProps> = ({
           classIds={buildData.classIds}
           isCollapsed={isCollapsed}
           isInLoadBuildModal={isInLoadBuildModal}
-          dataId={dataId}
+          buildDataId={buildDataId}
         />
 
         {!isCollapsed && (
           <BuildCardActionButtons
             actionNamesList={config.actionNamesList}
-            dataId={dataId}
+            buildDataId={buildDataId}
             screenName={screenName}
             isInLoadBuildModal={isInLoadBuildModal}
             isSaved={isSaved}

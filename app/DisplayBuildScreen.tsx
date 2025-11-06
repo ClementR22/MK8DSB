@@ -41,10 +41,10 @@ const DisplayBuildScreen = () => {
     const colorsCurrentlyInUse = new Set<string>(); // Garde une trace des couleurs utilisées dans le cycle actuel
 
     // 1. Réutiliser les couleurs pour les builds qui sont toujours présents
-    buildsListDisplayed.forEach(({ dataId }) => {
-      const existingColor = buildsColorsMap.get(dataId);
+    buildsListDisplayed.forEach(({ buildDataId }) => {
+      const existingColor = buildsColorsMap.get(buildDataId);
       if (existingColor && BUILD_CARD_COLOR_PALETTE.includes(existingColor)) {
-        newColorsMap.set(dataId, existingColor);
+        newColorsMap.set(buildDataId, existingColor);
         colorsCurrentlyInUse.add(existingColor);
       }
     });
@@ -54,15 +54,15 @@ const DisplayBuildScreen = () => {
 
     // 3. Attribuer de nouvelles couleurs aux builds qui n'en ont pas (nouveaux builds)
     buildsListDisplayed.forEach((build) => {
-      if (!newColorsMap.has(build.dataId)) {
+      if (!newColorsMap.has(build.buildDataId)) {
         if (availableColorsRef.current.length > 0) {
           const assignedColor = availableColorsRef.current.shift(); // Prend la première couleur disponible
           if (assignedColor) {
-            newColorsMap.set(build.dataId, assignedColor);
+            newColorsMap.set(build.buildDataId, assignedColor);
             colorsCurrentlyInUse.add(assignedColor); // Marque comme utilisée
           }
         } else {
-          console.warn(`Plus de couleurs uniques disponibles pour le build ${build.dataId}`);
+          console.warn(`Plus de couleurs uniques disponibles pour le build ${build.buildDataId}`);
         }
       }
     });
@@ -80,7 +80,7 @@ const DisplayBuildScreen = () => {
     () =>
       buildsListDisplayed.map((build) => ({
         ...build,
-        color: buildsColorsMap?.get(build.dataId) || theme.surface_variant || theme.surface_container_high,
+        color: buildsColorsMap?.get(build.buildDataId) || theme.surface_variant || theme.surface_container_high,
       })),
     [buildsListDisplayed, buildsColorsMap, theme.surface_variant, theme.surface_container_high]
   );

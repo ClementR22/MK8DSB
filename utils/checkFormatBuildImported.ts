@@ -15,7 +15,7 @@ export const checkFormatBuildImported = (obj: unknown): obj is BuildPersistant =
     keys.length === 2 && // Exactement 2 clés
     typeof importedBuild.name === "string" &&
     importedBuild.name.trim() !== "" &&
-    typeof importedBuild.dataId === "string" &&
-    dataIdRegex.test(importedBuild.dataId);
+    typeof importedBuild.buildDataId === "string" &&
+    dataIdRegex.test(importedBuild.buildDataId);
   return isCorrectFormat;
 };

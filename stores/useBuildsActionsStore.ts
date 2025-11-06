@@ -9,7 +9,6 @@ import { MAX_NUMBER_BUILDS_DISPLAY, MAX_NUMBER_BUILDS_SAVE } from "./useBuildsLi
 import { Build, BuildPersistant } from "@/data/builds/buildsTypes";
 
 // Utilities
-import { arraysEqual } from "@/utils/deepCompare";
 import { checkFormatBuildImported } from "@/utils/checkFormatBuildImported";
 
 // Stores
@@ -18,24 +17,24 @@ import useBuildsListStore from "./useBuildsListStore";
 import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 import useGeneralStore from "./useGeneralStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
-import useDeckStore, { BuildEntry } from "./useDeckStore";
+import useDeckStore from "./useDeckStore";
 import { t } from "i18next";
 import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
 
 export interface BuildsActionsStoreState {
-  loadBuildCard: (params: { source?: ScreenName; dataId?: string; build?: Build; target: ScreenName }) => Build;
-  loadToSearch: (params: { source?: ScreenName; dataId?: string; build?: Build }) => void;
-  loadToDisplay: (params: { source: ScreenName; dataId: string }) => void;
+  loadBuildCard: (params: { source?: ScreenName; buildDataId?: string; build?: Build; target: ScreenName }) => Build;
+  loadToSearch: (params: { source?: ScreenName; buildDataId?: string; build?: Build }) => void;
+  loadToDisplay: (params: { source: ScreenName; buildDataId: string }) => void;
   loadBuildsSaved: () => void;
-  saveBuild: (source: ScreenName, dataId: string) => Promise<void>;
-  unSaveBuild: (screenName: ScreenName, dataId: string) => void;
-  exportBuild: (screenName: ScreenName, dataId: string) => void;
+  saveBuild: (source: ScreenName, buildDataId: string) => Promise<void>;
+  unSaveBuild: (screenName: ScreenName, buildDataId: string) => void;
+  exportBuild: (screenName: ScreenName, buildDataId: string) => void;
   importBuild: (clipboardContent: string, screenName: ScreenName) => void;
 }
 
 const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
-  loadBuildCard: (params: { source?: ScreenName; dataId?: string; build?: Build; target: ScreenName }) => {
-    const { source, dataId, build: providedBuild, target } = params;
+  loadBuildCard: (params: { source?: ScreenName; buildDataId?: string; build?: Build; target: ScreenName }) => {
+    const { source, buildDataId, build: providedBuild, target } = params;
 
     // on récupère build depuis les props ou bien on le calcule
     // et on retire percentage
@@ -44,11 +43,11 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       const { percentage, ...build_ } = providedBuild;
       build = build_;
     } else {
-      const { percentage, ...build_ } = useBuildsListStore.getState().getBuild(source, dataId);
+      const { percentage, ...build_ } = useBuildsListStore.getState().getBuild(source, buildDataId);
       build = build_;
     }
 
-    const name = useDeckStore.getState().deck.get(build.dataId)?.name;
+    const name = useDeckStore.getState().deck.get(build.buildDataId)?.name;
     if (!name) {
       throw new Error("buildNameRequiredForLoading");
     }
@@ -70,8 +69,8 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     return build;
   },
 
-  loadToSearch: (params: { source?: ScreenName; dataId?: string; build?: Build }) => {
-    const { source, dataId, build: providedBuild } = params;
+  loadToSearch: (params: { source?: ScreenName; buildDataId?: string; build?: Build }) => {
+    const { source, buildDataId, build: providedBuild } = params;
 
     // on récupère build depuis les props ou bien on le calcule
     // pas nécessaire de retirer percentage
@@ -79,10 +78,10 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     if (providedBuild) {
       build = providedBuild;
     } else {
-      build = useBuildsListStore.getState().getBuild(source, dataId);
+      build = useBuildsListStore.getState().getBuild(source, buildDataId);
     }
 
-    const stats = buildsDataMap.get(build.dataId).stats;
+    const stats = buildsDataMap.get(build.buildDataId).stats;
 
     useStatsStore.getState().loadBuildStats(stats);
 
@@ -90,10 +89,10 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     useGeneralStore.getState().setShouldScrollToTop();
   },
 
-  loadToDisplay: (params: { source: ScreenName; dataId: string }) => {
-    const { source, dataId } = params;
+  loadToDisplay: (params: { source: ScreenName; buildDataId: string }) => {
+    const { source, buildDataId } = params;
 
-    get().loadBuildCard({ source, dataId, target: "display" });
+    get().loadBuildCard({ source, buildDataId, target: "display" });
 
     router.push({ pathname: "/DisplayBuildScreen", params: { scrollToTop: "true" } });
     useGeneralStore.getState().setShouldScrollToTop();
@@ -103,49 +102,49 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     const buildsPersistant = await useBuildsPersistenceStore.getState().fetchBuildsSaved();
 
     const buildsListSaved: Build[] = buildsPersistant.map((buildPersistant) => ({
-      dataId: buildPersistant.dataId,
+      buildDataId: buildPersistant.buildDataId,
     }));
 
     useBuildsListStore.getState().setBuildsListSaved(buildsListSaved);
     useDeckStore.getState().loadBuildsSaved(buildsPersistant);
   },
 
-  saveBuild: async (source: ScreenName, dataId: string) => {
+  saveBuild: async (source: ScreenName, buildDataId: string) => {
     const buildsListSaved = useBuildsListStore.getState().buildsListSaved;
     if (buildsListSaved.length >= MAX_NUMBER_BUILDS_SAVE) {
       throw new Error("buildLimitReachedInThisScreen");
     }
 
-    const build = useBuildsListStore.getState().getBuild(source, dataId);
+    const build = useBuildsListStore.getState().getBuild(source, buildDataId);
 
-    const name = useDeckStore.getState().deck.get(build.dataId)?.name;
+    const name = useDeckStore.getState().deck.get(build.buildDataId)?.name;
     if (!name) {
       throw new Error("buildNameRequiredForSaving");
     }
 
     get().loadBuildCard({ build: build, target: "save" });
     await useBuildsPersistenceStore.getState().saveBuildInMemory(build, name);
-    useDeckStore.getState().saveBuild(build.dataId);
+    useDeckStore.getState().saveBuild(build.buildDataId);
   },
 
-  unSaveBuild: (screenName: ScreenName, dataId: string) => {
-    const build = useBuildsListStore.getState().getBuild(screenName, dataId);
+  unSaveBuild: (screenName: ScreenName, buildDataId: string) => {
+    const build = useBuildsListStore.getState().getBuild(screenName, buildDataId);
     console.log("build", build);
     console.log("ok1");
-    useBuildsListStore.getState().removeBuild(dataId, "save");
+    useBuildsListStore.getState().removeBuild(buildDataId, "save");
 
     console.log("ok4");
   },
 
-  exportBuild: (screenName, dataId) => {
-    const build = useBuildsListStore.getState().getBuild(screenName, dataId);
-    const name = useDeckStore.getState().deck.get(build.dataId)?.name;
+  exportBuild: (screenName, buildDataId) => {
+    const build = useBuildsListStore.getState().getBuild(screenName, buildDataId);
+    const name = useDeckStore.getState().deck.get(build.buildDataId)?.name;
 
     if (!name) {
       throw new Error("buildNameRequiredForSharing");
     }
 
-    const json = JSON.stringify({ name: name, dataId: build.dataId });
+    const json = JSON.stringify({ name: name, buildDataId: build.buildDataId });
     Clipboard.setStringAsync(json + "\n" + t("text:tutoImportation"));
   },
 
@@ -173,10 +172,10 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     } else {
       const sameBuild = useBuildsListStore
         .getState()
-        .findSameBuildInThisScreen({ dataId: build.dataId, screenName: screenName });
+        .findSameBuildInThisScreen({ buildDataId: build.buildDataId, screenName: screenName });
 
       if (sameBuild) {
-        const buildName = useDeckStore.getState().deck.get(sameBuild.dataId)?.name;
+        const buildName = useDeckStore.getState().deck.get(sameBuild.buildDataId)?.name;
         throw new BuildAlreadyExistsError(buildName);
       }
 
@@ -187,7 +186,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
 
       get().loadBuildCard({ build, target: screenName });
       if (screenName === "save") {
-        const name = useDeckStore.getState().deck.get(build.dataId).name;
+        const name = useDeckStore.getState().deck.get(build.buildDataId).name;
         useBuildsPersistenceStore.getState().saveBuildInMemory(build, name);
       }
     }

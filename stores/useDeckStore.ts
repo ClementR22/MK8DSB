@@ -2,37 +2,35 @@ import { DEFAULT_BUILDS } from "@/constants/defaultBuilds";
 import { BuildPersistant } from "@/data/builds/buildsTypes";
 import { create } from "zustand";
 
-type Origin = "user" | "stranger";
-
-export type BuildEntry = { name: string; origin: Origin; isSaved: boolean };
+export type BuildEntry = { name: string; isSaved: boolean };
 
 type DeckState = {
   deck: Map<string, BuildEntry>;
 
-  updateName: (dataId: string, name: string) => void;
+  updateName: (buildDataId: string, name: string) => void;
   updateBuildData: (formerDataId: string, newDataId: string) => void;
-  removeBuildName: (dataId: string) => void;
-  saveBuild: (dataId: string) => void;
-  unSaveBuild: (dataId: string) => void;
+  removeBuildName: (buildDataId: string) => void;
+  saveBuild: (buildDataId: string) => void;
+  unSaveBuild: (buildDataId: string) => void;
   loadBuildsSaved: (buildsSaved: BuildPersistant[]) => void;
   checkNameFree: (buildName: string) => boolean;
 };
 
 const useDeckStore = create<DeckState>((set, get) => ({
   deck: new Map([
-    [DEFAULT_BUILDS.build1.dataId, { name: DEFAULT_BUILDS.build1.name, origin: "user", isSaved: false }],
-    [DEFAULT_BUILDS.build2.dataId, { name: DEFAULT_BUILDS.build2.name, origin: "user", isSaved: false }],
+    [DEFAULT_BUILDS.build1.buildDataId, { name: DEFAULT_BUILDS.build1.name, isSaved: false }],
+    [DEFAULT_BUILDS.build2.buildDataId, { name: DEFAULT_BUILDS.build2.name, isSaved: false }],
   ]),
 
-  updateName: (dataId, newName) =>
+  updateName: (buildDataId, newName) =>
     set((state) => {
-      const buildEntry = state.deck.get(dataId);
+      const buildEntry = state.deck.get(buildDataId);
       const updatedEntry: BuildEntry = buildEntry
         ? { ...buildEntry, name: newName }
-        : { name: newName, origin: "user", isSaved: false };
+        : { name: newName, isSaved: false };
 
       const newDeck = new Map(state.deck);
-      newDeck.set(dataId, updatedEntry);
+      newDeck.set(buildDataId, updatedEntry);
       return { deck: newDeck };
     }),
 
@@ -47,30 +45,30 @@ const useDeckStore = create<DeckState>((set, get) => ({
       return { deck: newDeck };
     }),
 
-  removeBuildName: (dataId) =>
+  removeBuildName: (buildDataId) =>
     set((state) => {
       const newDeck = new Map(state.deck);
-      newDeck.delete(dataId);
+      newDeck.delete(buildDataId);
       return { deck: newDeck };
     }),
 
-  saveBuild: (dataId) =>
+  saveBuild: (buildDataId) =>
     set((state) => {
-      const buildEntry = state.deck.get(dataId);
+      const buildEntry = state.deck.get(buildDataId);
       if (!buildEntry) return state;
 
       const newDeck = new Map(state.deck);
-      newDeck.set(dataId, { ...buildEntry, isSaved: true });
+      newDeck.set(buildDataId, { ...buildEntry, isSaved: true });
       return { deck: newDeck };
     }),
 
-  unSaveBuild: (dataId) =>
+  unSaveBuild: (buildDataId) =>
     set((state) => {
-      const buildEntry = state.deck.get(dataId);
+      const buildEntry = state.deck.get(buildDataId);
       if (!buildEntry) return state;
 
       const newDeck = new Map(state.deck);
-      newDeck.set(dataId, { ...buildEntry, isSaved: false });
+      newDeck.set(buildDataId, { ...buildEntry, isSaved: false });
       return { deck: newDeck };
     }),
 
@@ -78,9 +76,8 @@ const useDeckStore = create<DeckState>((set, get) => ({
     set((state) => {
       const newDeck = new Map(state.deck);
       buildsSaved.forEach((buildPersistant) => {
-        newDeck.set(buildPersistant.dataId, {
+        newDeck.set(buildPersistant.buildDataId, {
           name: buildPersistant.name,
-          origin: "user",
           isSaved: true,
         });
       });

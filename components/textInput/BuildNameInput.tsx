@@ -8,12 +8,12 @@ import { NameAlreadyExistsError } from "@/errors/errors";
 
 interface BuildNameInputProps {
   name: string;
-  dataId: string;
+  buildDataId: string;
   editable?: boolean;
   isSaved: boolean;
 }
 
-const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, dataId, editable = true, isSaved }) => {
+const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, buildDataId, editable = true, isSaved }) => {
   const screenName = useScreen();
   const renameBuild = useBuildsListStore((state) => state.renameBuild);
   const { scrollToBuildCard } = useBuildCardsScroll();
@@ -41,7 +41,7 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, dataId, editable 
 
     if (newName !== name) {
       try {
-        renameBuild(localName, screenName, dataId, isSaved);
+        renameBuild(localName, screenName, buildDataId, isSaved);
         showToast("buildRenamed", "success");
       } catch (e) {
         if (e instanceof NameAlreadyExistsError) {
@@ -53,11 +53,11 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, dataId, editable 
         return;
       }
     }
-  }, [localName, name, screenName, dataId, isSaved, renameBuild]);
+  }, [localName, name, screenName, buildDataId, isSaved, renameBuild]);
 
   const handleFocus = useCallback(() => {
-    scrollToBuildCard(dataId);
-  }, [dataId, scrollToBuildCard]);
+    scrollToBuildCard(buildDataId);
+  }, [buildDataId, scrollToBuildCard]);
 
   return (
     <>

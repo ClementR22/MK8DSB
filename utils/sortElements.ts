@@ -7,7 +7,7 @@ import { TFunction } from "i18next";
 // Add all properties you might need for sorting (like various speed/handling stats).
 export interface SortableElement {
   id?: number;
-  dataId?: string;
+  buildDataId?: string;
   name: string;
   classIds?: number[]; // on le conserve pour le tri des builds
   stats?: number[]; // on le conserve pour le tri des builds

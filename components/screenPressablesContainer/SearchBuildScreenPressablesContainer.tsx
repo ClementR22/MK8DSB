@@ -54,10 +54,10 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
     const chosenStatsFilterNumber = chosenStats.map((stat) => stat.statFilterNumber);
     const chosenClassIds = selectedClassIdsByCategory;
 
-    const gaps: { dataId: string; gap: number }[] = [];
+    const gaps: { buildDataId: string; gap: number }[] = [];
 
     for (const build of buildsDataArray) {
-      const { dataId, classIds, stats, bodytypes } = build;
+      const { buildDataId, classIds, stats, bodytypes } = build;
 
       const isOneElementNonAccepted = categories.some((categoryKey, index) => {
         if (chosenClassIds[categoryKey].size === 0) {
@@ -95,7 +95,7 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
       }
 
       if (validSet) {
-        gaps.push({ dataId, gap });
+        gaps.push({ buildDataId, gap });
       }
     }
 
@@ -109,11 +109,11 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
 
       const worstGap = chosenStatsChecked.filter((checked) => checked).length;
 
-      const buildsFound: Build[] = buildsFoundIdGap.map(({ dataId, gap }, index) => {
+      const buildsFound: Build[] = buildsFoundIdGap.map(({ buildDataId, gap }, index) => {
         const percentage = 100 * (1 - Math.sqrt(gap / worstGap));
         const percentageRounded = Number(percentage.toPrecision(3));
         return {
-          dataId: dataId,
+          buildDataId: buildDataId,
           percentage: percentageRounded,
         };
       });

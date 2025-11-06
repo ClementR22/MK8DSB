@@ -54,8 +54,8 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
   },
 
   saveBuildInMemory: async (build, name) => {
-    const buildPersistant: BuildPersistant = { dataId: build.dataId, name: name };
-    await saveThingInMemory(build.dataId, buildPersistant);
+    const buildPersistant: BuildPersistant = { buildDataId: build.buildDataId, name: name };
+    await saveThingInMemory(build.buildDataId, buildPersistant);
   },
 
   removeBuildInMemory: async (keyToRemove) => {

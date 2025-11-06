@@ -24,7 +24,7 @@ export interface BuildsListStoreState {
   buildsListFound: Build[];
   buildsListDisplayed: Build[];
   buildsListSaved: Build[];
-  buildEditedId: string;
+  buildEditedDataId: string;
   buildIndexInComparator: number;
 
   getBuildsList: (screenName: ScreenName) => {
@@ -33,20 +33,20 @@ export interface BuildsListStoreState {
   };
   getSetBuildsList: (screenName: ScreenName) => (newBuildsList: Build[]) => void;
 
-  getBuild: (screenName: ScreenName, dataId: string) => Build;
+  getBuild: (screenName: ScreenName, buildDataId: string) => Build;
 
   setBuildsListFound: (newBuildsList: Build[]) => void;
   setBuildsListDisplayed: (newBuildsList: Build[]) => void;
   setBuildsListSaved: (newBuildsList: Build[]) => void;
   deleteAllSavedBuilds: () => Promise<void>;
-  setBuildEditedId: (dataId: string) => void;
+  setBuildEditedDataId: (buildDataId: string) => void;
   addNewBuildInDisplay: () => void;
-  removeBuild: (dataId: string, screenName: ScreenName) => void;
-  renameBuild: (newName: string, screenName: ScreenName, dataId: string, isSaved: boolean) => void;
+  removeBuild: (buildDataId: string, screenName: ScreenName) => void;
+  renameBuild: (newName: string, screenName: ScreenName, buildDataId: string, isSaved: boolean) => void;
   updateBuildsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => void;
   sortBuildsList: (screenName: ScreenName, sortNumber: number) => void;
-  findSameBuildInThisScreen: (props: {
-    dataId: string;
+  findSameBuildInThisScreen: (params: {
+    buildDataId: string;
     buildsList?: Build[];
     screenName?: ScreenName;
   }) => Build | undefined;
@@ -54,9 +54,12 @@ export interface BuildsListStoreState {
 
 const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   buildsListFound: [],
-  buildsListDisplayed: [{ dataId: DEFAULT_BUILDS.build1.dataId }, { dataId: DEFAULT_BUILDS.build2.dataId }],
+  buildsListDisplayed: [
+    { buildDataId: DEFAULT_BUILDS.build1.buildDataId },
+    { buildDataId: DEFAULT_BUILDS.build2.buildDataId },
+  ],
   buildsListSaved: [],
-  buildEditedId: null,
+  buildEditedDataId: null,
   buildIndexInComparator: 2, // = get().buildsListDisplayed.length
 
   getBuildsList: (screenName) => {
@@ -97,10 +100,10 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     return setBuildsList;
   },
 
-  getBuild: (screenName: ScreenName, dataId: string) => {
+  getBuild: (screenName: ScreenName, buildDataId: string) => {
     const buildsList = get().getBuildsList(screenName).buildsList;
 
-    const build = buildsList.find((build) => build.dataId === dataId);
+    const build = buildsList.find((build) => build.buildDataId === buildDataId);
     return build;
   },
 
@@ -115,15 +118,15 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   deleteAllSavedBuilds: async () => {
     const unSaveBuild = useDeckStore.getState().unSaveBuild;
     const buildsListSaved = useBuildsListStore.getState().buildsListSaved;
-    buildsListSaved.forEach((build) => unSaveBuild(build.dataId));
+    buildsListSaved.forEach((build) => unSaveBuild(build.buildDataId));
 
     useBuildsListStore.getState().setBuildsListSaved([]);
 
     await deleteAllSavedBuildsInMemory();
   },
 
-  setBuildEditedId: (dataId) => {
-    set({ buildEditedId: dataId });
+  setBuildEditedDataId: (buildDataId) => {
+    set({ buildEditedDataId: buildDataId });
   },
 
   addNewBuildInDisplay: () => {
@@ -132,35 +135,35 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     }
 
     const newIndex = get().buildIndexInComparator;
-    const dataId = getRandomDataId();
+    const buildDataId = getRandomDataId();
 
     set((state) => {
       return {
         buildIndexInComparator: newIndex,
-        buildsListDisplayed: [...state.buildsListDisplayed, { dataId: dataId }], // okk
+        buildsListDisplayed: [...state.buildsListDisplayed, { buildDataId: buildDataId }], // okk
       };
     });
   },
 
-  removeBuild: (dataId, screenName) => {
+  removeBuild: (buildDataId, screenName) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
 
-    const newList = buildsList.filter((build) => build.dataId !== dataId);
+    const newList = buildsList.filter((build) => build.buildDataId !== buildDataId);
     set({ [buildsListName]: newList });
     console.log("ok3");
     if (screenName === "save") {
-      useBuildsPersistenceStore.getState().removeBuildInMemory(dataId);
+      useBuildsPersistenceStore.getState().removeBuildInMemory(buildDataId);
       // mise à jour de la props isSaved dans useDeckStore
-      useDeckStore.getState().unSaveBuild(dataId);
+      useDeckStore.getState().unSaveBuild(buildDataId);
     }
   },
 
-  renameBuild: (newName, screenName, dataId, isSaved) => {
-    const build = get().getBuild(screenName, dataId);
+  renameBuild: (newName, screenName, buildDataId, isSaved) => {
+    const build = get().getBuild(screenName, buildDataId);
 
     // si le nouveau nom est vide
     if (!newName.trim()) {
-      useDeckStore.getState().removeBuildName(build.dataId); // on retire le nom de useDeckStore
+      useDeckStore.getState().removeBuildName(build.buildDataId); // on retire le nom de useDeckStore
       newName = undefined;
       return;
     }
@@ -175,25 +178,25 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
       useBuildsPersistenceStore.getState().saveBuildInMemory(build, newName);
     }
 
-    useDeckStore.getState().updateName(build.dataId, newName);
+    useDeckStore.getState().updateName(build.buildDataId, newName);
   },
 
   updateBuildsList: (selectedClassIdsByCategory, screenName) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
-    const dataId = Object.values(selectedClassIdsByCategory).join("-");
+    const buildDataId = Object.values(selectedClassIdsByCategory).join("-");
 
-    const sameBuild = get().findSameBuildInThisScreen({ dataId, buildsList });
+    const sameBuild = get().findSameBuildInThisScreen({ buildDataId, buildsList });
     if (sameBuild) {
-      const buildName = useDeckStore.getState().deck.get(sameBuild.dataId)?.name;
+      const buildName = useDeckStore.getState().deck.get(sameBuild.buildDataId)?.name;
       throw new BuildAlreadyExistsError(buildName);
     }
 
-    const buildEditedId = get().buildEditedId;
+    const buildEditedDataId = get().buildEditedDataId;
 
-    const newBuild: Build = { dataId: dataId };
+    const newBuild: Build = { buildDataId: buildDataId };
 
     const buildsListUpdated = buildsList.map((build) => {
-      if (build.dataId === buildEditedId) {
+      if (build.buildDataId === buildEditedDataId) {
         return newBuild;
       }
       return build;
@@ -202,21 +205,21 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     set({ [buildsListName]: buildsListUpdated });
 
     if (screenName === "save") {
-      const name = useDeckStore.getState().deck.get(newBuild.dataId).name;
-      useBuildsPersistenceStore.getState().removeBuildInMemory(buildEditedId);
+      const name = useDeckStore.getState().deck.get(newBuild.buildDataId).name;
+      useBuildsPersistenceStore.getState().removeBuildInMemory(buildEditedDataId);
       useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild, name);
     }
 
-    useDeckStore.getState().updateBuildData(buildEditedId, dataId);
+    useDeckStore.getState().updateBuildData(buildEditedDataId, buildDataId);
   },
 
   sortBuildsList: (screenName, sortNumber) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
 
     const buildsListSortable: SortableElement[] = buildsList.map((build: Build) => {
-      const buildName = useDeckStore.getState().deck.get(build.dataId)?.name;
+      const buildName = useDeckStore.getState().deck.get(build.buildDataId)?.name;
 
-      const buildData = buildsDataMap.get(build.dataId);
+      const buildData = buildsDataMap.get(build.buildDataId);
 
       const mappedStats: Partial<SortableElement> = {};
 
@@ -225,7 +228,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
       });
 
       return {
-        dataId: build.dataId,
+        buildDataId: build.buildDataId,
         name: buildName,
         classIds: buildData.classIds,
         stats: buildData.stats,
@@ -235,20 +238,20 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
     const buildsListSorted = sortElements(buildsListSortable, sortNumber);
     const buildsListSortedLight: Build[] = buildsListSorted.map((build) => {
-      const dataId = buildsList.find((bld) => bld.dataId === build.dataId).dataId;
+      const buildDataId = buildsList.find((bld) => bld.buildDataId === build.buildDataId).buildDataId;
       return {
-        dataId: dataId,
+        buildDataId: buildDataId,
       };
     });
 
     set({ [buildsListName]: buildsListSortedLight });
   },
 
-  findSameBuildInThisScreen: ({ dataId, buildsList, screenName }) => {
+  findSameBuildInThisScreen: ({ buildDataId, buildsList, screenName }) => {
     if (!buildsList) {
       buildsList = get().getBuildsList(screenName).buildsList;
     }
-    const sameBuild = buildsList.find((build) => build.dataId === dataId);
+    const sameBuild = buildsList.find((build) => build.buildDataId === buildDataId);
     return sameBuild;
   },
 }));
