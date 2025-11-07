@@ -6,6 +6,7 @@ import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Appearance } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
+import { MenuProvider } from "react-native-popup-menu";
 
 // Components
 import CustomHeader from "@/components/CustomHeader";
@@ -85,73 +86,75 @@ export default function TabLayout() {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }} edges={[]}>
         <PaperProvider>
-          <StatusBar style={theme.theme_surface} />
-          <Tabs
-            screenOptions={{
-              tabBarActiveTintColor: theme.primary,
-              tabBarInactiveTintColor: theme.on_surface_variant,
-              sceneStyle: {
-                // For the content area behind the header/tab bar
-                backgroundColor: theme.surface,
-              },
-              tabBarStyle: {
-                backgroundColor: theme.surface_container,
-                borderTopWidth: 0,
-                boxShadow: box_shadow_z2,
-              },
-            }}
-          >
-            <Tabs.Screen
-              name="index" // This maps to the default route "/"
-              options={{
-                title: t("findSetTabTitle"),
-                tabBarIcon: ({ color }) => <Entypo name={"magnifying-glass"} size={24} color={color} />,
-                header: renderSearchHeader,
+          <MenuProvider>
+            <StatusBar style={theme.theme_surface} />
+            <Tabs
+              screenOptions={{
+                tabBarActiveTintColor: theme.primary,
+                tabBarInactiveTintColor: theme.on_surface_variant,
+                sceneStyle: {
+                  // For the content area behind the header/tab bar
+                  backgroundColor: theme.surface,
+                },
+                tabBarStyle: {
+                  backgroundColor: theme.surface_container,
+                  borderTopWidth: 0,
+                  boxShadow: box_shadow_z2,
+                },
               }}
-            />
-            <Tabs.Screen
-              name="DisplayBuildScreen"
-              options={{
-                title: t("displaySetTabTitle"),
-                tabBarIcon: ({ color }) => <MaterialCommunityIcons name="compare" size={24} color={color} />,
-                header: renderDisplayHeader,
-              }}
-            />
-            <Tabs.Screen
-              name="SavedBuildScreen"
-              options={{
-                title: t("savedSetTabTitle"),
-                tabBarIcon: ({ color, focused }) => (
-                  <MaterialCommunityIcons name={focused ? "cards" : "cards-outline"} size={24} color={color} />
-                ),
-                tabBarBadge: numberSavedBuilds,
-                header: renderSavedHeader,
-              }}
-            />
-            <Tabs.Screen
-              name="GalleryScreen"
-              options={{
-                title: t("galleryTabTitle"),
-                tabBarIcon: ({ color, focused }) => (
-                  <Ionicons name={focused ? "image" : "image-outline"} size={24} color={color} />
-                ),
-                header: renderGalleryHeader,
-              }}
-            />
-            <Tabs.Screen
-              name="SettingsScreen"
-              options={{
-                title: t("settingsTabTitle"),
-                tabBarIcon: ({ color, focused }) => (
-                  <Ionicons name={focused ? "settings" : "settings-outline"} size={24} color={color} />
-                ),
-                header: renderSettingsHeader,
-              }}
-            />
-          </Tabs>
-          <EditBuildModal />
-          <LoadBuildModal />
-          <Toast config={toastConfig} bottomOffset={59} swipeable={false} />
+            >
+              <Tabs.Screen
+                name="index" // This maps to the default route "/"
+                options={{
+                  title: t("findSetTabTitle"),
+                  tabBarIcon: ({ color }) => <Entypo name={"magnifying-glass"} size={24} color={color} />,
+                  header: renderSearchHeader,
+                }}
+              />
+              <Tabs.Screen
+                name="DisplayBuildScreen"
+                options={{
+                  title: t("displaySetTabTitle"),
+                  tabBarIcon: ({ color }) => <MaterialCommunityIcons name="compare" size={24} color={color} />,
+                  header: renderDisplayHeader,
+                }}
+              />
+              <Tabs.Screen
+                name="SavedBuildScreen"
+                options={{
+                  title: t("savedSetTabTitle"),
+                  tabBarIcon: ({ color, focused }) => (
+                    <MaterialCommunityIcons name={focused ? "cards" : "cards-outline"} size={24} color={color} />
+                  ),
+                  tabBarBadge: numberSavedBuilds,
+                  header: renderSavedHeader,
+                }}
+              />
+              <Tabs.Screen
+                name="GalleryScreen"
+                options={{
+                  title: t("galleryTabTitle"),
+                  tabBarIcon: ({ color, focused }) => (
+                    <Ionicons name={focused ? "image" : "image-outline"} size={24} color={color} />
+                  ),
+                  header: renderGalleryHeader,
+                }}
+              />
+              <Tabs.Screen
+                name="SettingsScreen"
+                options={{
+                  title: t("settingsTabTitle"),
+                  tabBarIcon: ({ color, focused }) => (
+                    <Ionicons name={focused ? "settings" : "settings-outline"} size={24} color={color} />
+                  ),
+                  header: renderSettingsHeader,
+                }}
+              />
+            </Tabs>
+            <EditBuildModal />
+            <LoadBuildModal />
+            <Toast config={toastConfig} bottomOffset={59} swipeable={false} />
+          </MenuProvider>
         </PaperProvider>
       </SafeAreaView>
     </SafeAreaProvider>

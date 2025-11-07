@@ -1,4 +1,5 @@
 import ButtonIcon, { ButtonIconProps } from "@/primitiveComponents/ButtonIcon";
+import IconContainer from "@/primitiveComponents/IconContainer";
 import Text from "@/primitiveComponents/Text";
 import useThemeStore from "@/stores/useThemeStore";
 import { BORDER_RADIUS_INF } from "@/utils/designTokens";
@@ -25,19 +26,16 @@ const ButtonIconWithBadge: React.FC<ButtonIconWithBadgeProps> = memo(
     const badgeBackgroundColor = theme.primary_container;
     const badgeIconColor = theme.primary;
 
-    const iconStyle = useMemo<ViewStyle>(
-      () => ({ backgroundColor: iconBackgroundColor ?? theme.primary }),
-      [iconBackgroundColor, theme.primary]
-    );
+    const Wrapper = onPress ? ButtonIcon : IconContainer;
 
     return (
       <View>
-        <ButtonIcon
+        <Wrapper
           onPress={onPress}
           tooltipText={tooltipText}
           iconName={iconName}
           iconType={iconType}
-          style={iconStyle}
+          backgroundColor={iconBackgroundColor ?? theme.primary}
         />
         {isBadge && (
           <View style={[styles.badgeContainer, { backgroundColor: badgeBackgroundColor }]}>

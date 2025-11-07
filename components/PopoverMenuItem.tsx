@@ -23,7 +23,6 @@ const PopoverMenuItem: React.FC<PopoverMenuItemProps> = ({ onPress, title, iconP
 const styles = StyleSheet.create({
   container: {
     minHeight: 48,
-    width: 166,
     paddingHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",

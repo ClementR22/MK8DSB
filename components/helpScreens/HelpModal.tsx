@@ -28,7 +28,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, children }) => {
         iconType={IconType.MaterialCommunityIcons}
         buttonSize={48}
         color={theme.on_surface}
-        style={{ backgroundColor: "transparent" }}
+        backgroundColor="transparent"
         tooltipText="help"
         toolTipPlacement={Placement.LEFT}
       />

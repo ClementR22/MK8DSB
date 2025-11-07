@@ -2,27 +2,36 @@ import React, { useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import useThemeStore from "@/stores/useThemeStore";
-import { BUTTON_SIZE } from "@/utils/designTokens";
+import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
 
 interface IconContainerProps {
   iconName: string;
   iconType: IconType;
+  shape?: "circle" | "rectangle";
   containerSize?: number;
   backgroundColor?: string;
   iconColor?: string;
-  containerStyle?: ViewStyle | ViewStyle[];
 }
 
 const IconContainer = ({
   iconName,
   iconType,
+  shape = "circle",
   containerSize = BUTTON_SIZE,
   backgroundColor,
   iconColor,
-  containerStyle,
   ...iconProps
 }: IconContainerProps) => {
   const { theme } = useThemeStore();
+
+  const shapeStyle =
+    shape === "circle"
+      ? {
+          height: containerSize,
+          width: containerSize,
+          borderRadius: BORDER_RADIUS_INF,
+        }
+      : { height: 30, width: 46, borderRadius: 10 };
 
   const iconSize = (24 / BUTTON_SIZE) * containerSize;
 
@@ -35,7 +44,7 @@ const IconContainer = ({
           width: containerSize,
           backgroundColor: backgroundColor || theme.primary,
         },
-        containerStyle,
+        shapeStyle,
       ]}
     >
       <Icon name={iconName} type={iconType} size={iconSize} color={iconColor || theme.on_primary} {...iconProps} />

@@ -1,53 +1,53 @@
-// components/PopoverMenu.tsx
-import React, { ReactElement } from "react";
-import { View, ViewStyle } from "react-native";
-import Popover, { PopoverMode, PopoverPlacement } from "react-native-popover-view";
-import { Placement } from "react-native-popover-view/dist/Types";
+import useThemeStore from "@/stores/useThemeStore";
+import React from "react";
+import { StyleSheet } from "react-native";
+import { Menu, MenuOptions, MenuTrigger } from "react-native-popup-menu";
+import PopoverMenuItem from "./PopoverMenuItem";
+import { ActionIconPropsList } from "@/hooks/useActionIconPropsList";
+import { t } from "i18next";
+import { BUTTON_SIZE } from "@/utils/designTokens";
 
-type TriggerCallback = (openMenu: () => void) => React.ReactElement;
-type ChildrenCallback = (closeMenu: () => void) => React.ReactNode;
-
-interface TooltipMenuProps {
-  trigger: TriggerCallback | ReactElement;
-  placement?: Placement;
-  isHideArrow?: boolean;
-  style: ViewStyle | ViewStyle[];
-  children: ChildrenCallback | React.ReactNode;
+interface PopoverMenuProps {
+  trigger: React.ReactElement;
+  actionIconPropsList?: ActionIconPropsList;
 }
 
-const PopoverMenu: React.FC<TooltipMenuProps> = ({
-  trigger,
-  placement = PopoverPlacement.AUTO,
-  isHideArrow = false,
-  style,
-  children,
-}) => {
-  const [showPopover, setShowPopover] = React.useState(false);
-  const triggerRef = React.useRef(null);
-
-  const openMenu = () => setShowPopover(true);
-  const closeMenu = () => setShowPopover(false);
-
-  const triggerElement = typeof trigger === "function" ? trigger(openMenu) : trigger;
-  const triggerChildren = typeof children === "function" ? children(closeMenu) : children;
+const PopoverMenu: React.FC<PopoverMenuProps> = ({ trigger, actionIconPropsList }) => {
+  const theme = useThemeStore((state) => state.theme);
 
   return (
-    <>
-      <View ref={triggerRef}>{triggerElement}</View>
-      <Popover
-        mode={PopoverMode.RN_MODAL}
-        backgroundStyle={{ backgroundColor: "transparent" }}
-        placement={placement}
-        isVisible={showPopover}
-        from={triggerRef}
-        onRequestClose={() => setShowPopover(false)}
-        popoverStyle={style}
-        arrowSize={isHideArrow && { width: 0, height: 0 }}
+    <Menu>
+      <MenuTrigger>{trigger}</MenuTrigger>
+      <MenuOptions
+        customStyles={{
+          optionsContainer: [styles.menuContainerList, { backgroundColor: theme.surface_container }],
+        }}
       >
-        {triggerChildren}
-      </Popover>
-    </>
+        {actionIconPropsList.map((actionProps) => {
+          const { title, name, type, onPress } = actionProps;
+          return (
+            <PopoverMenuItem
+              key={title}
+              onPress={() => {
+                onPress();
+              }}
+              title={t(title)}
+              iconProps={{ name, type }}
+            />
+          );
+        })}
+      </MenuOptions>
+    </Menu>
   );
 };
+
+const styles = StyleSheet.create({
+  menuContainerList: {
+    borderRadius: 4,
+    paddingVertical: 4,
+    width: 166,
+    marginTop: BUTTON_SIZE,
+  },
+});
 
 export default PopoverMenu;

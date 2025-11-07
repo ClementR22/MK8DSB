@@ -14,7 +14,7 @@ export interface ButtonIconProps {
   iconType: IconType;
   buttonSize?: number;
   shape?: "circle" | "rectangle";
-  style?: StyleProp<ViewStyle> | any;
+  backgroundColor?: string;
   disabled?: boolean;
   [key: string]: any;
 }
@@ -27,27 +27,19 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   iconType,
   buttonSize = BUTTON_SIZE,
   shape = "circle",
-  style = null,
+  backgroundColor,
   disabled = false,
   color = null,
   ...props
 }) => {
-  const shapeStyle =
-    shape === "circle"
-      ? {
-          height: buttonSize,
-          width: buttonSize,
-          borderRadius: BORDER_RADIUS_INF,
-        }
-      : { height: 30, width: 46, borderRadius: 10 };
-
   return (
     <ButtonBase onPress={onPress} tooltipText={tooltipText} placement={toolTipPlacement} disabled={disabled} {...props}>
       <IconContainer
         iconName={iconName}
         iconType={iconType}
+        shape={shape}
         containerSize={buttonSize}
-        containerStyle={[styles.container, shapeStyle, disabled && { backgroundColor: "grey" }, style]}
+        backgroundColor={disabled ? "grey" : backgroundColor}
         iconColor={color}
       />
     </ButtonBase>
@@ -55,12 +47,5 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
 };
 
 ButtonIcon.displayName = "ButtonIcon";
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
 
 export default React.memo(ButtonIcon);

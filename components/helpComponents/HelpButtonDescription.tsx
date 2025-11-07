@@ -23,12 +23,7 @@ const HelpButtonDescription = ({
   return (
     <View style={styles.container}>
       <View style={styles.iconWrapper}>
-        <IconContainer
-          iconName={iconName}
-          iconType={iconType}
-          containerSize={containerSize}
-          containerStyle={{ borderRadius: BORDER_RADIUS_INF }}
-        />
+        <IconContainer iconName={iconName} iconType={iconType} containerSize={containerSize} />
       </View>
 
       <View style={{ flex: 1, gap: 10, justifyContent: "center" }}>

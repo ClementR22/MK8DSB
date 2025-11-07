@@ -17,7 +17,7 @@ interface ActionProps {
   onPress: () => void;
 }
 
-type ActionIconPropsList = ActionProps[];
+export type ActionIconPropsList = ActionProps[];
 
 export function useActionIconPropsList(
   actionNamesToGenerate: ActionNamesList,

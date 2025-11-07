@@ -8,11 +8,11 @@ import {
   statNamesSortElementDefault,
   statNamesSortBuildCardDefault,
   statNamesSpeed,
+  statNames,
 } from "@/data/stats/statsData";
-import PopoverMenu from "../PopoverMenu";
+import Popover from "../Popover";
 import ButtonIconWithBadge from "./ButtonIconWithBadge";
 import {
-  BORDER_RADIUS_STANDARD,
   BUTTON_SIZE,
   GAP_SORT_MODE_SELECTOR,
   MARGIN_CONTAINER_LOWEST,
@@ -78,19 +78,17 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
       triggerIconName: string,
       triggerIconType: IconType
     ) => (
-      <PopoverMenu
+      <Popover
         key={key}
-        trigger={(openMenu) => (
+        trigger={
           <ButtonIconWithBadge
-            onPress={openMenu}
             tooltipText={tooltipText}
             iconName={triggerIconName}
             iconType={triggerIconType}
             direction={statNames.includes(activeSort) ? currentDirection : undefined}
             isBadge={statNames.includes(activeSort)}
           />
-        )}
-        style={styles.menuContainer}
+        }
       >
         {statNames.map((name) => {
           const config = sortButtonsConfig[name];
@@ -108,7 +106,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
             />
           );
         })}
-      </PopoverMenu>
+      </Popover>
     ),
     [activeSort, currentDirection, handlePress]
   );
@@ -175,12 +173,6 @@ const styles = StyleSheet.create({
   spaceAround: {
     justifyContent: "space-around",
     flex: 1,
-  },
-  menuContainer: {
-    flexDirection: "row",
-    padding: GAP_SORT_MODE_SELECTOR,
-    gap: GAP_SORT_MODE_SELECTOR,
-    borderRadius: BORDER_RADIUS_STANDARD,
   },
 });
 
