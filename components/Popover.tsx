@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Menu, MenuOptions, MenuTrigger } from "react-native-popup-menu";
+import { Menu, MenuOptions, MenuTrigger, renderers } from "react-native-popup-menu";
 import { BORDER_RADIUS_STANDARD, GAP_SORT_MODE_SELECTOR } from "@/utils/designTokens";
-import { renderers } from "react-native-popup-menu";
 
 interface PopoverProps {
   trigger: React.ReactElement;

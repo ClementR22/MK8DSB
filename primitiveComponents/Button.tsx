@@ -43,8 +43,8 @@ const Button: React.FC<ButtonProps> = ({
     <ButtonBase
       onPress={onPress}
       tooltipText={tooltipText}
-      containerStyle={[
-        styles.container,
+      containerStyleOuter={[
+        styles.containerOuter,
         {
           backgroundColor: disabled ? "grey" : buttonColor || theme.primary,
           paddingHorizontal: iconProps ? 15 : 10,
@@ -52,6 +52,7 @@ const Button: React.FC<ButtonProps> = ({
           flex: flex,
         },
       ]}
+      containerStyleInner={styles.containerInner}
       {...props}
       disabled={disabled}
     >
@@ -72,14 +73,17 @@ const Button: React.FC<ButtonProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
+  containerOuter: {
     height: BUTTON_SIZE,
     borderRadius: BORDER_RADIUS_INF,
+    boxShadow: box_shadow_z2,
     justifyContent: "center",
     alignItems: "center",
+  },
+  containerInner: {
+    flexDirection: "row",
+    alignItems: "center",
     gap: 5,
-    boxShadow: box_shadow_z2,
   },
 });
 

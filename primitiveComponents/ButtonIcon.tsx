@@ -4,12 +4,11 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
 import IconContainer from "./IconContainer";
 import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
-import { Placement } from "react-native-popover-view/dist/Types";
 
 export interface ButtonIconProps {
   onPress?: (event?: Event) => void;
   tooltipText: string;
-  toolTipPlacement?: Placement;
+  toolTipPlacement?: "top" | "right" | "bottom" | "left" | "auto";
   iconName: string;
   iconType: IconType;
   buttonSize?: number;
@@ -22,7 +21,7 @@ export interface ButtonIconProps {
 const ButtonIcon: React.FC<ButtonIconProps> = ({
   onPress,
   tooltipText,
-  toolTipPlacement,
+  toolTipPlacement = "top",
   iconName,
   iconType,
   buttonSize = BUTTON_SIZE,

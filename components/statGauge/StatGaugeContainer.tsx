@@ -73,7 +73,7 @@ const StatGaugeContainer = ({
   return (
     <Tooltip
       tooltipText={name}
-      style={[
+      childStyleInner={[
         styles.container,
         {
           backgroundColor: theme.surface,

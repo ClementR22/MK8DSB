@@ -25,16 +25,7 @@ const PopoverMenu: React.FC<PopoverMenuProps> = ({ trigger, actionIconPropsList 
       >
         {actionIconPropsList.map((actionProps) => {
           const { title, name, type, onPress } = actionProps;
-          return (
-            <PopoverMenuItem
-              key={title}
-              onPress={() => {
-                onPress();
-              }}
-              title={t(title)}
-              iconProps={{ name, type }}
-            />
-          );
+          return <PopoverMenuItem key={title} onPress={onPress} title={t(title)} iconProps={{ name, type }} />;
         })}
       </MenuOptions>
     </Menu>

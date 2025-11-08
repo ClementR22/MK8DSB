@@ -4,16 +4,17 @@ import useThemeStore from "@/stores/useThemeStore";
 import { CORNER_EXTRA_SMALL } from "@/utils/designTokens";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, ViewStyle } from "react-native";
-import Popover, { PopoverMode, PopoverPlacement } from "react-native-popover-view";
-import { Placement } from "react-native-popover-view/dist/Types";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Menu, MenuOptions, MenuTrigger, renderers } from "react-native-popup-menu";
+import { BORDER_RADIUS_STANDARD } from "@/utils/designTokens";
 
 interface TooltipProps {
   tooltipText: string;
   namespace?: string;
   onPress?: () => void;
-  style?: ViewStyle | ViewStyle[];
-  placement?: Placement;
+  childStyleInner?: ViewStyle | ViewStyle[];
+  childStyleOuter?: ViewStyle | ViewStyle[];
+  placement?: "top" | "right" | "bottom" | "left" | "auto";
   disabled?: boolean;
   children: React.ReactNode;
 }
@@ -22,80 +23,74 @@ const Tooltip: React.FC<TooltipProps> = ({
   tooltipText,
   namespace,
   onPress = null,
-  style,
-  placement = PopoverPlacement.TOP,
+  childStyleInner,
+  childStyleOuter,
+  placement = "top",
   disabled = false,
   children,
 }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const [showPopover, setShowPopover] = useState(false);
-
-  const touchableRef = useRef(null);
-  const timeoutRef = useRef(null);
-
-  const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
   const isAnyModalVisible = useGeneralStore((state) => state.isAnyModalVisible);
-
   const statusBarHeight = useSafeAreaInsets().top;
 
-  const closePopover = useCallback(() => {
-    setShowPopover(false);
-    setIsScrollEnable(true);
-    return clearTimeout(timeoutRef.current);
-  }, [setIsScrollEnable]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const timeoutRef = useRef(null);
 
-  const openPopover = useCallback(() => {
-    setShowPopover(true);
-    setIsScrollEnable(false);
+  const close = useCallback(() => {
+    setIsOpen(false);
+    return clearTimeout(timeoutRef.current);
+  }, []);
+
+  const open = useCallback(() => {
+    setIsOpen(true);
 
     timeoutRef.current = setTimeout(() => {
-      closePopover();
+      close();
     }, 2000);
-  }, [closePopover, setIsScrollEnable]);
+  }, [close]);
 
   useEffect(() => {
     return () => clearTimeout(timeoutRef.current);
   }, []);
 
   return (
-    <>
-      <Pressable ref={touchableRef} onLongPress={openPopover} onPress={onPress} disabled={disabled} style={style}>
-        {children}
-      </Pressable>
-
-      <Popover
-        mode={PopoverMode.RN_MODAL}
-        backgroundStyle={{ backgroundColor: "transparent" }}
-        placement={placement}
-        isVisible={showPopover}
-        from={touchableRef}
-        onRequestClose={() => setShowPopover(false)}
-        popoverStyle={{
-          marginTop: isAnyModalVisible ? -statusBarHeight : 0,
-          backgroundColor: theme.inverse_surface,
+    <Menu
+      opened={isOpen}
+      renderer={renderers.Popover}
+      rendererProps={{ placement: placement, anchorStyle: styles.anchor }}
+      style={childStyleOuter}
+    >
+      <MenuTrigger>
+        <Pressable onLongPress={open} onPress={onPress} disabled={disabled} style={childStyleInner}>
+          {children}
+        </Pressable>
+      </MenuTrigger>
+      <MenuOptions
+        customStyles={{
+          optionsContainer: { borderRadius: BORDER_RADIUS_STANDARD },
+          optionsWrapper: {
+            marginTop: isAnyModalVisible ? -statusBarHeight : 0,
+            backgroundColor: theme.inverse_surface,
+          },
         }}
-        arrowSize={{ width: 0, height: 0 }}
-        offset={5}
       >
-        {tooltipText && (
-          <Text
-            role="title"
-            size="small"
-            style={[
-              styles.content,
-              {
-                backgroundColor: theme.inverse_surface,
-                color: theme.inverse_on_surface,
-              },
-            ]}
-            namespace={namespace || "tooltip"}
-          >
-            {tooltipText}
-          </Text>
-        )}
-      </Popover>
-    </>
+        <Text
+          role="title"
+          size="small"
+          style={[
+            styles.content,
+            {
+              backgroundColor: theme.inverse_surface,
+              color: theme.inverse_on_surface,
+            },
+          ]}
+          namespace={namespace || "tooltip"}
+        >
+          {tooltipText}
+        </Text>
+      </MenuOptions>
+    </Menu>
   );
 };
 
@@ -105,6 +100,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: CORNER_EXTRA_SMALL,
   },
+  anchor: { backgroundColor: "transparent" },
 });
 
 export default Tooltip;

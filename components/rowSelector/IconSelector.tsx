@@ -39,7 +39,7 @@ const IconSelector = <T extends string>({
             tooltipText={option.name}
             namespace={namespace}
             onPress={() => onSelect(option.name)}
-            style={[styles.button, buttonStyle, isActive && activeStyle]}
+            childStyleOuter={[styles.button, buttonStyle, isActive && activeStyle]}
           >
             <Image source={option.imageUrl} style={styles.image} resizeMode="contain" />
           </Tooltip>

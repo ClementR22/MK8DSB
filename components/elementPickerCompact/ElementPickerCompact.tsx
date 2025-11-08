@@ -27,8 +27,9 @@ const ElementPickerCompact: React.FC<ElementPickerCompactProps> = ({
   return (
     <Tooltip
       tooltipText={name}
+      namespace="elements"
       onPress={onPress}
-      style={StyleSheet.flatten([elementPickerDynamicStyle, isSelected && activeBorderStyle])}
+      childStyleInner={StyleSheet.flatten([elementPickerDynamicStyle, isSelected && activeBorderStyle])}
     >
       <Image source={imageUrl} style={styles.image} resizeMode="contain" />
     </Tooltip>

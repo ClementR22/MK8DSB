@@ -11,6 +11,7 @@ import {
 import Toast from "react-native-toast-message";
 import { toastConfig } from "@/config/toastConfig";
 import Text from "./Text";
+import { MenuProvider } from "react-native-popup-menu";
 
 interface ModalButtonProps {
   text: string;
@@ -117,38 +118,40 @@ const Modal = ({
       statusBarTranslucent={true}
       {...props}
     >
-      <Pressable style={styles.background} onPress={handleBackgroundPress}>
-        <Pressable
-          style={[
-            styles.container,
-            {
-              backgroundColor: theme.surface_container_highest,
-              marginTop: 0,
-            },
-          ]}
-          onStartShouldSetResponder={handleContainerResponder}
-        >
-          {modalTitle && (
-            <Text role="headline" size="small" textAlign="center" style={styles.titleCenter} namespace="modal">
-              {modalTitle}
-            </Text>
-          )}
-
-          <View
-            style={
-              !withoutChildrenContainer && [styles.childrenContainer, { backgroundColor: theme.surface_container }]
-            }
+      <MenuProvider skipInstanceCheck>
+        <Pressable style={styles.background} onPress={handleBackgroundPress}>
+          <Pressable
+            style={[
+              styles.container,
+              {
+                backgroundColor: theme.surface_container_highest,
+                marginTop: 0,
+              },
+            ]}
+            onStartShouldSetResponder={handleContainerResponder}
           >
-            {children}
-          </View>
+            {modalTitle && (
+              <Text role="headline" size="small" textAlign="center" style={styles.titleCenter} namespace="modal">
+                {modalTitle}
+              </Text>
+            )}
 
-          <View style={[styles.buttonContainer, { flexDirection: buttonContainerFlexDirection }]}>
-            {renderSecondButton()}
-            {<ModalButton text={closeButtonText} onPress={actualOnPressClose} tooltipText={closeButtonText} />}
-          </View>
+            <View
+              style={
+                !withoutChildrenContainer && [styles.childrenContainer, { backgroundColor: theme.surface_container }]
+              }
+            >
+              {children}
+            </View>
+
+            <View style={[styles.buttonContainer, { flexDirection: buttonContainerFlexDirection }]}>
+              {renderSecondButton()}
+              {<ModalButton text={closeButtonText} onPress={actualOnPressClose} tooltipText={closeButtonText} />}
+            </View>
+          </Pressable>
         </Pressable>
-      </Pressable>
-      <Toast config={toastConfig} bottomOffset={0} />
+        <Toast config={toastConfig} bottomOffset={0} />
+      </MenuProvider>
     </NativeModal>
   );
 };

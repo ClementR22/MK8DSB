@@ -5,7 +5,6 @@ import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import { StyleSheet } from "react-native";
 import useThemeStore from "@/stores/useThemeStore";
-import { Placement } from "react-native-popover-view/dist/Types";
 
 export type HelpContentItem = {
   type: "title" | "highlight" | "step" | "feature" | "custom";
@@ -24,13 +23,13 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, children }) => {
   const customTrigger = useMemo(
     () => (
       <ButtonIcon
-        iconName={"help-circle-outline"}
+        iconName="help-circle-outline"
         iconType={IconType.MaterialCommunityIcons}
         buttonSize={48}
         color={theme.on_surface}
         backgroundColor="transparent"
         tooltipText="help"
-        toolTipPlacement={Placement.LEFT}
+        toolTipPlacement="left"
       />
     ),
     [theme.on_surface]

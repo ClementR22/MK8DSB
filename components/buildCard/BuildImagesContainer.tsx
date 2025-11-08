@@ -65,7 +65,6 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
                     tooltipText={name}
                     namespace="elements"
                     onPress={onImagesPress}
-                    style={styles.tooltip}
                   >
                     <Image source={image} style={styles.image} resizeMode="contain" />
                   </Tooltip>
@@ -90,9 +89,6 @@ const styles = StyleSheet.create({
   category: {
     flexDirection: "row",
     justifyContent: "center",
-  },
-  tooltip: {
-    alignItems: "center",
   },
   image: {
     width: IMAGE_SIZE,
