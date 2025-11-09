@@ -9,6 +9,7 @@ import showToast from "@/utils/showToast";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
+import { BuildAlreadyExistsError } from "@/errors/errors";
 
 interface ActionProps {
   title: string;
@@ -55,11 +56,27 @@ export function useActionIconPropsList(
   const handleLoadToDisplayPress = useCallback(() => {
     try {
       loadToDisplay({ source, buildDataId });
-
       showToast("buildHasBeenLoadedInTheComparator", "success");
       setIsLoadBuildModalVisible(false);
     } catch (e) {
-      showToast(e.message, "error");
+      if (e instanceof BuildAlreadyExistsError) {
+        // e.buildName peut etre undefined (inutile de le préciser car le build en conflit est égal au build à charger)
+
+        // Construction du message avec sécurité
+        const targetMessage = e.target ? ` in ${e.target}` : "";
+        const buildNameMessage = e.buildName ? ` withTheName ${e.buildName}` : "";
+
+        const fullMessage = `${e.message}${targetMessage}${buildNameMessage}`;
+
+        showToast(fullMessage, "error");
+      } else if (e instanceof Error) {
+        // Erreur générique : on affiche son message si c’est un vrai Error
+        showToast(e.message, "error");
+      } else {
+        // Cas où c’est un type inconnu (throw d’un string ou d’un objet brut)
+        console.error("Unexpected error:", e);
+        showToast("unknownError", "error");
+      }
     }
   }, [source, buildDataId, loadToDisplay, setIsLoadBuildModalVisible]);
 

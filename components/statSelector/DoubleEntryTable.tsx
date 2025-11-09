@@ -52,8 +52,6 @@ const TableRow: React.FC<TableRowProps> = ({
         const isChecked = statsMap.get(columnName)?.get(statName) ?? false;
         const isDisabled = columnName === "resultStats" && disabled;
 
-        console.log({ statName, columnName, isChecked, isDisabled });
-
         return (
           <View key={columnName + statName} style={[styles.cell, styles.checkboxCell]}>
             <Checkbox

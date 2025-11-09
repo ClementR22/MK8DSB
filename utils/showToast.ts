@@ -16,7 +16,6 @@ function showToast(messageKey: string, type?: ToastType, messageExtension: strin
   }
 
   const finalMessage = prefix + translatedParts.join(" ") + messageExtension;
-
   ToastManager.show(finalMessage);
 }
 

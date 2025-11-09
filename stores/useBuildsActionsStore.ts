@@ -22,7 +22,13 @@ import { t } from "i18next";
 import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
 
 export interface BuildsActionsStoreState {
-  loadBuildCard: (params: { source?: ScreenName; buildDataId?: string; build?: Build; target: ScreenName }) => Build;
+  loadBuildCard: (params: {
+    source?: ScreenName;
+    buildDataId?: string;
+    build?: Build;
+    name?: string;
+    target: ScreenName;
+  }) => Build;
   loadToSearch: (params: { source?: ScreenName; buildDataId?: string; build?: Build }) => void;
   loadToDisplay: (params: { source: ScreenName; buildDataId: string }) => void;
   loadBuildsSaved: () => void;
@@ -33,8 +39,14 @@ export interface BuildsActionsStoreState {
 }
 
 const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
-  loadBuildCard: (params: { source?: ScreenName; buildDataId?: string; build?: Build; target: ScreenName }) => {
-    const { source, buildDataId, build: providedBuild, target } = params;
+  loadBuildCard: (params: {
+    source?: ScreenName;
+    buildDataId?: string;
+    build?: Build;
+    name?: string;
+    target: ScreenName;
+  }) => {
+    const { source, buildDataId, build: providedBuild, name: providedName, target } = params;
 
     // on récupère build depuis les props ou bien on le calcule
     // et on retire percentage
@@ -47,12 +59,33 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       build = build_;
     }
 
-    const name = useDeckStore.getState().deck.get(build.buildDataId)?.name;
+    let name: string;
+    if (providedName) {
+      name = providedName;
+    } else {
+      const name_ = useDeckStore.getState().deck.get(build.buildDataId)?.name;
+      name = name_;
+    }
+
     if (!name) {
       throw new Error("buildNameRequiredForLoading");
     }
 
     const buildsListTarget = useBuildsListStore.getState().getBuildsList(target).buildsList;
+
+    const sameBuild = useBuildsListStore
+      .getState()
+      .findSameBuildInScreen({ buildDataId: build.buildDataId, screenName: target });
+
+    if (sameBuild) {
+      throw new BuildAlreadyExistsError(target, providedName);
+      // la 2e props buildName est donnée seulement si providedName est défini ie seulement si on est dans le cas d'une importation
+    }
+
+    const isNameFree = useDeckStore.getState().checkNameFree(name);
+    if (!isNameFree) {
+      throw new NameAlreadyExistsError(target, name);
+    }
 
     // vérification de la limit de builds
     if (
@@ -160,28 +193,15 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       throw new Error("incorrectFormat");
     }
 
-    const build: BuildPersistant = { ...parsedBuild };
+    const { buildDataId, name } = parsedBuild;
+    const build: Build = { buildDataId };
 
     if (screenName === "search") {
       get().loadToSearch({ build });
     } else {
-      const sameBuild = useBuildsListStore
-        .getState()
-        .findSameBuildInThisScreen({ buildDataId: build.buildDataId, screenName: screenName });
-
-      if (sameBuild) {
-        const buildName = useDeckStore.getState().deck.get(sameBuild.buildDataId)?.name;
-        throw new BuildAlreadyExistsError(buildName);
-      }
-
-      const isNameFree = useDeckStore.getState().checkNameFree(build.name);
-      if (!isNameFree) {
-        throw new NameAlreadyExistsError(build.name);
-      }
-
-      get().loadBuildCard({ build, target: screenName });
+      get().loadBuildCard({ build, name, target: screenName });
       if (screenName === "save") {
-        const name = useDeckStore.getState().deck.get(build.buildDataId).name;
+        useDeckStore.getState().setBuildName(build.buildDataId, name);
         useBuildsPersistenceStore.getState().saveBuildInMemory(build, name);
       }
     }

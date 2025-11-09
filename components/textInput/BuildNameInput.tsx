@@ -25,6 +25,12 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, buildDataId, edit
 
   const inputRef = useRef<TextInput>(null);
 
+  useEffect(() => {
+    if (name != localName) {
+      setLocalName(name);
+    }
+  }, [name]);
+
   const updateName = useCallback(
     (localName: string) => {
       let newName = localName.trim();
@@ -45,7 +51,7 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, buildDataId, edit
           showToast("buildRenamed", "success");
         } catch (e) {
           if (e instanceof NameAlreadyExistsError) {
-            showToast(e.message, "error", e.buildName);
+            showToast(`${e.message} ${e.buildName}`, "error");
           } else {
             showToast(e.message, "error");
           }

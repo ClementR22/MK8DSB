@@ -46,7 +46,7 @@ export interface BuildsListStoreState {
   renameBuild: (newName: string, screenName: ScreenName, buildDataId: string, isSaved: boolean) => void;
   updateBuildsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => void;
   sortBuildsList: (screenName: ScreenName, sortNumber: number) => void;
-  findSameBuildInThisScreen: (params: {
+  findSameBuildInScreen: (params: {
     buildDataId: string;
     buildsList?: Build[];
     screenName?: ScreenName;
@@ -171,7 +171,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     // pour la suite, newName est censé être non vide
     const isNameFree = useDeckStore.getState().checkNameFree(newName);
     if (!isNameFree) {
-      throw new NameAlreadyExistsError(newName);
+      throw new NameAlreadyExistsError(screenName, newName);
     }
 
     if (isSaved) {
@@ -188,11 +188,12 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
     const newBuildDataId = Object.values(selectedClassIdsByCategory).join("-");
 
-    const sameBuild = get().findSameBuildInThisScreen({ buildDataId: newBuildDataId, buildsList: buildsList });
+    const sameBuild = get().findSameBuildInScreen({ buildDataId: newBuildDataId, buildsList: buildsList });
     // si le build existe deja dans l'ecran, alors on annule la MAJ du build actuel
     if (sameBuild) {
       const buildName = useDeckStore.getState().deck.get(sameBuild.buildDataId)?.name;
-      throw new BuildAlreadyExistsError(buildName);
+      console.log("screenName", screenName, "bild", buildName);
+      throw new BuildAlreadyExistsError(screenName, buildName);
     }
 
     const newBuild: Build = { buildDataId: newBuildDataId };
@@ -255,7 +256,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     set({ [buildsListName]: buildsListSortedLight });
   },
 
-  findSameBuildInThisScreen: ({ buildDataId, buildsList, screenName }) => {
+  findSameBuildInScreen: ({ buildDataId, buildsList, screenName }) => {
     if (!buildsList) {
       buildsList = get().getBuildsList(screenName).buildsList;
     }

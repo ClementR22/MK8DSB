@@ -6,6 +6,7 @@ import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { useScreenNameFromPath } from "@/hooks/useScreenNameFromPath";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import showToast from "@/utils/showToast";
+import { BuildAlreadyExistsError } from "@/errors/errors";
 
 const EditBuildModal: React.FC = () => {
   const isEditBuildModalVisible = useEditBuildModalStore((state) => state.isEditBuildModalVisible);
@@ -23,7 +24,15 @@ const EditBuildModal: React.FC = () => {
         setIsBuildsListUpdated(true);
         showToast("buildUpdated", "success");
       } catch (e) {
-        showToast(e.message, "error", e.buildName);
+        if (e instanceof BuildAlreadyExistsError) {
+          // Construction du message avec sécurité
+          const targetMessage = e.target ? ` in ${e.target}` : "";
+          const buildNameMessage = e.buildName ? ` withTheName ${e.buildName}` : "";
+
+          const fullMessage = `${e.message}${targetMessage}${buildNameMessage}`;
+
+          showToast(fullMessage, "importError");
+        }
       }
     }
     setIsEditBuildModalVisible(false);
