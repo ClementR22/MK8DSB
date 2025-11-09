@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useScreen } from "../../contexts/ScreenContext";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import BuildNameInputContent from "./BuildNameInputContent";
@@ -25,41 +25,39 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, buildDataId, edit
 
   const inputRef = useRef<TextInput>(null);
 
-  // Synchroniser le state local si le nom change depuis l'extérieur
-  React.useEffect(() => {
-    setLocalName(name);
-  }, [name]);
+  const updateName = useCallback(
+    (localName: string) => {
+      let newName = localName.trim();
 
-  const updateName = useCallback(() => {
-    let newName = localName.trim();
-
-    if (!newName) {
-      if (isSaved) {
-        setLocalName(name);
-        showToast("savedBuildCannotHaveEmptyName", "error");
-        return;
-      }
-      newName = "";
-      setLocalName(newName);
-    }
-
-    if (newName !== name) {
-      try {
-        renameBuild(localName, screenName, buildDataId, isSaved);
-        showToast("buildRenamed", "success");
-      } catch (e) {
-        if (e instanceof NameAlreadyExistsError) {
-          showToast(e.message, "error", e.buildName);
-        } else {
-          showToast(e.message, "error");
+      if (!newName) {
+        if (isSaved) {
+          setLocalName(name);
+          showToast("savedBuildCannotHaveEmptyName", "error");
+          return;
         }
-        setLocalName(name);
+        newName = "";
+        setLocalName(newName);
       }
-    }
-  }, [localName, name, screenName, buildDataId, isSaved, renameBuild]);
+
+      if (newName !== name) {
+        try {
+          renameBuild(localName, screenName, buildDataId, isSaved);
+          showToast("buildRenamed", "success");
+        } catch (e) {
+          if (e instanceof NameAlreadyExistsError) {
+            showToast(e.message, "error", e.buildName);
+          } else {
+            showToast(e.message, "error");
+          }
+          setLocalName(name);
+        }
+      }
+    },
+    [name, screenName, buildDataId, isSaved, renameBuild]
+  );
 
   // Hook pour ne déclencher que si l'input est focus
-  useKeyboardDidHideWhileFocused(updateName, focused, inputRef);
+  useKeyboardDidHideWhileFocused(updateName, focused, inputRef, localName);
 
   const handleFocus = useCallback(() => {
     setFocused(true);
@@ -67,14 +65,15 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, buildDataId, edit
   }, [buildDataId, scrollToBuildCard]);
 
   const handleEndEditingOrBlur = useCallback(() => {
+    "end editing";
     if (focused) {
       setFocused(false);
     }
     // si on blur avant de fermer le keyboard,
     // alors useKeyboardDidHideWhileFocused n'appelle par updateName
     // donc on le fait ici
-    updateName();
-  }, []);
+    updateName(localName);
+  }, [localName, focused, setFocused, updateName]);
 
   return (
     <BuildNameInputContent

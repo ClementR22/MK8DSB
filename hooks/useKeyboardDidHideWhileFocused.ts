@@ -7,9 +7,10 @@ import { Keyboard, TextInput } from "react-native";
  * @param isActive Booléen qui doit être true quand l'input est focus
  */
 export const useKeyboardDidHideWhileFocused = (
-  callback: () => void,
+  callback: (newName: string) => void,
   isActive: boolean,
-  inputRef: React.RefObject<TextInput>
+  inputRef: React.RefObject<TextInput>,
+  localName: string
 ) => {
   const isFocused = useRef(isActive);
 
@@ -26,7 +27,7 @@ export const useKeyboardDidHideWhileFocused = (
 
     const listener = Keyboard.addListener("keyboardDidHide", () => {
       if (isFocused.current) {
-        callback();
+        callback(localName);
       }
     });
 
