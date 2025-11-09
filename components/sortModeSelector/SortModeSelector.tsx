@@ -10,7 +10,7 @@ import {
   statNamesSpeed,
   statNames,
 } from "@/data/stats/statsData";
-import Popover from "../Popover";
+import Popover from "../popover/Popover";
 import ButtonIconWithBadge from "./ButtonIconWithBadge";
 import {
   BUTTON_SIZE,

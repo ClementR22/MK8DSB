@@ -1,10 +1,11 @@
 import React, { useMemo, useCallback } from "react";
 import { View, StyleSheet, ScrollView, Pressable } from "react-native";
-import { Checkbox, DataTable } from "react-native-paper";
 import { ResultStat } from "@/contexts/ResultStatsContext";
 import { ChosenStat } from "@/stores/useStatsStore";
 import useThemeStore from "@/stores/useThemeStore";
 import Text from "@/primitiveComponents/Text";
+import { BORDER_RADIUS_MODAL_CHILDREN_CONTAINER } from "@/utils/designTokens";
+import Checkbox from "expo-checkbox";
 
 type CheckList = ChosenStat[] | ResultStat[];
 export type ColumnName = "chosenStats" | "resultStats";
@@ -20,68 +21,72 @@ interface DoubleEntryTableProps {
   disabled: boolean;
 }
 
-// Composant Row mémorisé séparément
-const TableRow = React.memo<{
+interface TableRowProps {
   statName: string;
   columns: Column[];
   labelFlex: number;
   disabled: boolean;
   onToggleStat: (statName: string, columnName: ColumnName) => void;
   statsMap: Map<string, Map<string, boolean>>;
-}>(({ statName, columns, labelFlex, disabled, onToggleStat, statsMap }) => {
+  color: string;
+}
+
+const TableRow: React.FC<TableRowProps> = ({
+  statName,
+  columns,
+  labelFlex,
+  disabled,
+  onToggleStat,
+  statsMap,
+  color,
+}) => {
   return (
-    <Pressable>
-      <DataTable.Row style={styles.row}>
-        <DataTable.Cell style={{ flex: labelFlex }}>
-          <Text role="title" size="small" namespace="stats">
-            {statName}
-          </Text>
-        </DataTable.Cell>
+    <View style={styles.row}>
+      <View style={[styles.cell, { flex: labelFlex }]}>
+        <Text role="title" size="small" namespace="stats">
+          {statName}
+        </Text>
+      </View>
 
-        {columns.map(({ columnName }) => {
-          const isChecked = statsMap.get(columnName)?.get(statName) ?? false;
-          const isDisabled = columnName === "resultStats" && disabled;
+      {columns.map(({ columnName }) => {
+        const isChecked = statsMap.get(columnName)?.get(statName) ?? false;
+        const isDisabled = columnName === "resultStats" && disabled;
 
-          return (
-            <DataTable.Cell key={columnName} style={styles.checkboxCell}>
-              <Checkbox
-                status={isChecked ? "checked" : "unchecked"}
-                onPress={() => onToggleStat(statName, columnName)}
-                disabled={isDisabled}
-              />
-            </DataTable.Cell>
-          );
-        })}
-      </DataTable.Row>
-    </Pressable>
+        console.log({ statName, columnName, isChecked, isDisabled });
+
+        return (
+          <View key={columnName + statName} style={[styles.cell, styles.checkboxCell]}>
+            <Checkbox
+              value={isChecked}
+              disabled={isDisabled}
+              onValueChange={() => onToggleStat(statName, columnName)}
+              color={color}
+            />
+          </View>
+        );
+      })}
+    </View>
   );
-});
+};
 
 TableRow.displayName = "TableRow";
 
 const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleStat, disabled }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  // Extraire les noms des stats une seule fois
   const rowNames = useMemo(() => columns[0]?.checkList.map((stat) => stat.name) || [], [columns]);
   const labelFlex = 5 - columns.length;
 
-  // Créer une Map pour lookup O(1)
   const statsMap = useMemo(() => {
     const map = new Map<string, Map<string, boolean>>();
-
     columns.forEach(({ columnName, checkList }) => {
       const columnMap = new Map<string, boolean>();
-      checkList.forEach((stat) => {
-        columnMap.set(stat.name, stat.checked);
-      });
+      checkList.forEach((stat) => columnMap.set(stat.name, stat.checked));
       map.set(columnName, columnMap);
     });
-
     return map;
   }, [columns]);
 
-  //  Callback stable pour le rendu des lignes
   const renderRow = useCallback(
     (statName: string) => (
       <TableRow
@@ -92,52 +97,67 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleSt
         disabled={disabled}
         onToggleStat={onToggleStat}
         statsMap={statsMap}
+        color={theme.primary}
       />
     ),
     [columns, labelFlex, disabled, onToggleStat, statsMap]
   );
 
   return (
-    <DataTable>
-      <DataTable.Header style={styles.header}>
-        <DataTable.Title style={{ flex: labelFlex }}>{""}</DataTable.Title>
+    <View style={[styles.tableWrapper, { borderColor: theme.outline_variant }]}>
+      {/* Header */}
+      <View style={[styles.header, { borderColor: theme.outline_variant }]}>
+        <View style={[styles.headerCell, { flex: labelFlex }]}>
+          <Text role="title" size="small" namespace="not">
+            {" "}
+          </Text>
+        </View>
         {columns.map(({ columnName }) => (
-          <DataTable.Title key={columnName} style={styles.headerCell}>
+          <View key={columnName} style={styles.headerCell}>
             <Text role="title" size="small" namespace="text">
               {columnName}
             </Text>
-          </DataTable.Title>
+          </View>
         ))}
-      </DataTable.Header>
-
-      <View style={[styles.scrollViewWrapper, { borderColor: theme.outline_variant }]}>
-        <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-          {rowNames.map(renderRow)}
-        </ScrollView>
       </View>
-    </DataTable>
+
+      {/* Body */}
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        {rowNames.map(renderRow)}
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    height: 30,
-    paddingRight: 0,
-    paddingLeft: 12,
-    borderBottomWidth: 0,
+  tableWrapper: {
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
+    borderRadius: BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,
+    overflow: "hidden",
   },
-  row: {
-    paddingRight: 0,
+  header: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    height: 32,
+    alignItems: "center",
+    backgroundColor: "#f5f5f5",
     paddingLeft: 12,
   },
   headerCell: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 0,
   },
-  scrollViewWrapper: {
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 6,
+    paddingLeft: 12,
+  },
+  cell: {
+    flex: 1,
+    justifyContent: "center",
   },
   scrollView: {
     maxHeight: 300,

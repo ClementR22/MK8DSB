@@ -126,7 +126,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
       });
       setStatListsInModal(initialStatLists);
     }
-  }, [isModalVisible, columns]);
+  }, [isModalVisible]);
 
   const handleStatToggle = useCallback(
     (statName: string, columnName: ColumnName) => {

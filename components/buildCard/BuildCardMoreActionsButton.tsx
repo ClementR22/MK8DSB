@@ -3,7 +3,7 @@ import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
 import { IconType } from "react-native-dynamic-vector-icons";
 import { ActionNamesList } from "@/hooks/useBuildCardConfig";
 import { ScreenName } from "@/contexts/ScreenContext";
-import PopoverMenu from "../PopoverMenu";
+import PopoverMenu from "../popover/PopoverMenu";
 import IconContainer from "@/primitiveComponents/IconContainer";
 
 interface BuildCardMoreActionsButtonProps {
