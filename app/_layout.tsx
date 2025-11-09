@@ -125,6 +125,7 @@ export default function TabLayout() {
                   <MaterialCommunityIcons name={focused ? "cards" : "cards-outline"} size={24} color={color} />
                 ),
                 tabBarBadge: numberSavedBuilds,
+                tabBarBadgeStyle: {backgroundColor: theme.primary_container, color: theme.on_primary_container},
                 header: renderSavedHeader,
               }}
             />
