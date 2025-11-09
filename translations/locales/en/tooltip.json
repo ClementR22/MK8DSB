@@ -8,7 +8,7 @@
 
   "loadStatsOfASet": "Load a build's stats",
   "loadASet": "Load a build",
-  "importACopiedSet": "Import a copied build",
+  "importACopiedSet": "Import a build from your clipboard",
 
   "addASet": "Add a build",
 
