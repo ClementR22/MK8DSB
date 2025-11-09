@@ -3,20 +3,12 @@
   "error": "Erreur",
   "importError": "Erreur d'importation",
 
-  "clipboardIsEmpty": "presse-papiers vide",
-  "incorrectFormat": "presse-papiers vide ou format incorrect",
-  "thisBuildDoesNotExist": "ce build n'existe pas",
-  "unknownError": "erreur inconnue",
-
-  "buildLimitReached": "limite de builds atteinte",
-
   "theSettingsHaveBeenReset": "les préférences ont été réinitialisées",
   "allSavedBuildsHaveBeenDeleted": "tous les builds sauvegardés ont été supprimés !",
 
   "buildRenamed": "build renommé",
-  "nameAlreadyExists": "ce nom est déjà pris :",
   "buildUpdated": "build mis à jour",
-  "buildAlreadyExists": "ce build est déjà présent",
+
   "buildStatsHaveBeenLoaded": "les stats du build ont été chargées",
   "buildHasBeenLoadedInTheComparator": "le build a été chargé dans le comparateur",
   "buildHasBeenSaved": "le build a été enregistré, cliquez sur 'Collection' pour le retrouver",
@@ -25,11 +17,6 @@
   "buildCopiedInClipboard": "build copié dans le presse-papier. Vous pouvez maintenant l'envoyez par message",
   "buildImported": "build importé",
   "statsImported": "stats du build importées",
-  "buildLimitReachedInThisScreen": "limite de builds atteinte",
-  "buildNameRequiredForSharing": "vous devez entrer un nom pour partager un build",
-  "buildNameRequiredForSaving": "vous devez entrer un nom pour enregister un build",
-  "buildNameRequiredForLoading": "vous devez entrer un nom pour déplacer un build",
-  "savedBuildCannotHaveEmptyName": "les builds de la collection doivent avoir un nom",
 
   "in": "dans",
   "display": "le Comparateur",

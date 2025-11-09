@@ -38,7 +38,7 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, buildDataId, edit
       if (!newName) {
         if (isSaved) {
           setLocalName(name);
-          showToast("savedBuildCannotHaveEmptyName", "error");
+          showToast("error:savedBuildCannotHaveEmptyName", "error");
           return;
         }
         newName = "";
@@ -48,12 +48,12 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, buildDataId, edit
       if (newName !== name) {
         try {
           renameBuild(localName, screenName, buildDataId, isSaved);
-          showToast("buildRenamed", "success");
+          showToast("toast:buildRenamed", "success");
         } catch (e) {
           if (e instanceof NameAlreadyExistsError) {
-            showToast(`${e.message} ${e.buildName}`, "error");
+            showToast(`error:${e.message}|${e.buildName}`, "error");
           } else {
-            showToast(e.message, "error");
+            showToast(`error:${e.message}`, "error");
           }
           setLocalName(name);
         }

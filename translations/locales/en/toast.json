@@ -3,20 +3,12 @@
   "error": "Error",
   "importError": "Import error",
 
-  "clipboardIsEmpty": "clipboard is empty",
-  "incorrectFormat": "empty clipboard or incorrect format",
-  "thisBuildDoesNotExist": "this build does not exist",
-  "unknownError": "unknown error",
-
-  "buildLimitReached": "build limit reached",
-
   "theSettingsHaveBeenReset": "the settings have been reset",
   "allSavedBuildsHaveBeenDeleted": "all saved builds have been deleted",
 
   "buildRenamed": "the build renamed",
-  "nameAlreadyExists": "this name is already taken:",
   "buildUpdated": "build updated",
-  "buildAlreadyExists": "this build is already",
+
   "buildStatsHaveBeenLoaded": "the build's stats have been loaded",
   "buildHasBeenLoadedInTheComparator": "the build have been loaded in the comparator",
   "buildHasBeenSaved": "the build has been saved, click on 'Collection' to find it",
@@ -25,11 +17,6 @@
   "buildCopiedInClipboard": "build copied to clipboard. You can now share it via message",
   "buildImported": "build imported",
   "statsImported": "build's stats imported",
-  "buildLimitReachedInThisScreen": "build limit reached",
-  "buildNameRequiredForSharing": "you must enter a name to share a build",
-  "buildNameRequiredForSaving": "you must enter a name to record a build",
-  "buildNameRequiredForLoading": "you must enter a name to move a build",
-  "savedBuildCannotHaveEmptyName": "collection's builds must have a name",
 
   "in": "in",
   "display": "the Comparator",

@@ -31,6 +31,7 @@ i18n.use(initReactI18next).init({
     "button",
     "categories",
     "elements",
+    "error",
     "helpSearch",
     "helpDisplay",
     "helpSave",

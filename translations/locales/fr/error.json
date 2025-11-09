@@ -1,0 +1,15 @@
+{
+  "incorrectFormat": "presse-papiers vide ou format incorrect",
+  "thisBuildDoesNotExist": "ce build n'existe pas",
+  "unknownError": "erreur inconnue",
+
+  "buildLimitReached": "limite de builds atteinte",
+  "buildLimitReachedInThisScreen": "limite de builds atteinte",
+  "nameAlreadyExists": "ce nom est déjà pris :",
+  "buildAlreadyExists": "ce build est déjà présent",
+
+  "buildNameRequiredForSharing": "vous devez entrer un nom pour partager un build",
+  "buildNameRequiredForSaving": "vous devez entrer un nom pour enregister un build",
+  "buildNameRequiredForLoading": "vous devez entrer un nom pour déplacer un build dans le Comparateur",
+  "savedBuildCannotHaveEmptyName": "les builds de la collection doivent avoir un nom"
+}

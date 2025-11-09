@@ -42,7 +42,7 @@ export interface BuildsListStoreState {
   deleteAllSavedBuilds: () => Promise<void>;
   setBuildEditedDataId: (buildDataId: string) => void;
   addNewBuildInDisplay: () => void;
-  removeBuild: (buildDataId: string, screenName: ScreenName) => void;
+  removeBuild: (buildDataId: string, screenName: ScreenName) => Promise<void>;
   renameBuild: (newName: string, screenName: ScreenName, buildDataId: string, isSaved: boolean) => void;
   updateBuildsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => void;
   sortBuildsList: (screenName: ScreenName, sortNumber: number) => void;
@@ -146,13 +146,13 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     });
   },
 
-  removeBuild: (buildDataId, screenName) => {
+  removeBuild: async (buildDataId, screenName) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
 
     const newList = buildsList.filter((build) => build.buildDataId !== buildDataId);
     set({ [buildsListName]: newList });
     if (screenName === "save") {
-      useBuildsPersistenceStore.getState().removeBuildInMemory(buildDataId);
+      await useBuildsPersistenceStore.getState().removeBuildInMemory(buildDataId);
       // mise à jour de la props isSaved dans useDeckStore
       useDeckStore.getState().unSaveBuild(buildDataId);
     }
@@ -192,7 +192,6 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     // si le build existe deja dans l'ecran, alors on annule la MAJ du build actuel
     if (sameBuild) {
       const buildName = useDeckStore.getState().deck.get(sameBuild.buildDataId)?.name;
-      console.log("screenName", screenName, "bild", buildName);
       throw new BuildAlreadyExistsError(screenName, buildName);
     }
 

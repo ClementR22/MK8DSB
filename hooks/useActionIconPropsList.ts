@@ -49,33 +49,33 @@ export function useActionIconPropsList(
   const handleLoadToSearchPress = useCallback(() => {
     loadToSearch({ source, buildDataId });
 
-    showToast("buildStatsHaveBeenLoaded", "success");
+    showToast("toast:buildStatsHaveBeenLoaded", "success");
     setIsLoadBuildModalVisible(false);
   }, [source, buildDataId, loadToSearch, setIsLoadBuildModalVisible]);
 
   const handleLoadToDisplayPress = useCallback(() => {
     try {
       loadToDisplay({ source, buildDataId });
-      showToast("buildHasBeenLoadedInTheComparator", "success");
+      showToast("toast:buildHasBeenLoadedInTheComparator", "success");
       setIsLoadBuildModalVisible(false);
     } catch (e) {
       if (e instanceof BuildAlreadyExistsError) {
         // e.buildName peut etre undefined (inutile de le préciser car le build en conflit est égal au build à charger)
 
         // Construction du message avec sécurité
-        const targetMessage = e.target ? ` in ${e.target}` : "";
-        const buildNameMessage = e.buildName ? ` withTheName ${e.buildName}` : "";
+        const targetMessage = e.target ? `|toast:in|toast:${e.target}` : "";
+        const buildNameMessage = e.buildName ? `|toast:withTheName|${e.buildName}` : "";
 
-        const fullMessage = `${e.message}${targetMessage}${buildNameMessage}`;
+        const fullMessage = `error:${e.message}${targetMessage}${buildNameMessage}`;
 
         showToast(fullMessage, "error");
       } else if (e instanceof Error) {
         // Erreur générique : on affiche son message si c’est un vrai Error
-        showToast(e.message, "error");
+        showToast(`error:${e.message}`, "error");
       } else {
         // Cas où c’est un type inconnu (throw d’un string ou d’un objet brut)
         console.error("Unexpected error:", e);
-        showToast("unknownError", "error");
+        showToast("error:unknownError", "error");
       }
     }
   }, [source, buildDataId, loadToDisplay, setIsLoadBuildModalVisible]);
@@ -84,27 +84,27 @@ export function useActionIconPropsList(
     try {
       if (!isSaved) {
         await saveBuild(source, buildDataId);
-        showToast("buildHasBeenSaved", "success");
+        showToast("toast:buildHasBeenSaved", "success");
       } else {
         await unSaveBuild(buildDataId);
-        showToast("buildHasBeenUnsaved", "success");
+        showToast("toast:buildHasBeenUnsaved", "success");
       }
     } catch (e) {
-      showToast(e.message, "error");
+      showToast(`error:${e.message}`, "error");
     }
   }, [source, buildDataId, isSaved, saveBuild, unSaveBuild]);
 
   const handleRemovePress = useCallback(() => {
     removeBuild(buildDataId, source);
-    showToast("buildHasBeenDeleted", "success");
+    showToast("toast:buildHasBeenDeleted", "success");
   }, [source, buildDataId, removeBuild]);
 
   const handleExportPress = useCallback(() => {
     try {
       exportBuild(source, buildDataId);
-      showToast("buildCopiedInClipboard", "success");
+      showToast("toast:buildCopiedInClipboard", "success");
     } catch (e) {
-      showToast(e.message, "error");
+      showToast(`error:${e.message}`, "error");
     }
   }, [source, buildDataId, exportBuild]);
 

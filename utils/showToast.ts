@@ -1,10 +1,14 @@
 import i18n from "@/translations";
 import ToastManager, { ToastType } from "./ToastManager";
 
-function showToast(messageKey: string, type?: ToastType, messageExtension: string = "") {
-  const keys = messageKey.split(" ");
+function showToast(messageKey: string, type?: ToastType) {
+  const keysWithNs = messageKey.split("|");
 
-  const translatedParts = keys.map((key) => i18n.t(key, { ns: "toast" })); // "toast" en fallback
+  const translatedParts = keysWithNs.map((keyWithNs) => {
+    console.log("keyWithNs", keyWithNs);
+    const translated = i18n.t(keyWithNs);
+    return translated;
+  });
 
   let prefix = "";
   if (type === "error") {
@@ -15,7 +19,7 @@ function showToast(messageKey: string, type?: ToastType, messageExtension: strin
     prefix = i18n.t("toast:success") + i18n.t("text:colon");
   }
 
-  const finalMessage = prefix + translatedParts.join(" ") + messageExtension;
+  const finalMessage = prefix + translatedParts.join(" ");
   ToastManager.show(finalMessage);
 }
 

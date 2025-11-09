@@ -22,14 +22,14 @@ const EditBuildModal: React.FC = () => {
       try {
         updateBuildsList(selectedClassIdsByCategory, screenName);
         setIsBuildsListUpdated(true);
-        showToast("buildUpdated", "success");
+        showToast("toast:buildUpdated", "success");
       } catch (e) {
         if (e instanceof BuildAlreadyExistsError) {
           // Construction du message avec sécurité
-          const targetMessage = e.target ? ` in ${e.target}` : "";
-          const buildNameMessage = e.buildName ? ` withTheName ${e.buildName}` : "";
+          const targetMessage = e.target ? `|toast:in|toast:${e.target}` : "";
+          const buildNameMessage = e.buildName ? `|toast:withTheName|${e.buildName}` : "";
 
-          const fullMessage = `${e.message}${targetMessage}${buildNameMessage}`;
+          const fullMessage = `error:${e.message}${targetMessage}${buildNameMessage}`;
 
           showToast(fullMessage, "importError");
         }

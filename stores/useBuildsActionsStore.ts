@@ -19,7 +19,8 @@ import useGeneralStore from "./useGeneralStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
 import useDeckStore from "./useDeckStore";
 import { t } from "i18next";
-import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
+import { BuildAlreadyExistsError } from "@/errors/errors";
+import { useGenerateUniqueName } from "@/hooks/useGenerateUniqueName";
 
 export interface BuildsActionsStoreState {
   loadBuildCard: (params: {
@@ -28,12 +29,12 @@ export interface BuildsActionsStoreState {
     build?: Build;
     name?: string;
     target: ScreenName;
-  }) => Build;
+  }) => void;
   loadToSearch: (params: { source?: ScreenName; buildDataId?: string; build?: Build }) => void;
   loadToDisplay: (params: { source: ScreenName; buildDataId: string }) => void;
   loadBuildsSaved: () => void;
   saveBuild: (source: ScreenName, buildDataId: string) => Promise<void>;
-  unSaveBuild: (buildDataId: string) => void;
+  unSaveBuild: (buildDataId: string) => Promise<void>;
   exportBuild: (screenName: ScreenName, buildDataId: string) => void;
   importBuild: (clipboardContent: string, screenName: ScreenName) => void;
 }
@@ -78,13 +79,9 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       .findSameBuildInScreen({ buildDataId: build.buildDataId, screenName: target });
 
     if (sameBuild) {
-      throw new BuildAlreadyExistsError(target, providedName);
+      const sameBuildName = useDeckStore.getState().deck.get(sameBuild.buildDataId).name;
+      throw new BuildAlreadyExistsError(target, sameBuildName);
       // la 2e props buildName est donnée seulement si providedName est défini ie seulement si on est dans le cas d'une importation
-    }
-
-    const isNameFree = useDeckStore.getState().checkNameFree(name);
-    if (!isNameFree) {
-      throw new NameAlreadyExistsError(target, name);
     }
 
     // vérification de la limit de builds
@@ -99,7 +96,6 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
 
     const setBuildsListTarget = useBuildsListStore.getState().getSetBuildsList(target);
     setBuildsListTarget(newBuildsListTarget);
-    return build;
   },
 
   loadToSearch: (params: { source?: ScreenName; buildDataId?: string; build?: Build }) => {
@@ -160,8 +156,8 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     useDeckStore.getState().saveBuild(build.buildDataId);
   },
 
-  unSaveBuild: (buildDataId: string) => {
-    useBuildsListStore.getState().removeBuild(buildDataId, "save");
+  unSaveBuild: async (buildDataId: string) => {
+    await useBuildsListStore.getState().removeBuild(buildDataId, "save");
   },
 
   exportBuild: (screenName, buildDataId) => {
@@ -181,11 +177,13 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
 
     // Cherche le premier JSON dans le texte
     const match = clipboardContent.match(/\{[^{}]*\}/);
+    if (!match) {
+      throw new Error("incorrectFormat");
+    }
 
-    if (!match) return null;
     try {
       parsedBuild = JSON.parse(match[0]);
-    } catch (err) {
+    } catch (e) {
       throw new Error("incorrectFormat");
     }
 
@@ -199,10 +197,14 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     if (screenName === "search") {
       get().loadToSearch({ build });
     } else {
-      get().loadBuildCard({ build, name, target: screenName });
+      const isNameFree = useDeckStore.getState().checkNameFree(name);
+      const newName = isNameFree ? name : useGenerateUniqueName(name);
+
+      get().loadBuildCard({ build, name: newName, target: screenName });
+      useDeckStore.getState().setBuildName(build.buildDataId, newName);
+
       if (screenName === "save") {
-        useDeckStore.getState().setBuildName(build.buildDataId, name);
-        useBuildsPersistenceStore.getState().saveBuildInMemory(build, name);
+        useBuildsPersistenceStore.getState().saveBuildInMemory(build, newName);
       }
     }
   },

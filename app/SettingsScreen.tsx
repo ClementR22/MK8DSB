@@ -25,7 +25,7 @@ const SettingsScreen: React.FC = () => {
 
   const handleDeleteAllSavedBuilds = () => {
     deleteAllSavedBuilds();
-    showToast("allSavedBuildsHaveBeenDeleted", "success");
+    showToast("toast:allSavedBuildsHaveBeenDeleted", "success");
   };
 
   // Mémoïsation des handlers DEBUG

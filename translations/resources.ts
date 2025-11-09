@@ -1,6 +1,7 @@
 import enButton from "./locales/en/button.json";
 import enCategories from "./locales/en/categories.json";
 import enElements from "./locales/en/elements.json";
+import enError from "./locales/en/error.json";
 import enHelpSearch from "./locales/en/helpSearch.json";
 import enHelpDisplay from "./locales/en/helpDisplay.json";
 import enHelpSave from "./locales/en/helpSave.json";
@@ -18,6 +19,7 @@ import enTooltip from "./locales/en/tooltip.json";
 import frButton from "./locales/fr/button.json";
 import frCategories from "./locales/fr/categories.json";
 import frElements from "./locales/fr/elements.json";
+import frError from "./locales/fr/error.json";
 import frHelpSearch from "./locales/fr/helpSearch.json";
 import frHelpDisplay from "./locales/fr/helpDisplay.json";
 import frHelpSave from "./locales/fr/helpSave.json";
@@ -37,6 +39,7 @@ export const resources = {
     button: enButton,
     categories: enCategories,
     elements: enElements,
+    error: enError,
     helpSearch: enHelpSearch,
     helpDisplay: enHelpDisplay,
     helpSave: enHelpSave,
@@ -56,6 +59,7 @@ export const resources = {
     button: frButton,
     categories: frCategories,
     elements: frElements,
+    error: frError,
     helpSearch: frHelpSearch,
     helpDisplay: frHelpDisplay,
     helpSave: frHelpSave,

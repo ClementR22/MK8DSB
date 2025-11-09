@@ -21,7 +21,7 @@ const ButtonAddBuild: React.FC<ButtonAddBuildProps> = ({ scrollRef }) => {
     try {
       addNewBuildInDisplay();
     } catch (e) {
-      showToast(e.message, "error");
+      showToast(`error:${e.message}`, "error");
       return; // Ne pas scroller en cas d'erreur
     }
 

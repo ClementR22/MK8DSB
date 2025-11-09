@@ -20,24 +20,24 @@ const ButtonImportBuild: React.FC<ButtonImportBuildProps> = ({ screenName }) => 
       const clipboardContent = await Clipboard.getStringAsync();
       importBuild(clipboardContent, screenName);
       if (screenName === "search") {
-        showToast("statsImported", "success");
+        showToast("toast:statsImported", "success");
       } else {
-        showToast("buildImported", "success");
+        showToast("toast:buildImported", "success");
       }
       useLoadBuildModalStore.getState().setIsLoadBuildModalVisible(false);
     } catch (e) {
       if (e instanceof BuildAlreadyExistsError) {
         // Construction du message avec sécurité
-        const targetMessage = e.target ? ` in ${e.target}` : "";
-        const buildNameMessage = e.buildName ? ` withTheName ${e.buildName}` : "";
+        const targetMessage = e.target ? `|toast:in|toast:${e.target}` : "";
+        const buildNameMessage = e.buildName ? `|toast:withTheName|${e.buildName}` : "";
 
-        const fullMessage = `${e.message}${targetMessage}${buildNameMessage}`;
+        const fullMessage = `error:${e.message}${targetMessage}${buildNameMessage}`;
 
         showToast(fullMessage, "importError");
       } else if (e instanceof NameAlreadyExistsError) {
-        showToast(`${e.message} ${e.buildName}`, "importError");
+        showToast(`error:${e.message}|${e.buildName}`, "importError");
       } else {
-        showToast(e.message, "importError");
+        showToast(`error:${e.message}`, "importError");
       }
     }
   };
