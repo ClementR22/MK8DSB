@@ -4,11 +4,7 @@ import ToastManager, { ToastType } from "./ToastManager";
 function showToast(messageKey: string, type?: ToastType) {
   const keysWithNs = messageKey.split("|");
 
-  const translatedParts = keysWithNs.map((keyWithNs) => {
-    console.log("keyWithNs", keyWithNs);
-    const translated = i18n.t(keyWithNs);
-    return translated;
-  });
+  const translatedParts = keysWithNs.map((keyWithNs) => (keyWithNs.includes(":") ? i18n.t(keyWithNs) : keyWithNs));
 
   let prefix = "";
   if (type === "error") {
