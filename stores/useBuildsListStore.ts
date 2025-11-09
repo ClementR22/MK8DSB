@@ -17,6 +17,7 @@ import { deleteAllSavedBuildsInMemory } from "@/utils/asyncStorageOperations";
 import { getRandomDataId } from "@/utils/getRandomDataId";
 import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
 import { t } from "i18next";
+import { useGenerateUniqueName } from "@/hooks/useGenerateUniqueName";
 
 export const MAX_NUMBER_BUILDS_DISPLAY = 10;
 export const MAX_NUMBER_BUILDS_SAVE = 30;
@@ -216,7 +217,10 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
       useDeckStore.getState().updateBuildDataId(formerBuildDataId, newBuildDataId);
     } else {
       // screenName == "display"
-      const newName = `${name} ${t("text:modified")}`;
+      let nameM = `${name} ${t("text:modified")}`;
+      const isNameFree = useDeckStore.getState().checkNameFree(nameM);
+      const newName = isNameFree ? nameM : useGenerateUniqueName(nameM);
+
       useDeckStore.getState().setBuildName(newBuildDataId, newName);
     }
   },

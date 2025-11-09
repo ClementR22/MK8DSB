@@ -80,8 +80,9 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
 
     if (sameBuild) {
       const sameBuildName = useDeckStore.getState().deck.get(sameBuild.buildDataId).name;
-      throw new BuildAlreadyExistsError(target, sameBuildName);
-      // la 2e props buildName est donnée seulement si providedName est défini ie seulement si on est dans le cas d'une importation
+      throw new BuildAlreadyExistsError(target, providedName && sameBuildName);
+      // la 2e props buildName est donnée seulement si providedName est défini càd
+      // seulement si on est dans le cas d'une importation
     }
 
     // vérification de la limit de builds
