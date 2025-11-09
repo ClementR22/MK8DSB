@@ -1,135 +1,63 @@
-import React, { useCallback, useMemo } from "react";
-import { View, StyleSheet, Pressable } from "react-native";
-import useThemeStore from "@/stores/useThemeStore";
-import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
-import { getBonusColor } from "@/utils/getBonusColor";
-import useGeneralStore from "@/stores/useGeneralStore";
-import { BORDER_RADIUS_STAT_GAUGE_CONTAINER, HEIGHT_STAT_GAUGE_CONTAINER } from "@/utils/designTokens";
+import React from "react";
+import { StyleSheet } from "react-native";
 import Text from "@/primitiveComponents/Text";
-import Tooltip from "../Tooltip";
 import { StatName } from "@/data/stats/statsTypes";
 import { statNamesCompact } from "@/data/stats/statsData";
+import Tooltip from "../Tooltip";
 
 interface StatGaugeContainerProps {
-  name: StatName;
   value: number;
-  statFilterNumber?: number;
-  chosenValue?: number;
+  name?: StatName;
   isInBuildCard?: boolean;
-  bonusEnabled?: boolean;
+  scrollToThisBuildCard?: () => void;
   children: React.ReactElement;
 }
 
-const WIDTH_TEXT = 46;
-
 const StatGaugeContainer = ({
-  name,
   value,
-  statFilterNumber = 0,
-  chosenValue,
+  name,
   isInBuildCard = false,
-  bonusEnabled = false,
+  scrollToThisBuildCard,
   children,
 }: StatGaugeContainerProps) => {
-  const theme = useThemeStore((state) => state.theme);
-
-  const showAllStatGaugeBonuses = bonusEnabled ? useGeneralStore((state) => state.showAllStatGaugeBonuses) : false;
-  const toggleAllStatGaugeBonuses = useGeneralStore((state) => state.toggleAllStatGaugeBonuses);
-
-  // Bonus trouvé
-  const { displayedValue, bonusColor } = useMemo(() => {
-    let bonusFound = undefined;
-
-    if (chosenValue !== undefined) {
-      bonusFound = value - chosenValue;
-    }
-
-    let displayedValue: number | string;
-    if (!showAllStatGaugeBonuses) {
-      displayedValue = value;
-    } else {
-      if (bonusFound === undefined) {
-        displayedValue = "?";
-      } else if (bonusFound === 0) {
-        displayedValue = "=";
-      } else if (bonusFound > 0) {
-        displayedValue = `+${bonusFound}`;
-      } else {
-        displayedValue = bonusFound;
-      }
-    }
-
-    const bonusColor = getBonusColor(bonusFound);
-
-    return { displayedValue, bonusColor };
-  }, [value, chosenValue, showAllStatGaugeBonuses]);
-
-  // Handler mémoïsé pour le press
-  const handlePress = useCallback(() => {
-    if (!bonusEnabled) return;
-    toggleAllStatGaugeBonuses();
-  }, [bonusEnabled, toggleAllStatGaugeBonuses]);
-
   return (
     <Tooltip
       tooltipText={name}
-      childStyleInner={[
-        styles.container,
-        {
-          backgroundColor: theme.surface,
-          borderColor: getStatSliderBorderColor(statFilterNumber, theme),
-        },
-      ]}
-      onPress={handlePress}
+      childStyleOuter={styles.containerOuter}
+      childStyleInner={styles.containerInner}
+      onPress={scrollToThisBuildCard}
     >
-      <View
-        style={[
-          styles.textWrapper,
-          {
-            width: WIDTH_TEXT,
-          },
-        ]}
-      >
-        <Text role="label" size="large" namespace="stats">
+      {name && (
+        <Text
+          role="label"
+          size="large"
+          style={styles[isInBuildCard ? "nameBuildCard" : "name"]}
+          namespace="stats"
+          textAlign="center"
+        >
           {statNamesCompact[name]}
         </Text>
-      </View>
-
-      {children}
-
-      {isInBuildCard && (
-        <View
-          style={[
-            styles.textWrapper,
-            {
-              width: WIDTH_TEXT,
-            },
-          ]}
-        >
-          <Text role="label" size="large" color={showAllStatGaugeBonuses && bonusColor} namespace="not">
-            {displayedValue}
-          </Text>
-        </View>
       )}
+      {children}
+      <Text role="label" size="large" style={styles[isInBuildCard ? "valueBuildCard" : "value"]} namespace="not">
+        {value}
+      </Text>
     </Tooltip>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    height: HEIGHT_STAT_GAUGE_CONTAINER,
+  containerOuter: {
     width: "100%",
+  },
+  containerInner: {
     flexDirection: "row",
-    padding: 3,
-    borderRadius: BORDER_RADIUS_STAT_GAUGE_CONTAINER,
-    borderWidth: 2,
     alignItems: "center",
   },
-  textWrapper: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-  },
+  name: { width: 45, marginLeft: 3, marginRight: 8 },
+  value: { width: 45, marginLeft: 13 },
+  nameBuildCard: { width: 43, marginRight: 4 },
+  valueBuildCard: { width: 43, marginLeft: 10 },
 });
 
 export default React.memo(StatGaugeContainer);

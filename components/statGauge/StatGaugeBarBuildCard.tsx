@@ -5,13 +5,13 @@ import useThemeStore from "@/stores/useThemeStore";
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
-interface StatGaugeBuildCardBarProps {
+interface StatGaugeBarBuildCardProps {
   obtainedValue: number;
   chosenValue?: number;
   isInSearchScreen?: boolean;
 }
 
-const StatGaugeBuildCardBar: React.FC<StatGaugeBuildCardBarProps> = ({
+const StatGaugeBarBuildCard: React.FC<StatGaugeBarBuildCardProps> = ({
   obtainedValue,
   chosenValue,
   isInSearchScreen = false,
@@ -24,7 +24,7 @@ const StatGaugeBuildCardBar: React.FC<StatGaugeBuildCardBarProps> = ({
 
   // Memoized calculations
   const gaugeData = useMemo(() => {
-    let isBonus;
+    let isBonus: boolean;
     if (chosenValue === undefined || obtainedValue === chosenValue) {
       isBonus = undefined;
     } else {
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(StatGaugeBuildCardBar);
+export default React.memo(StatGaugeBarBuildCard);

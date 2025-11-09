@@ -12,17 +12,15 @@ import BoxContainer from "@/primitiveComponents/BoxContainer";
 import useGeneralStore from "@/stores/useGeneralStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import StatGaugeContainer from "@/components/statGauge/StatGaugeContainer";
-import StatGaugeBar from "@/components/statGauge/StatGaugeBar";
-import { BORDER_RADIUS_CONTAINER_LOWEST, PADDING_SEARCH_CONTAINER } from "@/utils/designTokens";
+import { BORDER_RADIUS_CONTAINER_LOWEST, PADDING_SEARCH_CONTAINER, GAP_STAT_GAUGE_GROUP } from "@/utils/designTokens";
 import ScrollViewScreen, { ScrollViewScreenHandles } from "@/components/ScrollViewScreen";
 import { box_shadow_z1 } from "@/components/styles/shadow";
 import Text from "@/primitiveComponents/Text";
 import { BuildCardsScrollProvider } from "@/contexts/BuildCardsScrollContext";
 import useStatsStore from "@/stores/useStatsStore";
 import useBuildsListStore from "@/stores/useBuildsListStore";
-import useDeckStore from "@/stores/useDeckStore";
-import Button from "@/primitiveComponents/Button";
+import StatGaugeContainer from "@/components/statGauge/StatGaugeContainer";
+import StatGaugeBar from "@/components/statGauge/StatGaugeBar";
 
 const SearchBuildScreen: React.FC = () => {
   const scrollviewBuildsCardsRef = useRef<BuildCardsContainerHandles>(null);
@@ -32,24 +30,19 @@ const SearchBuildScreen: React.FC = () => {
   const chosenStats = useStatsStore((state) => state.chosenStats);
   const buildsListFound = useBuildsListStore((state) => state.buildsListFound);
 
-  const [isReduceStatSliders, setIsReduceStatSliders] = useState(false);
-  const toggleReduceStatSliders = useCallback(() => {
-    setIsReduceStatSliders((prev) => !prev);
+  const [isSliderCompact, setIsSliderCompact] = useState(false);
+  const toggleSliderCompact = useCallback(() => {
+    setIsSliderCompact((prev) => !prev);
   }, []);
 
   const renderedSliders = useMemo(() => {
     return chosenStats.map((stat) => {
       if (!stat.checked) return null;
 
-      if (isReduceStatSliders) {
+      if (isSliderCompact) {
         return (
-          <StatGaugeContainer
-            key={`statSlider-${stat.name}-compact`}
-            name={stat.name}
-            value={stat.value}
-            statFilterNumber={stat.statFilterNumber}
-          >
-            <StatGaugeBar value={stat.value} contextId="stat-gauge-compact" />
+          <StatGaugeContainer key={`statSlider-${stat.name}-compact`} name={stat.name} value={stat.value}>
+            <StatGaugeBar value={stat.value} />
           </StatGaugeContainer>
         );
       } else
@@ -62,9 +55,8 @@ const SearchBuildScreen: React.FC = () => {
           />
         );
     });
-  }, [chosenStats, isReduceStatSliders]);
+  }, [chosenStats, isSliderCompact]);
 
-  const deck = useDeckStore((state) => state.deck);
   return (
     <ScreenProvider screenName="search">
       <ResultStatsProvider>
@@ -73,17 +65,14 @@ const SearchBuildScreen: React.FC = () => {
             borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}
             padding={PADDING_SEARCH_CONTAINER}
             boxShadow={box_shadow_z1}
+            gap={isSliderCompact ? GAP_STAT_GAUGE_GROUP : undefined}
           >
-            <Button tooltipText="ok" onPress={() => console.log(deck)}>
-              ok
-            </Button>
-
             <View style={styles.searchContainerPressablesContainer}>
               <ButtonIcon
-                onPress={toggleReduceStatSliders}
-                iconName={isReduceStatSliders ? "chevron-down" : "chevron-up"}
+                onPress={toggleSliderCompact}
+                iconName={isSliderCompact ? "chevron-down" : "chevron-up"}
                 iconType={IconType.MaterialCommunityIcons}
-                tooltipText={isReduceStatSliders ? "DevelopSliders" : "ReduceSliders"}
+                tooltipText={isSliderCompact ? "DevelopSliders" : "ReduceSliders"}
               />
 
               <View style={styles.headerTextContainer}>

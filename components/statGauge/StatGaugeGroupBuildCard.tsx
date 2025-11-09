@@ -2,16 +2,17 @@ import React, { useMemo } from "react";
 import { useScreen } from "@/contexts/ScreenContext";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import { StyleSheet, View, ViewStyle } from "react-native";
-import StatGaugeContainer from "./StatGaugeContainer";
-import StatGaugeBuildCardBar from "./StatGaugeBuildCardBar";
+import StatGaugeBarBuildCard from "./StatGaugeBarBuildCard";
 import useStatsStore from "@/stores/useStatsStore";
+import StatGaugeContainer from "./StatGaugeContainer";
+import { GAP_STAT_GAUGE_GROUP } from "@/utils/designTokens";
 
-interface StatGaugeBuildCardsContainerProps {
+interface StatGaugeGroupBuildCardProps {
   stats: number[];
   containerStyle: ViewStyle;
 }
 
-const StatGaugeBuildCardsContainer: React.FC<StatGaugeBuildCardsContainerProps> = ({ stats, containerStyle }) => {
+const StatGaugeGroupBuildCard: React.FC<StatGaugeGroupBuildCardProps> = ({ stats, containerStyle }) => {
   const screenName = useScreen();
   const isInSearchScreen = screenName === "search";
   const { resultStats } = useResultStats();
@@ -35,15 +36,8 @@ const StatGaugeBuildCardsContainer: React.FC<StatGaugeBuildCardsContainerProps> 
       }
 
       return (
-        <StatGaugeContainer
-          key={stat.name}
-          name={stat.name}
-          value={statValue}
-          isInBuildCard={true}
-          chosenValue={chosenValue}
-          bonusEnabled={isInSearchScreen}
-        >
-          <StatGaugeBuildCardBar
+        <StatGaugeContainer key={stat.name} name={stat.name} value={statValue} isInBuildCard={true}>
+          <StatGaugeBarBuildCard
             obtainedValue={statValue}
             chosenValue={chosenValue}
             isInSearchScreen={isInSearchScreen}
@@ -57,13 +51,16 @@ const StatGaugeBuildCardsContainer: React.FC<StatGaugeBuildCardsContainerProps> 
     return null;
   }
 
-  return <View style={[styles.container, containerStyle]}>{sliderContent}</View>;
+  return <View style={[containerStyle, styles.container]}>{sliderContent}</View>;
 };
 
 const styles = StyleSheet.create({
   container: {
-    gap: 8,
+    gap: GAP_STAT_GAUGE_GROUP,
+    padding: 0,
+    paddingVertical: 7,
+    paddingLeft: 4,
   },
 });
 
-export default React.memo(StatGaugeBuildCardsContainer);
+export default React.memo(StatGaugeGroupBuildCard);

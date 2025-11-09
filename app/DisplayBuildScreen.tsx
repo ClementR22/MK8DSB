@@ -9,7 +9,7 @@ import ScreenPressablesContainer from "@/components/screenPressablesContainer/Sc
 import ButtonAddBuild from "@/components/managingBuildsButton/ButtonAddBuild";
 import ButtonLoadBuild from "@/components/managingBuildsButton/ButtonLoadBuild";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
-import StatGaugeComparesContainer from "@/components/statGaugeCompare/StatGaugeComparesContainer";
+import StatGaugeGroupCompare from "@/components/statGaugeCompare/StatGaugeGroupCompare";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
 import StatSelector from "@/components/statSelector/StatSelector";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
@@ -107,7 +107,7 @@ const DisplayBuildScreen = () => {
               <StatSelector triggerButtonText="statsToCompare" tooltipText="statsToCompare" />
             </View>
 
-            <StatGaugeComparesContainer buildsColorsMap={buildsColorsMap} />
+            <StatGaugeGroupCompare buildsColorsMap={buildsColorsMap} />
           </BuildCardsScrollProvider>
         </ScrollViewScreen>
       </ResultStatsProvider>

@@ -1,63 +1,44 @@
-import { MAX_STAT_VALUE } from "@/constants/constants";
-import { useGaugeMetrics } from "@/hooks/useGaugeMetrics";
-import { useStatGaugeStyles } from "@/hooks/useStatGaugeStyles";
-import Text from "@/primitiveComponents/Text";
-import { ContextId } from "@/stores/useGaugeStore";
 import useThemeStore from "@/stores/useThemeStore";
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import { BORDER_RADIUS_INF } from "@/utils/designTokens";
+import React, { memo } from "react";
+import { DimensionValue, StyleSheet, View } from "react-native";
 
 interface StatGaugeBarProps {
   value: number;
-  contextId: ContextId;
+  color?: string;
 }
 
-const StatGaugeBar = ({ value, contextId }: StatGaugeBarProps) => {
+const MAX_STAT_VALUE = 6;
+
+const StatGaugeBar: React.FC<StatGaugeBarProps> = ({ value, color }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const { getWidth, handleGaugeLayout } = useGaugeMetrics(contextId);
-
-  const showValueInside = value >= MAX_STAT_VALUE / 4;
-
-  const stylesDynamic = useStatGaugeStyles();
+  // Largeur du segment intérieur, clampée et calculée une seule fois par changement de value
+  const clampedValue = Math.min(Math.max(value, 0), MAX_STAT_VALUE);
+  const innerFillWidth = `${(clampedValue / MAX_STAT_VALUE) * 100}%` as DimensionValue;
 
   return (
-    <View style={stylesDynamic.emptyContainer} onLayout={handleGaugeLayout}>
-      {/* Fill principal */}
+    <View style={[styles.sliderTrack, { backgroundColor: theme.surface_container_highest }]}>
       <View
-        style={[
-          stylesDynamic.thick,
-          {
-            backgroundColor: theme.primary,
-            width: getWidth(value),
-          },
-        ]}
-      >
-        {showValueInside && (
-          <Text role="label" size="large" inverse style={styles.valueLabelInsidePosition} namespace="not">
-            {value}
-          </Text>
-        )}
-      </View>
-
-      {/* Valeur en dehors de la barre */}
-      {!showValueInside && (
-        <Text role="label" size="large" style={styles.valueLabelOutsidePosition} namespace="not">
-          {value}
-        </Text>
-      )}
+        style={StyleSheet.flatten([
+          styles.trackSegment,
+          { width: innerFillWidth, backgroundColor: color ?? theme.primary },
+        ])}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  valueLabelInsidePosition: {
-    position: "absolute",
-    right: 7,
+  trackSegment: {
+    height: "100%",
   },
-  valueLabelOutsidePosition: {
-    marginLeft: 7,
+  sliderTrack: {
+    flex: 1,
+    height: 13,
+    borderRadius: BORDER_RADIUS_INF,
+    overflow: "hidden",
   },
 });
 
-export default React.memo(StatGaugeBar);
+export default memo(StatGaugeBar);

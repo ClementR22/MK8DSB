@@ -9,6 +9,8 @@ import StatGaugeContainer from "../statGauge/StatGaugeContainer";
 import StatGaugeBar from "../statGauge/StatGaugeBar";
 import Text from "@/primitiveComponents/Text";
 import { StatName } from "@/data/stats/statsTypes";
+import StatGaugeContainerElementCard from "../statGaugeElementCard/statGaugeContainerElementCard";
+import StatGaugeBarElementCard from "../statGaugeElementCard/StatGaugeBarElementCard";
 
 type ElementStat = {
   name: StatName;
@@ -26,13 +28,13 @@ const ElementCard: React.FC<ElementCardProps> = memo(({ name, stats, category })
 
   const renderStat = useCallback(
     ({ name, value }: ElementStat) => (
-      <StatGaugeContainer key={name} name={name} value={value}>
+      <StatGaugeContainerElementCard key={name} name={name} value={value}>
         {category !== "character" ? (
           <StatGaugeRelativeBar value={value} maxValue={maxValues[category]} />
         ) : (
-          <StatGaugeBar value={value} contextId="stat-gauge-gallery" />
+          <StatGaugeBarElementCard value={value} />
         )}
-      </StatGaugeContainer>
+      </StatGaugeContainerElementCard>
     ),
     [maxValues, category]
   );
@@ -51,7 +53,7 @@ const ElementCard: React.FC<ElementCardProps> = memo(({ name, stats, category })
         {name}
       </Text>
 
-      <View style={styles.flatListContent}>{stats.map((stat) => renderStat(stat))}</View>
+      <View style={styles.statGaugeGroup}>{stats.map((stat) => renderStat(stat))}</View>
     </View>
   );
 });
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#EEE", // Light separator line
   },
-  flatListContent: {
+  statGaugeGroup: {
     paddingVertical: LIST_ITEM_SPACING * 2, // Padding for lists
     paddingHorizontal: LIST_ITEM_SPACING * 2, // Consistent padding
     gap: 1,

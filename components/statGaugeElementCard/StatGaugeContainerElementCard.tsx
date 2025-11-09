@@ -1,0 +1,135 @@
+import React, { useCallback, useMemo } from "react";
+import { View, StyleSheet, Pressable } from "react-native";
+import useThemeStore from "@/stores/useThemeStore";
+import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
+import { getBonusColor } from "@/utils/getBonusColor";
+import useGeneralStore from "@/stores/useGeneralStore";
+import { BORDER_RADIUS_STAT_GAUGE_CONTAINER, HEIGHT_STAT_GAUGE_CONTAINER } from "@/utils/designTokens";
+import Text from "@/primitiveComponents/Text";
+import Tooltip from "../Tooltip";
+import { StatName } from "@/data/stats/statsTypes";
+import { statNamesCompact } from "@/data/stats/statsData";
+
+interface StatGaugeContainerElementCardProps {
+  name: StatName;
+  value: number;
+  statFilterNumber?: number;
+  chosenValue?: number;
+  isInBuildCard?: boolean;
+  bonusEnabled?: boolean;
+  children: React.ReactElement;
+}
+
+const WIDTH_TEXT = 46;
+
+const StatGaugeContainerElementCard = ({
+  name,
+  value,
+  statFilterNumber = 0,
+  chosenValue,
+  isInBuildCard = false,
+  bonusEnabled = false,
+  children,
+}: StatGaugeContainerElementCardProps) => {
+  const theme = useThemeStore((state) => state.theme);
+
+  const showAllStatGaugeBonuses = bonusEnabled ? useGeneralStore((state) => state.showAllStatGaugeBonuses) : false;
+  const toggleAllStatGaugeBonuses = useGeneralStore((state) => state.toggleAllStatGaugeBonuses);
+
+  // Bonus trouvé
+  const { displayedValue, bonusColor } = useMemo(() => {
+    let bonusFound = undefined;
+
+    if (chosenValue !== undefined) {
+      bonusFound = value - chosenValue;
+    }
+
+    let displayedValue: number | string;
+    if (!showAllStatGaugeBonuses) {
+      displayedValue = value;
+    } else {
+      if (bonusFound === undefined) {
+        displayedValue = "?";
+      } else if (bonusFound === 0) {
+        displayedValue = "=";
+      } else if (bonusFound > 0) {
+        displayedValue = `+${bonusFound}`;
+      } else {
+        displayedValue = bonusFound;
+      }
+    }
+
+    const bonusColor = getBonusColor(bonusFound);
+
+    return { displayedValue, bonusColor };
+  }, [value, chosenValue, showAllStatGaugeBonuses]);
+
+  // Handler mémoïsé pour le press
+  const handlePress = useCallback(() => {
+    if (!bonusEnabled) return;
+    toggleAllStatGaugeBonuses();
+  }, [bonusEnabled, toggleAllStatGaugeBonuses]);
+
+  return (
+    <Tooltip
+      tooltipText={name}
+      childStyleInner={[
+        styles.container,
+        {
+          backgroundColor: theme.surface,
+          borderColor: getStatSliderBorderColor(statFilterNumber, theme),
+        },
+      ]}
+      onPress={handlePress}
+    >
+      <View
+        style={[
+          styles.textWrapper,
+          {
+            width: WIDTH_TEXT,
+          },
+        ]}
+      >
+        <Text role="label" size="large" namespace="stats">
+          {statNamesCompact[name]}
+        </Text>
+      </View>
+
+      {children}
+
+      {isInBuildCard && (
+        <View
+          style={[
+            styles.textWrapper,
+            {
+              width: WIDTH_TEXT,
+            },
+          ]}
+        >
+          <Text role="label" size="large" color={showAllStatGaugeBonuses && bonusColor} namespace="not">
+            {displayedValue}
+          </Text>
+        </View>
+      )}
+    </Tooltip>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    height: HEIGHT_STAT_GAUGE_CONTAINER,
+    width: "100%",
+    flexDirection: "row",
+    padding: 3,
+    borderRadius: BORDER_RADIUS_STAT_GAUGE_CONTAINER,
+    borderWidth: 2,
+    alignItems: "center",
+  },
+  textWrapper: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+  },
+});
+
+export default React.memo(StatGaugeContainerElementCard);

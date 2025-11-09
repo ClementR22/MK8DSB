@@ -1,22 +1,23 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import StatGaugeCompareBar from "./StatGaugeCompareBar";
+import StatGaugeContainer from "../statGauge/StatGaugeContainer";
 import { StatName } from "@/data/stats/statsTypes";
 import { useBuildCardStyle } from "@/hooks/useBuildCardStyle";
 import Text from "@/primitiveComponents/Text";
 import { useBuildCardsScroll } from "@/contexts/BuildCardsScrollContext";
+import StatGaugeBar from "../statGauge/StatGaugeBar";
 export interface SetIdAndStatValue {
   id: string;
   value: number;
   color: string;
 }
 
-interface StatGaugeCompareProps {
+interface StatGaugeContainerCompareProps {
   name: StatName;
   buildsIdAndValue: SetIdAndStatValue[];
 }
 
-const StatGaugeCompare: React.FC<StatGaugeCompareProps> = ({ buildsIdAndValue, name }) => {
+const StatGaugeContainerCompare: React.FC<StatGaugeContainerCompareProps> = ({ buildsIdAndValue, name }) => {
   const { setCardStyle } = useBuildCardStyle("100%");
   const { scrollToBuildCard } = useBuildCardsScroll();
 
@@ -28,12 +29,9 @@ const StatGaugeCompare: React.FC<StatGaugeCompareProps> = ({ buildsIdAndValue, n
 
       <View style={styles.statBarsContainer}>
         {buildsIdAndValue.map(({ id, value, color }) => (
-          <StatGaugeCompareBar
-            key={id}
-            value={value}
-            color={color}
-            scrollToThisBuildCard={() => scrollToBuildCard(id)}
-          />
+          <StatGaugeContainer key={id} value={value} scrollToThisBuildCard={() => scrollToBuildCard(id)}>
+            <StatGaugeBar value={value} color={color}></StatGaugeBar>
+          </StatGaugeContainer>
         ))}
       </View>
     </View>
@@ -41,9 +39,9 @@ const StatGaugeCompare: React.FC<StatGaugeCompareProps> = ({ buildsIdAndValue, n
 };
 
 const styles = StyleSheet.create({
-  container: { paddingTop: 3, paddingRight: 0, borderRightWidth: 0 },
+  container: { padding: 7, paddingTop: 3, paddingRight: 0 },
   textWrapper: {
-    marginBottom: 5, // Espacement entre le titre et les barres de stat
+    marginBottom: 4, // Espacement entre le titre et les barres de stat
   },
   statBarsContainer: {
     width: "100%",
@@ -51,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(StatGaugeCompare);
+export default React.memo(StatGaugeContainerCompare);

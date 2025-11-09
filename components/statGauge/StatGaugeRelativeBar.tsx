@@ -20,7 +20,7 @@ const StatGaugeRelativeBar = ({ value, maxValue = 6 }: StatGaugeRelativeBarProps
 
   const showValueInside = Math.abs(value) > maxValue / 2;
 
-  const { emptyContainer, thick } = useStatGaugeStyles();
+  const { emptyContainer, thick } = useStatGaugeStyles("100%");
 
   return (
     <View style={emptyContainer} onLayout={handleGaugeLayout}>

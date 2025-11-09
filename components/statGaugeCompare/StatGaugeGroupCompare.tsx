@@ -2,18 +2,18 @@ import React, { useMemo } from "react";
 import useThemeStore from "@/stores/useThemeStore";
 import { useResultStats } from "@/contexts/ResultStatsContext";
 import { statNames } from "@/data/stats/statsData";
-import StatGaugeCompare from "./StatGaugeCompare";
+import StatGaugeContainerCompare from "./StatGaugeContainerCompare";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import { box_shadow_z1 } from "../styles/shadow";
 import { BORDER_RADIUS_CONTAINER_LOWEST } from "@/utils/designTokens";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
 
-interface StatGaugeComparesContainerProps {
+interface StatGaugeGroupCompareProps {
   buildsColorsMap: Map<string, string>;
 }
 
-const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({ buildsColorsMap }) => {
+const StatGaugeGroupCompare: React.FC<StatGaugeGroupCompareProps> = ({ buildsColorsMap }) => {
   const theme = useThemeStore((state) => state.theme);
   const { resultStats } = useResultStats();
   const buildsListDisplayed = useBuildsListStore((state) => state.buildsListDisplayed);
@@ -39,10 +39,10 @@ const StatGaugeComparesContainer: React.FC<StatGaugeComparesContainerProps> = ({
   return (
     <BoxContainer gap={7} boxShadow={box_shadow_z1} borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}>
       {data.map(({ name, buildsIdAndValueWithColor }) => {
-        return <StatGaugeCompare key={name} name={name} buildsIdAndValue={buildsIdAndValueWithColor} />;
+        return <StatGaugeContainerCompare key={name} name={name} buildsIdAndValue={buildsIdAndValueWithColor} />;
       })}
     </BoxContainer>
   );
 };
 
-export default React.memo(StatGaugeComparesContainer);
+export default React.memo(StatGaugeGroupCompare);

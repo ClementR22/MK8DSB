@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal from "./HelpModal";
-import StatGaugeCompare from "../statGaugeCompare/StatGaugeCompare";
+import StatGaugeContainerCompare from "../statGaugeCompare/StatGaugeContainerCompare";
 import { PAGES_NAVIGATOR_DOTS_BUTTON_SIZE } from "../elementPickerCompact/PagesNavigator";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
 import Text from "@/primitiveComponents/Text";
@@ -43,7 +43,7 @@ const HelpDisplayBuildScreen = () => {
         </HelpStepItem>
 
         <HelpStepItem key={3} stepChar="3" title="how_to_use_comparator.step.view_differences" namespace="helpDisplay">
-          <StatGaugeCompare
+          <StatGaugeContainerCompare
             name="speedGround"
             buildsIdAndValue={[
               { id: "1", value: 5, color: "#E74C3C" },

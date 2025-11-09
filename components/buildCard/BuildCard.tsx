@@ -3,7 +3,6 @@ import { LayoutChangeEvent, View, StyleSheet } from "react-native";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import BuildCardActionButtons from "./BuildCardActionButtons";
 import BuildImagesContainer from "./BuildImagesContainer";
-import StatGaugeBuildCardsContainer from "../statGauge/StatGaugeBuildCardsContainer";
 import BuildCardHeader from "./BuildCardHeader";
 import { useBuildCardStyle } from "@/hooks/useBuildCardStyle";
 import { BUILD_CARD_WIDTH } from "@/utils/designTokens";
@@ -11,6 +10,7 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import { useBuildCardConfig } from "@/hooks/useBuildCardConfig";
 import { buildsDataMap } from "@/data/builds/buildsData";
 import useDeckStore from "@/stores/useDeckStore";
+import StatGaugeGroupBuildCard from "../statGauge/StatGaugeGroupBuildCard";
 
 interface BuildCardProps {
   buildDataId: string;
@@ -82,9 +82,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
           />
         )}
       </View>
-      {config.showStatSliderResult && (
-        <StatGaugeBuildCardsContainer stats={buildData.stats} containerStyle={setCardStyle} />
-      )}
+      {config.showStatSliderResult && <StatGaugeGroupBuildCard stats={buildData.stats} containerStyle={setCardStyle} />}
     </View>
   );
 };
