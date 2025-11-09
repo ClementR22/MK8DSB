@@ -33,7 +33,7 @@ const BuildNameInputContent: React.FC<BuildNameInputContentProps> = ({
         style={[
           styles.textInput,
           {
-            backgroundColor: theme.surface_container,
+            backgroundColor: theme.surface_container_high,
             color: theme.on_surface,
           },
         ]}
