@@ -28,20 +28,13 @@ interface TableRowProps {
   disabled: boolean;
   onToggleStat: (statName: string, columnName: ColumnName) => void;
   statsMap: Map<string, Map<string, boolean>>;
-  color: string;
 }
 
-const TableRow: React.FC<TableRowProps> = ({
-  statName,
-  columns,
-  labelFlex,
-  disabled,
-  onToggleStat,
-  statsMap,
-  color,
-}) => {
+const TableRow: React.FC<TableRowProps> = ({ statName, columns, labelFlex, disabled, onToggleStat, statsMap }) => {
+  const theme = useThemeStore((state) => state.theme);
+
   return (
-    <View style={styles.row}>
+    <Pressable style={styles.row}>
       <View style={[styles.cell, { flex: labelFlex }]}>
         <Text role="title" size="small" namespace="stats">
           {statName}
@@ -58,12 +51,12 @@ const TableRow: React.FC<TableRowProps> = ({
               value={isChecked}
               disabled={isDisabled}
               onValueChange={() => onToggleStat(statName, columnName)}
-              color={color}
+              color={theme.primary}
             />
           </View>
         );
       })}
-    </View>
+    </Pressable>
   );
 };
 
@@ -95,7 +88,6 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleSt
         disabled={disabled}
         onToggleStat={onToggleStat}
         statsMap={statsMap}
-        color={theme.primary}
       />
     ),
     [columns, labelFlex, disabled, onToggleStat, statsMap]
@@ -104,7 +96,12 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleSt
   return (
     <View style={[styles.tableWrapper, { borderColor: theme.outline_variant }]}>
       {/* Header */}
-      <View style={[styles.header, { borderColor: theme.outline_variant }]}>
+      <View
+        style={[
+          styles.header,
+          { borderColor: theme.outline_variant, backgroundColor: theme.surface_container_highest },
+        ]}
+      >
         <View style={[styles.headerCell, { flex: labelFlex }]}>
           <Text role="title" size="small" namespace="not">
             {" "}
@@ -129,17 +126,14 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleSt
 
 const styles = StyleSheet.create({
   tableWrapper: {
-    borderTopWidth: 2,
     borderBottomWidth: 2,
     borderRadius: BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,
     overflow: "hidden",
   },
   header: {
     flexDirection: "row",
-    borderBottomWidth: 1,
     height: 32,
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
     paddingLeft: 12,
   },
   headerCell: {
