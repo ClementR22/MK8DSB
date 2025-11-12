@@ -6,6 +6,7 @@ import useThemeStore from "@/stores/useThemeStore";
 import Text from "@/primitiveComponents/Text";
 import { BORDER_RADIUS_MODAL_CHILDREN_CONTAINER } from "@/utils/designTokens";
 import Checkbox from "expo-checkbox";
+import { StatName } from "@/data/stats/statsTypes";
 
 type CheckList = ChosenStat[] | ResultStat[];
 export type ColumnName = "chosenStats" | "resultStats";
@@ -17,69 +18,81 @@ export type Column = {
 
 interface DoubleEntryTableProps {
   columns: Column[];
-  onToggleStat: (statName: string, columnName: ColumnName) => void;
+  onToggleStat: (statName: StatName, columnName: ColumnName) => void;
   disabled: boolean;
 }
 
 interface TableRowProps {
-  statName: string;
+  statName: StatName;
   columns: Column[];
   labelFlex: number;
   disabled: boolean;
-  onToggleStat: (statName: string, columnName: ColumnName) => void;
-  statsMap: Map<string, Map<string, boolean>>;
+  onToggleStat: (statName: StatName, columnName: ColumnName) => void;
+  statsMap: Map<ColumnName, Map<StatName, boolean>>;
 }
 
-const TableRow: React.FC<TableRowProps> = ({ statName, columns, labelFlex, disabled, onToggleStat, statsMap }) => {
-  const theme = useThemeStore((state) => state.theme);
+const TableRow = React.memo(
+  ({ statName, columns, labelFlex, disabled, onToggleStat, statsMap }: TableRowProps) => {
+    const theme = useThemeStore((state) => state.theme);
 
-  return (
-    <Pressable style={styles.row}>
-      <View style={[styles.cell, { flex: labelFlex }]}>
-        <Text role="title" size="small" namespace="stats">
-          {statName}
-        </Text>
-      </View>
+    return (
+      <Pressable style={styles.row}>
+        <View style={[styles.cell, { flex: labelFlex }]}>
+          <Text role="title" size="small" namespace="stats">
+            {statName}
+          </Text>
+        </View>
 
-      {columns.map(({ columnName }) => {
-        const isChecked = statsMap.get(columnName)?.get(statName) ?? false;
-        const isDisabled = columnName === "resultStats" && disabled;
+        {columns.map(({ columnName }) => {
+          const isChecked = statsMap.get(columnName)?.get(statName) ?? false;
+          const isDisabled = columnName === "resultStats" && disabled;
 
-        return (
-          <View key={columnName + statName} style={[styles.cell, styles.checkboxCell]}>
-            <Checkbox
-              value={isChecked}
-              disabled={isDisabled}
-              onValueChange={() => onToggleStat(statName, columnName)}
-              color={theme.primary}
-            />
-          </View>
-        );
-      })}
-    </Pressable>
-  );
-};
+          return (
+            <View key={`${columnName}-${statName}`} style={[styles.cell, styles.checkboxCell]}>
+              <Checkbox
+                value={isChecked}
+                disabled={isDisabled}
+                onValueChange={() => onToggleStat(statName, columnName)}
+                color={theme.primary}
+              />
+            </View>
+          );
+        })}
+      </Pressable>
+    );
+  },
+  (prev, next) => {
+    // Re-render seulement si checked de cette ligne change
+    return next.columns.every(
+      ({ columnName }) =>
+        prev.statsMap.get(columnName)?.get(prev.statName) === next.statsMap.get(columnName)?.get(next.statName)
+    );
+  }
+);
 
 TableRow.displayName = "TableRow";
 
 const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleStat, disabled }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const rowNames = useMemo(() => columns[0]?.checkList.map((stat) => stat.name) || [], [columns]);
+  const rowNames = useMemo(
+    () => columns[0]?.checkList.map((stat: ChosenStat | ResultStat) => stat.name) || [],
+    [columns[0]?.checkList]
+  );
   const labelFlex = 5 - columns.length;
 
   const statsMap = useMemo(() => {
-    const map = new Map<string, Map<string, boolean>>();
+    const map = new Map<ColumnName, Map<StatName, boolean>>();
     columns.forEach(({ columnName, checkList }) => {
-      const columnMap = new Map<string, boolean>();
+      const columnMap = new Map<StatName, boolean>();
       checkList.forEach((stat) => columnMap.set(stat.name, stat.checked));
       map.set(columnName, columnMap);
     });
     return map;
-  }, [columns]);
+  }, [columns.map((c) => c.checkList.map((stat: ChosenStat | ResultStat) => stat.checked))]); // seulement si checkList change
 
   const renderRow = useCallback(
-    (statName: string) => (
+    (statName: StatName) => (
       <TableRow
         key={statName}
         statName={statName}

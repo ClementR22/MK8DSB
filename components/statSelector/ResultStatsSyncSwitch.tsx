@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect } from "react";
 import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
 import { ResultStats } from "@/contexts/ResultStatsContext";
 import { ChosenStat } from "@/stores/useStatsStore";
@@ -26,36 +26,49 @@ const ResultStatsSyncSwitch: React.FC<ResultStatsSyncSwitchProps> = ({
   const isResultStatsSync = useResultStatsDefaultStore((state) => state.isResultStatsSync);
   const setIsResultStatsSync = useResultStatsDefaultStore((state) => state.setIsResultStatsSync);
 
-  // Gestion du toggle du switch
+  // toggle switch
   const handleToggleSwitch = useCallback(
     (newIsResultStatsSync: boolean) => {
       setIsResultStatsSync(newIsResultStatsSync);
 
       if (newIsResultStatsSync) {
-        // Activation du mode synchronisé
         setResultStatsBeforeSync(resultStats);
-        setResultStats(chosenStats);
+
+        const updated = resultStats.map((stat, i) => {
+          const match = chosenStats.find((c) => c.name === stat.name);
+          if (!match) return stat; // pas trouvé, pas de changement
+          if (stat.checked === match.checked) return stat; // inchangé
+          return { ...stat, checked: match.checked }; // seulement si checked change
+        });
+        setResultStats(updated);
       } else {
-        // Désactivation du mode synchronisé
         setResultStats(resultStatsBeforeSync);
       }
     },
     [resultStats, resultStatsBeforeSync, chosenStats, setResultStatsBeforeSync, setResultStats, setIsResultStatsSync]
   );
 
-  // Auto-sync quand les chosenStats changent et que le mode sync est actif
+  // auto-sync quand chosenStats change et que le mode sync est actif
   useEffect(() => {
-    if (isResultStatsSync) {
-      setResultStats(chosenStats);
-    }
-  }, [chosenStats, setResultStats]);
+    if (!isResultStatsSync) return;
+
+    const updated = resultStats.map((stat, i) => {
+      const match = chosenStats.find((c) => c.name === stat.name);
+      if (!match) return stat; // pas trouvé, pas de changement
+      if (stat.checked === match.checked) return stat; // inchangé
+      return { ...stat, checked: match.checked }; // seulement si checked change
+    });
+    setResultStats(updated);
+  }, [chosenStats, isResultStatsSync, resultStats, setResultStats]);
 
   return (
     <View style={styles.container}>
       <ToggleSwitch
         isOn={isResultStatsSync}
         onColor={theme.primary}
+        thumbOnStyle={{ backgroundColor: theme.on_primary }}
         offColor={theme.outline_variant}
+        thumbOffStyle={{ backgroundColor: theme.outline }}
         size="medium"
         onToggle={handleToggleSwitch}
       />
@@ -69,4 +82,5 @@ const ResultStatsSyncSwitch: React.FC<ResultStatsSyncSwitchProps> = ({
 const styles = StyleSheet.create({
   container: { flexDirection: "row", alignItems: "center", gap: 12, marginBottom: 5 },
 });
+
 export default React.memo(ResultStatsSyncSwitch);
