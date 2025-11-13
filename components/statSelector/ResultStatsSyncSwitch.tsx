@@ -59,7 +59,7 @@ const ResultStatsSyncSwitch: React.FC<ResultStatsSyncSwitchProps> = ({
       return { ...stat, checked: match.checked }; // seulement si checked change
     });
     setResultStats(updated);
-  }, [chosenStats, isResultStatsSync, resultStats, setResultStats]);
+  }, [chosenStats, setResultStats]);
 
   return (
     <View style={styles.container}>

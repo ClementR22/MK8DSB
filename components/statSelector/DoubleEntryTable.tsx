@@ -62,7 +62,11 @@ const TableRow = React.memo(
     );
   },
   (prev, next) => {
-    // Re-render seulement si checked de cette ligne change
+    const prevDisabled = prev.columns.some((col) => col.columnName === "resultStats" && prev.disabled);
+    const nextDisabled = next.columns.some((col) => col.columnName === "resultStats" && next.disabled);
+
+    if (prevDisabled !== nextDisabled) return false;
+
     return next.columns.every(
       ({ columnName }) =>
         prev.statsMap.get(columnName)?.get(prev.statName) === next.statsMap.get(columnName)?.get(next.statName)
