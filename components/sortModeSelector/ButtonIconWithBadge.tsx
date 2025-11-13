@@ -61,7 +61,7 @@ const ButtonIconWithBadge: React.FC<ButtonIconWithBadgeProps> = memo(
 const styles = StyleSheet.create({
   badgeContainer: {
     position: "absolute",
-    top: -2,
+    top: 2,
     right: -5,
     alignItems: "center",
     justifyContent: "center",
