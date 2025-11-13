@@ -103,10 +103,15 @@ export default function TabLayout() {
               tabBarActiveTintColor: theme.primary,
               tabBarInactiveTintColor: theme.on_surface_variant,
               sceneStyle: { backgroundColor: theme.surface },
+              tabBarLabelStyle: {
+                fontSize: 10,
+                fontWeight: "500",
+                marginTop: 2,
+              },
               tabBarStyle: {
                 backgroundColor: theme.surface_container,
                 borderTopWidth: 0,
-                boxShadow: box_shadow_z2,
+                elevation: 1,
               },
             }}
           >

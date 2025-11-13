@@ -26,7 +26,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, children }) => {
         iconName="help-circle-outline"
         iconType={IconType.MaterialCommunityIcons}
         buttonSize={48}
-        color={theme.on_surface}
+        iconColor={theme.on_surface}
         backgroundColor="transparent"
         tooltipText="help"
         toolTipPlacement="left"
