@@ -95,117 +95,115 @@ export default function TabLayout() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }} edges={[]}>
-        <MenuProvider>
-          <StatusBar style={theme.theme_surface} />
-          <Tabs
-            screenOptions={{
-              tabBarActiveTintColor: theme.primary,
-              tabBarInactiveTintColor: theme.on_surface_variant,
-              sceneStyle: { backgroundColor: theme.surface },
-              tabBarLabelStyle: {
-                fontSize: 10,
-                fontWeight: "500",
-                marginTop: 2,
-              },
-              tabBarStyle: {
-                backgroundColor: theme.surface_container,
-                borderTopWidth: 0,
-                elevation: 1,
-              },
+      <MenuProvider>
+        <StatusBar style={theme.theme_surface} />
+        <Tabs
+          screenOptions={{
+            tabBarActiveTintColor: theme.primary,
+            tabBarInactiveTintColor: theme.on_surface_variant,
+            sceneStyle: { backgroundColor: theme.surface },
+            tabBarLabelStyle: {
+              fontSize: 10,
+              fontWeight: "500",
+              marginTop: 2,
+            },
+            tabBarStyle: {
+              backgroundColor: theme.surface_container,
+              borderTopWidth: 0,
+              elevation: 1,
+            },
+          }}
+        >
+          <Tabs.Screen
+            name="index"
+            options={{
+              title: t("findSetTabTitle"),
+              tabBarIcon: ({ color }) => (
+                <ButtonIconWithBadge
+                  tooltipText=""
+                  iconName="magnify"
+                  iconType={IconType.MaterialCommunityIcons}
+                  backgroundColor="transparent"
+                  iconColor={color}
+                  isBadge={false}
+                />
+              ),
+              header: renderSearchHeader,
             }}
-          >
-            <Tabs.Screen
-              name="index"
-              options={{
-                title: t("findSetTabTitle"),
-                tabBarIcon: ({ color }) => (
-                  <ButtonIconWithBadge
-                    tooltipText=""
-                    iconName="magnify"
-                    iconType={IconType.MaterialCommunityIcons}
-                    backgroundColor="transparent"
-                    iconColor={color}
-                    isBadge={false}
-                  />
-                ),
-                header: renderSearchHeader,
-              }}
-            />
-            <Tabs.Screen
-              name="DisplayBuildScreen"
-              options={{
-                title: t("displaySetTabTitle"),
-                tabBarIcon: ({ color }) => (
-                  <ButtonIconWithBadge
-                    tooltipText=""
-                    iconName="compare"
-                    iconType={IconType.MaterialCommunityIcons}
-                    backgroundColor="transparent"
-                    iconColor={color}
-                    isBadge={false}
-                  />
-                ),
-                header: renderDisplayHeader,
-              }}
-            />
-            <Tabs.Screen
-              name="SavedBuildScreen"
-              options={{
-                title: t("savedSetTabTitle"),
-                tabBarIcon: ({ color, focused }) => (
-                  <ButtonIconWithBadge
-                    tooltipText=""
-                    iconName={focused ? "cards" : "cards-outline"}
-                    iconType={IconType.MaterialCommunityIcons}
-                    badgeText={numberSavedBuilds}
-                    backgroundColor="transparent"
-                    iconColor={color}
-                  />
-                ),
-                header: renderSavedHeader,
-              }}
-            />
-            <Tabs.Screen
-              name="GalleryScreen"
-              options={{
-                title: t("galleryTabTitle"),
-                tabBarIcon: ({ color, focused }) => (
-                  <ButtonIconWithBadge
-                    tooltipText=""
-                    iconName={focused ? "image" : "image-outline"}
-                    iconType={IconType.Ionicons}
-                    backgroundColor="transparent"
-                    iconColor={color}
-                    isBadge={false}
-                  />
-                ),
-                header: renderGalleryHeader,
-              }}
-            />
-            <Tabs.Screen
-              name="SettingsScreen"
-              options={{
-                title: t("settingsTabTitle"),
-                tabBarIcon: ({ color, focused }) => (
-                  <ButtonIconWithBadge
-                    tooltipText=""
-                    iconName={focused ? "settings" : "settings-outline"}
-                    iconType={IconType.Ionicons}
-                    backgroundColor="transparent"
-                    iconColor={color}
-                    isBadge={false}
-                  />
-                ),
-                header: renderSettingsHeader,
-              }}
-            />
-          </Tabs>
-          <EditBuildModal />
-          <LoadBuildModal />
-          <Toast config={toastConfig} bottomOffset={59} swipeable={false} />
-        </MenuProvider>
-      </SafeAreaView>
+          />
+          <Tabs.Screen
+            name="DisplayBuildScreen"
+            options={{
+              title: t("displaySetTabTitle"),
+              tabBarIcon: ({ color }) => (
+                <ButtonIconWithBadge
+                  tooltipText=""
+                  iconName="compare"
+                  iconType={IconType.MaterialCommunityIcons}
+                  backgroundColor="transparent"
+                  iconColor={color}
+                  isBadge={false}
+                />
+              ),
+              header: renderDisplayHeader,
+            }}
+          />
+          <Tabs.Screen
+            name="SavedBuildScreen"
+            options={{
+              title: t("savedSetTabTitle"),
+              tabBarIcon: ({ color, focused }) => (
+                <ButtonIconWithBadge
+                  tooltipText=""
+                  iconName={focused ? "cards" : "cards-outline"}
+                  iconType={IconType.MaterialCommunityIcons}
+                  badgeText={numberSavedBuilds}
+                  backgroundColor="transparent"
+                  iconColor={color}
+                />
+              ),
+              header: renderSavedHeader,
+            }}
+          />
+          <Tabs.Screen
+            name="GalleryScreen"
+            options={{
+              title: t("galleryTabTitle"),
+              tabBarIcon: ({ color, focused }) => (
+                <ButtonIconWithBadge
+                  tooltipText=""
+                  iconName={focused ? "image" : "image-outline"}
+                  iconType={IconType.Ionicons}
+                  backgroundColor="transparent"
+                  iconColor={color}
+                  isBadge={false}
+                />
+              ),
+              header: renderGalleryHeader,
+            }}
+          />
+          <Tabs.Screen
+            name="SettingsScreen"
+            options={{
+              title: t("settingsTabTitle"),
+              tabBarIcon: ({ color, focused }) => (
+                <ButtonIconWithBadge
+                  tooltipText=""
+                  iconName={focused ? "settings" : "settings-outline"}
+                  iconType={IconType.Ionicons}
+                  backgroundColor="transparent"
+                  iconColor={color}
+                  isBadge={false}
+                />
+              ),
+              header: renderSettingsHeader,
+            }}
+          />
+        </Tabs>
+        <EditBuildModal />
+        <LoadBuildModal />
+        <Toast config={toastConfig} bottomOffset={59} swipeable={false} />
+      </MenuProvider>
     </SafeAreaProvider>
   );
 }
