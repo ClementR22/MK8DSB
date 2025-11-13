@@ -27,6 +27,9 @@ interface GeneralStoreState {
 
   isBuildCardsCollapsed: boolean;
   toggleIsBuildCardsCollapsed: () => void;
+
+  numberSavedBuilds: number;
+  setNumberSavedBuilds: (newNumberSavedBuilds: number) => void;
 }
 
 const useGeneralStore = create<GeneralStoreState>((set, get) => ({
@@ -67,6 +70,9 @@ const useGeneralStore = create<GeneralStoreState>((set, get) => ({
   toggleIsBuildCardsCollapsed: () => {
     set((state) => ({ isBuildCardsCollapsed: !state.isBuildCardsCollapsed }));
   },
+
+  numberSavedBuilds: 0,
+  setNumberSavedBuilds: (newNumberSavedBuilds: number) => set({ numberSavedBuilds: newNumberSavedBuilds }),
 }));
 
 export default useGeneralStore;

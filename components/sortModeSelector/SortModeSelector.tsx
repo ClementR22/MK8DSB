@@ -100,7 +100,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
               tooltipText={name}
               iconName={config.iconName}
               iconType={config.iconType}
-              iconBackgroundColor={config.iconBackgroundColor}
+              backgroundColor={config.backgroundColor}
               direction={isActive ? currentDirection : undefined}
               isBadge={isActive}
             />

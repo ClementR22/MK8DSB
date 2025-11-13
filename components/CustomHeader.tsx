@@ -8,27 +8,20 @@ import { box_shadow_z1 } from "./styles/shadow";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface CustomHeaderProps {
-  icon: string;
+  iconName: string;
+  iconType: IconType;
   title: string;
   helpComponent?: React.ReactElement;
 }
 
-function getIconType(icon: string) {
-  if (icon in MaterialCommunityIcons.glyphMap) return IconType.MaterialCommunityIcons;
-  if (icon in MaterialIcons.glyphMap) return IconType.MaterialIcons;
-  return IconType.MaterialCommunityIcons; // fallback
-}
-
-const CustomHeader: React.FC<CustomHeaderProps> = ({ icon, title, helpComponent }) => {
+const CustomHeader: React.FC<CustomHeaderProps> = ({ iconName, iconType, title, helpComponent }) => {
   const theme = useThemeStore((state) => state.theme);
-
-  const iconType = getIconType(icon);
 
   const statusBarHeight = useSafeAreaInsets().top;
 
   return (
     <View style={[styles.container, { backgroundColor: theme.surface_container, paddingTop: statusBarHeight }]}>
-      <Icon type={iconType} name={icon} size={24} color={theme.on_surface} style={styles.icon} />
+      <Icon name={iconName} type={iconType} size={24} color={theme.on_surface} style={styles.icon} />
       <View style={{ flex: 1, alignItems: "flex-start" }}>
         <Text role="headline" size="large" namespace="screens">
           {title}

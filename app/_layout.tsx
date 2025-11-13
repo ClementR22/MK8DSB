@@ -1,85 +1,97 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Platform, StatusBar as RNStatusBar } from "react-native";
-import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Appearance } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { MenuProvider } from "react-native-popup-menu";
+import Toast from "react-native-toast-message";
 
-// Components
 import CustomHeader from "@/components/CustomHeader";
 import EditBuildModal from "@/components/modal/EditBuildModal";
 import LoadBuildModal from "@/components/modal/LoadBuildModal";
-import Toast from "react-native-toast-message";
-// Help Components - Memoized for performance
 import HelpSearchBuildScreen from "@/components/helpScreens/HelpSearchBuildScreen";
 import HelpDisplayBuildScreen from "@/components/helpScreens/HelpDisplayBuildScreen";
 import HelpSavedBuildScreen from "@/components/helpScreens/HelpSavedBuildScreen";
 
-// Stores
 import useThemeStore from "@/stores/useThemeStore";
+import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
+import useBuildsListStore from "@/stores/useBuildsListStore";
+import useGeneralStore from "@/stores/useGeneralStore";
 
-// Utils & Hooks
 import { useLoadSettings } from "@/hooks/useLoadSettings";
 import { toastConfig } from "@/config/toastConfig";
 import { box_shadow_z2 } from "@/components/styles/shadow";
-import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
 import { useTranslation } from "react-i18next";
-import useBuildsListStore from "@/stores/useBuildsListStore";
+
+import ButtonIconWithBadge from "@/components/sortModeSelector/ButtonIconWithBadge";
+import { IconType } from "react-native-dynamic-vector-icons";
 
 export default function TabLayout() {
   const { t } = useTranslation("screens");
 
-  // --- Zustand Store Selections ---
   const loadBuildsSaved = useBuildsActionsStore((state) => state.loadBuildsSaved);
   const theme = useThemeStore((state) => state.theme);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
   const buildsListSaved = useBuildsListStore((state) => state.buildsListSaved);
+  const numberSavedBuilds = useGeneralStore((state) => state.numberSavedBuilds);
+  const setNumberSavedBuilds = useGeneralStore((state) => state.setNumberSavedBuilds);
 
-  // --- States ---
-  const [numberSavedBuilds, setNumberSavedBuilds] = useState(0);
-
-  // --- Effects ---
-
-  // Effect to listen for system theme changes
   useEffect(() => {
     const listener = Appearance.addChangeListener(updateSystemTheme);
     return () => listener.remove();
   }, [updateSystemTheme]);
 
-  // Effect to fetch saved builds on mount
   useEffect(() => {
     loadBuildsSaved();
   }, [loadBuildsSaved]);
 
-  // Custom hook for loading settings (assuming it has its own internal effects)
   useLoadSettings();
 
-  // update numberSavedBuilds
   useEffect(() => {
     setNumberSavedBuilds(buildsListSaved.length);
   }, [buildsListSaved]);
 
-  // Use useCallback for header functions to prevent unnecessary re-renders of CustomHeader
   const renderSearchHeader = useCallback(
-    () => <CustomHeader icon="magnify" title="findSetTitle" helpComponent={<HelpSearchBuildScreen />} />,
+    () => (
+      <CustomHeader
+        iconName="magnify"
+        iconType={IconType.MaterialCommunityIcons}
+        title="findSetTitle"
+        helpComponent={<HelpSearchBuildScreen />}
+      />
+    ),
     []
-  ); // Dependencies for useCallback
-
+  );
   const renderDisplayHeader = useCallback(
-    () => <CustomHeader icon="compare" title="displaySetTitle" helpComponent={<HelpDisplayBuildScreen />} />,
+    () => (
+      <CustomHeader
+        iconName="compare"
+        iconType={IconType.MaterialCommunityIcons}
+        title="displaySetTitle"
+        helpComponent={<HelpDisplayBuildScreen />}
+      />
+    ),
     []
   );
-
   const renderSavedHeader = useCallback(
-    () => <CustomHeader icon="cards-outline" title="savedSetTitle" helpComponent={<HelpSavedBuildScreen />} />,
+    () => (
+      <CustomHeader
+        iconName="cards-outline"
+        iconType={IconType.MaterialCommunityIcons}
+        title="savedSetTitle"
+        helpComponent={<HelpSavedBuildScreen />}
+      />
+    ),
     []
   );
-
-  const renderGalleryHeader = useCallback(() => <CustomHeader icon="image-outline" title="galleryTitle" />, []);
-
-  const renderSettingsHeader = useCallback(() => <CustomHeader icon="settings" title="settingsTitle" />, []);
+  const renderGalleryHeader = useCallback(
+    () => <CustomHeader iconName="image-outline" iconType={IconType.Ionicons} title="galleryTitle" />,
+    []
+  );
+  const renderSettingsHeader = useCallback(
+    () => <CustomHeader iconName="settings-outline" iconType={IconType.Ionicons} title="settingsTitle" />,
+    []
+  );
 
   return (
     <SafeAreaProvider>
@@ -90,10 +102,7 @@ export default function TabLayout() {
             screenOptions={{
               tabBarActiveTintColor: theme.primary,
               tabBarInactiveTintColor: theme.on_surface_variant,
-              sceneStyle: {
-                // For the content area behind the header/tab bar
-                backgroundColor: theme.surface,
-              },
+              sceneStyle: { backgroundColor: theme.surface },
               tabBarStyle: {
                 backgroundColor: theme.surface_container,
                 borderTopWidth: 0,
@@ -102,10 +111,19 @@ export default function TabLayout() {
             }}
           >
             <Tabs.Screen
-              name="index" // This maps to the default route "/"
+              name="index"
               options={{
                 title: t("findSetTabTitle"),
-                tabBarIcon: ({ color }) => <Entypo name={"magnifying-glass"} size={24} color={color} />,
+                tabBarIcon: ({ color }) => (
+                  <ButtonIconWithBadge
+                    tooltipText=""
+                    iconName="magnify"
+                    iconType={IconType.MaterialCommunityIcons}
+                    backgroundColor="transparent"
+                    iconColor={color}
+                    isBadge={false}
+                  />
+                ),
                 header: renderSearchHeader,
               }}
             />
@@ -113,7 +131,16 @@ export default function TabLayout() {
               name="DisplayBuildScreen"
               options={{
                 title: t("displaySetTabTitle"),
-                tabBarIcon: ({ color }) => <MaterialCommunityIcons name="compare" size={24} color={color} />,
+                tabBarIcon: ({ color }) => (
+                  <ButtonIconWithBadge
+                    tooltipText=""
+                    iconName="compare"
+                    iconType={IconType.MaterialCommunityIcons}
+                    backgroundColor="transparent"
+                    iconColor={color}
+                    isBadge={false}
+                  />
+                ),
                 header: renderDisplayHeader,
               }}
             />
@@ -122,10 +149,15 @@ export default function TabLayout() {
               options={{
                 title: t("savedSetTabTitle"),
                 tabBarIcon: ({ color, focused }) => (
-                  <MaterialCommunityIcons name={focused ? "cards" : "cards-outline"} size={24} color={color} />
+                  <ButtonIconWithBadge
+                    tooltipText=""
+                    iconName={focused ? "cards" : "cards-outline"}
+                    iconType={IconType.MaterialCommunityIcons}
+                    badgeText={numberSavedBuilds}
+                    backgroundColor="transparent"
+                    iconColor={color}
+                  />
                 ),
-                tabBarBadge: numberSavedBuilds,
-                tabBarBadgeStyle: {backgroundColor: theme.primary_container, color: theme.on_primary_container},
                 header: renderSavedHeader,
               }}
             />
@@ -134,7 +166,14 @@ export default function TabLayout() {
               options={{
                 title: t("galleryTabTitle"),
                 tabBarIcon: ({ color, focused }) => (
-                  <Ionicons name={focused ? "image" : "image-outline"} size={24} color={color} />
+                  <ButtonIconWithBadge
+                    tooltipText=""
+                    iconName={focused ? "image" : "image-outline"}
+                    iconType={IconType.Ionicons}
+                    backgroundColor="transparent"
+                    iconColor={color}
+                    isBadge={false}
+                  />
                 ),
                 header: renderGalleryHeader,
               }}
@@ -144,7 +183,14 @@ export default function TabLayout() {
               options={{
                 title: t("settingsTabTitle"),
                 tabBarIcon: ({ color, focused }) => (
-                  <Ionicons name={focused ? "settings" : "settings-outline"} size={24} color={color} />
+                  <ButtonIconWithBadge
+                    tooltipText=""
+                    iconName={focused ? "settings" : "settings-outline"}
+                    iconType={IconType.Ionicons}
+                    backgroundColor="transparent"
+                    iconColor={color}
+                    isBadge={false}
+                  />
                 ),
                 header: renderSettingsHeader,
               }}

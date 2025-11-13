@@ -11,6 +11,7 @@ export interface ButtonIconProps {
   toolTipPlacement?: "top" | "right" | "bottom" | "left" | "auto";
   iconName: string;
   iconType: IconType;
+  iconColor?: string;
   buttonSize?: number;
   shape?: "circle" | "rectangle";
   backgroundColor?: string;
@@ -24,11 +25,11 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   toolTipPlacement = "top",
   iconName,
   iconType,
+  iconColor = null,
   buttonSize = BUTTON_SIZE,
   shape = "circle",
   backgroundColor,
   disabled = false,
-  color = null,
   ...props
 }) => {
   return (
@@ -39,7 +40,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
         shape={shape}
         containerSize={buttonSize}
         backgroundColor={disabled ? "grey" : backgroundColor}
-        iconColor={color}
+        iconColor={iconColor}
       />
     </ButtonBase>
   );

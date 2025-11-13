@@ -5,7 +5,7 @@ import { IconType } from "react-native-dynamic-vector-icons";
 export interface SortButtonConfig {
   iconName: string;
   iconType: IconType;
-  iconBackgroundColor?: string; // Make it optional as some might derive from theme
+  backgroundColor?: string; // Make it optional as some might derive from theme
 }
 
 // Merged configuration for all icons
@@ -22,44 +22,44 @@ export const sortButtonsConfig: { [key in SortName]: SortButtonConfig } = {
   speedGround: {
     iconName: "speedometer",
     iconType: IconType.SimpleLineIcons,
-    iconBackgroundColor: "tan",
+    backgroundColor: "tan",
   },
   speedAntiGravity: {
     iconName: "speedometer",
     iconType: IconType.SimpleLineIcons,
-    iconBackgroundColor: "blueviolet",
+    backgroundColor: "blueviolet",
   },
   speedWater: {
     iconName: "speedometer",
     iconType: IconType.SimpleLineIcons,
-    iconBackgroundColor: "dodgerblue",
+    backgroundColor: "dodgerblue",
   },
   speedAir: {
     iconName: "speedometer",
     iconType: IconType.SimpleLineIcons,
-    iconBackgroundColor: "powderblue",
+    backgroundColor: "powderblue",
   },
 
   // Handling-related icons with specific background colors
   handlingGround: {
     iconName: "steering",
     iconType: IconType.MaterialCommunityIcons,
-    iconBackgroundColor: "tan",
+    backgroundColor: "tan",
   },
   handlingAntiGravity: {
     iconName: "steering",
     iconType: IconType.MaterialCommunityIcons,
-    iconBackgroundColor: "blueviolet",
+    backgroundColor: "blueviolet",
   },
   handlingWater: {
     iconName: "steering",
     iconType: IconType.MaterialCommunityIcons,
-    iconBackgroundColor: "dodgerblue",
+    backgroundColor: "dodgerblue",
   },
   handlingAir: {
     iconName: "steering",
     iconType: IconType.MaterialCommunityIcons,
-    iconBackgroundColor: "powderblue",
+    backgroundColor: "powderblue",
   },
 
   // Other direct stat sorts

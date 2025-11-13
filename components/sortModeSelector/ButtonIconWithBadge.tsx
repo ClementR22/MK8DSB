@@ -8,7 +8,6 @@ import { StyleSheet, View, ViewStyle } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 interface ButtonIconWithBadgeProps extends ButtonIconProps {
-  iconBackgroundColor?: string;
   // if the badge content is a number, then give it as badgeText
   badgeText?: string | number;
   // but if the badge content up/down arrow icon, then use direction
@@ -19,12 +18,12 @@ interface ButtonIconWithBadgeProps extends ButtonIconProps {
 const BADGE_ICON_INNER_SIZE = 20;
 
 const ButtonIconWithBadge: React.FC<ButtonIconWithBadgeProps> = memo(
-  ({ onPress, tooltipText, iconName, iconType, iconBackgroundColor, badgeText, direction, isBadge = true }) => {
+  ({ onPress, tooltipText, iconName, iconType, iconColor, backgroundColor, badgeText, direction, isBadge = true }) => {
     const theme = useThemeStore((state) => state.theme);
 
     const badgeIconName = direction === "asc" ? "arrow-up" : "arrow-down";
     const badgeBackgroundColor = theme.primary_container;
-    const badgeIconColor = theme.primary;
+    const badgeIconColor = theme.on_primary_container;
 
     const Wrapper = onPress ? ButtonIcon : IconContainer;
 
@@ -35,7 +34,8 @@ const ButtonIconWithBadge: React.FC<ButtonIconWithBadgeProps> = memo(
           tooltipText={tooltipText}
           iconName={iconName}
           iconType={iconType}
-          backgroundColor={iconBackgroundColor ?? theme.primary}
+          iconColor={iconColor}
+          backgroundColor={backgroundColor ?? theme.primary}
         />
         {isBadge && (
           <View style={[styles.badgeContainer, { backgroundColor: badgeBackgroundColor }]}>
