@@ -42,7 +42,7 @@ const SearchBuildScreen: React.FC = () => {
       if (isSliderCompact) {
         return (
           <StatGaugeContainer key={`statSlider-${stat.name}-compact`} name={stat.name} value={stat.value}>
-            <StatGaugeBar value={stat.value} />
+            <StatGaugeBar value={stat.value} statFilterNumber={stat.statFilterNumber} />
           </StatGaugeContainer>
         );
       } else

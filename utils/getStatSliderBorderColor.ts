@@ -1,4 +1,4 @@
-import ThemeColor from "@/components/styles/theme.d";
+import { ThemeColor } from "@/components/styles/theme.d";
 
 export function getStatSliderBorderColor(number: number, theme: ThemeColor) {
   switch (number) {

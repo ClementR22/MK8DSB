@@ -4,7 +4,6 @@ import Text from "@/primitiveComponents/Text";
 import { StatName } from "@/data/stats/statsTypes";
 import { statNamesCompact } from "@/data/stats/statsData";
 import Tooltip from "../Tooltip";
-import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import useThemeStore from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { getBonusColor } from "@/utils/getBonusColor";
@@ -13,7 +12,6 @@ interface StatGaugeContainerProps {
   name?: StatName;
   value: number;
   chosenValue?: number;
-  statFilterNumber?: number;
   isInBuildCard?: boolean;
   onPress?: () => void;
   children: React.ReactElement;
@@ -23,7 +21,6 @@ const StatGaugeContainer = ({
   name,
   value,
   chosenValue,
-  statFilterNumber,
   isInBuildCard = false,
   onPress,
   children,
@@ -77,7 +74,7 @@ const StatGaugeContainer = ({
     <Tooltip
       tooltipText={name}
       childStyleOuter={styles.containerOuter}
-      childStyleInner={[styles.containerInner, { borderColor: getStatSliderBorderColor(statFilterNumber, theme) }]}
+      childStyleInner={styles.containerInner}
       onPress={handlePress}
     >
       {name && (

@@ -42,7 +42,6 @@ const StatGaugeGroupBuildCard: React.FC<StatGaugeGroupBuildCardProps> = ({ stats
           value={statValue}
           chosenValue={chosenValue}
           isInBuildCard={true}
-          statFilterNumber={0}
         >
           <StatGaugeBarBuildCard
             obtainedValue={statValue}
