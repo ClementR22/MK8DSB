@@ -29,7 +29,7 @@ const StatGaugeContainerCompare: React.FC<StatGaugeContainerCompareProps> = ({ b
 
       <View style={styles.statBarsContainer}>
         {buildsIdAndValue.map(({ id, value, color }) => (
-          <StatGaugeContainer key={id} value={value} scrollToThisBuildCard={() => scrollToBuildCard(id)}>
+          <StatGaugeContainer key={id} value={value} onPress={() => scrollToBuildCard(id)}>
             <StatGaugeBar value={value} color={color}></StatGaugeBar>
           </StatGaugeContainer>
         ))}

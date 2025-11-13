@@ -36,7 +36,14 @@ const StatGaugeGroupBuildCard: React.FC<StatGaugeGroupBuildCardProps> = ({ stats
       }
 
       return (
-        <StatGaugeContainer key={stat.name} name={stat.name} value={statValue} isInBuildCard={true}>
+        <StatGaugeContainer
+          key={stat.name}
+          name={stat.name}
+          value={statValue}
+          chosenValue={chosenValue}
+          isInBuildCard={true}
+          statFilterNumber={0}
+        >
           <StatGaugeBarBuildCard
             obtainedValue={statValue}
             chosenValue={chosenValue}
