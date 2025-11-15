@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get("screen").height, // ou "screen"
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "blue",
   },
   container: {
     // cursor: "auto", // Web-specific. RN ignores.
