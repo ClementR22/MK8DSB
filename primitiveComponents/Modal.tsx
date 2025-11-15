@@ -1,5 +1,5 @@
-import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo } from "react";
-import { Modal as NativeModal, Pressable, StyleSheet, View } from "react-native";
+import React, { ReactElement, ReactNode, useCallback } from "react";
+import { Dimensions, Modal as NativeModal, Pressable, StyleSheet, View } from "react-native";
 import Button from "@/primitiveComponents/Button";
 import useThemeStore from "@/stores/useThemeStore";
 import {
@@ -120,7 +120,6 @@ const Modal = ({
               styles.container,
               {
                 backgroundColor: theme.surface_container_highest,
-                marginTop: 0,
               },
             ]}
             onStartShouldSetResponder={handleContainerResponder}
@@ -153,18 +152,12 @@ const Modal = ({
 
 const styles = StyleSheet.create({
   background: {
-    ...StyleSheet.absoluteFillObject,
-    // cursor: "auto", // Web-specific. RN ignores.
-    zIndex: -1,
-    position: "absolute",
-    width: "100%",
-    height: "100%",
+    height: Dimensions.get("screen").height, // ou "screen"
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "blue",
   },
   container: {
-    zIndex: 10,
     // cursor: "auto", // Web-specific. RN ignores.
     width: "90%",
     borderRadius: BORDER_RADIUS_MODAL_CONTAINER,
