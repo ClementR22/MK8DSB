@@ -72,9 +72,11 @@ const ResultStatsSyncSwitch: React.FC<ResultStatsSyncSwitchProps> = ({
         size="medium"
         onToggle={handleToggleSwitch}
       />
-      <Text role="title" size="small" namespace="text">
-        {isResultStatsSync ? "matchDesiredStats" : "unmatchDesiredStats"}
-      </Text>
+      <View style={{ flex: 1 }}>
+        <Text role="title" size="small" namespace="text">
+          {isResultStatsSync ? "matchDesiredStats" : "unmatchDesiredStats"}
+        </Text>
+      </View>
     </View>
   );
 };
