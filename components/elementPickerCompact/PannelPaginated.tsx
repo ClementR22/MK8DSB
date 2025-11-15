@@ -130,8 +130,8 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
   }, []);
 
   const { iconName, iconType, tooltipText } = isOpenSortView
-    ? { iconName: "car-sports", iconType: IconType.MaterialCommunityIcons, tooltipText: "FilterBodytypes" }
-    : { iconName: "sort", iconType: IconType.MaterialCommunityIcons, tooltipText: "SortElements" };
+    ? { iconName: "car-sports", iconType: IconType.MaterialCommunityIcons, tooltipText: "filterBodytypes" }
+    : { iconName: "sort", iconType: IconType.MaterialCommunityIcons, tooltipText: "sortElements" };
 
   return (
     <>

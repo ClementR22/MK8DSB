@@ -12,9 +12,6 @@ interface GeneralStoreState {
   showAllStatGaugeBonuses: boolean;
   toggleAllStatGaugeBonuses: () => void;
 
-  isAnyModalVisible: boolean;
-  setIsAnyModalVisible: (newIsAnyModalVisible: boolean) => void;
-
   resultsNumber: number;
   setResultsNumber: (newResultsNumber: number) => void;
 
@@ -41,11 +38,6 @@ const useGeneralStore = create<GeneralStoreState>((set, get) => ({
 
   showAllStatGaugeBonuses: false,
   toggleAllStatGaugeBonuses: () => set((state) => ({ showAllStatGaugeBonuses: !state.showAllStatGaugeBonuses })),
-
-  isAnyModalVisible: false,
-  setIsAnyModalVisible: (newIsAnyModalVisible: boolean) => {
-    set({ isAnyModalVisible: newIsAnyModalVisible });
-  },
 
   resultsNumber: RESULTS_NUMBER_DEFAULT,
   setResultsNumber: async (newResultsNumber: number) => {

@@ -2,7 +2,6 @@ import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo } from 
 import { Modal as NativeModal, Pressable, StyleSheet, View } from "react-native";
 import Button from "@/primitiveComponents/Button";
 import useThemeStore from "@/stores/useThemeStore";
-import useGeneralStore from "@/stores/useGeneralStore";
 import {
   BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,
   BORDER_RADIUS_MODAL_CONTAINER,
@@ -103,10 +102,6 @@ const Modal = ({
   const handleBackgroundPress = useCallback(() => setIsModalVisible(false), [setIsModalVisible]);
 
   const handleContainerResponder = useCallback(() => true, []);
-
-  const setIsAnyModalVisible = useGeneralStore((state) => state.setIsAnyModalVisible);
-
-  useEffect(() => setIsAnyModalVisible(isModalVisible), [isModalVisible]);
 
   return (
     <NativeModal

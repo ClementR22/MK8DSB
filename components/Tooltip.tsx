@@ -4,7 +4,6 @@ import useThemeStore from "@/stores/useThemeStore";
 import { CORNER_EXTRA_SMALL } from "@/utils/designTokens";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, ViewStyle } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Menu, MenuOptions, MenuTrigger, renderers } from "react-native-popup-menu";
 import { BORDER_RADIUS_STANDARD } from "@/utils/designTokens";
 
@@ -30,9 +29,6 @@ const Tooltip: React.FC<TooltipProps> = ({
   children,
 }) => {
   const theme = useThemeStore((state) => state.theme);
-
-  const isAnyModalVisible = useGeneralStore((state) => state.isAnyModalVisible);
-  const statusBarHeight = useSafeAreaInsets().top;
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const timeoutRef = useRef(null);
@@ -70,7 +66,6 @@ const Tooltip: React.FC<TooltipProps> = ({
         customStyles={{
           optionsContainer: { borderRadius: BORDER_RADIUS_STANDARD },
           optionsWrapper: {
-            marginTop: isAnyModalVisible ? -statusBarHeight : 0,
             backgroundColor: theme.inverse_surface,
           },
         }}
