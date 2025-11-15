@@ -32,7 +32,7 @@ const StatGaugeBar: React.FC<StatGaugeBarProps> = ({ value, color, statFilterNum
     const thick = stylesDynamic.thick;
 
     return { emptyContainer, thick };
-  }, [statFilterNumber, getStatSliderBorderColor]);
+  }, [statFilterNumber, stylesDynamic, getStatSliderBorderColor]);
 
   return (
     <View style={emptyContainer}>
