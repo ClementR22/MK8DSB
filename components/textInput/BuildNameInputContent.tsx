@@ -10,6 +10,7 @@ interface BuildNameInputContentProps {
   editable?: boolean;
   onFocus?: () => void;
   inputRef?: React.RefObject<TextInput>;
+  id: string;
 }
 
 const BuildNameInputContent: React.FC<BuildNameInputContentProps> = ({
@@ -19,6 +20,7 @@ const BuildNameInputContent: React.FC<BuildNameInputContentProps> = ({
   editable = true,
   onFocus,
   inputRef,
+  id,
 }) => {
   const theme = useThemeStore((state) => state.theme);
 
@@ -29,6 +31,7 @@ const BuildNameInputContent: React.FC<BuildNameInputContentProps> = ({
       }}
     >
       <TextInput
+        id={id}
         ref={inputRef}
         style={[
           styles.textInput,

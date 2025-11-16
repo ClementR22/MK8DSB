@@ -78,7 +78,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
   const closeModal = useCallback(() => {
     onModalClose && onModalClose();
     currentSetIsModalVisible(false);
-  }, [currentSetIsModalVisible]);
+  }, [currentSetIsModalVisible, onModalClose]);
 
   // Clonez le customTrigger pour injecter la prop onPress
   const triggerElement = customTrigger ? (

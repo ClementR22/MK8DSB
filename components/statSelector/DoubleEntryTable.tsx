@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView, Pressable } from "react-native";
 import { ResultStat } from "@/contexts/ResultStatsContext";
 import { ChosenStat } from "@/stores/useStatsStore";
@@ -7,33 +7,31 @@ import Text from "@/primitiveComponents/Text";
 import { BORDER_RADIUS_MODAL_CHILDREN_CONTAINER } from "@/utils/designTokens";
 import Checkbox from "expo-checkbox";
 import { StatName } from "@/data/stats/statsTypes";
+import { statNames } from "@/data/stats/statsData";
 
 export type StatList = ChosenStat[] | ResultStat[];
 export type ColumnName = "chosenStats" | "resultStats";
 
-export type Column = {
-  columnName: ColumnName;
-  statList: StatList;
-};
-
 interface DoubleEntryTableProps {
-  columns: Column[];
-  onToggleStat: (statName: StatName, columnName: ColumnName) => void;
+  statLists: Record<ColumnName, StatList>;
+  onToggleStat: (statName: StatName, columnName: ColumnName, statIndex: number) => void;
   disabled: boolean;
 }
 
 interface TableRowProps {
   statName: StatName;
-  columns: Column[];
+  columnNames: ColumnName[];
+  stats_i: (ChosenStat | ResultStat)[];
+  statIndex: number;
   labelFlex: number;
   disabled: boolean;
-  onToggleStat: (statName: StatName, columnName: ColumnName) => void;
-  statsMap: Map<ColumnName, Map<StatName, boolean>>;
+  onToggleStat: (statName: StatName, columnName: ColumnName, statIndex: number) => void;
 }
 
 const TableRow = React.memo(
-  ({ statName, columns, labelFlex, disabled, onToggleStat }: TableRowProps) => {
+  ({ statName, columnNames, stats_i, statIndex, labelFlex, disabled, onToggleStat }: TableRowProps) => {
     const theme = useThemeStore((state) => state.theme);
+
     return (
       <Pressable style={styles.row}>
         <View style={[styles.cell, { flex: labelFlex }]}>
@@ -41,16 +39,16 @@ const TableRow = React.memo(
             {statName}
           </Text>
         </View>
-        {columns.map(({ columnName, statList }) => {
-          const stat = statList.find((s) => s.name === statName);
+        {stats_i.map((stat, index) => {
           const isChecked = stat?.checked ?? false;
-          const isDisabled = columnName === "resultStats" && disabled;
+          const isDisabled = index === 1 && disabled; // index === 1 <=> columnName === "resultStats"
+          const columnName = columnNames[index];
           return (
-            <View key={`${columnName}-${statName}`} style={[styles.cell, styles.checkboxCell]}>
+            <View key={`${statName}-${index}`} style={[styles.cell, styles.checkboxCell]}>
               <Checkbox
                 value={isChecked}
                 disabled={isDisabled}
-                onValueChange={() => onToggleStat(statName, columnName)}
+                onValueChange={() => onToggleStat(statName, columnName as ColumnName, statIndex)}
                 color={theme.primary}
               />
             </View>
@@ -60,51 +58,44 @@ const TableRow = React.memo(
     );
   },
   (prev, next) => {
-    // Re-render uniquement si checked ou disabled change
-    return next.columns.every(({ statList }, i) => {
-      const prevStat = prev.columns[i].statList.find((s) => s.name === prev.statName);
-      const nextStat = statList.find((s) => s.name === prev.statName);
-      const prevDisabled = prev.columns[i].columnName === "resultStats" && prev.disabled;
-      const nextDisabled = next.columns[i].columnName === "resultStats" && next.disabled;
-      return prevStat?.checked === nextStat?.checked && prevDisabled === nextDisabled;
-    });
+    if (prev.disabled !== next.disabled) return false;
+    for (let i = 0; i < prev.stats_i.length; i++) {
+      if (prev.stats_i[i].checked !== next.stats_i[i].checked) return false;
+    }
+    return true;
   }
 );
 
 TableRow.displayName = "TableRow";
 
-const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleStat, disabled }) => {
+const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ statLists, onToggleStat, disabled }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const rowNames = useMemo(
-    () => columns[0]?.statList.map((stat: ChosenStat | ResultStat) => stat.name) || [],
-    [columns[0]?.statList]
-  );
-  const labelFlex = 5 - columns.length;
+  const columnNames = Object.keys(statLists) as ColumnName[];
+  const rowNames = statNames;
 
-  const statsMap = useMemo(() => {
-    const map = new Map<ColumnName, Map<StatName, boolean>>();
-    columns.forEach(({ columnName, statList }) => {
-      const columnMap = new Map<StatName, boolean>();
-      statList.forEach((stat) => columnMap.set(stat.name, stat.checked));
-      map.set(columnName, columnMap);
-    });
-    return map;
-  }, [columns.map((c) => c.statList.map((stat: ChosenStat | ResultStat) => stat.checked))]); // seulement si statList change
+  const labelFlex = 5 - columnNames.length;
+
+  useEffect(() => console.log("statLists", statLists), [statLists]);
 
   const renderRow = useCallback(
-    (statName: StatName) => (
-      <TableRow
-        key={statName}
-        statName={statName}
-        columns={columns}
-        labelFlex={labelFlex}
-        disabled={disabled}
-        onToggleStat={onToggleStat}
-        statsMap={statsMap}
-      />
-    ),
-    [columns, labelFlex, disabled, onToggleStat, statsMap]
+    (statName: StatName, index: number) => {
+      const stats_i = columnNames.map((columnName) => statLists[columnName][index]);
+
+      return (
+        <TableRow
+          key={statName}
+          statName={statName}
+          columnNames={columnNames}
+          stats_i={stats_i}
+          statIndex={index}
+          labelFlex={labelFlex}
+          disabled={disabled}
+          onToggleStat={onToggleStat}
+        />
+      );
+    },
+    [statLists, labelFlex, disabled, onToggleStat]
   );
 
   return (
@@ -121,7 +112,7 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ columns, onToggleSt
             {" "}
           </Text>
         </View>
-        {columns.map(({ columnName }) => (
+        {columnNames.map((columnName) => (
           <View key={columnName} style={styles.headerCell}>
             <Text role="title" size="small" namespace="text">
               {columnName}

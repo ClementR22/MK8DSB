@@ -89,6 +89,7 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, buildDataId, edit
       onEndEditingOrBlur={handleEndEditingOrBlur}
       editable={editable}
       onFocus={handleFocus}
+      id={buildDataId.toString()}
     />
   );
 };

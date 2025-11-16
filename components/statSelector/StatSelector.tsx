@@ -63,10 +63,6 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
   const { resultStats, setResultStats } = useResultStats();
   const { resultStatsDefault, setResultStatsDefault, isResultStatsSync } = useResultStatsDefaultStore();
 
-  const [statListsInModal, setStatListsInModal] = useState<Record<string, StatList>>({});
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [resultStatsBeforeSync, setResultStatsBeforeSync] = useState(resultStats);
-
   const screenConfig = useMemo(() => {
     return { config: getColumnsConfig(screenName), triggerConfig: getTriggerConfig(screenName) };
   }, [screenName]);
@@ -90,43 +86,53 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
     });
   }, [screenConfig.config, screenName, chosenStats, resultStats, resultStatsDefault]);
 
-  const columnsInModal = useMemo(() => {
-    return screenConfig.config.map(({ columnName }) => ({
-      columnName,
-      statList: statListsInModal[columnName] || [],
-    }));
-  }, [screenConfig.config, statListsInModal]);
-
-  // Initialiser le modal avec les statList actuelles
-  useEffect(() => {
-    if (isModalVisible && Object.keys(statListsInModal).length === 0) {
-      const initialLists: Record<string, StatList> = {};
-      columns.forEach(({ columnName, statList }) => (initialLists[columnName] = statList.map((stat) => ({ ...stat }))));
-      setStatListsInModal(initialLists);
-    }
-  }, [isModalVisible]);
+  const [statListsInModal, setStatListsInModal] = useState<Record<ColumnName, StatList>>(() => {
+    console.log("reset");
+    return columns.reduce((acc, { columnName, statList }) => {
+      acc[columnName] = statList;
+      return acc;
+    }, {} as Record<ColumnName, StatList>);
+  });
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [resultStatsBeforeSync, setResultStatsBeforeSync] = useState(resultStats);
 
   const handleStatToggle = useCallback(
-    (statName: string, columnName: ColumnName) => {
+    (statName: string, columnName: ColumnName, statIndex: number) => {
       setStatListsInModal((prev) => {
         const list = prev[columnName];
         if (!list) return prev;
-        const idx = list.findIndex((s) => s.name === statName);
-        if (idx === -1) return prev;
 
-        const currentStat = list[idx];
+        const currentStat = list[statIndex];
         const newChecked = !currentStat.checked;
 
-        // garder au moins un coché si nécessaire
+        // Garder au moins un coché si nécessaire
         const keepOne = screenConfig.config.find((c) => c.columnName === columnName)?.keepOneSelected;
-        if (keepOne && !newChecked && !list.some((s, i) => i !== idx && s.checked)) return prev;
+        if (keepOne && !newChecked && !list.some((s, i) => i !== statIndex && s.checked)) return prev;
 
         const updatedList = [...list];
-        updatedList[idx] = { ...currentStat, checked: newChecked };
+        updatedList[statIndex] = { ...currentStat, checked: newChecked };
+
+        // Si sync actif et qu'on modifie chosenStats, synchroniser resultStats
+        if (isResultStatsSync && screenName === "search" && columnName === "chosenStats") {
+          const resultStatsList = prev.resultStats as StatList;
+          const resultStatsUpdated = resultStatsList.map((stat) => {
+            if (stat.name === statName) {
+              return { ...stat, checked: newChecked };
+            }
+            return stat;
+          });
+          return {
+            ...prev,
+            [columnName]: updatedList,
+            resultStats: resultStatsUpdated,
+          };
+        }
+
+        console.log("columnname", columnName, "upd", updatedList);
         return { ...prev, [columnName]: updatedList };
       });
     },
-    [screenConfig.config]
+    [screenConfig.config, isResultStatsSync, screenName]
   );
 
   const handleResultStatsUpdate = useCallback((newStatList: StatList) => {
@@ -134,12 +140,16 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
   }, []);
 
   const handleModalClose = useCallback(() => {
+    console.log("statListsInModal", statListsInModal);
     columns.forEach(({ columnName, setStatList }) => {
       const modalData = statListsInModal[columnName];
+      console.log("modalData", modalData);
+
       if (modalData) setStatList(modalData);
     });
-    setStatListsInModal({}); // nettoyer
   }, [columns, statListsInModal]);
+
+  useEffect(() => console.log("statListsInModal", statListsInModal), [statListsInModal]);
 
   return (
     <ButtonAndModal
@@ -163,7 +173,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
           />
         )}
         <DoubleEntryTable
-          columns={columnsInModal}
+          statLists={statListsInModal}
           onToggleStat={handleStatToggle}
           disabled={isResultStatsSync && screenName === "search"}
         />
