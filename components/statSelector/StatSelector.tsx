@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState, useCallback } from "react";
+// StatSelector.tsx
+import React, { useMemo, useState, useCallback } from "react";
 import { View } from "react-native";
 import ButtonAndModal from "../modal/ButtonAndModal";
-import DoubleEntryTable, { ColumnName, StatList } from "./DoubleEntryTable";
+import DoubleEntryTable, { ColumnName, StatToggleMap } from "./DoubleEntryTable";
 import useStatsStore, { ChosenStat } from "@/stores/useStatsStore";
 import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
 import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
@@ -10,13 +11,7 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import useThemeStore from "@/stores/useThemeStore";
 import ResultStatsSyncSwitch from "./ResultStatsSyncSwitch";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
-
-type StatListColumn = {
-  columnName: ColumnName;
-  statList: StatList;
-  setStatList: (newStatList: StatList) => void;
-  keepOneSelected: boolean;
-};
+import { statNames } from "@/data/stats/statsData";
 
 interface StatSelectorProps {
   triggerButtonText?: string;
@@ -24,14 +19,8 @@ interface StatSelectorProps {
   children?: React.ReactNode;
 }
 
-const getColumnsConfig = (screenName: string): Omit<StatListColumn, "statList" | "setStatList">[] => {
-  if (screenName === "search")
-    return [
-      { columnName: "chosenStats", keepOneSelected: true },
-      { columnName: "resultStats", keepOneSelected: false },
-    ];
-  return [{ columnName: "resultStats", keepOneSelected: false }];
-};
+const getColumnsConfig = (screenName: string): ColumnName[] =>
+  screenName === "search" ? ["chosenStats", "resultStats"] : ["resultStats"];
 
 const getTriggerConfig = (screenName: ScreenName) => {
   const customTrigger =
@@ -63,100 +52,83 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
   const { resultStats, setResultStats } = useResultStats();
   const { resultStatsDefault, setResultStatsDefault, isResultStatsSync } = useResultStatsDefaultStore();
 
-  const screenConfig = useMemo(() => {
-    return { config: getColumnsConfig(screenName), triggerConfig: getTriggerConfig(screenName) };
-  }, [screenName]);
+  const columns = useMemo(() => getColumnsConfig(screenName), [screenName]);
+  const { customTrigger, modalTitle } = useMemo(() => getTriggerConfig(screenName), [screenName]);
 
-  const columns = useMemo(() => {
-    return screenConfig.config.map((config) => {
-      const statList: StatList =
-        config.columnName === "chosenStats"
-          ? chosenStats
-          : screenName !== "settings"
-          ? resultStats
-          : resultStatsDefault;
-      const setStatList: (newList: StatList) => void =
-        config.columnName === "chosenStats"
-          ? setChosenStats
-          : screenName !== "settings"
-          ? setResultStats
-          : setResultStatsDefault;
-
-      return { ...config, statList, setStatList };
+  // 🔹 Fusion de tous les stats dans un map par statName
+  const [statMap, setStatMap] = useState<StatToggleMap>(() => {
+    const map: StatToggleMap = {};
+    statNames.forEach((name) => {
+      map[name] = {
+        chosenStats: chosenStats.find((s) => s.name === name)?.checked ?? false,
+        resultStats:
+          screenName === "settings"
+            ? resultStatsDefault.find((s) => s.name === name)?.checked ?? false
+            : resultStats.find((s) => s.name === name)?.checked ?? false,
+      };
     });
-  }, [screenConfig.config, screenName, chosenStats, resultStats, resultStatsDefault]);
-
-  const [statListsInModal, setStatListsInModal] = useState<Record<ColumnName, StatList>>(() => {
-    console.log("reset");
-    return columns.reduce((acc, { columnName, statList }) => {
-      acc[columnName] = statList;
-      return acc;
-    }, {} as Record<ColumnName, StatList>);
+    return map;
   });
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [resultStatsBeforeSync, setResultStatsBeforeSync] = useState(resultStats);
 
-  const handleStatToggle = useCallback(
-    (statName: string, columnName: ColumnName, statIndex: number) => {
-      setStatListsInModal((prev) => {
-        const list = prev[columnName];
-        if (!list) return prev;
+  const toggleStat = useCallback(
+    (statName: string, columnName: ColumnName) => {
+      setStatMap((prev) => {
+        const current = prev[statName][columnName];
+        const newChecked = !current;
 
-        const currentStat = list[statIndex];
-        const newChecked = !currentStat.checked;
-
-        // Garder au moins un coché si nécessaire
-        const keepOne = screenConfig.config.find((c) => c.columnName === columnName)?.keepOneSelected;
-        if (keepOne && !newChecked && !list.some((s, i) => i !== statIndex && s.checked)) return prev;
-
-        const updatedList = [...list];
-        updatedList[statIndex] = { ...currentStat, checked: newChecked };
-
-        // Si sync actif et qu'on modifie chosenStats, synchroniser resultStats
-        if (isResultStatsSync && screenName === "search" && columnName === "chosenStats") {
-          const resultStatsList = prev.resultStats as StatList;
-          const resultStatsUpdated = resultStatsList.map((stat) => {
-            if (stat.name === statName) {
-              return { ...stat, checked: newChecked };
-            }
-            return stat;
-          });
-          return {
-            ...prev,
-            [columnName]: updatedList,
-            resultStats: resultStatsUpdated,
-          };
+        // keep at least one selected for chosenStats in search
+        if (columnName === "chosenStats" && columns.includes("chosenStats") && !newChecked) {
+          const othersChecked = Object.entries(prev)
+            .filter(([key]) => key !== statName)
+            .some(([, val]) => val.chosenStats);
+          if (!othersChecked) return prev;
         }
 
-        console.log("columnname", columnName, "upd", updatedList);
-        return { ...prev, [columnName]: updatedList };
+        const updated: StatToggleMap = { ...prev, [statName]: { ...prev[statName], [columnName]: newChecked } };
+
+        // sync chosenStats -> resultStats if needed
+        if (isResultStatsSync && columnName === "chosenStats" && screenName === "search") {
+          updated[statName].resultStats = newChecked;
+        }
+
+        return updated;
       });
     },
-    [screenConfig.config, isResultStatsSync, screenName]
+    [columns, isResultStatsSync, screenName]
   );
 
-  const handleResultStatsUpdate = useCallback((newStatList: StatList) => {
-    setStatListsInModal((prev) => ({ ...prev, resultStats: newStatList }));
-  }, []);
-
   const handleModalClose = useCallback(() => {
-    console.log("statListsInModal", statListsInModal);
-    columns.forEach(({ columnName, setStatList }) => {
-      const modalData = statListsInModal[columnName];
-      console.log("modalData", modalData);
+    // Mise à jour des stores
+    const chosenUpdated: ChosenStat[] = [];
+    const resultUpdated: ResultStat[] = [];
+    const resultDefaultUpdated: ResultStat[] = [];
 
-      if (modalData) setStatList(modalData);
+    Object.entries(statMap).forEach(([name, vals], statIndex) => {
+      if (columns.includes("chosenStats")) {
+        const prev = chosenStats[statIndex];
+        chosenUpdated.push({ ...prev, name, checked: vals.chosenStats } as ChosenStat);
+      }
+
+      if (columns.includes("resultStats")) {
+        if (screenName === "settings") resultDefaultUpdated.push({ name, checked: vals.resultStats } as ResultStat);
+        else resultUpdated.push({ name, checked: vals.resultStats } as ResultStat);
+      }
     });
-  }, [columns, statListsInModal]);
 
-  useEffect(() => console.log("statListsInModal", statListsInModal), [statListsInModal]);
+    if (columns.includes("chosenStats")) setChosenStats(chosenUpdated);
+    if (screenName === "settings") setResultStatsDefault(resultDefaultUpdated);
+    else setResultStats(resultUpdated);
+  }, [statMap, columns, screenName, setChosenStats, setResultStats, setResultStatsDefault]);
 
   return (
     <ButtonAndModal
-      customTrigger={screenConfig.triggerConfig.customTrigger}
+      customTrigger={customTrigger}
       triggerButtonText={triggerButtonText}
       tooltipText={tooltipText}
-      modalTitle={screenConfig.triggerConfig.modalTitle}
+      modalTitle={modalTitle}
       isModalVisibleProp={isModalVisible}
       setIsModalVisibleProp={setIsModalVisible}
       onModalClose={handleModalClose}
@@ -165,16 +137,29 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
         {children}
         {screenName === "search" && (
           <ResultStatsSyncSwitch
-            resultStats={statListsInModal.resultStats || []}
-            setResultStats={handleResultStatsUpdate}
+            resultStats={Object.entries(statMap).map(
+              ([name, val]) => ({ name, checked: val.resultStats } as ResultStat)
+            )}
+            setResultStats={(newList) =>
+              setStatMap((prev) => {
+                const updated = { ...prev };
+                newList.forEach((s) => {
+                  if (updated[s.name]) updated[s.name].resultStats = s.checked;
+                });
+                return updated;
+              })
+            }
             resultStatsBeforeSync={resultStatsBeforeSync}
             setResultStatsBeforeSync={setResultStatsBeforeSync}
-            chosenStats={(statListsInModal.chosenStats || []) as ChosenStat[]}
+            chosenStats={Object.entries(statMap).map(
+              ([name, val]) => ({ name, checked: val.chosenStats } as ChosenStat)
+            )}
           />
         )}
         <DoubleEntryTable
-          statLists={statListsInModal}
-          onToggleStat={handleStatToggle}
+          statMap={statMap}
+          columns={columns}
+          onToggleStat={toggleStat}
           disabled={isResultStatsSync && screenName === "search"}
         />
       </View>
