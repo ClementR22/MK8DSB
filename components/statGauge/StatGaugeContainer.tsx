@@ -27,9 +27,7 @@ const StatGaugeContainer = ({
 }: StatGaugeContainerProps) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const bonusEnabled = chosenValue != undefined;
-
-  const showAllStatGaugeBonuses = bonusEnabled ? useGeneralStore((state) => state.showAllStatGaugeBonuses) : false;
+  const showAllStatGaugeBonuses = useGeneralStore((state) => state.showAllStatGaugeBonuses);
   const toggleAllStatGaugeBonuses = useGeneralStore((state) => state.toggleAllStatGaugeBonuses);
 
   // Bonus trouvé
@@ -66,9 +64,8 @@ const StatGaugeContainer = ({
       onPress();
       return;
     }
-    if (!bonusEnabled) return;
     toggleAllStatGaugeBonuses();
-  }, [bonusEnabled, toggleAllStatGaugeBonuses]);
+  }, [toggleAllStatGaugeBonuses]);
 
   return (
     <Tooltip
