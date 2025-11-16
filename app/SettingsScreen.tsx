@@ -45,31 +45,31 @@ const SettingsScreen: React.FC = () => {
 
   return (
     <ScreenProvider screenName="settings">
-      <ResultStatsProvider>
-        <ScrollViewScreen scrollEnabled={true}>
-          <BoxContainer alignItems={"stretch"} boxShadow={box_shadow_z1}>
-            <LanguageSelector />
+      <ScrollViewScreen scrollEnabled={true}>
+        <BoxContainer alignItems={"stretch"} boxShadow={box_shadow_z1}>
+          <LanguageSelector />
 
-            <ThemeSelector />
+          <ThemeSelector />
 
-            <ResultsNumberSelector />
+          <ResultsNumberSelector />
 
+          <ResultStatsProvider>
             <StatSelector triggerButtonText="configureDefaultStats" tooltipText="configureDefaultStats">
               <Text role="title" size="small" namespace="text">
                 appliedWhenTheAppStarts
               </Text>
             </StatSelector>
+          </ResultStatsProvider>
 
-            <ButtonSendFeedback />
+          <ButtonSendFeedback />
 
-            <ButtonLicenses />
+          <ButtonLicenses />
 
-            <ButtonResetSettings resetSettings={resetSettings} />
+          <ButtonResetSettings resetSettings={resetSettings} />
 
-            <ButtonDeleteAllBuildsInMemory deleteAllSavedBuilds={handleDeleteAllSavedBuilds} />
-          </BoxContainer>
-        </ScrollViewScreen>
-      </ResultStatsProvider>
+          <ButtonDeleteAllBuildsInMemory deleteAllSavedBuilds={handleDeleteAllSavedBuilds} />
+        </BoxContainer>
+      </ScrollViewScreen>
     </ScreenProvider>
   );
 };

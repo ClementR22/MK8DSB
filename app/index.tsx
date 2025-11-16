@@ -59,34 +59,35 @@ const SearchBuildScreen: React.FC = () => {
 
   return (
     <ScreenProvider screenName="search">
-      <ResultStatsProvider>
-        <ScrollViewScreen scrollEnabled={isScrollEnable} ref={scrollviewMainRef}>
-          <BoxContainer
-            borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}
-            padding={PADDING_SEARCH_CONTAINER}
-            boxShadow={box_shadow_z1}
-            gap={isSliderCompact ? GAP_STAT_GAUGE_GROUP : undefined}
-          >
-            <View style={styles.searchContainerPressablesContainer}>
-              <ButtonIcon
-                onPress={toggleSliderCompact}
-                iconName={isSliderCompact ? "chevron-down" : "chevron-up"}
-                iconType={IconType.MaterialCommunityIcons}
-                tooltipText={isSliderCompact ? "DevelopSliders" : "ReduceSliders"}
-              />
+      <ScrollViewScreen scrollEnabled={isScrollEnable} ref={scrollviewMainRef}>
+        <BoxContainer
+          borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}
+          padding={PADDING_SEARCH_CONTAINER}
+          boxShadow={box_shadow_z1}
+          gap={isSliderCompact ? GAP_STAT_GAUGE_GROUP : undefined}
+        >
+          <View style={styles.searchContainerPressablesContainer}>
+            <ButtonIcon
+              onPress={toggleSliderCompact}
+              iconName={isSliderCompact ? "chevron-down" : "chevron-up"}
+              iconType={IconType.MaterialCommunityIcons}
+              tooltipText={isSliderCompact ? "DevelopSliders" : "ReduceSliders"}
+            />
 
-              <View style={styles.headerTextContainer}>
-                <Text role="headline" size="medium" namespace="text">
-                  desiredStats
-                </Text>
-              </View>
-
-              <ButtonLoadBuild tooltipText="loadStatsOfASet" />
+            <View style={styles.headerTextContainer}>
+              <Text role="headline" size="medium" namespace="text">
+                desiredStats
+              </Text>
             </View>
 
-            {/* Afficher les sliders memoisés */}
-            {renderedSliders}
-          </BoxContainer>
+            <ButtonLoadBuild tooltipText="loadStatsOfASet" />
+          </View>
+
+          {/* Afficher les sliders memoisés */}
+          {renderedSliders}
+        </BoxContainer>
+
+        <ResultStatsProvider>
           <SearchBuildScreenPressablesContainer
             scrollviewBuildsCardsRef={scrollviewBuildsCardsRef}
             scrollviewMainRef={scrollviewMainRef}
@@ -95,8 +96,8 @@ const SearchBuildScreen: React.FC = () => {
           <BuildCardsScrollProvider scrollRef={scrollviewBuildsCardsRef}>
             <BuildCardsContainer ref={scrollviewBuildsCardsRef} builds={buildsListFound} />
           </BuildCardsScrollProvider>
-        </ScrollViewScreen>
-      </ResultStatsProvider>
+        </ResultStatsProvider>
+      </ScrollViewScreen>
     </ScreenProvider>
   );
 };

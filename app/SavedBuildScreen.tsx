@@ -22,8 +22,8 @@ const SavedBuildScreen: React.FC = () => {
 
   return (
     <ScreenProvider screenName="save">
-      <ResultStatsProvider>
-        <ScrollViewScreen scrollEnabled={isScrollEnable}>
+      <ScrollViewScreen scrollEnabled={isScrollEnable}>
+        <ResultStatsProvider>
           <ScreenPressablesContainer sortNumber={sortNumberSavedBuilds} setSortNumber={setSortNumberSavedBuilds}>
             <ButtonImportBuild screenName="save" />
             <StatSelector tooltipText="displayedStatsInBuilds" />
@@ -32,8 +32,8 @@ const SavedBuildScreen: React.FC = () => {
           <BuildCardsScrollProvider scrollRef={scrollRef}>
             <BuildCardsContainer ref={scrollRef} builds={buildsListSaved} />
           </BuildCardsScrollProvider>
-        </ScrollViewScreen>
-      </ResultStatsProvider>
+        </ResultStatsProvider>
+      </ScrollViewScreen>
     </ScreenProvider>
   );
 };

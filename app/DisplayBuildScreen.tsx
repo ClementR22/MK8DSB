@@ -87,30 +87,30 @@ const DisplayBuildScreen = () => {
 
   return (
     <ScreenProvider screenName="display">
-      <ResultStatsProvider>
-        <ScrollViewScreen scrollEnabled={isScrollEnable}>
-          <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
-            <ButtonAddBuild scrollRef={scrollRef} />
-            <ButtonLoadBuild tooltipText="loadASet" />
-            <ButtonIcon
-              onPress={toggleIsBuildCardsCollapsed}
-              iconName={isBuildCardsCollapsed ? "chevron-down" : "chevron-up"}
-              iconType={IconType.MaterialCommunityIcons}
-              tooltipText={isBuildCardsCollapsed ? "developBuilds" : "reduceBuilds"}
-            />
-          </ScreenPressablesContainer>
+      <ScrollViewScreen scrollEnabled={isScrollEnable}>
+        <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
+          <ButtonAddBuild scrollRef={scrollRef} />
+          <ButtonLoadBuild tooltipText="loadASet" />
+          <ButtonIcon
+            onPress={toggleIsBuildCardsCollapsed}
+            iconName={isBuildCardsCollapsed ? "chevron-down" : "chevron-up"}
+            iconType={IconType.MaterialCommunityIcons}
+            tooltipText={isBuildCardsCollapsed ? "developBuilds" : "reduceBuilds"}
+          />
+        </ScreenPressablesContainer>
 
-          <BuildCardsScrollProvider scrollRef={scrollRef}>
+        <BuildCardsScrollProvider scrollRef={scrollRef}>
+          <ResultStatsProvider>
             <BuildCardsContainer ref={scrollRef} builds={buildsWithColor} hideRemoveBuild={hideRemoveBuild} />
 
             <View style={styles.mainButtonWrapper}>
               <StatSelector triggerButtonText="statsToCompare" tooltipText="statsToCompare" />
             </View>
+          </ResultStatsProvider>
 
-            <StatGaugeGroupCompare buildsColorsMap={buildsColorsMap} />
-          </BuildCardsScrollProvider>
-        </ScrollViewScreen>
-      </ResultStatsProvider>
+          <StatGaugeGroupCompare buildsColorsMap={buildsColorsMap} />
+        </BuildCardsScrollProvider>
+      </ScrollViewScreen>
     </ScreenProvider>
   );
 };
