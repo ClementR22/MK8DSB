@@ -45,6 +45,8 @@ const BuildNameInputContent: React.FC<BuildNameInputContentProps> = ({
         editable={editable}
         onFocus={onFocus}
         onBlur={onEndEditingOrBlur}
+        placeholder={id}
+        placeholderTextColor={theme.on_surface_variant}
       />
     </View>
   );
