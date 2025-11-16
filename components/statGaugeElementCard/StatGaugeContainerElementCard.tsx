@@ -4,7 +4,7 @@ import useThemeStore from "@/stores/useThemeStore";
 import { BORDER_RADIUS_STAT_GAUGE_CONTAINER, HEIGHT_STAT_GAUGE_CONTAINER } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
 import Tooltip from "../Tooltip";
-import { StatName } from "@/data/stats/statsTypes";
+import { StatName } from "@/types/statsTypes";
 import { statNamesCompact } from "@/data/stats/statsData";
 
 interface StatGaugeContainerElementCardProps {

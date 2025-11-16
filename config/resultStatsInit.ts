@@ -1,5 +1,5 @@
 import { statNames } from "@/data/stats/statsData";
-import { ResultStats } from "@/contexts/ResultStatsContext";
+import { ResultStat } from "@/contexts/ResultStatsContext";
 
 const resultStatsDefaultConfig: Record<string, boolean> = {
   speedGround: true,
@@ -16,12 +16,12 @@ const resultStatsDefaultConfig: Record<string, boolean> = {
   miniTurbo: true,
 };
 
-export const resultStatsDefaultInit: ResultStats = statNames.map((statName) => ({
+export const resultStatsDefaultInit: ResultStat[] = statNames.map((statName) => ({
   name: statName,
   checked: resultStatsDefaultConfig[statName],
 }));
 
-export const resultStatsSaveScreenInit: ResultStats = statNames.map((statName) => ({
+export const resultStatsSaveScreenInit: ResultStat[] = statNames.map((statName) => ({
   name: statName,
   checked: true,
 }));

@@ -1,4 +1,4 @@
-import { Category } from "@/data/elements/elementsTypes";
+import { Category } from "@/types/elementsTypes";
 import { ImageSourcePropType } from "react-native";
 
 export const categoryImageSources: { [key in Category]: ImageSourcePropType } = {

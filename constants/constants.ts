@@ -1,4 +1,4 @@
-import { StatName } from "@/data/stats/statsTypes";
+import { StatName } from "@/types/statsTypes";
 
 export const MAX_STAT_VALUE = 6;
 

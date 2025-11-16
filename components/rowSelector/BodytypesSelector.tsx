@@ -1,6 +1,6 @@
 // components/BodytypesSelector.tsx
 import React, { memo, useCallback, useMemo } from "react";
-import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
+import { Bodytype } from "@/types/bodytypesTypes";
 import IconSelector from "./IconSelector";
 import { bodytypeImageSources } from "@/assets/images/bodytypeImageSources";
 import useThemeStore from "@/stores/useThemeStore";

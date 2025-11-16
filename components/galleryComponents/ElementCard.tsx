@@ -1,12 +1,12 @@
 import React, { memo, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { maxValues } from "@/data/classStats";
-import { Category } from "@/data/elements/elementsTypes";
+import { Category } from "@/types/elementsTypes";
 import { BORDER_RADIUS_18, LIST_ITEM_SPACING, PADDING_HORIZONTAL_ELEMENT_CARD } from "@/utils/designTokens";
 import useThemeStore from "@/stores/useThemeStore";
 import StatGaugeRelativeBar from "../statGauge/StatGaugeRelativeBar";
 import Text from "@/primitiveComponents/Text";
-import { StatName } from "@/data/stats/statsTypes";
+import { StatName } from "@/types/statsTypes";
 import StatGaugeContainerElementCard from "../statGaugeElementCard/StatGaugeContainerElementCard";
 import StatGaugeBarElementCard from "../statGaugeElementCard/StatGaugeBarElementCard";
 

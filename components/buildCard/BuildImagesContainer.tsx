@@ -3,7 +3,7 @@ import { Image, Pressable, StyleSheet, View } from "react-native";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
 import { useScreen } from "@/contexts/ScreenContext";
 import { BUILD_CARD_WIDTH, PADDING_BUILD_CARD } from "@/utils/designTokens";
-import { Category } from "@/data/elements/elementsTypes";
+import { Category } from "@/types/elementsTypes";
 import { categories, elementsData } from "@/data/elements/elementsData";
 import Tooltip from "../Tooltip";
 
@@ -21,10 +21,10 @@ interface BuildImagesContainerProps {
   buildDataId: string;
 }
 
-interface BuildImageCategoryData {
+type BuildImageCategoryData = {
   category: string;
   elements: Array<{ name: string; image: any }>;
-}
+};
 
 const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
   classIds,

@@ -2,7 +2,7 @@ import React, { memo, useCallback, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { sortButtonsConfig } from "@/config/sortButtonsConfig";
-import { SortName } from "@/data/stats/statsTypes";
+import { SortName } from "@/types/statsTypes";
 import {
   statNamesHandling,
   statNamesSortElementDefault,

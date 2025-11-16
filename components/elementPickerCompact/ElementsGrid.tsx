@@ -1,4 +1,4 @@
-import { Category, ElementData } from "@/data/elements/elementsTypes";
+import { Category, ElementData } from "@/types/elementsTypes";
 import React, { memo } from "react";
 import { View, StyleSheet, Dimensions, Pressable } from "react-native"; // Removed Dimensions
 import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";

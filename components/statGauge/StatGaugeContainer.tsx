@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import Text from "@/primitiveComponents/Text";
-import { StatName } from "@/data/stats/statsTypes";
+import { StatName } from "@/types/statsTypes";
 import { statNamesCompact } from "@/data/stats/statsData";
 import Tooltip from "../Tooltip";
 import useThemeStore from "@/stores/useThemeStore";

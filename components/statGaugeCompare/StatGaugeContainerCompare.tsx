@@ -1,12 +1,12 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import StatGaugeContainer from "../statGauge/StatGaugeContainer";
-import { StatName } from "@/data/stats/statsTypes";
+import { StatName } from "@/types/statsTypes";
 import { useBuildCardStyle } from "@/hooks/useBuildCardStyle";
 import Text from "@/primitiveComponents/Text";
 import { useBuildCardsScroll } from "@/contexts/BuildCardsScrollContext";
 import StatGaugeBar from "../statGauge/StatGaugeBar";
-export interface SetIdAndStatValue {
+interface SetIdAndStatValue {
   id: string;
   value: number;
   color: string;

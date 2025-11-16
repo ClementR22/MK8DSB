@@ -1,13 +1,13 @@
 export type Category = "character" | "body" | "wheel" | "glider";
 
 // Base interface for all elements, now includes ElementStats
-export interface ElementData {
+export type ElementData = {
   id: number;
   name: string;
   category: Category;
   classId: number;
   imageUrl: ReturnType<typeof require>;
-}
+};
 
 export interface ElementDataCharacter extends ElementData {
   category: "character";
@@ -16,12 +16,10 @@ export interface ElementDataCharacter extends ElementData {
 export interface ElementDataBody extends ElementData {
   category: "body";
   bodytype: "kart" | "bike" | "sportBike" | "ATV";
-  // statBonus: any;
 }
 
 export interface ElementDataWheel extends ElementData {
   category: "wheel";
-  // statBonus: any;
 }
 
 export interface ElementDataGlider extends ElementData {
@@ -29,7 +27,7 @@ export interface ElementDataGlider extends ElementData {
 }
 
 // Define the structure for all the stats
-export interface ElementStats {
+export type ElementStats = {
   speedGround: number;
   speedAntiGravity: number;
   speedWater: number;
@@ -42,4 +40,4 @@ export interface ElementStats {
   handlingAir: number;
   traction: number;
   miniTurbo: number;
-}
+};

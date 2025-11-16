@@ -9,7 +9,7 @@ interface ScrollViewScreenProps {
 }
 
 export interface ScrollViewScreenHandles {
-  scrollToStart;
+  scrollToStart: () => void;
   scrollToEnd: () => void;
 }
 

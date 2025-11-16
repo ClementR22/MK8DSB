@@ -6,13 +6,7 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 import { StyleSheet } from "react-native";
 import useThemeStore from "@/stores/useThemeStore";
 
-export type HelpContentItem = {
-  type: "title" | "highlight" | "step" | "feature" | "custom";
-  content: any;
-  props?: any;
-};
-
-export type HelpModalProps = {
+type HelpModalProps = {
   title: string;
   children: React.ReactElement[];
 };

@@ -12,7 +12,7 @@ import BuildCard from "./BuildCard";
 import useThemeStore from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
-import { Build } from "@/data/builds/buildsTypes";
+import { Build } from "@/types/buildsTypes";
 import Placeholder from "./Placeholder";
 import { BORDER_RADIUS_CONTAINER_LOWEST, MARGIN_CONTAINER_LOWEST, PADDING_STANDARD } from "@/utils/designTokens";
 import { box_shadow_z1 } from "../styles/shadow";

@@ -5,7 +5,7 @@ import "react-native-get-random-values";
 // Data and Types
 import { statNames } from "@/data/stats/statsData";
 import { ScreenName } from "@/contexts/ScreenContext";
-import { Build } from "@/data/builds/buildsTypes";
+import { Build } from "@/types/buildsTypes";
 
 // Utilities
 import { SortableElement, sortElements } from "@/utils/sortElements";
@@ -22,7 +22,7 @@ import { useGenerateUniqueName } from "@/hooks/useGenerateUniqueName";
 export const MAX_NUMBER_BUILDS_DISPLAY = 10;
 export const MAX_NUMBER_BUILDS_SAVE = 30;
 
-export interface BuildsListStoreState {
+interface BuildsListStoreState {
   buildsListFound: Build[];
   buildsListDisplayed: Build[];
   buildsListSaved: Build[];

@@ -6,7 +6,7 @@ import { router } from "expo-router";
 // Data and Types
 import { ScreenName } from "@/contexts/ScreenContext";
 import { MAX_NUMBER_BUILDS_DISPLAY, MAX_NUMBER_BUILDS_SAVE } from "./useBuildsListStore";
-import { Build, BuildPersistant } from "@/data/builds/buildsTypes";
+import { Build, BuildPersistant } from "@/types/buildsTypes";
 
 // Utilities
 import { checkFormatBuildImported } from "@/utils/checkFormatBuildImported";
@@ -22,7 +22,7 @@ import { t } from "i18next";
 import { BuildAlreadyExistsError } from "@/errors/errors";
 import { useGenerateUniqueName } from "@/hooks/useGenerateUniqueName";
 
-export interface BuildsActionsStoreState {
+interface BuildsActionsStoreState {
   loadBuildCard: (params: {
     source?: ScreenName;
     buildDataId?: string;

@@ -7,7 +7,7 @@ import {
   ElementStats,
   ElementData,
   Category,
-} from "./elementsTypes";
+} from "../../types/elementsTypes";
 
 export const categories: Category[] = ["character", "body", "wheel", "glider"];
 

@@ -1,7 +1,7 @@
 // usePressableElementsStore.ts
 import { create } from "zustand";
 import { categories } from "@/data/elements/elementsData";
-import { Category } from "@/data/elements/elementsTypes";
+import { Category } from "@/types/elementsTypes";
 
 type SelectedClassIdsByCategory = {
   character: number;
@@ -17,7 +17,7 @@ type MultiSelectedClassIdsByCategory = {
   glider: Set<number>;
 };
 
-export type PressableElementsStore = {
+interface PressableElementsState {
   selectedClassIdsByCategory: SelectedClassIdsByCategory;
   multiSelectedClassIdsByCategory: MultiSelectedClassIdsByCategory;
   getSelectedClassIds: (
@@ -31,7 +31,7 @@ export type PressableElementsStore = {
 
   selectElementsByClassId: (category: Category, classId: number) => void;
   toggleMultiSelectElementsByClassId: (category: Category, elementId: number) => void;
-};
+}
 
 const defaultSingleSelection: SelectedClassIdsByCategory = { character: 9, body: 16, wheel: 30, glider: 39 };
 const defaultMultiSelection: MultiSelectedClassIdsByCategory = {
@@ -41,7 +41,7 @@ const defaultMultiSelection: MultiSelectedClassIdsByCategory = {
   glider: new Set(),
 };
 
-const usePressableElementsStore = create<PressableElementsStore>((set, get) => ({
+const usePressableElementsStore = create<PressableElementsState>((set, get) => ({
   selectedClassIdsByCategory: { ...defaultSingleSelection },
   multiSelectedClassIdsByCategory: { ...defaultMultiSelection },
 

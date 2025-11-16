@@ -4,7 +4,7 @@ import { HELP_HIGHLIGHT_BOX_COLORS } from "@/constants/Colors";
 import { BORDER_RADIUS_STANDARD } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
 
-export type BoxType = "info" | "result" | "tips";
+type BoxType = "info" | "result" | "tips";
 
 interface HelpHighlightBoxProps {
   type: BoxType;

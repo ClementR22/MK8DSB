@@ -1,5 +1,5 @@
 import rawBuildsData from "./buildsData.json";
-import { BuildData } from "./buildsTypes";
+import { BuildData } from "../../types/buildsTypes";
 
 export const buildsDataArray: BuildData[] = Object.entries(rawBuildsData).map(
   ([id, build]) =>

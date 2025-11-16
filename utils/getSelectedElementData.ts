@@ -1,4 +1,4 @@
-import { Category, ElementData } from "@/data/elements/elementsTypes";
+import { Category, ElementData } from "@/types/elementsTypes";
 import { classesStatsByCategory } from "@/data/elements/elementsStats";
 import { statNames } from "@/data/stats/statsData";
 

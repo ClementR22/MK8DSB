@@ -2,19 +2,19 @@ import { create } from "zustand";
 import { toggleAndGetChecks } from "@/utils/toggleCheck";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 import { resultStatsDefaultInit } from "@/config/resultStatsInit";
-import { ResultStats } from "@/contexts/ResultStatsContext";
+import { ResultStat } from "@/contexts/ResultStatsContext";
 import { IS_RESULT_STATS_SYNC } from "@/constants/constants";
 
-interface ResultStatsDefaultStore {
+interface ResultStatsDefaultState {
   isResultStatsSync: boolean;
   setIsResultStatsSync: (newValue: boolean) => Promise<void>;
 
-  resultStatsDefault: ResultStats;
-  setResultStatsDefault: (newList: ResultStats) => void;
+  resultStatsDefault: ResultStat[];
+  setResultStatsDefault: (newList: ResultStat[]) => void;
   toggleCheckListResultStatsDefault: (name: string) => void;
 }
 
-const useResultStatsDefaultStore = create<ResultStatsDefaultStore>((set, get) => ({
+const useResultStatsDefaultStore = create<ResultStatsDefaultState>((set, get) => ({
   isResultStatsSync: IS_RESULT_STATS_SYNC,
 
   async setIsResultStatsSync(newValue) {

@@ -10,13 +10,13 @@ import {
 } from "react-native";
 import PagerView from "react-native-pager-view";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
-import { Category } from "@/data/elements/elementsTypes";
+import { Category } from "@/types/elementsTypes";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import SortModeSelector from "../sortModeSelector/SortModeSelector";
 import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
+import { Bodytype } from "@/types/bodytypesTypes";
 import BodytypesSelector from "../rowSelector/BodytypesSelector";
 import useThemeStore from "@/stores/useThemeStore";
 import CategorySelector from "../rowSelector/CategorySelector";

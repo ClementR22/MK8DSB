@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState, ReactNo
 import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
 import { resultStatsSaveScreenInit } from "@/config/resultStatsInit";
 import { deepCompareStatArrays } from "@/utils/deepCompare";
-import { StatName } from "@/data/stats/statsTypes";
+import { StatName } from "@/types/statsTypes";
 import { useScreen } from "./ScreenContext";
 
 export type ResultStat = {
@@ -10,12 +10,10 @@ export type ResultStat = {
   checked: boolean;
 };
 
-export type ResultStats = ResultStat[];
-
-interface ResultStatsContextType {
-  resultStats: ResultStats;
-  setResultStats: React.Dispatch<React.SetStateAction<ResultStats>>;
-}
+type ResultStatsContextType = {
+  resultStats: ResultStat[];
+  setResultStats: React.Dispatch<React.SetStateAction<ResultStat[]>>;
+};
 
 const ResultStatsContext = createContext<ResultStatsContextType | undefined>(undefined);
 
@@ -27,7 +25,7 @@ export const ResultStatsProvider: React.FC<ResultStatsProviderProps> = ({ childr
   const screenName = useScreen();
   const resultStatsDefault = useResultStatsDefaultStore((state) => state.resultStatsDefault);
 
-  const [resultStats, setResultStats] = useState<ResultStats>(() =>
+  const [resultStats, setResultStats] = useState<ResultStat[]>(() =>
     screenName === "save" ? resultStatsSaveScreenInit : resultStatsDefault
   );
 

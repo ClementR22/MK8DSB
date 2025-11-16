@@ -1,4 +1,4 @@
-import { Bodytype } from "../bodytypes/bodytypesTypes";
+import { Bodytype } from "./bodytypesTypes";
 
 export type BuildData = {
   buildDataId: string;

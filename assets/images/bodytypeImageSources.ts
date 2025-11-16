@@ -1,4 +1,4 @@
-import { Bodytype } from "@/data/bodytypes/bodytypesTypes";
+import { Bodytype } from "@/types/bodytypesTypes";
 import { ImageSourcePropType } from "react-native";
 
 export const bodytypeImageSources: { [key in Bodytype]: ImageSourcePropType } = {

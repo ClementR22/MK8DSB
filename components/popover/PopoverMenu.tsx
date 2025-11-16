@@ -3,13 +3,13 @@ import React, { useRef } from "react";
 import { StyleSheet } from "react-native";
 import { Menu, MenuOptions, MenuTrigger } from "react-native-popup-menu";
 import PopoverMenuItem from "./PopoverMenuItem";
-import { ActionIconPropsList } from "@/hooks/useActionIconPropsList";
+import { ActionIconProps } from "@/hooks/useActionIconPropsList";
 import { t } from "i18next";
 import { BUTTON_SIZE } from "@/utils/designTokens";
 
 interface PopoverMenuProps {
   trigger: React.ReactElement;
-  actionIconPropsList?: ActionIconPropsList;
+  actionIconPropsList?: ActionIconProps[];
 }
 
 const PopoverMenu: React.FC<PopoverMenuProps> = ({ trigger, actionIconPropsList }) => {

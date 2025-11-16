@@ -7,10 +7,10 @@ import Text from "@/primitiveComponents/Text";
 import { BORDER_RADIUS_STANDARD } from "@/utils/designTokens";
 import { typography } from "./styles/typography";
 
-interface PickerItem {
+type PickerItem = {
   label: string; // clé de traduction (ex. "settings.language.english")
   value: string;
-}
+};
 
 interface PickerProps {
   value: string;

@@ -1,4 +1,4 @@
-import { BuildPersistant } from "@/data/builds/buildsTypes";
+import { BuildPersistant } from "@/types/buildsTypes";
 
 export const checkFormatBuildImported = (obj: unknown): obj is BuildPersistant => {
   if (typeof obj !== "object" || Array.isArray(obj) || obj === null) {

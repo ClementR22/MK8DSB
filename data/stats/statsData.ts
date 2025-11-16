@@ -5,7 +5,7 @@ import {
   StatNameSortElementDefault,
   StatNameSortBuildCardDefault,
   StatNameSpeed,
-} from "./statsTypes";
+} from "../../types/statsTypes";
 
 export const statNames: StatName[] = [
   "speedGround",

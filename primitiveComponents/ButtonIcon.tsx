@@ -1,9 +1,8 @@
 import React from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
 import IconContainer from "./IconContainer";
-import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
+import { BUTTON_SIZE } from "@/utils/designTokens";
 
 export interface ButtonIconProps {
   onPress?: (event?: Event) => void;

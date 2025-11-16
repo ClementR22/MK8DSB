@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import StatSliderContent from "./StatSliderContent";
-import { StatName } from "@/data/stats/statsTypes";
+import { StatName } from "@/types/statsTypes";
 
 interface StatSliderPreviewProps {
   name: StatName;

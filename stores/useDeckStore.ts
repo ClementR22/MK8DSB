@@ -1,10 +1,10 @@
 import { DEFAULT_BUILDS } from "@/constants/defaultBuilds";
-import { BuildPersistant } from "@/data/builds/buildsTypes";
+import { BuildPersistant } from "@/types/buildsTypes";
 import { create } from "zustand";
 
 export type BuildEntry = { name: string; isSaved: boolean };
 
-type DeckState = {
+interface DeckState {
   deck: Map<string, BuildEntry>;
 
   setBuildName: (buildDataId: string, name: string) => void;
@@ -14,7 +14,7 @@ type DeckState = {
   unSaveBuild: (buildDataId: string) => void;
   loadBuildsSaved: (buildsSaved: BuildPersistant[]) => void;
   checkNameFree: (buildName: string) => boolean;
-};
+}
 
 const useDeckStore = create<DeckState>((set, get) => ({
   deck: new Map([

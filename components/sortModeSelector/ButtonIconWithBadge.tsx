@@ -3,8 +3,8 @@ import IconContainer from "@/primitiveComponents/IconContainer";
 import Text from "@/primitiveComponents/Text";
 import useThemeStore from "@/stores/useThemeStore";
 import { BORDER_RADIUS_INF } from "@/utils/designTokens";
-import React, { memo, useMemo } from "react";
-import { StyleSheet, View, ViewStyle } from "react-native";
+import React, { memo } from "react";
+import { StyleSheet, View } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 interface ButtonIconWithBadgeProps extends ButtonIconProps {

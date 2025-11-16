@@ -5,12 +5,11 @@ import Checkbox from "expo-checkbox";
 import useThemeStore from "@/stores/useThemeStore";
 import Text from "@/primitiveComponents/Text";
 import { BORDER_RADIUS_MODAL_CHILDREN_CONTAINER } from "@/utils/designTokens";
-import { StatName } from "@/data/stats/statsTypes";
 
 export type ColumnName = "chosenStats" | "resultStats";
 
 export type StatToggleMap = Record<
-  string,
+  string, // on met string StatName pour ne pas force l'exhaustivité
   {
     chosenStats: boolean;
     resultStats: boolean;

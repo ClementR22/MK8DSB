@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback, memo } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import CategorySelector from "@/components/rowSelector/CategorySelector";
-import { Category } from "@/data/elements/elementsTypes";
+import { Category } from "@/types/elementsTypes";
 import { elementsDataByCategory } from "@/data/elements/elementsData";
 import { sortElements } from "@/utils/sortElements";
 import ElementCard from "@/components/galleryComponents/ElementCard";

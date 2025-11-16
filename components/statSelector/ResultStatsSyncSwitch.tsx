@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
-import { ResultStats } from "@/contexts/ResultStatsContext";
+import { ResultStat } from "@/contexts/ResultStatsContext";
 import { ChosenStat } from "@/stores/useStatsStore";
 import ToggleSwitch from "toggle-switch-react-native";
 import useThemeStore from "@/stores/useThemeStore";
@@ -8,10 +8,10 @@ import { StyleSheet, View } from "react-native";
 import Text from "@/primitiveComponents/Text";
 
 interface ResultStatsSyncSwitchProps {
-  resultStats: ResultStats;
-  setResultStats: (newStatList: ResultStats) => void;
-  resultStatsBeforeSync: ResultStats;
-  setResultStatsBeforeSync: (newStatList: ResultStats) => void;
+  resultStats: ResultStat[];
+  setResultStats: (newStatList: ResultStat[]) => void;
+  resultStatsBeforeSync: ResultStat[];
+  setResultStatsBeforeSync: (newStatList: ResultStat[]) => void;
   chosenStats: ChosenStat[];
 }
 

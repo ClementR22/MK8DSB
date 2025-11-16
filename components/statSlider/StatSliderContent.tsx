@@ -6,7 +6,7 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import useStatsStore from "@/stores/useStatsStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import useThemeStore from "@/stores/useThemeStore";
-import { StatName } from "@/data/stats/statsTypes";
+import { StatName } from "@/types/statsTypes";
 import { BORDER_RADIUS_INF, BORDER_RADIUS_STAT_GAUGE_CONTAINER, BUTTON_SIZE } from "@/utils/designTokens";
 import { box_shadow_z1 } from "../styles/shadow";
 import Text from "@/primitiveComponents/Text";

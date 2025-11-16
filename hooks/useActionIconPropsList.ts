@@ -11,14 +11,12 @@ import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { buildsDataMap } from "@/data/builds/buildsData";
 import { BuildAlreadyExistsError } from "@/errors/errors";
 
-interface ActionProps {
+export interface ActionIconProps {
   title: string;
   name: string;
   type: IconType;
   onPress: () => void;
 }
-
-export type ActionIconPropsList = ActionProps[];
 
 export function useActionIconPropsList(
   actionNamesToGenerate: ActionNamesList,
@@ -26,7 +24,7 @@ export function useActionIconPropsList(
   isInLoadBuildModal: boolean,
   buildDataId: string,
   isSaved?: boolean
-): ActionIconPropsList {
+): ActionIconProps[] {
   const source = isInLoadBuildModal ? "save" : screenName;
 
   const updateSelectionFromBuild = usePressableElementsStore((state) => state.updateSelectionFromBuild);
@@ -109,7 +107,7 @@ export function useActionIconPropsList(
   }, [source, buildDataId, exportBuild]);
 
   if (isInLoadBuildModal) {
-    const actionIconPropsList: ActionIconPropsList = [
+    const actionIconPropsList: ActionIconProps[] = [
       {
         title: screenName === "search" ? "loadTheStats" : "loadTheBuild",
         name: "check",
@@ -120,8 +118,8 @@ export function useActionIconPropsList(
     return actionIconPropsList;
   }
 
-  const actionIconPropsList: ActionIconPropsList = useMemo(() => {
-    const allActionsDefs: Record<ActionName, ActionProps> = {
+  const actionIconPropsList: ActionIconProps[] = useMemo(() => {
+    const allActionsDefs: Record<ActionName, ActionIconProps> = {
       edit: {
         title: "edit",
         name: "edit",

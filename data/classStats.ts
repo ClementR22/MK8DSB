@@ -1,4 +1,4 @@
-import { Category, ElementStats } from "./elements/elementsTypes";
+import { Category, ElementStats } from "../types/elementsTypes";
 
 export const maxValues: Record<Category, number> = {
   character: 5,

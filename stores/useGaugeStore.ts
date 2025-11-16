@@ -1,17 +1,15 @@
-import React, { useCallback, useMemo } from "react";
 import { create } from "zustand";
 import { LayoutChangeEvent } from "react-native";
-import { MAX_STAT_VALUE } from "@/constants/constants";
 
 export type ContextId = "stat-gauge-compact" | "stat-gauge-build-card" | "stat-gauge-gallery";
 
-interface GaugeStore {
+interface GaugeState {
   gaugeWidths: Record<ContextId, number>;
   setGaugeWidth: (contextId: ContextId, width: number) => void;
   createLayoutHandler: (contextId: ContextId) => (event: LayoutChangeEvent) => void;
 }
 
-const useGaugeStore = create<GaugeStore>((set, get) => ({
+const useGaugeStore = create<GaugeState>((set, get) => ({
   gaugeWidths: {
     "stat-gauge-compact": 0,
     "stat-gauge-build-card": 0,

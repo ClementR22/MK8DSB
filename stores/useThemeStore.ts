@@ -9,15 +9,15 @@ const THEME_STORAGE_KEY = "theme"; // Define a constant for the storage key
 type Theme = typeof light_theme;
 export type ThemeMode = "light" | "dark" | "system";
 
-type ThemeStore = {
+interface ThemeState {
   theme: Theme;
   themeMode: ThemeMode;
   setTheme: (newThemeMode: ThemeMode) => Promise<void>;
   updateSystemTheme: () => void;
-};
+}
 
 // --- Store Implementation ---
-const useThemeStore = create<ThemeStore>((set, get) => {
+const useThemeStore = create<ThemeState>((set, get) => {
   // Helper function to determine the correct theme object
   const getTheme = (themeMode: ThemeMode): Theme => {
     switch (themeMode) {

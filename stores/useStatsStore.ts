@@ -2,19 +2,19 @@ import { create } from "zustand";
 
 // Data and Types
 import { statNames } from "@/data/stats/statsData";
-import { StatName } from "@/data/stats/statsTypes";
+import { StatName } from "@/types/statsTypes";
 
 // Constants
 import { CHOSEN_STATS_DEFAULT_SELECTED } from "@/constants/constants";
 
-export interface ChosenStat {
+export type ChosenStat = {
   name: StatName;
   checked: boolean;
   value: number | null;
   statFilterNumber: number;
-}
+};
 
-export interface StatsStoreState {
+interface StatsStoreState {
   chosenStats: ChosenStat[];
 
   setChosenStats: (newChosenStats: ChosenStat[]) => void;
