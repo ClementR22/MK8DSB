@@ -1,7 +1,6 @@
 // components/elementPickerCompact/ElementsDeselector.tsx
 import React, { memo, useEffect, useMemo, useRef } from "react";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import { elementsDataByClassId } from "@/data/elements/elementsData";
 import useThemeStore from "@/stores/useThemeStore";
 import { Pressable, ScrollView, View } from "react-native";
 import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
@@ -10,11 +9,13 @@ import ElementPickerCompact from "./ElementPickerCompact";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { BORDER_RADIUS_MODAL_CHILDREN_CONTAINER } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
+import { useGameData } from "@/hooks/useGameData";
 
 const ITEM_ELEMENT_WIDTH = 40;
 const ELEMENTS_CONTAINER_PADDING = 6;
 
 const ElementsDeselector: React.FC = () => {
+  const { elementsDataByClassId } = useGameData();
   const theme = useThemeStore((state) => state.theme);
 
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);

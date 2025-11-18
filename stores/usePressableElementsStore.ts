@@ -1,7 +1,6 @@
 // usePressableElementsStore.ts
 import { create } from "zustand";
-import { categories } from "@/data/elements/elementsData";
-import { Category } from "@/types/elementsTypes";
+import { Category } from "@/types";
 
 type SelectedClassIdsByCategory = {
   character: number;
@@ -27,7 +26,7 @@ interface PressableElementsState {
   isBuildsListUpdated: boolean;
   setIsBuildsListUpdated: (newIsBuildsListUpdated: boolean) => void;
 
-  updateSelectionFromBuild: (classIds: number[]) => void;
+  updateSelectionFromBuild: (classIds: number[], categories: Category[]) => void;
 
   selectElementsByClassId: (category: Category, classId: number) => void;
   toggleMultiSelectElementsByClassId: (category: Category, elementId: number) => void;
@@ -59,7 +58,7 @@ const usePressableElementsStore = create<PressableElementsState>((set, get) => (
     set({ isBuildsListUpdated: newIsBuildsListUpdated });
   },
 
-  updateSelectionFromBuild: (classIds) => {
+  updateSelectionFromBuild: (classIds, categories) => {
     set((state) => {
       const newSelected: SelectedClassIdsByCategory = {
         character: null,

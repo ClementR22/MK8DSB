@@ -1,10 +1,7 @@
-import { Bodytype } from "./bodytypesTypes";
-
-export type BuildData = {
+export type BaseBuildData<TStats extends number[], TClassIds extends number[]> = {
   buildDataId: string;
-  classIds: number[];
-  stats: number[];
-  bodytypes: Bodytype[];
+  classIds: TClassIds;
+  stats: TStats;
 };
 
 export type Build = {

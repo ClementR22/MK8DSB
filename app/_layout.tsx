@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Appearance } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { MenuProvider } from "react-native-popup-menu";
 import Toast from "react-native-toast-message";
 
@@ -20,14 +20,17 @@ import useGeneralStore from "@/stores/useGeneralStore";
 
 import { useLoadSettings } from "@/hooks/useLoadSettings";
 import { toastConfig } from "@/config/toastConfig";
-import { box_shadow_z2 } from "@/components/styles/shadow";
 import { useTranslation } from "react-i18next";
 
 import ButtonIconWithBadge from "@/components/sortModeSelector/ButtonIconWithBadge";
 import { IconType } from "react-native-dynamic-vector-icons";
+import { useInitStatsStore } from "@/hooks/useInitStatsStore";
+import useGameStore from "@/stores/useGameStore";
+import { useInitResultStatsDefaultStore } from "@/hooks/useInitResultStatsDefaultStore";
 
 export default function TabLayout() {
   const { t } = useTranslation("screens");
+  const game = useGameStore((state) => state.game);
 
   const loadBuildsSaved = useBuildsActionsStore((state) => state.loadBuildsSaved);
   const theme = useThemeStore((state) => state.theme);
@@ -46,6 +49,10 @@ export default function TabLayout() {
   }, [loadBuildsSaved]);
 
   useLoadSettings();
+
+  useInitStatsStore();
+
+  useInitResultStatsDefaultStore();
 
   useEffect(() => {
     setNumberSavedBuilds(buildsListSaved.length);

@@ -6,7 +6,7 @@ import { router } from "expo-router";
 // Data and Types
 import { ScreenName } from "@/contexts/ScreenContext";
 import { MAX_NUMBER_BUILDS_DISPLAY, MAX_NUMBER_BUILDS_SAVE } from "./useBuildsListStore";
-import { Build, BuildPersistant } from "@/types/buildsTypes";
+import { Build } from "@/types";
 
 // Utilities
 import { checkFormatBuildImported } from "@/utils/checkFormatBuildImported";
@@ -16,11 +16,11 @@ import useStatsStore from "./useStatsStore";
 import useBuildsListStore from "./useBuildsListStore";
 import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 import useGeneralStore from "./useGeneralStore";
-import { buildsDataMap } from "@/data/builds/buildsData";
 import useDeckStore from "./useDeckStore";
 import { t } from "i18next";
 import { BuildAlreadyExistsError } from "@/errors/errors";
 import { useGenerateUniqueName } from "@/hooks/useGenerateUniqueName";
+import { BuildData } from "@/types";
 
 interface BuildsActionsStoreState {
   loadBuildCard: (params: {
@@ -30,13 +30,16 @@ interface BuildsActionsStoreState {
     name?: string;
     target: ScreenName;
   }) => void;
-  loadToSearch: (params: { source?: ScreenName; buildDataId?: string; build?: Build }) => void;
+  loadToSearch: (
+    params: { source?: ScreenName; buildDataId?: string; build?: Build },
+    buildsDataMap: Map<string, BuildData>
+  ) => void;
   loadToDisplay: (params: { source: ScreenName; buildDataId: string }) => void;
   loadBuildsSaved: () => void;
   saveBuild: (source: ScreenName, buildDataId: string) => Promise<void>;
   unSaveBuild: (buildDataId: string) => Promise<void>;
   exportBuild: (screenName: ScreenName, buildDataId: string) => void;
-  importBuild: (clipboardContent: string, screenName: ScreenName) => void;
+  importBuild: (clipboardContent: string, screenName: ScreenName, buildDataMap: Map<string, BuildData>) => void;
 }
 
 const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
@@ -99,7 +102,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     setBuildsListTarget(newBuildsListTarget);
   },
 
-  loadToSearch: (params: { source?: ScreenName; buildDataId?: string; build?: Build }) => {
+  loadToSearch: (params: { source?: ScreenName; buildDataId?: string; build?: Build }, buildsDataMap) => {
     const { source, buildDataId, build: providedBuild } = params;
 
     // on récupère build depuis les props ou bien on le calcule
@@ -173,7 +176,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     Clipboard.setStringAsync(json + "\n" + t("text:tutoImportation"));
   },
 
-  importBuild: (clipboardContent: string, screenName: ScreenName) => {
+  importBuild: (clipboardContent: string, screenName: ScreenName, buildDataMap) => {
     let parsedBuild: unknown;
 
     // Cherche le premier JSON dans le texte
@@ -196,7 +199,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     const build: Build = { buildDataId };
 
     if (screenName === "search") {
-      get().loadToSearch({ build });
+      get().loadToSearch({ build }, buildDataMap);
     } else {
       const isNameFree = useDeckStore.getState().checkNameFree(name);
       const newName = isNameFree ? name : useGenerateUniqueName(name);

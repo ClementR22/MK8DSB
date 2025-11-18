@@ -1,11 +1,5 @@
-import {
-  StatName,
-  StatNameCompareDefault,
-  StatNameHandling,
-  StatNameSortElementDefault,
-  StatNameSortBuildCardDefault,
-  StatNameSpeed,
-} from "../../types/statsTypes";
+import { StatNameHandling, StatName, StatNameSpeed, ChosenStat } from "@/types/mk8d/stats";
+import { SortNameElementDefault, SortNameBuildCardDefault, StatNameSortDefault } from "@/types/mk8d/sorts";
 
 export const statNames: StatName[] = [
   "speedGround",
@@ -37,7 +31,7 @@ export const statNamesCompact = {
   miniTurbo: "MT",
 };
 
-export const statNamesCompareDefault: StatNameCompareDefault[] = [
+const statNamesSortDefault: StatNameSortDefault[] = [
   "speed", // A special button to open the speed-specific sorting sub-menu
   "acceleration",
   "weight",
@@ -46,8 +40,8 @@ export const statNamesCompareDefault: StatNameCompareDefault[] = [
   "miniTurbo",
 ];
 
-export const statNamesSortBuildCardDefault: StatNameSortBuildCardDefault[] = ["name", ...statNamesCompareDefault];
-export const statNamesSortElementDefault: StatNameSortElementDefault[] = ["id", ...statNamesSortBuildCardDefault];
+export const sortNamesBuildCardDefault: SortNameBuildCardDefault[] = ["name", ...statNamesSortDefault];
+export const sortNamesElementDefault: SortNameElementDefault[] = ["id", ...sortNamesBuildCardDefault];
 
 export const statNamesSpeed: StatNameSpeed[] = ["speedGround", "speedAntiGravity", "speedWater", "speedAir"];
 
@@ -57,3 +51,12 @@ export const statNamesHandling: StatNameHandling[] = [
   "handlingWater",
   "handlingAir",
 ];
+
+const chosenStatsSelectedInit: StatName[] = ["speedGround", "acceleration", "miniTurbo"];
+
+export const chosenStatsInit: ChosenStat[] = statNames.map((name) => ({
+  name,
+  checked: chosenStatsSelectedInit.includes(name),
+  value: 0,
+  statFilterNumber: 0,
+}));

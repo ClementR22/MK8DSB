@@ -1,6 +1,6 @@
 // components/CategorySelector.tsx
 import React, { memo, useMemo } from "react";
-import { Category } from "@/types/elementsTypes";
+import { Category } from "@/types/bodytypesTypes";
 import IconSelector from "./IconSelector";
 import { categoryImageSources } from "@/assets/images/categoryImageSources";
 import useThemeStore from "@/stores/useThemeStore";

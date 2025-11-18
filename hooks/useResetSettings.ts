@@ -1,4 +1,4 @@
-import { useSettingsMap } from "@/config/settingsMap";
+import { useSettingsMap } from "@/hooks/useSettingsMap";
 import showToast from "@/utils/showToast";
 
 export const useResetSettings = () => {

@@ -3,15 +3,16 @@ import React, { useMemo, useState, useCallback } from "react";
 import { View } from "react-native";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import DoubleEntryTable, { ColumnName, StatToggleMap } from "./DoubleEntryTable";
-import useStatsStore, { ChosenStat } from "@/stores/useStatsStore";
-import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
+import useStatsStore from "@/stores/useStatsStore";
+import { useResultStats } from "@/contexts/ResultStatsContext";
+import { ChosenStat, ResultStat } from "@/types";
 import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useThemeStore from "@/stores/useThemeStore";
 import ResultStatsSyncSwitch from "./ResultStatsSyncSwitch";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
-import { statNames } from "@/data/stats/statsData";
+import { useGameData } from "@/hooks/useGameData";
 
 interface StatSelectorProps {
   triggerButtonText?: string;
@@ -45,6 +46,7 @@ const getTriggerConfig = (screenName: ScreenName) => {
 };
 
 const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipText, children }) => {
+  const { statNames } = useGameData();
   const theme = useThemeStore((state) => state.theme);
   const screenName = useScreen();
 

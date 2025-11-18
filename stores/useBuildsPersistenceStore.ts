@@ -2,7 +2,7 @@ import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Data and Types
-import { Build, BuildPersistant } from "@/types/buildsTypes";
+import { Build, BuildPersistant } from "@/types";
 
 // Utilities
 import {
@@ -10,7 +10,7 @@ import {
   loadThingFromMemory,
   saveThingInMemory,
 } from "@/utils/asyncStorageOperations";
-import { SORT_NUMBER_SAVED_BUILDS_DEFAULT } from "@/constants/constants";
+import { SORT_NUMBER_SAVED_BUILDS_DEFAULT } from "@/config/config";
 
 interface BuildsPersistenceStoreState {
   sortNumberSavedBuilds: number;

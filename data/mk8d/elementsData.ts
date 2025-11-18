@@ -1,15 +1,13 @@
-import { baseStatsByClassId } from "../classStats";
+import { baseStatsByClassId } from "./classStats";
 import {
   ElementDataCharacter,
   ElementDataBody,
   ElementDataWheel,
   ElementDataGlider,
-  ElementStats,
   ElementData,
-  Category,
-} from "../../types/elementsTypes";
-
-export const categories: Category[] = ["character", "body", "wheel", "glider"];
+  ElementStats,
+} from "../../types/mk8d/elements";
+import { Category } from "@/types/mk8d/categories";
 
 function getElementStats(classId: number, overrides?: Partial<ElementStats>): ElementStats {
   const baseStats = baseStatsByClassId[classId];

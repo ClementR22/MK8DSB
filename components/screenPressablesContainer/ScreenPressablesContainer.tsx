@@ -9,6 +9,7 @@ import { BORDER_RADIUS_CONTAINER_LOWEST, BUTTON_SIZE, PADDING_BOX_CONTAINER } fr
 import Separator from "../Separator";
 import { box_shadow_z1 } from "../styles/shadow";
 import useBuildsListStore from "@/stores/useBuildsListStore";
+import { useGameData } from "@/hooks/useGameData";
 
 interface ScreenPressablesContainerProps {
   sortNumber: number;
@@ -21,6 +22,8 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
   setSortNumber,
   children,
 }) => {
+  const { buildsDataMap, statNames } = useGameData();
+
   const screenName = useScreen();
   const isInGalleryScreen = screenName === "gallery";
 
@@ -30,7 +33,7 @@ const ScreenPressablesContainer: React.FC<ScreenPressablesContainerProps> = ({
   const sortBuildsList = useBuildsListStore((state) => state.sortBuildsList);
   useEffect(() => {
     if (!isInGalleryScreen) {
-      sortBuildsList(screenName, sortNumber);
+      sortBuildsList(screenName, sortNumber, buildsDataMap, statNames);
     }
   }, [sortNumber]);
 

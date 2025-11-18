@@ -9,7 +9,7 @@ import { BORDER_RADIUS_MODAL_CHILDREN_CONTAINER } from "@/utils/designTokens";
 export type ColumnName = "chosenStats" | "resultStats";
 
 export type StatToggleMap = Record<
-  string, // on met string StatName pour ne pas force l'exhaustivité
+  string, // on met string au lieu de StatName pour autoriser une initialisation non exhaustive
   {
     chosenStats: boolean;
     resultStats: boolean;

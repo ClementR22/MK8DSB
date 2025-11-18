@@ -3,9 +3,9 @@ import { Image, Pressable, StyleSheet, View } from "react-native";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
 import { useScreen } from "@/contexts/ScreenContext";
 import { BUILD_CARD_WIDTH, PADDING_BUILD_CARD } from "@/utils/designTokens";
-import { Category } from "@/types/elementsTypes";
-import { categories, elementsData } from "@/data/elements/elementsData";
+import { Category } from "@/types";
 import Tooltip from "../Tooltip";
+import { useGameData } from "@/hooks/useGameData";
 
 const MAX_WIDTH_IN_BUILD_CARD = BUILD_CARD_WIDTH - PADDING_BUILD_CARD * 2; // 200
 const MAX_NUMBER_OF_IMAGE = 5;
@@ -32,6 +32,7 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
   isInLoadBuildModal,
   buildDataId,
 }) => {
+  const { elementsData, categories } = useGameData();
   const screenName = useScreen();
 
   const data = useMemo<BuildImageCategoryData[]>(() => {

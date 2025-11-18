@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { loadThingFromMemory } from "@/utils/asyncStorageOperations";
-import { useSettingsMap } from "@/config/settingsMap";
+import { useSettingsMap } from "@/hooks/useSettingsMap";
 import { getLanguageToUse } from "@/translations";
 import i18next from "i18next";
 

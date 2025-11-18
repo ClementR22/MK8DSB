@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { categories } from "@/data/elements/elementsData";
-import { buildsDataArray } from "@/data/builds/buildsData";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
@@ -9,15 +7,14 @@ import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import PannelPaginated from "../elementPickerCompact/PannelPaginated";
 import ElementsDeselector from "../elementPickerCompact/ElementsDeselector";
 import "react-native-get-random-values";
-import { Bodytype } from "@/types/bodytypesTypes";
+import { Bodytype, Build } from "@/types";
 import { MARGIN_CONTAINER_LOWEST, PADDING_SEARCH_CONTAINER } from "@/utils/designTokens";
 import StatSelector from "../statSelector/StatSelector";
 import useGeneralStore from "@/stores/useGeneralStore";
 import ButtonIconWithBadge from "../sortModeSelector/ButtonIconWithBadge";
 import useStatsStore from "@/stores/useStatsStore";
 import useBuildsListStore from "@/stores/useBuildsListStore";
-import { Build } from "@/types/buildsTypes";
-import { useTranslation } from "react-i18next";
+import { useGameData } from "@/hooks/useGameData";
 
 interface SearchBuildScreenPressablesContainerProps {
   scrollviewBuildsCardsRef: React.RefObject<any>;
@@ -28,6 +25,8 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
   scrollviewBuildsCardsRef,
   scrollviewMainRef,
 }) => {
+  const { categories, buildsDataArray } = useGameData();
+
   const chosenStats = useStatsStore((state) => state.chosenStats);
   const setBuildsListFound = useBuildsListStore((state) => state.setBuildsListFound);
   const resultsNumber = useGeneralStore((state) => state.resultsNumber);

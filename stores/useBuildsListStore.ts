@@ -3,21 +3,20 @@ import { create } from "zustand";
 import "react-native-get-random-values";
 
 // Data and Types
-import { statNames } from "@/data/stats/statsData";
 import { ScreenName } from "@/contexts/ScreenContext";
-import { Build } from "@/types/buildsTypes";
+import { Build, StatName } from "@/types";
 
 // Utilities
-import { SortableElement, sortElements } from "@/utils/sortElements";
+import { sortElements } from "@/utils/sortElements";
 import { DEFAULT_BUILDS } from "@/constants/defaultBuilds";
 import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
-import { buildsDataMap } from "@/data/builds/buildsData";
 import useDeckStore from "./useDeckStore";
 import { deleteAllSavedBuildsInMemory } from "@/utils/asyncStorageOperations";
 import { getRandomDataId } from "@/utils/getRandomDataId";
 import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
 import { t } from "i18next";
 import { useGenerateUniqueName } from "@/hooks/useGenerateUniqueName";
+import { BuildData } from "@/types";
 
 export const MAX_NUMBER_BUILDS_DISPLAY = 10;
 export const MAX_NUMBER_BUILDS_SAVE = 30;
@@ -46,7 +45,12 @@ interface BuildsListStoreState {
   removeBuild: (buildDataId: string, screenName: ScreenName) => Promise<void>;
   renameBuild: (newName: string, screenName: ScreenName, buildDataId: string, isSaved: boolean) => void;
   updateBuildsList: (pressedClassIds: Record<string, number>, screenName: ScreenName) => void;
-  sortBuildsList: (screenName: ScreenName, sortNumber: number) => void;
+  sortBuildsList: (
+    screenName: ScreenName,
+    sortNumber: number,
+    buildsDataMap: Map<string, BuildData>,
+    statNames: StatName[]
+  ) => void;
   findSameBuildInScreen: (params: {
     buildDataId: string;
     buildsList?: Build[];
@@ -225,27 +229,25 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     }
   },
 
-  sortBuildsList: (screenName, sortNumber) => {
+  sortBuildsList: (screenName, sortNumber, buildsDataMap, statNames) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
 
-    const buildsListSortable: SortableElement[] = buildsList.map((build: Build) => {
+    const buildsListSortable = buildsList.map((build: Build) => {
       const buildName = useDeckStore.getState().deck.get(build.buildDataId)?.name;
 
-      const buildData = buildsDataMap.get(build.buildDataId);
+      const buildData: BuildData = buildsDataMap.get(build.buildDataId);
 
-      const mappedStats: Partial<SortableElement> = {};
+      const mappedStats = {};
 
       statNames.forEach((statName, index) => {
         mappedStats[statName] = buildData.stats[index];
       });
 
       return {
-        buildDataId: build.buildDataId,
         name: buildName,
-        classIds: buildData.classIds,
-        stats: buildData.stats,
+        buildDataId: build.buildDataId,
         ...mappedStats,
-      } as SortableElement;
+      };
     });
 
     const buildsListSorted = sortElements(buildsListSortable, sortNumber);

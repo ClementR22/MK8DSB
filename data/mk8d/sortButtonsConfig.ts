@@ -1,4 +1,4 @@
-import { SortName } from "@/types/statsTypes";
+import { SortName } from "@/types/mk8d/stats";
 import { IconType } from "react-native-dynamic-vector-icons";
 
 // Define the type for the properties of a statistic icon

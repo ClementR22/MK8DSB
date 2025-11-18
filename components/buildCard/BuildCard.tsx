@@ -8,9 +8,9 @@ import { useBuildCardStyle } from "@/hooks/useBuildCardStyle";
 import { BUILD_CARD_WIDTH } from "@/utils/designTokens";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { useBuildCardConfig } from "@/hooks/useBuildCardConfig";
-import { buildsDataMap } from "@/data/builds/buildsData";
 import useDeckStore from "@/stores/useDeckStore";
 import StatGaugeGroupBuildCard from "../statGauge/StatGaugeGroupBuildCard";
+import { useGameData } from "@/hooks/useGameData";
 
 interface BuildCardProps {
   buildDataId: string;
@@ -31,6 +31,8 @@ const BuildCard: React.FC<BuildCardProps> = ({
   onLayout,
   borderColor,
 }) => {
+  const { buildsDataMap } = useGameData();
+
   const build = useDeckStore((state) => state.deck).get(buildDataId) || { name: "", isSaved: false };
 
   const { name, isSaved } = build;

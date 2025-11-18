@@ -1,15 +1,15 @@
 import { create } from "zustand";
 import { toggleAndGetChecks } from "@/utils/toggleCheck";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
-import { resultStatsDefaultInit } from "@/config/resultStatsInit";
-import { ResultStat } from "@/contexts/ResultStatsContext";
-import { IS_RESULT_STATS_SYNC } from "@/constants/constants";
+import { ResultStat } from "@/types";
+import { IS_RESULT_STATS_SYNC } from "@/config/config";
 
 interface ResultStatsDefaultState {
   isResultStatsSync: boolean;
   setIsResultStatsSync: (newValue: boolean) => Promise<void>;
 
   resultStatsDefault: ResultStat[];
+  initResultStatsDefault: (resultStatsDefaultInit: ResultStat[]) => void;
   setResultStatsDefault: (newList: ResultStat[]) => void;
   toggleCheckListResultStatsDefault: (name: string) => void;
 }
@@ -22,7 +22,9 @@ const useResultStatsDefaultStore = create<ResultStatsDefaultState>((set, get) =>
     set({ isResultStatsSync: newValue });
   },
 
-  resultStatsDefault: resultStatsDefaultInit,
+  resultStatsDefault: [],
+
+  initResultStatsDefault: (resultStatsDefaultInit: ResultStat[]) => set({ resultStatsDefault: resultStatsDefaultInit }),
 
   async setResultStatsDefault(newList) {
     await saveThingInMemory("resultStatsDefault", newList);

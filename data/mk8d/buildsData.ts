@@ -1,5 +1,5 @@
+import { BuildData } from "@/types/mk8d/builds";
 import rawBuildsData from "./buildsData.json";
-import { BuildData } from "../../types/buildsTypes";
 
 export const buildsDataArray: BuildData[] = Object.entries(rawBuildsData).map(
   ([id, build]) =>

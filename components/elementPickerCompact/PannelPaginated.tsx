@@ -9,14 +9,13 @@ import {
   View,
 } from "react-native";
 import PagerView from "react-native-pager-view";
-import { elementsDataByCategory } from "@/data/elements/elementsData";
-import { Category } from "@/types/elementsTypes";
+import { Category } from "@/types";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import SortModeSelector from "../sortModeSelector/SortModeSelector";
 import { sortElements } from "@/utils/sortElements";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import { Bodytype } from "@/types/bodytypesTypes";
+import { Bodytype } from "@/types";
 import BodytypesSelector from "../rowSelector/BodytypesSelector";
 import useThemeStore from "@/stores/useThemeStore";
 import CategorySelector from "../rowSelector/CategorySelector";
@@ -30,6 +29,8 @@ import {
 } from "@/utils/designTokens";
 import Separator from "../Separator";
 import { useTranslation } from "react-i18next";
+import { ElementData } from "@/types";
+import { useGameData } from "@/hooks/useGameData";
 
 interface ElementPickerCompactSelectorPannelProps {
   selectionMode?: "single" | "multiple";
@@ -45,6 +46,7 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
   children,
 }) => {
   const { t } = useTranslation("elements");
+  const { elementsDataByCategory } = useGameData();
 
   const theme = useThemeStore((state) => state.theme);
   const pagerRef = useRef<PagerView>(null);
@@ -55,8 +57,8 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
   const [isOpenSortView, setIsOpenSortView] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const categoryElementsSorted = useMemo(
-    () => sortElements(elementsDataByCategory[selectedCategory], sortNumber, t),
+  const categoryElementsSorted = useMemo<ElementData[]>(
+    () => sortElements<ElementData>(elementsDataByCategory[selectedCategory], sortNumber, t),
     [selectedCategory, sortNumber, t]
   );
 

@@ -1,12 +1,9 @@
-export type Category = "character" | "body" | "wheel" | "glider";
+import { BaseElementData } from "../common/elements";
+import { Bodytype } from "./bodytypes";
+import { Category } from "./categories";
 
-// Base interface for all elements, now includes ElementStats
-export type ElementData = {
-  id: number;
-  name: string;
+export type ElementData = BaseElementData & {
   category: Category;
-  classId: number;
-  imageUrl: ReturnType<typeof require>;
 };
 
 export interface ElementDataCharacter extends ElementData {
@@ -15,7 +12,7 @@ export interface ElementDataCharacter extends ElementData {
 
 export interface ElementDataBody extends ElementData {
   category: "body";
-  bodytype: "kart" | "bike" | "sportBike" | "ATV";
+  bodytype: Bodytype;
 }
 
 export interface ElementDataWheel extends ElementData {

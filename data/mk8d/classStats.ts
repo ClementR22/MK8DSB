@@ -1,4 +1,7 @@
-import { Category, ElementStats } from "../types/elementsTypes";
+import { Category } from "@/types/mk8d/categories";
+import { ElementStats } from "@/types/mk8d/elements";
+
+export const MAX_STAT_VALUE = 6;
 
 export const maxValues: Record<Category, number> = {
   character: 5,

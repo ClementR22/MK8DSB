@@ -1,30 +1,9 @@
 // utils/sortElements.ts
-import i18n from "@/translations";
 import { TFunction } from "i18next";
 
 // Define a common interface for elements that can be sorted.
-// This interface should reflect the properties available on your actual ElementDataCharacter, ElementDataBody, etc.
+// This interface should reflect the properties available on your actual ElementDataCharacterMK8D, ElementDataBody, etc.
 // Add all properties you might need for sorting (like various speed/handling stats).
-export interface SortableElement {
-  id?: number;
-  buildDataId?: string;
-  name: string;
-  classIds?: number[]; // on le conserve pour le tri des builds
-  stats?: number[]; // on le conserve pour le tri des builds
-  speedGround?: number;
-  speedAntiGravity?: number;
-  speedWater?: number;
-  speedAir?: number;
-  acceleration?: number;
-  weight?: number;
-  handlingGround?: number;
-  handlingAntiGravity?: number;
-  handlingWater?: number;
-  handlingAir?: number;
-  traction?: number;
-  miniTurbo?: number;
-  // Add other relevant stat properties if they exist on your elements
-}
 
 /**
  * Sorts an array of elements based on a given order number and language.
@@ -34,83 +13,49 @@ export interface SortableElement {
  * @param language The language to use for alphabetical sorting.
  * @returns A new array with the elements sorted according to the specified strategy.
  */
-export const sortElements = <T extends SortableElement>(
+
+const sortMap = [
+  "id",
+  "name",
+  "speedGround",
+  "speedAntiGravity",
+  "speedWater",
+  "speedAir",
+  "handlingGround",
+  "handlingAntiGravity",
+  "handlingWater",
+  "handlingAir",
+  "acceleration",
+  "weight",
+  "traction",
+  "miniTurbo",
+] as const;
+
+export const sortElements = <T>(
   elements: T[],
   sortNumber: number,
   t: TFunction = ((key: string) => key) as unknown as TFunction
 ): T[] => {
-  // Always create a shallow copy to ensure the original array is not mutated.
-  const sortableElements = [...elements];
+  const sortKey = sortMap[sortNumber] as keyof T;
+  const ascending = sortNumber % 2 === 0;
 
-  // Define sorting strategies mapped to their respective order numbers.
-  // We will now have pairs of numbers for each sortable property:
-  // Even number for ascending, Odd number for descending.
-  const sortingStrategies: { [key: number]: (a: T, b: T) => number } = {
-    // ID
-    0: (a, b) => a.id - b.id, // ID Ascending (0)
-    1: (a, b) => b.id - a.id, // ID Descending (1)
-
-    // Name
-    2: (a, b) => t(a.name).localeCompare(t(b.name)), // Name A-Z (2)
-    3: (a, b) => t(b.name).localeCompare(t(a.name)), // Name Z-A (3)
-
-    // Speed Ground
-    4: (a, b) => (a.speedGround || 0) - (b.speedGround || 0), // Speed Ground Ascending (6)
-    5: (a, b) => (b.speedGround || 0) - (a.speedGround || 0), // Speed Ground Descending (7)
-
-    // Speed Anti-Gravity
-    6: (a, b) => (a.speedAntiGravity || 0) - (b.speedAntiGravity || 0), // Speed Anti-Gravity Ascending (8)
-    7: (a, b) => (b.speedAntiGravity || 0) - (a.speedAntiGravity || 0), // Speed Anti-Gravity Descending (9)
-
-    // Speed Water
-    8: (a, b) => (a.speedWater || 0) - (b.speedWater || 0), // Speed Water Ascending (10)
-    9: (a, b) => (b.speedWater || 0) - (a.speedWater || 0), // Speed Water Descending (11)
-
-    // Speed Air
-    10: (a, b) => (a.speedAir || 0) - (b.speedAir || 0), // Speed Air Ascending (12)
-    11: (a, b) => (b.speedAir || 0) - (a.speedAir || 0), // Speed Air Descending (13)
-
-    // Handling Ground
-    12: (a, b) => (a.handlingGround || 0) - (b.handlingGround || 0), // Handling Ground Ascending (14)
-    13: (a, b) => (b.handlingGround || 0) - (a.handlingGround || 0), // Handling Ground Descending (15)
-
-    // Handling Anti-Gravity
-    14: (a, b) => (a.handlingAntiGravity || 0) - (b.handlingAntiGravity || 0), // Handling Anti-Gravity Ascending (16)
-    15: (a, b) => (b.handlingAntiGravity || 0) - (a.handlingAntiGravity || 0), // Handling Anti-Gravity Descending (17)
-
-    // Handling Water
-    16: (a, b) => (a.handlingWater || 0) - (b.handlingWater || 0), // Handling Water Ascending (18)
-    17: (a, b) => (b.handlingWater || 0) - (a.handlingWater || 0), // Handling Water Descending (19)
-
-    // Handling Air
-    18: (a, b) => (a.handlingAir || 0) - (b.handlingAir || 0), // Handling Air Ascending (20)
-    19: (a, b) => (b.handlingAir || 0) - (a.handlingAir || 0), // Handling Air Descending (21)
-
-    // Acceleration
-    20: (a, b) => (a.acceleration || 0) - (b.acceleration || 0), // Acceleration Ascending (22)
-    21: (a, b) => (b.acceleration || 0) - (a.acceleration || 0), // Acceleration Descending (23)
-
-    // Weight
-    22: (a, b) => (a.weight || 0) - (b.weight || 0), // Weight Ascending (24)
-    23: (a, b) => (b.weight || 0) - (a.weight || 0), // Weight Descending (25)
-
-    // Traction
-    24: (a, b) => (a.traction || 0) - (b.traction || 0), // Traction Ascending (26)
-    25: (a, b) => (b.traction || 0) - (a.traction || 0), // Traction Descending (27)
-
-    // Mini Turbo
-    26: (a, b) => (a.miniTurbo || 0) - (b.miniTurbo || 0), // Mini Turbo Ascending (28)
-    27: (a, b) => (b.miniTurbo || 0) - (a.miniTurbo || 0), // Mini Turbo Descending (29)
-  };
-
-  const strategy = sortingStrategies[sortNumber];
-
-  if (!strategy) {
-    // If the sortNumber does not correspond to a defined strategy,
-    // log a warning and return the copied, unsorted elements.
-    console.warn(`Unknown sortNumber for sorting: ${sortNumber}. Returning unsorted elements.`);
-    return sortableElements;
+  if (!sortKey) {
+    console.warn(`Unknown sortNumber: ${sortNumber}. Returning unsorted elements.`);
+    return [...elements];
   }
 
-  return sortableElements.sort(strategy);
+  const sorted = [...elements];
+
+  sorted.sort((a, b) => {
+    const aValue = a[sortKey] as unknown;
+    const bValue = b[sortKey] as unknown;
+
+    if (typeof aValue === "string" && typeof bValue === "string") {
+      return ascending ? t(aValue).localeCompare(t(bValue)) : t(bValue).localeCompare(t(aValue));
+    }
+
+    return ascending ? Number(aValue ?? 0) - Number(bValue ?? 0) : Number(bValue ?? 0) - Number(aValue ?? 0);
+  });
+
+  return sorted;
 };

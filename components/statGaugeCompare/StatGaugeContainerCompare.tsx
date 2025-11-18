@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import StatGaugeContainer from "../statGauge/StatGaugeContainer";
-import { StatName } from "@/types/statsTypes";
+import { StatName } from "@/types";
 import { useBuildCardStyle } from "@/hooks/useBuildCardStyle";
 import Text from "@/primitiveComponents/Text";
 import { useBuildCardsScroll } from "@/contexts/BuildCardsScrollContext";

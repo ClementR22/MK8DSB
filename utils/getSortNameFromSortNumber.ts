@@ -1,4 +1,4 @@
-import { SortName } from "@/types/statsTypes";
+import { SortName } from "@/types";
 
 export const sortNameMap: { [key: string]: { asc: number; desc: number } } = {
   id: { asc: 0, desc: 1 },

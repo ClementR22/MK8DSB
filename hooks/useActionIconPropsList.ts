@@ -8,8 +8,8 @@ import { ActionName, ActionNamesList } from "./useBuildCardConfig";
 import showToast from "@/utils/showToast";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import { buildsDataMap } from "@/data/builds/buildsData";
 import { BuildAlreadyExistsError } from "@/errors/errors";
+import { useGameData } from "./useGameData";
 
 export interface ActionIconProps {
   title: string;
@@ -25,6 +25,8 @@ export function useActionIconPropsList(
   buildDataId: string,
   isSaved?: boolean
 ): ActionIconProps[] {
+  const { buildsDataMap, categories } = useGameData();
+
   const source = isInLoadBuildModal ? "save" : screenName;
 
   const updateSelectionFromBuild = usePressableElementsStore((state) => state.updateSelectionFromBuild);
@@ -40,12 +42,12 @@ export function useActionIconPropsList(
 
   const handleEditPress = useCallback(() => {
     setBuildEditedDataId(buildDataId);
-    updateSelectionFromBuild(buildsDataMap.get(buildDataId).classIds);
+    updateSelectionFromBuild(buildsDataMap.get(buildDataId).classIds, categories);
     setIsEditBuildModalVisible(true);
   }, [buildDataId, setBuildEditedDataId, updateSelectionFromBuild, setIsEditBuildModalVisible]);
 
   const handleLoadToSearchPress = useCallback(() => {
-    loadToSearch({ source, buildDataId });
+    loadToSearch({ source, buildDataId }, buildsDataMap);
 
     showToast("toast:buildStatsHaveBeenLoaded", "success");
     setIsLoadBuildModalVisible(false);

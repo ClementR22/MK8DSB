@@ -1,11 +1,12 @@
-import { Category, ElementData } from "@/types/elementsTypes";
-import { classesStatsByCategory } from "@/data/elements/elementsStats";
-import { statNames } from "@/data/stats/statsData";
+import { ElementData } from "@/types/mk8d/elements";
+import { Category, StatName } from "@/types";
 
 export const getSelectedElementData = (
   categoryElementsSorted: ElementData[],
   selectedElementId: number,
-  selectedCategory: Category
+  selectedCategory: Category,
+  classesStatsByCategory: Map<number, number[]>,
+  statNames: StatName[]
 ) => {
   const currentElement = categoryElementsSorted.find((element) => element.id === selectedElementId);
 

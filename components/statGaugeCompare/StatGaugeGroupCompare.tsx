@@ -1,19 +1,20 @@
 import React, { useMemo } from "react";
 import useThemeStore from "@/stores/useThemeStore";
 import { useResultStats } from "@/contexts/ResultStatsContext";
-import { statNames } from "@/data/stats/statsData";
 import StatGaugeContainerCompare from "./StatGaugeContainerCompare";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import { box_shadow_z1 } from "../styles/shadow";
 import { BORDER_RADIUS_CONTAINER_LOWEST } from "@/utils/designTokens";
 import useBuildsListStore from "@/stores/useBuildsListStore";
-import { buildsDataMap } from "@/data/builds/buildsData";
+import { useGameData } from "@/hooks/useGameData";
 
 interface StatGaugeGroupCompareProps {
   buildsColorsMap: Map<string, string>;
 }
 
 const StatGaugeGroupCompare: React.FC<StatGaugeGroupCompareProps> = ({ buildsColorsMap }) => {
+  const { buildsDataMap, statNames } = useGameData();
+
   const theme = useThemeStore((state) => state.theme);
   const { resultStats } = useResultStats();
   const buildsListDisplayed = useBuildsListStore((state) => state.buildsListDisplayed);

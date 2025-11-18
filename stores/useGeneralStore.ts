@@ -1,4 +1,4 @@
-import { RESULTS_NUMBER_DEFAULT } from "@/constants/constants";
+import { RESULTS_NUMBER_DEFAULT } from "@/config/config";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 import { create } from "zustand";
 

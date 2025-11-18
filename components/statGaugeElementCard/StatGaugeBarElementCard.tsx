@@ -1,4 +1,4 @@
-import { MAX_STAT_VALUE } from "@/constants/constants";
+import { useGameData } from "@/hooks/useGameData";
 import { useGaugeMetrics } from "@/hooks/useGaugeMetrics";
 import { useStatGaugeStyles } from "@/hooks/useStatGaugeStyles";
 import Text from "@/primitiveComponents/Text";
@@ -11,6 +11,7 @@ interface StatGaugeBarElementCardProps {
 }
 
 const StatGaugeBarElementCard = ({ value }: StatGaugeBarElementCardProps) => {
+  const { MAX_STAT_VALUE } = useGameData();
   const theme = useThemeStore((state) => state.theme);
 
   const { getWidth, handleGaugeLayout } = useGaugeMetrics("stat-gauge-gallery");

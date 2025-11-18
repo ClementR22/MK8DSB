@@ -1,3 +1,4 @@
+import { useGameData } from "@/hooks/useGameData";
 import { useStatGaugeStyles } from "@/hooks/useStatGaugeStyles";
 import useThemeStore from "@/stores/useThemeStore";
 import { BORDER_RADIUS_INF } from "@/utils/designTokens";
@@ -11,9 +12,9 @@ interface StatGaugeBarProps {
   statFilterNumber?: number;
 }
 
-const MAX_STAT_VALUE = 6;
-
 const StatGaugeBar: React.FC<StatGaugeBarProps> = ({ value, color, statFilterNumber }) => {
+  const { MAX_STAT_VALUE } = useGameData();
+
   const theme = useThemeStore((state) => state.theme);
 
   // Largeur du segment intérieur, clampée et calculée une seule fois par changement de value

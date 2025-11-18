@@ -1,7 +1,8 @@
-import { statNames } from "@/data/stats/statsData";
-import { ResultStat } from "@/contexts/ResultStatsContext";
+import { statNames } from "./stats";
+import { ResultStat } from "@/types/mk8d/stats";
+import { StatName } from "@/types/mk8d";
 
-const resultStatsDefaultConfig: Record<string, boolean> = {
+const resultStatsDefaultConfig: Record<StatName, boolean> = {
   speedGround: true,
   speedAntiGravity: false,
   speedWater: false,

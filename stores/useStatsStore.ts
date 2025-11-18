@@ -1,22 +1,12 @@
 import { create } from "zustand";
 
-// Data and Types
-import { statNames } from "@/data/stats/statsData";
-import { StatName } from "@/types/statsTypes";
-
-// Constants
-import { CHOSEN_STATS_DEFAULT_SELECTED } from "@/constants/constants";
-
-export type ChosenStat = {
-  name: StatName;
-  checked: boolean;
-  value: number | null;
-  statFilterNumber: number;
-};
+// Types
+import { ChosenStat, StatName } from "@/types";
 
 interface StatsStoreState {
   chosenStats: ChosenStat[];
 
+  initChosenStats: (chosenStatsSelectedInit: ChosenStat[]) => void;
   setChosenStats: (newChosenStats: ChosenStat[]) => void;
   updateStatValue: (name: StatName, newValue: number) => void;
   setStatFilterNumber: (statName: string, newState: number) => void;
@@ -24,12 +14,12 @@ interface StatsStoreState {
 }
 
 const useStatsStore = create<StatsStoreState>((set, get) => ({
-  chosenStats: statNames.map((statName) => ({
-    name: statName,
-    checked: CHOSEN_STATS_DEFAULT_SELECTED.includes(statName),
-    value: 0,
-    statFilterNumber: 0,
-  })),
+  chosenStats: [],
+
+  initChosenStats: (chosenStatsSelectedInit) =>
+    set({
+      chosenStats: chosenStatsSelectedInit,
+    }),
 
   setChosenStats: (newChosenStats) => {
     set({ chosenStats: newChosenStats });

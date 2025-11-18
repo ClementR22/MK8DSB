@@ -1,8 +1,8 @@
 // components/BodytypesSelector.tsx
-import React, { memo, useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Bodytype } from "@/types/bodytypesTypes";
 import IconSelector from "./IconSelector";
-import { bodytypeImageSources } from "@/assets/images/bodytypeImageSources";
+import { bodytypeImageSourcesMK8D } from "@/assets/images/bodytypeImageSourcesMK8D";
 import useThemeStore from "@/stores/useThemeStore";
 import { StyleSheet } from "react-native";
 import { GAP_ELEMENTS_GRID } from "@/utils/designTokens";
@@ -12,7 +12,7 @@ interface BodytypesSelectorProps {
   setSelectedBodytypes: React.Dispatch<React.SetStateAction<Set<Bodytype>>>;
 }
 
-const bodytypeOptions = Object.entries(bodytypeImageSources).map(([name, imageUrl]) => ({
+const bodytypeOptions = Object.entries(bodytypeImageSourcesMK8D).map(([name, imageUrl]) => ({
   name: name as Bodytype,
   imageUrl,
 }));

@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { useScreen } from "@/contexts/ScreenContext";
-import { ResultStat, useResultStats } from "@/contexts/ResultStatsContext";
+import { useResultStats } from "@/contexts/ResultStatsContext";
+import { ResultStat } from "@/types";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import StatGaugeBarBuildCard from "./StatGaugeBarBuildCard";
 import useStatsStore from "@/stores/useStatsStore";

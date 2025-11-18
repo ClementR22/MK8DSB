@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback, memo } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import CategorySelector from "@/components/rowSelector/CategorySelector";
-import { Category } from "@/types/elementsTypes";
-import { elementsDataByCategory } from "@/data/elements/elementsData";
+import { Category, ElementData } from "@/types";
 import { sortElements } from "@/utils/sortElements";
 import ElementCard from "@/components/galleryComponents/ElementCard";
 import ElementsList from "@/components/galleryComponents/ElementsList";
@@ -15,9 +14,11 @@ import Pannel from "@/components/galleryComponents/Pannel";
 import Animated, { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 import i18n from "@/translations";
 import { useTranslation } from "react-i18next";
+import { useGameData } from "@/hooks/useGameData";
 
 // --- Main GalleryScreen Component ---
 const GalleryScreen = () => {
+  const { elementsDataByCategory, statNames, classesStatsByCategory } = useGameData();
   const { t } = useTranslation("elements");
 
   const [selectedElementId, setSelectedElementId] = useState(0);
@@ -25,8 +26,8 @@ const GalleryScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [sortNumber, setSortNumber] = useState(0);
 
-  const categoryElementsSorted = useMemo(
-    () => sortElements(elementsDataByCategory[selectedCategory], sortNumber, t),
+  const categoryElementsSorted = useMemo<ElementData[]>(
+    () => sortElements<ElementData>(elementsDataByCategory[selectedCategory], sortNumber, t),
     [selectedCategory, sortNumber, t]
   );
 
@@ -35,7 +36,9 @@ const GalleryScreen = () => {
   const { selectedElementName, selectedElementStats } = getSelectedElementData(
     categoryElementsSorted,
     selectedElementId,
-    selectedCategory
+    selectedCategory,
+    classesStatsByCategory,
+    statNames
   );
 
   const handleElementPickerPress = useCallback(

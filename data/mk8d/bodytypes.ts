@@ -1,8 +1,13 @@
-import { Bodytype, BodytypeItem } from "../../types/bodytypesTypes";
+import { Bodytype } from "@/types/mk8d/bodytypes";
+
+type BodytypeItem = {
+  name: Bodytype;
+  imageUrl: ReturnType<typeof require>;
+};
 
 export const bodytypeNames: Bodytype[] = ["kart", "bike", "sportBike", "ATV"];
 
-export const bodytypesData = [
+export const bodytypes = [
   {
     name: "kart",
     imageUrl: require("@/assets/images/elementsImages/karts/Standard Kart.png"),

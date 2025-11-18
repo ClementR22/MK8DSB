@@ -1,15 +1,8 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { sortButtonsConfig } from "@/config/sortButtonsConfig";
-import { SortName } from "@/types/statsTypes";
-import {
-  statNamesHandling,
-  statNamesSortElementDefault,
-  statNamesSortBuildCardDefault,
-  statNamesSpeed,
-  statNames,
-} from "@/data/stats/statsData";
+import { SortName } from "@/types";
+
 import Popover from "../popover/Popover";
 import ButtonIconWithBadge from "./ButtonIconWithBadge";
 import {
@@ -23,6 +16,7 @@ import { getCurrentDirection, getSortNameFromSortNumber, sortNameMap } from "@/u
 import { vw } from "../styles/theme";
 import { IconType } from "react-native-dynamic-vector-icons";
 import showToast from "@/utils/showToast";
+import { useGameData } from "@/hooks/useGameData";
 
 // Constants
 const NUMBER_OF_BUTTONS = 8;
@@ -38,11 +32,14 @@ interface SortModeSelectorProps {
 }
 
 const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSortNumber, sortCase, containerStyle }) => {
+  const { statNamesHandling, sortNamesElementDefault, sortNamesBuildCardDefault, statNamesSpeed, sortButtonsConfig } =
+    useGameData();
+
   const screenName = useScreen();
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const statNamesSortDefault = useMemo(
-    () => (sortCase === "element" ? statNamesSortElementDefault : statNamesSortBuildCardDefault),
+    () => (sortCase === "element" ? sortNamesElementDefault : sortNamesBuildCardDefault),
     [sortCase]
   );
 

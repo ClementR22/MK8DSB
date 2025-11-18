@@ -1,4 +1,4 @@
-import { categories } from "./elementsData";
+import { categories } from "./categories";
 
 const classesStatsCharacter = new Map([
   [0, [2.5, 2.25, 2.75, 3, 4, 2, 5, 5, 4.5, 5, 4.25, 4.5]],

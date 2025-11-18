@@ -2,7 +2,7 @@ import useThemeStore from "@/stores/useThemeStore";
 import React, { memo, useMemo } from "react";
 import { FlatList } from "react-native";
 import ElementPicker from "./ElementPicker";
-import { ElementData } from "@/types/elementsTypes";
+import { ElementData } from "@/types";
 import { LIST_ITEM_SPACING } from "@/utils/designTokens";
 
 interface ElementPickerSelectorProps {

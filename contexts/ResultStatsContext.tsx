@@ -1,14 +1,9 @@
 import React, { createContext, useContext, useEffect, useMemo, useState, ReactNode } from "react";
 import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
-import { resultStatsSaveScreenInit } from "@/config/resultStatsInit";
 import { deepCompareStatArrays } from "@/utils/deepCompare";
-import { StatName } from "@/types/statsTypes";
 import { useScreen } from "./ScreenContext";
-
-export type ResultStat = {
-  name: StatName;
-  checked: boolean;
-};
+import { useGameData } from "@/hooks/useGameData";
+import { ResultStat } from "@/types";
 
 type ResultStatsContextType = {
   resultStats: ResultStat[];
@@ -22,6 +17,8 @@ interface ResultStatsProviderProps {
 }
 
 export const ResultStatsProvider: React.FC<ResultStatsProviderProps> = ({ children }) => {
+  const { resultStatsSaveScreenInit } = useGameData();
+
   const screenName = useScreen();
   const resultStatsDefault = useResultStatsDefaultStore((state) => state.resultStatsDefault);
 

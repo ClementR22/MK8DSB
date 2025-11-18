@@ -7,18 +7,20 @@ import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
 import showToast from "@/utils/showToast";
 import useLoadBuildModalStore from "@/stores/useLoadBuildModalStore";
 import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
+import { useGameData } from "@/hooks/useGameData";
 
 interface ButtonImportBuildProps {
   screenName: ScreenName;
 }
 
 const ButtonImportBuild: React.FC<ButtonImportBuildProps> = ({ screenName }) => {
+  const { buildDataMap } = useGameData();
   const importBuild = useBuildsActionsStore((state) => state.importBuild);
 
   const handleImport = async (screenName: ScreenName) => {
     try {
       const clipboardContent = await Clipboard.getStringAsync();
-      importBuild(clipboardContent, screenName);
+      importBuild(clipboardContent, screenName, buildDataMap);
       if (screenName === "search") {
         showToast("toast:statsImported", "success");
       } else {

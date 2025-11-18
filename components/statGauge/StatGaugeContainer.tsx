@@ -1,12 +1,12 @@
 import React, { useCallback, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import Text from "@/primitiveComponents/Text";
-import { StatName } from "@/types/statsTypes";
-import { statNamesCompact } from "@/data/stats/statsData";
+import { StatName } from "@/types";
 import Tooltip from "../Tooltip";
 import useThemeStore from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { getBonusColor } from "@/utils/getBonusColor";
+import { useGameData } from "@/hooks/useGameData";
 
 interface StatGaugeContainerProps {
   name?: StatName;
@@ -25,6 +25,7 @@ const StatGaugeContainer = ({
   onPress,
   children,
 }: StatGaugeContainerProps) => {
+  const { statNamesCompact } = useGameData();
   const theme = useThemeStore((state) => state.theme);
 
   const showAllStatGaugeBonuses = useGeneralStore((state) => state.showAllStatGaugeBonuses);
