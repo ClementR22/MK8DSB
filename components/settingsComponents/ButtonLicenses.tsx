@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, Linking, StyleSheet, ScrollView } from "react-native";
 import ButtonAndModal from "../modal/ButtonAndModal";
-import { licensesLinks } from "@/data/licensesLinks";
+import { licensesLinks } from "@/constants/licensesLinks";
 import Text from "@/primitiveComponents/Text";
 import { vh } from "../styles/theme";
 

@@ -8,7 +8,6 @@ import { Build, StatName } from "@/types";
 
 // Utilities
 import { sortElements } from "@/utils/sortElements";
-import { DEFAULT_BUILDS } from "@/constants/defaultBuilds";
 import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 import useDeckStore from "./useDeckStore";
 import { deleteAllSavedBuildsInMemory } from "@/utils/asyncStorageOperations";
@@ -28,6 +27,7 @@ interface BuildsListStoreState {
   buildEditedDataId: string;
   buildIndexInComparator: number;
 
+  initBuildsListDisplayed: (buildsListDisplayedInit: Build[]) => void;
   getBuildsList: (screenName: ScreenName) => {
     buildsList: Build[] | Build[];
     buildsListName: string;
@@ -60,13 +60,13 @@ interface BuildsListStoreState {
 
 const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   buildsListFound: [],
-  buildsListDisplayed: [
-    { buildDataId: DEFAULT_BUILDS.build1.buildDataId },
-    { buildDataId: DEFAULT_BUILDS.build2.buildDataId },
-  ],
+  buildsListDisplayed: [],
   buildsListSaved: [],
+
   buildEditedDataId: null,
   buildIndexInComparator: 2, // = get().buildsListDisplayed.length
+
+  initBuildsListDisplayed: (buildsListDisplayedInit) => set({ buildsListDisplayed: buildsListDisplayedInit }),
 
   getBuildsList: (screenName) => {
     let buildsListName: string;

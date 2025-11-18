@@ -1,5 +1,4 @@
-import { DEFAULT_BUILDS } from "@/constants/defaultBuilds";
-import { BuildPersistant } from "@/types/buildsTypes";
+import { BuildPersistant } from "@/types";
 import { create } from "zustand";
 
 export type BuildEntry = { name: string; isSaved: boolean };
@@ -18,8 +17,7 @@ interface DeckState {
 
 const useDeckStore = create<DeckState>((set, get) => ({
   deck: new Map([
-    [DEFAULT_BUILDS.build1.buildDataId, { name: DEFAULT_BUILDS.build1.name, isSaved: false }],
-    [DEFAULT_BUILDS.build2.buildDataId, { name: DEFAULT_BUILDS.build2.name, isSaved: false }],
+    //    [DEFAULT_BUILDS.build1.buildDataId, { name: DEFAULT_BUILDS.build1.name, isSaved: false }],
   ]),
 
   setBuildName: (buildDataId, newName) =>

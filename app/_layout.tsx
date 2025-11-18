@@ -27,6 +27,7 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import { useInitStatsStore } from "@/hooks/useInitStatsStore";
 import useGameStore from "@/stores/useGameStore";
 import { useInitResultStatsDefaultStore } from "@/hooks/useInitResultStatsDefaultStore";
+import { useInitBuildsListStore } from "@/hooks/useInitBuildsListStore";
 
 export default function TabLayout() {
   const { t } = useTranslation("screens");
@@ -53,6 +54,8 @@ export default function TabLayout() {
   useInitStatsStore();
 
   useInitResultStatsDefaultStore();
+
+  useInitBuildsListStore();
 
   useEffect(() => {
     setNumberSavedBuilds(buildsListSaved.length);
