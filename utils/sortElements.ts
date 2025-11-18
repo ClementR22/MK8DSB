@@ -36,9 +36,10 @@ export const sortElements = <T>(
   sortNumber: number,
   t: TFunction = ((key: string) => key) as unknown as TFunction
 ): T[] => {
-  const sortKey = sortMap[sortNumber] as keyof T;
+  const sortKey = sortMap[Math.floor(sortNumber / 2)] as keyof T;
   const ascending = sortNumber % 2 === 0;
 
+  console.log(sortNumber, sortKey);
   if (!sortKey) {
     console.warn(`Unknown sortNumber: ${sortNumber}. Returning unsorted elements.`);
     return [...elements];
