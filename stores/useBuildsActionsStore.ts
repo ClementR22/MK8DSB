@@ -39,7 +39,7 @@ interface BuildsActionsStoreState {
   saveBuild: (source: ScreenName, buildDataId: string) => Promise<void>;
   unSaveBuild: (buildDataId: string) => Promise<void>;
   exportBuild: (screenName: ScreenName, buildDataId: string) => void;
-  importBuild: (clipboardContent: string, screenName: ScreenName, buildDataMap: Map<string, BuildData>) => void;
+  importBuild: (clipboardContent: string, screenName: ScreenName, buildsDataMap: Map<string, BuildData>) => void;
 }
 
 const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
@@ -176,7 +176,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     Clipboard.setStringAsync(json + "\n" + t("text:tutoImportation"));
   },
 
-  importBuild: (clipboardContent: string, screenName: ScreenName, buildDataMap) => {
+  importBuild: (clipboardContent: string, screenName: ScreenName, buildsDataMap) => {
     let parsedBuild: unknown;
 
     // Cherche le premier JSON dans le texte
@@ -199,7 +199,7 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     const build: Build = { buildDataId };
 
     if (screenName === "search") {
-      get().loadToSearch({ build }, buildDataMap);
+      get().loadToSearch({ build }, buildsDataMap);
     } else {
       const isNameFree = useDeckStore.getState().checkNameFree(name);
       const newName = isNameFree ? name : useGenerateUniqueName(name);

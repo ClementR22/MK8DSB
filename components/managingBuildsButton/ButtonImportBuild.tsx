@@ -14,13 +14,13 @@ interface ButtonImportBuildProps {
 }
 
 const ButtonImportBuild: React.FC<ButtonImportBuildProps> = ({ screenName }) => {
-  const { buildDataMap } = useGameData();
+  const { buildsDataMap } = useGameData();
   const importBuild = useBuildsActionsStore((state) => state.importBuild);
 
   const handleImport = async (screenName: ScreenName) => {
     try {
       const clipboardContent = await Clipboard.getStringAsync();
-      importBuild(clipboardContent, screenName, buildDataMap);
+      importBuild(clipboardContent, screenName, buildsDataMap);
       if (screenName === "search") {
         showToast("toast:statsImported", "success");
       } else {
