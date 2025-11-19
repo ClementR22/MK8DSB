@@ -12,11 +12,9 @@ import { useContainerLowestStyle } from "@/hooks/useScreenStyle";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 import Pannel from "@/components/galleryComponents/Pannel";
 import Animated, { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
-import i18n from "@/translations";
 import { useTranslation } from "react-i18next";
 import { useGameData } from "@/hooks/useGameData";
 
-// --- Main GalleryScreen Component ---
 const GalleryScreen = () => {
   const { elementsDataByCategory, statNames, classesStatsByCategory } = useGameData();
   const { t } = useTranslation("elements");
@@ -26,20 +24,31 @@ const GalleryScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [sortNumber, setSortNumber] = useState(0);
 
-  const categoryElementsSorted = useMemo<ElementData[]>(
-    () => sortElements<ElementData>(elementsDataByCategory[selectedCategory], sortNumber, t),
-    [selectedCategory, sortNumber, t]
-  );
+  const { categoryElementsSorted, classesStats } = useMemo(() => {
+    const categoryElementsSorted: ElementData[] = sortElements<ElementData>(
+      elementsDataByCategory[selectedCategory],
+      sortNumber,
+      t
+    );
+    const classesStats: Map<number, number[]> = classesStatsByCategory[selectedCategory];
+    return { categoryElementsSorted, classesStats };
+  }, [selectedCategory, sortNumber, t, classesStatsByCategory, sortElements]);
+  // dépendances : toutes
 
   const overlayOpacity = useSharedValue(isLeftPannelExpanded ? 0.5 : 0);
 
-  const { selectedElementName, selectedElementStats } = getSelectedElementData(
-    categoryElementsSorted,
-    selectedElementId,
-    selectedCategory,
-    classesStatsByCategory,
-    statNames
-  );
+  const elementCard = useMemo(() => {
+    const { selectedElementName, selectedElementStats } = getSelectedElementData(
+      categoryElementsSorted,
+      selectedElementId,
+      classesStats,
+      statNames
+    );
+    return <ElementCard name={selectedElementName} stats={selectedElementStats} category={selectedCategory} />;
+  }, [selectedElementId, statNames]);
+  // dépendances :
+  // selectedElementId car ElementCard doit correspondre à selectedElementId
+  // statNames pour réagir au changement de jeu
 
   const handleElementPickerPress = useCallback(
     (id: number) => {
@@ -81,7 +90,7 @@ const GalleryScreen = () => {
           contentContainerStyle={{ paddingTop: MARGIN_CONTAINER_LOWEST + 24, paddingBottom: MARGIN_CONTAINER_LOWEST }} // MARGIN_CONTAINER_LOWEST
           showsVerticalScrollIndicator={false}
         >
-          <ElementCard name={selectedElementName} stats={selectedElementStats} category={selectedCategory} />
+          {elementCard}
         </ScrollView>
 
         <Animated.View
