@@ -94,7 +94,7 @@ const StatGaugeContainer = ({
         size="large"
         style={styles[isInBuildCard ? "valueBuildCard" : "value"]}
         namespace="not"
-        textAlign="left"
+        textAlign={isInBuildCard ? "center" : "left"}
         color={showAllStatGaugeBonuses ? bonusColor : theme.on_surface}
       >
         {displayedValue}
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   name: { width: 45, marginLeft: 3, marginRight: 8 },
-  value: { width: 45, marginLeft: 13 },
+  value: { width: 45, marginLeft: 8 },
   nameBuildCard: { width: 43, marginRight: 4 },
   valueBuildCard: { width: 48, marginLeft: 0 },
 });
