@@ -6,7 +6,7 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import useStatsStore from "@/stores/useStatsStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import useThemeStore from "@/stores/useThemeStore";
-import { StatName } from "@/types/statsTypes";
+import { StatName } from "@/types";
 import { BORDER_RADIUS_INF, BORDER_RADIUS_STAT_GAUGE_CONTAINER, BUTTON_SIZE } from "@/utils/designTokens";
 import { box_shadow_z1 } from "../styles/shadow";
 import Text from "@/primitiveComponents/Text";
@@ -17,6 +17,7 @@ interface StatSliderContentProps {
   statFilterNumber: number;
   setStatFilterNumber: (num: number) => void;
   disabled?: boolean;
+  onPress?: () => void;
 }
 
 const MAX_VALUE = 6;
@@ -27,6 +28,7 @@ const StatSliderContent = ({
   statFilterNumber,
   setStatFilterNumber,
   disabled = false,
+  onPress = () => {},
 }: StatSliderContentProps) => {
   const theme = useThemeStore((state) => state.theme);
 
@@ -76,6 +78,7 @@ const StatSliderContent = ({
           borderColor: getStatSliderBorderColor(statFilterNumber, theme),
         },
       ])}
+      onPress={onPress}
     >
       <View style={styles.containerLeft}>
         <View style={styles.textWrapper}>

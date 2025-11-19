@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 // Components import
@@ -21,8 +21,13 @@ import useStatsStore from "@/stores/useStatsStore";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import StatGaugeContainer from "@/components/statGauge/StatGaugeContainer";
 import StatGaugeBar from "@/components/statGauge/StatGaugeBar";
+import { StatName } from "@/types";
+import { useGameData } from "@/hooks/useGameData";
+import { useSlidersCompact } from "@/hooks/useSlidersCompact";
 
 const SearchBuildScreen: React.FC = () => {
+  const { statNames } = useGameData();
+
   const scrollviewBuildsCardsRef = useRef<BuildCardsContainerHandles>(null);
   const scrollviewMainRef = useRef<ScrollViewScreenHandles>(null);
 
@@ -30,32 +35,32 @@ const SearchBuildScreen: React.FC = () => {
   const chosenStats = useStatsStore((state) => state.chosenStats);
   const buildsListFound = useBuildsListStore((state) => state.buildsListFound);
 
-  const [isSliderCompact, setIsSliderCompact] = useState(false);
-  const toggleSliderCompact = useCallback(() => {
-    setIsSliderCompact((prev) => !prev);
-  }, []);
+  // Liste des stats visibles (checked)
+  const visibleStats = chosenStats.filter((s) => s.checked).map((s) => s.name);
+
+  const { compactByStat, isAllCompact, toggleAll, toggleOne } = useSlidersCompact(statNames, visibleStats);
 
   const renderedSliders = useMemo(() => {
     return chosenStats.map((stat) => {
       if (!stat.checked) return null;
 
-      if (isSliderCompact) {
-        return (
-          <StatGaugeContainer key={`statSlider-${stat.name}-compact`} name={stat.name} value={stat.value}>
-            <StatGaugeBar value={stat.value} statFilterNumber={stat.statFilterNumber} />
-          </StatGaugeContainer>
-        );
-      } else
-        return (
-          <StatSlider
-            key={`statSlider-${stat.name}-full`}
-            name={stat.name}
-            value={stat.value}
-            statFilterNumber={stat.statFilterNumber}
-          />
-        );
+      const compact = compactByStat[stat.name];
+
+      return compact ? (
+        <StatGaugeContainer key={stat.name} name={stat.name} value={stat.value} onPress={() => toggleOne(stat.name)}>
+          <StatGaugeBar value={stat.value} statFilterNumber={stat.statFilterNumber} />
+        </StatGaugeContainer>
+      ) : (
+        <StatSlider
+          key={stat.name}
+          name={stat.name}
+          value={stat.value}
+          statFilterNumber={stat.statFilterNumber}
+          onPress={() => toggleOne(stat.name)}
+        />
+      );
     });
-  }, [chosenStats, isSliderCompact]);
+  }, [chosenStats, compactByStat]);
 
   return (
     <ScreenProvider screenName="search">
@@ -64,14 +69,14 @@ const SearchBuildScreen: React.FC = () => {
           borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}
           padding={PADDING_SEARCH_CONTAINER}
           boxShadow={box_shadow_z1}
-          gap={isSliderCompact ? GAP_STAT_GAUGE_GROUP : undefined}
+          gap={GAP_STAT_GAUGE_GROUP}
         >
           <View style={styles.searchContainerPressablesContainer}>
             <ButtonIcon
-              onPress={toggleSliderCompact}
-              iconName={isSliderCompact ? "chevron-down" : "chevron-up"}
+              onPress={toggleAll}
+              iconName={isAllCompact ? "chevron-down" : "chevron-up"}
               iconType={IconType.MaterialCommunityIcons}
-              tooltipText={isSliderCompact ? "DevelopSliders" : "ReduceSliders"}
+              tooltipText={isAllCompact ? "developSliders" : "reduceSliders"}
             />
 
             <View style={styles.headerTextContainer}>
