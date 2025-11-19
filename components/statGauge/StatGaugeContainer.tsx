@@ -40,7 +40,7 @@ const StatGaugeContainer = ({
     }
 
     let displayedValue: number | string;
-    if (!showAllStatGaugeBonuses) {
+    if (!isInBuildCard || !showAllStatGaugeBonuses) {
       displayedValue = value;
     } else {
       if (bonusFound === undefined) {
@@ -65,7 +65,9 @@ const StatGaugeContainer = ({
       onPress();
       return;
     }
-    toggleAllStatGaugeBonuses();
+    if (isInBuildCard) {
+      toggleAllStatGaugeBonuses();
+    }
   }, [toggleAllStatGaugeBonuses]);
 
   return (
@@ -92,7 +94,7 @@ const StatGaugeContainer = ({
         size="large"
         style={styles[isInBuildCard ? "valueBuildCard" : "value"]}
         namespace="not"
-        textAlign="center"
+        textAlign="left"
         color={showAllStatGaugeBonuses ? bonusColor : theme.on_surface}
       >
         {displayedValue}
