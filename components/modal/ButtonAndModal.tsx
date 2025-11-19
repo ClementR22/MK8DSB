@@ -37,6 +37,7 @@ interface ButtonAndModalProps {
   };
   closeAfterSecondButton?: boolean;
   secondButtonPosition?: "left" | "right";
+  onModalOpen?: () => void;
   onModalClose?: () => void;
 }
 
@@ -55,6 +56,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
   secondButtonProps,
   closeAfterSecondButton,
   secondButtonPosition = "left",
+  onModalOpen,
   onModalClose,
 }) => {
   // État interne pour gérer la visibilité si les props externes ne sont pas fournies
@@ -71,8 +73,9 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
 
   // Fonction pour ouvrir le modal
   const openModal = useCallback(() => {
+    onModalOpen && onModalOpen();
     currentSetIsModalVisible(true);
-  }, [currentSetIsModalVisible]);
+  }, [currentSetIsModalVisible, onModalOpen]);
 
   // Fonction pour fermer le modal
   const closeModal = useCallback(() => {

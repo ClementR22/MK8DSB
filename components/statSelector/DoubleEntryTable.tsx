@@ -18,20 +18,21 @@ export type StatToggleMap = Record<
 
 interface DoubleEntryTableProps {
   statMap: StatToggleMap;
-  columns: ColumnName[];
+  columnNames: ColumnName[];
   onToggleStat: (statName: string, columnName: ColumnName) => void;
   disabled: boolean;
 }
 
-const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ statMap, columns, onToggleStat, disabled }) => {
+const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ statMap, columnNames, onToggleStat, disabled }) => {
+  console.log("statMap", statMap);
   const theme = useThemeStore((state) => state.theme);
 
   const rowNames = Object.keys(statMap);
-  const labelFlex = 5 - columns.length;
+  const labelFlex = 5 - columnNames.length;
 
   const renderRow = useCallback(
     (statName: string) => {
-      const vals = columns.map((col) => statMap[statName][col]);
+      const vals = columnNames.map((col) => statMap[statName][col]);
       return (
         <Pressable key={statName} style={styles.row}>
           <View style={[styles.cell, { flex: labelFlex }]}>
@@ -39,7 +40,7 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ statMap, columns, o
               {statName}
             </Text>
           </View>
-          {columns.map((col, i) => (
+          {columnNames.map((col, i) => (
             <View key={col} style={[styles.cell, styles.checkboxCell]}>
               <Checkbox
                 value={vals[i]}
@@ -52,7 +53,7 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ statMap, columns, o
         </Pressable>
       );
     },
-    [statMap, columns, labelFlex, disabled, onToggleStat, theme.primary]
+    [statMap, columnNames, labelFlex, disabled, onToggleStat, theme.primary]
   );
 
   return (
@@ -64,7 +65,7 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ statMap, columns, o
         ]}
       >
         <View style={[styles.headerCell, { flex: labelFlex }]} />
-        {columns.map((col) => (
+        {columnNames.map((col) => (
           <View key={col} style={styles.headerCell}>
             <Text role="title" size="small" namespace="text">
               {col}

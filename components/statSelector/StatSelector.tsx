@@ -1,11 +1,11 @@
 // StatSelector.tsx
-import React, { useMemo, useState, useCallback } from "react";
+import React, { useMemo, useState, useCallback, useEffect } from "react";
 import { View } from "react-native";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import DoubleEntryTable, { ColumnName, StatToggleMap } from "./DoubleEntryTable";
 import useStatsStore from "@/stores/useStatsStore";
 import { useResultStats } from "@/contexts/ResultStatsContext";
-import { ChosenStat, ResultStat } from "@/types";
+import { ChosenStat, ResultStat, StatName } from "@/types";
 import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
@@ -50,15 +50,22 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
   const theme = useThemeStore((state) => state.theme);
   const screenName = useScreen();
 
-  const { chosenStats, setChosenStats } = useStatsStore();
+  const chosenStats = useStatsStore((state) => state.chosenStats);
+  const setChosenStats = useStatsStore((state) => state.setChosenStats);
   const { resultStats, setResultStats } = useResultStats();
   const { resultStatsDefault, setResultStatsDefault, isResultStatsSync } = useResultStatsDefaultStore();
 
-  const columns = useMemo(() => getColumnsConfig(screenName), [screenName]);
+  const columnNames = useMemo(() => getColumnsConfig(screenName), [screenName]);
   const { customTrigger, modalTitle } = useMemo(() => getTriggerConfig(screenName), [screenName]);
 
-  // 🔹 Fusion de tous les stats dans un map par statName
-  const [statMap, setStatMap] = useState<StatToggleMap>(() => {
+  // Fusion de tous les stats dans un map par statName
+  const [statMap, setStatMap] = useState<StatToggleMap>();
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [resultStatsBeforeSync, setResultStatsBeforeSync] = useState(resultStats);
+
+  // on réinitialiser statNames à chaque ouverture de la modal
+  const initStatMap = useCallback(() => {
     const map: StatToggleMap = {};
     statNames.forEach((name) => {
       map[name] = {
@@ -69,11 +76,9 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
             : resultStats.find((s) => s.name === name)?.checked ?? false,
       };
     });
-    return map;
-  });
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [resultStatsBeforeSync, setResultStatsBeforeSync] = useState(resultStats);
+    setStatMap(map);
+  }, [chosenStats, resultStats, resultStatsDefault, statNames, screenName]);
 
   const toggleStat = useCallback(
     (statName: string, columnName: ColumnName) => {
@@ -82,7 +87,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
         const newChecked = !current;
 
         // keep at least one selected for chosenStats in search
-        if (columnName === "chosenStats" && columns.includes("chosenStats") && !newChecked) {
+        if (columnName === "chosenStats" && columnNames.includes("chosenStats") && !newChecked) {
           const othersChecked = Object.entries(prev)
             .filter(([key]) => key !== statName)
             .some(([, val]) => val.chosenStats);
@@ -99,7 +104,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
         return updated;
       });
     },
-    [columns, isResultStatsSync, screenName]
+    [columnNames, isResultStatsSync, screenName]
   );
 
   const handleModalClose = useCallback(() => {
@@ -109,21 +114,22 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
     const resultDefaultUpdated: ResultStat[] = [];
 
     Object.entries(statMap).forEach(([name, vals], statIndex) => {
-      if (columns.includes("chosenStats")) {
+      if (columnNames.includes("chosenStats")) {
         const prev = chosenStats[statIndex];
         chosenUpdated.push({ ...prev, name, checked: vals.chosenStats } as ChosenStat);
       }
 
-      if (columns.includes("resultStats")) {
+      if (columnNames.includes("resultStats")) {
         if (screenName === "settings") resultDefaultUpdated.push({ name, checked: vals.resultStats } as ResultStat);
         else resultUpdated.push({ name, checked: vals.resultStats } as ResultStat);
       }
     });
 
-    if (columns.includes("chosenStats")) setChosenStats(chosenUpdated);
+    console.log("chosenUpdated", chosenUpdated);
+    if (columnNames.includes("chosenStats")) setChosenStats(chosenUpdated);
     if (screenName === "settings") setResultStatsDefault(resultDefaultUpdated);
     else setResultStats(resultUpdated);
-  }, [statMap, columns, screenName, setChosenStats, setResultStats, setResultStatsDefault]);
+  }, [statMap, columnNames, screenName, setChosenStats, setResultStats, setResultStatsDefault]);
 
   return (
     <ButtonAndModal
@@ -134,10 +140,11 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
       isModalVisibleProp={isModalVisible}
       setIsModalVisibleProp={setIsModalVisible}
       onModalClose={handleModalClose}
+      onModalOpen={initStatMap}
     >
       <View style={{ backgroundColor: theme.surface, padding: 16 }}>
         {children}
-        {screenName === "search" && (
+        {screenName === "search" && statMap && (
           <ResultStatsSyncSwitch
             resultStats={Object.entries(statMap).map(
               ([name, val]) => ({ name, checked: val.resultStats } as ResultStat)
@@ -160,7 +167,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
         )}
         <DoubleEntryTable
           statMap={statMap}
-          columns={columns}
+          columnNames={columnNames}
           onToggleStat={toggleStat}
           disabled={isResultStatsSync && screenName === "search"}
         />
