@@ -1,11 +1,9 @@
 import Text from "@/primitiveComponents/Text";
-import useGeneralStore from "@/stores/useGeneralStore";
 import useThemeStore from "@/stores/useThemeStore";
-import { CORNER_EXTRA_SMALL } from "@/utils/designTokens";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { CORNER_EXTRA_SMALL, BORDER_RADIUS_STANDARD } from "@/utils/designTokens";
+import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { Pressable, StyleSheet, ViewStyle } from "react-native";
 import { Menu, MenuOptions, MenuTrigger, renderers } from "react-native-popup-menu";
-import { BORDER_RADIUS_STANDARD } from "@/utils/designTokens";
 
 interface TooltipProps {
   tooltipText: string;
@@ -14,6 +12,7 @@ interface TooltipProps {
   childStyleInner?: ViewStyle | ViewStyle[];
   childStyleOuter?: ViewStyle | ViewStyle[];
   placement?: "top" | "right" | "bottom" | "left" | "auto";
+  isButton?: boolean;
   disabled?: boolean;
   children: React.ReactNode;
 }
@@ -25,54 +24,59 @@ const Tooltip: React.FC<TooltipProps> = ({
   childStyleInner,
   childStyleOuter,
   placement = "top",
+  isButton = false,
   disabled = false,
   children,
 }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const timeoutRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const close = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
     setIsOpen(false);
-    return clearTimeout(timeoutRef.current);
   }, []);
 
   const open = useCallback(() => {
     setIsOpen(true);
 
-    timeoutRef.current = setTimeout(() => {
-      close();
-    }, 2000);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(close, 2000);
   }, [close]);
 
   useEffect(() => {
-    return () => clearTimeout(timeoutRef.current);
+    return () => timeoutRef.current && clearTimeout(timeoutRef.current);
   }, []);
+
+  const menuTriggerProps = useMemo(() => {
+    if (!isButton) return undefined;
+    return {
+      style: styles.menuTrigger,
+      customStyles: { triggerOuterWrapper: styles.triggerOuterWrapper },
+    };
+  }, [isButton]);
 
   return (
     <Menu
       opened={isOpen}
       renderer={renderers.Popover}
-      rendererProps={{ placement: placement, anchorStyle: styles.anchor }}
+      rendererProps={{ placement, anchorStyle: styles.anchor }}
       style={childStyleOuter}
     >
-      <MenuTrigger
-        style={styles.menuTrigger}
-        customStyles={{
-          triggerOuterWrapper: styles.triggerOuterWrapper,
-        }}
-      >
+      <MenuTrigger {...menuTriggerProps}>
         <Pressable onLongPress={open} onPress={disabled ? undefined : onPress} style={childStyleInner}>
           {children}
         </Pressable>
       </MenuTrigger>
+
       <MenuOptions
         customStyles={{
           optionsContainer: { borderRadius: BORDER_RADIUS_STANDARD },
-          optionsWrapper: {
-            backgroundColor: theme.inverse_surface,
-          },
+          optionsWrapper: { backgroundColor: theme.inverse_surface },
         }}
       >
         <Text
@@ -105,4 +109,4 @@ const styles = StyleSheet.create({
   triggerOuterWrapper: { flex: 1 },
 });
 
-export default Tooltip;
+export default React.memo(Tooltip);

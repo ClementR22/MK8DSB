@@ -48,6 +48,7 @@ const Button: React.FC<ButtonProps> = ({
         },
       ]}
       containerStyleInner={styles.containerInner}
+      isButton={true}
       disabled={disabled}
     >
       {iconProps && <Icon type={iconProps.type} name={iconProps.name} size={24} color={theme.on_primary} />}
