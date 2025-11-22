@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PopoverMenu;
+export default React.memo(PopoverMenu);

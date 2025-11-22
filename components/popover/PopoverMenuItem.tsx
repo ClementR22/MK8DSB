@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
   text: { flexShrink: 1 },
 });
 
-export default PopoverMenuItem;
+export default React.memo(PopoverMenuItem);

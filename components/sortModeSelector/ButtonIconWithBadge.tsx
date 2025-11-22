@@ -17,46 +17,54 @@ interface ButtonIconWithBadgeProps extends ButtonIconProps {
 
 const BADGE_ICON_INNER_SIZE = 20;
 
-const ButtonIconWithBadge: React.FC<ButtonIconWithBadgeProps> = memo(
-  ({ onPress, tooltipText, iconName, iconType, iconColor, backgroundColor, badgeText, direction, isBadge = true }) => {
-    const theme = useThemeStore((state) => state.theme);
+const ButtonIconWithBadge: React.FC<ButtonIconWithBadgeProps> = ({
+  onPress,
+  tooltipText,
+  iconName,
+  iconType,
+  iconColor,
+  backgroundColor,
+  badgeText,
+  direction,
+  isBadge = true,
+}) => {
+  const theme = useThemeStore((state) => state.theme);
 
-    const badgeIconName = direction === "asc" ? "arrow-up" : "arrow-down";
-    const badgeBackgroundColor = theme.primary_container;
-    const badgeIconColor = theme.on_primary_container;
+  const badgeIconName = direction === "asc" ? "arrow-up" : "arrow-down";
+  const badgeBackgroundColor = theme.primary_container;
+  const badgeIconColor = theme.on_primary_container;
 
-    const Wrapper = onPress ? ButtonIcon : IconContainer;
+  const Wrapper = onPress ? ButtonIcon : IconContainer;
 
-    return (
-      <View>
-        <Wrapper
-          onPress={onPress}
-          tooltipText={tooltipText}
-          iconName={iconName}
-          iconType={iconType}
-          iconColor={iconColor}
-          backgroundColor={backgroundColor ?? theme.primary}
-        />
-        {isBadge && (
-          <View style={[styles.badgeContainer, { backgroundColor: badgeBackgroundColor }]}>
-            {direction ? (
-              <Icon
-                name={badgeIconName}
-                type={IconType.MaterialCommunityIcons}
-                size={BADGE_ICON_INNER_SIZE}
-                color={badgeIconColor}
-              />
-            ) : (
-              <Text role="title" size="small" namespace="not">
-                {badgeText}
-              </Text>
-            )}
-          </View>
-        )}
-      </View>
-    );
-  }
-);
+  return (
+    <View>
+      <Wrapper
+        onPress={onPress}
+        tooltipText={tooltipText}
+        iconName={iconName}
+        iconType={iconType}
+        iconColor={iconColor}
+        backgroundColor={backgroundColor ?? theme.primary}
+      />
+      {isBadge && (
+        <View style={[styles.badgeContainer, { backgroundColor: badgeBackgroundColor }]}>
+          {direction ? (
+            <Icon
+              name={badgeIconName}
+              type={IconType.MaterialCommunityIcons}
+              size={BADGE_ICON_INNER_SIZE}
+              color={badgeIconColor}
+            />
+          ) : (
+            <Text role="title" size="small" namespace="not">
+              {badgeText}
+            </Text>
+          )}
+        </View>
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   badgeContainer: {
@@ -72,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ButtonIconWithBadge;
+export default React.memo(ButtonIconWithBadge);

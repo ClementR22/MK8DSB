@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default IconContainer;
+export default React.memo(IconContainer);

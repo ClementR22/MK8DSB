@@ -26,7 +26,7 @@ const HelpButtonDescription = ({
         <IconContainer iconName={iconName} iconType={iconType} containerSize={containerSize} />
       </View>
 
-      <View style={{ flex: 1, gap: 10, justifyContent: "center" }}>
+      <View style={styles.description}>
         <Text role="body" size="large" namespace={namespace}>
           {description}
         </Text>
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   iconWrapper: { width: BUTTON_SIZE, alignItems: "center" },
+  description: { flex: 1, gap: 10, justifyContent: "center" },
 });
 
 export default HelpButtonDescription;

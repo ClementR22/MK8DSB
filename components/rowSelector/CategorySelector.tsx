@@ -1,6 +1,6 @@
 // components/CategorySelector.tsx
 import React, { memo, useMemo } from "react";
-import { Category } from "@/types/bodytypesTypes";
+import { Category } from "@/types";
 import IconSelector from "./IconSelector";
 import { categoryImageSources } from "@/assets/images/categoryImageSources";
 import useThemeStore from "@/stores/useThemeStore";
@@ -19,29 +19,31 @@ const categoryOptions = Object.entries(categoryImageSources).map(([name, imageUr
   imageUrl,
 }));
 
-const CategorySelector: React.FC<CategorySelectorProps> = memo(
-  ({ selectedCategory, onCategoryPress, isInGalleryScreen = false }) => {
-    const theme = useThemeStore((state) => state.theme);
+const CategorySelector: React.FC<CategorySelectorProps> = ({
+  selectedCategory,
+  onCategoryPress,
+  isInGalleryScreen = false,
+}) => {
+  const theme = useThemeStore((state) => state.theme);
 
-    const activeStyle = useMemo(() => ({ backgroundColor: theme.primary }), [theme.primary]);
+  const activeStyle = useMemo(() => ({ backgroundColor: theme.primary }), [theme.primary]);
 
-    return (
-      <IconSelector<Category>
-        options={categoryOptions}
-        namespace="categories"
-        selectedValues={selectedCategory}
-        onSelect={onCategoryPress}
-        buttonStyle={styles.button}
-        activeStyle={activeStyle}
-        containerStyle={
-          isInGalleryScreen
-            ? styles.containerGallery
-            : [styles.containerPannel, { backgroundColor: theme.surface_container_high }]
-        }
-      />
-    );
-  }
-);
+  return (
+    <IconSelector<Category>
+      options={categoryOptions}
+      namespace="categories"
+      selectedValues={selectedCategory}
+      onSelect={onCategoryPress}
+      buttonStyle={styles.button}
+      activeStyle={activeStyle}
+      containerStyle={
+        isInGalleryScreen
+          ? styles.containerGallery
+          : [styles.containerPannel, { backgroundColor: theme.surface_container_high }]
+      }
+    />
+  );
+};
 
 const styles = StyleSheet.create({
   containerGallery: { flex: 1 },
@@ -56,4 +58,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CategorySelector;
+export default React.memo(CategorySelector);

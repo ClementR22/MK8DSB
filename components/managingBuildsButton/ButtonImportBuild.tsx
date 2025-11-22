@@ -54,4 +54,4 @@ const ButtonImportBuild: React.FC<ButtonImportBuildProps> = ({ screenName }) => 
   );
 };
 
-export default ButtonImportBuild;
+export default React.memo(ButtonImportBuild);

@@ -32,4 +32,4 @@ function Placeholder({ type }: PlaceholderProps) {
   );
 }
 
-export default Placeholder;
+export default React.memo(Placeholder);
