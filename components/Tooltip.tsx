@@ -57,8 +57,13 @@ const Tooltip: React.FC<TooltipProps> = ({
       rendererProps={{ placement: placement, anchorStyle: styles.anchor }}
       style={childStyleOuter}
     >
-      <MenuTrigger>
-        <Pressable onLongPress={open} onPress={onPress} disabled={disabled} style={childStyleInner}>
+      <MenuTrigger
+        style={styles.menuTrigger}
+        customStyles={{
+          triggerOuterWrapper: styles.triggerOuterWrapper,
+        }}
+      >
+        <Pressable onLongPress={open} onPress={disabled ? undefined : onPress} style={childStyleInner}>
           {children}
         </Pressable>
       </MenuTrigger>
@@ -96,6 +101,8 @@ const styles = StyleSheet.create({
     borderRadius: CORNER_EXTRA_SMALL,
   },
   anchor: { backgroundColor: "transparent" },
+  menuTrigger: { flex: 1 },
+  triggerOuterWrapper: { flex: 1 },
 });
 
 export default Tooltip;

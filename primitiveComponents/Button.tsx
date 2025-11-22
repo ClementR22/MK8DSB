@@ -19,7 +19,6 @@ interface ButtonProps {
   onPress: () => void;
   tooltipText: string;
   iconProps?: IconProps;
-  minWidth?: number;
   flex?: 1;
   disabled?: boolean;
   [key: string]: any;
@@ -32,10 +31,8 @@ const Button: React.FC<ButtonProps> = ({
   onPress,
   tooltipText,
   iconProps,
-  minWidth,
   flex,
   disabled = false,
-  ...props
 }) => {
   const theme = useThemeStore((state) => state.theme);
 
@@ -47,13 +44,10 @@ const Button: React.FC<ButtonProps> = ({
         styles.containerOuter,
         {
           backgroundColor: disabled ? "grey" : buttonColor || theme.primary,
-          paddingHorizontal: iconProps ? 15 : 10,
-          minWidth: minWidth,
           flex: flex,
         },
       ]}
       containerStyleInner={styles.containerInner}
-      {...props}
       disabled={disabled}
     >
       {iconProps && <Icon type={iconProps.type} name={iconProps.name} size={24} color={theme.on_primary} />}
@@ -77,13 +71,15 @@ const styles = StyleSheet.create({
     height: BUTTON_SIZE,
     borderRadius: BORDER_RADIUS_INF,
     boxShadow: box_shadow_z2,
-    justifyContent: "center",
-    alignItems: "center",
+    minWidth: 100, // just for modal buttons
   },
   containerInner: {
     flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
     gap: 5,
+    flex: 1,
+    paddingHorizontal: 15, // just for the search button in HelpSearhBuildScreen
   },
 });
 

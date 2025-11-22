@@ -22,13 +22,7 @@ interface ModalButtonProps {
 
 const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, buttonTextColor }: ModalButtonProps) => {
   return (
-    <Button
-      buttonColor={buttonColor}
-      buttonTextColor={buttonTextColor}
-      onPress={onPress}
-      minWidth={100}
-      tooltipText={tooltipText}
-    >
+    <Button buttonColor={buttonColor} buttonTextColor={buttonTextColor} onPress={onPress} tooltipText={tooltipText}>
       {text}
     </Button>
   );
