@@ -86,7 +86,7 @@ export default function TabLayout() {
   const renderSavedHeader = useCallback(
     () => (
       <CustomHeader
-        iconName="cards-outline"
+        iconName="cards"
         iconType={IconType.MaterialCommunityIcons}
         title="savedSetTitle"
         helpComponent={<HelpSavedBuildScreen />}
@@ -95,11 +95,11 @@ export default function TabLayout() {
     []
   );
   const renderGalleryHeader = useCallback(
-    () => <CustomHeader iconName="image-outline" iconType={IconType.Ionicons} title="galleryTitle" />,
+    () => <CustomHeader iconName="image" iconType={IconType.Ionicons} title="galleryTitle" />,
     []
   );
   const renderSettingsHeader = useCallback(
-    () => <CustomHeader iconName="settings-outline" iconType={IconType.Ionicons} title="settingsTitle" />,
+    () => <CustomHeader iconName="settings" iconType={IconType.Ionicons} title="settingsTitle" />,
     []
   );
 
