@@ -3,6 +3,7 @@ import { create } from "zustand";
 
 interface GameState {
   game: Game;
+  setGame: (game: Game) => void;
 }
 
 const useGameStore = create<GameState>((set) => ({

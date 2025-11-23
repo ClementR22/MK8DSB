@@ -2,6 +2,7 @@ import enButton from "./locales/en/button.json";
 import enCategories from "./locales/en/categories.json";
 import enElements from "./locales/en/elements.json";
 import enError from "./locales/en/error.json";
+import enGame from "./locales/en/game.json";
 import enHelpSearch from "./locales/en/helpSearch.json";
 import enHelpDisplay from "./locales/en/helpDisplay.json";
 import enHelpSave from "./locales/en/helpSave.json";
@@ -20,6 +21,7 @@ import frButton from "./locales/fr/button.json";
 import frCategories from "./locales/fr/categories.json";
 import frElements from "./locales/fr/elements.json";
 import frError from "./locales/fr/error.json";
+import frGame from "./locales/fr/game.json";
 import frHelpSearch from "./locales/fr/helpSearch.json";
 import frHelpDisplay from "./locales/fr/helpDisplay.json";
 import frHelpSave from "./locales/fr/helpSave.json";
@@ -40,6 +42,7 @@ export const resources = {
     categories: enCategories,
     elements: enElements,
     error: enError,
+    game: enGame,
     helpSearch: enHelpSearch,
     helpDisplay: enHelpDisplay,
     helpSave: enHelpSave,
@@ -60,6 +63,7 @@ export const resources = {
     categories: frCategories,
     elements: frElements,
     error: frError,
+    game: frGame,
     helpSearch: frHelpSearch,
     helpDisplay: frHelpDisplay,
     helpSave: frHelpSave,

@@ -13,11 +13,12 @@ import ButtonDeleteAllBuildsInMemory from "@/components/settingsComponents/Butto
 import StatSelector from "@/components/statSelector/StatSelector";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
-import ResultsNumberSelector from "@/components/ResultsNumberSelector";
+import ResultsNumberSelector from "@/components/settingsComponents/ResultsNumberSelector";
 import { box_shadow_z1 } from "@/components/styles/shadow";
 import Text from "@/primitiveComponents/Text";
 import showToast from "@/utils/showToast";
 import useBuildsListStore from "@/stores/useBuildsListStore";
+import GameSelector from "@/components/settingsComponents/GameSelector";
 
 const SettingsScreen: React.FC = () => {
   const resetSettings = useResetSettings();
@@ -50,6 +51,8 @@ const SettingsScreen: React.FC = () => {
           <LanguageSelector />
 
           <ThemeSelector />
+
+          <GameSelector />
 
           <ResultsNumberSelector />
 
