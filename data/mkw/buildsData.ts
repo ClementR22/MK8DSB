@@ -16,9 +16,9 @@ export const buildsDataMap: Map<string, BuildData> = new Map(
 
 export const buildsListDisplayedInit: Build[] = [
   {
-    buildDataId: "9-16-30-39",
+    buildDataId: "10-20",
   },
   {
-    buildDataId: "15-22-31-42",
+    buildDataId: "19-26",
   },
 ];

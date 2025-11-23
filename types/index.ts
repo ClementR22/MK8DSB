@@ -23,3 +23,9 @@ export type ResultStat = MK8D.ResultStat | MKW.ResultStat;
 export type ChosenStat = MK8D.ChosenStat | MKW.ChosenStat;
 
 export type BuildData = MK8D.BuildData | MKW.BuildData;
+
+export type SelectedClassIdsByCategory = MK8D.SelectedClassIdsByCategory | MKW.SelectedClassIdsByCategory;
+
+export type MultiSelectedClassIdsByCategory =
+  | MK8D.MultiSelectedClassIdsByCategory
+  | MKW.MultiSelectedClassIdsByCategory;

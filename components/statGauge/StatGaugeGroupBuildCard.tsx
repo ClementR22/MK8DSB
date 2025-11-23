@@ -22,7 +22,6 @@ const StatGaugeGroupBuildCard: React.FC<StatGaugeGroupBuildCardProps> = ({ stats
 
   const sliderContent = useMemo(() => {
     const filteredResultStats = resultStats.filter((stat) => stat.checked);
-
     if (filteredResultStats.length === 0) {
       return null;
     }

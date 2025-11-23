@@ -14,13 +14,13 @@ export const statNames: StatName[] = [
 ];
 
 export const statNamesCompact = {
-  speedGround: "SS",
-  speedAntiGravity: "SR",
+  speedSmooth: "SS",
+  speedRough: "SR",
   speedWater: "SW",
   acceleration: "Acc",
   weight: "Wei",
-  handlingGround: "HS",
-  handlingAntiGravity: "HR",
+  handlingSmooth: "HS",
+  handlingRough: "HR",
   handlingWater: "HW",
   miniTurbo: "MT",
 };

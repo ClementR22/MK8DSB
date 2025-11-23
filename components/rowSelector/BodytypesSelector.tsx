@@ -1,23 +1,20 @@
 // components/BodytypesSelector.tsx
 import React, { useCallback, useMemo } from "react";
-import { Bodytype } from "@/types/bodytypesTypes";
+import { Bodytype } from "@/types";
 import IconSelector from "./IconSelector";
-import { bodytypeImageSourcesMK8D } from "@/assets/images/elementsImages/mk8d/bodytypeImageSourcesMK8D";
 import useThemeStore from "@/stores/useThemeStore";
 import { StyleSheet } from "react-native";
 import { GAP_ELEMENTS_GRID } from "@/utils/designTokens";
+import { useGameData } from "@/hooks/useGameData";
 
 interface BodytypesSelectorProps {
   selectedBodytypes: Set<Bodytype>;
   setSelectedBodytypes: React.Dispatch<React.SetStateAction<Set<Bodytype>>>;
 }
 
-const bodytypeOptions = Object.entries(bodytypeImageSourcesMK8D).map(([name, imageUrl]) => ({
-  name: name as Bodytype,
-  imageUrl,
-}));
-
 const BodytypesSelector: React.FC<BodytypesSelectorProps> = ({ selectedBodytypes, setSelectedBodytypes }) => {
+  const { bodytypesItems } = useGameData();
+
   const theme = useThemeStore((state) => state.theme);
 
   const handleSelect = useCallback(
@@ -39,7 +36,7 @@ const BodytypesSelector: React.FC<BodytypesSelectorProps> = ({ selectedBodytypes
 
   return (
     <IconSelector<Bodytype>
-      options={bodytypeOptions}
+      options={bodytypesItems}
       selectedValues={selectedBodytypes}
       onSelect={handleSelect}
       activeStyle={activeStyle}

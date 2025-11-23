@@ -7,6 +7,7 @@ import { BUTTON_SIZE } from "@/utils/designTokens";
 export interface ButtonIconProps {
   onPress?: (event?: Event) => void;
   tooltipText: string;
+  namespace?: string;
   toolTipPlacement?: "top" | "right" | "bottom" | "left" | "auto";
   iconName: string;
   iconType: IconType;
@@ -21,6 +22,7 @@ export interface ButtonIconProps {
 const ButtonIcon: React.FC<ButtonIconProps> = ({
   onPress,
   tooltipText,
+  namespace,
   toolTipPlacement = "top",
   iconName,
   iconType,
@@ -32,7 +34,14 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   ...props
 }) => {
   return (
-    <ButtonBase onPress={onPress} tooltipText={tooltipText} placement={toolTipPlacement} disabled={disabled} {...props}>
+    <ButtonBase
+      onPress={onPress}
+      tooltipText={tooltipText}
+      namespace={namespace}
+      placement={toolTipPlacement}
+      disabled={disabled}
+      {...props}
+    >
       <IconContainer
         iconName={iconName}
         iconType={iconType}

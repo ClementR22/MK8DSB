@@ -1,3 +1,27 @@
-import { Category } from "@/types/mkw/categories";
+import { Category, SelectedClassIdsByCategory, MultiSelectedClassIdsByCategory } from "@/types/mkw/categories";
+
+type CategoryItem = {
+  name: Category;
+  imageUrl: ReturnType<typeof require>;
+};
 
 export const categories: Category[] = ["character", "body"];
+
+export const categoriesItems = [
+  { name: "character", imageUrl: require("@/assets/images/elementsImages/mkw/characters/Mario.png") } as CategoryItem,
+
+  {
+    name: "body",
+    imageUrl: require("@/assets/images/elementsImages/mkw/karts/Standard Kart.png"),
+  } as CategoryItem,
+];
+
+export const selectedClassIdsByCategoryInit: SelectedClassIdsByCategory = {
+  character: 10,
+  body: 20,
+};
+
+export const multiSelectedClassIdsByCategoryInit: MultiSelectedClassIdsByCategory = {
+  character: new Set(),
+  body: new Set(),
+};

@@ -5,9 +5,9 @@ type BodytypeItem = {
   imageUrl: ReturnType<typeof require>;
 };
 
-export const bodytypeNames: Bodytype[] = ["kart", "bike", "sportBike", "ATV"];
+export const bodytype: Bodytype[] = ["kart", "bike", "sportBike", "ATV"];
 
-export const bodytypes = [
+export const bodytypesItems = [
   {
     name: "kart",
     imageUrl: require("@/assets/images/elementsImages/mk8d/karts/Standard Kart.png"),
@@ -17,10 +17,12 @@ export const bodytypes = [
     name: "bike",
     imageUrl: require("@/assets/images/elementsImages/mk8d/bikes/Standard Bike.png"),
   } as BodytypeItem,
+
   {
     name: "sportBike",
     imageUrl: require("@/assets/images/elementsImages/mk8d/sportBikes/Sport Bike.png"),
   } as BodytypeItem,
+
   {
     name: "ATV",
     imageUrl: require("@/assets/images/elementsImages/mk8d/ATVs/Standard ATV.png"),

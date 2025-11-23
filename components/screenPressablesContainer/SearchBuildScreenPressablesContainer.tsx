@@ -37,7 +37,10 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
   const [disableSearch, setDisableSearch] = useState(false);
 
   const numberOfSelectedClassIds = useMemo(
-    () => Object.values(selectedClassIdsByCategory).reduce((count, category) => count + category.size, 0),
+    () =>
+      selectedClassIdsByCategory
+        ? Object.values(selectedClassIdsByCategory).reduce((count, category) => count + category.size, 0)
+        : 0,
     [selectedClassIdsByCategory]
   );
 

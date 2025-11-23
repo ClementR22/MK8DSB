@@ -1,24 +1,16 @@
 // usePressableElementsStore.ts
 import { create } from "zustand";
-import { Category } from "@/types";
-
-type SelectedClassIdsByCategory = {
-  character: number;
-  body: number;
-  wheel: number;
-  glider: number;
-};
-
-type MultiSelectedClassIdsByCategory = {
-  character: Set<number>;
-  body: Set<number>;
-  wheel: Set<number>;
-  glider: Set<number>;
-};
+import { Category, SelectedClassIdsByCategory, MultiSelectedClassIdsByCategory } from "@/types";
 
 interface PressableElementsState {
   selectedClassIdsByCategory: SelectedClassIdsByCategory;
   multiSelectedClassIdsByCategory: MultiSelectedClassIdsByCategory;
+
+  initSingleAndMultiSelectedClassIdsByCategory: (
+    selectedClassIdsByCategoryInit: SelectedClassIdsByCategory,
+    multiSelectedClassIdsByCategoryInit: MultiSelectedClassIdsByCategory
+  ) => void;
+
   getSelectedClassIds: (
     selectionMode: "single" | "multiple"
   ) => SelectedClassIdsByCategory | MultiSelectedClassIdsByCategory;
@@ -32,17 +24,19 @@ interface PressableElementsState {
   toggleMultiSelectElementsByClassId: (category: Category, elementId: number) => void;
 }
 
-const defaultSingleSelection: SelectedClassIdsByCategory = { character: 9, body: 16, wheel: 30, glider: 39 };
-const defaultMultiSelection: MultiSelectedClassIdsByCategory = {
-  character: new Set(),
-  body: new Set(),
-  wheel: new Set(),
-  glider: new Set(),
-};
-
 const usePressableElementsStore = create<PressableElementsState>((set, get) => ({
-  selectedClassIdsByCategory: { ...defaultSingleSelection },
-  multiSelectedClassIdsByCategory: { ...defaultMultiSelection },
+  selectedClassIdsByCategory: null,
+  multiSelectedClassIdsByCategory: null,
+
+  initSingleAndMultiSelectedClassIdsByCategory: (
+    selectedClassIdsByCategoryInit,
+    multiSelectedClassIdsByCategoryInit
+  ) => {
+    set({
+      selectedClassIdsByCategory: selectedClassIdsByCategoryInit,
+      multiSelectedClassIdsByCategory: multiSelectedClassIdsByCategoryInit,
+    });
+  },
 
   getSelectedClassIds: (selectionMode) => {
     if (selectionMode === "single") {
@@ -60,22 +54,17 @@ const usePressableElementsStore = create<PressableElementsState>((set, get) => (
 
   updateSelectionFromBuild: (classIds, categories) => {
     set((state) => {
-      const newSelected: SelectedClassIdsByCategory = {
-        character: null,
-        body: null,
-        wheel: null,
-        glider: null,
-      };
+      const newSelected: SelectedClassIdsByCategory = state.selectedClassIdsByCategory; // just of initialization
 
       categories.forEach((catName, index) => {
         newSelected[catName as Category] = classIds[index];
       });
 
-      const areEqual =
-        state.selectedClassIdsByCategory.character === newSelected.character &&
-        state.selectedClassIdsByCategory.body === newSelected.body &&
-        state.selectedClassIdsByCategory.wheel === newSelected.wheel &&
-        state.selectedClassIdsByCategory.glider === newSelected.glider;
+      const selectedClassIdsByCategory = state.selectedClassIdsByCategory;
+
+      const areEqual = Object.entries(selectedClassIdsByCategory).every(
+        ([categoryKey, categoryValue]) => newSelected[categoryKey] === categoryValue
+      );
 
       // Mettre à jour l'état UNIQUEMENT si le contenu a changé
       if (!areEqual) {

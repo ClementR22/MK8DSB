@@ -6,6 +6,7 @@ type ButtonBaseProps = {
   children: React.ReactNode;
   onPress: () => void;
   tooltipText: string;
+  namespace?: string;
   placement?: "top" | "right" | "bottom" | "left" | "auto";
   containerStyleOuter?: ViewStyle | ViewStyle[];
   containerStyleInner?: ViewStyle | ViewStyle[];
@@ -18,6 +19,7 @@ const ButtonBase = ({
   children,
   onPress,
   tooltipText,
+  namespace,
   placement = "top",
   containerStyleOuter,
   containerStyleInner,
@@ -34,6 +36,7 @@ const ButtonBase = ({
       childStyleOuter={containerStyleOuter}
       childStyleInner={containerStyleInner}
       tooltipText={tooltipText}
+      namespace={namespace}
       placement={placement}
       isButton={isButton}
       disabled={disabled}

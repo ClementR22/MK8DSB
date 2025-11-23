@@ -28,6 +28,7 @@ import { useInitStatsStore } from "@/hooks/useInitStatsStore";
 import useGameStore from "@/stores/useGameStore";
 import { useInitResultStatsDefaultStore } from "@/hooks/useInitResultStatsDefaultStore";
 import { useInitBuildsListStore } from "@/hooks/useInitBuildsListStore";
+import { useInitPressableElementsStore } from "@/hooks/useInitPressableElementsStore";
 
 export default function TabLayout() {
   const { t } = useTranslation("screens");
@@ -56,6 +57,8 @@ export default function TabLayout() {
   useInitResultStatsDefaultStore();
 
   useInitBuildsListStore();
+
+  useInitPressableElementsStore();
 
   useEffect(() => {
     setNumberSavedBuilds(buildsListSaved.length);

@@ -76,6 +76,7 @@ const StatGaugeContainer = ({
       childStyleOuter={styles.containerOuter}
       childStyleInner={styles.containerInner}
       onPress={handlePress}
+      namespace="stats"
     >
       {name && (
         <Text

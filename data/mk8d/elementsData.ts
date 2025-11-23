@@ -9,6 +9,8 @@ import {
 } from "../../types/mk8d/elements";
 import { Category } from "@/types/mk8d/categories";
 
+export const maxNumberOfImages = 5;
+
 function getElementStats(classId: number, overrides?: Partial<ElementStats>): ElementStats {
   const baseStats = baseStatsByClassId[classId];
 

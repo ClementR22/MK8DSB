@@ -20,6 +20,7 @@ const BADGE_ICON_INNER_SIZE = 20;
 const ButtonIconWithBadge: React.FC<ButtonIconWithBadgeProps> = ({
   onPress,
   tooltipText,
+  namespace,
   iconName,
   iconType,
   iconColor,
@@ -41,6 +42,7 @@ const ButtonIconWithBadge: React.FC<ButtonIconWithBadgeProps> = ({
       <Wrapper
         onPress={onPress}
         tooltipText={tooltipText}
+        namespace={namespace}
         iconName={iconName}
         iconType={iconType}
         iconColor={iconColor}

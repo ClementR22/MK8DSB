@@ -80,6 +80,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
         trigger={
           <ButtonIconWithBadge
             tooltipText={tooltipText}
+            namespace="sort"
             iconName={triggerIconName}
             iconType={triggerIconType}
             direction={statNames.includes(activeSort) ? currentDirection : undefined}
@@ -95,6 +96,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
               key={name}
               onPress={() => handlePress(name)}
               tooltipText={name}
+              namespace="sort"
               iconName={config.iconName}
               iconType={config.iconType}
               backgroundColor={config.backgroundColor}
@@ -128,6 +130,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
           key={name}
           onPress={() => handlePress(name)}
           tooltipText={name}
+          namespace="sort"
           iconName={iconConfig.iconName}
           iconType={iconConfig.iconType}
           direction={isActive ? currentDirection : undefined}

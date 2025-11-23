@@ -8,9 +8,6 @@ import Tooltip from "../Tooltip";
 import { useGameData } from "@/hooks/useGameData";
 
 const MAX_WIDTH_IN_BUILD_CARD = BUILD_CARD_WIDTH - PADDING_BUILD_CARD * 2; // 200
-const MAX_NUMBER_OF_IMAGE = 5;
-
-const IMAGE_SIZE = MAX_WIDTH_IN_BUILD_CARD / MAX_NUMBER_OF_IMAGE; // 40
 
 const PADDING_VERTICAL_CONTAINER = 7;
 const GAP_CONTAINER = 14;
@@ -32,7 +29,7 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
   isInLoadBuildModal,
   buildDataId,
 }) => {
-  const { elementsData, categories } = useGameData();
+  const { elementsData, categories, maxNumberOfImages } = useGameData();
   const screenName = useScreen();
 
   const data = useMemo<BuildImageCategoryData[]>(() => {
@@ -53,6 +50,14 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
   const [editActionProps] = useActionIconPropsList(["edit"], screenName, isInLoadBuildModal, buildDataId, false);
   const onImagesPress = !isInLoadBuildModal && screenName !== "search" ? editActionProps.onPress : () => {};
 
+  const imageStyle = useMemo(
+    () => ({
+      width: MAX_WIDTH_IN_BUILD_CARD / maxNumberOfImages,
+      height: MAX_WIDTH_IN_BUILD_CARD / maxNumberOfImages,
+    }),
+    [maxNumberOfImages]
+  );
+
   return (
     <Pressable onPress={onImagesPress} style={styles.pressable}>
       <View style={[styles.container, isCollapsed && styles.containerCollapsed]}>
@@ -67,7 +72,7 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
                     namespace="elements"
                     onPress={onImagesPress}
                   >
-                    <Image source={image} style={styles.image} resizeMode="contain" />
+                    <Image source={image} style={imageStyle} resizeMode="contain" />
                   </Tooltip>
                 )
             )}
@@ -90,10 +95,6 @@ const styles = StyleSheet.create({
   category: {
     flexDirection: "row",
     justifyContent: "center",
-  },
-  image: {
-    width: IMAGE_SIZE,
-    height: IMAGE_SIZE,
   },
 });
 

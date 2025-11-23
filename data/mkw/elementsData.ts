@@ -2,6 +2,8 @@ import { baseStatsByClassId } from "./classStats";
 import { ElementDataCharacter, ElementDataBody, ElementData, ElementStats } from "../../types/mkw/elements";
 import { Category } from "@/types/mkw/categories";
 
+export const maxNumberOfImages = 4;
+
 function getElementStats(classId: number, overrides?: Partial<ElementStats>): ElementStats {
   const baseStats = baseStatsByClassId[classId];
 
@@ -77,7 +79,7 @@ export const elementsData = [
     id: 6,
     name: "Bowser",
     category: "character",
-    classId: 26,
+    classId: 19,
     imageUrl: require("@/assets/images/elementsImages/mkw/characters/Bowser.png"),
     ...getElementStats(26),
   } as ElementDataCharacter,

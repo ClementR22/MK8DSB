@@ -5,9 +5,9 @@ type BodytypeItem = {
   imageUrl: ReturnType<typeof require>;
 };
 
-export const bodytypeNames: Bodytype[] = ["kart", "bike", "ATV"];
+export const bodytype: Bodytype[] = ["kart", "bike", "ATV"];
 
-export const bodytypes = [
+export const bodytypesItems = [
   {
     name: "kart",
     imageUrl: require("@/assets/images/elementsImages/mkw/karts/Standard Kart.png"),

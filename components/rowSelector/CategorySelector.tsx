@@ -2,11 +2,11 @@
 import React, { memo, useMemo } from "react";
 import { Category } from "@/types";
 import IconSelector from "./IconSelector";
-import { categoryImageSources } from "@/assets/images/elementsImages/mk8d/categoryImageSources";
 import useThemeStore from "@/stores/useThemeStore";
 import { StyleSheet } from "react-native";
 import { BORDER_WIDTH_CATEGORY_SELECTOR, BORDER_RADIUS_CATEGORY_SELECTOR } from "@/utils/designTokens";
 import { box_shadow_z1 } from "@/components/styles/shadow";
+import { useGameData } from "@/hooks/useGameData";
 
 interface CategorySelectorProps {
   selectedCategory: Category;
@@ -14,23 +14,19 @@ interface CategorySelectorProps {
   isInGalleryScreen?: boolean;
 }
 
-const categoryOptions = Object.entries(categoryImageSources).map(([name, imageUrl]) => ({
-  name: name as Category,
-  imageUrl,
-}));
-
 const CategorySelector: React.FC<CategorySelectorProps> = ({
   selectedCategory,
   onCategoryPress,
   isInGalleryScreen = false,
 }) => {
+  const { categoriesItems } = useGameData();
   const theme = useThemeStore((state) => state.theme);
 
   const activeStyle = useMemo(() => ({ backgroundColor: theme.primary }), [theme.primary]);
 
   return (
     <IconSelector<Category>
-      options={categoryOptions}
+      options={categoriesItems}
       namespace="categories"
       selectedValues={selectedCategory}
       onSelect={onCategoryPress}
