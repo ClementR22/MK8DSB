@@ -329,7 +329,7 @@ export const baseStatsByClassId: { [key: number]: ElementStats } = {
     miniTurbo: 0.25,
   },
   21: {
-    // Circuit Special, B-Dasher, P-Wing
+    // Circuit Special, B Dasher, P-Wing
     speedGround: 0.5,
     speedAntiGravity: 0.25,
     speedWater: -0.5,

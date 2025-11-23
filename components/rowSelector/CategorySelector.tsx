@@ -2,7 +2,7 @@
 import React, { memo, useMemo } from "react";
 import { Category } from "@/types";
 import IconSelector from "./IconSelector";
-import { categoryImageSources } from "@/assets/images/categoryImageSources";
+import { categoryImageSources } from "@/assets/images/elementsImages/mk8d/categoryImageSources";
 import useThemeStore from "@/stores/useThemeStore";
 import { StyleSheet } from "react-native";
 import { BORDER_WIDTH_CATEGORY_SELECTOR, BORDER_RADIUS_CATEGORY_SELECTOR } from "@/utils/designTokens";

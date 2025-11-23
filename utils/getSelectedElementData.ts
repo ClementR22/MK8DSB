@@ -1,5 +1,5 @@
 import { ElementData } from "@/types/mk8d/elements";
-import { Category, StatName } from "@/types";
+import { StatName } from "@/types";
 
 export const getSelectedElementData = (
   categoryElementsSorted: ElementData[],

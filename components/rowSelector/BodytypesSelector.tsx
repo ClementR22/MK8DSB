@@ -2,7 +2,7 @@
 import React, { useCallback, useMemo } from "react";
 import { Bodytype } from "@/types/bodytypesTypes";
 import IconSelector from "./IconSelector";
-import { bodytypeImageSourcesMK8D } from "@/assets/images/bodytypeImageSourcesMK8D";
+import { bodytypeImageSourcesMK8D } from "@/assets/images/elementsImages/mk8d/bodytypeImageSourcesMK8D";
 import useThemeStore from "@/stores/useThemeStore";
 import { StyleSheet } from "react-native";
 import { GAP_ELEMENTS_GRID } from "@/utils/designTokens";

@@ -17,6 +17,11 @@
   "traction": "Adhérence (Adh)",
   "miniTurbo": "Mini-turbo (MT)",
 
+  "speedSmooth": "Vitesse lisse",
+  "speedRough": "Vitesse rugueux",
+  "handlingSmooth": "Maniabilité lisse",
+  "handlingRough": "Maniabilité rugueux",
+
   "speed": "Vitesse",
   "handling": "Maniabilité"
 }
