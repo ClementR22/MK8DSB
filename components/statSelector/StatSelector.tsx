@@ -125,7 +125,6 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
       }
     });
 
-    console.log("chosenUpdated", chosenUpdated);
     if (columnNames.includes("chosenStats")) setChosenStats(chosenUpdated);
     if (screenName === "settings") setResultStatsDefault(resultDefaultUpdated);
     else setResultStats(resultUpdated);

@@ -11,7 +11,7 @@ export const useBuildCardStyle = (width?: DimensionValue) => {
   const theme = useThemeStore((state) => state.theme);
 
   // Calcule le style de la carte une seule fois
-  const setCardStyle = useMemo(() => {
+  const buildCardStyle = useMemo(() => {
     return StyleSheet.flatten([
       {
         // Styles de base communs à toutes les cartes
@@ -27,6 +27,6 @@ export const useBuildCardStyle = (width?: DimensionValue) => {
   }, [theme.surface, theme.surface_container_high]); // Dépendances
 
   return {
-    setCardStyle,
+    buildCardStyle,
   };
 };

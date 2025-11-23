@@ -24,7 +24,6 @@ interface DoubleEntryTableProps {
 }
 
 const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ statMap, columnNames, onToggleStat, disabled }) => {
-  console.log("statMap", statMap);
   const theme = useThemeStore((state) => state.theme);
 
   const rowNames = Object.keys(statMap);

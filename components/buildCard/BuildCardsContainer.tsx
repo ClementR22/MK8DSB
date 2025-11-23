@@ -38,18 +38,18 @@ export interface BuildCardsContainerHandles {
 const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsContainerProps>(
   ({ builds, isInLoadBuildModal = false, screenNameFromProps, hideRemoveBuild }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
-    const setCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
+    const buildCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
 
     // La logique d'availableColorsRef et son useEffect ont été déplacés dans DisplayBuildScreen
 
     const onBuildCardLayout = useCallback((id: string, event: LayoutChangeEvent) => {
       const { x, width } = event.nativeEvent.layout;
-      setCardLayouts.current.set(id, { x, width }); // Utilisez l'ID build comme clé
+      buildCardLayouts.current.set(id, { x, width }); // Utilisez l'ID build comme clé
     }, []);
 
     const scrollToBuildCardHandler = useCallback(
       (id: string) => {
-        const layout = setCardLayouts.current.get(id);
+        const layout = buildCardLayouts.current.get(id);
         if (scrollViewRef.current && layout) {
           const screenWidth = Dimensions.get("window").width;
           const scrollX = layout.x - screenWidth / 2 + layout.width / 2;
@@ -58,7 +58,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
           // Optionnel : garder le warn si besoin de debug
         }
       },
-      [] // Dépendances vides car setCardLayouts.current est une ref stable
+      [] // Dépendances vides car buildCardLayouts.current est une ref stable
     );
 
     useImperativeHandle(ref, () => ({

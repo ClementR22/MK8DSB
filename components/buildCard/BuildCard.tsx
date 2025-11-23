@@ -48,11 +48,11 @@ const BuildCard: React.FC<BuildCardProps> = ({
 
   const config = useBuildCardConfig(situation, hideRemoveBuild, screenName);
 
-  const { setCardStyle } = useBuildCardStyle(BUILD_CARD_WIDTH);
+  const { buildCardStyle } = useBuildCardStyle(BUILD_CARD_WIDTH);
 
   return (
     <View style={styles.wrapper} onLayout={onLayout}>
-      <View style={[setCardStyle, borderColor && { borderColor }]}>
+      <View style={[buildCardStyle, borderColor && { borderColor }]}>
         <BuildCardHeader
           isNameEditable={config.isNameEditable}
           name={name}
@@ -84,7 +84,9 @@ const BuildCard: React.FC<BuildCardProps> = ({
           />
         )}
       </View>
-      {config.showStatSliderResult && <StatGaugeGroupBuildCard stats={buildData.stats} containerStyle={setCardStyle} />}
+      {config.showStatSliderResult && (
+        <StatGaugeGroupBuildCard stats={buildData.stats} containerStyle={buildCardStyle} />
+      )}
     </View>
   );
 };

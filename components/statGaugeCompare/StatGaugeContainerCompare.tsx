@@ -18,11 +18,11 @@ interface StatGaugeContainerCompareProps {
 }
 
 const StatGaugeContainerCompare: React.FC<StatGaugeContainerCompareProps> = ({ buildsIdAndValue, name }) => {
-  const { setCardStyle } = useBuildCardStyle("100%");
+  const { buildCardStyle } = useBuildCardStyle("100%");
   const { scrollToBuildCard } = useBuildCardsScroll();
 
   return (
-    <View style={[setCardStyle, styles.container]}>
+    <View style={[buildCardStyle, styles.container]}>
       <Text role="title" size="medium" style={styles.textWrapper} namespace="stats">
         {name}
       </Text>
