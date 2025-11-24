@@ -1,11 +1,37 @@
 import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
 import useThemeStore from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { IS_RESULT_STATS_SYNC, SORT_NUMBER_SAVED_BUILDS_DEFAULT, RESULTS_NUMBER_DEFAULT } from "@/config/config";
+import {
+  LANGUAGE_DEFAULT,
+  THEME_DEFAULT,
+  IS_RESULT_STATS_SYNC_DEFAULT,
+  SORT_NUMBER_SAVED_BUILDS_DEFAULT,
+  RESULTS_NUMBER_DEFAULT,
+  GAME_DEFAULT,
+} from "@/config/config";
 import useBuildsPersistenceStore from "@/stores/useBuildsPersistenceStore";
 import { useGameData } from "./useGameData";
+import useGameStore from "@/stores/useGameStore";
+import useLanguageStore from "@/stores/useLanguageStore";
 
-type SettingKey = "theme" | "isResultStatsSync" | "resultStatsDefault" | "sortNumberSavedBuilds" | "resultsNumber";
+type SettingKey =
+  | "language"
+  | "theme"
+  | "isResultStatsSync"
+  | "resultStatsDefault"
+  | "sortNumberSavedBuilds"
+  | "resultsNumber"
+  | "game";
+
+export const settingKeys: SettingKey[] = [
+  "language",
+  "theme",
+  "isResultStatsSync",
+  "resultStatsDefault",
+  "sortNumberSavedBuilds",
+  "resultsNumber",
+  "game",
+];
 
 type SettingsEntry = {
   setState: (value: any) => void;
@@ -15,17 +41,21 @@ type SettingsEntry = {
 export function useSettingsMap(): Record<SettingKey, SettingsEntry> {
   const { resultStatsDefaultInit } = useGameData();
 
+  const setTheme = useThemeStore((state) => state.setTheme);
+  const setLanguage = useLanguageStore((state) => state.setLanguage);
   const setIsResultStatsSync = useResultStatsDefaultStore((state) => state.setIsResultStatsSync);
   const setResultStatsDefault = useResultStatsDefaultStore((state) => state.setResultStatsDefault);
-  const setTheme = useThemeStore((state) => state.setTheme);
   const setSortNumberSavedBuilds = useBuildsPersistenceStore((state) => state.setSortNumberSavedBuilds);
   const setResultsNumber = useGeneralStore((state) => state.setResultsNumber);
+  const setGame = useGameStore((state) => state.setGame);
 
   return {
-    theme: { setState: setTheme, defaultValue: "system" },
-    isResultStatsSync: { setState: setIsResultStatsSync, defaultValue: IS_RESULT_STATS_SYNC },
+    language: { setState: setLanguage, defaultValue: LANGUAGE_DEFAULT },
+    theme: { setState: setTheme, defaultValue: THEME_DEFAULT },
+    isResultStatsSync: { setState: setIsResultStatsSync, defaultValue: IS_RESULT_STATS_SYNC_DEFAULT },
     resultStatsDefault: { setState: setResultStatsDefault, defaultValue: resultStatsDefaultInit },
     sortNumberSavedBuilds: { setState: setSortNumberSavedBuilds, defaultValue: SORT_NUMBER_SAVED_BUILDS_DEFAULT },
     resultsNumber: { setState: setResultsNumber, defaultValue: RESULTS_NUMBER_DEFAULT },
+    game: { setState: setGame, defaultValue: GAME_DEFAULT },
   };
 }

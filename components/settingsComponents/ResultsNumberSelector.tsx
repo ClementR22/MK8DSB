@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import useThemeStore from "@/stores/useThemeStore";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -11,7 +10,6 @@ const MIN_RESULTS = 1;
 const MAX_RESULTS = 20;
 
 const ResultsNumberSelector = () => {
-  const theme = useThemeStore((state) => state.theme);
   const resultsNumber = useGeneralStore((state) => state.resultsNumber);
   const setResultsNumber = useGeneralStore((state) => state.setResultsNumber);
 

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Picker from "../Picker";
-import { saveThingInMemory } from "@/utils/asyncStorageOperations";
-import { LanguageMode, useLanguage } from "@/hooks/useLanguage";
+import useLanguageStore, { LanguageMode } from "@/stores/useLanguageStore";
 
 export const languageList: { label: string; value: LanguageMode }[] = [
   { label: "english", value: "en" },
@@ -10,20 +9,13 @@ export const languageList: { label: string; value: LanguageMode }[] = [
 ];
 
 const LanguageSelector = () => {
-  const { selectedLanguage, changeLanguage } = useLanguage();
-
-  const [languageMode, setLanguageMode_] = useState<LanguageMode>(selectedLanguage);
-  const setLanguageMode = (newLanguageMode: LanguageMode) => {
-    changeLanguage(newLanguageMode);
-    saveThingInMemory("language", newLanguageMode);
-  };
-
-  useEffect(() => setLanguageMode_(selectedLanguage), [selectedLanguage]);
+  const language = useLanguageStore((state) => state.language);
+  const setLanguage = useLanguageStore((state) => state.setLanguage);
 
   return (
     <Picker
-      value={languageMode}
-      setValue={setLanguageMode}
+      value={language}
+      setValue={setLanguage}
       itemList={languageList}
       pickerTitle="language"
       namespace="language"

@@ -4,7 +4,7 @@ import { initReactI18next } from "react-i18next";
 import { resources } from "./resources";
 
 import { loadThingFromMemory } from "@/utils/asyncStorageOperations";
-import { Language, LanguageMode } from "@/hooks/useLanguage";
+import { Language, LanguageMode } from "@/stores/useLanguageStore";
 
 // Fonction pour obtenir la langue système
 export const getSystemLanguage = () => {
