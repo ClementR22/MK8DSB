@@ -74,8 +74,6 @@ const SettingsScreen: React.FC = () => {
           <ButtonResetSettings resetSettings={resetSettings} />
 
           <ButtonDeleteAllBuildsInMemory deleteAllSavedBuilds={handleDeleteAllSavedBuilds} />
-
-          <Pressable onPress={handleShowMemory}>show memory</Pressable>
         </BoxContainer>
       </ScrollViewScreen>
     </ScreenProvider>

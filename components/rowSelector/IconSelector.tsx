@@ -40,6 +40,7 @@ const IconSelector = <T extends string>({
             namespace={namespace}
             onPress={() => onSelect(option.name)}
             childStyleOuter={[styles.button, buttonStyle, isActive && activeStyle]}
+            childStyleInner={{ paddingHorizontal: 100 }} // pour élargir la zone pressable
           >
             <Image source={option.imageUrl} style={styles.image} resizeMode="contain" />
           </Tooltip>
