@@ -34,8 +34,9 @@ export default function TabLayout() {
   const { t } = useTranslation("screens");
   const game = useGameStore((state) => state.game);
 
-  const loadBuildsSaved = useBuildsActionsStore((state) => state.loadBuildsSaved);
   const theme = useThemeStore((state) => state.theme);
+  const isSettingsLoaded = useGeneralStore((state) => state.isSettingsLoaded);
+  const loadBuildsSaved = useBuildsActionsStore((state) => state.loadBuildsSaved);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
   const buildsListSaved = useBuildsListStore((state) => state.buildsListSaved);
   const numberSavedBuilds = useGeneralStore((state) => state.numberSavedBuilds);
@@ -46,10 +47,6 @@ export default function TabLayout() {
     return () => listener.remove();
   }, [updateSystemTheme]);
 
-  useEffect(() => {
-    loadBuildsSaved();
-  }, [loadBuildsSaved]);
-
   useLoadSettings();
 
   useInitStatsStore();
@@ -59,6 +56,15 @@ export default function TabLayout() {
   useInitBuildsListStore();
 
   useInitPressableElementsStore();
+
+  useEffect(() => {
+    if (!isSettingsLoaded) return;
+
+    const load = async () => {
+      await loadBuildsSaved();
+    };
+    load();
+  }, [game]); // uniquement à chaque changement de game (mais pas au démarrage car useLoadSettings le fait)
 
   useEffect(() => {
     setNumberSavedBuilds(buildsListSaved.length);

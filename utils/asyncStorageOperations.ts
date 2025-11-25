@@ -1,4 +1,8 @@
+import { Game } from "@/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+// ne pas ajouter d'autres imports (types, stores, etc.) car souvent
+// c'est asyncStorageOperations qui est importé dans d'autres fichier
+// et on veut éviter Require cycle
 
 export const saveThingInMemory = async (thingKey: string, newThing: any) => {
   try {
@@ -21,23 +25,14 @@ export const loadThingFromMemory = async (thingKey: string, setThing?: any) => {
     }
     if (setThing) {
       setThing(savedThingParsed);
-    } else {
-      return savedThingParsed;
     }
+    return savedThingParsed;
   }
 };
 
-export const getOnlyBuildsSavedKeysFromMemory = async () => {
-  const excludedKeys = [
-    "language",
-    "theme",
-    "isResultStatsSync",
-    "resultStatsDefault",
-    "sortNumberSavedBuilds",
-    "resultsNumber",
-  ];
+export const getOnlyBuildsSavedKeysFromMemory = async (game: Game) => {
   const keys = await AsyncStorage.getAllKeys();
-  const onlyBuildsKeys = keys.filter((k) => !excludedKeys.includes(k));
+  const onlyBuildsKeys = keys.filter((k) => k.startsWith(`${game}`));
   return onlyBuildsKeys;
 };
 
@@ -58,9 +53,9 @@ export const deleteAllTheMemory = async () => {
   }
 };
 
-export const deleteAllSavedBuildsInMemory = async () => {
+export const deleteAllSavedBuildsInMemory = async (game: Game) => {
   try {
-    const buildsKeys = await getOnlyBuildsSavedKeysFromMemory();
+    const buildsKeys = await getOnlyBuildsSavedKeysFromMemory(game);
     buildsKeys.forEach(async (thingKey) => await AsyncStorage.removeItem(thingKey));
   } catch (e) {
     console.error("Erreur lors de la suppression : ", e);

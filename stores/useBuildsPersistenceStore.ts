@@ -2,7 +2,7 @@ import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Data and Types
-import { Build, BuildPersistant } from "@/types";
+import { Build, BuildPersistant, Game } from "@/types";
 
 // Utilities
 import {
@@ -16,9 +16,9 @@ interface BuildsPersistenceStoreState {
   sortNumberSavedBuilds: number;
 
   setSortNumberSavedBuilds: (newSortNumberSavedBuilds: number) => Promise<void>;
-  fetchBuildsSavedKeys: () => Promise<string[]>;
-  fetchBuildsSaved: () => Promise<BuildPersistant[]>;
-  saveBuildInMemory: (build: Build, name: string) => Promise<void>;
+  fetchBuildsSavedKeys: (game: Game) => Promise<string[]>;
+  fetchBuildsSaved: (game: Game) => Promise<BuildPersistant[]>;
+  saveBuildInMemory: (build: Build, name: string, game: Game) => Promise<void>;
   removeBuildInMemory: (keyToRemove: string) => Promise<void>;
   loadSortNumberFromMemory: () => Promise<void>;
 }
@@ -31,13 +31,13 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
     set({ sortNumberSavedBuilds: newSortNumberSavedBuilds });
   },
 
-  fetchBuildsSavedKeys: async () => {
-    const buildsKeys = await getOnlyBuildsSavedKeysFromMemory();
+  fetchBuildsSavedKeys: async (game) => {
+    const buildsKeys = await getOnlyBuildsSavedKeysFromMemory(game);
     return buildsKeys;
   },
 
-  fetchBuildsSaved: async () => {
-    const buildsKeys = await get().fetchBuildsSavedKeys();
+  fetchBuildsSaved: async (game) => {
+    const buildsKeys = await get().fetchBuildsSavedKeys(game);
     const buildsValues = await AsyncStorage.multiGet(buildsKeys);
     const buildsValuesParsed: BuildPersistant[] = buildsValues
       .map(([, value]) => {
@@ -49,13 +49,12 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
         }
       })
       .filter((buildPersistant) => buildPersistant !== null) as BuildPersistant[];
-
     return buildsValuesParsed;
   },
 
-  saveBuildInMemory: async (build, name) => {
+  saveBuildInMemory: async (build, name, game) => {
     const buildPersistant: BuildPersistant = { buildDataId: build.buildDataId, name: name };
-    await saveThingInMemory(build.buildDataId, buildPersistant);
+    await saveThingInMemory(`${game}:${build.buildDataId}`, buildPersistant);
   },
 
   removeBuildInMemory: async (keyToRemove) => {

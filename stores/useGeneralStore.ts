@@ -3,6 +3,9 @@ import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 import { create } from "zustand";
 
 interface GeneralStoreState {
+  isSettingsLoaded: boolean;
+  setIsSettingsLoaded: (newIsSettingsLoaded: boolean) => void;
+
   isScrollEnable: boolean;
   setIsScrollEnable: (newIsScrollEnable: boolean) => void;
 
@@ -30,6 +33,9 @@ interface GeneralStoreState {
 }
 
 const useGeneralStore = create<GeneralStoreState>((set, get) => ({
+  isSettingsLoaded: false,
+  setIsSettingsLoaded: (newIsSettingsLoaded) => set({ isSettingsLoaded: newIsSettingsLoaded }),
+
   isScrollEnable: true,
   setIsScrollEnable: (newIsScrollEnable) => set({ isScrollEnable: newIsScrollEnable }),
 

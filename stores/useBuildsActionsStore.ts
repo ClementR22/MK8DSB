@@ -6,7 +6,7 @@ import { router } from "expo-router";
 // Data and Types
 import { ScreenName } from "@/contexts/ScreenContext";
 import { MAX_NUMBER_BUILDS_DISPLAY, MAX_NUMBER_BUILDS_SAVE } from "./useBuildsListStore";
-import { Build } from "@/types";
+import { Build, Game } from "@/types";
 
 // Utilities
 import { checkFormatBuildImported } from "@/utils/checkFormatBuildImported";
@@ -21,6 +21,7 @@ import { t } from "i18next";
 import { BuildAlreadyExistsError } from "@/errors/errors";
 import { useGenerateUniqueName } from "@/hooks/useGenerateUniqueName";
 import { BuildData } from "@/types";
+import useGameStore from "./useGameStore";
 
 interface BuildsActionsStoreState {
   loadBuildCard: (params: {
@@ -35,7 +36,7 @@ interface BuildsActionsStoreState {
     buildsDataMap: Map<string, BuildData>
   ) => void;
   loadToDisplay: (params: { source: ScreenName; buildDataId: string }) => void;
-  loadBuildsSaved: () => void;
+  loadBuildsSaved: (gameProps?: Game) => Promise<void>;
   saveBuild: (source: ScreenName, buildDataId: string) => Promise<void>;
   unSaveBuild: (buildDataId: string) => Promise<void>;
   exportBuild: (screenName: ScreenName, buildDataId: string) => void;
@@ -131,9 +132,10 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     useGeneralStore.getState().setShouldScrollToTop();
   },
 
-  loadBuildsSaved: async () => {
-    const buildsPersistant = await useBuildsPersistenceStore.getState().fetchBuildsSaved();
+  loadBuildsSaved: async (gameProps) => {
+    const game = gameProps || useGameStore.getState().game;
 
+    const buildsPersistant = await useBuildsPersistenceStore.getState().fetchBuildsSaved(game);
     const buildsListSaved: Build[] = buildsPersistant.map((buildPersistant) => ({
       buildDataId: buildPersistant.buildDataId,
     }));
@@ -156,7 +158,8 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     }
 
     get().loadBuildCard({ build: build, target: "save" });
-    await useBuildsPersistenceStore.getState().saveBuildInMemory(build, name);
+    const game = useGameStore.getState().game;
+    await useBuildsPersistenceStore.getState().saveBuildInMemory(build, name, game);
     useDeckStore.getState().saveBuild(build.buildDataId);
   },
 
@@ -208,7 +211,8 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       useDeckStore.getState().setBuildName(build.buildDataId, newName);
 
       if (screenName === "save") {
-        useBuildsPersistenceStore.getState().saveBuildInMemory(build, newName);
+        const game = useGameStore.getState().game;
+        useBuildsPersistenceStore.getState().saveBuildInMemory(build, newName, game);
       }
     }
   },

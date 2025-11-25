@@ -17,21 +17,11 @@ import useLanguageStore from "@/stores/useLanguageStore";
 type SettingKey =
   | "language"
   | "theme"
+  | "game"
   | "isResultStatsSync"
   | "resultStatsDefault"
   | "sortNumberSavedBuilds"
-  | "resultsNumber"
-  | "game";
-
-export const settingKeys: SettingKey[] = [
-  "language",
-  "theme",
-  "isResultStatsSync",
-  "resultStatsDefault",
-  "sortNumberSavedBuilds",
-  "resultsNumber",
-  "game",
-];
+  | "resultsNumber";
 
 type SettingsEntry = {
   setState: (value: any) => void;
@@ -52,10 +42,10 @@ export function useSettingsMap(): Record<SettingKey, SettingsEntry> {
   return {
     language: { setState: setLanguage, defaultValue: LANGUAGE_DEFAULT },
     theme: { setState: setTheme, defaultValue: THEME_DEFAULT },
+    game: { setState: setGame, defaultValue: GAME_DEFAULT },
     isResultStatsSync: { setState: setIsResultStatsSync, defaultValue: IS_RESULT_STATS_SYNC_DEFAULT },
     resultStatsDefault: { setState: setResultStatsDefault, defaultValue: resultStatsDefaultInit },
     sortNumberSavedBuilds: { setState: setSortNumberSavedBuilds, defaultValue: SORT_NUMBER_SAVED_BUILDS_DEFAULT },
     resultsNumber: { setState: setResultsNumber, defaultValue: RESULTS_NUMBER_DEFAULT },
-    game: { setState: setGame, defaultValue: GAME_DEFAULT },
   };
 }

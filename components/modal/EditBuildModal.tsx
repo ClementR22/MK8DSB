@@ -7,8 +7,10 @@ import { useScreenNameFromPath } from "@/hooks/useScreenNameFromPath";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import showToast from "@/utils/showToast";
 import { BuildAlreadyExistsError } from "@/errors/errors";
+import useGameStore from "@/stores/useGameStore";
 
 const EditBuildModal: React.FC = () => {
+  const game = useGameStore((state) => state.game);
   const isEditBuildModalVisible = useEditBuildModalStore((state) => state.isEditBuildModalVisible);
   const setIsEditBuildModalVisible = useEditBuildModalStore((state) => state.setIsEditBuildModalVisible);
   const isBuildsListUpdated = usePressableElementsStore((state) => state.isBuildsListUpdated);
@@ -20,7 +22,7 @@ const EditBuildModal: React.FC = () => {
   const handleCloseEditBuildModal = useCallback(() => {
     if (!isBuildsListUpdated) {
       try {
-        updateBuildsList(selectedClassIdsByCategory, screenName);
+        updateBuildsList(selectedClassIdsByCategory, screenName, game);
         setIsBuildsListUpdated(true);
         showToast("toast:buildUpdated", "success");
       } catch (e) {
@@ -40,6 +42,7 @@ const EditBuildModal: React.FC = () => {
     isBuildsListUpdated,
     selectedClassIdsByCategory,
     screenName,
+    game,
     updateBuildsList,
     setIsBuildsListUpdated,
     setIsEditBuildModalVisible,

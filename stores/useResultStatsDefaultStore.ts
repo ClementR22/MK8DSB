@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { toggleAndGetChecks } from "@/utils/toggleCheck";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 import { ResultStat } from "@/types";
-import { IS_RESULT_STATS_SYNC } from "@/config/config";
+import { IS_RESULT_STATS_SYNC_DEFAULT } from "@/config/config";
 
 interface ResultStatsDefaultState {
   isResultStatsSync: boolean;
@@ -15,7 +15,7 @@ interface ResultStatsDefaultState {
 }
 
 const useResultStatsDefaultStore = create<ResultStatsDefaultState>((set, get) => ({
-  isResultStatsSync: IS_RESULT_STATS_SYNC,
+  isResultStatsSync: IS_RESULT_STATS_SYNC_DEFAULT,
 
   async setIsResultStatsSync(newValue) {
     await saveThingInMemory("isResultStatsSync", newValue);

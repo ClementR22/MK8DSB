@@ -19,13 +19,16 @@ import Text from "@/primitiveComponents/Text";
 import showToast from "@/utils/showToast";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import GameSelector from "@/components/settingsComponents/GameSelector";
+import { Pressable } from "react-native";
+import useGameStore from "@/stores/useGameStore";
 
 const SettingsScreen: React.FC = () => {
+  const game = useGameStore((state) => state.game);
   const resetSettings = useResetSettings();
   const deleteAllSavedBuilds = useBuildsListStore((state) => state.deleteAllSavedBuilds);
 
   const handleDeleteAllSavedBuilds = () => {
-    deleteAllSavedBuilds();
+    deleteAllSavedBuilds(game);
     showToast("toast:allSavedBuildsHaveBeenDeleted", "success");
   };
 
@@ -71,6 +74,8 @@ const SettingsScreen: React.FC = () => {
           <ButtonResetSettings resetSettings={resetSettings} />
 
           <ButtonDeleteAllBuildsInMemory deleteAllSavedBuilds={handleDeleteAllSavedBuilds} />
+
+          <Pressable onPress={handleShowMemory}>show memory</Pressable>
         </BoxContainer>
       </ScrollViewScreen>
     </ScreenProvider>
