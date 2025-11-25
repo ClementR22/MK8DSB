@@ -21,6 +21,7 @@ const StatGaugeContainerElementCard = ({ name, children }: StatGaugeContainerEle
   return (
     <Tooltip
       tooltipText={name}
+      namespace="stats"
       childStyleInner={[
         styles.container,
         {

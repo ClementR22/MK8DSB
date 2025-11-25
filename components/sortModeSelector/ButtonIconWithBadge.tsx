@@ -35,7 +35,7 @@ const ButtonIconWithBadge: React.FC<ButtonIconWithBadgeProps> = ({
   const badgeBackgroundColor = theme.primary_container;
   const badgeIconColor = theme.on_primary_container;
 
-  const Wrapper = onPress ? ButtonIcon : IconContainer;
+  const Wrapper = onPress || tooltipText ? ButtonIcon : IconContainer;
 
   return (
     <View>

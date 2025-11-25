@@ -77,16 +77,17 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
     ) => (
       <Popover
         key={key}
-        trigger={
+        trigger={(openPopover) => (
           <ButtonIconWithBadge
             tooltipText={tooltipText}
+            onPress={openPopover}
             namespace="sort"
             iconName={triggerIconName}
             iconType={triggerIconType}
             direction={statNames.includes(activeSort) ? currentDirection : undefined}
             isBadge={statNames.includes(activeSort)}
           />
-        }
+        )}
       >
         {statNames.map((name) => {
           const config = sortButtonsConfig[name];

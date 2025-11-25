@@ -1,17 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { Menu, MenuOptions, MenuTrigger, renderers } from "react-native-popup-menu";
 import { BORDER_RADIUS_STANDARD, GAP_SORT_MODE_SELECTOR } from "@/utils/designTokens";
 
 interface PopoverProps {
-  trigger: React.ReactElement;
+  trigger: (openPopover: () => void) => React.ReactNode;
   children?: React.ReactNode;
 }
 
 const Popover: React.FC<PopoverProps> = ({ trigger, children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openPopover = () => setIsOpen(true);
+  const closePopover = () => setIsOpen(false);
+
   return (
-    <Menu renderer={renderers.Popover} rendererProps={{ placement: "bottom" }}>
-      <MenuTrigger>{trigger}</MenuTrigger>
+    <Menu
+      opened={isOpen}
+      onBackdropPress={closePopover}
+      renderer={renderers.Popover}
+      rendererProps={{ placement: "bottom" }}
+    >
+      <MenuTrigger>{trigger(openPopover)}</MenuTrigger>
       <MenuOptions
         customStyles={{
           optionsContainer: { borderRadius: BORDER_RADIUS_STANDARD },
@@ -25,12 +35,6 @@ const Popover: React.FC<PopoverProps> = ({ trigger, children }) => {
 };
 
 const styles = StyleSheet.create({
-  menuContainerList: {
-    borderRadius: 4,
-    paddingVertical: 4,
-    width: 166,
-  },
-
   menuContainer: {
     flexDirection: "row",
     padding: GAP_SORT_MODE_SELECTOR,
