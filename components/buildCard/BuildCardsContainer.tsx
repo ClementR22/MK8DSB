@@ -140,13 +140,14 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
         horizontal
         scrollEnabled={isScrollEnable}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ width: calculatedContentWidth }}
+        contentContainerStyle={{ minWidth: "100%" }}
       >
         <Pressable
           style={[
             styles.container,
             {
               backgroundColor: theme.surface_container,
+              flex: 1,
             },
           ]}
         >
