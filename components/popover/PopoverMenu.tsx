@@ -1,7 +1,7 @@
 import useThemeStore from "@/stores/useThemeStore";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
-import { Menu, MenuOptions, MenuTrigger } from "react-native-popup-menu";
+import { Menu, MenuOptions, MenuTrigger, renderers } from "react-native-popup-menu";
 import PopoverMenuItem from "./PopoverMenuItem";
 import { ActionIconProps } from "@/hooks/useActionIconPropsList";
 import { t } from "i18next";
@@ -21,7 +21,7 @@ const PopoverMenu: React.FC<PopoverMenuProps> = ({ trigger, actionIconPropsList 
   const closePopover = () => setIsOpen(false);
 
   return (
-    <Menu opened={isOpen} onBackdropPress={closePopover}>
+    <Menu opened={isOpen} onBackdropPress={closePopover} renderer={renderers.NotAnimatedContextMenu}>
       <MenuTrigger>{trigger(openPopover)}</MenuTrigger>
       <MenuOptions
         customStyles={{
