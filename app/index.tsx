@@ -85,7 +85,7 @@ const SearchBuildScreen: React.FC = () => {
               </Text>
             </View>
 
-            <ButtonLoadBuild tooltipText="loadStatsOfASet" />
+            <ButtonLoadBuild tooltipText="loadStatsOfABuild" />
           </View>
 
           {/* Afficher les sliders memoisés */}

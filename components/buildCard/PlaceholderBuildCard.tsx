@@ -16,11 +16,11 @@ const PlaceholderBuildCard: React.FC<PlaceholderBuildCardProps> = () => {
   return (
     <BoxContainer height={200}>
       <Button
-        tooltipText="addASet"
+        tooltipText="addABuild"
         onPress={buildController.addRandomBuildInDisplay}
         iconProps={{ name: "plus", type: IconType.MaterialCommunityIcons }}
       >
-        addASet
+        addABuild
       </Button>
     </BoxContainer>
   );

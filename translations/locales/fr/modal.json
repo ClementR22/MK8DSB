@@ -6,8 +6,8 @@
   "displayedStatsInBuilds": "Stats affichées dans les builds",
   "statsToCompare": "Stats à comparer",
 
-  "loadStatsOfASet": "Charger les stats d'un build",
-  "loadASet": "Charger un build",
+  "loadStatsOfABuild": "Charger les stats d'un build",
+  "loadABuild": "Charger un build",
 
   "guideBuildFinder": "Guide du Chercheur de builds",
   "guideBuildComparator": "Guide du Comparateur de builds",

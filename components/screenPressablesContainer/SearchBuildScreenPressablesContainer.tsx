@@ -76,7 +76,7 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
       if (chosenBodytype.size && !bodytypes.some((b) => chosenBodytype.has(b))) continue;
 
       let gap = 0;
-      let validSet = true;
+      let isValid = true;
 
       for (let statIndex = 0; statIndex < chosenStatsChecked.length; statIndex++) {
         if (!chosenStatsChecked[statIndex]) continue;
@@ -86,17 +86,17 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
         const statFilterNumber = chosenStatsFilterNumber[statIndex];
 
         if (statFilterNumber === 2 && setValue !== chosenValue) {
-          validSet = false;
+          isValid = false;
           break;
         } else if (statFilterNumber === 1 && setValue < chosenValue) {
-          validSet = false;
+          isValid = false;
           break;
         } else {
           gap += ((chosenValue - setValue) / 6) ** 2;
         }
       }
 
-      if (validSet) {
+      if (isValid) {
         gaps.push({ buildDataId, gap });
       }
     }

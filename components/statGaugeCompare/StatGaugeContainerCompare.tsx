@@ -6,7 +6,7 @@ import { useBuildCardStyle } from "@/hooks/useBuildCardStyle";
 import Text from "@/primitiveComponents/Text";
 import { useBuildCardsScroll } from "@/contexts/BuildCardsScrollContext";
 import StatGaugeBar from "../statGauge/StatGaugeBar";
-interface SetIdAndStatValue {
+interface BuildIdAndStatValue {
   id: string;
   value: number;
   color: string;
@@ -14,7 +14,7 @@ interface SetIdAndStatValue {
 
 interface StatGaugeContainerCompareProps {
   name: StatName;
-  buildsIdAndValue: SetIdAndStatValue[];
+  buildsIdAndValue: BuildIdAndStatValue[];
 }
 
 const StatGaugeContainerCompare: React.FC<StatGaugeContainerCompareProps> = ({ buildsIdAndValue, name }) => {

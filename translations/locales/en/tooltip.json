@@ -6,11 +6,11 @@
   "developBuilds": "Develop builds",
   "reduceBuilds": "Reduce builds",
 
-  "loadStatsOfASet": "Load a build's stats",
-  "loadASet": "Load a build",
-  "importACopiedSet": "Import a build from your clipboard",
+  "loadStatsOfABuild": "Load a build's stats",
+  "loadABuild": "Load a build",
+  "importACopiedBuild": "Import a build from your clipboard",
 
-  "addASet": "Add a build",
+  "addABuild": "Add a build",
 
   "search": "Search builds",
 

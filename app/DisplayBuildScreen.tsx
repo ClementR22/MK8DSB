@@ -90,7 +90,7 @@ const DisplayBuildScreen = () => {
       <ScrollViewScreen scrollEnabled={isScrollEnable}>
         <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
           <ButtonAddBuild scrollRef={scrollRef} />
-          <ButtonLoadBuild tooltipText="loadASet" />
+          <ButtonLoadBuild tooltipText="loadABuild" />
           <ButtonIcon
             onPress={toggleIsBuildCardsCollapsed}
             iconName={isBuildCardsCollapsed ? "chevron-down" : "chevron-up"}

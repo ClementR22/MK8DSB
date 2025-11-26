@@ -17,7 +17,7 @@ const LoadBuildModal = () => {
 
   return (
     <Modal
-      modalTitle={screenName === "search" ? "loadStatsOfASet" : "loadASet"}
+      modalTitle={screenName === "search" ? "loadStatsOfABuild" : "loadABuild"}
       isModalVisible={isLoadBuildModalVisible}
       setIsModalVisible={setIsLoadBuildModalVisible}
       secondButton={<ButtonImportBuild screenName={screenName} />}

@@ -72,7 +72,7 @@ export default function TabLayout() {
       <CustomHeader
         iconName="magnify"
         iconType={IconType.MaterialCommunityIcons}
-        title="findSetTitle"
+        title="buildFinderTitle"
         helpComponent={<HelpSearchBuildScreen />}
       />
     ),
@@ -83,7 +83,7 @@ export default function TabLayout() {
       <CustomHeader
         iconName="compare"
         iconType={IconType.MaterialCommunityIcons}
-        title="displaySetTitle"
+        title="comparatorTitle"
         helpComponent={<HelpDisplayBuildScreen />}
       />
     ),
@@ -94,7 +94,7 @@ export default function TabLayout() {
       <CustomHeader
         iconName="cards"
         iconType={IconType.MaterialCommunityIcons}
-        title="savedSetTitle"
+        title="collectionTitle"
         helpComponent={<HelpSavedBuildScreen />}
       />
     ),
@@ -133,7 +133,7 @@ export default function TabLayout() {
           <Tabs.Screen
             name="index"
             options={{
-              title: t("findSetTabTitle"),
+              title: t("buildFinderTabTitle"),
               tabBarIcon: ({ color }) => (
                 <ButtonIconWithBadge
                   tooltipText=""
@@ -150,7 +150,7 @@ export default function TabLayout() {
           <Tabs.Screen
             name="DisplayBuildScreen"
             options={{
-              title: t("displaySetTabTitle"),
+              title: t("comparatorTabTitle"),
               tabBarIcon: ({ color }) => (
                 <ButtonIconWithBadge
                   tooltipText=""
@@ -167,7 +167,7 @@ export default function TabLayout() {
           <Tabs.Screen
             name="SavedBuildScreen"
             options={{
-              title: t("savedSetTabTitle"),
+              title: t("collectionTabTitle"),
               tabBarIcon: ({ color, focused }) => (
                 <ButtonIconWithBadge
                   tooltipText=""

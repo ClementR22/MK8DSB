@@ -38,7 +38,7 @@ const ButtonAddBuild: React.FC<ButtonAddBuildProps> = ({ scrollRef }) => {
   return (
     <ButtonIcon
       onPress={handleAdd}
-      tooltipText="addASet"
+      tooltipText="addABuild"
       iconName="plus"
       iconType={IconType.MaterialCommunityIcons}
       disabled={disabled}

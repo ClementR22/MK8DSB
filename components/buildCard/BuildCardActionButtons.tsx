@@ -31,7 +31,7 @@ const BuildCardActionButtons: React.FC<BuildCardActionButtonsProps> = ({
   return (
     <BoxContainer
       flexDirection="row"
-      key="displaySetActionButtonContainer"
+      key="comparatorTitleActionButtonContainer"
       marginHorizontal={0}
       justifyContent={"space-around"}
     >

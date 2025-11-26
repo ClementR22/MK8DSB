@@ -6,11 +6,11 @@
   "developBuilds": "Développer les builds",
   "reduceBuilds": "Réduire les builds",
 
-  "loadStatsOfASet": "Charger les stats d'un build",
-  "loadASet": "Charger un build",
-  "importACopiedSet": "Importer un build du presse-papier",
+  "loadStatsOfABuild": "Charger les stats d'un build",
+  "loadABuild": "Charger un build",
+  "importACopiedBuild": "Importer un build du presse-papier",
 
-  "addASet": "Ajouter un build",
+  "addABuild": "Ajouter un build",
 
   "search": "Chercher des builds",
 

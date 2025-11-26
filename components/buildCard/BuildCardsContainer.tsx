@@ -79,18 +79,18 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
 
     const [hasShownSearchQuestionIcon, setHasShownSearchQuestionIcon] = useState(false);
 
-    const noSetToShow = builds.length === 0;
+    const noBuildToShow = builds.length === 0;
 
-    const calculatedContentWidth: DimensionValue | undefined = noSetToShow || isLoading ? "100%" : undefined;
+    const calculatedContentWidth: DimensionValue | undefined = noBuildToShow || isLoading ? "100%" : undefined;
 
     useEffect(() => {
-      if (!noSetToShow && !hasShownSearchQuestionIcon) {
+      if (!noBuildToShow && !hasShownSearchQuestionIcon) {
         setHasShownSearchQuestionIcon(true);
       }
-    }, [noSetToShow, hasShownSearchQuestionIcon]);
+    }, [noBuildToShow, hasShownSearchQuestionIcon]);
 
     const placeHolder = useMemo(() => {
-      if (!noSetToShow) return null;
+      if (!noBuildToShow) return null;
 
       if (screenName === "search") {
         if (!hasShownSearchQuestionIcon) {
@@ -103,10 +103,10 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
         return <PlaceholderBuildCard />;
       }
       return <Placeholder text="savedEmpty" />;
-    }, [noSetToShow, screenName, theme.on_surface, hasShownSearchQuestionIcon]);
+    }, [noBuildToShow, screenName, theme.on_surface, hasShownSearchQuestionIcon]);
 
     const memoizedBuildCards = useMemo(() => {
-      if (noSetToShow) {
+      if (noBuildToShow) {
         return null;
       }
 
@@ -144,7 +144,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
             <BoxContainer height={200}>
               <ActivityIndicator size={50} color={theme.primary} />
             </BoxContainer>
-          ) : noSetToShow ? (
+          ) : noBuildToShow ? (
             placeHolder
           ) : (
             memoizedBuildCards
