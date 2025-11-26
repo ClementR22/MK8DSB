@@ -38,6 +38,8 @@ export function useActionIconPropsList(
   const unSaveBuild = useBuildsActionsStore((state) => state.unSaveBuild);
   const removeBuild = useBuildsListStore((state) => state.removeBuild);
   const exportBuild = useBuildsActionsStore((state) => state.exportBuild);
+  const setScrollRequest = useBuildsListStore((state) => state.setScrollRequest);
+  const getBuildTarget = useBuildsListStore((state) => state.getBuildTarget);
   const setIsLoadBuildModalVisible = useLoadBuildModalStore((state) => state.setIsLoadBuildModalVisible);
 
   const handleEditPress = useCallback(() => {
@@ -95,9 +97,13 @@ export function useActionIconPropsList(
   }, [source, buildDataId, isSaved, saveBuild, unSaveBuild]);
 
   const handleRemovePress = useCallback(() => {
+    const previousBuildDataId = getBuildTarget(source, buildDataId);
     removeBuild(buildDataId, source);
+    if (previousBuildDataId) {
+      setScrollRequest(source, previousBuildDataId);
+    }
     showToast("toast:buildHasBeenDeleted", "success");
-  }, [source, buildDataId, removeBuild]);
+  }, [source, buildDataId, removeBuild, getBuildTarget, setScrollRequest]);
 
   const handleExportPress = useCallback(() => {
     try {

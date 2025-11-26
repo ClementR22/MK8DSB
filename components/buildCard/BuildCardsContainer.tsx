@@ -18,6 +18,7 @@ import { BORDER_RADIUS_CONTAINER_LOWEST, MARGIN_CONTAINER_LOWEST, PADDING_STANDA
 import { box_shadow_z1 } from "../styles/shadow";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import PlaceholderBuildCard from "./PlaceholderBuildCard";
+import useBuildsListStore from "@/stores/useBuildsListStore";
 
 interface BuildWithColor extends Build {
   color: string;
@@ -75,12 +76,24 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
     const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
     const screenName = useScreen();
     const isLoading = useGeneralStore((state) => state.isLoading);
+    const scrollRequest = useBuildsListStore((state) => state.scrollRequest);
+    const clearScrollRequest = useBuildsListStore((state) => state.clearScrollRequest);
 
     const [hasShownSearchQuestionIcon, setHasShownSearchQuestionIcon] = useState(false);
 
     const noBuildToShow = builds.length === 0;
 
     const calculatedContentWidth: DimensionValue | undefined = noBuildToShow || isLoading ? "100%" : undefined;
+
+    useEffect(() => {
+      if (!scrollRequest) return;
+      const { source, buildDataId } = scrollRequest;
+      // Ce container est-il concerné ?
+      if (source !== screenName) return;
+      scrollToBuildCardHandler(buildDataId);
+      // Puis reset pour éviter de scanner inutilement
+      clearScrollRequest();
+    }, [scrollRequest]);
 
     useEffect(() => {
       if (!noBuildToShow && !hasShownSearchQuestionIcon) {
