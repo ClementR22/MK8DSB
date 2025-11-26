@@ -17,6 +17,7 @@ import Placeholder from "./Placeholder";
 import { BORDER_RADIUS_CONTAINER_LOWEST, MARGIN_CONTAINER_LOWEST, PADDING_STANDARD } from "@/utils/designTokens";
 import { box_shadow_z1 } from "../styles/shadow";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
+import PlaceholderBuildCard from "./PlaceholderBuildCard";
 
 interface BuildWithColor extends Build {
   color: string;
@@ -93,11 +94,15 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
 
       if (screenName === "search") {
         if (!hasShownSearchQuestionIcon) {
-          return <Placeholder type="searchEmpty" />;
+          return <Placeholder text="searchEmpty" />;
         }
-        return <Placeholder type="searchNotFound" />;
+        return <Placeholder text="searchNotFound" />;
       }
-      return <Placeholder type="savedEmpty" />;
+      if (screenName === "display") {
+        console.log("ahhh");
+        return <PlaceholderBuildCard />;
+      }
+      return <Placeholder text="savedEmpty" />;
     }, [noSetToShow, screenName, theme.on_surface, hasShownSearchQuestionIcon]);
 
     const memoizedBuildCards = useMemo(() => {

@@ -1,6 +1,7 @@
 {
   "searchEmpty": "Recherchez le build de vos rêves",
   "searchNotFound": "Aucun build trouvé correspondant à ces stats",
+  "displayEmpty": "Comparez vos builds",
   "savedEmpty": "Retrouvez votre collection de builds ici",
   "none": "Aucun"
 }

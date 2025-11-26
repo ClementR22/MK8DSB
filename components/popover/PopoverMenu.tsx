@@ -1,5 +1,5 @@
 import useThemeStore from "@/stores/useThemeStore";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import { Menu, MenuOptions, MenuTrigger } from "react-native-popup-menu";
 import PopoverMenuItem from "./PopoverMenuItem";
@@ -8,20 +8,21 @@ import { t } from "i18next";
 import { BUTTON_SIZE } from "@/utils/designTokens";
 
 interface PopoverMenuProps {
-  trigger: React.ReactElement;
+  trigger: (openPopover: () => void) => React.ReactNode;
   actionIconPropsList?: ActionIconProps[];
 }
 
 const PopoverMenu: React.FC<PopoverMenuProps> = ({ trigger, actionIconPropsList }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const menuRef = useRef<Menu>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const closeMenu = () => menuRef.current.close();
+  const openPopover = () => setIsOpen(true);
+  const closePopover = () => setIsOpen(false);
 
   return (
-    <Menu ref={menuRef}>
-      <MenuTrigger>{trigger}</MenuTrigger>
+    <Menu opened={isOpen} onBackdropPress={closePopover}>
+      <MenuTrigger>{trigger(openPopover)}</MenuTrigger>
       <MenuOptions
         customStyles={{
           optionsContainer: [styles.menuContainerList, { backgroundColor: theme.surface_container }],
@@ -34,7 +35,7 @@ const PopoverMenu: React.FC<PopoverMenuProps> = ({ trigger, actionIconPropsList 
               key={title}
               onPress={() => {
                 onPress();
-                closeMenu();
+                closePopover();
               }}
               title={t(title)}
               iconProps={{ name, type }}

@@ -4,7 +4,7 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import { ActionNamesList } from "@/hooks/useBuildCardConfig";
 import { ScreenName } from "@/contexts/ScreenContext";
 import PopoverMenu from "../popover/PopoverMenu";
-import IconContainer from "@/primitiveComponents/IconContainer";
+import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 
 interface BuildCardMoreActionsButtonProps {
   moreActionNamesList: ActionNamesList;
@@ -21,7 +21,14 @@ const BuildCardMoreActionsButton: React.FC<BuildCardMoreActionsButtonProps> = ({
 
   return (
     <PopoverMenu
-      trigger={<IconContainer iconName={"more-vert"} iconType={IconType.MaterialIcons} />}
+      trigger={(openPopover) => (
+        <ButtonIcon
+          tooltipText="moreActions"
+          onPress={openPopover}
+          iconName={"more-vert"}
+          iconType={IconType.MaterialIcons}
+        />
+      )}
       actionIconPropsList={actionIconPropsList}
     />
   );

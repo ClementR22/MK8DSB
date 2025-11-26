@@ -27,7 +27,6 @@ interface BuildsListStoreState {
   buildEditedDataId: string;
   buildIndexInComparator: number;
 
-  initBuildsListDisplayed: (buildsListDisplayedInit: Build[]) => void;
   getBuildsList: (screenName: ScreenName) => {
     buildsList: Build[] | Build[];
     buildsListName: string;
@@ -41,7 +40,7 @@ interface BuildsListStoreState {
   setBuildsListSaved: (newBuildsList: Build[]) => void;
   deleteAllSavedBuilds: (game: Game) => Promise<void>;
   setBuildEditedDataId: (buildDataId: string) => void;
-  addNewBuildInDisplay: () => void;
+  addRandomBuildInDisplay: (buildDataId: string) => void;
   removeBuild: (buildDataId: string, screenName: ScreenName) => Promise<void>;
   renameBuild: (newName: string, screenName: ScreenName, buildDataId: string, isSaved: boolean, game: Game) => void;
   updateBuildsList: (pressedClassIds: Record<string, number>, screenName: ScreenName, game: Game) => void;
@@ -64,9 +63,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   buildsListSaved: [],
 
   buildEditedDataId: null,
-  buildIndexInComparator: 2, // = get().buildsListDisplayed.length
-
-  initBuildsListDisplayed: (buildsListDisplayedInit) => set({ buildsListDisplayed: buildsListDisplayedInit }),
+  buildIndexInComparator: null, // = get().buildsListDisplayed.length
 
   getBuildsList: (screenName) => {
     let buildsListName: string;
@@ -135,13 +132,12 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     set({ buildEditedDataId: buildDataId });
   },
 
-  addNewBuildInDisplay: () => {
+  addRandomBuildInDisplay: (buildDataId: string) => {
     if (get().buildsListDisplayed.length >= MAX_NUMBER_BUILDS_DISPLAY) {
       throw new Error("buildLimitReached");
     }
 
     const newIndex = get().buildIndexInComparator;
-    const buildDataId = getRandomDataId();
 
     set((state) => {
       return {

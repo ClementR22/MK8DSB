@@ -2,34 +2,32 @@ import React from "react";
 import useThemeStore from "@/stores/useThemeStore";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import Text from "@/primitiveComponents/Text";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
+
+type PlaceholderText = "searchEmpty" | "searchNotFound" | "displayEmpty" | "savedEmpty";
 
 interface PlaceholderProps {
-  type: "searchEmpty" | "searchNotFound" | "savedEmpty";
+  text: PlaceholderText;
 }
 
-const iconName = {
+const iconName: Record<PlaceholderText, string> = {
   searchEmpty: "chat-question",
   searchNotFound: "home-flood",
+  displayEmpty: "compare",
   savedEmpty: "heart-multiple",
 };
 
-function Placeholder({ type }: PlaceholderProps) {
+const Placeholder: React.FC<PlaceholderProps> = ({ text }) => {
   const theme = useThemeStore((state) => state.theme);
 
   return (
     <BoxContainer height={200}>
       <Text role="title" size="large" textAlign="center" namespace="placeholder">
-        {type}
+        {text}
       </Text>
-      <MaterialCommunityIcons
-        // @ts-ignore
-        name={iconName[type]}
-        size={72}
-        color={theme.on_surface}
-      />
+      <Icon name={iconName[text]} type={IconType.MaterialCommunityIcons} size={72} color={theme.on_surface} />
     </BoxContainer>
   );
-}
+};
 
 export default React.memo(Placeholder);

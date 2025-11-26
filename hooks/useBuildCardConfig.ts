@@ -30,7 +30,7 @@ const situationConfigs: Record<string, BuildCardSituationConfig> = {
 const BASE_ACTIONS_SEARCH: ActionNamesList = ["share", "loadToDisplay", "save"];
 const BASE_ACTIONS_DISPLAY: ActionNamesList = ["edit", "loadToSearch", "save"];
 const BASE_ACTIONS_SAVE: ActionNamesList = ["edit", "loadToSearch", "loadToDisplay"];
-const MORE_ACTIONS_DISPLAY_COMMON: ActionNamesList = ["share"]; // Common actions for display more list
+const MORE_ACTIONS_DISPLAY_COMMON: ActionNamesList = ["remove", "share"];
 const BASE_MORE_ACTIONS_SAVE: ActionNamesList = ["share", "remove"];
 
 export const useBuildCardConfig = (situation, hideRemoveBuild, screenName) => {
@@ -44,13 +44,7 @@ export const useBuildCardConfig = (situation, hideRemoveBuild, screenName) => {
       moreActionNames = undefined;
     } else if (situation === "display") {
       actionNames = BASE_ACTIONS_DISPLAY;
-      const dynamicMore: ActionNamesList = [];
-      if (!hideRemoveBuild) {
-        dynamicMore.push("remove");
-      }
-
-      moreActionNames =
-        dynamicMore.length > 0 ? [...dynamicMore, ...MORE_ACTIONS_DISPLAY_COMMON] : MORE_ACTIONS_DISPLAY_COMMON;
+      moreActionNames = MORE_ACTIONS_DISPLAY_COMMON;
     } else if (situation === "save") {
       actionNames = BASE_ACTIONS_SAVE;
       moreActionNames = BASE_MORE_ACTIONS_SAVE;

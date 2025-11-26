@@ -27,7 +27,6 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import { useInitStatsStore } from "@/hooks/useInitStatsStore";
 import useGameStore from "@/stores/useGameStore";
 import { useInitResultStatsDefaultStore } from "@/hooks/useInitResultStatsDefaultStore";
-import { useInitBuildsListStore } from "@/hooks/useInitBuildsListStore";
 import { useInitPressableElementsStore } from "@/hooks/useInitPressableElementsStore";
 
 export default function TabLayout() {
@@ -52,8 +51,6 @@ export default function TabLayout() {
   useInitStatsStore();
 
   useInitResultStatsDefaultStore();
-
-  useInitBuildsListStore();
 
   useInitPressableElementsStore();
 
