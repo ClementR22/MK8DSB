@@ -16,7 +16,8 @@ interface StatSliderContentProps {
   value: number;
   statFilterNumber: number;
   setStatFilterNumber: (num: number) => void;
-  disabled?: boolean;
+  // setValuePreview n'est donnée quand dans help (donc il joue aussi le rôle de "disabled")
+  setValuePreview?: React.Dispatch<React.SetStateAction<number>>;
   onPress?: () => void;
 }
 
@@ -27,7 +28,7 @@ const StatSliderContent = ({
   value,
   statFilterNumber,
   setStatFilterNumber,
-  disabled = false,
+  setValuePreview,
   onPress = () => {},
 }: StatSliderContentProps) => {
   const theme = useThemeStore((state) => state.theme);
@@ -38,12 +39,16 @@ const StatSliderContent = ({
 
   // Mémoïsation stricte des handlers
   const onValueChange = useCallback(([v]: [number]) => setTempValue(v), []);
+
   const onSlidingStart = useCallback(() => {
     setIsScrollEnable(false);
   }, [setIsScrollEnable]);
+
   const onSlidingComplete = useCallback(
     ([v]: [number]) => {
-      if (!disabled) {
+      if (setValuePreview) {
+        setValuePreview(v);
+      } else {
         if (v !== value) {
           updateStatValue(name, v);
         }

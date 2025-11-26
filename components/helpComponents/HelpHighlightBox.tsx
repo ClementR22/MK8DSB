@@ -10,7 +10,7 @@ interface HelpHighlightBoxProps {
   type: BoxType;
   title: string;
   namespace: string;
-  children: ReactNode;
+  children: ReactNode[];
 }
 
 const HelpHighlightBox = ({ type, title, namespace, children }: HelpHighlightBoxProps) => {
@@ -32,9 +32,11 @@ const HelpHighlightBox = ({ type, title, namespace, children }: HelpHighlightBox
       <Text role="title" size="medium" color={textColor} textAlign="center" namespace={namespace}>
         {title}
       </Text>
-      <Text role="body" size="large" color={textColor} textAlign="center" namespace={namespace}>
-        {children}
-      </Text>
+      {children.map((child, index) => (
+        <Text key={index} role="body" size="large" color={textColor} textAlign="left" namespace={namespace}>
+          {child}
+        </Text>
+      ))}
     </View>
   );
 };
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
   container: {
     borderLeftWidth: 4,
     padding: 16,
-    gap: 6,
+    gap: 10,
     borderRadius: BORDER_RADIUS_STANDARD,
   },
 });

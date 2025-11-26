@@ -2,12 +2,13 @@
   "intro.pick_stats": "Sélectionnez vos statistiques",
   "intro.find_sets": ", et laissez l'algorithme dénicher pour vous les meilleurs builds.",
 
-  "how_to_use.title": "Comment utiliser\nle Chercheur de builds",
+  "how_to_use.title": "Comment l'utiliser",
 
   "how_to_use.step.choose_criteria": "Choisissez vos critères",
   "how_to_use.step.choose_criteria.add_stat": "Ajoutez/supprimez une statistique",
 
   "how_to_use.step.adjust_values": "Ajustez les valeurs et la tolérance",
+  "how_to_use.step.adjust_values.tap_to_reduce": "Touchez un slider pour le rendre compact",
 
   "value_type.approximate": "valeur approximative",
   "value_type.exact": "valeur exacte",
@@ -33,9 +34,10 @@
 
   "results_management.title": "Gestion des résultats",
   "results_management.save_to_collection": "Ajoutez à votre collection",
-  "results_management.move_to_comparator": "Déplacez vers le comparateur de builds",
+  "results_management.move_to": "Déplacez vers le comparateur de builds",
   "results_management.export_set": "Exportez le build",
 
-  "tips.title": "Conseil pratique",
-  "tips.start_with_key_stats": "Commencez avec 2–3 statistiques principales pour des résultats plus pertinents"
+  "tips.title": "Conseils pratiques",
+  "tips.start_with_key_stats": "Commencez avec 2-3 statistiques principales pour des résultats plus pertinents.",
+  "tips.tooltip": "Appuyez longuement sur les composants (boutons, images, ...) pour obtenir des indications supplémentaires."
 }

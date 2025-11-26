@@ -2,37 +2,38 @@
   "intro.compare_sets": "Comparez jusqu'à 12 builds ",
   "intro.compare_description": "simultanément pour identifier celui qui vous convient le mieux.",
 
-  "how_to_use_comparator.title": "Comment utiliser le Comparateur de builds",
+  "how_to_use.title": "Comment l'utiliser",
 
-  "how_to_use_comparator.step.add_sets": "Ajoutez vos builds à comparer",
-  "how_to_use_comparator.step.add_sets.label_create_set": "Créer un nouveau build",
+  "how_to_use.step.add_sets": "Ajoutez des builds à comparer",
+  "how_to_use.step.add_sets.label_create_set": "Ajouter un nouveau build",
 
-  "how_to_use_comparator.step.edit_sets": "Modifiez les builds rapidement",
-  "how_to_use_comparator.step.edit_sets.label_edit_elements": "Cliquez sur le crayon pour modifier les éléments d’un build",
+  "how_to_use.step.edit_sets": "Modifiez les builds rapidement",
+  "how_to_use.step.edit_sets.label_edit_elements": "Cliquez sur le crayon pour modifier les éléments d’un build",
 
-  "how_to_use_comparator.step.view_differences": "Visualisez les différences",
-  "how_to_use_comparator.step.view_differences.label_each_color": "Chaque couleur = un build différent",
-  "how_to_use_comparator.step.view_differences.label_tap_to_navigate": "Appuyez sur une barre pour naviguer vers le build correspondant",
+  "how_to_use.step.view_differences": "Visualisez les différences",
+  "how_to_use.step.view_differences.label_each_color": "Chaque couleur = un build différent",
+  "how_to_use.step.view_differences.label_tap_to_navigate": "Appuyez sur une barre pour naviguer vers le build correspondant",
 
-  "how_to_use_comparator.step.choose_stats": "Modifier les statistiques à comparer",
-  "how_to_use_comparator.step.choose_stats.label_select_stats": "Choisissez les statistiques à afficher",
+  "how_to_use.step.choose_stats": "Modifier les statistiques à comparer",
+  "how_to_use.step.choose_stats.label_select_stats": "Choisissez les statistiques à afficher",
 
-  "advanced_options_comparator.title": "Options avancées",
+  "advanced_options.title": "Options avancées",
 
-  "advanced_options_comparator.step.import_from_collection": "Importer un build depuis la collection",
-  "advanced_options_comparator.step.import_from_collection.label_open_collection": "Ouvrez votre collection de builds",
-  "advanced_options_comparator.step.import_from_collection.label_import_set": "Importer un build enregistré pour le comparer",
+  "advanced_options.step.import_from_collection": "Importer un build depuis la collection",
+  "advanced_options.step.import_from_collection.label_open_collection": "Ouvrez votre collection de builds",
+  "advanced_options.step.import_from_collection.label_import_set": "Importer un build enregistré pour le comparer",
 
-  "advanced_options_comparator.step.sort_sets": "Trier les builds",
-  "advanced_options_comparator.step.sort_sets.label_open_sorts": "Ouvrez les différents tris possibles",
-  "advanced_options_comparator.step.sort_sets.label_select_sort": "Sélectionnez le tri qui vous convient",
-  "advanced_options_comparator.step.sort_sets.label_long_press_hint": "Cliquez longuement sur un bouton de tri pour afficher son nom",
+  "advanced_options.step.sort_sets": "Trier les builds",
+  "advanced_options.step.sort_sets.label_open_sorts": "Ouvrez les différents tris possibles",
+  "advanced_options.step.sort_sets.label_select_sort": "Sélectionnez le tri qui vous convient",
+  "advanced_options.step.sort_sets.label_long_press_hint": "Cliquez longuement sur un bouton de tri pour afficher son nom",
 
-  "actions_comparator.title": "Actions disponibles",
-  "actions_comparator.label_save_to_collection": "Sauvegarder dans votre collection",
-  "actions_comparator.label_copy_to_finder": "Copier les stats dans le Chercheur de builds et utiliser comme base",
-  "actions_comparator.label_export_set": "Exporter le build",
+  "actions.title": "Actions disponibles",
+  "actions.label_save_to_collection": "Sauvegarder dans votre collection",
+  "actions.label_copy_to_finder": "Copier les stats dans le Chercheur de builds et utiliser comme base",
+  "actions.label_export_set": "Exporter le build",
 
-  "tips_comparator.title": "Conseil pratique",
-  "tips_comparator.limit_sets": "Limitez-vous à 2–3 builds pour une comparaison claire, et concentrez-vous sur vos statistiques prioritaires"
+  "tips.title": "Conseils pratiques",
+  "tips.limit_sets": "Limitez-vous à 2-3 builds pour une comparaison claire, et concentrez-vous sur vos statistiques prioritaires.",
+  "tips.tooltip": "Appuyez longuement sur les composants (boutons, images, ...) pour obtenir des indications supplémentaires."
 }

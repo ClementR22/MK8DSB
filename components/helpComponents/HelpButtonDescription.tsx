@@ -8,22 +8,15 @@ import Text from "@/primitiveComponents/Text";
 interface HelpButtonDescriptionProps {
   iconName: string;
   iconType: IconType;
-  containerSize?: number;
   description: string;
   namespace: string;
 }
 
-const HelpButtonDescription = ({
-  iconName,
-  iconType,
-  containerSize = BUTTON_SIZE,
-  description,
-  namespace,
-}: HelpButtonDescriptionProps) => {
+const HelpButtonDescription = ({ iconName, iconType, description, namespace }: HelpButtonDescriptionProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconWrapper}>
-        <IconContainer iconName={iconName} iconType={iconType} containerSize={containerSize} />
+        <IconContainer iconName={iconName} iconType={iconType} />
       </View>
 
       <View style={styles.description}>

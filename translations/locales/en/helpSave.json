@@ -2,7 +2,8 @@
   "intro.centralize": "Centralize and organize ",
   "intro.description": "all your favorite builds for quick access.",
 
-  "how_to_use_collection.title": "How to manage your collection",
+  "how_to_use_collection.title": "How to use",
+
   "how_to_use_collection.step.save_set": "Save a new build",
   "how_to_use_collection.step.save_set.label_description": "After finding a build you like, save it here to access it easily later",
   "how_to_use_collection.step.choose_stats": "Edit displayed stats",
@@ -18,7 +19,7 @@
 
   "actions.title": "Available actions",
   "actions.label_edit_elements": "Edit build elements (character, kart, wheels, glider)",
-  "actions.label_add_to_comparator": "Add to build comparator",
+  "actions.label_add_to": "Add to build comparator",
   "actions.label_copy_to_finder": "Copy stats to the Build Finder and use as a base",
   "actions.label_export_set": "Export the build",
   "actions.label_delete_set": "Remove the build from your collection"

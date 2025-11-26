@@ -42,8 +42,8 @@ const HelpFavoritesScreen = () => {
       <HelpSection title="advanced_options.title" contentType="step" namespace="helpSave">
         <HelpStepItem stepChar={"A"} title="advanced_options.step.import_set" namespace="helpSave">
           <HelpButtonDescription
-            iconName="paste"
-            iconType={IconType.FontAwesome5}
+            iconName="content-paste"
+            iconType={IconType.MaterialCommunityIcons}
             description="advanced_options.step.import_set.label_description"
             namespace="helpSave"
           />
@@ -78,7 +78,7 @@ const HelpFavoritesScreen = () => {
         <HelpButtonDescription
           iconName="compare"
           iconType={IconType.MaterialCommunityIcons}
-          description="actions.label_add_to_comparator"
+          description="actions.label_add_to"
           namespace="helpSave"
         />
         <HelpButtonDescription

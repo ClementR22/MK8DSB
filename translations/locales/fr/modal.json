@@ -9,9 +9,9 @@
   "loadStatsOfABuild": "Charger les stats d'un build",
   "loadABuild": "Charger un build",
 
-  "guideBuildFinder": "Guide du Chercheur de builds",
-  "guideBuildComparator": "Guide du Comparateur de builds",
-  "guideBuildCollection": "Guide de la collection de builds",
+  "guideBuildFinder": "Guide du\nChercheur de builds",
+  "guideBuildComparator": "Guide du\nComparateur de builds",
+  "guideBuildCollection": "Guide de la\nCollection de builds",
 
   "numberOfSearchResults": "Nombre de résultats de recherche",
   "defaultDisplayedStats": "Stats affichées par défault dans les builds",

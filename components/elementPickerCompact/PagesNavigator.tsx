@@ -6,7 +6,6 @@ import { BORDER_RADIUS_INF, GAP_SORT_MODE_SELECTOR } from "@/utils/designTokens"
 
 // Constants
 const HEIGHT = 30;
-export const PAGES_NAVIGATOR_DOTS_BUTTON_SIZE = HEIGHT * 0.8;
 const NAV_BUTTON_WIDTH = 46;
 
 interface PagesNavigatorProps {

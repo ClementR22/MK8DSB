@@ -2,7 +2,6 @@ import React, { memo } from "react";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal from "./HelpModal";
 import StatGaugeContainerCompare from "../statGaugeCompare/StatGaugeContainerCompare";
-import { PAGES_NAVIGATOR_DOTS_BUTTON_SIZE } from "../elementPickerCompact/PagesNavigator";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
 import Text from "@/primitiveComponents/Text";
 import HelpStepItem from "../helpComponents/HelpStepItem";
@@ -23,26 +22,26 @@ const HelpDisplayBuildScreen = () => {
       </Text>
 
       {/* Section 1 — How to use */}
-      <HelpSection title="how_to_use_comparator.title" namespace="helpDisplay" contentType="step">
-        <HelpStepItem key={1} stepChar="1" title="how_to_use_comparator.step.add_sets" namespace="helpDisplay">
+      <HelpSection title="how_to_use.title" namespace="helpDisplay" contentType="step">
+        <HelpStepItem key={1} stepChar="1" title="how_to_use.step.add_sets" namespace="helpDisplay">
           <HelpButtonDescription
             iconName="plus"
             iconType={IconType.MaterialCommunityIcons}
-            description="how_to_use_comparator.step.add_sets.label_create_set"
+            description="how_to_use.step.add_sets.label_create_set"
             namespace="helpDisplay"
           />
         </HelpStepItem>
 
-        <HelpStepItem key={2} stepChar="2" title="how_to_use_comparator.step.edit_sets" namespace="helpDisplay">
+        <HelpStepItem key={2} stepChar="2" title="how_to_use.step.edit_sets" namespace="helpDisplay">
           <HelpButtonDescription
             iconName="pencil"
             iconType={IconType.MaterialCommunityIcons}
-            description="how_to_use_comparator.step.edit_sets.label_edit_elements"
+            description="how_to_use.step.edit_sets.label_edit_elements"
             namespace="helpDisplay"
           />
         </HelpStepItem>
 
-        <HelpStepItem key={3} stepChar="3" title="how_to_use_comparator.step.view_differences" namespace="helpDisplay">
+        <HelpStepItem key={3} stepChar="3" title="how_to_use.step.view_differences" namespace="helpDisplay">
           <StatGaugeContainerCompare
             name="speedGround"
             buildsIdAndValue={[
@@ -52,90 +51,84 @@ const HelpDisplayBuildScreen = () => {
             ]}
           />
           <Text role="body" size="large" fontStyle="italic" namespace="helpDisplay">
-            how_to_use_comparator.step.view_differences.label_each_color
+            how_to_use.step.view_differences.label_each_color
           </Text>
           <Text role="body" size="large" fontStyle="italic" namespace="helpDisplay">
-            how_to_use_comparator.step.view_differences.label_tap_to_navigate
+            how_to_use.step.view_differences.label_tap_to_navigate
           </Text>
         </HelpStepItem>
 
-        <HelpStepItem key={4} stepChar="4" title="how_to_use_comparator.step.choose_stats" namespace="helpDisplay">
+        <HelpStepItem key={4} stepChar="4" title="how_to_use.step.choose_stats" namespace="helpDisplay">
           <HelpButtonDescription
-            iconName="plus"
+            iconName="checkbox-multiple-marked"
             iconType={IconType.MaterialCommunityIcons}
-            description="how_to_use_comparator.step.choose_stats.label_select_stats"
+            description="how_to_use.step.choose_stats.label_select_stats"
             namespace="helpDisplay"
-            containerSize={PAGES_NAVIGATOR_DOTS_BUTTON_SIZE}
           />
         </HelpStepItem>
       </HelpSection>
 
       {/* Section 2 — Advanced options */}
-      <HelpSection title="advanced_options_comparator.title" namespace="helpDisplay" contentType="step">
-        <HelpStepItem
-          key="A"
-          stepChar="A"
-          title="advanced_options_comparator.step.import_from_collection"
-          namespace="helpDisplay"
-        >
+      <HelpSection title="advanced_options.title" namespace="helpDisplay" contentType="step">
+        <HelpStepItem key="A" stepChar="A" title="advanced_options.step.import_from_collection" namespace="helpDisplay">
           <HelpButtonDescription
             iconName="cards-outline"
             iconType={IconType.MaterialCommunityIcons}
-            description="advanced_options_comparator.step.import_from_collection.label_open_collection"
+            description="advanced_options.step.import_from_collection.label_open_collection"
             namespace="helpDisplay"
           />
           <HelpButtonDescription
-            iconName="download"
-            iconType={IconType.MaterialCommunityIcons}
-            description="advanced_options_comparator.step.import_from_collection.label_import_set"
+            iconName="check"
+            iconType={IconType.FontAwesome5}
+            description="advanced_options.step.import_from_collection.label_import_set"
             namespace="helpDisplay"
           />
         </HelpStepItem>
 
-        <HelpStepItem key="B" stepChar="B" title="advanced_options_comparator.step.sort_sets" namespace="helpDisplay">
+        <HelpStepItem key="B" stepChar="B" title="advanced_options.step.sort_sets" namespace="helpDisplay">
           <HelpButtonDescription
             iconName="sort"
             iconType={IconType.MaterialCommunityIcons}
-            description="advanced_options_comparator.step.sort_sets.label_open_sorts"
+            description="advanced_options.step.sort_sets.label_open_sorts"
             namespace="helpDisplay"
           />
           <HelpButtonDescription
             iconName="sort-alphabetical-ascending"
             iconType={IconType.MaterialCommunityIcons}
-            description="advanced_options_comparator.step.sort_sets.label_select_sort"
+            description="advanced_options.step.sort_sets.label_select_sort"
             namespace="helpDisplay"
           />
           <Text role="body" size="large" fontStyle="italic" namespace="helpDisplay">
-            advanced_options_comparator.step.sort_sets.label_long_press_hint
+            advanced_options.step.sort_sets.label_long_press_hint
           </Text>
         </HelpStepItem>
       </HelpSection>
 
       {/* Section 3 — Actions */}
-      <HelpSection title="actions_comparator.title" namespace="helpDisplay" contentType="button">
+      <HelpSection title="actions.title" namespace="helpDisplay" contentType="button">
         <HelpButtonDescription
           iconName="content-save"
           iconType={IconType.MaterialCommunityIcons}
-          description="actions_comparator.label_save_to_collection"
+          description="actions.label_save_to_collection"
           namespace="helpDisplay"
         />
         <HelpButtonDescription
           iconName="magnify"
           iconType={IconType.MaterialCommunityIcons}
-          description="actions_comparator.label_copy_to_finder"
+          description="actions.label_copy_to_finder"
           namespace="helpDisplay"
         />
         <HelpButtonDescription
           iconName="clipboard-outline"
           iconType={IconType.MaterialCommunityIcons}
-          description="actions_comparator.label_export_set"
+          description="actions.label_export_set"
           namespace="helpDisplay"
         />
       </HelpSection>
 
       {/* Tips */}
-      <HelpHighlightBox type="tips" title="tips_comparator.title" namespace="helpDisplay">
-        tips_comparator.limit_sets
+      <HelpHighlightBox type="tips" title="tips.title" namespace="helpDisplay">
+        {["tips.limit_sets", "tips.tooltip"]}
       </HelpHighlightBox>
     </HelpModal>
   );

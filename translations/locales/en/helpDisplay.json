@@ -2,37 +2,38 @@
   "intro.compare_sets": "Compare up to 12 builds ",
   "intro.compare_description": "at once to find the one that suits you best.",
 
-  "how_to_use_comparator.title": "How to use the Build comparator",
+  "how_to_use.title": "How to use",
 
-  "how_to_use_comparator.step.add_sets": "Add your builds to compare",
-  "how_to_use_comparator.step.add_sets.label_create_set": "Create a new build",
+  "how_to_use.step.add_sets": "Add builds to compare",
+  "how_to_use.step.add_sets.label_create_set": "Add a new build",
 
-  "how_to_use_comparator.step.edit_sets": "Edit builds quickly",
-  "how_to_use_comparator.step.edit_sets.label_edit_elements": "Tap the pencil to edit a set’s elements",
+  "how_to_use.step.edit_sets": "Edit builds quickly",
+  "how_to_use.step.edit_sets.label_edit_elements": "Tap the pencil to edit a build’s elements",
 
-  "how_to_use_comparator.step.view_differences": "View the differences",
-  "how_to_use_comparator.step.view_differences.label_each_color": "Each color = a different build",
-  "how_to_use_comparator.step.view_differences.label_tap_to_navigate": "Tap a bar to jump to the corresponding build",
+  "how_to_use.step.view_differences": "View the differences",
+  "how_to_use.step.view_differences.label_each_color": "Each color = a different build",
+  "how_to_use.step.view_differences.label_tap_to_navigate": "Tap a bar to jump to the corresponding build",
 
-  "how_to_use_comparator.step.choose_stats": "Edit the compared stats",
-  "how_to_use_comparator.step.choose_stats.label_select_stats": "Choose which stats to display",
+  "how_to_use.step.choose_stats": "Edit the compared stats",
+  "how_to_use.step.choose_stats.label_select_stats": "Choose which stats to display",
 
-  "advanced_options_comparator.title": "Advanced options",
+  "advanced_options.title": "Advanced options",
 
-  "advanced_options_comparator.step.import_from_collection": "Import a build from collection",
-  "advanced_options_comparator.step.import_from_collection.label_open_collection": "Open your collection",
-  "advanced_options_comparator.step.import_from_collection.label_import_set": "Import a saved build to compare",
+  "advanced_options.step.import_from_collection": "Import a build from collection",
+  "advanced_options.step.import_from_collection.label_open_collection": "Open your collection",
+  "advanced_options.step.import_from_collection.label_import_set": "Import a saved build to compare",
 
-  "advanced_options_comparator.step.sort_sets": "Sort the builds",
-  "advanced_options_comparator.step.sort_sets.label_open_sorts": "Open available sort options",
-  "advanced_options_comparator.step.sort_sets.label_select_sort": "Select the sorting mode that fits you best",
-  "advanced_options_comparator.step.sort_sets.label_long_press_hint": "Long-press a sort button to view its name",
+  "advanced_options.step.sort_sets": "Sort the builds",
+  "advanced_options.step.sort_sets.label_open_sorts": "Open available sort options",
+  "advanced_options.step.sort_sets.label_select_sort": "Select the sorting mode that fits you best",
+  "advanced_options.step.sort_sets.label_long_press_hint": "Long-press a sort button to view its name",
 
-  "actions_comparator.title": "Available actions",
-  "actions_comparator.label_save_to_collection": "Save to collection",
-  "actions_comparator.label_copy_to_finder": "Copy stats to the Build Finder and use as a base",
-  "actions_comparator.label_export_set": "Export the build",
+  "actions.title": "Available actions",
+  "actions.label_save_to_collection": "Save to collection",
+  "actions.label_copy_to_finder": "Copy stats to the Build Finder and use as a base",
+  "actions.label_export_set": "Export the build",
 
-  "tips_comparator.title": "Pro tip",
-  "tips_comparator.limit_sets": "Limit to 2–3 builds for clearer comparison and focus on your key stats"
+  "tips.title": "Pro tips",
+  "tips.limit_sets": "Limit to 2-3 builds for clearer comparison and focus on your key stats.",
+  "tips.tooltip": "Long press on components (buttons, images, ...) to get more informations."
 }

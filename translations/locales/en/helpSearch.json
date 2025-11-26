@@ -2,12 +2,13 @@
   "intro.pick_stats": "Pick the stats you want",
   "intro.find_sets": ", and let the algorithm find the perfect builds for you.",
 
-  "how_to_use.title": "How to use the Build Finder",
+  "how_to_use.title": "How to use",
 
   "how_to_use.step.choose_criteria": "Choose your criteria",
   "how_to_use.step.choose_criteria.add_stat": "Add/remove a statistic",
 
   "how_to_use.step.adjust_values": "Adjust values and tolerance",
+  "how_to_use.step.adjust_values.tap_to_reduce": "Tap a slider to make it compact",
 
   "value_type.approximate": "approximate value",
   "value_type.exact": "exact value",
@@ -33,9 +34,10 @@
 
   "results_management.title": "Results management",
   "results_management.save_to_collection": "Save to your collection",
-  "results_management.move_to_comparator": "Move to the build comparator",
+  "results_management.move_to": "Move to the build comparator",
   "results_management.export_set": "Export the build",
 
-  "tips.title": "Pro tip",
-  "tips.start_with_key_stats": "Start with 2–3 key stats for more relevant results"
+  "tips.title": "Pro tips",
+  "tips.start_with_key_stats": "Start with 2-3 key stats for more relevant results.",
+  "tips.tooltip": "Long press on components (buttons, images, ...) to get more informations."
 }

@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal from "./HelpModal";
@@ -12,8 +12,25 @@ import Text from "@/primitiveComponents/Text";
 import HelpStepItem from "../helpComponents/HelpStepItem";
 import HelpSection from "../helpComponents/HelpSection";
 import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
+import StatGaugeGroupBuildCard from "../statGauge/StatGaugeGroupBuildCard";
+import { useBuildCardStyle } from "@/hooks/useBuildCardStyle";
+import StatGaugeContainer from "../statGauge/StatGaugeContainer";
+import { useSlidersCompact } from "@/hooks/useSlidersCompact";
+import { useGameData } from "@/hooks/useGameData";
+import StatGaugeBar from "../statGauge/StatGaugeBar";
 
 const HelpSearchBuildScreen = () => {
+  const { statNames } = useGameData();
+  const statName = statNames[0];
+
+  const [chosenStat, setChosenStat] = useState(3);
+  const [isCompact, setIsCompact] = useState(false);
+  const toggleSlider = () => setIsCompact(!isCompact);
+
+  const [statFilterNumber, setStatFilterNumber] = useState(0);
+
+  const { buildCardStyle } = useBuildCardStyle(BUILD_CARD_WIDTH);
+
   return (
     <HelpModal title="guideBuildFinder">
       {/* Intro */}
@@ -38,7 +55,20 @@ const HelpSearchBuildScreen = () => {
         </HelpStepItem>
 
         <HelpStepItem key={2} stepChar="2" title="how_to_use.step.adjust_values" namespace="helpSearch">
-          <StatSliderPreview name="speedGround" />
+          {isCompact ? (
+            <StatGaugeContainer name={statName} value={chosenStat} onPress={toggleSlider}>
+              <StatGaugeBar value={chosenStat} statFilterNumber={statFilterNumber} />
+            </StatGaugeContainer>
+          ) : (
+            <StatSliderPreview
+              name="speedGround"
+              value={chosenStat}
+              setValue={setChosenStat}
+              onPress={toggleSlider}
+              statFilterNumber={statFilterNumber}
+              setStatFilterNumber={setStatFilterNumber}
+            />
+          )}
           <Text role="body" size="large" fontStyle="italic" namespace="not">
             {"≈"}
             <Text role="body" size="large" namespace="text">
@@ -63,6 +93,9 @@ const HelpSearchBuildScreen = () => {
             <Text role="body" size="large" namespace="helpSearch">
               value_type.minimum
             </Text>
+          </Text>
+          <Text role="body" size="large" fontStyle="italic" namespace="helpSearch">
+            how_to_use.step.adjust_values.tap_to_reduce
           </Text>
         </HelpStepItem>
 
@@ -95,7 +128,11 @@ const HelpSearchBuildScreen = () => {
           <Text role="body" size="large" namespace="helpSearch">
             how_to_use.step.review_results.ranked_by_score
           </Text>
-          <View style={{ width: BUILD_CARD_WIDTH - PADDING_BUILD_CARD * 2 }}></View>
+          <View style={buildCardStyle}>
+            <StatGaugeContainer name={"acceleration"} value={4} chosenValue={chosenStat} isInBuildCard={true}>
+              <StatGaugeBarBuildCard obtainedValue={4} chosenValue={chosenStat} isInSearchScreen={true} />
+            </StatGaugeContainer>
+          </View>
           <Text role="body" size="large" fontStyle="italic" namespace="helpSearch">
             how_to_use.step.review_results.tap_to_view_gap
           </Text>
@@ -130,8 +167,8 @@ const HelpSearchBuildScreen = () => {
             namespace="helpSearch"
           />
           <HelpButtonDescription
-            iconName="download"
-            iconType={IconType.MaterialCommunityIcons}
+            iconName="check"
+            iconType={IconType.FontAwesome5}
             description="advanced_options.step.reuse_stats.import_variations"
             namespace="helpSearch"
           />
@@ -149,7 +186,7 @@ const HelpSearchBuildScreen = () => {
         <HelpButtonDescription
           iconName="compare"
           iconType={IconType.MaterialCommunityIcons}
-          description="results_management.move_to_comparator"
+          description="results_management.move_to"
           namespace="helpSearch"
         />
         <HelpButtonDescription
@@ -162,7 +199,7 @@ const HelpSearchBuildScreen = () => {
 
       {/* Tips */}
       <HelpHighlightBox type="tips" title="tips.title" namespace="helpSearch">
-        tips.start_with_key_stats
+        {["tips.start_with_key_stats", "tips.tooltip"]}
       </HelpHighlightBox>
     </HelpModal>
   );
