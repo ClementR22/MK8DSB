@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo, useState, useCallback } from "react";
+import React, { useEffect, useRef, useMemo, useState } from "react";
 import BuildCardsContainer from "@/components/buildCard/BuildCardsContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import useBuildsListStore from "@/stores/useBuildsListStore";
@@ -16,7 +16,6 @@ import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
 import { StyleSheet, View } from "react-native";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
-import { BuildCardsScrollProvider } from "@/contexts/BuildCardsScrollContext";
 
 const DisplayBuildScreen = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -97,17 +96,15 @@ const DisplayBuildScreen = () => {
           />
         </ScreenPressablesContainer>
 
-        <BuildCardsScrollProvider scrollRef={scrollRef}>
-          <ResultStatsProvider>
-            <BuildCardsContainer ref={scrollRef} builds={buildsWithColor} />
+        <ResultStatsProvider>
+          <BuildCardsContainer ref={scrollRef} builds={buildsWithColor} />
 
-            <View style={styles.mainButtonWrapper}>
-              <StatSelector triggerButtonText="statsToCompare" tooltipText="statsToCompare" />
-            </View>
+          <View style={styles.mainButtonWrapper}>
+            <StatSelector triggerButtonText="statsToCompare" tooltipText="statsToCompare" />
+          </View>
 
-            <StatGaugeGroupCompare buildsColorsMap={buildsColorsMap} />
-          </ResultStatsProvider>
-        </BuildCardsScrollProvider>
+          <StatGaugeGroupCompare buildsColorsMap={buildsColorsMap} />
+        </ResultStatsProvider>
       </ScrollViewScreen>
     </ScreenProvider>
   );

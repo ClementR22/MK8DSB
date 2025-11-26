@@ -2,7 +2,6 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useScreen } from "../../contexts/ScreenContext";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import BuildNameInputContent from "./BuildNameInputContent";
-import { useBuildCardsScroll } from "@/contexts/BuildCardsScrollContext";
 import showToast from "@/utils/showToast";
 import { NameAlreadyExistsError } from "@/errors/errors";
 import { useKeyboardDidHideWhileFocused } from "@/hooks/useKeyboardDidHideWhileFocused";
@@ -20,7 +19,7 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, buildDataId, edit
   const game = useGameStore((state) => state.game);
   const screenName = useScreen();
   const renameBuild = useBuildsListStore((state) => state.renameBuild);
-  const { scrollToBuildCard } = useBuildCardsScroll();
+  const setScrollRequest = useBuildsListStore((state) => state.setScrollRequest);
 
   const [localName, setLocalName] = useState(name);
   const [focused, setFocused] = useState(false);
@@ -69,8 +68,8 @@ const BuildNameInput: React.FC<BuildNameInputProps> = ({ name, buildDataId, edit
 
   const handleFocus = useCallback(() => {
     setFocused(true);
-    scrollToBuildCard(buildDataId);
-  }, [buildDataId, scrollToBuildCard]);
+    setScrollRequest(screenName, buildDataId);
+  }, [screenName, buildDataId, , setScrollRequest]);
 
   const handleEndEditingOrBlur = useCallback(() => {
     "end editing";

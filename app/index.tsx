@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 
 // Components import
@@ -16,12 +16,10 @@ import { BORDER_RADIUS_CONTAINER_LOWEST, PADDING_SEARCH_CONTAINER, GAP_STAT_GAUG
 import ScrollViewScreen, { ScrollViewScreenHandles } from "@/components/ScrollViewScreen";
 import { box_shadow_z1 } from "@/components/styles/shadow";
 import Text from "@/primitiveComponents/Text";
-import { BuildCardsScrollProvider } from "@/contexts/BuildCardsScrollContext";
 import useStatsStore from "@/stores/useStatsStore";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import StatGaugeContainer from "@/components/statGauge/StatGaugeContainer";
 import StatGaugeBar from "@/components/statGauge/StatGaugeBar";
-import { StatName } from "@/types";
 import { useGameData } from "@/hooks/useGameData";
 import { useSlidersCompact } from "@/hooks/useSlidersCompact";
 
@@ -98,9 +96,7 @@ const SearchBuildScreen: React.FC = () => {
             scrollviewMainRef={scrollviewMainRef}
           />
 
-          <BuildCardsScrollProvider scrollRef={scrollviewBuildsCardsRef}>
-            <BuildCardsContainer ref={scrollviewBuildsCardsRef} builds={buildsListFound} />
-          </BuildCardsScrollProvider>
+          <BuildCardsContainer ref={scrollviewBuildsCardsRef} builds={buildsListFound} />
         </ResultStatsProvider>
       </ScrollViewScreen>
     </ScreenProvider>

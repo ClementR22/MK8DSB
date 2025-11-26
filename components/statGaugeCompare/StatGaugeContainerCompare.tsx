@@ -4,8 +4,9 @@ import StatGaugeContainer from "../statGauge/StatGaugeContainer";
 import { StatName } from "@/types";
 import { useBuildCardStyle } from "@/hooks/useBuildCardStyle";
 import Text from "@/primitiveComponents/Text";
-import { useBuildCardsScroll } from "@/contexts/BuildCardsScrollContext";
 import StatGaugeBar from "../statGauge/StatGaugeBar";
+import useBuildsListStore from "@/stores/useBuildsListStore";
+import { useScreen } from "@/contexts/ScreenContext";
 interface BuildIdAndStatValue {
   id: string;
   value: number;
@@ -19,7 +20,9 @@ interface StatGaugeContainerCompareProps {
 
 const StatGaugeContainerCompare: React.FC<StatGaugeContainerCompareProps> = ({ buildsIdAndValue, name }) => {
   const { buildCardStyle } = useBuildCardStyle("100%");
-  const { scrollToBuildCard } = useBuildCardsScroll();
+  const screenName = useScreen();
+
+  const setScrollRequest = useBuildsListStore((state) => state.setScrollRequest);
 
   return (
     <View style={[buildCardStyle, styles.container]}>
@@ -29,7 +32,7 @@ const StatGaugeContainerCompare: React.FC<StatGaugeContainerCompareProps> = ({ b
 
       <View style={styles.statBarsContainer}>
         {buildsIdAndValue.map(({ id, value, color }) => (
-          <StatGaugeContainer key={id} value={value} onPress={() => scrollToBuildCard(id)}>
+          <StatGaugeContainer key={id} value={value} onPress={() => setScrollRequest(screenName, id)}>
             <StatGaugeBar value={value} color={color}></StatGaugeBar>
           </StatGaugeContainer>
         ))}

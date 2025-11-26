@@ -1,13 +1,5 @@
 import React, { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
-import {
-  ActivityIndicator,
-  Dimensions,
-  DimensionValue,
-  LayoutChangeEvent,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { ActivityIndicator, Dimensions, LayoutChangeEvent, Pressable, ScrollView, StyleSheet } from "react-native";
 import BuildCard from "./BuildCard";
 import useThemeStore from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -33,7 +25,6 @@ interface BuildCardsContainerProps {
 export interface BuildCardsContainerHandles {
   scrollToStart: () => void;
   scrollToEnd: () => void;
-  scrollToBuildCard: (id: string) => void; // Scroll par ID
 }
 
 const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsContainerProps>(
@@ -48,7 +39,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
       buildCardLayouts.current.set(id, { x, width }); // Utilisez l'ID build comme clé
     }, []);
 
-    const scrollToBuildCardHandler = useCallback(
+    const scrollToBuildCard = useCallback(
       (id: string) => {
         const layout = buildCardLayouts.current.get(id);
         if (scrollViewRef.current && layout) {
@@ -69,7 +60,6 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
       scrollToEnd: () => {
         scrollViewRef.current?.scrollToEnd({ animated: true });
       },
-      scrollToBuildCard: scrollToBuildCardHandler,
     }));
 
     const theme = useThemeStore((state) => state.theme);
@@ -88,7 +78,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
       const { source, buildDataId } = scrollRequest;
       // Ce container est-il concerné ?
       if (source !== screenName) return;
-      scrollToBuildCardHandler(buildDataId);
+      scrollToBuildCard(buildDataId);
       // Puis reset pour éviter de scanner inutilement
       clearScrollRequest();
     }, [scrollRequest]);

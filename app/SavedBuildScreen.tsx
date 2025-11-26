@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import BuildCardsContainer from "@/components/buildCard/BuildCardsContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
@@ -7,7 +7,6 @@ import ButtonImportBuild from "@/components/managingBuildsButton/ButtonImportBui
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
 import StatSelector from "@/components/statSelector/StatSelector";
-import { BuildCardsScrollProvider } from "@/contexts/BuildCardsScrollContext";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import useBuildsPersistenceStore from "@/stores/useBuildsPersistenceStore";
 
@@ -18,8 +17,6 @@ const SavedBuildScreen: React.FC = () => {
   const sortNumberSavedBuilds = useBuildsPersistenceStore((state) => state.sortNumberSavedBuilds);
   const setSortNumberSavedBuilds = useBuildsPersistenceStore((state) => state.setSortNumberSavedBuilds);
 
-  const scrollRef = useRef(null); // Ref pour BuildCardsContainer
-
   return (
     <ScreenProvider screenName="save">
       <ScrollViewScreen scrollEnabled={isScrollEnable}>
@@ -29,9 +26,7 @@ const SavedBuildScreen: React.FC = () => {
             <StatSelector tooltipText="displayedStatsInBuilds" />
           </ScreenPressablesContainer>
 
-          <BuildCardsScrollProvider scrollRef={scrollRef}>
-            <BuildCardsContainer ref={scrollRef} builds={buildsListSaved} />
-          </BuildCardsScrollProvider>
+          <BuildCardsContainer builds={buildsListSaved} />
         </ResultStatsProvider>
       </ScrollViewScreen>
     </ScreenProvider>
