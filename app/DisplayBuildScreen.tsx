@@ -74,8 +74,6 @@ const DisplayBuildScreen = () => {
 
   // --- Fin Logique d'attribution des couleurs ---
 
-  const hideRemoveBuild = buildsListDisplayed.length === 1;
-
   const buildsWithColor = useMemo(
     () =>
       buildsListDisplayed.map((build) => ({
@@ -101,7 +99,7 @@ const DisplayBuildScreen = () => {
 
         <BuildCardsScrollProvider scrollRef={scrollRef}>
           <ResultStatsProvider>
-            <BuildCardsContainer ref={scrollRef} builds={buildsWithColor} hideRemoveBuild={hideRemoveBuild} />
+            <BuildCardsContainer ref={scrollRef} builds={buildsWithColor} />
 
             <View style={styles.mainButtonWrapper}>
               <StatSelector triggerButtonText="statsToCompare" tooltipText="statsToCompare" />

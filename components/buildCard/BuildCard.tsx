@@ -17,7 +17,6 @@ interface BuildCardProps {
   percentage?: number;
   isInLoadBuildModal?: boolean;
   screenNameFromProps?: ScreenName;
-  hideRemoveBuild?: boolean;
   onLayout?: (event: LayoutChangeEvent) => void;
   borderColor?: string;
 }
@@ -27,7 +26,6 @@ const BuildCard: React.FC<BuildCardProps> = ({
   percentage = undefined,
   isInLoadBuildModal = false,
   screenNameFromProps,
-  hideRemoveBuild = false,
   onLayout,
   borderColor,
 }) => {
@@ -46,7 +44,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
   const isBuildCardsCollapsed = useGeneralStore((state) => state.isBuildCardsCollapsed);
   const isCollapsed = screenName === "display" && isBuildCardsCollapsed;
 
-  const config = useBuildCardConfig(situation, hideRemoveBuild, screenName);
+  const config = useBuildCardConfig(situation, screenName);
 
   const { buildCardStyle } = useBuildCardStyle(BUILD_CARD_WIDTH);
 

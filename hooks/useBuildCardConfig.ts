@@ -1,3 +1,4 @@
+import { ScreenName } from "@/contexts/ScreenContext";
 import { useMemo } from "react";
 
 export type ActionName = "edit" | "loadToSearch" | "loadToDisplay" | "save" | "remove" | "share";
@@ -33,7 +34,7 @@ const BASE_ACTIONS_SAVE: ActionNamesList = ["edit", "loadToSearch", "loadToDispl
 const MORE_ACTIONS_DISPLAY_COMMON: ActionNamesList = ["remove", "share"];
 const BASE_MORE_ACTIONS_SAVE: ActionNamesList = ["share", "remove"];
 
-export const useBuildCardConfig = (situation, hideRemoveBuild, screenName) => {
+export const useBuildCardConfig = (situation: ScreenName | "load", screenName: ScreenName) => {
   return useMemo(() => {
     const base = situationConfigs[situation];
     let actionNames: ActionNamesList;
@@ -61,5 +62,5 @@ export const useBuildCardConfig = (situation, hideRemoveBuild, screenName) => {
       actionNamesList: actionNames,
       moreActionNamesList: moreActionNames,
     };
-  }, [situation, hideRemoveBuild, screenName]);
+  }, [situation, screenName]);
 };
