@@ -7,6 +7,7 @@ import useThemeStore from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { getBonusColor } from "@/utils/getBonusColor";
 import { useGameData } from "@/hooks/useGameData";
+import { useScreen } from "@/contexts/ScreenContext";
 
 interface StatGaugeContainerProps {
   name?: StatName;
@@ -27,6 +28,7 @@ const StatGaugeContainer = ({
 }: StatGaugeContainerProps) => {
   const { statNamesCompact } = useGameData();
   const theme = useThemeStore((state) => state.theme);
+  const screenName = useScreen();
 
   const showAllStatGaugeBonuses = useGeneralStore((state) => state.showAllStatGaugeBonuses);
   const toggleAllStatGaugeBonuses = useGeneralStore((state) => state.toggleAllStatGaugeBonuses);
@@ -65,10 +67,10 @@ const StatGaugeContainer = ({
       onPress();
       return;
     }
-    if (isInBuildCard) {
+    if (isInBuildCard && screenName === "search") {
       toggleAllStatGaugeBonuses();
     }
-  }, [toggleAllStatGaugeBonuses]);
+  }, [screenName, toggleAllStatGaugeBonuses]);
 
   return (
     <Tooltip
