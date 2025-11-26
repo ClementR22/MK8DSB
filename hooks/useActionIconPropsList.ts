@@ -39,7 +39,6 @@ export function useActionIconPropsList(
   const removeBuild = useBuildsListStore((state) => state.removeBuild);
   const exportBuild = useBuildsActionsStore((state) => state.exportBuild);
   const setScrollRequest = useBuildsListStore((state) => state.setScrollRequest);
-  const getBuildTarget = useBuildsListStore((state) => state.getBuildTarget);
   const setIsLoadBuildModalVisible = useLoadBuildModalStore((state) => state.setIsLoadBuildModalVisible);
 
   const handleEditPress = useCallback(() => {
@@ -97,13 +96,10 @@ export function useActionIconPropsList(
   }, [source, buildDataId, isSaved, saveBuild, unSaveBuild]);
 
   const handleRemovePress = useCallback(() => {
-    const previousBuildDataId = getBuildTarget(source, buildDataId);
     removeBuild(buildDataId, source);
-    if (previousBuildDataId) {
-      setScrollRequest(source, previousBuildDataId);
-    }
+    setScrollRequest(source, buildDataId); // permet de refresh le scroll de la scrollview
     showToast("toast:buildHasBeenDeleted", "success");
-  }, [source, buildDataId, removeBuild, getBuildTarget, setScrollRequest]);
+  }, [source, buildDataId, removeBuild, setScrollRequest]);
 
   const handleExportPress = useCallback(() => {
     try {

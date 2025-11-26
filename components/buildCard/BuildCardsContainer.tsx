@@ -83,8 +83,6 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
 
     const noBuildToShow = builds.length === 0;
 
-    const calculatedContentWidth: DimensionValue | undefined = noBuildToShow || isLoading ? "100%" : undefined;
-
     useEffect(() => {
       if (!scrollRequest) return;
       const { source, buildDataId } = scrollRequest;

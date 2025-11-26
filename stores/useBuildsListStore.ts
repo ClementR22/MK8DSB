@@ -35,8 +35,6 @@ interface BuildsListStoreState {
 
   clearScrollRequest: () => void;
 
-  getBuildTarget: (source: ScreenName, buildToRemoveDataId: string) => string;
-
   getBuildsList: (screenName: ScreenName) => {
     buildsList: Build[] | Build[];
     buildsListName: string;
@@ -80,34 +78,6 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
   setScrollRequest: (source, buildDataId) => set({ scrollRequest: { source, buildDataId } }),
 
   clearScrollRequest: () => set({ scrollRequest: null }),
-
-  getBuildTarget: (source, buildToRemoveDataId) => {
-    const { buildsList } = get().getBuildsList(source);
-
-    if (buildsList.length < 2) return null;
-
-    const lastBuildIndex = buildsList.length - 1;
-
-    let buildToRemoveIndex: number;
-    buildsList.forEach((build, index) => {
-      if (build.buildDataId === buildToRemoveDataId) {
-        buildToRemoveIndex = index;
-      }
-    });
-
-    if (buildToRemoveIndex === lastBuildIndex) {
-      // si on supprime le dernier build, alors on scroll vers le précédent
-      return buildsList[lastBuildIndex - 1].buildDataId;
-    }
-
-    if (buildToRemoveIndex === lastBuildIndex - 1) {
-      // si on supprime l'avant dernier build, alors on scroll vers le suivant (le dernier)
-      return buildsList[lastBuildIndex].buildDataId;
-    }
-
-    // sinon, pas de scroll
-    return null;
-  },
 
   getBuildsList: (screenName) => {
     let buildsListName: string;
