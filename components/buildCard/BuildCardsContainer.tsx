@@ -7,6 +7,7 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
+  View,
 } from "react-native";
 import BuildCard from "./BuildCard";
 import useThemeStore from "@/stores/useThemeStore";
@@ -18,6 +19,7 @@ import { BORDER_RADIUS_CONTAINER_LOWEST, MARGIN_CONTAINER_LOWEST, PADDING_STANDA
 import { box_shadow_z1 } from "../styles/shadow";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import PlaceholderBuildCard from "./PlaceholderBuildCard";
+import ButtonAddBuild from "../managingBuildsButton/ButtonAddBuild";
 
 interface BuildWithColor extends Build {
   color: string;
@@ -109,7 +111,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
         return null;
       }
 
-      return builds.map((build: BuildWithColor) => (
+      let buildsComponent = builds.map((build: BuildWithColor) => (
         <BuildCard
           key={build.buildDataId}
           buildDataId={build.buildDataId}
@@ -121,6 +123,17 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
           borderColor={build.color}
         />
       ));
+  
+      
+      if (screenName === "display") {
+        buildsComponent.push(
+          <View style={[{display: "flex", flexGrow: 1, justifyContent: "center", paddingHorizontal: 10}]}>
+            <ButtonAddBuild scrollRef={null}/>
+          </View>
+        )
+        return buildsComponent;
+      }
+      return buildsComponent;
     }, [builds, isInLoadBuildModal, screenNameFromProps, hideRemoveBuild, onBuildCardLayout]);
 
     return (

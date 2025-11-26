@@ -12,8 +12,7 @@ export const useBuildCardStyle = (width?: DimensionValue) => {
 
   // Calcule le style de la carte une seule fois
   const buildCardStyle = useMemo(() => {
-    return StyleSheet.flatten([
-      {
+    return ({
         // Styles de base communs à toutes les cartes
         width: width,
         borderRadius: BORDER_RADIUS_STANDARD,
@@ -22,8 +21,7 @@ export const useBuildCardStyle = (width?: DimensionValue) => {
         backgroundColor: theme.surface,
         borderColor: theme.surface,
         boxShadow: box_shadow_z1,
-      },
-    ]) as ViewStyle;
+      }) as ViewStyle;
   }, [theme.surface, theme.surface_container_high]); // Dépendances
 
   return {

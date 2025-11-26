@@ -13,6 +13,8 @@ interface BoxContainerProps {
   gap?: number;
   marginHorizontal?: number;
   marginTop?: number;
+  borderWidth?: number;
+  borderColor?: string;
   borderRadius?: number;
   padding?: number;
   paddingHorizontal?: number;
@@ -30,6 +32,8 @@ const BoxContainer = ({
   gap = 10,
   marginHorizontal = MARGIN_CONTAINER_LOWEST,
   marginTop,
+  borderColor = "transparent",
+  borderWidth = 3,
   borderRadius = 12,
   padding = PADDING_BOX_CONTAINER,
   paddingHorizontal,
@@ -49,6 +53,8 @@ const BoxContainer = ({
             justifyContent: justifyContent,
             marginHorizontal: marginHorizontal,
             marginTop: marginTop,
+            borderWidth: borderWidth,
+            borderColor: borderColor,
             borderRadius: borderRadius,
             gap: gap,
             flexDirection: flexDirection,

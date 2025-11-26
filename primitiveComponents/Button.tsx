@@ -19,7 +19,7 @@ interface ButtonProps {
   onPress: () => void;
   tooltipText: string;
   iconProps?: IconProps;
-  flex?: 1;
+  flex?: number;
   disabled?: boolean;
   [key: string]: any;
 }

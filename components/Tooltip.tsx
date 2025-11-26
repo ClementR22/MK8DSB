@@ -1,6 +1,6 @@
 import Text from "@/primitiveComponents/Text";
 import useThemeStore from "@/stores/useThemeStore";
-import { CORNER_EXTRA_SMALL, BORDER_RADIUS_STANDARD } from "@/utils/designTokens";
+import { BORDER_RADIUS_STANDARD, CORNER_SMALL } from "@/utils/designTokens";
 import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { Pressable, StyleSheet, ViewStyle } from "react-native";
 import { Menu, MenuOptions, MenuTrigger, renderers } from "react-native-popup-menu";
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: CORNER_EXTRA_SMALL,
+    borderRadius: CORNER_SMALL,
   },
   anchor: { backgroundColor: "transparent" },
   menuTrigger: { flex: 1 },
