@@ -16,7 +16,7 @@
 
   "resetSettingsText": "Do you really want to reset settings?",
   "deleteAllBuildsInMemoryText": "Do you really want to delete all saved builds?",
-  "appliedWhenTheAppStarts": "Applied when the app starts",
+  "appliedForBuildFinderAndComparator": "Applied when the app starts, for the Build Finder and the Comparator",
 
   "buildFound": "Build found",
 

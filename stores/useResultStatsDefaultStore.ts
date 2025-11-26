@@ -1,39 +1,35 @@
 import { create } from "zustand";
-import { toggleAndGetChecks } from "@/utils/toggleCheck";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
-import { ResultStat } from "@/types";
+import { Game, ResultStat } from "@/types";
 import { IS_RESULT_STATS_SYNC_DEFAULT } from "@/config/config";
 
 interface ResultStatsDefaultState {
   isResultStatsSync: boolean;
   setIsResultStatsSync: (newValue: boolean) => Promise<void>;
 
-  resultStatsDefault: ResultStat[];
-  initResultStatsDefault: (resultStatsDefaultInit: ResultStat[]) => void;
-  setResultStatsDefault: (newList: ResultStat[]) => void;
-  toggleCheckListResultStatsDefault: (name: string) => void;
+  resultStatsDefault: Record<Game, ResultStat[]>;
+  initResultStatsDefault: (initObj: Record<Game, ResultStat[]>) => void;
+  setResultStatsDefaultForGame: (list: ResultStat[], game: Game) => Promise<void>;
 }
 
 const useResultStatsDefaultStore = create<ResultStatsDefaultState>((set, get) => ({
   isResultStatsSync: IS_RESULT_STATS_SYNC_DEFAULT,
 
-  async setIsResultStatsSync(newValue) {
+  setIsResultStatsSync: async (newValue) => {
     await saveThingInMemory("isResultStatsSync", newValue);
     set({ isResultStatsSync: newValue });
   },
 
-  resultStatsDefault: [],
+  resultStatsDefault: { MK8D: [], MKW: [] },
 
-  initResultStatsDefault: (resultStatsDefaultInit: ResultStat[]) => set({ resultStatsDefault: resultStatsDefaultInit }),
+  initResultStatsDefault: (obj) => set({ resultStatsDefault: obj }),
 
-  async setResultStatsDefault(newList) {
-    await saveThingInMemory("resultStatsDefault", newList);
-    set({ resultStatsDefault: newList });
-  },
+  setResultStatsDefaultForGame: async (list, game) => {
+    const current = get().resultStatsDefault;
+    const updated = { ...current, [game]: list };
 
-  toggleCheckListResultStatsDefault(name) {
-    const newList = toggleAndGetChecks(get().resultStatsDefault, name);
-    get().setResultStatsDefault(newList);
+    await saveThingInMemory("resultStatsDefault", updated);
+    set({ resultStatsDefault: updated });
   },
 }));
 

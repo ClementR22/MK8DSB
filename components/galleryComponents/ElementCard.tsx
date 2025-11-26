@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Category } from "@/types";
 import { BORDER_RADIUS_18, LIST_ITEM_SPACING, PADDING_HORIZONTAL_ELEMENT_CARD } from "@/utils/designTokens";
 import useThemeStore from "@/stores/useThemeStore";
-import StatGaugeRelativeBar from "../statGauge/StatGaugeRelativeBar";
+import StatGaugeRelativeBar from "../statGaugeElementCard/StatGaugeRelativeBar";
 import Text from "@/primitiveComponents/Text";
 import { StatName } from "@/types";
 import StatGaugeContainerElementCard from "../statGaugeElementCard/StatGaugeContainerElementCard";

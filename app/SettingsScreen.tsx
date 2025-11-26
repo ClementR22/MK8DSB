@@ -62,7 +62,7 @@ const SettingsScreen: React.FC = () => {
           <ResultStatsProvider>
             <StatSelector triggerButtonText="configureDefaultStats" tooltipText="configureDefaultStats">
               <Text role="title" size="small" namespace="text">
-                appliedWhenTheAppStarts
+                appliedForBuildFinderAndComparator
               </Text>
             </StatSelector>
           </ResultStatsProvider>
@@ -74,6 +74,8 @@ const SettingsScreen: React.FC = () => {
           <ButtonResetSettings resetSettings={resetSettings} />
 
           <ButtonDeleteAllBuildsInMemory deleteAllSavedBuilds={handleDeleteAllSavedBuilds} />
+          <Pressable onPress={handleRemoveMemory}>delete</Pressable>
+          <Pressable onPress={handleShowMemory}>show</Pressable>
         </BoxContainer>
       </ScrollViewScreen>
     </ScreenProvider>

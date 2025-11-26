@@ -10,13 +10,11 @@ import StatSelector from "@/components/statSelector/StatSelector";
 import { BuildCardsScrollProvider } from "@/contexts/BuildCardsScrollContext";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import useBuildsPersistenceStore from "@/stores/useBuildsPersistenceStore";
-import useGameStore from "@/stores/useGameStore";
 
 const SavedBuildScreen: React.FC = () => {
   const buildsListSaved = useBuildsListStore((state) => state.buildsListSaved);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
-  const game = useGameStore((state) => state.game);
   const sortNumberSavedBuilds = useBuildsPersistenceStore((state) => state.sortNumberSavedBuilds);
   const setSortNumberSavedBuilds = useBuildsPersistenceStore((state) => state.setSortNumberSavedBuilds);
 

@@ -13,6 +13,7 @@ import useThemeStore from "@/stores/useThemeStore";
 import ResultStatsSyncSwitch from "./ResultStatsSyncSwitch";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { useGameData } from "@/hooks/useGameData";
+import useGameStore from "@/stores/useGameStore";
 
 interface StatSelectorProps {
   triggerButtonText?: string;
@@ -49,11 +50,12 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
   const { statNames } = useGameData();
   const theme = useThemeStore((state) => state.theme);
   const screenName = useScreen();
+  const game = useGameStore((state) => state.game);
 
   const chosenStats = useStatsStore((state) => state.chosenStats);
   const setChosenStats = useStatsStore((state) => state.setChosenStats);
   const { resultStats, setResultStats } = useResultStats();
-  const { resultStatsDefault, setResultStatsDefault, isResultStatsSync } = useResultStatsDefaultStore();
+  const { resultStatsDefault, setResultStatsDefaultForGame, isResultStatsSync } = useResultStatsDefaultStore();
 
   const columnNames = useMemo(() => getColumnsConfig(screenName), [screenName]);
   const { customTrigger, modalTitle } = useMemo(() => getTriggerConfig(screenName), [screenName]);
@@ -72,7 +74,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
         chosenStats: chosenStats.find((s) => s.name === name)?.checked ?? false,
         resultStats:
           screenName === "settings"
-            ? resultStatsDefault.find((s) => s.name === name)?.checked ?? false
+            ? resultStatsDefault[game].find((s) => s.name === name)?.checked ?? false
             : resultStats.find((s) => s.name === name)?.checked ?? false,
       };
     });
@@ -107,7 +109,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
     [columnNames, isResultStatsSync, screenName]
   );
 
-  const handleModalClose = useCallback(() => {
+  const handleModalClose = useCallback(async () => {
     // Mise à jour des stores
     const chosenUpdated: ChosenStat[] = [];
     const resultUpdated: ResultStat[] = [];
@@ -126,9 +128,9 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
     });
 
     if (columnNames.includes("chosenStats")) setChosenStats(chosenUpdated);
-    if (screenName === "settings") setResultStatsDefault(resultDefaultUpdated);
+    if (screenName === "settings") await setResultStatsDefaultForGame(resultDefaultUpdated, game);
     else setResultStats(resultUpdated);
-  }, [statMap, columnNames, screenName, setChosenStats, setResultStats, setResultStatsDefault]);
+  }, [statMap, columnNames, screenName, setChosenStats, setResultStats, setResultStatsDefaultForGame]);
 
   return (
     <ButtonAndModal
@@ -141,7 +143,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
       onModalClose={handleModalClose}
       onModalOpen={initStatMap}
     >
-      <View style={{ backgroundColor: theme.surface, padding: 16 }}>
+      <View style={{ backgroundColor: theme.surface, padding: 16, gap: 10 }}>
         {children}
         {screenName === "search" && statMap && (
           <ResultStatsSyncSwitch

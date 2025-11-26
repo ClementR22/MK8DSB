@@ -26,7 +26,6 @@ import ButtonIconWithBadge from "@/components/sortModeSelector/ButtonIconWithBad
 import { IconType } from "react-native-dynamic-vector-icons";
 import { useInitStatsStore } from "@/hooks/useInitStatsStore";
 import useGameStore from "@/stores/useGameStore";
-import { useInitResultStatsDefaultStore } from "@/hooks/useInitResultStatsDefaultStore";
 import { useInitPressableElementsStore } from "@/hooks/useInitPressableElementsStore";
 
 export default function TabLayout() {
@@ -49,8 +48,6 @@ export default function TabLayout() {
   useLoadSettings();
 
   useInitStatsStore();
-
-  useInitResultStatsDefaultStore();
 
   useInitPressableElementsStore();
 

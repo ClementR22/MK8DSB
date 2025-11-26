@@ -4,6 +4,7 @@ import { deepCompareStatArrays } from "@/utils/deepCompare";
 import { useScreen } from "./ScreenContext";
 import { useGameData } from "@/hooks/useGameData";
 import { ResultStat } from "@/types";
+import useGameStore from "@/stores/useGameStore";
 
 type ResultStatsContextType = {
   resultStats: ResultStat[];
@@ -19,8 +20,10 @@ interface ResultStatsProviderProps {
 export const ResultStatsProvider: React.FC<ResultStatsProviderProps> = ({ children }) => {
   const { resultStatsSaveScreenInit } = useGameData();
 
+  const game = useGameStore((state) => state.game);
   const screenName = useScreen();
-  const resultStatsDefault = useResultStatsDefaultStore((state) => state.resultStatsDefault);
+
+  const resultStatsDefault = useResultStatsDefaultStore((state) => state.resultStatsDefault)[game];
 
   const [resultStats, setResultStats] = useState<ResultStat[]>(() =>
     screenName === "save" ? resultStatsSaveScreenInit : resultStatsDefault
@@ -28,14 +31,21 @@ export const ResultStatsProvider: React.FC<ResultStatsProviderProps> = ({ childr
 
   const isResultStatsSync = useResultStatsDefaultStore((state) => state.isResultStatsSync);
 
-  // useEffect est exécuté au lancement ET à chaque changement de resultStatsDefault dans les settings
   useEffect(() => {
-    if (isResultStatsSync && screenName === "search") return;
+    if (isResultStatsSync && screenName === "search") return; // on ne met pas à jour si sync
+
+    if (screenName === "save") return; // on ne met PAS à jour dans save screen car il est indépendant de       setResultStats(resultStatsDefault);
 
     if (!deepCompareStatArrays(resultStatsDefault, resultStats)) {
       setResultStats(resultStatsDefault);
     }
   }, [resultStatsDefault]);
+
+  useEffect(() => {
+    if (screenName === "save") {
+      setResultStats(resultStatsSaveScreenInit); // on MET à jour dans save screen car il dépend de game
+    }
+  }, [game]);
 
   const contextValue = useMemo<ResultStatsContextType>(
     () => ({

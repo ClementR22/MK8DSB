@@ -99,7 +99,6 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
         return <Placeholder text="searchNotFound" />;
       }
       if (screenName === "display") {
-        console.log("ahhh");
         return <PlaceholderBuildCard />;
       }
       return <Placeholder text="savedEmpty" />;

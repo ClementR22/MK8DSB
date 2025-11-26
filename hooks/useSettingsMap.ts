@@ -13,6 +13,8 @@ import useBuildsPersistenceStore from "@/stores/useBuildsPersistenceStore";
 import { useGameData } from "./useGameData";
 import useGameStore from "@/stores/useGameStore";
 import useLanguageStore from "@/stores/useLanguageStore";
+import { resultStatsDefaultInit as resultStatsDefaultInitMK8D } from "@/data/mk8d";
+import { resultStatsDefaultInit as resultStatsDefaultInitMKW } from "@/data/mkw";
 
 type SettingKey =
   | "language"
@@ -29,12 +31,10 @@ type SettingsEntry = {
 };
 
 export function useSettingsMap(): Record<SettingKey, SettingsEntry> {
-  const { resultStatsDefaultInit } = useGameData();
-
   const setTheme = useThemeStore((state) => state.setTheme);
   const setLanguage = useLanguageStore((state) => state.setLanguage);
   const setIsResultStatsSync = useResultStatsDefaultStore((state) => state.setIsResultStatsSync);
-  const setResultStatsDefault = useResultStatsDefaultStore((state) => state.setResultStatsDefault);
+  const initResultStatsDefault = useResultStatsDefaultStore((state) => state.initResultStatsDefault);
   const setSortNumberSavedBuilds = useBuildsPersistenceStore((state) => state.setSortNumberSavedBuilds);
   const setResultsNumber = useGeneralStore((state) => state.setResultsNumber);
   const setGame = useGameStore((state) => state.setGame);
@@ -44,7 +44,13 @@ export function useSettingsMap(): Record<SettingKey, SettingsEntry> {
     theme: { setState: setTheme, defaultValue: THEME_DEFAULT },
     game: { setState: setGame, defaultValue: GAME_DEFAULT },
     isResultStatsSync: { setState: setIsResultStatsSync, defaultValue: IS_RESULT_STATS_SYNC_DEFAULT },
-    resultStatsDefault: { setState: setResultStatsDefault, defaultValue: resultStatsDefaultInit },
+    resultStatsDefault: {
+      setState: initResultStatsDefault,
+      defaultValue: {
+        MK8D: resultStatsDefaultInitMK8D,
+        MKW: resultStatsDefaultInitMKW,
+      },
+    },
     sortNumberSavedBuilds: { setState: setSortNumberSavedBuilds, defaultValue: SORT_NUMBER_SAVED_BUILDS_DEFAULT },
     resultsNumber: { setState: setResultsNumber, defaultValue: RESULTS_NUMBER_DEFAULT },
   };
