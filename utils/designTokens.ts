@@ -26,7 +26,6 @@ export const BORDER_RADIUS_STANDARD = BORDER_RADIUS_CONTAINER_LOWEST - PADDING_S
 /**** Border Radius ****/
 
 // Material 3 constants
-export const CORNER_EXTRA_SMALL = 4;
 export const CORNER_SMALL = 8;
 export const CORNER_MEDIUM = 12;
 export const CORNER_LARGE = 16;

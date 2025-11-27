@@ -5,12 +5,14 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import showToast from "@/utils/showToast";
 import useBuildsListStore, { MAX_NUMBER_BUILDS_DISPLAY } from "@/stores/useBuildsListStore";
 import { useBuildController } from "@/hooks/useBuildController";
+import Button from "@/primitiveComponents/Button";
 
 interface ButtonAddBuildProps {
   scrollRef: React.RefObject<ScrollView>;
+  withText?: boolean;
 }
 
-const ButtonAddBuild: React.FC<ButtonAddBuildProps> = ({ scrollRef }) => {
+const ButtonAddBuild: React.FC<ButtonAddBuildProps> = ({ scrollRef, withText = false }) => {
   const buildController = useBuildController(); // Nouveau hook propre
   const buildsListDisplayed = useBuildsListStore((state) => state.buildsListDisplayed);
 
@@ -34,6 +36,19 @@ const ButtonAddBuild: React.FC<ButtonAddBuildProps> = ({ scrollRef }) => {
   useEffect(() => {
     return () => clearTimeout(timeoutRef.current);
   }, []);
+
+  if (withText) {
+    return (
+      <Button
+        onPress={handleAdd}
+        tooltipText="addABuild"
+        iconProps={{ name: "plus", type: IconType.MaterialCommunityIcons }}
+        disabled={disabled}
+      >
+        addABuild
+      </Button>
+    );
+  }
 
   return (
     <ButtonIcon

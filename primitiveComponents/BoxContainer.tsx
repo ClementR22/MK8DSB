@@ -1,12 +1,13 @@
 import React from "react";
 import { DimensionValue, StyleSheet, View, ViewStyle } from "react-native";
 import useThemeStore from "@/stores/useThemeStore";
-import { MARGIN_CONTAINER_LOWEST, PADDING_BOX_CONTAINER } from "@/utils/designTokens";
+import { BORDER_RADIUS_STANDARD, MARGIN_CONTAINER_LOWEST, PADDING_BOX_CONTAINER } from "@/utils/designTokens";
 
 interface BoxContainerProps {
   children: React.ReactNode;
   backgroundColor?: string;
   height?: DimensionValue;
+  width?: DimensionValue;
   justifyContent?: ViewStyle["justifyContent"];
   flexDirection?: ViewStyle["flexDirection"];
   alignItems?: ViewStyle["alignItems"];
@@ -26,15 +27,16 @@ const BoxContainer = ({
   children,
   backgroundColor,
   height,
+  width,
   justifyContent = "center",
   flexDirection = "column",
   alignItems = "center",
   gap = 10,
   marginHorizontal = MARGIN_CONTAINER_LOWEST,
   marginTop,
+  borderWidth = 0,
   borderColor = "transparent",
-  borderWidth = 3,
-  borderRadius = 12,
+  borderRadius = BORDER_RADIUS_STANDARD,
   padding = PADDING_BOX_CONTAINER,
   paddingHorizontal,
   flexWrap = "nowrap",
@@ -50,6 +52,7 @@ const BoxContainer = ({
           {
             backgroundColor: backgroundColor || theme.surface_container,
             height: height,
+            width: width,
             justifyContent: justifyContent,
             marginHorizontal: marginHorizontal,
             marginTop: marginTop,

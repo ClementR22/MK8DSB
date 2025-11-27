@@ -13,6 +13,7 @@
   "close": "Close",
   "ok": "OK",
 
+  "editTheBuild": "Edit the build",
   "remove": "Remove",
   "save": "Save",
   "loadTheStats": "Load the stats",

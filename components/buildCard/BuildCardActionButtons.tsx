@@ -33,7 +33,8 @@ const BuildCardActionButtons: React.FC<BuildCardActionButtonsProps> = ({
       flexDirection="row"
       key="comparatorTitleActionButtonContainer"
       marginHorizontal={0}
-      justifyContent={"space-around"}
+      justifyContent="space-around"
+      borderRadius={10}
     >
       {actionIconPropsList.map((actionProps) => {
         const { title, name, type, onPress } = actionProps;

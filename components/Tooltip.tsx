@@ -1,6 +1,6 @@
 import Text from "@/primitiveComponents/Text";
 import useThemeStore from "@/stores/useThemeStore";
-import { BORDER_RADIUS_STANDARD, CORNER_SMALL } from "@/utils/designTokens";
+import { CORNER_SMALL } from "@/utils/designTokens";
 import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { Pressable, StyleSheet, ViewStyle } from "react-native";
 import { Menu, MenuOptions, MenuTrigger, renderers } from "react-native-popup-menu";
@@ -75,7 +75,7 @@ const Tooltip: React.FC<TooltipProps> = ({
 
       <MenuOptions
         customStyles={{
-          optionsContainer: { borderRadius: BORDER_RADIUS_STANDARD },
+          optionsContainer: styles.optionsContainer,
           optionsWrapper: { backgroundColor: theme.inverse_surface },
         }}
       >
@@ -99,10 +99,10 @@ const Tooltip: React.FC<TooltipProps> = ({
 };
 
 const styles = StyleSheet.create({
+  optionsContainer: { borderRadius: CORNER_SMALL, overflow: "hidden" },
   content: {
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: CORNER_SMALL,
   },
   anchor: { backgroundColor: "transparent" },
   menuTrigger: { flex: 1 },

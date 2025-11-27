@@ -6,7 +6,6 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import { BUILD_CARD_COLOR_PALETTE } from "@/constants/Colors";
 import useThemeStore from "@/stores/useThemeStore";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
-import ButtonAddBuild from "@/components/managingBuildsButton/ButtonAddBuild";
 import ButtonLoadBuild from "@/components/managingBuildsButton/ButtonLoadBuild";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import StatGaugeGroupCompare from "@/components/statGaugeCompare/StatGaugeGroupCompare";
@@ -86,7 +85,6 @@ const DisplayBuildScreen = () => {
     <ScreenProvider screenName="display">
       <ScrollViewScreen scrollEnabled={isScrollEnable}>
         <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
-          <ButtonAddBuild scrollRef={scrollRef} />
           <ButtonLoadBuild tooltipText="loadABuild" />
           <ButtonIcon
             onPress={toggleIsBuildCardsCollapsed}

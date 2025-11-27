@@ -133,11 +133,10 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
 
       if (screenName === "display") {
         buildsComponent.push(
-          <View style={[{ display: "flex", flexGrow: 1, justifyContent: "center", paddingHorizontal: 10 }]}>
-            <ButtonAddBuild scrollRef={null} />
+          <View key="buttonAddBuild" style={[{ justifyContent: "center", paddingHorizontal: 10 }]}>
+            <ButtonAddBuild scrollRef={scrollViewRef} />
           </View>
         );
-        return buildsComponent;
       }
       return buildsComponent;
     }, [builds, isInLoadBuildModal, screenNameFromProps, onBuildCardLayout]);
