@@ -1,5 +1,14 @@
 import React, { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
-import { ActivityIndicator, Dimensions, LayoutChangeEvent, Pressable, ScrollView, StyleSheet } from "react-native";
+import {
+  ActivityIndicator,
+  Dimensions,
+  DimensionValue,
+  LayoutChangeEvent,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import BuildCard from "./BuildCard";
 import useThemeStore from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
@@ -11,6 +20,7 @@ import { box_shadow_z1 } from "../styles/shadow";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import PlaceholderBuildCard from "./PlaceholderBuildCard";
 import useBuildsListStore from "@/stores/useBuildsListStore";
+import ButtonAddBuild from "../managingBuildsButton/ButtonAddBuild";
 
 interface BuildWithColor extends Build {
   color: string;
@@ -109,7 +119,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
         return null;
       }
 
-      return builds.map((build: BuildWithColor) => (
+      let buildsComponent = builds.map((build: BuildWithColor) => (
         <BuildCard
           key={build.buildDataId}
           buildDataId={build.buildDataId}
@@ -120,6 +130,16 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
           borderColor={build.color}
         />
       ));
+
+      if (screenName === "display") {
+        buildsComponent.push(
+          <View style={[{ display: "flex", flexGrow: 1, justifyContent: "center", paddingHorizontal: 10 }]}>
+            <ButtonAddBuild scrollRef={null} />
+          </View>
+        );
+        return buildsComponent;
+      }
+      return buildsComponent;
     }, [builds, isInLoadBuildModal, screenNameFromProps, onBuildCardLayout]);
 
     return (
