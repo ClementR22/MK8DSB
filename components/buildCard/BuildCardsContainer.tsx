@@ -83,6 +83,8 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
 
     const noBuildToShow = builds.length === 0;
 
+    const calculatedContentWidth: DimensionValue | undefined = noBuildToShow ? "100%" : undefined;
+
     useEffect(() => {
       if (!scrollRequest) return;
       const { source, buildDataId } = scrollRequest;
@@ -133,7 +135,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
 
       if (screenName === "display") {
         buildsComponent.push(
-          <View key="buttonAddBuild" style={[{ justifyContent: "center", paddingHorizontal: 10 }]}>
+          <View key="buttonAddBuildWrapper" style={[{ justifyContent: "center", paddingHorizontal: 10 }]}>
             <ButtonAddBuild scrollRef={scrollViewRef} />
           </View>
         );
@@ -147,7 +149,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
         horizontal
         scrollEnabled={isScrollEnable}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ minWidth: "100%" }}
+        contentContainerStyle={{ minWidth: "100%", width: calculatedContentWidth }}
       >
         <Pressable
           style={[

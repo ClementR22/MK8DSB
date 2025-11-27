@@ -36,7 +36,7 @@ const BoxContainer = ({
   marginTop,
   borderWidth = 0,
   borderColor = "transparent",
-  borderRadius = BORDER_RADIUS_STANDARD,
+  borderRadius = 12,
   padding = PADDING_BOX_CONTAINER,
   paddingHorizontal,
   flexWrap = "nowrap",
