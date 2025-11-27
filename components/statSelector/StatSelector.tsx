@@ -14,6 +14,7 @@ import ResultStatsSyncSwitch from "./ResultStatsSyncSwitch";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { useGameData } from "@/hooks/useGameData";
 import useGameStore from "@/stores/useGameStore";
+import Button from "@/primitiveComponents/Button";
 
 interface StatSelectorProps {
   triggerButtonText?: string;
@@ -32,7 +33,15 @@ const getTriggerConfig = (screenName: ScreenName) => {
         iconName="checkbox-multiple-marked"
         iconType={IconType.MaterialCommunityIcons}
       />
-    ) : null;
+    ) : (
+      <Button
+        iconProps={{ name: "checkbox-multiple-marked", type: IconType.MaterialCommunityIcons }}
+        onPress={null}
+        tooltipText="statsToCompare"
+      >
+        statsToCompare
+      </Button>
+    );
 
   const modalTitle =
     screenName === "search"
@@ -135,7 +144,6 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
   return (
     <ButtonAndModal
       customTrigger={customTrigger}
-      triggerButtonText={triggerButtonText}
       tooltipText={tooltipText}
       modalTitle={modalTitle}
       isModalVisibleProp={isModalVisible}

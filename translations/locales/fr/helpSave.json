@@ -19,8 +19,8 @@
 
   "actions.title": "Actions disponibles",
   "actions.label_edit_elements": "Modifier les éléments du build (personnage, kart, roues, ailes)",
-  "actions.label_add_to": "Ajouter au comparateur de builds",
+  "actions.label_add_to": "Ajouter au Comparateur de builds",
   "actions.label_copy_to_finder": "Copier les stats dans le Chercheur de builds et utiliser comme base de recherche",
   "actions.label_export_set": "Exporter le build",
-  "actions.label_delete_set": "Supprimer le build de votre collection"
+  "actions.label_delete_set": "Supprimer le build de votre Collection"
 }

@@ -3,19 +3,16 @@ import { View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal from "./HelpModal";
 import StatSliderPreview from "../statSlider/StatSliderPreview";
-import { PADDING_BUILD_CARD, BUILD_CARD_WIDTH } from "@/utils/designTokens";
+import { BUILD_CARD_WIDTH } from "@/utils/designTokens";
 import Button from "@/primitiveComponents/Button";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
-// import StatGaugeContainer from "../statGauge/StatGaugeContainer";
+import StatGaugeContainer from "../statGauge/StatGaugeContainer";
 import StatGaugeBarBuildCard from "../statGauge/StatGaugeBarBuildCard";
 import Text from "@/primitiveComponents/Text";
 import HelpStepItem from "../helpComponents/HelpStepItem";
 import HelpSection from "../helpComponents/HelpSection";
 import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
-import StatGaugeGroupBuildCard from "../statGauge/StatGaugeGroupBuildCard";
 import { useBuildCardStyle } from "@/hooks/useBuildCardStyle";
-import StatGaugeContainer from "../statGauge/StatGaugeContainer";
-import { useSlidersCompact } from "@/hooks/useSlidersCompact";
 import { useGameData } from "@/hooks/useGameData";
 import StatGaugeBar from "../statGauge/StatGaugeBar";
 
@@ -47,10 +44,11 @@ const HelpSearchBuildScreen = () => {
       <HelpSection title="how_to_use.title" namespace="helpSearch" contentType="step">
         <HelpStepItem key={1} stepChar="1" title="how_to_use.step.choose_criteria" namespace="helpSearch">
           <HelpButtonDescription
-            iconName="plus"
+            iconName="checkbox-multiple-marked"
             iconType={IconType.MaterialCommunityIcons}
             description="how_to_use.step.choose_criteria.add_stat"
-            namespace="helpSearch"
+            namespaceDescription="helpSearch"
+            tooltipText="desiredStatsAndStatsInBuilds"
           />
         </HelpStepItem>
 
@@ -103,11 +101,11 @@ const HelpSearchBuildScreen = () => {
           key={3}
           stepChar="3"
           title="how_to_use.step.start_search"
-          alignItems="center"
           namespace="helpSearch"
+          alignItems="center"
         >
           <Button
-            onPress={() => {}}
+            onPress={null}
             tooltipText="search"
             iconProps={{
               type: IconType.MaterialCommunityIcons,
@@ -146,7 +144,8 @@ const HelpSearchBuildScreen = () => {
             iconName="checkbox-multiple-marked"
             iconType={IconType.MaterialCommunityIcons}
             description="advanced_options.step.customize_display.choose_stats_to_show"
-            namespace="helpSearch"
+            namespaceDescription="helpSearch"
+            tooltipText="desiredStatsAndStatsInBuilds"
           />
         </HelpStepItem>
 
@@ -155,7 +154,8 @@ const HelpSearchBuildScreen = () => {
             iconName="filter"
             iconType={IconType.MaterialCommunityIcons}
             description="advanced_options.step.filters.lock_item"
-            namespace="helpSearch"
+            namespaceDescription="helpSearch"
+            tooltipText="chooseFilters"
           />
         </HelpStepItem>
 
@@ -164,13 +164,15 @@ const HelpSearchBuildScreen = () => {
             iconName="cards-outline"
             iconType={IconType.MaterialCommunityIcons}
             description="advanced_options.step.reuse_stats.open_collection"
-            namespace="helpSearch"
+            namespaceDescription="helpSearch"
+            tooltipText="loadStatsOfABuild"
           />
           <HelpButtonDescription
             iconName="check"
             iconType={IconType.FontAwesome5}
             description="advanced_options.step.reuse_stats.import_variations"
-            namespace="helpSearch"
+            namespaceDescription="helpSearch"
+            tooltipText="loadTheStats"
           />
         </HelpStepItem>
       </HelpSection>
@@ -178,22 +180,25 @@ const HelpSearchBuildScreen = () => {
       {/* Section 3 — Results management */}
       <HelpSection title="results_management.title" namespace="helpSearch" contentType="button">
         <HelpButtonDescription
-          iconName="content-save"
+          iconName="content-save-outline"
           iconType={IconType.MaterialCommunityIcons}
           description="results_management.save_to_collection"
-          namespace="helpSearch"
+          namespaceDescription="helpSearch"
+          tooltipText="save"
         />
         <HelpButtonDescription
           iconName="compare"
           iconType={IconType.MaterialCommunityIcons}
-          description="results_management.move_to"
-          namespace="helpSearch"
+          description="results_management.add_to"
+          namespaceDescription="helpSearch"
+          tooltipText="loadTheBuildToDisplayScreen"
         />
         <HelpButtonDescription
-          iconName="clipboard-outline"
-          iconType={IconType.MaterialCommunityIcons}
+          iconName="share"
+          iconType={IconType.MaterialIcons}
           description="results_management.export_set"
-          namespace="helpSearch"
+          namespaceDescription="helpSearch"
+          tooltipText="share"
         />
       </HelpSection>
 

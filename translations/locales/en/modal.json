@@ -10,8 +10,8 @@
   "loadABuild": "Load a build",
 
   "guideBuildFinder": "Build finder guide",
-  "guideBuildComparator": "Build comparator guide",
-  "guideBuildCollection": "Build collection guide",
+  "guideBuildComparator": "Build Comparator guide",
+  "guideBuildCollection": "Build Collection guide",
 
   "numberOfSearchResults": "Number of search results",
   "defaultDisplayedStats": "Default displayed stats in builds",

@@ -125,7 +125,7 @@ export function useActionIconPropsList(
   const actionIconPropsList: ActionIconProps[] = useMemo(() => {
     const allActionsDefs: Record<ActionName, ActionIconProps> = {
       edit: {
-        title: "edit",
+        title: "editTheBuild",
         name: "edit",
         type: IconType.MaterialIcons,
         onPress: handleEditPress,

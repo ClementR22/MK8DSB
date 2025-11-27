@@ -4,23 +4,33 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import IconContainer from "@/primitiveComponents/IconContainer";
 import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
+import Tooltip from "../Tooltip";
 
 interface HelpButtonDescriptionProps {
   iconName: string;
   iconType: IconType;
   description: string;
-  namespace: string;
+  namespaceDescription: string;
+  tooltipText: string;
+  namespaceTooltipText?: string;
 }
 
-const HelpButtonDescription = ({ iconName, iconType, description, namespace }: HelpButtonDescriptionProps) => {
+const HelpButtonDescription = ({
+  iconName,
+  iconType,
+  description,
+  namespaceDescription,
+  tooltipText,
+  namespaceTooltipText,
+}: HelpButtonDescriptionProps) => {
   return (
     <View style={styles.container}>
-      <View style={styles.iconWrapper}>
+      <Tooltip tooltipText={tooltipText} namespace={namespaceTooltipText}>
         <IconContainer iconName={iconName} iconType={iconType} />
-      </View>
+      </Tooltip>
 
       <View style={styles.description}>
-        <Text role="body" size="large" namespace={namespace}>
+        <Text role="body" size="large" namespace={namespaceDescription}>
           {description}
         </Text>
       </View>
@@ -32,11 +42,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     gap: 10,
-    alignSelf: "flex-start",
     alignItems: "center",
   },
-  iconWrapper: { width: BUTTON_SIZE, alignItems: "center" },
-  description: { flex: 1, gap: 10, justifyContent: "center" },
+  description: { flex: 1 },
 });
 
 export default HelpButtonDescription;

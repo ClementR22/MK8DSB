@@ -19,8 +19,8 @@
 
   "actions.title": "Available actions",
   "actions.label_edit_elements": "Edit build elements (character, kart, wheels, glider)",
-  "actions.label_add_to": "Add to build comparator",
-  "actions.label_copy_to_finder": "Copy stats to the Build Finder and use as a base",
+  "actions.label_add_to": "Add to the build Comparator",
+  "actions.label_copy_to_finder": "Copy stats to the build Finder and use as a base",
   "actions.label_export_set": "Export the build",
-  "actions.label_delete_set": "Remove the build from your collection"
+  "actions.label_delete_set": "Remove the build from your Collection"
 }

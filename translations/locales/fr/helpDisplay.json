@@ -19,8 +19,8 @@
 
   "advanced_options.title": "Options avancées",
 
-  "advanced_options.step.import_from_collection": "Importer un build depuis la collection",
-  "advanced_options.step.import_from_collection.label_open_collection": "Ouvrez votre collection de builds",
+  "advanced_options.step.import_from_collection": "Importer un build depuis la Collection",
+  "advanced_options.step.import_from_collection.label_open_collection": "Ouvrez votre Collection de builds",
   "advanced_options.step.import_from_collection.label_import_set": "Importer un build enregistré pour le comparer",
 
   "advanced_options.step.sort_sets": "Trier les builds",
@@ -29,7 +29,7 @@
   "advanced_options.step.sort_sets.label_long_press_hint": "Cliquez longuement sur un bouton de tri pour afficher son nom",
 
   "actions.title": "Actions disponibles",
-  "actions.label_save_to_collection": "Sauvegarder dans votre collection",
+  "actions.label_save_to_collection": "Sauvegarder dans votre Collection",
   "actions.label_copy_to_finder": "Copier les stats dans le Chercheur de builds et utiliser comme base",
   "actions.label_export_set": "Exporter le build",
 

@@ -29,13 +29,13 @@
   "advanced_options.step.filters.lock_item": "Imposez un personnage, un kart, des roues ou une aile",
 
   "advanced_options.step.reuse_stats": "Réutilisez les statistiques d’un build",
-  "advanced_options.step.reuse_stats.open_collection": "Ouvrez votre collection de builds",
+  "advanced_options.step.reuse_stats.open_collection": "Ouvrez votre Collection de builds",
   "advanced_options.step.reuse_stats.import_variations": "Importez les statistiques d’un build pour chercher des variantes",
 
   "results_management.title": "Gestion des résultats",
-  "results_management.save_to_collection": "Ajoutez à votre collection",
-  "results_management.move_to": "Déplacez vers le comparateur de builds",
-  "results_management.export_set": "Exportez le build",
+  "results_management.save_to_collection": "Ajouter à votre Collection",
+  "results_management.add_to": "Ajouter au Comparateur de builds",
+  "results_management.export_set": "Exporter le build",
 
   "tips.title": "Conseils pratiques",
   "tips.start_with_key_stats": "Commencez avec 2-3 statistiques principales pour des résultats plus pertinents.",

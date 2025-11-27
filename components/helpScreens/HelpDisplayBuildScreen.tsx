@@ -7,6 +7,7 @@ import Text from "@/primitiveComponents/Text";
 import HelpStepItem from "../helpComponents/HelpStepItem";
 import HelpSection from "../helpComponents/HelpSection";
 import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
+import Button from "@/primitiveComponents/Button";
 
 const HelpDisplayBuildScreen = () => {
   return (
@@ -28,7 +29,8 @@ const HelpDisplayBuildScreen = () => {
             iconName="plus"
             iconType={IconType.MaterialCommunityIcons}
             description="how_to_use.step.add_sets.label_create_set"
-            namespace="helpDisplay"
+            namespaceDescription="helpDisplay"
+            tooltipText="addABuild"
           />
         </HelpStepItem>
 
@@ -37,7 +39,8 @@ const HelpDisplayBuildScreen = () => {
             iconName="pencil"
             iconType={IconType.MaterialCommunityIcons}
             description="how_to_use.step.edit_sets.label_edit_elements"
-            namespace="helpDisplay"
+            namespaceDescription="helpDisplay"
+            tooltipText="editTheBuild"
           />
         </HelpStepItem>
 
@@ -58,13 +61,20 @@ const HelpDisplayBuildScreen = () => {
           </Text>
         </HelpStepItem>
 
-        <HelpStepItem key={4} stepChar="4" title="how_to_use.step.choose_stats" namespace="helpDisplay">
-          <HelpButtonDescription
-            iconName="checkbox-multiple-marked"
-            iconType={IconType.MaterialCommunityIcons}
-            description="how_to_use.step.choose_stats.label_select_stats"
-            namespace="helpDisplay"
-          />
+        <HelpStepItem
+          key={4}
+          stepChar="4"
+          title="how_to_use.step.choose_stats"
+          namespace="helpDisplay"
+          alignItems="center"
+        >
+          <Button
+            iconProps={{ name: "checkbox-multiple-marked", type: IconType.MaterialCommunityIcons }}
+            onPress={null}
+            tooltipText="statsToCompare"
+          >
+            statsToCompare
+          </Button>
         </HelpStepItem>
       </HelpSection>
 
@@ -75,13 +85,15 @@ const HelpDisplayBuildScreen = () => {
             iconName="cards-outline"
             iconType={IconType.MaterialCommunityIcons}
             description="advanced_options.step.import_from_collection.label_open_collection"
-            namespace="helpDisplay"
+            namespaceDescription="helpDisplay"
+            tooltipText="loadABuild"
           />
           <HelpButtonDescription
             iconName="check"
             iconType={IconType.FontAwesome5}
             description="advanced_options.step.import_from_collection.label_import_set"
-            namespace="helpDisplay"
+            namespaceDescription="helpDisplay"
+            tooltipText="loadTheBuild"
           />
         </HelpStepItem>
 
@@ -90,13 +102,16 @@ const HelpDisplayBuildScreen = () => {
             iconName="sort"
             iconType={IconType.MaterialCommunityIcons}
             description="advanced_options.step.sort_sets.label_open_sorts"
-            namespace="helpDisplay"
+            namespaceDescription="helpDisplay"
+            tooltipText="sortBuilds"
           />
           <HelpButtonDescription
             iconName="sort-alphabetical-ascending"
             iconType={IconType.MaterialCommunityIcons}
             description="advanced_options.step.sort_sets.label_select_sort"
-            namespace="helpDisplay"
+            namespaceDescription="helpDisplay"
+            tooltipText="name"
+            namespaceTooltipText="sort"
           />
           <Text role="body" size="large" fontStyle="italic" namespace="helpDisplay">
             advanced_options.step.sort_sets.label_long_press_hint
@@ -107,22 +122,25 @@ const HelpDisplayBuildScreen = () => {
       {/* Section 3 — Actions */}
       <HelpSection title="actions.title" namespace="helpDisplay" contentType="button">
         <HelpButtonDescription
-          iconName="content-save"
+          iconName="content-save-outline"
           iconType={IconType.MaterialCommunityIcons}
           description="actions.label_save_to_collection"
-          namespace="helpDisplay"
+          namespaceDescription="helpDisplay"
+          tooltipText="save"
         />
         <HelpButtonDescription
           iconName="magnify"
           iconType={IconType.MaterialCommunityIcons}
           description="actions.label_copy_to_finder"
-          namespace="helpDisplay"
+          namespaceDescription="helpDisplay"
+          tooltipText="loadTheStats"
         />
         <HelpButtonDescription
-          iconName="clipboard-outline"
-          iconType={IconType.MaterialCommunityIcons}
+          iconName="share"
+          iconType={IconType.MaterialIcons}
           description="actions.label_export_set"
-          namespace="helpDisplay"
+          namespaceDescription="helpDisplay"
+          tooltipText="share"
         />
       </HelpSection>
 

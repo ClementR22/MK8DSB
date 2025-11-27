@@ -29,12 +29,12 @@
   "advanced_options.step.filters.lock_item": "Lock a character, kart, wheels, or glider",
 
   "advanced_options.step.reuse_stats": "Reuse a build's stats",
-  "advanced_options.step.reuse_stats.open_collection": "Open your collection",
+  "advanced_options.step.reuse_stats.open_collection": "Open your Collection",
   "advanced_options.step.reuse_stats.import_variations": "Import a build's stats to find variations",
 
   "results_management.title": "Results management",
-  "results_management.save_to_collection": "Save to your collection",
-  "results_management.move_to": "Move to the build comparator",
+  "results_management.save_to_collection": "Save to your Collection",
+  "results_management.add_to": "Add to the build Comparator",
   "results_management.export_set": "Export the build",
 
   "tips.title": "Pro tips",

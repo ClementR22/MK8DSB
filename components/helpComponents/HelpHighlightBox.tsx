@@ -16,13 +16,10 @@ interface HelpHighlightBoxProps {
 const HelpHighlightBox = ({ type, title, namespace, children }: HelpHighlightBoxProps) => {
   const { backgroundColor, borderColor, textColor } = HELP_HIGHLIGHT_BOX_COLORS[type];
 
-  if (!children) return;
-
   return (
     <View
       style={[
         styles.container,
-        title && { paddingTop: 12 },
         {
           backgroundColor: backgroundColor,
           borderLeftColor: borderColor,
@@ -47,6 +44,7 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 10,
     borderRadius: BORDER_RADIUS_STANDARD,
+    paddingTop: 12,
   },
 });
 

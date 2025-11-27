@@ -19,8 +19,8 @@
 
   "advanced_options.title": "Advanced options",
 
-  "advanced_options.step.import_from_collection": "Import a build from collection",
-  "advanced_options.step.import_from_collection.label_open_collection": "Open your collection",
+  "advanced_options.step.import_from_collection": "Import a build from the Collection",
+  "advanced_options.step.import_from_collection.label_open_collection": "Open your Collection",
   "advanced_options.step.import_from_collection.label_import_set": "Import a saved build to compare",
 
   "advanced_options.step.sort_sets": "Sort the builds",
@@ -29,8 +29,8 @@
   "advanced_options.step.sort_sets.label_long_press_hint": "Long-press a sort button to view its name",
 
   "actions.title": "Available actions",
-  "actions.label_save_to_collection": "Save to collection",
-  "actions.label_copy_to_finder": "Copy stats to the Build Finder and use as a base",
+  "actions.label_save_to_collection": "Save to the Collection",
+  "actions.label_copy_to_finder": "Copy stats to the build Finder and use as a base",
   "actions.label_export_set": "Export the build",
 
   "tips.title": "Pro tips",

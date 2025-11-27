@@ -36,13 +36,13 @@
   "sortBuilds": "Trier les builds",
   "sortElements": "Trier les éléments",
 
-  "edit": "Editer",
+  "editTheBuild": "Editer le build",
   "save": "Enregistrer",
   "loadTheStats": "Charger les stats",
   "loadTheBuild": "Charger le build",
   "loadTheStatsToSearchScreen": "Charger les stats dans le Chercheur",
   "loadTheBuildToDisplayScreen": "Charger le build dans le Comparateur",
-  "export": "Exporter",
+  "share": "Partager",
   "moreActions": "Plus d'actions",
 
   "confirm": "Confirmer",

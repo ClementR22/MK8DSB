@@ -11,5 +11,5 @@
   "buildNameRequiredForSharing": "you must enter a name to share a build",
   "buildNameRequiredForSaving": "you must enter a name to record a build",
   "buildNameRequiredForLoading": "you must enter a name to move a build to the Comparator",
-  "savedBuildCannotHaveEmptyName": "collection's builds must have a name"
+  "savedBuildCannotHaveEmptyName": "Collection's builds must have a name"
 }

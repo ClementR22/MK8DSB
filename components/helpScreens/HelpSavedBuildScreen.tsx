@@ -19,13 +19,14 @@ const HelpFavoritesScreen = () => {
         </Text>
       </Text>
 
-      <HelpSection title="how_to_use_collection.title" contentType="step" namespace="helpSave">
+      <HelpSection title="how_to_use_collection.title" namespace="helpSave" contentType="step">
         <HelpStepItem stepChar={"1"} title="how_to_use_collection.step.save_set" namespace="helpSave">
           <HelpButtonDescription
-            iconName="content-save"
+            iconName="content-save-outline"
             iconType={IconType.MaterialCommunityIcons}
             description="how_to_use_collection.step.save_set.label_description"
-            namespace="helpSave"
+            namespaceDescription="helpSave"
+            tooltipText="save"
           />
         </HelpStepItem>
 
@@ -34,18 +35,20 @@ const HelpFavoritesScreen = () => {
             iconName="checkbox-multiple-marked"
             iconType={IconType.MaterialCommunityIcons}
             description="how_to_use_collection.step.choose_stats.label_description"
-            namespace="helpSave"
+            namespaceDescription="helpSave"
+            tooltipText="displayedStatsInBuilds"
           />
         </HelpStepItem>
       </HelpSection>
 
-      <HelpSection title="advanced_options.title" contentType="step" namespace="helpSave">
+      <HelpSection title="advanced_options.title" namespace="helpSave" contentType="step">
         <HelpStepItem stepChar={"A"} title="advanced_options.step.import_set" namespace="helpSave">
           <HelpButtonDescription
             iconName="content-paste"
             iconType={IconType.MaterialCommunityIcons}
             description="advanced_options.step.import_set.label_description"
-            namespace="helpSave"
+            namespaceDescription="helpSave"
+            tooltipText="importACopiedBuild"
           />
         </HelpStepItem>
 
@@ -54,13 +57,16 @@ const HelpFavoritesScreen = () => {
             iconName="sort"
             iconType={IconType.MaterialCommunityIcons}
             description="advanced_options.step.sort_sets.label_open_sorts"
-            namespace="helpSave"
+            namespaceDescription="helpSave"
+            tooltipText="sortBuilds"
           />
           <HelpButtonDescription
             iconName="sort-alphabetical-ascending"
             iconType={IconType.MaterialCommunityIcons}
             description="advanced_options.step.sort_sets.label_select_sort"
-            namespace="helpSave"
+            namespaceDescription="helpSave"
+            tooltipText="name"
+            namespaceTooltipText="sort"
           />
           <Text role="body" size="large" fontStyle="italic" namespace="helpSave">
             advanced_options.step.sort_sets.label_long_press_hint
@@ -68,36 +74,42 @@ const HelpFavoritesScreen = () => {
         </HelpStepItem>
       </HelpSection>
 
-      <HelpSection title="actions.title" contentType="button" namespace="helpSave">
+      <HelpSection title="actions.title" namespace="helpSave" contentType="button">
         <HelpButtonDescription
           iconName="pencil"
           iconType={IconType.MaterialCommunityIcons}
           description="actions.label_edit_elements"
-          namespace="helpSave"
+          namespaceDescription="helpSave"
+          tooltipText="editTheBuild"
         />
         <HelpButtonDescription
           iconName="compare"
           iconType={IconType.MaterialCommunityIcons}
           description="actions.label_add_to"
-          namespace="helpSave"
+          namespaceDescription="helpSave"
+          tooltipText="loadTheBuildToDisplayScreen"
         />
         <HelpButtonDescription
           iconName="magnify"
           iconType={IconType.MaterialCommunityIcons}
           description="actions.label_copy_to_finder"
-          namespace="helpSave"
+          namespaceDescription="helpSave"
+          tooltipText="loadTheStatsToSearchScreen"
         />
         <HelpButtonDescription
-          iconName="clipboard-outline"
-          iconType={IconType.MaterialCommunityIcons}
+          iconName="share"
+          iconType={IconType.MaterialIcons}
           description="actions.label_export_set"
-          namespace="helpSave"
+          namespaceDescription="helpSave"
+          tooltipText="share"
         />
         <HelpButtonDescription
           iconName="trash-can"
           iconType={IconType.MaterialCommunityIcons}
           description="actions.label_delete_set"
-          namespace="helpSave"
+          namespaceDescription="helpSave"
+          tooltipText="remove"
+          namespaceTooltipText="button"
         />
       </HelpSection>
     </HelpModal>

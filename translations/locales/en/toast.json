@@ -10,9 +10,9 @@
   "buildUpdated": "build updated",
 
   "buildStatsHaveBeenLoaded": "the build's stats have been loaded",
-  "buildHasBeenLoadedInTheComparator": "the build have been loaded in the comparator",
+  "buildHasBeenLoadedInTheComparator": "the build have been loaded in the Comparator",
   "buildHasBeenSaved": "the build has been saved, click on 'Collection' to find it",
-  "buildHasBeenUnsaved": "the build has been removed from your collection",
+  "buildHasBeenUnsaved": "the build has been removed from your Collection",
   "buildHasBeenDeleted": "the build has been deleted",
   "buildCopiedInClipboard": "build copied to clipboard. You can now share it via message",
   "buildImported": "build imported",
