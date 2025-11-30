@@ -9,6 +9,8 @@ import { StatName } from "@/types";
 import StatGaugeContainerElementCard from "../statGaugeElementCard/StatGaugeContainerElementCard";
 import StatGaugeBarElementCard from "../statGaugeElementCard/StatGaugeBarElementCard";
 import { useGameData } from "@/hooks/useGameData";
+import { elementsNamespaceByGame } from "@/translations/namespaces";
+import useGameStore from "@/stores/useGameStore";
 
 type ElementStat = {
   name: StatName;
@@ -22,6 +24,8 @@ interface ElementCardProps {
 }
 
 const ElementCard: React.FC<ElementCardProps> = memo(({ name, stats, category }) => {
+  const game = useGameStore((state) => state.game);
+
   const { maxValues } = useGameData();
   const theme = useThemeStore((state) => state.theme);
 
@@ -48,7 +52,13 @@ const ElementCard: React.FC<ElementCardProps> = memo(({ name, stats, category })
         },
       ]}
     >
-      <Text role="headline" size="small" weight="bold" style={styles.textWrapper} namespace="elements">
+      <Text
+        role="headline"
+        size="small"
+        weight="bold"
+        style={styles.textWrapper}
+        namespace={elementsNamespaceByGame[game]}
+      >
         {name}
       </Text>
 

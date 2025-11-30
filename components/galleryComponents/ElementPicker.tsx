@@ -8,6 +8,8 @@ import React, { memo } from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { box_shadow_z1 } from "../styles/shadow";
 import Text from "@/primitiveComponents/Text";
+import { elementsNamespaceByGame } from "@/translations/namespaces";
+import useGameStore from "@/stores/useGameStore";
 
 interface ElementPickerProps {
   name: string;
@@ -19,6 +21,8 @@ interface ElementPickerProps {
 }
 
 const ElementPicker: React.FC<ElementPickerProps> = ({ name, imageUrl, onPress, isCollapsed, style }) => {
+  const game = useGameStore((state) => state.game);
+
   return (
     <Pressable style={[defaultStyles.container, style.containerDynamic]} onPress={onPress}>
       <View style={defaultStyles.imagePlaceholder}>
@@ -32,7 +36,7 @@ const ElementPicker: React.FC<ElementPickerProps> = ({ name, imageUrl, onPress, 
           color={style.textColorDynamic}
           numberOfLines={1}
           style={{ marginLeft: 12 }}
-          namespace="elements"
+          namespace={elementsNamespaceByGame[game]}
         >
           {name}
         </Text>

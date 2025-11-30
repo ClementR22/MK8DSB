@@ -6,6 +6,8 @@ import { BUILD_CARD_WIDTH, PADDING_BUILD_CARD } from "@/utils/designTokens";
 import { Category } from "@/types";
 import Tooltip from "../Tooltip";
 import { useGameData } from "@/hooks/useGameData";
+import { elementsNamespaceByGame } from "@/translations/namespaces";
+import useGameStore from "@/stores/useGameStore";
 
 const MAX_WIDTH_IN_BUILD_CARD = BUILD_CARD_WIDTH - PADDING_BUILD_CARD * 2; // 200
 
@@ -29,6 +31,8 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
   isInLoadBuildModal,
   buildDataId,
 }) => {
+  const game = useGameStore((state) => state.game);
+
   const { elementsData, categories, maxNumberOfImages } = useGameData();
   const screenName = useScreen();
 
@@ -69,7 +73,7 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
                   <Tooltip
                     key={`${item.category}-${index}`}
                     tooltipText={name}
-                    namespace="elements"
+                    namespace={elementsNamespaceByGame[game]}
                     onPress={onImagesPress}
                   >
                     <Image source={image} style={imageStyle} resizeMode="contain" />

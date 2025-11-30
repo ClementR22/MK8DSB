@@ -1,13 +1,5 @@
 import React, { useState, memo, useMemo, useCallback, useRef } from "react";
-import {
-  FlatList,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { FlatList, Platform, StyleSheet, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { Category } from "@/types";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
@@ -31,6 +23,8 @@ import Separator from "../Separator";
 import { useTranslation } from "react-i18next";
 import { ElementData } from "@/types";
 import { useGameData } from "@/hooks/useGameData";
+import useGameStore from "@/stores/useGameStore";
+import { elementsNamespaceByGame } from "@/translations/namespaces";
 
 interface ElementPickerCompactSelectorPannelProps {
   selectionMode?: "single" | "multiple";
@@ -45,7 +39,9 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
   setSelectedBodytypes,
   children,
 }) => {
-  const { t } = useTranslation("elements");
+  const game = useGameStore((state) => state.game);
+
+  const { t } = useTranslation(elementsNamespaceByGame[game]);
   const { elementsDataByCategory } = useGameData();
 
   const theme = useThemeStore((state) => state.theme);

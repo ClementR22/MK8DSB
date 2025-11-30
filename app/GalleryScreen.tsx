@@ -14,10 +14,14 @@ import Pannel from "@/components/galleryComponents/Pannel";
 import Animated, { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
 import { useGameData } from "@/hooks/useGameData";
+import { elementsNamespaceByGame } from "@/translations/namespaces";
+import useGameStore from "@/stores/useGameStore";
 
 const GalleryScreen = () => {
+  const game = useGameStore((state) => state.game);
+
   const { elementsDataByCategory, statNames, classesStatsByCategory } = useGameData();
-  const { t } = useTranslation("elements");
+  const { t } = useTranslation(elementsNamespaceByGame[game]);
 
   const [selectedElementId, setSelectedElementId] = useState(0);
   const [isLeftPannelExpanded, setIsLeftPannelExpanded] = useState(true);

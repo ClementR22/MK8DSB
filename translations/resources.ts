@@ -1,6 +1,7 @@
 import enButton from "./locales/en/button.json";
 import enCategories from "./locales/en/categories.json";
-import enElements from "./locales/en/elements.json";
+import enElementsMK8D from "./locales/en/elementsMK8D.json";
+import enElementsMKW from "./locales/en/elementsMKW.json";
 import enError from "./locales/en/error.json";
 import enGame from "./locales/en/game.json";
 import enHelpSearch from "./locales/en/helpSearch.json";
@@ -21,7 +22,8 @@ import enTooltip from "./locales/en/tooltip.json";
 
 import frButton from "./locales/fr/button.json";
 import frCategories from "./locales/fr/categories.json";
-import frElements from "./locales/fr/elements.json";
+import frElementsMK8D from "./locales/fr/elementsMK8D.json";
+import frElementsMKW from "./locales/fr/elementsMKW.json";
 import frError from "./locales/fr/error.json";
 import frGame from "./locales/fr/game.json";
 import frHelpSearch from "./locales/fr/helpSearch.json";
@@ -44,7 +46,8 @@ export const resources = {
   en: {
     button: enButton,
     categories: enCategories,
-    elements: enElements,
+    elementsMK8D: enElementsMK8D,
+    elementsMKW: enElementsMKW,
     error: enError,
     game: enGame,
     helpSearch: enHelpSearch,
@@ -67,7 +70,8 @@ export const resources = {
   fr: {
     button: frButton,
     categories: frCategories,
-    elements: frElements,
+    elementsMK8D: frElementsMK8D,
+    elementMKW: frElementsMKW,
     error: frError,
     game: frGame,
     helpSearch: frHelpSearch,

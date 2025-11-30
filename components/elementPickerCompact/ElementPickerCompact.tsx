@@ -1,6 +1,8 @@
 import React, { memo } from "react";
 import { Image, ImageSourcePropType, StyleSheet, ViewStyle } from "react-native";
 import Tooltip from "../Tooltip";
+import { elementsNamespaceByGame } from "@/translations/namespaces";
+import useGameStore from "@/stores/useGameStore";
 
 interface ElementPickerCompactProps {
   // Propriétés spécifiques à l'élément affiché
@@ -24,10 +26,12 @@ const ElementPickerCompact: React.FC<ElementPickerCompactProps> = ({
   elementPickerDynamicStyle,
   activeBorderStyle,
 }) => {
+  const game = useGameStore((state) => state.game);
+
   return (
     <Tooltip
       tooltipText={name}
-      namespace="elements"
+      namespace={elementsNamespaceByGame[game]}
       onPress={onPress}
       childStyleInner={StyleSheet.flatten([elementPickerDynamicStyle, isSelected && activeBorderStyle])}
     >
