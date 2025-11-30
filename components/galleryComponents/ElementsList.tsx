@@ -1,5 +1,5 @@
 import useThemeStore from "@/stores/useThemeStore";
-import React, { memo, useMemo } from "react";
+import React, { memo, useEffect, useMemo, useRef } from "react";
 import { FlatList } from "react-native";
 import ElementPicker from "./ElementPicker";
 import { ElementData } from "@/types";
@@ -29,8 +29,18 @@ const ElementsList: React.FC<ElementPickerSelectorProps> = memo(
       [theme]
     );
 
+    const flatListRef = useRef<FlatList<ElementData>>(null);
+
+    // Auto scroll vers le haut quand la liste change
+    useEffect(() => {
+      if (flatListRef.current) {
+        flatListRef.current.scrollToOffset({ offset: 0, animated: false });
+      }
+    }, [categoryElementsSorted]);
+
     return (
       <FlatList
+        ref={flatListRef}
         data={categoryElementsSorted}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => {
