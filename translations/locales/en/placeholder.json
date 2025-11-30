@@ -1,7 +1,7 @@
 {
   "searchEmpty": "Search your dream build",
   "searchNotFound": "No build found with theses stats",
-  "displayEmpty": "Compare your builds",
-  "savedEmpty": "Find here your build Collection",
-  "none": "None"
+  "chooseStatsToCompare": "Choose stats to compare",
+  "noBuildToCompare": "No build to compare",
+  "savedEmpty": "Find here your build Collection"
 }

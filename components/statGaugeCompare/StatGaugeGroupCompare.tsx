@@ -36,12 +36,15 @@ const StatGaugeGroupCompare: React.FC<StatGaugeGroupCompareProps> = ({ buildsCol
       }));
   }, [resultStats, buildsListDisplayed, buildsColorsMap, theme.surface_variant]);
 
-  const noGaugeToShow = buildsListDisplayed.length === 0;
+  const noGaugeToShow = data.length === 0;
+  const noBuildsToShow = buildsListDisplayed.length === 0;
 
   return (
     <BoxContainer gap={7} boxShadow={box_shadow_z1} borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}>
       {noGaugeToShow ? (
-        <Placeholder text="displayEmpty" />
+        <Placeholder text="chooseStatsToCompare" />
+      ) : noBuildsToShow ? (
+        <Placeholder text="noBuildToCompare" />
       ) : (
         data.map(({ name, buildsIdAndValueWithColor }) => {
           return <StatGaugeContainerCompare key={name} name={name} buildsIdAndValue={buildsIdAndValueWithColor} />;

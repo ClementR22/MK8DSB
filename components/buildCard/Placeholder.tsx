@@ -4,7 +4,7 @@ import BoxContainer from "@/primitiveComponents/BoxContainer";
 import Text from "@/primitiveComponents/Text";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
-type PlaceholderText = "searchEmpty" | "searchNotFound" | "displayEmpty" | "savedEmpty";
+type PlaceholderText = "searchEmpty" | "searchNotFound" | "chooseStatsToCompare" | "noBuildToCompare" | "savedEmpty";
 
 interface PlaceholderProps {
   text: PlaceholderText;
@@ -13,7 +13,8 @@ interface PlaceholderProps {
 const iconName: Record<PlaceholderText, string> = {
   searchEmpty: "chat-question",
   searchNotFound: "home-flood",
-  displayEmpty: "compare",
+  chooseStatsToCompare: "compare",
+  noBuildToCompare: "compare",
   savedEmpty: "heart-multiple",
 };
 
