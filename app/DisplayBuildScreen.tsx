@@ -85,13 +85,13 @@ const DisplayBuildScreen = () => {
     <ScreenProvider screenName="display">
       <ScrollViewScreen scrollEnabled={isScrollEnable}>
         <ScreenPressablesContainer sortNumber={sortNumber} setSortNumber={setSortNumber}>
-          <ButtonLoadBuild tooltipText="loadABuild" />
           <ButtonIcon
             onPress={toggleIsBuildCardsCollapsed}
             iconName={isBuildCardsCollapsed ? "chevron-down" : "chevron-up"}
             iconType={IconType.MaterialCommunityIcons}
             tooltipText={isBuildCardsCollapsed ? "developBuilds" : "reduceBuilds"}
           />
+          <ButtonLoadBuild tooltipText="loadABuild" />
         </ScreenPressablesContainer>
 
         <ResultStatsProvider>

@@ -2,6 +2,7 @@ import { Game } from "@/types";
 import { create } from "zustand";
 import useBuildsListStore from "./useBuildsListStore";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
+import { GAME_DEFAULT } from "@/config/config";
 
 interface GameState {
   game: Game;
@@ -9,7 +10,7 @@ interface GameState {
 }
 
 const useGameStore = create<GameState>((set) => ({
-  game: "MK8D" as Game,
+  game: GAME_DEFAULT as Game,
   setGame: async (game: Game) => {
     // on nettoie retire les BuildCard
     useBuildsListStore.getState().setBuildsListFound([]);

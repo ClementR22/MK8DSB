@@ -2,6 +2,7 @@ import { Appearance } from "react-native";
 import { create } from "zustand";
 import { dark_theme, light_theme } from "@/components/styles/theme";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
+import { THEME_DEFAULT } from "@/config/config";
 
 const THEME_STORAGE_KEY = "theme"; // Define a constant for the storage key
 
@@ -33,7 +34,7 @@ const useThemeStore = create<ThemeState>((set, get) => {
   };
 
   return {
-    themeMode: "system", // Initial state
+    themeMode: THEME_DEFAULT, // Initial state
     theme: getTheme("system"), // Initial theme based on system
 
     setTheme: async (newThemeMode) => {

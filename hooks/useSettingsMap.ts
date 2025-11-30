@@ -10,7 +10,6 @@ import {
   GAME_DEFAULT,
 } from "@/config/config";
 import useBuildsPersistenceStore from "@/stores/useBuildsPersistenceStore";
-import { useGameData } from "./useGameData";
 import useGameStore from "@/stores/useGameStore";
 import useLanguageStore from "@/stores/useLanguageStore";
 import { resultStatsDefaultInit as resultStatsDefaultInitMK8D } from "@/data/mk8d";

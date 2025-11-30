@@ -2,6 +2,8 @@ import { create } from "zustand";
 import { saveThingInMemory } from "@/utils/asyncStorageOperations";
 import { Game, ResultStat } from "@/types";
 import { IS_RESULT_STATS_SYNC_DEFAULT } from "@/config/config";
+import { resultStatsDefaultInit as resultStatsDefaultInitMK8D } from "@/data/mk8d";
+import { resultStatsDefaultInit as resultStatsDefaultInitMKW } from "@/data/mkw";
 
 interface ResultStatsDefaultState {
   isResultStatsSync: boolean;
@@ -20,7 +22,7 @@ const useResultStatsDefaultStore = create<ResultStatsDefaultState>((set, get) =>
     set({ isResultStatsSync: newValue });
   },
 
-  resultStatsDefault: { MK8D: [], MKW: [] },
+  resultStatsDefault: { MK8D: resultStatsDefaultInitMK8D, MKW: resultStatsDefaultInitMKW },
 
   initResultStatsDefault: (obj) => set({ resultStatsDefault: obj }),
 
