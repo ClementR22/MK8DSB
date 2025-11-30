@@ -1,0 +1,20 @@
+{
+  "id": "Numéro",
+  "name": "Nom",
+  "asc": "croissant",
+  "desc": "décroissant",
+
+  "speedSmooth": "Vitesse lisse (VL)",
+  "speedRough": "Vitesse rugueux (VR)",
+  "speedWater": "Vitesse eau (VE)",
+  "acceleration": "Accélération (Acc)",
+  "weight": "Poids (Poi)",
+  "handlingSmooth": "Maniabilité lisse (ML)",
+  "handlingRough": "Maniabilité rugueux (MR)",
+  "handlingWater": "Maniabilité eau (ME)",
+  "traction": "Adhérence (Adh)",
+  "miniTurbo": "Mini-turbo (MT)",
+
+  "speed": "Vitesse",
+  "handling": "Maniabilité"
+}

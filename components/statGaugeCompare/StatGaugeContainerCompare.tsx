@@ -7,6 +7,8 @@ import Text from "@/primitiveComponents/Text";
 import StatGaugeBar from "../statGauge/StatGaugeBar";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import { useScreen } from "@/contexts/ScreenContext";
+import { statsNamespaceByGame } from "@/translations/namespaces";
+import useGameStore from "@/stores/useGameStore";
 interface BuildIdAndStatValue {
   id: string;
   value: number;
@@ -19,6 +21,8 @@ interface StatGaugeContainerCompareProps {
 }
 
 const StatGaugeContainerCompare: React.FC<StatGaugeContainerCompareProps> = ({ buildsIdAndValue, name }) => {
+  const game = useGameStore((state) => state.game);
+
   const { buildCardStyle } = useBuildCardStyle("100%");
   const screenName = useScreen();
 
@@ -26,7 +30,7 @@ const StatGaugeContainerCompare: React.FC<StatGaugeContainerCompareProps> = ({ b
 
   return (
     <View style={[buildCardStyle, styles.container]}>
-      <Text role="title" size="medium" style={styles.textWrapper} namespace="stats">
+      <Text role="title" size="medium" style={styles.textWrapper} namespace={statsNamespaceByGame[game]}>
         {name}
       </Text>
 

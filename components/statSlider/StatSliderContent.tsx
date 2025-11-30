@@ -10,6 +10,8 @@ import { StatName } from "@/types";
 import { BORDER_RADIUS_INF, BORDER_RADIUS_STAT_GAUGE_CONTAINER, BUTTON_SIZE } from "@/utils/designTokens";
 import { box_shadow_z1 } from "../styles/shadow";
 import Text from "@/primitiveComponents/Text";
+import useGameStore from "@/stores/useGameStore";
+import { statsNamespaceByGame } from "@/translations/namespaces";
 
 interface StatSliderContentProps {
   name: StatName;
@@ -31,6 +33,7 @@ const StatSliderContent = ({
   setValuePreview,
   onPress = () => {},
 }: StatSliderContentProps) => {
+  const game = useGameStore((state) => state.game);
   const theme = useThemeStore((state) => state.theme);
 
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
@@ -87,7 +90,13 @@ const StatSliderContent = ({
     >
       <View style={styles.containerLeft}>
         <View style={styles.textWrapper}>
-          <Text role="title" size="medium" numberOfLines={1} ellipsizeMode="tail" namespace="stats">
+          <Text
+            role="title"
+            size="medium"
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            namespace={statsNamespaceByGame[game]}
+          >
             {name}
           </Text>
           <Text role="title" size="medium" style={styles.separatorText} namespace="text">

@@ -7,6 +7,8 @@ import useThemeStore from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { getBonusColor } from "@/utils/getBonusColor";
 import { useGameData } from "@/hooks/useGameData";
+import { statsNamespaceByGame } from "@/translations/namespaces";
+import useGameStore from "@/stores/useGameStore";
 
 interface StatGaugeContainerProps {
   name?: StatName;
@@ -25,6 +27,8 @@ const StatGaugeContainer = ({
   onPress,
   children,
 }: StatGaugeContainerProps) => {
+  const game = useGameStore((state) => state.game);
+
   const { statNamesCompact } = useGameData();
   const theme = useThemeStore((state) => state.theme);
 
@@ -76,14 +80,14 @@ const StatGaugeContainer = ({
       childStyleOuter={styles.containerOuter}
       childStyleInner={styles.containerInner}
       onPress={handlePress}
-      namespace="stats"
+      namespace={statsNamespaceByGame[game]}
     >
       {name && (
         <Text
           role="label"
           size="large"
           style={styles[isInBuildCard ? "nameBuildCard" : "name"]}
-          namespace="stats"
+          namespace={statsNamespaceByGame[game]}
           textAlign="center"
         >
           {statNamesCompact[name]}

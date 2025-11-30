@@ -1,0 +1,20 @@
+{
+  "id": "Number",
+  "name": "Name",
+  "asc": "ascending",
+  "desc": "descending",
+
+  "speedSmooth": "Speed smooth (SS)",
+  "speedRough": "Speed rough (SR)",
+  "speedWater": "Water speed (SW)",
+  "acceleration": "Acceleration (Acc)",
+  "weight": "Weight (Wei)",
+  "handlingSmooth": "Handling smooth (HS)",
+  "handlingRough": "Handling rough (HR)",
+  "handlingWater": "Water handling (HW)",
+  "traction": "Traction (Tra)",
+  "miniTurbo": "Mini-Turbo (MT)",
+
+  "speed": "Speed",
+  "handling": "Handling"
+}

@@ -6,6 +6,8 @@ import Text from "@/primitiveComponents/Text";
 import Tooltip from "../Tooltip";
 import { StatName } from "@/types";
 import { useGameData } from "@/hooks/useGameData";
+import { statsNamespaceByGame } from "@/translations/namespaces";
+import useGameStore from "@/stores/useGameStore";
 
 interface StatGaugeContainerElementCardProps {
   name: StatName;
@@ -15,13 +17,15 @@ interface StatGaugeContainerElementCardProps {
 const WIDTH_TEXT = 46;
 
 const StatGaugeContainerElementCard = ({ name, children }: StatGaugeContainerElementCardProps) => {
+  const game = useGameStore((state) => state.game);
+
   const { statNamesCompact } = useGameData();
   const theme = useThemeStore((state) => state.theme);
 
   return (
     <Tooltip
       tooltipText={name}
-      namespace="stats"
+      namespace={statsNamespaceByGame[game]}
       childStyleInner={[
         styles.container,
         {
@@ -38,7 +42,7 @@ const StatGaugeContainerElementCard = ({ name, children }: StatGaugeContainerEle
           },
         ]}
       >
-        <Text role="label" size="large" namespace="stats">
+        <Text role="label" size="large" namespace={statsNamespaceByGame[game]}>
           {statNamesCompact[name]}
         </Text>
       </View>

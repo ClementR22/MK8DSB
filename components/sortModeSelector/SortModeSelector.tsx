@@ -17,6 +17,8 @@ import { vw } from "../styles/theme";
 import { IconType } from "react-native-dynamic-vector-icons";
 import showToast from "@/utils/showToast";
 import { useGameData } from "@/hooks/useGameData";
+import useGameStore from "@/stores/useGameStore";
+import { sortsNamespaceByGame } from "@/translations/namespaces";
 
 // Constants
 const NUMBER_OF_BUTTONS = 8;
@@ -32,6 +34,8 @@ interface SortModeSelectorProps {
 }
 
 const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSortNumber, sortCase, containerStyle }) => {
+  const game = useGameStore((state) => state.game);
+
   const { statNamesHandling, sortNamesElementDefault, sortNamesBuildCardDefault, statNamesSpeed, sortButtonsConfig } =
     useGameData();
 
@@ -81,7 +85,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
           <ButtonIconWithBadge
             tooltipText={tooltipText}
             onPress={openPopover}
-            namespace="sort"
+            namespaceTooltipText={sortsNamespaceByGame[game]}
             iconName={triggerIconName}
             iconType={triggerIconType}
             direction={statNames.includes(activeSort) ? currentDirection : undefined}
@@ -97,7 +101,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
               key={name}
               onPress={() => handlePress(name)}
               tooltipText={name}
-              namespace="sort"
+              namespaceTooltipText={sortsNamespaceByGame[game]}
               iconName={config.iconName}
               iconType={config.iconType}
               backgroundColor={config.backgroundColor}
@@ -131,7 +135,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
           key={name}
           onPress={() => handlePress(name)}
           tooltipText={name}
-          namespace="sort"
+          namespaceTooltipText={sortsNamespaceByGame[game]}
           iconName={iconConfig.iconName}
           iconType={iconConfig.iconType}
           direction={isActive ? currentDirection : undefined}

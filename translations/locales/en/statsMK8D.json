@@ -12,14 +12,6 @@
   "traction": "Traction (Tra)",
   "miniTurbo": "Mini-Turbo (MT)",
 
-  "speedSmooth": "Speed smooth (SS)",
-  "speedRough": "Speed rough (SR)",
-  "handlingSmooth": "Handling smooth (HS)",
-  "handlingRough": "Handling rough (HR)",
-
-  "speed": "Speed",
-  "handling": "Handling",
-
   "SG": "GS",
   "SAG": "AGS",
   "SW": "WS",
@@ -31,10 +23,5 @@
   "HW": "WH",
   "HA": "AH",
   "Tra": "Tra",
-  "MT": "MT",
-
-  "SS": "SS",
-  "SR": "SR",
-  "HS": "HS",
-  "HR": "HR"
+  "MT": "MT"
 }

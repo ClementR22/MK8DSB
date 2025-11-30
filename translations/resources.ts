@@ -10,8 +10,10 @@ import enLanguage from "./locales/en/language.json";
 import enModal from "./locales/en/modal.json";
 import enPlaceholder from "./locales/en/placeholder.json";
 import enScreens from "./locales/en/screens.json";
-import enSort from "./locales/en/sort.json";
-import enStats from "./locales/en/stats.json";
+import enSortsMK8D from "./locales/en/sortsMK8D.json";
+import enSortsMKW from "./locales/en/sortsMKW.json";
+import enStatsMK8D from "./locales/en/statsMK8D.json";
+import enStatsMKW from "./locales/en/statsMKW.json";
 import enText from "./locales/en/text.json";
 import enTheme from "./locales/en/theme.json";
 import enToast from "./locales/en/toast.json";
@@ -29,8 +31,10 @@ import frLanguage from "./locales/fr/language.json";
 import frModal from "./locales/fr/modal.json";
 import frPlaceholder from "./locales/fr/placeholder.json";
 import frScreens from "./locales/fr/screens.json";
-import frSort from "./locales/fr/sort.json";
-import frStats from "./locales/fr/stats.json";
+import frSortsMK8D from "./locales/fr/sortsMK8D.json";
+import frSortsMKW from "./locales/fr/sortsMKW.json";
+import frStatsMK8D from "./locales/fr/statsMK8D.json";
+import frStatsMKW from "./locales/fr/statsMKW.json";
 import frText from "./locales/fr/text.json";
 import frTheme from "./locales/fr/theme.json";
 import frToast from "./locales/fr/toast.json";
@@ -50,8 +54,10 @@ export const resources = {
     modal: enModal,
     placeholder: enPlaceholder,
     screens: enScreens,
-    sort: enSort,
-    stats: enStats,
+    sortsMK8D: enSortsMK8D,
+    sortsMKW: enSortsMKW,
+    statsMK8D: enStatsMK8D,
+    statsMKW: enStatsMKW,
     text: enText,
     theme: enTheme,
     toast: enToast,
@@ -71,8 +77,10 @@ export const resources = {
     modal: frModal,
     placeholder: frPlaceholder,
     screens: frScreens,
-    sort: frSort,
-    stats: frStats,
+    sortsMK8D: frSortsMK8D,
+    sortsMKW: frSortsMKW,
+    statsMK8D: frStatsMK8D,
+    statsMKW: frStatsMKW,
     text: frText,
     theme: frTheme,
     toast: frToast,

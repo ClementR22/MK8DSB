@@ -5,6 +5,8 @@ import Checkbox from "expo-checkbox";
 import useThemeStore from "@/stores/useThemeStore";
 import Text from "@/primitiveComponents/Text";
 import { BORDER_RADIUS_MODAL_CHILDREN_CONTAINER } from "@/utils/designTokens";
+import { statsNamespaceByGame } from "@/translations/namespaces";
+import useGameStore from "@/stores/useGameStore";
 
 export type ColumnName = "chosenStats" | "resultStats";
 
@@ -24,6 +26,7 @@ interface DoubleEntryTableProps {
 }
 
 const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ statMap, columnNames, onToggleStat, disabled }) => {
+  const game = useGameStore((state) => state.game);
   const theme = useThemeStore((state) => state.theme);
 
   const rowNames = Object.keys(statMap);
@@ -35,7 +38,7 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ statMap, columnName
       return (
         <Pressable key={statName} style={styles.row}>
           <View style={[styles.cell, { flex: labelFlex }]}>
-            <Text role="title" size="small" namespace="stats">
+            <Text role="title" size="small" namespace={statsNamespaceByGame[game]}>
               {statName}
             </Text>
           </View>

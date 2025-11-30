@@ -5,8 +5,12 @@ import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
 import Text from "@/primitiveComponents/Text";
 import HelpStepItem from "../helpComponents/HelpStepItem";
 import HelpSection from "../helpComponents/HelpSection";
+import { sortsNamespaceByGame } from "@/translations/namespaces";
+import useGameStore from "@/stores/useGameStore";
 
 const HelpFavoritesScreen = () => {
+  const game = useGameStore((state) => state.game);
+
   return (
     <HelpModal title="guideBuildCollection">
       {/* Intro */}
@@ -66,7 +70,7 @@ const HelpFavoritesScreen = () => {
             description="advanced_options.step.sort_sets.label_select_sort"
             namespaceDescription="helpSave"
             tooltipText="name"
-            namespaceTooltipText="sort"
+            namespaceTooltipText={sortsNamespaceByGame[game]}
           />
           <Text role="body" size="large" fontStyle="italic" namespace="helpSave">
             advanced_options.step.sort_sets.label_long_press_hint

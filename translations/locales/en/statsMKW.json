@@ -1,0 +1,23 @@
+{
+  "speedSmooth": "Speed smooth (SS)",
+  "speedRough": "Speed rough (SR)",
+  "speedWater": "Water speed (SW)",
+  "acceleration": "Acceleration (Acc)",
+  "weight": "Weight (Wei)",
+  "handlingSmooth": "Handling smooth (HS)",
+  "handlingRough": "Handling rough (HR)",
+  "handlingWater": "Water handling (HW)",
+  "traction": "Traction (Tra)",
+  "miniTurbo": "Mini-Turbo (MT)",
+
+  "SS": "SS",
+  "SR": "SR",
+  "SW": "SW",
+  "Acc": "Acc",
+  "Wei": "Wei",
+  "HS": "HS",
+  "HR": "HR",
+  "HW": "HW",
+  "Tra": "Tra",
+  "MT": "MT"
+}

@@ -17,11 +17,6 @@
   "traction": "Traction (Tra)",
   "miniTurbo": "Mini-Turbo (MT)",
 
-  "speedSmooth": "Speed smooth",
-  "speedRough": "Speed rough",
-  "handlingSmooth": "Handling smooth",
-  "handlingRough": "Handling rough",
-
   "speed": "Speed",
   "handling": "Handling"
 }

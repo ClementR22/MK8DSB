@@ -8,8 +8,12 @@ import HelpStepItem from "../helpComponents/HelpStepItem";
 import HelpSection from "../helpComponents/HelpSection";
 import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
 import Button from "@/primitiveComponents/Button";
+import useGameStore from "@/stores/useGameStore";
+import { sortsNamespaceByGame } from "@/translations/namespaces";
 
 const HelpDisplayBuildScreen = () => {
+  const game = useGameStore((state) => state.game);
+
   return (
     <HelpModal title="guideBuildComparator">
       {/* Intro */}
@@ -111,7 +115,7 @@ const HelpDisplayBuildScreen = () => {
             description="advanced_options.step.sort_sets.label_select_sort"
             namespaceDescription="helpDisplay"
             tooltipText="name"
-            namespaceTooltipText="sort"
+            namespaceTooltipText={sortsNamespaceByGame[game]}
           />
           <Text role="body" size="large" fontStyle="italic" namespace="helpDisplay">
             advanced_options.step.sort_sets.label_long_press_hint

@@ -1,0 +1,25 @@
+{
+  "speedSmooth": "Vitesse lisse (VL)",
+  "speedRough": "Vitesse rugueux (VR)",
+  "speedWater": "Vitesse eau (VE)",
+  "acceleration": "Accélération (Acc)",
+  "weight": "Poids (Poi)",
+  "handlingSmooth": "Maniabilité lisse (ML)",
+  "handlingRough": "Maniabilité rugueux (MR)",
+  "handlingWater": "Maniabilité eau (ME)",
+  "traction": "Adhérence (Adh)",
+  "miniTurbo": "Mini-turbo (MT)",
+
+  "SS": "VL",
+  "SR": "VR",
+  "SW": "VE",
+  "SA": "VA",
+  "Acc": "Acc",
+  "Wei": "Poi",
+  "HS": "ML",
+  "HR": "MR",
+  "HW": "ME",
+  "HA": "MA",
+  "Tra": "Adh",
+  "MT": "MT"
+}
