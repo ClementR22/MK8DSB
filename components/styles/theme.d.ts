@@ -1,5 +1,6 @@
 export interface ThemeColor {
-  theme: "dark" | "light";
+  isLight: boolean;
+  isDark: boolean;
   theme_surface: "dark" | "light";
   primary: string;
   on_primary: string;

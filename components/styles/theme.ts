@@ -7,7 +7,9 @@ export const vw: number = Dimensions.get("screen").width;
 // Default Material 3 theme (https://m3.material.io/styles/color/static/baseline)
 
 export const light_theme: ThemeColor = {
-  theme: "light",
+  isLight: true,
+  isDark: false,
+
   theme_surface: "dark",
 
   primary: "#6750A4",
@@ -57,7 +59,9 @@ export const light_theme: ThemeColor = {
 };
 
 export const dark_theme: ThemeColor = {
-  theme: "dark",
+  isLight: false,
+  isDark: true,
+
   theme_surface: "light",
 
   primary: "#D0BCFF",
