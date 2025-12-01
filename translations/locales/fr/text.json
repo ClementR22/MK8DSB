@@ -8,6 +8,7 @@
   "game": "Jeu",
 
   "selected": "Sélectionnés",
+  "none": "Aucun",
 
   "matchDesiredStats": "Synchronisation : les stats désirées sont affichées dans les builds trouvés",
   "unmatchDesiredStats": "Dissociation : les stats affichées dans les builds sont indépendantes",

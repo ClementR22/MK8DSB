@@ -81,7 +81,7 @@ const ElementsDeselector: React.FC = () => {
           textAlign="center"
           fontStyle="italic"
           style={styles.noItemsText}
-          namespace="placeholder"
+          namespace="text"
         >
           none
         </Text>
