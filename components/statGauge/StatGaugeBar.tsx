@@ -13,13 +13,13 @@ interface StatGaugeBarProps {
 }
 
 const StatGaugeBar: React.FC<StatGaugeBarProps> = ({ value, color, statFilterNumber }) => {
-  const { MAX_STAT_VALUE } = useGameData();
+  const { MAX_STAT_VALUE_BUILD } = useGameData();
 
   const theme = useThemeStore((state) => state.theme);
 
   // Largeur du segment intérieur, clampée et calculée une seule fois par changement de value
-  const clampedValue = Math.min(Math.max(value, 0), MAX_STAT_VALUE);
-  const innerFillWidth = `${(clampedValue / MAX_STAT_VALUE) * 100}%` as DimensionValue;
+  const clampedValue = Math.min(Math.max(value, 0), MAX_STAT_VALUE_BUILD);
+  const innerFillWidth = `${(clampedValue / MAX_STAT_VALUE_BUILD) * 100}%` as DimensionValue;
 
   const isInDesiredContainer = statFilterNumber != undefined;
 

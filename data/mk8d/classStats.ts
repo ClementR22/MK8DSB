@@ -1,7 +1,7 @@
 import { Category } from "@/types/mk8d/categories";
 import { ElementStats } from "@/types/mk8d/elements";
 
-export const MAX_STAT_VALUE = 6;
+export const MAX_STAT_VALUE_BUILD = 6;
 
 export const maxValues: Record<Category, number> = {
   character: 5,
@@ -9,6 +9,8 @@ export const maxValues: Record<Category, number> = {
   wheel: 1.25,
   glider: 1.25,
 };
+
+export const STEP = 0.25;
 
 export const baseStatsByClassId: { [key: number]: ElementStats } = {
   // --- Character Class Stats ---

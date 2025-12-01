@@ -35,7 +35,7 @@ const ElementCard: React.FC<ElementCardProps> = memo(({ name, stats, category })
         {category !== "character" ? (
           <StatGaugeRelativeBar value={value} maxValue={maxValues[category]} />
         ) : (
-          <StatGaugeBarElementCard value={value} />
+          <StatGaugeBarElementCard value={value} maxValue={maxValues[category]} />
         )}
       </StatGaugeContainerElementCard>
     ),

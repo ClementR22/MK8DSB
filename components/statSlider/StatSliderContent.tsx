@@ -12,6 +12,7 @@ import { box_shadow_z1 } from "../styles/shadow";
 import Text from "@/primitiveComponents/Text";
 import useGameStore from "@/stores/useGameStore";
 import { statsNamespaceByGame } from "@/translations/namespaces";
+import { useGameData } from "@/hooks/useGameData";
 
 interface StatSliderContentProps {
   name: StatName;
@@ -23,8 +24,6 @@ interface StatSliderContentProps {
   onPress?: () => void;
 }
 
-const MAX_VALUE = 6;
-
 const StatSliderContent = ({
   name,
   value,
@@ -35,13 +34,14 @@ const StatSliderContent = ({
 }: StatSliderContentProps) => {
   const game = useGameStore((state) => state.game);
   const theme = useThemeStore((state) => state.theme);
+  const { MAX_STAT_VALUE_BUILD, STEP } = useGameData();
 
   const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
   const updateStatValue = useStatsStore((state) => state.updateStatValue);
   const [tempValue, setTempValue] = useState(value);
 
   // Mémoïsation stricte des handlers
-  const onValueChange = useCallback(([v]: [number]) => setTempValue(v), []);
+  const onValueChange = useCallback(([v]: [number]) => setTempValue(Math.round(v * 100) / 100), []);
 
   const onSlidingStart = useCallback(() => {
     setIsScrollEnable(false);
@@ -49,6 +49,7 @@ const StatSliderContent = ({
 
   const onSlidingComplete = useCallback(
     ([v]: [number]) => {
+      v = Math.round(v * 100) / 100;
       if (setValuePreview) {
         setValuePreview(v);
       } else {
@@ -111,8 +112,8 @@ const StatSliderContent = ({
           onSlidingStart={onSlidingStart}
           onSlidingComplete={onSlidingComplete}
           minimumValue={0}
-          maximumValue={MAX_VALUE}
-          step={0.25}
+          maximumValue={MAX_STAT_VALUE_BUILD}
+          step={STEP}
           trackStyle={styles.track}
           renderThumbComponent={renderCustomThumb}
           minimumTrackStyle={{ backgroundColor: theme.primary }}

@@ -1,12 +1,14 @@
 import { Category } from "@/types/mkw/categories";
 import { ElementStats } from "@/types/mkw/elements";
 
-export const MAX_STAT_VALUE = 6;
+export const MAX_STAT_VALUE_BUILD = 4;
 
 export const maxValues: Record<Category, number> = {
-  character: 5,
-  body: 1.25,
+  character: 3,
+  body: 1.2,
 };
+
+export const STEP = 0.2;
 
 export const baseStatsByClassId: { [key: number]: ElementStats } = {
   // --- Character Class Stats ---

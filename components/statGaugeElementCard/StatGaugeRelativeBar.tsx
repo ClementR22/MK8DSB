@@ -8,10 +8,10 @@ import Text from "@/primitiveComponents/Text";
 
 interface StatGaugeRelativeBarProps {
   value: number;
-  maxValue?: number;
+  maxValue: number;
 }
 
-const StatGaugeRelativeBar = ({ value, maxValue = 6 }: StatGaugeRelativeBarProps) => {
+const StatGaugeRelativeBar = ({ value, maxValue }: StatGaugeRelativeBarProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   const { gaugeWidth, handleGaugeLayout } = useGaugeMetrics("stat-gauge-gallery");

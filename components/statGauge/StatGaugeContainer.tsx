@@ -38,9 +38,9 @@ const StatGaugeContainer = ({
   // Bonus trouvé
   const { displayedValue, bonusColor } = useMemo(() => {
     let bonusFound = undefined;
-
+    console.log({ value, chosenValue });
     if (chosenValue !== undefined) {
-      bonusFound = value - chosenValue;
+      bonusFound = Math.round((value - chosenValue) * 100) / 100;
     }
 
     let displayedValue: number | string;

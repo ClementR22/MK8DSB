@@ -8,15 +8,16 @@ import { StyleSheet, View } from "react-native";
 
 interface StatGaugeBarElementCardProps {
   value: number;
+  maxValue: number;
 }
 
-const StatGaugeBarElementCard = ({ value }: StatGaugeBarElementCardProps) => {
-  const { MAX_STAT_VALUE } = useGameData();
+const StatGaugeBarElementCard = ({ value, maxValue }: StatGaugeBarElementCardProps) => {
+  const { MAX_STAT_VALUE_BUILD } = useGameData();
   const theme = useThemeStore((state) => state.theme);
 
   const { getWidth, handleGaugeLayout } = useGaugeMetrics("stat-gauge-gallery");
 
-  const showValueInside = value >= MAX_STAT_VALUE / 4;
+  const showValueInside = value >= MAX_STAT_VALUE_BUILD / 4;
 
   const stylesDynamic = useStatGaugeStyles("100%");
 
@@ -28,7 +29,7 @@ const StatGaugeBarElementCard = ({ value }: StatGaugeBarElementCardProps) => {
           stylesDynamic.thick,
           {
             backgroundColor: theme.primary,
-            width: getWidth(value),
+            width: getWidth(value, maxValue),
           },
         ]}
       >
