@@ -20,12 +20,6 @@ import { useGameData } from "@/hooks/useGameData";
 import useGameStore from "@/stores/useGameStore";
 import { sortsNamespaceByGame } from "@/translations/namespaces";
 
-// Constants
-const NUMBER_OF_BUTTONS = 8;
-const CONTENT_WIDTH =
-  BUTTON_SIZE * NUMBER_OF_BUTTONS + GAP_SORT_MODE_SELECTOR * (NUMBER_OF_BUTTONS - 1) + 2 * PADDING_BOX_CONTAINER;
-const NEEDS_SCROLL = CONTENT_WIDTH > vw - 2 * MARGIN_CONTAINER_LOWEST;
-
 interface SortModeSelectorProps {
   sortNumber: number;
   setSortNumber: (number: number) => void;
@@ -44,7 +38,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
 
   const statNamesSortDefault = useMemo(
     () => (sortCase === "element" ? sortNamesElementDefault : sortNamesBuildCardDefault),
-    [sortCase]
+    [sortCase, sortNamesElementDefault, sortNamesBuildCardDefault]
   );
 
   const [currentDirection, setCurrentDirection] = useState<"asc" | "desc">(getCurrentDirection(sortNumber));
@@ -94,7 +88,10 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
         )}
       >
         {statNames.map((name) => {
+          console.log({ name });
+          console.log("la", "sortButtonsConfig", sortButtonsConfig);
           const config = sortButtonsConfig[name];
+          console.log({ config });
           const isActive = name === activeSort;
           return (
             <ButtonIconWithBadge
@@ -112,7 +109,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
         })}
       </Popover>
     ),
-    [activeSort, currentDirection, handlePress]
+    [sortButtonsConfig, activeSort, currentDirection, handlePress]
   );
 
   const mainButtons = useMemo(() => {
@@ -145,8 +142,14 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
     });
   }, [statNamesSortDefault, activeSort, currentDirection, handlePress, createTooltipMenu]);
 
-  const Wrapper = NEEDS_SCROLL ? ScrollView : View;
-  const wrapperProps = NEEDS_SCROLL
+  const needsScroll = useMemo(() => {
+    const numberOfButtons = mainButtons.length;
+    const contentWidth = BUTTON_SIZE * numberOfButtons + GAP_SORT_MODE_SELECTOR * (numberOfButtons - 1);
+    return contentWidth > vw - 2 * MARGIN_CONTAINER_LOWEST - 2 * PADDING_BOX_CONTAINER;
+  }, [mainButtons]);
+
+  const Wrapper = needsScroll ? ScrollView : View;
+  const wrapperProps = needsScroll
     ? {
         horizontal: true,
         scrollEnabled: isScrollEnable,
@@ -160,7 +163,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
         style={[
           styles.container,
           { paddingHorizontal: screenName === "search" ? GAP_SORT_MODE_SELECTOR : PADDING_BOX_CONTAINER },
-          !NEEDS_SCROLL && styles.spaceAround,
+          !needsScroll && styles.spaceAround,
         ]}
       >
         {mainButtons}
