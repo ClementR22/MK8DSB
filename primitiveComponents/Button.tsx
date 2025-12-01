@@ -7,9 +7,10 @@ import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
 import { box_shadow_z2 } from "@/components/styles/shadow";
 import Text from "./Text";
 
-type IconProps = {
+export type IconProps = {
   name: string;
   type: IconType;
+  color?: string;
 };
 
 interface ButtonProps {
@@ -17,7 +18,7 @@ interface ButtonProps {
   buttonColor?: string;
   buttonTextColor?: string;
   onPress: () => void;
-  tooltipText: string;
+  tooltipText?: string;
   iconProps?: IconProps;
   flex?: number;
   disabled?: boolean;
@@ -51,7 +52,9 @@ const Button: React.FC<ButtonProps> = ({
       isButton={true}
       disabled={disabled}
     >
-      {iconProps && <Icon type={iconProps.type} name={iconProps.name} size={24} color={theme.on_primary} />}
+      {iconProps && (
+        <Icon type={iconProps.type} name={iconProps.name} size={24} color={iconProps.color || theme.on_primary} />
+      )}
       <Text
         role="title"
         size="small"

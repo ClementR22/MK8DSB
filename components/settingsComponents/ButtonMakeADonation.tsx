@@ -2,23 +2,22 @@ import React, { useCallback } from "react";
 import { Linking } from "react-native";
 import Button from "@/primitiveComponents/Button";
 import { IconType } from "react-native-dynamic-vector-icons";
-import { Ionicons } from "@expo/vector-icons";
 
-const url = "https://forms.gle/YZvjYiu2pT9Futvd9";
+const url = "https://www.paypal.com/donate/?hosted_button_id=7YMYSGASUL7A8";
 
-const ButtonSendFeedback = React.memo(() => {
+const ButtonMakeADonation = React.memo(() => {
   const handleContactPress = useCallback(() => {
     Linking.openURL(url);
   }, []);
   return (
     <Button
       onPress={handleContactPress}
-      tooltipText="sendFeedback"
-      iconProps={{ name: "chatbox-ellipses-outline", type: IconType.Ionicons }}
+      tooltipText="makeADonation"
+      iconProps={{ name: "hand-heart", type: IconType.MaterialCommunityIcons }}
     >
-      sendFeedback
+      makeADonation
     </Button>
   );
 });
 
-export default ButtonSendFeedback;
+export default ButtonMakeADonation;

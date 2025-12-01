@@ -1,5 +1,5 @@
 // StatSelector.tsx
-import React, { useMemo, useState, useCallback, useEffect } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import { View } from "react-native";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import DoubleEntryTable, { ColumnName, StatToggleMap } from "./DoubleEntryTable";
@@ -7,55 +7,21 @@ import useStatsStore from "@/stores/useStatsStore";
 import { useResultStats } from "@/contexts/ResultStatsContext";
 import { ChosenStat, ResultStat, StatName } from "@/types";
 import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
-import ButtonIcon from "@/primitiveComponents/ButtonIcon";
-import { IconType } from "react-native-dynamic-vector-icons";
 import useThemeStore from "@/stores/useThemeStore";
 import ResultStatsSyncSwitch from "./ResultStatsSyncSwitch";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { useGameData } from "@/hooks/useGameData";
 import useGameStore from "@/stores/useGameStore";
-import Button from "@/primitiveComponents/Button";
+import { customTriggerConfig, modalTitleConfig, tooltipTextConfig } from "@/config/statSelectorConfig";
 
 interface StatSelectorProps {
-  triggerButtonText?: string;
-  tooltipText: string;
   children?: React.ReactNode;
 }
 
 const getColumnsConfig = (screenName: string): ColumnName[] =>
   screenName === "search" ? ["chosenStats", "resultStats"] : ["resultStats"];
 
-const getTriggerConfig = (screenName: ScreenName) => {
-  const customTrigger =
-    screenName === "search" || screenName === "save" ? (
-      <ButtonIcon
-        tooltipText={screenName === "search" ? "desiredStatsAndStatsInBuilds" : "displayedStatsInBuilds"}
-        iconName="checkbox-multiple-marked"
-        iconType={IconType.MaterialCommunityIcons}
-      />
-    ) : (
-      <Button
-        iconProps={{ name: "checkbox-multiple-marked", type: IconType.MaterialCommunityIcons }}
-        onPress={null}
-        tooltipText="statsToCompare"
-      >
-        statsToCompare
-      </Button>
-    );
-
-  const modalTitle =
-    screenName === "search"
-      ? "desiredStatsAndStatsInBuilds"
-      : screenName === "display"
-      ? "statsToCompare"
-      : screenName === "save"
-      ? "displayedStatsInBuilds"
-      : "defaultDisplayedStats";
-
-  return { customTrigger, modalTitle };
-};
-
-const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipText, children }) => {
+const StatSelector: React.FC<StatSelectorProps> = ({ children }) => {
   const { statNames } = useGameData();
   const theme = useThemeStore((state) => state.theme);
   const screenName = useScreen();
@@ -67,7 +33,12 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
   const { resultStatsDefault, setResultStatsDefaultForGame, isResultStatsSync } = useResultStatsDefaultStore();
 
   const columnNames = useMemo(() => getColumnsConfig(screenName), [screenName]);
-  const { customTrigger, modalTitle } = useMemo(() => getTriggerConfig(screenName), [screenName]);
+  const { customTrigger, triggerButtonText, iconProps, modalTitle, tooltipText } = useMemo(() => {
+    const { customTrigger, triggerButtonText, iconProps } = customTriggerConfig[screenName];
+    const modalTitle = modalTitleConfig[screenName];
+    const tooltipText = tooltipTextConfig[screenName];
+    return { customTrigger, triggerButtonText, iconProps, modalTitle, tooltipText };
+  }, [screenName]);
 
   // Fusion de tous les stats dans un map par statName
   const [statMap, setStatMap] = useState<StatToggleMap>();
@@ -144,6 +115,8 @@ const StatSelector: React.FC<StatSelectorProps> = ({ triggerButtonText, tooltipT
   return (
     <ButtonAndModal
       customTrigger={customTrigger}
+      triggerButtonText={triggerButtonText}
+      iconProps={iconProps}
       tooltipText={tooltipText}
       modalTitle={modalTitle}
       isModalVisibleProp={isModalVisible}

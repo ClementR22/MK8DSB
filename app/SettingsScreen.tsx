@@ -21,6 +21,7 @@ import useBuildsListStore from "@/stores/useBuildsListStore";
 import GameSelector from "@/components/settingsComponents/GameSelector";
 import { Pressable } from "react-native";
 import useGameStore from "@/stores/useGameStore";
+import ButtonMakeADonation from "@/components/settingsComponents/ButtonMakeADonation";
 
 const SettingsScreen: React.FC = () => {
   const game = useGameStore((state) => state.game);
@@ -60,7 +61,7 @@ const SettingsScreen: React.FC = () => {
           <ResultsNumberSelector />
 
           <ResultStatsProvider>
-            <StatSelector triggerButtonText="configureDefaultStats" tooltipText="configureDefaultStats">
+            <StatSelector>
               <Text role="title" size="small" namespace="text">
                 appliedForBuildFinderAndComparator
               </Text>
@@ -69,13 +70,13 @@ const SettingsScreen: React.FC = () => {
 
           <ButtonSendFeedback />
 
+          <ButtonMakeADonation />
+
           <ButtonLicenses />
 
           <ButtonResetSettings resetSettings={resetSettings} />
 
           <ButtonDeleteAllBuildsInMemory deleteAllSavedBuilds={handleDeleteAllSavedBuilds} />
-          <Pressable onPress={handleRemoveMemory}>delete</Pressable>
-          <Pressable onPress={handleShowMemory}>show</Pressable>
         </BoxContainer>
       </ScrollViewScreen>
     </ScreenProvider>

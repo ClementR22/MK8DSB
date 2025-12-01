@@ -159,7 +159,7 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
 
   return (
     <View style={styles.screenPressablesContainer}>
-      <StatSelector tooltipText="desiredStatsAndStatsInBuilds" />
+      <StatSelector />
 
       <Button
         key="button-search"

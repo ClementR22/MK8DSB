@@ -3,6 +3,7 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 import useThemeStore from "@/stores/useThemeStore";
 import Text from "@/primitiveComponents/Text";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { IconType } from "react-native-dynamic-vector-icons";
 
 const ButtonResetSettings = ({ resetSettings }) => {
   const theme = useThemeStore((state) => state.theme);
@@ -10,6 +11,7 @@ const ButtonResetSettings = ({ resetSettings }) => {
   return (
     <ButtonAndModal
       triggerButtonText="resetSettings"
+      iconProps={{ name: "rotate-ccw", type: IconType.Feather, color: theme.on_error }}
       tooltipText="resetSettings"
       secondButtonProps={{
         text: "confirm",

@@ -1,7 +1,7 @@
 import React, { memo, ReactElement, useCallback, useState } from "react";
 import { GestureResponderEvent } from "react-native";
 import Modal from "@/primitiveComponents/Modal";
-import Button from "../../primitiveComponents/Button";
+import Button, { IconProps } from "../../primitiveComponents/Button";
 
 interface ButtonAndModalProps {
   // Le contenu principal du modal. Peut être un composant, du texte, etc.
@@ -20,6 +20,7 @@ interface ButtonAndModalProps {
   customTrigger?: React.ReactElement<{ onPress?: (event: GestureResponderEvent) => void } & Record<string, any>>;
   // Sinon on utilisera un Button avec le texte donné en props
   triggerButtonText?: string;
+  iconProps?: IconProps;
   tooltipText: string;
   // Possibilité changer le texte du bouton fermer.
   closeButtonText?: string;
@@ -50,6 +51,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
   setIsModalVisibleProp, // option
   customTrigger, // give a component OR
   triggerButtonText, // give just the text
+  iconProps,
   tooltipText,
   closeButtonText = undefined,
   secondButton,
@@ -88,11 +90,12 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
     React.cloneElement(customTrigger, { onPress: openModal, tooltipText: tooltipText })
   ) : (
     <Button
-      key={"ModalButton"}
+      key="ModalButton"
       buttonColor={buttonColor}
       buttonTextColor={buttonTextColor}
       onPress={openModal}
       tooltipText={tooltipText}
+      iconProps={iconProps}
     >
       {triggerButtonText}
     </Button>

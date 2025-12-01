@@ -43,6 +43,7 @@ const ResultsNumberSelector = () => {
     <ButtonAndModal
       modalTitle="numberOfSearchResults"
       triggerButtonText="numberOfSearchResults"
+      iconProps={{ name: "numbers", type: IconType.MaterialIcons }}
       isModalVisibleProp={isModalVisible}
       setIsModalVisibleProp={setIsModalVisible}
       tooltipText="numberOfSearchResults"

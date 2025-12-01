@@ -98,7 +98,7 @@ const DisplayBuildScreen = () => {
           <BuildCardsContainer ref={scrollRef} builds={buildsWithColor} />
 
           <View style={styles.mainButtonWrapper}>
-            <StatSelector triggerButtonText="statsToCompare" tooltipText="statsToCompare" />
+            <StatSelector />
           </View>
 
           <StatGaugeGroupCompare buildsColorsMap={buildsColorsMap} />

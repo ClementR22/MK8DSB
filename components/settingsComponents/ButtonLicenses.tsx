@@ -4,10 +4,16 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 import { licensesLinks } from "@/constants/licensesLinks";
 import Text from "@/primitiveComponents/Text";
 import { vh } from "../styles/theme";
+import { IconType } from "react-native-dynamic-vector-icons";
 
 const ButtonLicenses = () => {
   return (
-    <ButtonAndModal modalTitle="licenses" triggerButtonText="openSourceLicenses" tooltipText="openSourceLicenses">
+    <ButtonAndModal
+      modalTitle="licenses"
+      triggerButtonText="openSourceLicenses"
+      iconProps={{ name: "license", type: IconType.MaterialCommunityIcons }}
+      tooltipText="openSourceLicenses"
+    >
       <ScrollView
         contentContainerStyle={styles.flatListContainer}
         style={{
