@@ -88,10 +88,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
         )}
       >
         {statNames.map((name) => {
-          console.log({ name });
-          console.log("la", "sortButtonsConfig", sortButtonsConfig);
           const config = sortButtonsConfig[name];
-          console.log({ config });
           const isActive = name === activeSort;
           return (
             <ButtonIconWithBadge

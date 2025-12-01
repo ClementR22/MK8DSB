@@ -31,6 +31,7 @@ const ElementPicker: React.FC<ElementPickerProps> = ({ name, imageUrl, onPress, 
       </View>
       {!isCollapsed && (
         <Text
+          key={`${name}-${game}`} // force le re-render pour refresh t la fonction de traduction
           role="title"
           size="small"
           color={style.textColorDynamic}

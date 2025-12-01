@@ -4,6 +4,7 @@ import { FlatList } from "react-native";
 import ElementPicker from "./ElementPicker";
 import { ElementData } from "@/types";
 import { LIST_ITEM_SPACING } from "@/utils/designTokens";
+import useGameStore from "@/stores/useGameStore";
 
 interface ElementPickerSelectorProps {
   categoryElementsSorted: ElementData[];
@@ -15,6 +16,7 @@ interface ElementPickerSelectorProps {
 const ElementsList: React.FC<ElementPickerSelectorProps> = memo(
   ({ categoryElementsSorted, selectedElementId, isLeftPannelExpanded, onElementPickerPress }) => {
     const theme = useThemeStore((state) => state.theme);
+    const game = useGameStore((state) => state.game);
 
     const { activeStyle, inactiveStyle } = useMemo(
       () => ({
