@@ -71,5 +71,5 @@
     "typescript-eslint": "^8.31.1"
   },
   "private": true,
-  "license": "Proprietary"
+  "license": "MIT"
 }
