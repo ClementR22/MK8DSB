@@ -10,8 +10,12 @@ import HelpHighlightBox from "../helpComponents/HelpHighlightBox";
 import Button from "@/primitiveComponents/Button";
 import useGameStore from "@/stores/useGameStore";
 import { sortsNamespaceByGame } from "@/translations/namespaces";
+import { useGameData } from "@/hooks/useGameData";
 
 const HelpDisplayBuildScreen = () => {
+  const { MAX_STAT_VALUE_BUILD } = useGameData();
+  const obtainedValues = [0.5, 0.75, 0.25].map((coef) => coef * MAX_STAT_VALUE_BUILD);
+
   const game = useGameStore((state) => state.game);
 
   return (
@@ -50,11 +54,11 @@ const HelpDisplayBuildScreen = () => {
 
         <HelpStepItem key={3} stepChar="3" title="how_to_use.step.view_differences" namespace="helpDisplay">
           <StatGaugeContainerCompare
-            name="speedGround"
+            name="acceleration"
             buildsIdAndValue={[
-              { id: "1", value: 5, color: "#E74C3C" },
-              { id: "2", value: 3, color: "#3498DB" },
-              { id: "3", value: 7, color: "#2ECC71" },
+              { id: "1", value: obtainedValues[0], color: "#E74C3C" },
+              { id: "2", value: obtainedValues[1], color: "#3498DB" },
+              { id: "3", value: obtainedValues[2], color: "#2ECC71" },
             ]}
           />
           <Text role="body" size="large" fontStyle="italic" namespace="helpDisplay">

@@ -17,10 +17,10 @@ import { useGameData } from "@/hooks/useGameData";
 import StatGaugeBar from "../statGauge/StatGaugeBar";
 
 const HelpSearchBuildScreen = () => {
-  const { statNames } = useGameData();
-  const statName = statNames[0];
+  const { MAX_STAT_VALUE_BUILD } = useGameData();
+  const obtainedValue = MAX_STAT_VALUE_BUILD * 0.5;
 
-  const [chosenStat, setChosenStat] = useState(3);
+  const [chosenStat, setChosenStat] = useState(MAX_STAT_VALUE_BUILD * 0.75);
   const [isCompact, setIsCompact] = useState(false);
   const toggleSlider = () => setIsCompact(!isCompact);
 
@@ -54,12 +54,12 @@ const HelpSearchBuildScreen = () => {
 
         <HelpStepItem key={2} stepChar="2" title="how_to_use.step.adjust_values" namespace="helpSearch">
           {isCompact ? (
-            <StatGaugeContainer name={statName} value={chosenStat} onPress={toggleSlider}>
+            <StatGaugeContainer name="acceleration" value={chosenStat} onPress={toggleSlider}>
               <StatGaugeBar value={chosenStat} statFilterNumber={statFilterNumber} />
             </StatGaugeContainer>
           ) : (
             <StatSliderPreview
-              name="speedGround"
+              name="acceleration"
               value={chosenStat}
               setValue={setChosenStat}
               onPress={toggleSlider}
@@ -127,8 +127,8 @@ const HelpSearchBuildScreen = () => {
             how_to_use.step.review_results.ranked_by_score
           </Text>
           <View style={buildCardStyle}>
-            <StatGaugeContainer name={"acceleration"} value={4} chosenValue={chosenStat} isInBuildCard={true}>
-              <StatGaugeBarBuildCard obtainedValue={4} chosenValue={chosenStat} isInSearchScreen={true} />
+            <StatGaugeContainer name="acceleration" value={obtainedValue} chosenValue={chosenStat} isInBuildCard={true}>
+              <StatGaugeBarBuildCard obtainedValue={obtainedValue} chosenValue={chosenStat} isInSearchScreen={true} />
             </StatGaugeContainer>
           </View>
           <Text role="body" size="large" fontStyle="italic" namespace="helpSearch">
