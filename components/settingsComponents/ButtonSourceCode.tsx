@@ -3,21 +3,17 @@ import { Linking } from "react-native";
 import Button from "@/primitiveComponents/Button";
 import { IconType } from "react-native-dynamic-vector-icons";
 
-const url = "https://forms.gle/YZvjYiu2pT9Futvd9";
+const url = "https://github.com/ClementR22/MK8DSB";
 
-const ButtonSendFeedback = React.memo(() => {
+const ButtonSourceCode = React.memo(() => {
   const handlePress = useCallback(() => {
     Linking.openURL(url);
   }, []);
   return (
-    <Button
-      onPress={handlePress}
-      tooltipText="sendFeedback"
-      iconProps={{ name: "chatbox-ellipses-outline", type: IconType.Ionicons }}
-    >
-      sendFeedback
+    <Button onPress={handlePress} tooltipText="sourceCode" iconProps={{ name: "github", type: IconType.AntDesign }}>
+      sourceCode
     </Button>
   );
 });
 
-export default ButtonSendFeedback;
+export default ButtonSourceCode;

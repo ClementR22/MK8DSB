@@ -22,6 +22,7 @@ import GameSelector from "@/components/settingsComponents/GameSelector";
 import { Pressable } from "react-native";
 import useGameStore from "@/stores/useGameStore";
 import ButtonMakeADonation from "@/components/settingsComponents/ButtonMakeADonation";
+import ButtonSourceCode from "@/components/settingsComponents/ButtonSourceCode";
 
 const SettingsScreen: React.FC = () => {
   const game = useGameStore((state) => state.game);
@@ -69,6 +70,8 @@ const SettingsScreen: React.FC = () => {
           </ResultStatsProvider>
 
           <ButtonSendFeedback />
+
+          <ButtonSourceCode />
 
           <ButtonMakeADonation />
 
