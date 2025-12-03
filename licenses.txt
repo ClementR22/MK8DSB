@@ -1,0 +1,2457 @@
+yarn licenses v1.22.22
+├─ (BSD-2-Clause OR MIT OR Apache-2.0)
+│  └─ rc@1.2.8
+│     ├─ URL: https://github.com/dominictarr/rc.git
+│     ├─ VendorName: Dominic Tarr
+│     └─ VendorUrl: dominictarr.com
+├─ (BSD-3-Clause OR GPL-2.0)
+│  └─ node-forge@1.3.3
+│     ├─ URL: https://github.com/digitalbazaar/forge
+│     ├─ VendorName: Digital Bazaar, Inc.
+│     └─ VendorUrl: https://github.com/digitalbazaar/forge
+├─ (MIT OR CC0-1.0)
+│  ├─ type-fest@0.21.3
+│  │  ├─ URL: https://github.com/sindresorhus/type-fest.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  └─ type-fest@0.7.1
+│     ├─ URL: https://github.com/sindresorhus/type-fest.git
+│     ├─ VendorName: Sindre Sorhus
+│     └─ VendorUrl: sindresorhus.com
+├─ 0BSD
+│  ├─ jsc-safe-url@0.2.4
+│  │  ├─ URL: git+https://github.com/robhogan/jsc-safe-url.git
+│  │  ├─ VendorName: Rob Hogan
+│  │  └─ VendorUrl: https://github.com/robhogan/jsc-safe-url#readme
+│  └─ tslib@2.8.1
+│     ├─ URL: https://github.com/Microsoft/tslib.git
+│     ├─ VendorName: Microsoft Corp.
+│     └─ VendorUrl: https://www.typescriptlang.org/
+├─ Apache-2.0
+│  ├─ baseline-browser-mapping@2.8.32
+│  │  └─ URL: git+https://github.com/web-platform-dx/baseline-browser-mapping.git
+│  ├─ bser@2.1.1
+│  │  ├─ URL: https://github.com/facebook/watchman
+│  │  ├─ VendorName: Wez Furlong
+│  │  └─ VendorUrl: https://facebook.github.io/watchman/docs/bser.html
+│  ├─ chrome-launcher@0.15.2
+│  │  ├─ URL: https://github.com/GoogleChrome/chrome-launcher/
+│  │  └─ VendorName: The Chromium Authors
+│  ├─ chromium-edge-launcher@0.2.0
+│  │  ├─ URL: https://github.com/cezaraugusto/chromium-edge-launcher/
+│  │  └─ VendorName: Cezar Augusto
+│  ├─ detect-libc@2.1.2
+│  │  ├─ URL: git://github.com/lovell/detect-libc.git
+│  │  └─ VendorName: Lovell Fuller
+│  ├─ exponential-backoff@3.1.3
+│  │  ├─ URL: git+https://github.com/coveooss/exponential-backoff.git
+│  │  ├─ VendorName: Sami Sayegh
+│  │  └─ VendorUrl: https://github.com/coveooss/exponential-backoff#readme
+│  ├─ fb-watchman@2.0.2
+│  │  ├─ URL: git@github.com:facebook/watchman.git
+│  │  ├─ VendorName: Wez Furlong
+│  │  └─ VendorUrl: https://facebook.github.io/watchman/
+│  ├─ lighthouse-logger@1.4.2
+│  ├─ marky@1.3.0
+│  │  ├─ URL: git+https://github.com/nolanlawson/marky.git
+│  │  ├─ VendorName: Nolan Lawson
+│  │  └─ VendorUrl: https://github.com/nolanlawson/marky#readme
+│  ├─ ts-interface-checker@0.1.13
+│  │  ├─ URL: https://github.com/gristlabs/ts-interface-checker
+│  │  └─ VendorName: Dmitry S, Grist Labs
+│  ├─ walker@1.0.8
+│  │  ├─ URL: https://github.com/daaku/nodejs-walker
+│  │  ├─ VendorName: Naitik Shah
+│  │  └─ VendorUrl: https://github.com/daaku/nodejs-walker
+│  └─ xcode@3.0.1
+│     ├─ URL: https://github.com/apache/cordova-node-xcode.git
+│     └─ VendorName: Apache Software Foundation
+├─ Apache*
+│  └─ qrcode-terminal@0.11.0
+│     ├─ URL: https://github.com/gtanner/qrcode-terminal
+│     └─ VendorUrl: https://github.com/gtanner/qrcode-terminal
+├─ BlueOak-1.0.0
+│  ├─ chownr@3.0.0
+│  │  ├─ URL: git://github.com/isaacs/chownr.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me/
+│  ├─ jackspeak@3.4.3
+│  │  ├─ URL: git+https://github.com/isaacs/jackspeak.git
+│  │  └─ VendorName: Isaac Z. Schlueter
+│  ├─ package-json-from-dist@1.0.1
+│  │  ├─ URL: git+https://github.com/isaacs/package-json-from-dist.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: https://izs.me
+│  ├─ path-scurry@1.11.1
+│  │  ├─ URL: git+https://github.com/isaacs/path-scurry
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: https://blog.izs.me
+│  ├─ sax@1.4.3
+│  │  ├─ URL: git://github.com/isaacs/sax-js.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me/
+│  ├─ tar@7.5.2
+│  │  ├─ URL: https://github.com/isaacs/node-tar.git
+│  │  └─ VendorName: Isaac Z. Schlueter
+│  └─ yallist@5.0.0
+│     ├─ URL: git+https://github.com/isaacs/yallist.git
+│     ├─ VendorName: Isaac Z. Schlueter
+│     └─ VendorUrl: http://blog.izs.me/
+├─ BSD-2-Clause
+│  ├─ dotenv-expand@11.0.7
+│  │  ├─ URL: https://github.com/motdotla/dotenv-expand
+│  │  └─ VendorName: motdotla
+│  ├─ dotenv@16.4.7
+│  │  └─ URL: git://github.com/motdotla/dotenv.git
+│  ├─ dotenv@16.6.1
+│  │  ├─ URL: git://github.com/motdotla/dotenv.git
+│  │  └─ VendorUrl: https://github.com/motdotla/dotenv#readme
+│  ├─ esprima@4.0.1
+│  │  ├─ URL: https://github.com/jquery/esprima.git
+│  │  ├─ VendorName: Ariya Hidayat
+│  │  └─ VendorUrl: http://esprima.org/
+│  ├─ fontfaceobserver@2.3.0
+│  │  ├─ URL: git+https://github.com/bramstein/fontfaceobserver.git
+│  │  ├─ VendorName: Bram Stein
+│  │  └─ VendorUrl: https://fontfaceobserver.com/
+│  ├─ regjsparser@0.13.0
+│  │  ├─ URL: git+ssh://git@github.com/jviereck/regjsparser.git
+│  │  ├─ VendorName: 'Julian Viereck'
+│  │  └─ VendorUrl: https://github.com/jviereck/regjsparser
+│  ├─ terser@5.44.1
+│  │  ├─ URL: https://github.com/terser/terser
+│  │  ├─ VendorName: Mihai Bazon
+│  │  └─ VendorUrl: https://terser.org/
+│  ├─ webidl-conversions@3.0.1
+│  │  ├─ URL: https://github.com/jsdom/webidl-conversions.git
+│  │  ├─ VendorName: Domenic Denicola
+│  │  └─ VendorUrl: https://domenic.me/
+│  └─ webidl-conversions@5.0.0
+│     ├─ URL: https://github.com/jsdom/webidl-conversions.git
+│     ├─ VendorName: Domenic Denicola
+│     └─ VendorUrl: https://domenic.me/
+├─ BSD-3-Clause
+│  ├─ @expo/xcpretty@4.3.2
+│  │  ├─ URL: https://github.com/expo/expo-cli.git
+│  │  ├─ VendorName: Evan Bacon
+│  │  └─ VendorUrl: https://github.com/expo/expo-cli
+│  ├─ @react-native/debugger-frontend@0.81.4
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/debugger-frontend#readme
+│  ├─ @react-native/debugger-frontend@0.81.5
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/debugger-frontend#readme
+│  ├─ @sinonjs/commons@3.0.1
+│  │  ├─ URL: git+https://github.com/sinonjs/commons.git
+│  │  └─ VendorUrl: https://github.com/sinonjs/commons#readme
+│  ├─ @sinonjs/fake-timers@10.3.0
+│  │  ├─ URL: https://github.com/sinonjs/fake-timers.git
+│  │  ├─ VendorName: Christian Johansen
+│  │  └─ VendorUrl: https://github.com/sinonjs/fake-timers
+│  ├─ babel-plugin-istanbul@6.1.1
+│  │  ├─ URL: git+https://github.com/istanbuljs/babel-plugin-istanbul.git
+│  │  ├─ VendorName: Thai Pangsakulyanont @dtinth
+│  │  └─ VendorUrl: https://github.com/istanbuljs/babel-plugin-istanbul#readme
+│  ├─ hoist-non-react-statics@3.3.2
+│  │  ├─ URL: git://github.com/mridgway/hoist-non-react-statics.git
+│  │  └─ VendorName: Michael Ridgway
+│  ├─ hyphenate-style-name@1.1.0
+│  │  ├─ URL: git+ssh://git@github.com/rexxars/hyphenate-style-name.git
+│  │  ├─ VendorName: Espen Hovlandsdal
+│  │  └─ VendorUrl: https://github.com/rexxars/hyphenate-style-name#readme
+│  ├─ ieee754@1.2.1
+│  │  ├─ URL: git://github.com/feross/ieee754.git
+│  │  ├─ VendorName: Feross Aboukhadijeh
+│  │  └─ VendorUrl: https://feross.org
+│  ├─ istanbul-lib-coverage@3.2.2
+│  │  ├─ URL: git+ssh://git@github.com/istanbuljs/istanbuljs.git
+│  │  ├─ VendorName: Krishnan Anantheswaran
+│  │  └─ VendorUrl: https://istanbul.js.org/
+│  ├─ istanbul-lib-instrument@5.2.1
+│  │  ├─ URL: git+ssh://git@github.com/istanbuljs/istanbuljs.git
+│  │  ├─ VendorName: Krishnan Anantheswaran
+│  │  └─ VendorUrl: https://istanbul.js.org/
+│  ├─ makeerror@1.0.12
+│  │  ├─ URL: https://github.com/daaku/nodejs-makeerror
+│  │  └─ VendorName: Naitik Shah
+│  ├─ rtl-detect@1.1.2
+│  │  ├─ URL: git+https://github.com/shadiabuhilal/rtl-detect.git
+│  │  ├─ VendorName: Shadi Abu Hilal
+│  │  └─ VendorUrl: https://github.com/shadiabuhilal/rtl-detect
+│  ├─ source-map-js@1.2.1
+│  │  ├─ URL: https://github.com/7rulnik/source-map-js.git
+│  │  ├─ VendorName: Valentin 7rulnik Semirulnik
+│  │  └─ VendorUrl: https://github.com/7rulnik/source-map-js
+│  ├─ source-map@0.5.7
+│  │  ├─ URL: http://github.com/mozilla/source-map.git
+│  │  ├─ VendorName: Nick Fitzgerald
+│  │  └─ VendorUrl: https://github.com/mozilla/source-map
+│  ├─ source-map@0.6.1
+│  │  ├─ URL: http://github.com/mozilla/source-map.git
+│  │  ├─ VendorName: Nick Fitzgerald
+│  │  └─ VendorUrl: https://github.com/mozilla/source-map
+│  ├─ sprintf-js@1.0.3
+│  │  ├─ URL: https://github.com/alexei/sprintf.js.git
+│  │  ├─ VendorName: Alexandru Marasteanu
+│  │  └─ VendorUrl: http://alexei.ro/
+│  └─ tmpl@1.0.5
+│     ├─ URL: https://github.com/daaku/nodejs-tmpl
+│     ├─ VendorName: Naitik Shah
+│     └─ VendorUrl: https://github.com/daaku/nodejs-tmpl
+├─ CC-BY-4.0
+│  └─ caniuse-lite@1.0.30001759
+│     ├─ URL: https://github.com/browserslist/caniuse-lite.git
+│     ├─ VendorName: Ben Briggs
+│     └─ VendorUrl: http://beneb.info
+├─ ISC
+│  ├─ @isaacs/cliui@8.0.2
+│  │  ├─ URL: https://github.com/yargs/cliui.git
+│  │  └─ VendorName: Ben Coe
+│  ├─ @isaacs/fs-minipass@4.0.1
+│  │  ├─ URL: https://github.com/npm/fs-minipass.git
+│  │  └─ VendorName: Isaac Z. Schlueter
+│  ├─ @isaacs/ttlcache@1.4.1
+│  │  ├─ URL: git+https://github.com/isaacs/ttlcache
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: https://izs.me
+│  ├─ @istanbuljs/load-nyc-config@1.1.0
+│  │  ├─ URL: git+https://github.com/istanbuljs/load-nyc-config.git
+│  │  └─ VendorUrl: https://github.com/istanbuljs/load-nyc-config#readme
+│  ├─ @ungap/structured-clone@1.3.0
+│  │  ├─ URL: git+https://github.com/ungap/structured-clone.git
+│  │  ├─ VendorName: Andrea Giammarchi
+│  │  └─ VendorUrl: https://github.com/ungap/structured-clone#readme
+│  ├─ anymatch@3.1.3
+│  │  ├─ URL: https://github.com/micromatch/anymatch
+│  │  ├─ VendorName: Elan Shanker
+│  │  └─ VendorUrl: https://github.com/micromatch/anymatch
+│  ├─ cliui@7.0.4
+│  │  ├─ URL: https://github.com/yargs/cliui.git
+│  │  └─ VendorName: Ben Coe
+│  ├─ cliui@8.0.1
+│  │  ├─ URL: https://github.com/yargs/cliui.git
+│  │  └─ VendorName: Ben Coe
+│  ├─ electron-to-chromium@1.5.263
+│  │  ├─ URL: https://github.com/kilian/electron-to-chromium/
+│  │  └─ VendorName: Kilian Valkhof
+│  ├─ foreground-child@3.3.1
+│  │  ├─ URL: git+https://github.com/tapjs/foreground-child.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me/
+│  ├─ fs.realpath@1.0.0
+│  │  ├─ URL: git+https://github.com/isaacs/fs.realpath.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me/
+│  ├─ get-caller-file@2.0.5
+│  │  ├─ URL: git+https://github.com/stefanpenner/get-caller-file.git
+│  │  ├─ VendorName: Stefan Penner
+│  │  └─ VendorUrl: https://github.com/stefanpenner/get-caller-file#readme
+│  ├─ glob@10.5.0
+│  │  ├─ URL: git://github.com/isaacs/node-glob.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: https://blog.izs.me/
+│  ├─ glob@7.2.3
+│  │  ├─ URL: git://github.com/isaacs/node-glob.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me/
+│  ├─ graceful-fs@4.2.11
+│  │  └─ URL: https://github.com/isaacs/node-graceful-fs
+│  ├─ hosted-git-info@7.0.2
+│  │  ├─ URL: git+https://github.com/npm/hosted-git-info.git
+│  │  ├─ VendorName: GitHub Inc.
+│  │  └─ VendorUrl: https://github.com/npm/hosted-git-info
+│  ├─ inflight@1.0.6
+│  │  ├─ URL: https://github.com/npm/inflight.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: https://github.com/isaacs/inflight
+│  ├─ inherits@2.0.4
+│  │  └─ URL: git://github.com/isaacs/inherits
+│  ├─ ini@1.3.8
+│  │  ├─ URL: git://github.com/isaacs/ini.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me/
+│  ├─ isexe@2.0.0
+│  │  ├─ URL: git+https://github.com/isaacs/isexe.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: https://github.com/isaacs/isexe#readme
+│  ├─ lru-cache@10.4.3
+│  │  ├─ URL: git://github.com/isaacs/node-lru-cache.git
+│  │  └─ VendorName: Isaac Z. Schlueter
+│  ├─ lru-cache@5.1.1
+│  │  ├─ URL: git://github.com/isaacs/node-lru-cache.git
+│  │  └─ VendorName: Isaac Z. Schlueter
+│  ├─ minimatch@3.1.2
+│  │  ├─ URL: git://github.com/isaacs/minimatch.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me
+│  ├─ minimatch@9.0.5
+│  │  ├─ URL: git://github.com/isaacs/minimatch.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me
+│  ├─ minipass@7.1.2
+│  │  ├─ URL: https://github.com/isaacs/minipass
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me/
+│  ├─ npm-package-arg@11.0.3
+│  │  ├─ URL: git+https://github.com/npm/npm-package-arg.git
+│  │  ├─ VendorName: GitHub Inc.
+│  │  └─ VendorUrl: https://github.com/npm/npm-package-arg
+│  ├─ once@1.4.0
+│  │  ├─ URL: git://github.com/isaacs/once
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me/
+│  ├─ picocolors@1.1.1
+│  │  ├─ URL: https://github.com/alexeyraspopov/picocolors.git
+│  │  └─ VendorName: Alexey Raspopov
+│  ├─ proc-log@4.2.0
+│  │  ├─ URL: https://github.com/npm/proc-log.git
+│  │  └─ VendorName: GitHub Inc.
+│  ├─ react-native-popup-menu@0.18.0
+│  │  ├─ URL: git+ssh://git@github.com:instea/react-native-popup-menu.git
+│  │  ├─ VendorName: instea.co
+│  │  └─ VendorUrl: https://github.com/instea/react-native-popup-menu
+│  ├─ rimraf@3.0.2
+│  │  ├─ URL: git://github.com/isaacs/rimraf.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me/
+│  ├─ semver@6.3.1
+│  │  ├─ URL: https://github.com/npm/node-semver.git
+│  │  └─ VendorName: GitHub Inc.
+│  ├─ semver@7.6.3
+│  │  ├─ URL: git+https://github.com/npm/node-semver.git
+│  │  └─ VendorName: GitHub Inc.
+│  ├─ semver@7.7.2
+│  │  ├─ URL: git+https://github.com/npm/node-semver.git
+│  │  └─ VendorName: GitHub Inc.
+│  ├─ semver@7.7.3
+│  │  ├─ URL: git+https://github.com/npm/node-semver.git
+│  │  └─ VendorName: GitHub Inc.
+│  ├─ setprototypeof@1.2.0
+│  │  ├─ URL: https://github.com/wesleytodd/setprototypeof.git
+│  │  ├─ VendorName: Wes Todd
+│  │  └─ VendorUrl: https://github.com/wesleytodd/setprototypeof
+│  ├─ signal-exit@3.0.7
+│  │  ├─ URL: https://github.com/tapjs/signal-exit.git
+│  │  ├─ VendorName: Ben Coe
+│  │  └─ VendorUrl: https://github.com/tapjs/signal-exit
+│  ├─ signal-exit@4.1.0
+│  │  ├─ URL: https://github.com/tapjs/signal-exit.git
+│  │  └─ VendorName: Ben Coe
+│  ├─ test-exclude@6.0.0
+│  │  ├─ URL: git+https://github.com/istanbuljs/test-exclude.git
+│  │  ├─ VendorName: Ben Coe
+│  │  └─ VendorUrl: https://istanbul.js.org/
+│  ├─ validate-npm-package-name@5.0.1
+│  │  ├─ URL: git+https://github.com/npm/validate-npm-package-name.git
+│  │  ├─ VendorName: GitHub Inc.
+│  │  └─ VendorUrl: https://github.com/npm/validate-npm-package-name
+│  ├─ which@2.0.2
+│  │  ├─ URL: git://github.com/isaacs/node-which.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me
+│  ├─ wrappy@1.0.2
+│  │  ├─ URL: https://github.com/npm/wrappy
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: https://github.com/npm/wrappy
+│  ├─ write-file-atomic@4.0.2
+│  │  ├─ URL: https://github.com/npm/write-file-atomic.git
+│  │  ├─ VendorName: GitHub Inc.
+│  │  └─ VendorUrl: https://github.com/npm/write-file-atomic
+│  ├─ y18n@5.0.8
+│  │  ├─ URL: https://github.com/yargs/y18n.git
+│  │  ├─ VendorName: Ben Coe
+│  │  └─ VendorUrl: https://github.com/yargs/y18n
+│  ├─ yallist@3.1.1
+│  │  ├─ URL: git+https://github.com/isaacs/yallist.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me/
+│  ├─ yaml@2.8.2
+│  │  ├─ URL: https://github.com/eemeli/yaml.git
+│  │  ├─ VendorName: Eemeli Aro
+│  │  └─ VendorUrl: https://eemeli.org/yaml/
+│  ├─ yargs-parser@20.2.9
+│  │  ├─ URL: https://github.com/yargs/yargs-parser.git
+│  │  └─ VendorName: Ben Coe
+│  ├─ yargs-parser@21.1.1
+│  │  ├─ URL: https://github.com/yargs/yargs-parser.git
+│  │  └─ VendorName: Ben Coe
+│  └─ zod-to-json-schema@3.25.0
+│     ├─ URL: https://github.com/StefanTerdell/zod-to-json-schema
+│     └─ VendorName: Stefan Terdell
+├─ MIT
+│  ├─ @0no-co/graphql.web@1.2.0
+│  │  ├─ URL: https://github.com/0no-co/graphql.web
+│  │  └─ VendorName: 0no.co
+│  ├─ @babel/code-frame@7.10.4
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: Sebastian McKenzie
+│  │  └─ VendorUrl: https://babeljs.io/
+│  ├─ @babel/code-frame@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-code-frame
+│  ├─ @babel/compat-data@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/team
+│  ├─ @babel/core@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-core
+│  ├─ @babel/generator@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-generator
+│  ├─ @babel/helper-annotate-as-pure@7.27.3
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-helper-annotate-as-pure
+│  ├─ @babel/helper-compilation-targets@7.27.2
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/team
+│  ├─ @babel/helper-create-class-features-plugin@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/team
+│  ├─ @babel/helper-create-regexp-features-plugin@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/team
+│  ├─ @babel/helper-define-polyfill-provider@0.6.5
+│  │  └─ URL: https://github.com/babel/babel-polyfills.git
+│  ├─ @babel/helper-globals@7.28.0
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/team
+│  ├─ @babel/helper-member-expression-to-functions@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-helper-member-expression-to-functions
+│  ├─ @babel/helper-module-imports@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-helper-module-imports
+│  ├─ @babel/helper-module-transforms@7.28.3
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-helper-module-transforms
+│  ├─ @babel/helper-optimise-call-expression@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-helper-optimise-call-expression
+│  ├─ @babel/helper-plugin-utils@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-helper-plugin-utils
+│  ├─ @babel/helper-remap-async-to-generator@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-helper-remap-async-to-generator
+│  ├─ @babel/helper-replace-supers@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-helper-replace-supers
+│  ├─ @babel/helper-skip-transparent-expression-wrappers@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/team
+│  ├─ @babel/helper-string-parser@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-helper-string-parser
+│  ├─ @babel/helper-validator-identifier@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/team
+│  ├─ @babel/helper-validator-option@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/team
+│  ├─ @babel/helper-wrap-function@7.28.3
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-helper-wrap-function
+│  ├─ @babel/helpers@7.28.4
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-helpers
+│  ├─ @babel/highlight@7.25.9
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-highlight
+│  ├─ @babel/parser@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-parser
+│  ├─ @babel/plugin-proposal-decorators@7.28.0
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-proposal-decorators
+│  ├─ @babel/plugin-proposal-export-default-from@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-proposal-export-default-from
+│  ├─ @babel/plugin-syntax-async-generators@7.8.4
+│  │  └─ URL: https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-async-generators
+│  ├─ @babel/plugin-syntax-bigint@7.8.3
+│  │  └─ URL: https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-bigint
+│  ├─ @babel/plugin-syntax-class-properties@7.12.13
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-syntax-class-properties
+│  ├─ @babel/plugin-syntax-class-static-block@7.14.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-syntax-class-static-block
+│  ├─ @babel/plugin-syntax-decorators@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-syntax-decorators
+│  ├─ @babel/plugin-syntax-dynamic-import@7.8.3
+│  │  └─ URL: https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-dynamic-import
+│  ├─ @babel/plugin-syntax-export-default-from@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-syntax-export-default-from
+│  ├─ @babel/plugin-syntax-flow@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-syntax-flow
+│  ├─ @babel/plugin-syntax-import-attributes@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/team
+│  ├─ @babel/plugin-syntax-import-meta@7.10.4
+│  │  └─ URL: https://github.com/babel/babel.git
+│  ├─ @babel/plugin-syntax-json-strings@7.8.3
+│  │  └─ URL: https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-json-strings
+│  ├─ @babel/plugin-syntax-jsx@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-syntax-jsx
+│  ├─ @babel/plugin-syntax-logical-assignment-operators@7.10.4
+│  │  └─ URL: https://github.com/babel/babel.git
+│  ├─ @babel/plugin-syntax-nullish-coalescing-operator@7.8.3
+│  │  └─ URL: https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-nullish-coalescing-operator
+│  ├─ @babel/plugin-syntax-numeric-separator@7.10.4
+│  │  └─ URL: https://github.com/babel/babel.git
+│  ├─ @babel/plugin-syntax-object-rest-spread@7.8.3
+│  │  └─ URL: https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-object-rest-spread
+│  ├─ @babel/plugin-syntax-optional-catch-binding@7.8.3
+│  │  └─ URL: https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-optional-catch-binding
+│  ├─ @babel/plugin-syntax-optional-chaining@7.8.3
+│  │  └─ URL: https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-optional-chaining
+│  ├─ @babel/plugin-syntax-private-property-in-object@7.14.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-syntax-private-property-in-object
+│  ├─ @babel/plugin-syntax-top-level-await@7.14.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-syntax-top-level-await
+│  ├─ @babel/plugin-syntax-typescript@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-syntax-typescript
+│  ├─ @babel/plugin-transform-arrow-functions@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-arrow-functions
+│  ├─ @babel/plugin-transform-async-generator-functions@7.28.0
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-async-generator-functions
+│  ├─ @babel/plugin-transform-async-to-generator@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-async-to-generator
+│  ├─ @babel/plugin-transform-block-scoping@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-block-scoping
+│  ├─ @babel/plugin-transform-class-properties@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-class-properties
+│  ├─ @babel/plugin-transform-class-static-block@7.28.3
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-class-static-block
+│  ├─ @babel/plugin-transform-classes@7.28.4
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-classes
+│  ├─ @babel/plugin-transform-computed-properties@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-computed-properties
+│  ├─ @babel/plugin-transform-destructuring@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-destructuring
+│  ├─ @babel/plugin-transform-export-namespace-from@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-export-namespace-from
+│  ├─ @babel/plugin-transform-flow-strip-types@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-flow-strip-types
+│  ├─ @babel/plugin-transform-for-of@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-for-of
+│  ├─ @babel/plugin-transform-function-name@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-function-name
+│  ├─ @babel/plugin-transform-literals@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-literals
+│  ├─ @babel/plugin-transform-logical-assignment-operators@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-logical-assignment-operators
+│  ├─ @babel/plugin-transform-modules-commonjs@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-modules-commonjs
+│  ├─ @babel/plugin-transform-named-capturing-groups-regex@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-named-capturing-groups-regex
+│  ├─ @babel/plugin-transform-nullish-coalescing-operator@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-nullish-coalescing-operator
+│  ├─ @babel/plugin-transform-numeric-separator@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-numeric-separator
+│  ├─ @babel/plugin-transform-object-rest-spread@7.28.4
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-object-rest-spread
+│  ├─ @babel/plugin-transform-optional-catch-binding@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-optional-catch-binding
+│  ├─ @babel/plugin-transform-optional-chaining@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-optional-chaining
+│  ├─ @babel/plugin-transform-parameters@7.27.7
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-parameters
+│  ├─ @babel/plugin-transform-private-methods@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-private-methods
+│  ├─ @babel/plugin-transform-private-property-in-object@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-private-property-in-object
+│  ├─ @babel/plugin-transform-react-display-name@7.28.0
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-react-display-name
+│  ├─ @babel/plugin-transform-react-jsx-development@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/team
+│  ├─ @babel/plugin-transform-react-jsx-self@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-react-jsx-self
+│  ├─ @babel/plugin-transform-react-jsx-source@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-react-jsx-source
+│  ├─ @babel/plugin-transform-react-jsx@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-react-jsx
+│  ├─ @babel/plugin-transform-react-pure-annotations@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/team
+│  ├─ @babel/plugin-transform-regenerator@7.28.4
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-regenerator
+│  ├─ @babel/plugin-transform-runtime@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-runtime
+│  ├─ @babel/plugin-transform-shorthand-properties@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-shorthand-properties
+│  ├─ @babel/plugin-transform-spread@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-spread
+│  ├─ @babel/plugin-transform-sticky-regex@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-sticky-regex
+│  ├─ @babel/plugin-transform-template-literals@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-template-literals
+│  ├─ @babel/plugin-transform-typescript@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-typescript
+│  ├─ @babel/plugin-transform-unicode-regex@7.27.1
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-plugin-transform-unicode-regex
+│  ├─ @babel/preset-react@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-preset-react
+│  ├─ @babel/preset-typescript@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-preset-typescript
+│  ├─ @babel/runtime@7.28.4
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-runtime
+│  ├─ @babel/template@7.27.2
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-template
+│  ├─ @babel/traverse--for-generate-function-map@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-traverse
+│  ├─ @babel/traverse@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-traverse
+│  ├─ @babel/types@7.28.5
+│  │  ├─ URL: https://github.com/babel/babel.git
+│  │  ├─ VendorName: The Babel Team
+│  │  └─ VendorUrl: https://babel.dev/docs/en/next/babel-types
+│  ├─ @egjs/hammerjs@2.0.17
+│  │  ├─ URL: git://github.com/naver/hammer.js.git
+│  │  └─ VendorUrl: http://naver.github.io/egjs
+│  ├─ @expo/cli@54.0.16
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: Expo
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/cli
+│  ├─ @expo/code-signing-certificates@0.0.5
+│  │  ├─ URL: https://github.com/expo/code-signing-certificates.git
+│  │  ├─ VendorName: Expo
+│  │  └─ VendorUrl: https://github.com/expo/code-signing-certificates/tree/main#readme
+│  ├─ @expo/config-plugins@54.0.2
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://docs.expo.dev/guides/config-plugins/
+│  ├─ @expo/config-types@54.0.8
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/config-types#readme
+│  ├─ @expo/config@12.0.10
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/config#readme
+│  ├─ @expo/devcert@1.2.0
+│  │  ├─ URL: git+https://github.com/expo/devcert.git
+│  │  ├─ VendorName: Dave Wasmer
+│  │  └─ VendorUrl: https://github.com/expo/devcert#readme
+│  ├─ @expo/devtools@0.1.7
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/devtools#readme
+│  ├─ @expo/env@2.0.7
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/env#readme
+│  ├─ @expo/fingerprint@0.15.3
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/fingerprint#readme
+│  ├─ @expo/image-utils@0.8.7
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/%40expo/image-utils#readme
+│  ├─ @expo/json-file@10.0.7
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/json-file#readme
+│  ├─ @expo/mcp-tunnel@0.1.0
+│  │  ├─ URL: https://github.com/expo/expo-mcp.git
+│  │  └─ VendorName: 650 Industries, Inc.
+│  ├─ @expo/metro-config@54.0.9
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/metro-config#readme
+│  ├─ @expo/metro-runtime@6.1.2
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/metro-runtime
+│  ├─ @expo/metro@54.1.0
+│  │  ├─ URL: git+https://github.com/expo/expo-metro.git
+│  │  └─ VendorName: Expo
+│  ├─ @expo/osascript@2.3.7
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/osascript#readme
+│  ├─ @expo/package-manager@1.9.8
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/package-manager#readme
+│  ├─ @expo/plist@0.4.7
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/plist#readme
+│  ├─ @expo/prebuild-config@54.0.6
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/prebuild-config#readme
+│  ├─ @expo/schema-utils@0.1.7
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/@expo/schema-utils#readme
+│  ├─ @expo/sdk-runtime-versions@1.0.0
+│  │  └─ VendorName: Expo
+│  ├─ @expo/spawn-async@1.7.2
+│  │  ├─ URL: git+https://github.com/expo/spawn-async.git
+│  │  ├─ VendorName: Expo
+│  │  └─ VendorUrl: https://github.com/expo/spawn-async#readme
+│  ├─ @expo/sudo-prompt@9.3.2
+│  │  ├─ URL: git+https://github.com/expo/sudo-prompt.git
+│  │  ├─ VendorName: Joran Dirk Greef
+│  │  └─ VendorUrl: https://github.com/expo/sudo-prompt
+│  ├─ @expo/vector-icons@15.0.3
+│  │  ├─ URL: https://github.com/expo/vector-icons.git
+│  │  ├─ VendorName: Brent Vatne
+│  │  └─ VendorUrl: https://expo.github.io/vector-icons
+│  ├─ @expo/ws-tunnel@1.0.6
+│  ├─ @gorhom/bottom-sheet@5.2.7
+│  │  ├─ URL: https://github.com/gorhom/react-native-bottom-sheet
+│  │  ├─ VendorName: Mo Gorhom
+│  │  └─ VendorUrl: https://gorhom.dev/react-native-bottom-sheet/
+│  ├─ @gorhom/portal@1.0.14
+│  │  ├─ URL: https://github.com/gorhom/react-native-portal
+│  │  ├─ VendorName: Mo Gorhom
+│  │  └─ VendorUrl: https://github.com/gorhom/react-native-portal#readme
+│  ├─ @istanbuljs/schema@0.1.3
+│  │  ├─ URL: git+https://github.com/istanbuljs/schema.git
+│  │  ├─ VendorName: Corey Farrell
+│  │  └─ VendorUrl: https://github.com/istanbuljs/schema#readme
+│  ├─ @jest/create-cache-key-function@29.7.0
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ @jest/environment@29.7.0
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ @jest/fake-timers@29.7.0
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ @jest/schemas@29.6.3
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ @jest/transform@29.7.0
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ @jest/types@29.6.3
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ @jridgewell/gen-mapping@0.3.13
+│  │  ├─ URL: git+https://github.com/jridgewell/sourcemaps.git
+│  │  ├─ VendorName: Justin Ridgewell
+│  │  └─ VendorUrl: https://github.com/jridgewell/sourcemaps/tree/main/packages/gen-mapping
+│  ├─ @jridgewell/remapping@2.3.5
+│  │  ├─ URL: git+https://github.com/jridgewell/sourcemaps.git
+│  │  ├─ VendorName: Justin Ridgewell
+│  │  └─ VendorUrl: https://github.com/jridgewell/sourcemaps/tree/main/packages/remapping
+│  ├─ @jridgewell/resolve-uri@3.1.2
+│  │  ├─ URL: https://github.com/jridgewell/resolve-uri
+│  │  └─ VendorName: Justin Ridgewell
+│  ├─ @jridgewell/source-map@0.3.11
+│  │  ├─ URL: git+https://github.com/jridgewell/sourcemaps.git
+│  │  ├─ VendorName: Justin Ridgewell
+│  │  └─ VendorUrl: https://github.com/jridgewell/sourcemaps/tree/main/packages/source-map
+│  ├─ @jridgewell/sourcemap-codec@1.5.5
+│  │  ├─ URL: git+https://github.com/jridgewell/sourcemaps.git
+│  │  ├─ VendorName: Justin Ridgewell
+│  │  └─ VendorUrl: https://github.com/jridgewell/sourcemaps/tree/main/packages/sourcemap-codec
+│  ├─ @jridgewell/trace-mapping@0.3.31
+│  │  ├─ URL: git+https://github.com/jridgewell/sourcemaps.git
+│  │  ├─ VendorName: Justin Ridgewell
+│  │  └─ VendorUrl: https://github.com/jridgewell/sourcemaps/tree/main/packages/trace-mapping
+│  ├─ @miblanchard/react-native-slider@2.6.0
+│  │  └─ URL: git@github.com:miblanchard/react-native-slider.git
+│  ├─ @pkgjs/parseargs@0.11.0
+│  │  ├─ URL: git@github.com:pkgjs/parseargs.git
+│  │  └─ VendorUrl: https://github.com/pkgjs/parseargs#readme
+│  ├─ @radix-ui/primitive@1.1.3
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-collection@1.1.7
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-compose-refs@1.1.2
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-context@1.1.2
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-dialog@1.1.15
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-direction@1.1.1
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-dismissable-layer@1.1.11
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-focus-guards@1.1.3
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-focus-scope@1.1.7
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-id@1.1.1
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-portal@1.1.9
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-presence@1.1.5
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-primitive@2.1.3
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-roving-focus@1.1.11
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-slot@1.2.0
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-slot@1.2.3
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-tabs@1.1.13
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-use-callback-ref@1.1.1
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-use-controllable-state@1.2.2
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-use-effect-event@0.0.2
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-use-escape-keydown@1.1.1
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @radix-ui/react-use-layout-effect@1.1.1
+│  │  ├─ URL: git+https://github.com/radix-ui/primitives.git
+│  │  └─ VendorUrl: https://radix-ui.com/primitives
+│  ├─ @react-native-async-storage/async-storage@2.2.0
+│  │  ├─ URL: https://github.com/react-native-async-storage/async-storage.git
+│  │  ├─ VendorName: Krzysztof Borowy
+│  │  └─ VendorUrl: https://github.com/react-native-async-storage/async-storage#readme
+│  ├─ @react-native-picker/picker@2.11.1
+│  │  ├─ URL: https://github.com/react-native-picker/picker.git
+│  │  └─ VendorUrl: https://github.com/react-native-picker/picker#readme
+│  ├─ @react-native/assets-registry@0.81.4
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/assets#readme
+│  ├─ @react-native/babel-plugin-codegen@0.81.5
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/babel-plugin-codegen#readme
+│  ├─ @react-native/babel-preset@0.81.5
+│  │  └─ URL: git+ssh://git@github.com/facebook/react-native.git
+│  ├─ @react-native/codegen@0.81.4
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/react-native-codegen#readme
+│  ├─ @react-native/codegen@0.81.5
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/react-native-codegen#readme
+│  ├─ @react-native/community-cli-plugin@0.81.4
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/community-cli-plugin#readme
+│  ├─ @react-native/dev-middleware@0.81.4
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/dev-middleware#readme
+│  ├─ @react-native/dev-middleware@0.81.5
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/dev-middleware#readme
+│  ├─ @react-native/gradle-plugin@0.81.4
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/gradle-plugin#readme
+│  ├─ @react-native/js-polyfills@0.81.4
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/polyfills#readme
+│  ├─ @react-native/normalize-colors@0.74.89
+│  │  ├─ URL: https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/normalize-color#readme
+│  ├─ @react-native/normalize-colors@0.81.4
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/normalize-color#readme
+│  ├─ @react-native/normalize-colors@0.81.5
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/normalize-color#readme
+│  ├─ @react-native/virtualized-lists@0.81.4
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://github.com/facebook/react-native/tree/HEAD/packages/virtualized-lists#readme
+│  ├─ @react-navigation/bottom-tabs@7.8.11
+│  │  └─ URL: https://github.com/react-navigation/react-navigation.git
+│  ├─ @react-navigation/core@7.13.5
+│  │  ├─ URL: https://github.com/react-navigation/react-navigation.git
+│  │  └─ VendorUrl: https://reactnavigation.org/
+│  ├─ @react-navigation/elements@2.9.1
+│  │  ├─ URL: https://github.com/react-navigation/react-navigation.git
+│  │  └─ VendorUrl: https://reactnavigation.org/
+│  ├─ @react-navigation/native-stack@7.8.5
+│  │  ├─ URL: https://github.com/react-navigation/react-navigation.git
+│  │  └─ VendorUrl: https://github.com/software-mansion/react-native-screens#readme
+│  ├─ @react-navigation/native@7.1.24
+│  │  ├─ URL: https://github.com/react-navigation/react-navigation.git
+│  │  └─ VendorUrl: https://reactnavigation.org/
+│  ├─ @react-navigation/routers@7.5.2
+│  │  ├─ URL: https://github.com/react-navigation/react-navigation.git
+│  │  └─ VendorUrl: https://reactnavigation.org/docs/custom-routers/
+│  ├─ @sinclair/typebox@0.27.8
+│  │  ├─ URL: https://github.com/sinclairzx81/typebox
+│  │  └─ VendorName: sinclairzx81
+│  ├─ @types/babel__core@7.20.5
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/babel__core
+│  ├─ @types/babel__generator@7.27.0
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/babel__generator
+│  ├─ @types/babel__template@7.4.4
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/babel__template
+│  ├─ @types/babel__traverse@7.28.0
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/babel__traverse
+│  ├─ @types/graceful-fs@4.1.9
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/graceful-fs
+│  ├─ @types/hammerjs@2.0.46
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/hammerjs
+│  ├─ @types/istanbul-lib-coverage@2.0.6
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/istanbul-lib-coverage
+│  ├─ @types/istanbul-lib-report@3.0.3
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/istanbul-lib-report
+│  ├─ @types/istanbul-reports@3.0.4
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/istanbul-reports
+│  ├─ @types/node@24.10.1
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node
+│  ├─ @types/react@19.1.17
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react
+│  ├─ @types/stack-utils@2.0.3
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/stack-utils
+│  ├─ @types/yargs-parser@21.0.3
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/yargs-parser
+│  ├─ @types/yargs@17.0.35
+│  │  ├─ URL: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+│  │  └─ VendorUrl: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/yargs
+│  ├─ @urql/core@5.2.0
+│  │  ├─ URL: https://github.com/urql-graphql/urql.git
+│  │  ├─ VendorName: urql GraphQL Contributors
+│  │  └─ VendorUrl: https://formidable.com/open-source/urql/docs/
+│  ├─ @urql/exchange-retry@1.3.2
+│  │  ├─ URL: https://github.com/urql-graphql/urql.git
+│  │  ├─ VendorName: urql GraphQL Contributors
+│  │  └─ VendorUrl: https://formidable.com/open-source/urql/docs/
+│  ├─ @xmldom/xmldom@0.8.11
+│  │  ├─ URL: git://github.com/xmldom/xmldom.git
+│  │  └─ VendorUrl: https://github.com/xmldom/xmldom
+│  ├─ abort-controller@3.0.0
+│  │  ├─ URL: git+https://github.com/mysticatea/abort-controller.git
+│  │  ├─ VendorName: Toru Nagashima
+│  │  └─ VendorUrl: https://github.com/mysticatea/abort-controller#readme
+│  ├─ accepts@1.3.8
+│  │  └─ URL: https://github.com/jshttp/accepts.git
+│  ├─ acorn@8.15.0
+│  │  ├─ URL: git+https://github.com/acornjs/acorn.git
+│  │  └─ VendorUrl: https://github.com/acornjs/acorn
+│  ├─ agent-base@7.1.4
+│  │  ├─ URL: https://github.com/TooTallNate/proxy-agents.git
+│  │  ├─ VendorName: Nathan Rajlich
+│  │  └─ VendorUrl: http://n8.io/
+│  ├─ anser@1.4.10
+│  │  ├─ URL: git://github.com/IonicaBizau/anser.git
+│  │  ├─ VendorName: Ionică Bizău
+│  │  └─ VendorUrl: https://github.com/IonicaBizau/anser#readme
+│  ├─ ansi-escapes@4.3.2
+│  │  ├─ URL: https://github.com/sindresorhus/ansi-escapes.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ ansi-regex@4.1.1
+│  │  ├─ URL: https://github.com/chalk/ansi-regex.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ ansi-regex@5.0.1
+│  │  ├─ URL: https://github.com/chalk/ansi-regex.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ ansi-regex@6.2.2
+│  │  ├─ URL: https://github.com/chalk/ansi-regex.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ ansi-styles@3.2.1
+│  │  ├─ URL: https://github.com/chalk/ansi-styles.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ ansi-styles@4.3.0
+│  │  ├─ URL: https://github.com/chalk/ansi-styles.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ ansi-styles@5.2.0
+│  │  ├─ URL: https://github.com/chalk/ansi-styles.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ ansi-styles@6.2.3
+│  │  ├─ URL: https://github.com/chalk/ansi-styles.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ any-promise@1.3.0
+│  │  ├─ URL: https://github.com/kevinbeaty/any-promise
+│  │  ├─ VendorName: Kevin Beaty
+│  │  └─ VendorUrl: http://github.com/kevinbeaty/any-promise
+│  ├─ arg@5.0.2
+│  │  ├─ URL: https://github.com/vercel/arg.git
+│  │  └─ VendorName: Josh Junon
+│  ├─ argparse@1.0.10
+│  │  └─ URL: https://github.com/nodeca/argparse.git
+│  ├─ aria-hidden@1.2.6
+│  │  ├─ URL: git+https://github.com/theKashey/aria-hidden.git
+│  │  ├─ VendorName: Anton Korzunov
+│  │  └─ VendorUrl: https://github.com/theKashey/aria-hidden#readme
+│  ├─ asap@2.0.6
+│  │  └─ URL: https://github.com/kriskowal/asap.git
+│  ├─ async-limiter@1.0.1
+│  │  ├─ URL: https://github.com/strml/async-limiter.git
+│  │  └─ VendorName: Samuel Reed
+│  ├─ babel-jest@29.7.0
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ babel-plugin-jest-hoist@29.6.3
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ babel-plugin-polyfill-corejs2@0.4.14
+│  │  └─ URL: https://github.com/babel/babel-polyfills.git
+│  ├─ babel-plugin-polyfill-corejs3@0.13.0
+│  │  └─ URL: https://github.com/babel/babel-polyfills.git
+│  ├─ babel-plugin-polyfill-regenerator@0.6.5
+│  │  └─ URL: https://github.com/babel/babel-polyfills.git
+│  ├─ babel-plugin-react-compiler@1.0.0
+│  │  └─ URL: git+https://github.com/facebook/react.git
+│  ├─ babel-plugin-react-native-web@0.21.2
+│  │  ├─ URL: git://github.com/necolas/react-native-web.git
+│  │  └─ VendorName: Nicolas Gallagher
+│  ├─ babel-plugin-syntax-hermes-parser@0.29.1
+│  │  └─ URL: git@github.com:facebook/hermes.git
+│  ├─ babel-plugin-transform-flow-enums@0.0.2
+│  │  └─ URL: git+https://github.com/facebook/flow.git
+│  ├─ babel-preset-current-node-syntax@1.2.0
+│  │  ├─ URL: https://github.com/nicolo-ribaudo/babel-preset-current-node-syntax.git
+│  │  ├─ VendorName: Nicolò Ribaudo
+│  │  └─ VendorUrl: https://github.com/nicolo-ribaudo
+│  ├─ babel-preset-expo@54.0.7
+│  │  ├─ URL: git+https://github.com/expo/expo.git
+│  │  ├─ VendorName: Expo
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/babel-preset-expo#readme
+│  ├─ babel-preset-jest@29.6.3
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ balanced-match@1.0.2
+│  │  ├─ URL: git://github.com/juliangruber/balanced-match.git
+│  │  ├─ VendorName: Julian Gruber
+│  │  └─ VendorUrl: https://github.com/juliangruber/balanced-match
+│  ├─ base64-js@1.5.1
+│  │  ├─ URL: git://github.com/beatgammit/base64-js.git
+│  │  ├─ VendorName: T. Jameson Little
+│  │  └─ VendorUrl: https://github.com/beatgammit/base64-js
+│  ├─ better-opn@3.0.2
+│  │  ├─ URL: https://github.com/ExiaSR/better-opn
+│  │  └─ VendorName: Michael Lin
+│  ├─ bplist-creator@0.1.0
+│  │  ├─ URL: https://github.com/nearinfinity/node-bplist-creator.git
+│  │  └─ VendorName: Joe Ferner
+│  ├─ bplist-parser@0.3.1
+│  │  ├─ URL: https://github.com/nearinfinity/node-bplist-parser.git
+│  │  ├─ VendorName: Joe Ferner
+│  │  └─ VendorUrl: https://github.com/nearinfinity/node-bplist-parser
+│  ├─ bplist-parser@0.3.2
+│  │  ├─ URL: https://github.com/nearinfinity/node-bplist-parser.git
+│  │  ├─ VendorName: Joe Ferner
+│  │  └─ VendorUrl: https://github.com/nearinfinity/node-bplist-parser
+│  ├─ brace-expansion@1.1.12
+│  │  ├─ URL: git://github.com/juliangruber/brace-expansion.git
+│  │  ├─ VendorName: Julian Gruber
+│  │  └─ VendorUrl: https://github.com/juliangruber/brace-expansion
+│  ├─ brace-expansion@2.0.2
+│  │  ├─ URL: git://github.com/juliangruber/brace-expansion.git
+│  │  ├─ VendorName: Julian Gruber
+│  │  └─ VendorUrl: https://github.com/juliangruber/brace-expansion
+│  ├─ braces@3.0.3
+│  │  ├─ URL: https://github.com/micromatch/braces.git
+│  │  ├─ VendorName: Jon Schlinkert
+│  │  └─ VendorUrl: https://github.com/micromatch/braces
+│  ├─ browserslist@4.28.0
+│  │  ├─ URL: https://github.com/browserslist/browserslist.git
+│  │  └─ VendorName: Andrey Sitnik
+│  ├─ buffer-from@1.1.2
+│  │  └─ URL: https://github.com/LinusU/buffer-from.git
+│  ├─ buffer@5.7.1
+│  │  ├─ URL: git://github.com/feross/buffer.git
+│  │  ├─ VendorName: Feross Aboukhadijeh
+│  │  └─ VendorUrl: https://github.com/feross/buffer
+│  ├─ bytes@3.1.2
+│  │  ├─ URL: https://github.com/visionmedia/bytes.js.git
+│  │  ├─ VendorName: TJ Holowaychuk
+│  │  └─ VendorUrl: http://tjholowaychuk.com
+│  ├─ camelcase@5.3.1
+│  │  ├─ URL: https://github.com/sindresorhus/camelcase.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ camelcase@6.3.0
+│  │  ├─ URL: https://github.com/sindresorhus/camelcase.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ chalk@2.4.2
+│  │  └─ URL: https://github.com/chalk/chalk.git
+│  ├─ chalk@4.1.2
+│  │  └─ URL: https://github.com/chalk/chalk.git
+│  ├─ ci-info@2.0.0
+│  │  ├─ URL: https://github.com/watson/ci-info.git
+│  │  ├─ VendorName: Thomas Watson Steen
+│  │  └─ VendorUrl: https://github.com/watson/ci-info
+│  ├─ ci-info@3.9.0
+│  │  ├─ URL: https://github.com/watson/ci-info.git
+│  │  ├─ VendorName: Thomas Watson Steen
+│  │  └─ VendorUrl: https://github.com/watson/ci-info
+│  ├─ cli-cursor@2.1.0
+│  │  ├─ URL: https://github.com/sindresorhus/cli-cursor.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ cli-spinners@2.9.2
+│  │  ├─ URL: https://github.com/sindresorhus/cli-spinners.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ client-only@0.0.1
+│  │  ├─ URL: https://reactjs.org/
+│  │  └─ VendorUrl: https://reactjs.org/
+│  ├─ clone@1.0.4
+│  │  ├─ URL: git://github.com/pvorb/node-clone.git
+│  │  ├─ VendorName: Paul Vorbach
+│  │  └─ VendorUrl: http://paul.vorba.ch/
+│  ├─ color-convert@1.9.3
+│  │  ├─ URL: https://github.com/Qix-/color-convert.git
+│  │  └─ VendorName: Heather Arthur
+│  ├─ color-convert@2.0.1
+│  │  ├─ URL: https://github.com/Qix-/color-convert.git
+│  │  └─ VendorName: Heather Arthur
+│  ├─ color-name@1.1.3
+│  │  ├─ URL: git@github.com:dfcreative/color-name.git
+│  │  ├─ VendorName: DY
+│  │  └─ VendorUrl: https://github.com/dfcreative/color-name
+│  ├─ color-name@1.1.4
+│  │  ├─ URL: git@github.com:colorjs/color-name.git
+│  │  ├─ VendorName: DY
+│  │  └─ VendorUrl: https://github.com/colorjs/color-name
+│  ├─ color-string@1.9.1
+│  │  ├─ URL: https://github.com/Qix-/color-string.git
+│  │  └─ VendorName: Heather Arthur
+│  ├─ color@4.2.3
+│  │  └─ URL: https://github.com/Qix-/color.git
+│  ├─ commander@12.1.0
+│  │  ├─ URL: git+https://github.com/tj/commander.js.git
+│  │  └─ VendorName: TJ Holowaychuk
+│  ├─ commander@2.20.3
+│  │  ├─ URL: https://github.com/tj/commander.js.git
+│  │  └─ VendorName: TJ Holowaychuk
+│  ├─ commander@4.1.1
+│  │  ├─ URL: https://github.com/tj/commander.js.git
+│  │  └─ VendorName: TJ Holowaychuk
+│  ├─ commander@7.2.0
+│  │  ├─ URL: https://github.com/tj/commander.js.git
+│  │  └─ VendorName: TJ Holowaychuk
+│  ├─ compressible@2.0.18
+│  │  └─ URL: https://github.com/jshttp/compressible.git
+│  ├─ compression@1.8.1
+│  │  └─ URL: https://github.com/expressjs/compression.git
+│  ├─ concat-map@0.0.1
+│  │  ├─ URL: git://github.com/substack/node-concat-map.git
+│  │  ├─ VendorName: James Halliday
+│  │  └─ VendorUrl: http://substack.net
+│  ├─ connect@3.7.0
+│  │  ├─ URL: https://github.com/senchalabs/connect.git
+│  │  ├─ VendorName: TJ Holowaychuk
+│  │  └─ VendorUrl: http://tjholowaychuk.com
+│  ├─ convert-source-map@2.0.0
+│  │  ├─ URL: git://github.com/thlorenz/convert-source-map.git
+│  │  ├─ VendorName: Thorsten Lorenz
+│  │  └─ VendorUrl: https://github.com/thlorenz/convert-source-map
+│  ├─ core-js-compat@3.47.0
+│  │  ├─ URL: git+https://github.com/zloirock/core-js.git
+│  │  ├─ VendorName: Denis Pushkarev
+│  │  └─ VendorUrl: https://core-js.io/
+│  ├─ cross-fetch@3.2.0
+│  │  ├─ URL: https://github.com/lquixada/cross-fetch.git
+│  │  ├─ VendorName: Leonardo Quixada
+│  │  └─ VendorUrl: https://github.com/lquixada/cross-fetch
+│  ├─ cross-spawn@7.0.6
+│  │  ├─ URL: git@github.com:moxystudio/node-cross-spawn.git
+│  │  ├─ VendorName: André Cruz
+│  │  └─ VendorUrl: https://github.com/moxystudio/node-cross-spawn
+│  ├─ crypto-random-string@2.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/crypto-random-string.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ css-in-js-utils@3.1.0
+│  │  ├─ URL: https://github.com/robinweser/css-in-js-utils.git
+│  │  └─ VendorName: robinweser
+│  ├─ csstype@3.2.3
+│  │  ├─ URL: https://github.com/frenic/csstype
+│  │  └─ VendorName: Fredrik Nicol
+│  ├─ debug@2.6.9
+│  │  ├─ URL: git://github.com/visionmedia/debug.git
+│  │  └─ VendorName: TJ Holowaychuk
+│  ├─ debug@3.2.7
+│  │  ├─ URL: git://github.com/visionmedia/debug.git
+│  │  └─ VendorName: TJ Holowaychuk
+│  ├─ debug@4.4.3
+│  │  ├─ URL: git://github.com/debug-js/debug.git
+│  │  ├─ VendorName: Josh Junon
+│  │  └─ VendorUrl: https://github.com/qix-
+│  ├─ decode-uri-component@0.2.2
+│  │  ├─ URL: https://github.com/SamVerschueren/decode-uri-component.git
+│  │  ├─ VendorName: Sam Verschueren
+│  │  └─ VendorUrl: github.com/SamVerschueren
+│  ├─ deep-extend@0.6.0
+│  │  ├─ URL: git://github.com/unclechu/node-deep-extend.git
+│  │  ├─ VendorName: Viacheslav Lotsmanov
+│  │  └─ VendorUrl: https://github.com/unclechu/node-deep-extend
+│  ├─ deepmerge@4.3.1
+│  │  ├─ URL: git://github.com/TehShrike/deepmerge.git
+│  │  └─ VendorUrl: https://github.com/TehShrike/deepmerge
+│  ├─ defaults@1.0.4
+│  │  ├─ URL: git://github.com/sindresorhus/node-defaults.git
+│  │  └─ VendorName: Elijah Insua
+│  ├─ define-lazy-prop@2.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/define-lazy-prop.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ depd@2.0.0
+│  │  ├─ URL: https://github.com/dougwilson/nodejs-depd.git
+│  │  └─ VendorName: Douglas Christopher Wilson
+│  ├─ destroy@1.2.0
+│  │  ├─ URL: https://github.com/stream-utils/destroy.git
+│  │  ├─ VendorName: Jonathan Ong
+│  │  └─ VendorUrl: http://jongleberry.com
+│  ├─ detect-node-es@1.1.0
+│  │  ├─ URL: https://github.com/thekashey/detect-node
+│  │  ├─ VendorName: Ilya Kantor
+│  │  └─ VendorUrl: https://github.com/thekashey/detect-node
+│  ├─ eastasianwidth@0.2.0
+│  │  ├─ URL: git://github.com/komagata/eastasianwidth.git
+│  │  └─ VendorName: Masaki Komagata
+│  ├─ ee-first@1.1.1
+│  │  ├─ URL: https://github.com/jonathanong/ee-first.git
+│  │  ├─ VendorName: Jonathan Ong
+│  │  └─ VendorUrl: http://jongleberry.com
+│  ├─ emoji-regex@8.0.0
+│  │  ├─ URL: https://github.com/mathiasbynens/emoji-regex.git
+│  │  ├─ VendorName: Mathias Bynens
+│  │  └─ VendorUrl: https://mths.be/emoji-regex
+│  ├─ emoji-regex@9.2.2
+│  │  ├─ URL: https://github.com/mathiasbynens/emoji-regex.git
+│  │  ├─ VendorName: Mathias Bynens
+│  │  └─ VendorUrl: https://mths.be/emoji-regex
+│  ├─ encodeurl@1.0.2
+│  │  └─ URL: https://github.com/pillarjs/encodeurl.git
+│  ├─ encodeurl@2.0.0
+│  │  └─ URL: https://github.com/pillarjs/encodeurl.git
+│  ├─ env-editor@0.4.2
+│  │  ├─ URL: https://github.com/sindresorhus/env-editor.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ error-stack-parser@2.1.4
+│  │  ├─ URL: git://github.com/stacktracejs/error-stack-parser.git
+│  │  └─ VendorUrl: https://www.stacktracejs.com/
+│  ├─ escalade@3.2.0
+│  │  ├─ URL: https://github.com/lukeed/escalade.git
+│  │  ├─ VendorName: Luke Edwards
+│  │  └─ VendorUrl: https://lukeed.com
+│  ├─ escape-html@1.0.3
+│  │  └─ URL: https://github.com/component/escape-html.git
+│  ├─ escape-string-regexp@1.0.5
+│  │  ├─ URL: https://github.com/sindresorhus/escape-string-regexp.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ escape-string-regexp@2.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/escape-string-regexp.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ escape-string-regexp@4.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/escape-string-regexp.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ etag@1.8.1
+│  │  └─ URL: https://github.com/jshttp/etag.git
+│  ├─ event-target-shim@5.0.1
+│  │  ├─ URL: https://github.com/mysticatea/event-target-shim.git
+│  │  ├─ VendorName: Toru Nagashima
+│  │  └─ VendorUrl: https://github.com/mysticatea/event-target-shim
+│  ├─ exec-async@2.2.0
+│  │  ├─ URL: git+https://github.com/ccheever/exec-async.git
+│  │  ├─ VendorName: Charlie Cheever
+│  │  └─ VendorUrl: https://github.com/ccheever/exec-async#readme
+│  ├─ expo-asset@12.0.10
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/versions/latest/sdk/asset/
+│  ├─ expo-blur@15.0.7
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/versions/latest/sdk/blur-view/
+│  ├─ expo-checkbox@5.0.7
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/versions/latest/sdk/checkbox
+│  ├─ expo-clipboard@8.0.7
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/versions/latest/sdk/clipboard
+│  ├─ expo-constants@18.0.10
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/versions/latest/sdk/constants/
+│  ├─ expo-file-system@19.0.19
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/versions/latest/sdk/filesystem/
+│  ├─ expo-font@14.0.9
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/versions/latest/sdk/font/
+│  ├─ expo-keep-awake@15.0.7
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/versions/latest/sdk/keep-awake/
+│  ├─ expo-linking@8.0.9
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/versions/latest/sdk/linking
+│  ├─ expo-localization@17.0.7
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/versions/latest/sdk/localization/
+│  ├─ expo-modules-autolinking@3.0.22
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/expo-modules-autolinking#readme
+│  ├─ expo-modules-core@3.0.26
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/expo-modules-core
+│  ├─ expo-router@6.0.15
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/routing/introduction/
+│  ├─ expo-server@1.0.4
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/expo-server#readme
+│  ├─ expo-splash-screen@31.0.11
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/versions/latest/sdk/splash-screen/
+│  ├─ expo-status-bar@3.0.8
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/versions/latest/sdk/status-bar/
+│  ├─ expo-web-browser@15.0.9
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: 650 Industries, Inc.
+│  │  └─ VendorUrl: https://docs.expo.dev/versions/latest/sdk/webbrowser/
+│  ├─ expo@54.0.25
+│  │  ├─ URL: https://github.com/expo/expo.git
+│  │  ├─ VendorName: Expo
+│  │  └─ VendorUrl: https://github.com/expo/expo/tree/main/packages/expo
+│  ├─ fast-base64-decode@1.0.0
+│  │  └─ URL: https://github.com/LinusU/fast-base64-decode.git
+│  ├─ fast-deep-equal@3.1.3
+│  │  ├─ URL: git+https://github.com/epoberezkin/fast-deep-equal.git
+│  │  ├─ VendorName: Evgeny Poberezkin
+│  │  └─ VendorUrl: https://github.com/epoberezkin/fast-deep-equal#readme
+│  ├─ fast-json-stable-stringify@2.1.0
+│  │  ├─ URL: git://github.com/epoberezkin/fast-json-stable-stringify.git
+│  │  ├─ VendorName: James Halliday
+│  │  └─ VendorUrl: https://github.com/epoberezkin/fast-json-stable-stringify
+│  ├─ fbjs-css-vars@1.0.2
+│  │  └─ URL: https://github.com/facebook/fbjs.git
+│  ├─ fbjs@3.0.5
+│  │  └─ URL: https://github.com/facebook/fbjs.git
+│  ├─ fill-range@7.1.1
+│  │  ├─ URL: https://github.com/jonschlinkert/fill-range.git
+│  │  ├─ VendorName: Jon Schlinkert
+│  │  └─ VendorUrl: https://github.com/jonschlinkert/fill-range
+│  ├─ filter-obj@1.1.0
+│  │  ├─ URL: https://github.com/sindresorhus/filter-obj.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ finalhandler@1.1.2
+│  │  ├─ URL: https://github.com/pillarjs/finalhandler.git
+│  │  └─ VendorName: Douglas Christopher Wilson
+│  ├─ find-up@4.1.0
+│  │  ├─ URL: https://github.com/sindresorhus/find-up.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ find-up@5.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/find-up.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ flow-enums-runtime@0.0.6
+│  │  └─ URL: git+https://github.com/facebook/flow.git
+│  ├─ freeport-async@2.0.0
+│  │  ├─ URL: https://github.com/expo/freeport-async.git
+│  │  ├─ VendorName: Expo
+│  │  └─ VendorUrl: https://github.com/expo/freeport-async/blob/master/README.md
+│  ├─ fresh@0.5.2
+│  │  ├─ URL: https://github.com/jshttp/fresh.git
+│  │  ├─ VendorName: TJ Holowaychuk
+│  │  └─ VendorUrl: http://tjholowaychuk.com
+│  ├─ function-bind@1.1.2
+│  │  ├─ URL: https://github.com/Raynos/function-bind.git
+│  │  ├─ VendorName: Raynos
+│  │  └─ VendorUrl: https://github.com/Raynos/function-bind
+│  ├─ gensync@1.0.0-beta.2
+│  │  ├─ URL: https://github.com/loganfsmyth/gensync.git
+│  │  ├─ VendorName: Logan Smyth
+│  │  └─ VendorUrl: https://github.com/loganfsmyth/gensync
+│  ├─ get-nonce@1.0.1
+│  │  ├─ URL: git@github.com:theKashey/get-nonce.git
+│  │  ├─ VendorName: Anton Korzunov
+│  │  └─ VendorUrl: https://github.com/theKashey/get-nonce
+│  ├─ get-package-type@0.1.0
+│  │  ├─ URL: git+https://github.com/cfware/get-package-type.git
+│  │  ├─ VendorName: Corey Farrell
+│  │  └─ VendorUrl: https://github.com/cfware/get-package-type#readme
+│  ├─ getenv@2.0.0
+│  │  ├─ URL: git://github.com/ctavan/node-getenv.git
+│  │  ├─ VendorName: Christoph Tavan
+│  │  └─ VendorUrl: https://github.com/ctavan/node-getenv
+│  ├─ global-dirs@0.1.1
+│  │  ├─ URL: https://github.com/sindresorhus/global-dirs.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ has-flag@3.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/has-flag.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ has-flag@4.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/has-flag.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ hasown@2.0.2
+│  │  ├─ URL: git+https://github.com/inspect-js/hasOwn.git
+│  │  ├─ VendorName: Jordan Harband
+│  │  └─ VendorUrl: https://github.com/inspect-js/hasOwn#readme
+│  ├─ hermes-estree@0.29.1
+│  │  └─ URL: git@github.com:facebook/hermes.git
+│  ├─ hermes-estree@0.32.0
+│  │  └─ URL: git@github.com:facebook/hermes.git
+│  ├─ hermes-parser@0.29.1
+│  │  └─ URL: git@github.com:facebook/hermes.git
+│  ├─ hermes-parser@0.32.0
+│  │  └─ URL: git@github.com:facebook/hermes.git
+│  ├─ html-parse-stringify@3.0.1
+│  │  ├─ URL: https://github.com/henrikjoreteg/html-parse-stringify
+│  │  ├─ VendorName: Henrik Joreteg
+│  │  └─ VendorUrl: https://github.com/henrikjoreteg/html-parse-stringify
+│  ├─ http-errors@2.0.0
+│  │  ├─ URL: https://github.com/jshttp/http-errors.git
+│  │  ├─ VendorName: Jonathan Ong
+│  │  └─ VendorUrl: http://jongleberry.com
+│  ├─ https-proxy-agent@7.0.6
+│  │  ├─ URL: https://github.com/TooTallNate/proxy-agents.git
+│  │  ├─ VendorName: Nathan Rajlich
+│  │  └─ VendorUrl: http://n8.io/
+│  ├─ i18next@25.7.1
+│  │  ├─ URL: https://github.com/i18next/i18next.git
+│  │  ├─ VendorName: Jan Mühlemann
+│  │  └─ VendorUrl: https://www.i18next.com/
+│  ├─ ignore@5.3.2
+│  │  ├─ URL: git@github.com:kaelzhang/node-ignore.git
+│  │  └─ VendorName: kael
+│  ├─ image-size@1.2.1
+│  │  ├─ URL: git://github.com/image-size/image-size.git
+│  │  ├─ VendorName: netroy
+│  │  └─ VendorUrl: http://netroy.in/
+│  ├─ imurmurhash@0.1.4
+│  │  ├─ URL: https://github.com/jensyt/imurmurhash-js
+│  │  ├─ VendorName: Jens Taylor
+│  │  └─ VendorUrl: https://github.com/jensyt/imurmurhash-js
+│  ├─ inline-style-prefixer@7.0.1
+│  │  ├─ URL: https://github.com/robinweser/inline-style-prefixer
+│  │  └─ VendorName: Robin Weser
+│  ├─ invariant@2.2.4
+│  │  ├─ URL: https://github.com/zertosh/invariant
+│  │  └─ VendorName: Andres Suarez
+│  ├─ is-arrayish@0.3.4
+│  │  ├─ URL: https://github.com/qix-/node-is-arrayish.git
+│  │  ├─ VendorName: Qix
+│  │  └─ VendorUrl: http://github.com/qix-
+│  ├─ is-core-module@2.16.1
+│  │  ├─ URL: git+https://github.com/inspect-js/is-core-module.git
+│  │  ├─ VendorName: Jordan Harband
+│  │  └─ VendorUrl: https://github.com/inspect-js/is-core-module
+│  ├─ is-docker@2.2.1
+│  │  ├─ URL: https://github.com/sindresorhus/is-docker.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ is-fullwidth-code-point@3.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/is-fullwidth-code-point.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ is-number@7.0.0
+│  │  ├─ URL: https://github.com/jonschlinkert/is-number.git
+│  │  ├─ VendorName: Jon Schlinkert
+│  │  └─ VendorUrl: https://github.com/jonschlinkert/is-number
+│  ├─ is-plain-obj@2.1.0
+│  │  ├─ URL: https://github.com/sindresorhus/is-plain-obj.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ is-wsl@2.2.0
+│  │  ├─ URL: https://github.com/sindresorhus/is-wsl.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ jest-environment-node@29.7.0
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ jest-get-type@29.6.3
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ jest-haste-map@29.7.0
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ jest-message-util@29.7.0
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ jest-mock@29.7.0
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ jest-regex-util@29.6.3
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ jest-util@29.7.0
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ jest-validate@29.7.0
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ jest-worker@29.7.0
+│  │  └─ URL: https://github.com/jestjs/jest.git
+│  ├─ jimp-compact@0.16.1
+│  │  └─ URL: https://github.com/nuxt-community/jimp-compact.git
+│  ├─ js-tokens@4.0.0
+│  │  ├─ URL: https://github.com/lydell/js-tokens.git
+│  │  └─ VendorName: Simon Lydell
+│  ├─ js-yaml@3.14.2
+│  │  ├─ URL: https://github.com/nodeca/js-yaml.git
+│  │  ├─ VendorName: Vladimir Zapparov
+│  │  └─ VendorUrl: https://github.com/nodeca/js-yaml
+│  ├─ js-yaml@4.1.1
+│  │  ├─ URL: https://github.com/nodeca/js-yaml.git
+│  │  └─ VendorName: Vladimir Zapparov
+│  ├─ jsesc@3.1.0
+│  │  ├─ URL: https://github.com/mathiasbynens/jsesc.git
+│  │  ├─ VendorName: Mathias Bynens
+│  │  └─ VendorUrl: https://mths.be/jsesc
+│  ├─ json5@2.2.3
+│  │  ├─ URL: git+https://github.com/json5/json5.git
+│  │  ├─ VendorName: Aseem Kishore
+│  │  └─ VendorUrl: http://json5.org/
+│  ├─ kleur@3.0.3
+│  │  ├─ URL: https://github.com/lukeed/kleur.git
+│  │  ├─ VendorName: Luke Edwards
+│  │  └─ VendorUrl: lukeed.com
+│  ├─ lan-network@0.1.7
+│  │  ├─ URL: https://github.com/kitten/lan-network
+│  │  └─ VendorName: Phil Pluckthun
+│  ├─ leven@3.1.0
+│  │  ├─ URL: https://github.com/sindresorhus/leven.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ lines-and-columns@1.2.4
+│  │  ├─ URL: https://github.com/eventualbuddha/lines-and-columns.git
+│  │  ├─ VendorName: Brian Donovan
+│  │  └─ VendorUrl: https://github.com/eventualbuddha/lines-and-columns#readme
+│  ├─ locate-path@5.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/locate-path.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ locate-path@6.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/locate-path.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ lodash.debounce@4.0.8
+│  │  ├─ URL: https://github.com/lodash/lodash.git
+│  │  ├─ VendorName: John-David Dalton
+│  │  └─ VendorUrl: https://lodash.com/
+│  ├─ lodash.throttle@4.1.1
+│  │  ├─ URL: https://github.com/lodash/lodash.git
+│  │  ├─ VendorName: John-David Dalton
+│  │  └─ VendorUrl: https://lodash.com/
+│  ├─ log-symbols@2.2.0
+│  │  ├─ URL: https://github.com/sindresorhus/log-symbols.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ loose-envify@1.4.0
+│  │  ├─ URL: git://github.com/zertosh/loose-envify.git
+│  │  ├─ VendorName: Andres Suarez
+│  │  └─ VendorUrl: https://github.com/zertosh/loose-envify
+│  ├─ memoize-one@5.2.1
+│  │  ├─ URL: https://github.com/alexreardon/memoize-one.git
+│  │  └─ VendorName: Alex Reardon
+│  ├─ memoize-one@6.0.0
+│  │  ├─ URL: https://github.com/alexreardon/memoize-one.git
+│  │  └─ VendorName: Alex Reardon
+│  ├─ merge-options@3.0.4
+│  │  ├─ URL: https://github.com/schnittstabil/merge-options.git
+│  │  └─ VendorName: Michael Mayer
+│  ├─ merge-stream@2.0.0
+│  │  ├─ URL: https://github.com/grncdr/merge-stream.git
+│  │  └─ VendorName: Stephen Sugden
+│  ├─ metro-babel-transformer@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-babel-transformer@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-cache-key@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-cache-key@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-cache@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-cache@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-config@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-config@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-core@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-core@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-file-map@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-file-map@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-minify-terser@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-minify-terser@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-resolver@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-resolver@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-runtime@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-runtime@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-source-map@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-source-map@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-symbolicate@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-symbolicate@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-transform-plugins@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-transform-plugins@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-transform-worker@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro-transform-worker@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ metro@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ micromatch@4.0.8
+│  │  ├─ URL: https://github.com/micromatch/micromatch.git
+│  │  ├─ VendorName: Jon Schlinkert
+│  │  └─ VendorUrl: https://github.com/micromatch/micromatch
+│  ├─ mime-db@1.52.0
+│  │  └─ URL: https://github.com/jshttp/mime-db.git
+│  ├─ mime-db@1.54.0
+│  │  └─ URL: https://github.com/jshttp/mime-db.git
+│  ├─ mime-types@2.1.35
+│  │  └─ URL: https://github.com/jshttp/mime-types.git
+│  ├─ mime@1.6.0
+│  │  ├─ URL: https://github.com/broofa/node-mime
+│  │  ├─ VendorName: Robert Kieffer
+│  │  └─ VendorUrl: http://github.com/broofa
+│  ├─ mimic-fn@1.2.0
+│  │  ├─ URL: https://github.com/sindresorhus/mimic-fn.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ minimist@1.2.8
+│  │  ├─ URL: git://github.com/minimistjs/minimist.git
+│  │  ├─ VendorName: James Halliday
+│  │  └─ VendorUrl: https://github.com/minimistjs/minimist
+│  ├─ minizlib@3.1.0
+│  │  ├─ URL: git+https://github.com/isaacs/minizlib.git
+│  │  ├─ VendorName: Isaac Z. Schlueter
+│  │  └─ VendorUrl: http://blog.izs.me/
+│  ├─ mkdirp@1.0.4
+│  │  └─ URL: https://github.com/isaacs/node-mkdirp.git
+│  ├─ ms@2.0.0
+│  │  └─ URL: https://github.com/zeit/ms.git
+│  ├─ ms@2.1.3
+│  │  └─ URL: https://github.com/vercel/ms.git
+│  ├─ mz@2.7.0
+│  │  ├─ URL: https://github.com/normalize/mz.git
+│  │  ├─ VendorName: Jonathan Ong
+│  │  └─ VendorUrl: http://jongleberry.com
+│  ├─ nanoid@3.3.11
+│  │  ├─ URL: https://github.com/ai/nanoid.git
+│  │  └─ VendorName: Andrey Sitnik
+│  ├─ negotiator@0.6.3
+│  │  └─ URL: https://github.com/jshttp/negotiator.git
+│  ├─ negotiator@0.6.4
+│  │  └─ URL: https://github.com/jshttp/negotiator.git
+│  ├─ nested-error-stacks@2.0.1
+│  │  ├─ URL: https://github.com/mdlavin/nested-error-stacks.git
+│  │  └─ VendorName: Matt Lavin
+│  ├─ node-fetch@2.7.0
+│  │  ├─ URL: https://github.com/bitinn/node-fetch.git
+│  │  ├─ VendorName: David Frank
+│  │  └─ VendorUrl: https://github.com/bitinn/node-fetch
+│  ├─ node-int64@0.4.0
+│  │  ├─ URL: https://github.com/broofa/node-int64
+│  │  └─ VendorName: Robert Kieffer
+│  ├─ node-releases@2.0.27
+│  │  ├─ URL: git+https://github.com/chicoxyzzy/node-releases.git
+│  │  └─ VendorName: Sergey Rubanov
+│  ├─ normalize-path@3.0.0
+│  │  ├─ URL: https://github.com/jonschlinkert/normalize-path.git
+│  │  ├─ VendorName: Jon Schlinkert
+│  │  └─ VendorUrl: https://github.com/jonschlinkert/normalize-path
+│  ├─ nullthrows@1.1.1
+│  │  ├─ URL: https://github.com/zertosh/nullthrows
+│  │  └─ VendorName: Andres Suarez
+│  ├─ ob1@0.83.2
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ ob1@0.83.3
+│  │  └─ URL: git@github.com:facebook/metro.git
+│  ├─ object-assign@4.1.1
+│  │  ├─ URL: https://github.com/sindresorhus/object-assign.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ on-finished@2.3.0
+│  │  └─ URL: https://github.com/jshttp/on-finished.git
+│  ├─ on-finished@2.4.1
+│  │  └─ URL: https://github.com/jshttp/on-finished.git
+│  ├─ on-headers@1.1.0
+│  │  ├─ URL: https://github.com/jshttp/on-headers.git
+│  │  └─ VendorName: Douglas Christopher Wilson
+│  ├─ onetime@2.0.1
+│  │  ├─ URL: https://github.com/sindresorhus/onetime.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ open@7.4.2
+│  │  ├─ URL: https://github.com/sindresorhus/open.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ open@8.4.2
+│  │  ├─ URL: https://github.com/sindresorhus/open.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ ora@3.4.0
+│  │  ├─ URL: https://github.com/sindresorhus/ora.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ p-limit@2.3.0
+│  │  ├─ URL: https://github.com/sindresorhus/p-limit.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ p-limit@3.1.0
+│  │  ├─ URL: https://github.com/sindresorhus/p-limit.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ p-locate@4.1.0
+│  │  ├─ URL: https://github.com/sindresorhus/p-locate.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ p-locate@5.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/p-locate.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ p-try@2.2.0
+│  │  ├─ URL: https://github.com/sindresorhus/p-try.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ parse-png@2.1.0
+│  │  ├─ URL: https://github.com/kevva/parse-png.git
+│  │  ├─ VendorName: Kevin Martensson
+│  │  └─ VendorUrl: github.com/kevva
+│  ├─ parseurl@1.3.3
+│  │  └─ URL: https://github.com/pillarjs/parseurl.git
+│  ├─ path-exists@4.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/path-exists.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ path-is-absolute@1.0.1
+│  │  ├─ URL: https://github.com/sindresorhus/path-is-absolute.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ path-key@3.1.1
+│  │  ├─ URL: https://github.com/sindresorhus/path-key.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ path-parse@1.0.7
+│  │  ├─ URL: https://github.com/jbgutierrez/path-parse.git
+│  │  ├─ VendorName: Javier Blanco
+│  │  └─ VendorUrl: https://github.com/jbgutierrez/path-parse#readme
+│  ├─ picomatch@2.3.1
+│  │  ├─ URL: https://github.com/micromatch/picomatch.git
+│  │  ├─ VendorName: Jon Schlinkert
+│  │  └─ VendorUrl: https://github.com/micromatch/picomatch
+│  ├─ picomatch@3.0.1
+│  │  ├─ URL: https://github.com/micromatch/picomatch.git
+│  │  ├─ VendorName: Jon Schlinkert
+│  │  └─ VendorUrl: https://github.com/micromatch/picomatch
+│  ├─ pirates@4.0.7
+│  │  ├─ URL: https://github.com/danez/pirates.git
+│  │  ├─ VendorName: Ari Porad
+│  │  └─ VendorUrl: https://github.com/danez/pirates#readme
+│  ├─ plist@3.1.0
+│  │  ├─ URL: git://github.com/TooTallNate/node-plist.git
+│  │  └─ VendorName: Nathan Rajlich
+│  ├─ pngjs@3.4.0
+│  │  ├─ URL: git://github.com/lukeapage/pngjs2.git
+│  │  └─ VendorUrl: https://github.com/lukeapage/pngjs
+│  ├─ postcss-value-parser@4.2.0
+│  │  ├─ URL: https://github.com/TrySound/postcss-value-parser.git
+│  │  ├─ VendorName: Bogdan Chadkin
+│  │  └─ VendorUrl: https://github.com/TrySound/postcss-value-parser
+│  ├─ postcss@8.4.49
+│  │  ├─ URL: https://github.com/postcss/postcss.git
+│  │  ├─ VendorName: Andrey Sitnik
+│  │  └─ VendorUrl: https://postcss.org/
+│  ├─ pretty-bytes@5.6.0
+│  │  ├─ URL: https://github.com/sindresorhus/pretty-bytes.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ pretty-format@29.7.0
+│  │  ├─ URL: https://github.com/jestjs/jest.git
+│  │  └─ VendorName: James Kyle
+│  ├─ progress@2.0.3
+│  │  ├─ URL: git://github.com/visionmedia/node-progress
+│  │  └─ VendorName: TJ Holowaychuk
+│  ├─ promise@7.3.1
+│  │  ├─ URL: https://github.com/then/promise.git
+│  │  └─ VendorName: ForbesLindesay
+│  ├─ promise@8.3.0
+│  │  ├─ URL: https://github.com/then/promise.git
+│  │  └─ VendorName: ForbesLindesay
+│  ├─ prompts@2.4.2
+│  │  ├─ URL: https://github.com/terkelg/prompts.git
+│  │  ├─ VendorName: Terkel Gjervig
+│  │  └─ VendorUrl: https://terkel.com
+│  ├─ prop-types@15.8.1
+│  │  ├─ URL: https://github.com/facebook/prop-types.git
+│  │  └─ VendorUrl: https://facebook.github.io/react/
+│  ├─ punycode@2.3.1
+│  │  ├─ URL: https://github.com/mathiasbynens/punycode.js.git
+│  │  ├─ VendorName: Mathias Bynens
+│  │  └─ VendorUrl: https://mths.be/punycode
+│  ├─ query-string@7.1.3
+│  │  ├─ URL: https://github.com/sindresorhus/query-string.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ queue@6.0.2
+│  │  ├─ URL: https://github.com/jessetane/queue.git
+│  │  └─ VendorName: Jesse Tane
+│  ├─ range-parser@1.2.1
+│  │  ├─ URL: https://github.com/jshttp/range-parser.git
+│  │  ├─ VendorName: TJ Holowaychuk
+│  │  └─ VendorUrl: http://tjholowaychuk.com
+│  ├─ react-devtools-core@6.1.5
+│  │  └─ URL: https://github.com/facebook/react.git
+│  ├─ react-dom@19.1.0
+│  │  ├─ URL: https://github.com/facebook/react.git
+│  │  └─ VendorUrl: https://react.dev/
+│  ├─ react-fast-compare@3.2.2
+│  │  ├─ URL: https://github.com/FormidableLabs/react-fast-compare
+│  │  ├─ VendorName: Chris Bolin
+│  │  └─ VendorUrl: https://github.com/FormidableLabs/react-fast-compare
+│  ├─ react-freeze@1.0.4
+│  │  └─ URL: https://github.com/software-mansion/react-freeze.git
+│  ├─ react-i18next@16.3.5
+│  │  ├─ URL: https://github.com/i18next/react-i18next.git
+│  │  ├─ VendorName: Jan Mühlemann
+│  │  └─ VendorUrl: https://github.com/i18next/react-i18next
+│  ├─ react-is@16.13.1
+│  │  ├─ URL: https://github.com/facebook/react.git
+│  │  └─ VendorUrl: https://reactjs.org/
+│  ├─ react-is@18.3.1
+│  │  ├─ URL: https://github.com/facebook/react.git
+│  │  └─ VendorUrl: https://reactjs.org/
+│  ├─ react-is@19.2.0
+│  │  ├─ URL: https://github.com/facebook/react.git
+│  │  └─ VendorUrl: https://react.dev/
+│  ├─ react-native-dynamic-vector-icons@2.0.0
+│  │  ├─ URL: git@github.com:WrathChaos/react-native-dynamic-vector-icons.git
+│  │  ├─ VendorName: Kuray
+│  │  └─ VendorUrl: https://www.freakycoder.com/
+│  ├─ react-native-gesture-handler@2.28.0
+│  │  ├─ URL: git+https://github.com/software-mansion/react-native-gesture-handler.git
+│  │  ├─ VendorName: Krzysztof Magiera
+│  │  └─ VendorUrl: https://github.com/software-mansion/react-native-gesture-handler#readme
+│  ├─ react-native-get-random-values@1.11.0
+│  │  └─ URL: https://github.com/LinusU/react-native-get-random-values.git
+│  ├─ react-native-is-edge-to-edge@1.2.1
+│  │  ├─ URL: https://github.com/zoontek/react-native-edge-to-edge.git
+│  │  ├─ VendorName: Mathieu Acthernoene
+│  │  └─ VendorUrl: https://github.com/zoontek/react-native-edge-to-edge
+│  ├─ react-native-pager-view@6.9.1
+│  │  ├─ URL: https://github.com/callstack/react-native-pager-view
+│  │  ├─ VendorName: troZee
+│  │  └─ VendorUrl: https://github.com/callstack/react-native-pager-view#readme
+│  ├─ react-native-reanimated@4.1.5
+│  │  ├─ URL: git+https://github.com/software-mansion/react-native-reanimated.git
+│  │  ├─ VendorName: Krzysztof Magiera
+│  │  └─ VendorUrl: https://docs.swmansion.com/react-native-reanimated
+│  ├─ react-native-safe-area-context@5.6.2
+│  │  ├─ URL: https://github.com/AppAndFlow/react-native-safe-area-context.git
+│  │  ├─ VendorName: Janic Duplessis
+│  │  └─ VendorUrl: https://github.com/AppAndFlow/react-native-safe-area-context#readme
+│  ├─ react-native-screens@4.16.0
+│  │  ├─ URL: git+https://github.com/software-mansion/react-native-screens.git
+│  │  ├─ VendorName: Krzysztof Magiera
+│  │  └─ VendorUrl: https://github.com/software-mansion/react-native-screens#readme
+│  ├─ react-native-toast-message@2.3.3
+│  │  ├─ URL: git+https://github.com/calintamas/react-native-toast-message.git
+│  │  └─ VendorName: Calin Tamas
+│  ├─ react-native-vector-icons@10.3.0
+│  │  ├─ URL: git://github.com/oblador/react-native-vector-icons.git
+│  │  ├─ VendorName: Joel Arvidsson
+│  │  └─ VendorUrl: https://github.com/oblador/react-native-vector-icons
+│  ├─ react-native-web@0.21.2
+│  │  ├─ URL: git://github.com/necolas/react-native-web.git
+│  │  └─ VendorName: Nicolas Gallagher
+│  ├─ react-native-worklets@0.5.1
+│  │  ├─ URL: git+https://github.com/software-mansion/react-native-reanimated.git
+│  │  └─ VendorUrl: https://docs.swmansion.com/react-native-worklets
+│  ├─ react-native@0.81.4
+│  │  ├─ URL: git+https://github.com/facebook/react-native.git
+│  │  └─ VendorUrl: https://reactnative.dev/
+│  ├─ react-refresh@0.14.2
+│  │  ├─ URL: https://github.com/facebook/react.git
+│  │  └─ VendorUrl: https://reactjs.org/
+│  ├─ react-remove-scroll-bar@2.3.8
+│  │  ├─ URL: https://github.com/theKashey/react-remove-scroll-bar
+│  │  └─ VendorName: Anton Korzunov
+│  ├─ react-remove-scroll@2.7.2
+│  │  ├─ URL: https://github.com/theKashey/react-remove-scroll
+│  │  └─ VendorName: Anton Korzunov
+│  ├─ react-style-singleton@2.2.3
+│  │  ├─ URL: https://github.com/theKashey/react-style-singleton
+│  │  ├─ VendorName: Anton Korzunov
+│  │  └─ VendorUrl: https://github.com/theKashey/react-style-singleton#readme
+│  ├─ react@19.1.0
+│  │  ├─ URL: https://github.com/facebook/react.git
+│  │  └─ VendorUrl: https://react.dev/
+│  ├─ regenerate-unicode-properties@10.2.2
+│  │  ├─ URL: https://github.com/mathiasbynens/regenerate-unicode-properties.git
+│  │  ├─ VendorName: Mathias Bynens
+│  │  └─ VendorUrl: https://github.com/mathiasbynens/regenerate-unicode-properties
+│  ├─ regenerate@1.4.2
+│  │  ├─ URL: https://github.com/mathiasbynens/regenerate.git
+│  │  ├─ VendorName: Mathias Bynens
+│  │  └─ VendorUrl: https://mths.be/regenerate
+│  ├─ regenerator-runtime@0.13.11
+│  │  ├─ URL: https://github.com/facebook/regenerator/tree/main/packages/runtime
+│  │  └─ VendorName: Ben Newman
+│  ├─ regexpu-core@6.4.0
+│  │  ├─ URL: https://github.com/mathiasbynens/regexpu-core.git
+│  │  ├─ VendorName: Mathias Bynens
+│  │  └─ VendorUrl: https://mths.be/regexpu
+│  ├─ regjsgen@0.8.0
+│  │  ├─ URL: https://github.com/bnjmnt4n/regjsgen.git
+│  │  ├─ VendorName: Benjamin Tan
+│  │  └─ VendorUrl: https://github.com/bnjmnt4n/regjsgen
+│  ├─ require-directory@2.1.1
+│  │  ├─ URL: git://github.com/troygoode/node-require-directory.git
+│  │  ├─ VendorName: Troy Goode
+│  │  └─ VendorUrl: https://github.com/troygoode/node-require-directory/
+│  ├─ require-from-string@2.0.2
+│  │  ├─ URL: https://github.com/floatdrop/require-from-string.git
+│  │  ├─ VendorName: Vsevolod Strukchinsky
+│  │  └─ VendorUrl: github.com/floatdrop
+│  ├─ requireg@0.2.2
+│  │  ├─ URL: https://github.com/h2non/requireg.git
+│  │  └─ VendorUrl: http://github.com/h2non/requireg
+│  ├─ resolve-from@5.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/resolve-from.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ resolve-global@1.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/resolve-global.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ resolve-workspace-root@2.0.0
+│  │  ├─ URL: git+https://github.com/byCedric/resolve-workspace-root.git
+│  │  ├─ VendorName: Cedric van Putten
+│  │  └─ VendorUrl: https://github.com/byCedric/resolve-workspace-root#readme
+│  ├─ resolve.exports@2.0.3
+│  │  ├─ URL: https://github.com/lukeed/resolve.exports.git
+│  │  ├─ VendorName: Luke Edwards
+│  │  └─ VendorUrl: https://lukeed.com
+│  ├─ resolve@1.22.11
+│  │  ├─ URL: ssh://github.com/browserify/resolve.git
+│  │  ├─ VendorName: James Halliday
+│  │  └─ VendorUrl: http://substack.net
+│  ├─ resolve@1.7.1
+│  │  ├─ URL: git://github.com/browserify/resolve.git
+│  │  ├─ VendorName: James Halliday
+│  │  └─ VendorUrl: http://substack.net
+│  ├─ restore-cursor@2.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/restore-cursor.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ safe-buffer@5.2.1
+│  │  ├─ URL: git://github.com/feross/safe-buffer.git
+│  │  ├─ VendorName: Feross Aboukhadijeh
+│  │  └─ VendorUrl: https://github.com/feross/safe-buffer
+│  ├─ scheduler@0.26.0
+│  │  ├─ URL: https://github.com/facebook/react.git
+│  │  └─ VendorUrl: https://react.dev/
+│  ├─ send@0.19.0
+│  │  ├─ URL: https://github.com/pillarjs/send.git
+│  │  └─ VendorName: TJ Holowaychuk
+│  ├─ send@0.19.1
+│  │  ├─ URL: https://github.com/pillarjs/send.git
+│  │  └─ VendorName: TJ Holowaychuk
+│  ├─ serialize-error@2.1.0
+│  │  ├─ URL: https://github.com/sindresorhus/serialize-error.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ serve-static@1.16.2
+│  │  ├─ URL: https://github.com/expressjs/serve-static.git
+│  │  └─ VendorName: Douglas Christopher Wilson
+│  ├─ server-only@0.0.1
+│  │  ├─ URL: https://reactjs.org/
+│  │  └─ VendorUrl: https://reactjs.org/
+│  ├─ setimmediate@1.0.5
+│  │  ├─ URL: https://github.com/YuzuJS/setImmediate.git
+│  │  └─ VendorName: YuzuJS
+│  ├─ sf-symbols-typescript@2.2.0
+│  │  ├─ URL: https://github.com/nandorojo/typescript-sf-symbols
+│  │  └─ VendorName: Fernando Rojo
+│  ├─ shallowequal@1.1.0
+│  │  ├─ URL: https://github.com/dashed/shallowequal.git
+│  │  ├─ VendorName: Alberto Leal
+│  │  └─ VendorUrl: github.com/dashed
+│  ├─ shebang-command@2.0.0
+│  │  ├─ URL: https://github.com/kevva/shebang-command.git
+│  │  ├─ VendorName: Kevin Mårtensson
+│  │  └─ VendorUrl: github.com/kevva
+│  ├─ shebang-regex@3.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/shebang-regex.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ shell-quote@1.8.3
+│  │  ├─ URL: http://github.com/ljharb/shell-quote.git
+│  │  ├─ VendorName: James Halliday
+│  │  └─ VendorUrl: https://github.com/ljharb/shell-quote
+│  ├─ simple-plist@1.3.1
+│  │  ├─ URL: https://github.com/wollardj/simple-plist.git
+│  │  ├─ VendorName: Joe Wollard
+│  │  └─ VendorUrl: https://github.com/wollardj/simple-plist.git
+│  ├─ simple-swizzle@0.2.4
+│  │  ├─ URL: https://github.com/qix-/node-simple-swizzle.git
+│  │  ├─ VendorName: Qix
+│  │  └─ VendorUrl: http://github.com/qix-
+│  ├─ sisteransi@1.0.5
+│  │  ├─ URL: https://github.com/terkelg/sisteransi
+│  │  ├─ VendorName: Terkel Gjervig
+│  │  └─ VendorUrl: https://terkel.com
+│  ├─ slash@3.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/slash.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ slugify@1.6.6
+│  │  ├─ URL: https://github.com/simov/slugify.git
+│  │  ├─ VendorName: Simeon Velichkov
+│  │  └─ VendorUrl: https://github.com/simov/slugify
+│  ├─ source-map-support@0.5.21
+│  │  └─ URL: https://github.com/evanw/node-source-map-support
+│  ├─ split-on-first@1.1.0
+│  │  ├─ URL: https://github.com/sindresorhus/split-on-first.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ stack-utils@2.0.6
+│  │  ├─ URL: https://github.com/tapjs/stack-utils.git
+│  │  ├─ VendorName: James Talmage
+│  │  └─ VendorUrl: github.com/jamestalmage
+│  ├─ stackframe@1.3.4
+│  │  ├─ URL: git://github.com/stacktracejs/stackframe.git
+│  │  └─ VendorUrl: https://www.stacktracejs.com/
+│  ├─ stacktrace-parser@0.1.11
+│  │  ├─ URL: git+https://github.com/errwischt/stacktrace-parser.git
+│  │  ├─ VendorName: Georg Tavonius
+│  │  └─ VendorUrl: https://github.com/errwischt/stacktrace-parser
+│  ├─ statuses@1.5.0
+│  │  └─ URL: https://github.com/jshttp/statuses.git
+│  ├─ statuses@2.0.1
+│  │  └─ URL: https://github.com/jshttp/statuses.git
+│  ├─ strict-uri-encode@2.0.0
+│  │  ├─ URL: https://github.com/kevva/strict-uri-encode.git
+│  │  ├─ VendorName: Kevin Mårtensson
+│  │  └─ VendorUrl: github.com/kevva
+│  ├─ string-width-cjs@4.2.3
+│  │  ├─ URL: https://github.com/sindresorhus/string-width.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ string-width@4.2.3
+│  │  ├─ URL: https://github.com/sindresorhus/string-width.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ string-width@5.1.2
+│  │  ├─ URL: https://github.com/sindresorhus/string-width.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ strip-ansi-cjs@6.0.1
+│  │  ├─ URL: https://github.com/chalk/strip-ansi.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ strip-ansi@5.2.0
+│  │  ├─ URL: https://github.com/chalk/strip-ansi.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ strip-ansi@6.0.1
+│  │  ├─ URL: https://github.com/chalk/strip-ansi.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ strip-ansi@7.1.2
+│  │  ├─ URL: https://github.com/chalk/strip-ansi.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ strip-json-comments@2.0.1
+│  │  ├─ URL: https://github.com/sindresorhus/strip-json-comments.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ structured-headers@0.4.1
+│  │  ├─ URL: git+ssh://git@github.com/evert/structured-header.git
+│  │  ├─ VendorName: Evert Pot
+│  │  └─ VendorUrl: https://github.com/evert/structured-header#readme
+│  ├─ styleq@0.1.3
+│  │  ├─ URL: https://github.com/necolas/styleq
+│  │  └─ VendorName: Nicolas Gallagher
+│  ├─ sucrase@3.35.0
+│  │  ├─ URL: https://github.com/alangpierce/sucrase.git
+│  │  └─ VendorName: Alan Pierce
+│  ├─ supports-color@5.5.0
+│  │  ├─ URL: https://github.com/chalk/supports-color.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ supports-color@7.2.0
+│  │  ├─ URL: https://github.com/chalk/supports-color.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ supports-color@8.1.1
+│  │  ├─ URL: https://github.com/chalk/supports-color.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ supports-hyperlinks@2.3.0
+│  │  ├─ URL: https://github.com/jamestalmage/supports-hyperlinks.git
+│  │  ├─ VendorName: James Talmage
+│  │  └─ VendorUrl: github.com/jamestalmage
+│  ├─ supports-preserve-symlinks-flag@1.0.0
+│  │  ├─ URL: git+https://github.com/inspect-js/node-supports-preserve-symlinks-flag.git
+│  │  ├─ VendorName: Jordan Harband
+│  │  └─ VendorUrl: https://github.com/inspect-js/node-supports-preserve-symlinks-flag#readme
+│  ├─ temp-dir@2.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/temp-dir.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ terminal-link@2.1.1
+│  │  ├─ URL: https://github.com/sindresorhus/terminal-link.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ thenify-all@1.6.0
+│  │  ├─ URL: https://github.com/thenables/thenify-all.git
+│  │  ├─ VendorName: Jonathan Ong
+│  │  └─ VendorUrl: http://jongleberry.com
+│  ├─ thenify@3.3.1
+│  │  ├─ URL: https://github.com/thenables/thenify.git
+│  │  ├─ VendorName: Jonathan Ong
+│  │  └─ VendorUrl: http://jongleberry.com
+│  ├─ throat@5.0.0
+│  │  ├─ URL: https://github.com/ForbesLindesay/throat.git
+│  │  └─ VendorName: ForbesLindesay
+│  ├─ to-regex-range@5.0.1
+│  │  ├─ URL: https://github.com/micromatch/to-regex-range.git
+│  │  ├─ VendorName: Jon Schlinkert
+│  │  └─ VendorUrl: https://github.com/micromatch/to-regex-range
+│  ├─ toggle-switch-react-native@3.3.0
+│  │  ├─ URL: git+https://github.com/aminebenkeroum/toggle-switch-react-native.git
+│  │  ├─ VendorName: aminebenkeroum
+│  │  └─ VendorUrl: https://github.com/aminebenkeroum/toggle-switch-react-native#readme
+│  ├─ toidentifier@1.0.1
+│  │  ├─ URL: https://github.com/component/toidentifier.git
+│  │  └─ VendorName: Douglas Christopher Wilson
+│  ├─ tr46@0.0.3
+│  │  ├─ URL: git+https://github.com/Sebmaster/tr46.js.git
+│  │  ├─ VendorName: Sebastian Mayr
+│  │  └─ VendorUrl: https://github.com/Sebmaster/tr46.js#readme
+│  ├─ type-detect@4.0.8
+│  │  ├─ URL: git+ssh://git@github.com/chaijs/type-detect.git
+│  │  ├─ VendorName: Jake Luer
+│  │  └─ VendorUrl: http://alogicalparadox.com
+│  ├─ ua-parser-js@1.0.41
+│  │  ├─ URL: https://github.com/faisalman/ua-parser-js.git
+│  │  ├─ VendorName: Faisal Salman
+│  │  └─ VendorUrl: https://uaparser.dev/
+│  ├─ undici-types@7.16.0
+│  │  ├─ URL: git+https://github.com/nodejs/undici.git
+│  │  └─ VendorUrl: https://undici.nodejs.org/
+│  ├─ undici@6.22.0
+│  │  ├─ URL: git+https://github.com/nodejs/undici.git
+│  │  └─ VendorUrl: https://undici.nodejs.org/
+│  ├─ unicode-canonical-property-names-ecmascript@2.0.1
+│  │  ├─ URL: https://github.com/mathiasbynens/unicode-canonical-property-names-ecmascript.git
+│  │  ├─ VendorName: Mathias Bynens
+│  │  └─ VendorUrl: https://github.com/mathiasbynens/unicode-canonical-property-names-ecmascript
+│  ├─ unicode-match-property-ecmascript@2.0.0
+│  │  ├─ URL: https://github.com/mathiasbynens/unicode-match-property-ecmascript.git
+│  │  ├─ VendorName: Mathias Bynens
+│  │  └─ VendorUrl: https://github.com/mathiasbynens/unicode-match-property-ecmascript
+│  ├─ unicode-match-property-value-ecmascript@2.2.1
+│  │  ├─ URL: https://github.com/mathiasbynens/unicode-match-property-value-ecmascript.git
+│  │  ├─ VendorName: Mathias Bynens
+│  │  └─ VendorUrl: https://github.com/mathiasbynens/unicode-match-property-value-ecmascript
+│  ├─ unicode-property-aliases-ecmascript@2.2.0
+│  │  ├─ URL: https://github.com/mathiasbynens/unicode-property-aliases-ecmascript.git
+│  │  ├─ VendorName: Mathias Bynens
+│  │  └─ VendorUrl: https://github.com/mathiasbynens/unicode-property-aliases-ecmascript
+│  ├─ unique-string@2.0.0
+│  │  ├─ URL: https://github.com/sindresorhus/unique-string.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: sindresorhus.com
+│  ├─ unpipe@1.0.0
+│  │  ├─ URL: https://github.com/stream-utils/unpipe.git
+│  │  └─ VendorName: Douglas Christopher Wilson
+│  ├─ update-browserslist-db@1.1.4
+│  │  ├─ URL: https://github.com/browserslist/update-db.git
+│  │  └─ VendorName: Andrey Sitnik
+│  ├─ use-callback-ref@1.3.3
+│  │  ├─ URL: https://github.com/theKashey/use-callback-ref/
+│  │  └─ VendorName: theKashey
+│  ├─ use-latest-callback@0.2.6
+│  │  ├─ URL: https://github.com/satya164/use-latest-callback
+│  │  └─ VendorName: Satyajit Sahoo
+│  ├─ use-sidecar@1.1.3
+│  │  ├─ URL: https://github.com/theKashey/use-sidecar
+│  │  ├─ VendorName: theKashey
+│  │  └─ VendorUrl: https://github.com/theKashey/use-sidecar
+│  ├─ use-sync-external-store@1.6.0
+│  │  └─ URL: https://github.com/facebook/react.git
+│  ├─ utils-merge@1.0.1
+│  │  ├─ URL: git://github.com/jaredhanson/utils-merge.git
+│  │  ├─ VendorName: Jared Hanson
+│  │  └─ VendorUrl: http://www.jaredhanson.net/
+│  ├─ uuid@7.0.3
+│  │  └─ URL: https://github.com/uuidjs/uuid.git
+│  ├─ vary@1.1.2
+│  │  ├─ URL: https://github.com/jshttp/vary.git
+│  │  └─ VendorName: Douglas Christopher Wilson
+│  ├─ vaul@1.1.2
+│  │  ├─ URL: https://github.com/emilkowalski/vaul.git
+│  │  ├─ VendorName: Emil Kowalski
+│  │  └─ VendorUrl: https://vaul.emilkowal.ski/
+│  ├─ vlq@1.0.1
+│  │  ├─ URL: https://github.com/Rich-Harris/vlq
+│  │  └─ VendorName: Rich Harris
+│  ├─ void-elements@3.1.0
+│  │  ├─ URL: https://github.com/pugjs/void-elements.git
+│  │  ├─ VendorName: hemanth.hm
+│  │  └─ VendorUrl: https://github.com/jadejs/void-elements
+│  ├─ warn-once@0.1.1
+│  │  ├─ URL: https://github.com/satya164/warn-once
+│  │  └─ VendorName: Satyajit Sahoo
+│  ├─ wcwidth@1.0.1
+│  │  ├─ URL: git+https://github.com/timoxley/wcwidth.git
+│  │  ├─ VendorName: Tim Oxley
+│  │  └─ VendorUrl: https://github.com/timoxley/wcwidth#readme
+│  ├─ whatwg-fetch@3.6.20
+│  │  └─ URL: https://github.com/github/fetch.git
+│  ├─ whatwg-url-without-unicode@8.0.0-3
+│  │  ├─ URL: https://github.com/charpeni/whatwg-url.git
+│  │  └─ VendorName: Sebastian Mayr
+│  ├─ whatwg-url@5.0.0
+│  │  ├─ URL: https://github.com/jsdom/whatwg-url.git
+│  │  └─ VendorName: Sebastian Mayr
+│  ├─ wonka@6.3.5
+│  │  ├─ URL: https://github.com/0no-co/wonka
+│  │  └─ VendorName: 0no.co
+│  ├─ wrap-ansi-cjs@7.0.0
+│  │  ├─ URL: https://github.com/chalk/wrap-ansi.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ wrap-ansi@7.0.0
+│  │  ├─ URL: https://github.com/chalk/wrap-ansi.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ wrap-ansi@8.1.0
+│  │  ├─ URL: https://github.com/chalk/wrap-ansi.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ ws@6.2.3
+│  │  ├─ URL: https://github.com/websockets/ws.git
+│  │  ├─ VendorName: Einar Otto Stangvik
+│  │  └─ VendorUrl: https://github.com/websockets/ws
+│  ├─ ws@7.5.10
+│  │  ├─ URL: https://github.com/websockets/ws.git
+│  │  ├─ VendorName: Einar Otto Stangvik
+│  │  └─ VendorUrl: https://github.com/websockets/ws
+│  ├─ ws@8.18.3
+│  │  ├─ URL: git+https://github.com/websockets/ws.git
+│  │  ├─ VendorName: Einar Otto Stangvik
+│  │  └─ VendorUrl: https://github.com/websockets/ws
+│  ├─ xml2js@0.6.0
+│  │  ├─ URL: https://github.com/Leonidas-from-XIV/node-xml2js.git
+│  │  ├─ VendorName: Marek Kubica
+│  │  └─ VendorUrl: https://github.com/Leonidas-from-XIV/node-xml2js
+│  ├─ xmlbuilder@11.0.1
+│  │  ├─ URL: git://github.com/oozcitak/xmlbuilder-js.git
+│  │  ├─ VendorName: Ozgur Ozcitak
+│  │  └─ VendorUrl: http://github.com/oozcitak/xmlbuilder-js
+│  ├─ xmlbuilder@15.1.1
+│  │  ├─ URL: git://github.com/oozcitak/xmlbuilder-js.git
+│  │  ├─ VendorName: Ozgur Ozcitak
+│  │  └─ VendorUrl: http://github.com/oozcitak/xmlbuilder-js
+│  ├─ yargs@16.2.0
+│  │  ├─ URL: https://github.com/yargs/yargs.git
+│  │  └─ VendorUrl: https://yargs.js.org/
+│  ├─ yargs@17.7.2
+│  │  ├─ URL: https://github.com/yargs/yargs.git
+│  │  └─ VendorUrl: https://yargs.js.org/
+│  ├─ yocto-queue@0.1.0
+│  │  ├─ URL: https://github.com/sindresorhus/yocto-queue.git
+│  │  ├─ VendorName: Sindre Sorhus
+│  │  └─ VendorUrl: https://sindresorhus.com
+│  ├─ zod@3.25.76
+│  │  ├─ URL: git+https://github.com/colinhacks/zod.git
+│  │  ├─ VendorName: Colin McDonnell
+│  │  └─ VendorUrl: https://zod.dev/
+│  └─ zustand@5.0.9
+│     ├─ URL: git+https://github.com/pmndrs/zustand.git
+│     ├─ VendorName: Paul Henschel
+│     └─ VendorUrl: https://github.com/pmndrs/zustand
+├─ MPL-2.0
+│  ├─ lightningcss-linux-x64-gnu@1.30.2
+│  │  └─ URL: https://github.com/parcel-bundler/lightningcss.git
+│  ├─ lightningcss-linux-x64-musl@1.30.2
+│  │  └─ URL: https://github.com/parcel-bundler/lightningcss.git
+│  └─ lightningcss@1.30.2
+│     └─ URL: https://github.com/parcel-bundler/lightningcss.git
+├─ Python-2.0
+│  └─ argparse@2.0.1
+│     └─ URL: https://github.com/nodeca/argparse.git
+└─ Unlicense
+   ├─ big-integer@1.6.52
+   │  ├─ URL: git@github.com:peterolson/BigInteger.js.git
+   │  └─ VendorName: Peter Olson
+   └─ stream-buffers@2.2.0
+      ├─ URL: https://github.com/samcday/node-stream-buffer.git
+      └─ VendorName: Sam Day
+Done in 10.28s.
