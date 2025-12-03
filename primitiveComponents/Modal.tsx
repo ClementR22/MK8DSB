@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useCallback } from "react";
+import React, { ReactElement, ReactNode, useCallback, useRef } from "react";
 import { Dimensions, Modal as NativeModal, Pressable, StyleSheet, View } from "react-native";
 import Button from "@/primitiveComponents/Button";
 import useThemeStore from "@/stores/useThemeStore";
@@ -11,6 +11,8 @@ import Toast from "react-native-toast-message";
 import { toastConfig } from "@/config/toastConfig";
 import Text from "./Text";
 import { MenuProvider } from "react-native-popup-menu";
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import { opacity } from "react-native-reanimated/lib/typescript/Colors";
 
 interface ModalButtonProps {
   text: string;
@@ -30,6 +32,7 @@ const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, butto
 
 interface ModalProps {
   modalTitle: string;
+  bottomSheetModalRef: React.RefObject<BottomSheetModal>;
   isModalVisible: boolean;
   setIsModalVisible: (newVisible: boolean) => void;
   children: ReactNode;
@@ -52,6 +55,7 @@ interface ModalProps {
 
 const Modal = ({
   modalTitle,
+  bottomSheetModalRef,
   isModalVisible,
   setIsModalVisible,
   children,
@@ -85,62 +89,47 @@ const Modal = ({
     return null;
   }, [secondButton, secondButtonProps, closeAfterSecondButton, setIsModalVisible]);
 
-  const actualOnPressClose = useCallback(() => {
-    if (onClose) {
-      onClose();
-    } else {
-      setIsModalVisible(false);
-    }
-  }, [onClose, setIsModalVisible]);
+  // callbacks
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log("handleSheetChanges", index);
+  }, []);
 
-  const handleBackgroundPress = useCallback(() => setIsModalVisible(false), [setIsModalVisible]);
-
-  const handleContainerResponder = useCallback(() => true, []);
+  const renderBackDrop = useCallback((props: any) => {
+    return <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props} />;
+  }, []);
 
   return (
-    <NativeModal
-      animationType="none" // Animation (slide, fade, none)
-      transparent={true} // Fond transparent
-      visible={isModalVisible}
-      onRequestClose={actualOnPressClose} // Ferme le modal
-      navigationBarTranslucent={true}
-      statusBarTranslucent={true}
+    <BottomSheetModal
+      ref={bottomSheetModalRef}
+      enableDynamicSizing
+      enablePanDownToClose={false}
+      backgroundStyle={{ backgroundColor: theme.surface_container_highest }}
+      backdropComponent={renderBackDrop}
       {...props}
     >
       <MenuProvider skipInstanceCheck>
-        <Pressable style={styles.background} onPress={handleBackgroundPress}>
-          <Pressable
-            style={[
-              styles.container,
-              {
-                backgroundColor: theme.surface_container_highest,
-              },
-            ]}
-            onStartShouldSetResponder={handleContainerResponder}
+        <BottomSheetView>
+          {modalTitle && (
+            <Text role="headline" size="small" textAlign="center" style={styles.titleCenter} namespace="modal">
+              {modalTitle}
+            </Text>
+          )}
+
+          <View
+            style={
+              !withoutChildrenContainer && [styles.childrenContainer, { backgroundColor: theme.surface_container }]
+            }
           >
-            {modalTitle && (
-              <Text role="headline" size="small" textAlign="center" style={styles.titleCenter} namespace="modal">
-                {modalTitle}
-              </Text>
-            )}
+            {children}
+          </View>
 
-            <View
-              style={
-                !withoutChildrenContainer && [styles.childrenContainer, { backgroundColor: theme.surface_container }]
-              }
-            >
-              {children}
-            </View>
-
-            <View style={[styles.buttonContainer, { flexDirection: buttonContainerFlexDirection }]}>
-              {renderSecondButton()}
-              {<ModalButton text={closeButtonText} onPress={actualOnPressClose} tooltipText={closeButtonText} />}
-            </View>
-          </Pressable>
-        </Pressable>
-        <Toast config={toastConfig} bottomOffset={0} />
+          <View style={[styles.buttonContainer, { flexDirection: buttonContainerFlexDirection }]}>
+            {renderSecondButton()}
+          </View>
+          <Toast config={toastConfig} bottomOffset={0} />
+        </BottomSheetView>
       </MenuProvider>
-    </NativeModal>
+    </BottomSheetModal>
   );
 };
 
@@ -150,12 +139,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  container: {
-    // cursor: "auto", // Web-specific. RN ignores.
-    width: "90%",
-    borderRadius: BORDER_RADIUS_MODAL_CONTAINER,
-    paddingVertical: 12,
   },
   childrenContainer: {
     paddingHorizontal: 0,
