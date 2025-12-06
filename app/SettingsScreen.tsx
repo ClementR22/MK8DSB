@@ -79,10 +79,6 @@ const SettingsScreen: React.FC = () => {
 
           <ButtonResetSettings resetSettings={resetSettings} />
 
-          <Text role="title" size="large" namespace="not">
-            version A
-          </Text>
-
           <ButtonDeleteAllBuildsInMemory deleteAllSavedBuilds={handleDeleteAllSavedBuilds} />
         </BoxContainer>
       </ScrollViewScreen>

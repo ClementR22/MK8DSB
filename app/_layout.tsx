@@ -27,11 +27,8 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import { useInitStatsStore } from "@/hooks/useInitStatsStore";
 import useGameStore from "@/stores/useGameStore";
 import { useInitPressableElementsStore } from "@/hooks/useInitPressableElementsStore";
-import { useExpoUpdates } from "@/hooks/useExpoUpdates";
 
 export default function TabLayout() {
-  useExpoUpdates();
-
   const { t } = useTranslation("screens");
   const game = useGameStore((state) => state.game);
 

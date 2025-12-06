@@ -39,7 +39,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     output: "static",
     favicon: "./assets/images/favicon.png",
   },
-  plugins: ["expo-router", "expo-localization", "expo-web-browser"],
+  plugins: ["expo-router", "expo-localization"],
   experiments: {
     typedRoutes: true,
   },
@@ -51,8 +51,4 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       projectId: "00f67cbf-872e-41b5-8b6c-4b4ae1f6c6bb",
     },
   },
-  updates: {
-    url: "https://expo.dev/accounts/lentrepriz/projects/MK8DSB",
-  },
-  runtimeVersion: "exposdk:1.0.0",
 });
