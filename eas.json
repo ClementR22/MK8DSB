@@ -12,8 +12,7 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk",
-        "gradleCommand": ":app:assembleRelease",
-        "withoutLint": true
+        "gradleCommand": ":app:assembleRelease"
       },
       "channel": "preview"
     },
