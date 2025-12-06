@@ -217,38 +217,3 @@ jobs:
           artifacts: |
             ./mk8dsb_${{steps.version.outputs.v-version}}.apk
             ./sha256sum.txt
-
-  ota_update:
-    name: Deploy OTA Update
-    runs-on: ubuntu-latest
-    needs: [build] # S'assure que ce job s'exécute après la compilation et l'upload des artefacts
-    # Condition: S'exécute si le build n'est PAS ignoré (si on a potentiellement des changements JS à publier)
-    if: ${{!inputs.skip-build}}
-    steps:
-      - name: ⬇️ Checkout repository
-        uses: actions/checkout@v5
-
-      - name: 🛠️ Setup Node and Install dependencies
-        uses: actions/setup-node@v5
-        with:
-          node-version: 18.x
-          cache: npm
-
-      - name: 🔑 Setup EAS and Login
-        uses: expo/expo-github-action@v8
-        with:
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
-
-      - name: 📦 Install dependencies
-        run: npm install
-
-      - name: Publish OTA (Nightly/Preview Channel)
-        if: ${{!inputs.stable}}
-        # Le canal 'preview' est utilisé pour les Nightlies
-        run: npx eas update --branch preview --message "Nightly OTA Update"
-
-      - name: Publish OTA (Stable/Production Channel)
-        if: ${{inputs.stable}}
-        # Le canal 'production' est utilisé pour les Stables
-        run: npx eas update --branch production --message "Stable OTA Update"
