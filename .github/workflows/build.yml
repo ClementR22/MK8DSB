@@ -109,7 +109,7 @@ jobs:
 
       - name: Build apk (local)
         if: ${{!inputs.skip-build}}
-        run: eas build --non-interactive --platform android --profile preview --local --build-properties "gradleCommand=.:app:assembleRelease -x lintVitalAnalyzeRelease -x lintRelease" || exit 1
+        run: eas build --non-interactive --platform android --profile preview --local || exit 1
 
       - name: Store build name
         id: build-name
