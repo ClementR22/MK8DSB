@@ -11,7 +11,12 @@ npm-debug.*
 *.apk
 *.aab
 web-build/
-android/
+# Ignore tout le dossier Android, Sauf les fichiers de configuration essentiels
+android/*
+!android/app/build.gradle
+!android/gradle.properties
+!android/settings.gradle
+!android/build.gradle
 
 .vscode/
 .idea/

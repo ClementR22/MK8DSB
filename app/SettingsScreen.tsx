@@ -19,7 +19,6 @@ import Text from "@/primitiveComponents/Text";
 import showToast from "@/utils/showToast";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import GameSelector from "@/components/settingsComponents/GameSelector";
-import { Pressable } from "react-native";
 import useGameStore from "@/stores/useGameStore";
 import ButtonMakeADonation from "@/components/settingsComponents/ButtonMakeADonation";
 import ButtonSourceCode from "@/components/settingsComponents/ButtonSourceCode";

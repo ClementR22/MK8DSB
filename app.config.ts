@@ -39,7 +39,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     output: "static",
     favicon: "./assets/images/favicon.png",
   },
-  plugins: ["expo-router", "expo-localization"],
+  plugins: ["expo-router", "expo-localization", "./custom.plugin"],
   experiments: {
     typedRoutes: true,
   },
