@@ -50,6 +50,6 @@ const styles = StyleSheet.create({
 });
 
 // pour obtenir toutes les licences
-// npx license-checker --production --json > licenses-summary.json
+// npx license-checker --production --relativeLicensePath --json > licenses.json
 
 export default React.memo(ButtonLicenses);
