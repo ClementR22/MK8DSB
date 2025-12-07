@@ -7,6 +7,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   name: "MK8DSB",
   slug: "MK8DSB",
   version: "{{VERSION}}",
+  /*
+  à modifier plutot dans android/app/src/main/AndroidManifest.xml
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   scheme: "myapp",
@@ -34,14 +36,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     translucent: true,
     backgroundColor: "#00000000", // Changé de "transparent" à "#00000000"
   },
+  plugins: ["expo-router", "expo-localization", "expo-web-browser", "./custom.plugin"],
+  experiments: {
+    typedRoutes: true,
+  },
+  */
   web: {
     bundler: "metro",
     output: "static",
     favicon: "./assets/images/favicon.png",
-  },
-  plugins: ["expo-router", "expo-localization", "./custom.plugin"],
-  experiments: {
-    typedRoutes: true,
   },
   extra: {
     router: {
