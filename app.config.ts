@@ -7,6 +7,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   name: "MK8DSB",
   slug: "MK8DSB",
   version: "{{VERSION}}",
+  runtimeVersion: "exposdk:54.0.0",
+
+  android: {
+    package: "com.clement_rayer.MK8DSB",
+  },
   /*
   à modifier plutot dans android/app/src/main/AndroidManifest.xml
   orientation: "portrait",
@@ -41,9 +46,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     typedRoutes: true,
   },
   */
-  android: {
-    package: "com.clement_rayer.MK8DSB",
-  },
+
   web: {
     bundler: "metro",
     output: "static",
