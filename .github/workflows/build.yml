@@ -122,7 +122,16 @@ jobs:
 
       - name: Store build name
         id: build-name
-        run: echo "value=mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk" >> "$GITHUB_OUTPUT"
+        run: |
+          # Si Stable, on utilise la nouvelle version incrémentée
+          if ${{inputs.stable}}; then
+              VERSION_TAG=${{ steps.version_build.outputs.v-version }}
+              echo "value=mk8dsb_${VERSION_TAG}.apk" >> "$GITHUB_OUTPUT"
+          # Si Nightly, on utilise la version nightly
+          else
+              VERSION_TAG=${{steps.nightly-version.outputs.value}}
+              echo "value=mk8dsb-nightly_${VERSION_TAG}.apk" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Rename build
         run: mv build-*.apk ${{steps.build-name.outputs.value}}
@@ -199,6 +208,7 @@ jobs:
           version-type: ${{inputs.version-bump}}
           skip-tag: "true"
           bump-policy: "ignore"
+          skip-app-json: "true"
           commit-message: "CI : bumps `package.json` to version ${{steps.version.outputs.v-version}}"
 
       - name: Download artifacts
