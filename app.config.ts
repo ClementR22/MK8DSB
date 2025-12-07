@@ -6,7 +6,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   owner: "lentrepriz",
   name: "MK8DSB",
   slug: "MK8DSB",
-  version: "{{VERSION}}",
+  version: "1.0.0-build-test",
   runtimeVersion: "exposdk:54.0.0",
 
   android: {
