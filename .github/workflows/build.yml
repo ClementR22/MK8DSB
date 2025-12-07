@@ -83,6 +83,15 @@ jobs:
           repository: ClementR22/MK8DSB
           excludes: "prerelease"
 
+      - name: Calculate next stable version
+        id: version_build
+        if: ${{inputs.stable}}
+        uses: reecetech/version-increment@2024.10.1
+        with:
+          scheme: "semver"
+          increment: ${{inputs.version-bump}}
+          tag_prefix: "v"
+
       - name: Get latest commit hash
         id: get-latest-commit
         run: echo "value=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
@@ -99,7 +108,7 @@ jobs:
 
       - name: Update app.config.ts - Stable
         if: ${{inputs.stable}}
-        run: sed -i app.config.ts -e 's|{{VERSION}}|${{ steps.get-latest-tag.outputs.release }}|g'
+        run: sed -i app.config.ts -e 's|{{VERSION}}|${{ steps.version_build.outputs.v-version }}|g'
 
       - name: Clean Android build
         if: ${{inputs.reset-cache}}
