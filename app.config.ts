@@ -41,6 +41,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     typedRoutes: true,
   },
   */
+  android: {
+    package: "com.clement_rayer.MK8DSB",
+  },
   web: {
     bundler: "metro",
     output: "static",
