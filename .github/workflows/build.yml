@@ -200,16 +200,23 @@ jobs:
           increment: ${{inputs.version-bump}}
           tag_prefix: "v"
 
-      - name: Bump package.json and app.json version
-        uses: NoAccount1/gh-action-bump-version@master
+      - name: Bump package.json and create commit
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        with:
-          version-type: ${{inputs.version-bump}}
-          skip-tag: "true"
-          bump-policy: "ignore"
-          skip-app-json: "true"
-          commit-message: "CI : bumps `package.json` to version ${{steps.version.outputs.v-version}}"
+        run: |
+          # Configuration de l'utilisateur pour le commit
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Met à jour le package.json sans créer de tag (le tag est géré par l'action de release plus bas)
+          npm version ${{inputs.version-bump}} --no-git-tag-version 
+
+          # Commit du package.json mis à jour
+          git add package.json
+          git commit -m "CI : bumps package.json to version ${{steps.version.outputs.v-version}}"
+
+          # Push du commit vers le dépôt
+          git push
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
