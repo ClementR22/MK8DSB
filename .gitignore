@@ -11,12 +11,18 @@ npm-debug.*
 *.apk
 *.aab
 web-build/
-# Ignore tout le dossier Android, Sauf les fichiers de configuration essentiels
-android/*
+
+# Android - RÈGLES DE BASE
+# Ces fichiers DOIVENT être trackés par Git
 !android/app/build.gradle
 !android/gradle.properties
 !android/settings.gradle
 !android/build.gradle
+
+# Ces fichiers/dossiers DOIVENT être ignorés
+android/build/
+android/app/build/
+android/local.properties
 
 .vscode/
 .idea/
