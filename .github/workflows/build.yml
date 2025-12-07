@@ -227,9 +227,6 @@ jobs:
       - name: List downloaded files
         run: ls -lRAh
 
-      - name: Rename stable release
-        run: mv app-release.apk mk8dsb_${{steps.version.outputs.v-version}}.apk
-
       - name: Upload stable release
         uses: ncipollo/release-action@v1
         env:
