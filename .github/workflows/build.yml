@@ -118,10 +118,7 @@ jobs:
 
       - name: Build apk (local)
         if: ${{!inputs.skip-build}}
-        run: |
-          eas build --non-interactive --platform android --profile preview --local 
-          # 🔐 Stop if build fails
-          || { echo "❌ Build failed, aborting release."; exit 1; }
+        run: eas build --non-interactive --platform android --profile preview --local
 
       - name: Store build name
         id: build-name
