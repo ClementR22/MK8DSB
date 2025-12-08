@@ -1,4 +1,4 @@
-name: Build and release
+name: Build and Release
 
 permissions:
   contents: write
@@ -14,10 +14,7 @@ on:
         type: choice
         description: Version level
         required: false
-        options:
-          - major
-          - minor
-          - patch
+        options: [major, minor, patch]
         default: patch
       reset-cache:
         type: boolean
@@ -30,7 +27,6 @@ on:
       is-draft:
         type: boolean
         description: Draft release ?
-        required: false
         default: false
       description:
         required: false
@@ -40,25 +36,28 @@ env:
   GITHUB_TOKEN: ${{ github.token }}
 
 jobs:
+  # ------- VALIDATION -------
   check-description:
     runs-on: ubuntu-latest
     steps:
-      - name: Exit
-        if: ${{inputs.stable && !inputs.description}}
-        run: echo "Missing description for a stable release" && exit 1
+      - name: Exit if missing description for stable
+        if: ${{ inputs.stable && !inputs.description }}
+        run: echo "❌ Missing description for a stable release" && exit 1
 
   check-version-bump:
     runs-on: ubuntu-latest
     steps:
-      - name: Exit
-        if: ${{inputs.stable && !inputs.version-bump}}
-        run: echo "Missing version bump for a stable release" && exit 1
+      - name: Exit if missing version bump for stable
+        if: ${{ inputs.stable && !inputs.version-bump }}
+        run: echo "❌ Missing version bump for a stable release" && exit 1
 
+  # ------- BUILD PROCESS -------
   build:
     runs-on: ubuntu-latest
     needs: [check-description, check-version-bump]
+
     steps:
-      - name: Setup repo
+      - name: Checkout repo
         uses: actions/checkout@v5
 
       - name: Setup Node
@@ -74,7 +73,7 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Get latest tag
         id: get-latest-tag
@@ -85,158 +84,124 @@ jobs:
 
       - name: Calculate next stable version
         id: version_build
-        if: ${{inputs.stable}}
+        if: ${{ inputs.stable }}
         uses: reecetech/version-increment@2024.10.1
         with:
-          scheme: "semver"
-          increment: ${{inputs.version-bump}}
+          scheme: semver
+          increment: ${{ inputs.version-bump }}
           tag_prefix: "v"
 
       - name: Get latest commit hash
         id: get-latest-commit
         run: echo "value=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
 
-      - name: Store nightly version
+      - name: Generate Nightly version
         id: nightly-version
+        if: ${{ !inputs.stable }}
         run: |
-          echo "${{steps.get-latest-tag.outputs.release}}-${{steps.get-latest-commit.outputs.value}}" > nightly-version.txt
-          echo "value=$(cat nightly-version.txt)" >> "$GITHUB_OUTPUT"
+          VERSION="${{ steps.get-latest-tag.outputs.release }}-${{ steps.get-latest-commit.outputs.value }}"
+          echo "$VERSION" > nightly-version.txt
+          echo "value=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Update app.config.ts - Nightly
-        if: ${{!inputs.stable}}
-        run: sed -i app.config.ts -e 's|{{VERSION}}|${{ steps.nightly-version.outputs.value }}|g'
+      # ---------- UPDATE APP CONFIG ----------
+      - name: Update app.config.ts
+        run: |
+          VERSION=$([[ ${{inputs.stable}} == 'true' ]] && echo "${{ steps.version_build.outputs.v-version }}" || echo "${{ steps.nightly-version.outputs.value }}")
+          sed -i app.config.ts -e "s|{{VERSION}}|$VERSION|g"
 
-      - name: Update app.config.ts - Stable
-        if: ${{inputs.stable}}
-        run: sed -i app.config.ts -e 's|{{VERSION}}|${{ steps.version_build.outputs.v-version }}|g'
-
+      # ---------- CLEAN & BUILD ----------
       - name: Clean Android build
-        if: ${{inputs.reset-cache}}
+        if: ${{ inputs.reset-cache }}
         run: |
           cd android && ./gradlew clean && cd ..
           rm -rf android/app/build
 
-      - name: Build apk (local)
-        if: ${{!inputs.skip-build}}
-        run: eas build --non-interactive --platform android --profile preview --local || exit 1
+      - name: Build APK (local)
+        if: ${{ !inputs.skip-build }}
+        run: eas build --non-interactive --platform android --profile preview --local
 
       - name: Store build name
         id: build-name
         run: |
-          # Si Stable, on utilise la nouvelle version incrémentée
-          if ${{inputs.stable}}; then
-              VERSION_TAG=${{ steps.version_build.outputs.v-version }}
-              echo "value=mk8dsb_${VERSION_TAG}.apk" >> "$GITHUB_OUTPUT"
-          # Si Nightly, on utilise la version nightly
-          else
-              VERSION_TAG=${{steps.nightly-version.outputs.value}}
-              echo "value=mk8dsb-nightly_${VERSION_TAG}.apk" >> "$GITHUB_OUTPUT"
-          fi
+          VERSION=$([[ ${{inputs.stable}} == 'true' ]] && echo "${{ steps.version_build.outputs.v-version }}" || echo "${{ steps.nightly-version.outputs.value }}")
+          echo "value=mk8dsb_${VERSION}.apk" >> "$GITHUB_OUTPUT"
 
       - name: Rename build
-        run: mv build-*.apk ${{steps.build-name.outputs.value}}
+        run: mv build-*.apk ${{ steps.build-name.outputs.value }}
 
       - name: Generate SHA256 checksum
-        run: sha256sum ${{steps.build-name.outputs.value}} > sha256sum.txt && cat sha256sum.txt
+        run: sha256sum ${{ steps.build-name.outputs.value }} > sha256sum.txt && cat sha256sum.txt
 
-      - name: Upload application artifacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: artifacts
           path: |
-            ./${{steps.build-name.outputs.value}}
+            ./${{ steps.build-name.outputs.value }}
             ./sha256sum.txt
             ./nightly-version.txt
 
+  # ------- NIGHTLY RELEASE -------
   nightly:
-    if: ${{!inputs.stable}}
-    needs: [build]
+    if: ${{ !inputs.stable }}
+    needs: build
     runs-on: ubuntu-latest
+
     steps:
       - name: Clear cache manually
-        if: ${{inputs.reset-cache}}
+        if: ${{ inputs.reset-cache }}
         run: rm -rf ~/.npm ~/.gradle
 
-      - name: Download artifacts
+      - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
           name: artifacts
-          path: ./
 
-      - name: Get app-version
-        id: nightly-version
-        run: echo "value=$(cat nightly-version.txt)" >> "$GITHUB_OUTPUT"
-
-      - name: Upload nightly release
+      - name: Upload Nightly Release
         uses: ncipollo/release-action@v1
-        env:
-          GITHUB_TOKEN: ${{github.token}}
         with:
-          tag: nightly-${{steps.nightly-version.outputs.value}}
-          name: "Nightly release ${{steps.nightly-version.outputs.value}}"
-          draft: ${{inputs.is-draft}}
+          tag: nightly-${{ steps.build-name.outputs.value }}
+          name: "Nightly release"
+          draft: ${{ inputs.is-draft }}
           prerelease: true
           body: |
-            Unstable release, things may break and you may lose your settings or data.
-            **Use with caution.**
-            ${{inputs.description}}
-          artifacts: |
-            mk8dsb-nightly_${{steps.nightly-version.outputs.value}}.apk
-            sha256sum.txt
+            ⚠️ Unstable release — settings or data may be wiped.
+            ${{ inputs.description }}
+          artifacts: "*.apk,sha256sum.txt"
 
+  # ------- STABLE RELEASE -------
   release:
-    if: ${{inputs.stable}}
-    needs: [check-description, check-version-bump, build]
+    if: ${{ inputs.stable }}
+    needs: build
     runs-on: ubuntu-latest
+
     steps:
-      - name: Setup github
+      - name: Checkout repo
         uses: actions/checkout@v5
 
-      - name: Increment version
-        uses: reecetech/version-increment@2024.10.1
-        id: version
-        with:
-          scheme: "semver"
-          increment: ${{inputs.version-bump}}
-          tag_prefix: "v"
-
-      - name: Bump package.json and create commit
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+      - name: Increment version & commit
         run: |
-          # Configuration de l'utilisateur pour le commit
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Met à jour le package.json sans créer de tag (le tag est géré par l'action de release plus bas)
-          npm version ${{inputs.version-bump}} --no-git-tag-version 
+          # Update package.json & lockfile without tag
+          npm version ${{ inputs.version-bump }} --no-git-tag-version
 
-          # Commit du package.json mis à jour
-          git add package.json
-          git commit -m "CI : bumps package.json to version ${{steps.version.outputs.v-version}}"
-
-          # Push du commit vers le dépôt
+          git add package.json package-lock.json
+          git commit -m "chore(release): bump version to ${{ steps.version_build.outputs.v-version }}"
           git push
 
-      - name: Download artifacts
+      - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
           name: artifacts
-          path: ./
 
-      - name: List downloaded files
-        run: ls -lRAh
-
-      - name: Upload stable release
+      - name: Upload Stable Release
         uses: ncipollo/release-action@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
         with:
-          name: MK8DSB ${{steps.version.outputs.v-version}}
-          tag: ${{steps.version.outputs.v-version}}
-          body: ${{inputs.description}}
-          draft: ${{inputs.is-draft}}
+          name: MK8DSB ${{ steps.version_build.outputs.v-version }}
+          tag: ${{ steps.version_build.outputs.v-version }}
+          body: ${{ inputs.description }}
+          draft: ${{ inputs.is-draft }}
           prerelease: false
-          artifacts: |
-            ./mk8dsb_${{steps.version.outputs.v-version}}.apk
-            ./sha256sum.txt
+          artifacts: "*.apk,sha256sum.txt"
