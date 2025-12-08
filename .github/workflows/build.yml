@@ -224,11 +224,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # set package.json exactly to tag value (no double increment)
-          npm version ${steps.version.outputs.v-version#v} --no-git-tag-version
+          VERSION="${{ steps.version.outputs.v-version }}"
+          CLEAN_VERSION="${VERSION#v}"
+
+          npm version $CLEAN_VERSION --no-git-tag-version
 
           git add package.json
-          git commit -m "CI: bump version to ${steps.version.outputs.v-version}"
+          git commit -m "CI: bump version to ${VERSION}"
           git push
 
       - name: Download artifacts
