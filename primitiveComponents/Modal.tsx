@@ -4,7 +4,6 @@ import Button from "@/primitiveComponents/Button";
 import useThemeStore from "@/stores/useThemeStore";
 import {
   BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,
-  BORDER_RADIUS_MODAL_CONTAINER,
   MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER,
 } from "@/utils/designTokens";
 import Toast from "react-native-toast-message";
@@ -96,11 +95,6 @@ const Modal = ({
     }
     return null;
   }, [secondButton, secondButtonProps, closeAfterSecondButton, setIsModalVisible]);
-
-  // callbacks
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
 
   const renderBackDrop = useCallback((props: any) => {
     return <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props} />;

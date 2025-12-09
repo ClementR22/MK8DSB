@@ -177,8 +177,8 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
             horizontal
             pagingEnabled
             getItemLayout={(_, index) => ({
-              length: 300,
-              offset: 300 * index,
+              length: 100,
+              offset: 100 * index,
               index,
             })}
           />
