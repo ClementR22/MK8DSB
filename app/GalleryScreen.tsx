@@ -8,7 +8,7 @@ import ElementsList from "@/components/galleryComponents/ElementsList";
 import { getSelectedElementData } from "@/utils/getSelectedElementData";
 import ScreenPressablesContainer from "@/components/screenPressablesContainer/ScreenPressablesContainer";
 import { ScreenProvider } from "@/contexts/ScreenContext";
-import { useContainerLowestStyle } from "@/hooks/useScreenStyle";
+import { getContainerLowestStyle } from "@/utils/getScreenStyle";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 import Pannel from "@/components/galleryComponents/Pannel";
 import Animated, { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
@@ -78,7 +78,7 @@ const GalleryScreen = () => {
     opacity: overlayOpacity.value,
   }));
 
-  const containerLowestStyle = useContainerLowestStyle("view");
+  const containerLowestStyle = getContainerLowestStyle("view");
 
   return (
     <ScreenProvider screenName="gallery">

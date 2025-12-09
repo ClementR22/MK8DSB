@@ -15,5 +15,7 @@
 
   "numberOfSearchResults": "Nombre de résultats de recherche",
   "defaultDisplayedStats": "Stats affichées par défault dans les builds",
-  "licenses": "Licences"
+  "licenses": "Licences",
+
+  "updateAvailable": "Mise à jour disponible"
 }

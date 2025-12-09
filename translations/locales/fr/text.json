@@ -15,6 +15,7 @@
   "chosenStats": "desir.",
   "resultStats": "affich.",
 
+  "updateAvailableText": "Souhaitez-vous mettre à jour l'appli ?",
   "resetSettingsText": "Souhaitez-vous vraiment réinitialiser les préférences ?",
   "deleteAllBuildsInMemoryText": "Souhaitez-vous vraiment supprimer tous les builds enregistrés ?",
   "appliedForBuildFinderAndComparator": "Appliquées au démarrage de l'app, pour le Chercheur et le Comparateur",

@@ -18,7 +18,7 @@ interface ButtonProps {
   buttonColor?: string;
   buttonTextColor?: string;
   onPress: () => void;
-  tooltipText?: string;
+  tooltipText: string;
   iconProps?: IconProps;
   flex?: number;
   disabled?: boolean;

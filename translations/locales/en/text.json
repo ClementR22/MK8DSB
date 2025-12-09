@@ -15,6 +15,7 @@
   "chosenStats": "desir.",
   "resultStats": "disp.",
 
+  "updateAvailableText": "Do you want to update the app?",
   "resetSettingsText": "Do you really want to reset settings?",
   "deleteAllBuildsInMemoryText": "Do you really want to delete all saved builds?",
   "appliedForBuildFinderAndComparator": "Applied when the app starts, for the Finder and the Comparator",

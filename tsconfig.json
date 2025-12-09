@@ -2,7 +2,9 @@
   "compilerOptions": {
     "target": "ES6",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -12,8 +14,6 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts",
     "app",
     "components",
     "babel.config.js",

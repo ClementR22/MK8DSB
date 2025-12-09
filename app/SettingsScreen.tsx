@@ -22,6 +22,7 @@ import GameSelector from "@/components/settingsComponents/GameSelector";
 import useGameStore from "@/stores/useGameStore";
 import ButtonMakeADonation from "@/components/settingsComponents/ButtonMakeADonation";
 import ButtonSourceCode from "@/components/settingsComponents/ButtonSourceCode";
+import ButtonUpdate from "@/components/settingsComponents/ButtonUpdate";
 
 const SettingsScreen: React.FC = () => {
   const game = useGameStore((state) => state.game);
@@ -75,6 +76,8 @@ const SettingsScreen: React.FC = () => {
           <ButtonMakeADonation />
 
           <ButtonLicenses />
+
+          <ButtonUpdate isInModal={false} />
 
           <ButtonResetSettings resetSettings={resetSettings} />
 

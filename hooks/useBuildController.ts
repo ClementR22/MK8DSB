@@ -4,7 +4,7 @@ import { getRandomDataId } from "@/utils/getRandomDataId";
 
 export function useBuildController() {
   const { numberOfElementsByCategory } = useGameData();
-  const addBuild = useBuildsListStore((s) => s.addRandomBuildInDisplay);
+  const addBuildInDisplay = useBuildsListStore((s) => s.addBuildInDisplay);
   const buildsListDisplayed = useBuildsListStore((s) => s.buildsListDisplayed);
 
   function addRandomBuildInDisplay() {
@@ -13,7 +13,7 @@ export function useBuildController() {
     }
 
     const build = getRandomDataId(numberOfElementsByCategory);
-    addBuild(build);
+    addBuildInDisplay(build);
   }
 
   return { addRandomBuildInDisplay };

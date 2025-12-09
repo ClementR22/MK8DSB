@@ -1,0 +1,29 @@
+import React, { useEffect, useState } from "react";
+import { useCheckUpdate } from "@/hooks/useCheckUpdate";
+import Button from "@/primitiveComponents/Button";
+import Modal from "@/primitiveComponents/Modal";
+import ButtonUpdate from "../settingsComponents/ButtonUpdate";
+import Text from "@/primitiveComponents/Text";
+
+const UpdateAvailableModal = () => {
+  const { updateAvailable } = useCheckUpdate();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => setIsModalVisible(updateAvailable), [updateAvailable]);
+
+  console.log({ isModalVisible, updateAvailable });
+  return (
+    <Modal
+      modalTitle="updateAvailable"
+      isModalVisible={isModalVisible}
+      setIsModalVisible={setIsModalVisible}
+      secondButton={<ButtonUpdate isInModal={true} />}
+    >
+      <Text role="body" size="large" weight="regular" textAlign="center" style={{ padding: 20 }} namespace="text">
+        updateAvailableText
+      </Text>
+    </Modal>
+  );
+};
+
+export default UpdateAvailableModal;

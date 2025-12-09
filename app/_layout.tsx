@@ -27,12 +27,13 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import { useInitStatsStore } from "@/hooks/useInitStatsStore";
 import useGameStore from "@/stores/useGameStore";
 import { useInitPressableElementsStore } from "@/hooks/useInitPressableElementsStore";
+import UpdateAvailableModal from "@/components/modal/UpdateAvailableModal";
 
 export default function TabLayout() {
   const { t } = useTranslation("screens");
   const game = useGameStore((state) => state.game);
-
   const theme = useThemeStore((state) => state.theme);
+
   const isSettingsLoaded = useGeneralStore((state) => state.isSettingsLoaded);
   const loadBuildsSaved = useBuildsActionsStore((state) => state.loadBuildsSaved);
   const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
@@ -215,6 +216,7 @@ export default function TabLayout() {
         </Tabs>
         <EditBuildModal />
         <LoadBuildModal />
+        <UpdateAvailableModal />
         <Toast config={toastConfig} bottomOffset={59} swipeable={false} />
       </MenuProvider>
     </SafeAreaProvider>

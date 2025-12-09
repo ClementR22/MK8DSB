@@ -1,4 +1,4 @@
-import { useContainerLowestStyle } from "@/hooks/useScreenStyle";
+import { getContainerLowestStyle } from "@/utils/getScreenStyle";
 import useGeneralStore from "@/stores/useGeneralStore";
 import React, { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { ScrollView } from "react-native";
@@ -36,7 +36,7 @@ const ScrollViewScreen = forwardRef<ScrollViewScreenHandles, ScrollViewScreenPro
       }
     }, [shouldScrollToTop, resetScrollToTop]);
 
-    const containerLowestStyle = useContainerLowestStyle("scrollview");
+    const containerLowestStyle = getContainerLowestStyle("scrollview");
 
     return (
       <ScrollView

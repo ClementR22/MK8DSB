@@ -11,7 +11,6 @@ import { sortElements } from "@/utils/sortElements";
 import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 import useDeckStore from "./useDeckStore";
 import { deleteAllSavedBuildsInMemory } from "@/utils/asyncStorageOperations";
-import { getRandomDataId } from "@/utils/getRandomDataId";
 import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
 import { t } from "i18next";
 import { useGenerateUniqueName } from "@/hooks/useGenerateUniqueName";
@@ -48,7 +47,7 @@ interface BuildsListStoreState {
   setBuildsListSaved: (newBuildsList: Build[]) => void;
   deleteAllSavedBuilds: (game: Game) => Promise<void>;
   setBuildEditedDataId: (buildDataId: string) => void;
-  addRandomBuildInDisplay: (buildDataId: string) => void;
+  addBuildInDisplay: (buildDataId: string) => void;
   removeBuild: (buildDataId: string, screenName: ScreenName) => Promise<void>;
   renameBuild: (newName: string, screenName: ScreenName, buildDataId: string, isSaved: boolean, game: Game) => void;
   updateBuildsList: (pressedClassIds: Record<string, number>, screenName: ScreenName, game: Game) => void;
@@ -146,7 +145,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     set({ buildEditedDataId: buildDataId });
   },
 
-  addRandomBuildInDisplay: (buildDataId: string) => {
+  addBuildInDisplay: (buildDataId: string) => {
     if (get().buildsListDisplayed.length >= MAX_NUMBER_BUILDS_DISPLAY) {
       throw new Error("buildLimitReached");
     }
