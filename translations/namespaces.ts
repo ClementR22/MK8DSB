@@ -1,8 +1,8 @@
 import { Game } from "@/types";
 
 export const sortsNamespaceByGame: Record<Game, string> = {
-  MK8D: "sortMK8D",
-  MKW: "sortMKW",
+  MK8D: "sortsMK8D",
+  MKW: "sortsMKW",
 } as const;
 
 export const statsNamespaceByGame: Record<Game, string> = {

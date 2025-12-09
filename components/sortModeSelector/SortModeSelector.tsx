@@ -2,7 +2,6 @@ import React, { memo, useCallback, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { SortName } from "@/types";
-
 import Popover from "../popover/Popover";
 import ButtonIconWithBadge from "./ButtonIconWithBadge";
 import {
@@ -59,7 +58,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
         setSortNumber(newDirection === "asc" ? newOrderInfo.asc : newOrderInfo.desc);
       }
 
-      showToast(`sort:${name}|sort:${newDirection}`);
+      showToast(`${sortsNamespaceByGame[game]}:${name}|${sortsNamespaceByGame[game]}:${newDirection}`);
     },
     [activeSort, currentDirection, setSortNumber]
   );
@@ -79,7 +78,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
           <ButtonIconWithBadge
             tooltipText={tooltipText}
             onPress={openPopover}
-            namespaceTooltipText={sortsNamespaceByGame[game]}
+            namespace={sortsNamespaceByGame[game]}
             iconName={triggerIconName}
             iconType={triggerIconType}
             direction={statNames.includes(activeSort) ? currentDirection : undefined}
@@ -95,7 +94,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
               key={name}
               onPress={() => handlePress(name)}
               tooltipText={name}
-              namespaceTooltipText={sortsNamespaceByGame[game]}
+              namespace={sortsNamespaceByGame[game]}
               iconName={config.iconName}
               iconType={config.iconType}
               backgroundColor={config.backgroundColor}
@@ -129,7 +128,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
           key={name}
           onPress={() => handlePress(name)}
           tooltipText={name}
-          namespaceTooltipText={sortsNamespaceByGame[game]}
+          namespace={sortsNamespaceByGame[game]}
           iconName={iconConfig.iconName}
           iconType={iconConfig.iconType}
           direction={isActive ? currentDirection : undefined}
