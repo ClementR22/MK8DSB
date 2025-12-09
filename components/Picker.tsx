@@ -37,7 +37,7 @@ const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle,
 
   return (
     <View>
-      <Text role="title" size="small" style={styles.title} namespace="text">
+      <Text role="title" size="small" weight="semibold" style={styles.title} namespace="text">
         {pickerTitle}
       </Text>
 

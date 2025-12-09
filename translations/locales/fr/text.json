@@ -26,5 +26,11 @@
 
   "tutoImportation": "Copiez le texte, allez dans 'Collection' et cliquez sur le bouton 'Importer' (presse-papier).",
 
-  "modified": "modifié"
+  "modified": "modifié",
+
+  "general": "Généraux",
+  "displaying": "Affichage",
+  "community": "Communauté",
+  "developer": "Développeur",
+  "maintenance": "Maintenance"
 }

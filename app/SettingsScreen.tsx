@@ -53,11 +53,21 @@ const SettingsScreen: React.FC = () => {
     <ScreenProvider screenName="settings">
       <ScrollViewScreen scrollEnabled={true}>
         <BoxContainer alignItems={"stretch"} boxShadow={box_shadow_z1}>
+          <Text role="title" size="large" namespace="text" textAlign="center">
+            general
+          </Text>
+
           <LanguageSelector />
 
           <ThemeSelector />
 
           <GameSelector />
+        </BoxContainer>
+
+        <BoxContainer>
+          <Text role="title" size="large" namespace="text">
+            displaying
+          </Text>
 
           <ResultsNumberSelector />
 
@@ -68,20 +78,38 @@ const SettingsScreen: React.FC = () => {
               </Text>
             </StatSelector>
           </ResultStatsProvider>
+        </BoxContainer>
+
+        <BoxContainer>
+          <Text role="title" size="large" namespace="text">
+            community
+          </Text>
 
           <ButtonSendFeedback />
 
+          <ButtonMakeADonation />
+        </BoxContainer>
+
+        <BoxContainer>
+          <Text role="title" size="large" namespace="text">
+            developer
+          </Text>
+
           <ButtonSourceCode />
 
-          <ButtonMakeADonation />
-
           <ButtonLicenses />
+        </BoxContainer>
+
+        <BoxContainer>
+          <Text role="title" size="large" namespace="text">
+            maintenance
+          </Text>
 
           <ButtonUpdate isInModal={false} />
 
-          <ButtonResetSettings resetSettings={resetSettings} />
-
           <ButtonDeleteAllBuildsInMemory deleteAllSavedBuilds={handleDeleteAllSavedBuilds} />
+
+          <ButtonResetSettings resetSettings={resetSettings} />
         </BoxContainer>
       </ScrollViewScreen>
     </ScreenProvider>
