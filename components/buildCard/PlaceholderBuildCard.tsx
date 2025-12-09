@@ -7,10 +7,16 @@ import Text from "@/primitiveComponents/Text";
 import { Pressable, StyleSheet } from "react-native";
 import { useBuildController } from "@/hooks/useBuildController";
 import useGeneralStore from "@/stores/useGeneralStore";
+import { Game } from "@/types";
+import useGameStore from "@/stores/useGameStore";
 
-interface PlaceholderBuildCardProps {}
+const BUILD_CARD_HEIGHT: Record<Game, { collapsed: number; expanded: number }> = {
+  MK8D: { collapsed: 119, expanded: 341 },
+  MKW: { collapsed: 129, expanded: 253 },
+};
 
-const PlaceholderBuildCard: React.FC<PlaceholderBuildCardProps> = () => {
+const PlaceholderBuildCard = () => {
+  const game = useGameStore((state) => state.game);
   const theme = useThemeStore((state) => state.theme);
 
   const isBuildCardsCollapsed = useGeneralStore((state) => state.isBuildCardsCollapsed);
@@ -22,7 +28,7 @@ const PlaceholderBuildCard: React.FC<PlaceholderBuildCardProps> = () => {
       style={[
         styles.container,
         {
-          height: isBuildCardsCollapsed ? 119 : 341,
+          height: isBuildCardsCollapsed ? BUILD_CARD_HEIGHT[game].collapsed : BUILD_CARD_HEIGHT[game].expanded,
           borderColor: theme.primary,
           backgroundColor: theme.surface,
         },
