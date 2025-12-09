@@ -11,8 +11,6 @@ interface ButtonLoadBuildProps {
 }
 
 const ButtonLoadBuild: React.FC<ButtonLoadBuildProps> = ({ tooltipText }) => {
-  const theme = useThemeStore((state) => state.theme);
-
   const setIsLoadBuildModalVisible = useLoadBuildModalStore((state) => state.setIsLoadBuildModalVisible);
   const numberSavedBuilds = useGeneralStore((state) => state.numberSavedBuilds);
 

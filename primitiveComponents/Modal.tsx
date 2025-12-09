@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useCallback, useRef } from "react";
+import React, { ReactElement, ReactNode, useCallback, useEffect, useRef } from "react";
 import { Dimensions, Modal as NativeModal, Pressable, StyleSheet, View } from "react-native";
 import Button from "@/primitiveComponents/Button";
 import useThemeStore from "@/stores/useThemeStore";
@@ -32,7 +32,6 @@ const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, butto
 
 interface ModalProps {
   modalTitle: string;
-  bottomSheetModalRef: React.RefObject<BottomSheetModal>;
   isModalVisible: boolean;
   setIsModalVisible: (newVisible: boolean) => void;
   children: ReactNode;
@@ -55,7 +54,6 @@ interface ModalProps {
 
 const Modal = ({
   modalTitle,
-  bottomSheetModalRef,
   isModalVisible,
   setIsModalVisible,
   children,
@@ -69,6 +67,16 @@ const Modal = ({
   ...props
 }: ModalProps) => {
   const theme = useThemeStore((state) => state.theme);
+
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  useEffect(() => {
+    if (isModalVisible) {
+      bottomSheetModalRef.current?.present();
+    } else {
+      bottomSheetModalRef.current?.close();
+    }
+  }, [isModalVisible]);
 
   const buttonContainerFlexDirection = secondButtonPosition === "left" ? "row" : "row-reverse";
 
@@ -105,6 +113,7 @@ const Modal = ({
       enablePanDownToClose={false}
       backgroundStyle={{ backgroundColor: theme.surface_container_highest }}
       backdropComponent={renderBackDrop}
+      onDismiss={() => setIsModalVisible(false)}
       {...props}
     >
       <MenuProvider skipInstanceCheck>
