@@ -1,3 +1,4 @@
+import { IconType } from "react-native-dynamic-vector-icons";
 import * as MK8D from "./mk8d";
 import * as MKW from "./mkw";
 export * from "./common";
@@ -29,3 +30,9 @@ export type SelectedClassIdsByCategory = MK8D.SelectedClassIdsByCategory | MKW.S
 export type MultiSelectedClassIdsByCategory =
   | MK8D.MultiSelectedClassIdsByCategory
   | MKW.MultiSelectedClassIdsByCategory;
+
+export type IconProps = {
+  name: string;
+  type: IconType;
+  color?: string;
+};

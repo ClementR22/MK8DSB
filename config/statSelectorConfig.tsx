@@ -1,32 +1,8 @@
 import { ScreenName } from "@/contexts/ScreenContext";
 import Button from "@/primitiveComponents/Button";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
+import ButtonSettings from "@/primitiveComponents/ButtonSettings";
 import { IconType } from "react-native-dynamic-vector-icons";
-
-export const customTriggerConfig: Record<
-  ScreenName,
-  {
-    customTrigger?: React.ReactElement;
-    triggerButtonText?: string;
-    iconProps?: { name: string; type: IconType };
-  }
-> = {
-  search: {
-    customTrigger: <ButtonIcon iconName="checkbox-multiple-marked" iconType={IconType.MaterialCommunityIcons} />,
-  },
-  save: {
-    customTrigger: <ButtonIcon iconName="checkbox-multiple-marked" iconType={IconType.MaterialCommunityIcons} />,
-  },
-  display: {
-    triggerButtonText: "statsToCompare",
-    iconProps: { name: "checkbox-multiple-marked", type: IconType.MaterialCommunityIcons },
-  },
-  settings: {
-    triggerButtonText: "defaultStats",
-    iconProps: { name: "checkbox-multiple-marked", type: IconType.MaterialCommunityIcons },
-  },
-  gallery: null,
-};
 
 export const modalTitleConfig: Record<ScreenName, string> = {
   search: "desiredStatsAndStatsInBuilds",
@@ -42,4 +18,39 @@ export const tooltipTextConfig: Record<ScreenName, string> = {
   save: "displayedStatsInBuilds",
   gallery: null,
   settings: "configureDefaultStats",
+};
+
+export const triggerConfig: Record<ScreenName, React.ReactElement> = {
+  search: (
+    <ButtonIcon
+      iconName="checkbox-multiple-marked"
+      iconType={IconType.MaterialCommunityIcons}
+      tooltipText={tooltipTextConfig.search}
+    />
+  ),
+
+  save: (
+    <ButtonIcon
+      iconName="checkbox-multiple-marked"
+      iconType={IconType.MaterialCommunityIcons}
+      tooltipText={tooltipTextConfig.save}
+    />
+  ),
+
+  display: (
+    <Button
+      iconProps={{ name: "checkbox-multiple-marked", type: IconType.MaterialCommunityIcons }}
+      tooltipText={tooltipTextConfig.display}
+    >
+      statsToCompare
+    </Button>
+  ),
+  settings: (
+    <ButtonSettings
+      title="defaultStats"
+      iconProps={{ name: "checkbox-multiple-marked", type: IconType.MaterialCommunityIcons }}
+      tooltipText={tooltipTextConfig.settings}
+    />
+  ),
+  gallery: null,
 };

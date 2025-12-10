@@ -5,14 +5,14 @@ import ButtonAndModal from "../modal/ButtonAndModal";
 import DoubleEntryTable, { ColumnName, StatToggleMap } from "./DoubleEntryTable";
 import useStatsStore from "@/stores/useStatsStore";
 import { useResultStats } from "@/contexts/ResultStatsContext";
-import { ChosenStat, ResultStat, StatName } from "@/types";
+import { ChosenStat, ResultStat } from "@/types";
 import useResultStatsDefaultStore from "@/stores/useResultStatsDefaultStore";
 import useThemeStore from "@/stores/useThemeStore";
 import ResultStatsSyncSwitch from "./ResultStatsSyncSwitch";
-import { ScreenName, useScreen } from "@/contexts/ScreenContext";
+import { useScreen } from "@/contexts/ScreenContext";
 import { useGameData } from "@/hooks/useGameData";
 import useGameStore from "@/stores/useGameStore";
-import { customTriggerConfig, modalTitleConfig, tooltipTextConfig } from "@/config/statSelectorConfig";
+import { triggerConfig, modalTitleConfig } from "@/config/statSelectorConfig";
 
 interface StatSelectorProps {
   children?: React.ReactNode;
@@ -33,11 +33,10 @@ const StatSelector: React.FC<StatSelectorProps> = ({ children }) => {
   const { resultStatsDefault, setResultStatsDefaultForGame, isResultStatsSync } = useResultStatsDefaultStore();
 
   const columnNames = useMemo(() => getColumnsConfig(screenName), [screenName]);
-  const { customTrigger, triggerButtonText, iconProps, modalTitle, tooltipText } = useMemo(() => {
-    const { customTrigger, triggerButtonText, iconProps } = customTriggerConfig[screenName];
+  const { triggerComponent, modalTitle } = useMemo(() => {
+    const triggerComponent = triggerConfig[screenName];
     const modalTitle = modalTitleConfig[screenName];
-    const tooltipText = tooltipTextConfig[screenName];
-    return { customTrigger, triggerButtonText, iconProps, modalTitle, tooltipText };
+    return { triggerComponent, modalTitle };
   }, [screenName]);
 
   // Fusion de tous les stats dans un map par statName
@@ -114,10 +113,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ children }) => {
 
   return (
     <ButtonAndModal
-      customTrigger={customTrigger}
-      triggerButtonText={triggerButtonText}
-      iconProps={iconProps}
-      tooltipText={tooltipText}
+      triggerComponent={triggerComponent}
       modalTitle={modalTitle}
       isModalVisibleProp={isModalVisible}
       setIsModalVisibleProp={setIsModalVisible}

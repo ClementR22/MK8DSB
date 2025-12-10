@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { Linking } from "react-native";
-import Button from "@/primitiveComponents/Button";
 import { IconType } from "react-native-dynamic-vector-icons";
+import ButtonSettings from "@/primitiveComponents/ButtonSettings";
 
 const url = "https://forms.gle/YZvjYiu2pT9Futvd9";
 
@@ -10,13 +10,12 @@ const ButtonSendFeedback = React.memo(() => {
     Linking.openURL(url);
   }, []);
   return (
-    <Button
+    <ButtonSettings
+      title="sendFeedback"
       onPress={handlePress}
-      tooltipText="sendFeedback"
       iconProps={{ name: "chatbox-ellipses-outline", type: IconType.Ionicons }}
-    >
-      sendFeedback
-    </Button>
+      tooltipText="sendFeedback"
+    />
   );
 });
 

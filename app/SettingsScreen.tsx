@@ -23,6 +23,10 @@ import useGameStore from "@/stores/useGameStore";
 import ButtonMakeADonation from "@/components/settingsComponents/ButtonMakeADonation";
 import ButtonSourceCode from "@/components/settingsComponents/ButtonSourceCode";
 import ButtonUpdate from "@/components/settingsComponents/ButtonUpdate";
+import Separator from "@/components/Separator";
+import { vw } from "@/components/styles/theme";
+import { View } from "react-native";
+import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
 
 const SettingsScreen: React.FC = () => {
   const game = useGameStore((state) => state.game);
@@ -52,7 +56,7 @@ const SettingsScreen: React.FC = () => {
   return (
     <ScreenProvider screenName="settings">
       <ScrollViewScreen scrollEnabled={true}>
-        <BoxContainer alignItems={"stretch"} boxShadow={box_shadow_z1}>
+        <View style={{ padding: MARGIN_CONTAINER_LOWEST }}>
           <Text role="title" size="large" namespace="text" textAlign="center">
             general
           </Text>
@@ -62,14 +66,13 @@ const SettingsScreen: React.FC = () => {
           <ThemeSelector />
 
           <GameSelector />
-        </BoxContainer>
-
-        <BoxContainer>
-          <Text role="title" size="large" namespace="text">
-            displaying
-          </Text>
-
+        </View>
+        <Text role="title" size="large" namespace="text">
+          displaying
+        </Text>
+        <View>
           <ResultsNumberSelector />
+          <Separator direction="horizontal" length={vw - 60} lineWidth={1} alignSelf="flex-end" />
 
           <ResultStatsProvider>
             <StatSelector>
@@ -78,19 +81,16 @@ const SettingsScreen: React.FC = () => {
               </Text>
             </StatSelector>
           </ResultStatsProvider>
-        </BoxContainer>
 
-        <BoxContainer>
           <Text role="title" size="large" namespace="text">
             community
           </Text>
 
           <ButtonSendFeedback />
+          <Separator direction="horizontal" length={vw - 60} lineWidth={1} alignSelf="flex-end" />
 
           <ButtonMakeADonation />
-        </BoxContainer>
 
-        <BoxContainer>
           <Text role="title" size="large" namespace="text">
             developer
           </Text>
@@ -98,9 +98,7 @@ const SettingsScreen: React.FC = () => {
           <ButtonSourceCode />
 
           <ButtonLicenses />
-        </BoxContainer>
 
-        <BoxContainer>
           <Text role="title" size="large" namespace="text">
             maintenance
           </Text>
@@ -110,7 +108,7 @@ const SettingsScreen: React.FC = () => {
           <ButtonDeleteAllBuildsInMemory deleteAllSavedBuilds={handleDeleteAllSavedBuilds} />
 
           <ButtonResetSettings resetSettings={resetSettings} />
-        </BoxContainer>
+        </View>
       </ScrollViewScreen>
     </ScreenProvider>
   );

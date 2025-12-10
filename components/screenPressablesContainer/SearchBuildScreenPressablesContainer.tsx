@@ -174,7 +174,7 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
 
       <ButtonAndModal
         modalTitle="filters"
-        customTrigger={
+        triggerComponent={
           <ButtonIconWithBadge
             tooltipText="chooseFilters"
             iconName="filter"
@@ -182,7 +182,6 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
             badgeText={numberOfSelectedClassIds}
           />
         }
-        tooltipText="chooseFilters"
       >
         <PannelPaginated
           selectionMode="multiple"

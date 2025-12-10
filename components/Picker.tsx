@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   pickerInput: {
     fontSize: typography.title.small.fontSize,
     paddingHorizontal: 10,
-    minHeight: 40,
+    minHeight: 30,
     width: "100%",
   },
   chevronIcon: {

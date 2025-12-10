@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { Linking } from "react-native";
-import Button from "@/primitiveComponents/Button";
 import { IconType } from "react-native-dynamic-vector-icons";
+import ButtonSettings from "@/primitiveComponents/ButtonSettings";
 
 const url = "https://www.paypal.com/donate/?hosted_button_id=7YMYSGASUL7A8";
 
@@ -10,13 +10,12 @@ const ButtonMakeADonation = React.memo(() => {
     Linking.openURL(url);
   }, []);
   return (
-    <Button
+    <ButtonSettings
+      title="makeADonation"
       onPress={handleContactPress}
-      tooltipText="makeADonation"
       iconProps={{ name: "hand-heart", type: IconType.MaterialCommunityIcons }}
-    >
-      makeADonation
-    </Button>
+      tooltipText="makeADonation"
+    />
   );
 });
 

@@ -1,23 +1,18 @@
 import React, { ReactNode } from "react";
 import { StyleSheet } from "react-native";
 import useThemeStore from "@/stores/useThemeStore";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import Icon from "react-native-dynamic-vector-icons";
 import ButtonBase from "./ButtonBase";
 import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
 import { box_shadow_z2 } from "@/components/styles/shadow";
 import Text from "./Text";
-
-export type IconProps = {
-  name: string;
-  type: IconType;
-  color?: string;
-};
+import { IconProps } from "@/types";
 
 interface ButtonProps {
   children: ReactNode;
   buttonColor?: string;
   buttonTextColor?: string;
-  onPress: () => void;
+  onPress?: () => void;
   tooltipText: string;
   iconProps?: IconProps;
   flex?: number;

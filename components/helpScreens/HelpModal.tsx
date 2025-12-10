@@ -14,7 +14,7 @@ type HelpModalProps = {
 const HelpModal: React.FC<HelpModalProps> = ({ title, children }) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const customTrigger = useMemo(
+  const triggerComponent = useMemo(
     () => (
       <ButtonIcon
         iconName="help-circle-outline"
@@ -30,7 +30,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, children }) => {
   );
 
   return (
-    <ButtonAndModal modalTitle={title} customTrigger={customTrigger} tooltipText="help">
+    <ButtonAndModal modalTitle={title} triggerComponent={triggerComponent}>
       <ScrollView scrollEnabled={true} style={styles.scrollView}>
         <Pressable style={styles.container}>{children}</Pressable>
       </ScrollView>

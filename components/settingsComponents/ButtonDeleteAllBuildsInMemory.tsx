@@ -4,15 +4,21 @@ import useThemeStore from "@/stores/useThemeStore";
 import Text from "@/primitiveComponents/Text";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { IconType } from "react-native-dynamic-vector-icons";
+import Button from "@/primitiveComponents/Button";
+import ButtonSettings from "@/primitiveComponents/ButtonSettings";
 
 const ButtonDeleteAllBuildsInMemory = ({ deleteAllSavedBuilds }) => {
   const theme = useThemeStore((state) => state.theme);
 
   return (
     <ButtonAndModal
-      triggerButtonText="deleteAllBuildsInMemory"
-      iconProps={{ name: "trash-can", type: IconType.MaterialCommunityIcons, color: theme.on_error }}
-      tooltipText="deleteAllBuildsInMemory"
+      triggerComponent={
+        <ButtonSettings
+          title="deleteAllBuildsInMemory"
+          iconProps={{ name: "trash-can", type: IconType.MaterialCommunityIcons, color: theme.on_error }}
+          tooltipText="deleteAllBuildsInMemory"
+        />
+      }
       secondButtonProps={{
         text: "confirm",
         tooltipText: "confirm",

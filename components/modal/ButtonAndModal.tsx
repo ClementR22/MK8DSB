@@ -1,7 +1,8 @@
 import React, { memo, ReactElement, useCallback, useState } from "react";
 import { GestureResponderEvent } from "react-native";
 import Modal from "@/primitiveComponents/Modal";
-import Button, { IconProps } from "../../primitiveComponents/Button";
+import Button from "../../primitiveComponents/Button";
+import { IconProps } from "@/types";
 
 interface ButtonAndModalProps {
   // Le contenu principal du modal. Peut être un composant, du texte, etc.
@@ -17,11 +18,7 @@ interface ButtonAndModalProps {
   // Setter pour le contrôle externe
   setIsModalVisibleProp?: (visible: boolean) => void;
   // Un élément React personnalisé qui servira de déclencheur pour ouvrir le modal.
-  customTrigger?: React.ReactElement<{ onPress?: (event: GestureResponderEvent) => void } & Record<string, any>>;
-  // Sinon on utilisera un Button avec le texte donné en props
-  triggerButtonText?: string;
-  iconProps?: IconProps;
-  tooltipText: string;
+  triggerComponent: React.ReactElement<{ onPress?: (event: GestureResponderEvent) => void } & Record<string, any>>;
   // Possibilité changer le texte du bouton fermer.
   closeButtonText?: string;
   // Composant pour le deuxieme bouton
@@ -49,10 +46,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
   modalTitle = undefined, // Initialisé à undefined pour ne pas passer null par défaut
   isModalVisibleProp, // option
   setIsModalVisibleProp, // option
-  customTrigger, // give a component OR
-  triggerButtonText, // give just the text
-  iconProps,
-  tooltipText,
+  triggerComponent, // give a component OR
   closeButtonText = undefined,
   secondButton,
   secondButtonProps,
@@ -85,25 +79,12 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
     currentSetIsModalVisible(false);
   }, [currentSetIsModalVisible, onModalClose]);
 
-  // Clonez le customTrigger pour injecter la prop onPress
-  const triggerElement = customTrigger ? (
-    React.cloneElement(customTrigger, { onPress: openModal, tooltipText: tooltipText })
-  ) : (
-    <Button
-      key="ModalButton"
-      buttonColor={buttonColor}
-      buttonTextColor={buttonTextColor}
-      onPress={openModal}
-      tooltipText={tooltipText}
-      iconProps={iconProps}
-    >
-      {triggerButtonText}
-    </Button>
-  );
+  // Clonez le trigger pour injecter la prop onPress
+  const triggerComponent_ = React.cloneElement(triggerComponent, { onPress: openModal });
 
   return (
     <>
-      {triggerElement}
+      {triggerComponent_}
 
       <Modal
         key={"Modal-ButtonAndModal"}

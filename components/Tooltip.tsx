@@ -14,6 +14,7 @@ interface TooltipProps {
   placement?: "top" | "right" | "bottom" | "left" | "auto";
   isButton?: boolean;
   disabled?: boolean;
+  top?: number;
   children: React.ReactNode;
 }
 
@@ -26,6 +27,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   placement = "top",
   isButton = false,
   disabled = false,
+  top = 0,
   children,
 }) => {
   const theme = useThemeStore((state) => state.theme);
@@ -75,7 +77,7 @@ const Tooltip: React.FC<TooltipProps> = ({
 
       <MenuOptions
         customStyles={{
-          optionsContainer: styles.optionsContainer,
+          optionsContainer: [styles.optionsContainer, { top }],
           optionsWrapper: { backgroundColor: theme.inverse_surface },
         }}
       >

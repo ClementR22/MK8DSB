@@ -4,15 +4,20 @@ import useThemeStore from "@/stores/useThemeStore";
 import Text from "@/primitiveComponents/Text";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { IconType } from "react-native-dynamic-vector-icons";
+import ButtonSettings from "@/primitiveComponents/ButtonSettings";
 
 const ButtonResetSettings = ({ resetSettings }) => {
   const theme = useThemeStore((state) => state.theme);
 
   return (
     <ButtonAndModal
-      triggerButtonText="resetSettings"
-      iconProps={{ name: "rotate-ccw", type: IconType.Feather, color: theme.on_error }}
-      tooltipText="resetSettings"
+      triggerComponent={
+        <ButtonSettings
+          title="resetSettings"
+          iconProps={{ name: "rotate-ccw", type: IconType.Feather, color: theme.on_error }}
+          tooltipText="resetSettings"
+        />
+      }
       secondButtonProps={{
         text: "confirm",
         tooltipText: "confirm",

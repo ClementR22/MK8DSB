@@ -6,10 +6,17 @@ interface SeparatorProps {
   direction: "vertical" | "horizontal";
   length?: DimensionValue;
   lineWidth?: number;
+  alignSelf?: "flex-start" | "flex-end" | "center" | "stretch" | "baseline";
   wrapperStyle?: ViewStyle;
 }
 
-const Separator: React.FC<SeparatorProps> = ({ direction, length = "90%", lineWidth = 2, wrapperStyle }) => {
+const Separator: React.FC<SeparatorProps> = ({
+  direction,
+  length = "90%",
+  lineWidth = 2,
+  alignSelf = "center",
+  wrapperStyle,
+}) => {
   const outlineVariant = useThemeStore((state) => state.theme.outline_variant);
 
   const isVertical = direction === "vertical";
@@ -21,7 +28,7 @@ const Separator: React.FC<SeparatorProps> = ({ direction, length = "90%", lineWi
           width: (isVertical ? lineWidth : length) as DimensionValue,
           height: (isVertical ? length : lineWidth) as DimensionValue,
           backgroundColor: outlineVariant,
-          alignSelf: "center",
+          alignSelf,
         },
         wrapperStyle,
       ]}

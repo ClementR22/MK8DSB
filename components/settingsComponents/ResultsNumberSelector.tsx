@@ -5,6 +5,7 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import useGeneralStore from "@/stores/useGeneralStore";
 import ButtonAndModal from "@/components/modal/ButtonAndModal";
 import Text from "@/primitiveComponents/Text";
+import ButtonSettings from "@/primitiveComponents/ButtonSettings";
 
 const MIN_RESULTS = 1;
 const MAX_RESULTS = 20;
@@ -42,11 +43,16 @@ const ResultsNumberSelector = () => {
   return (
     <ButtonAndModal
       modalTitle="numberOfSearchResults"
-      triggerButtonText="numberOfSearchResults"
-      iconProps={{ name: "numbers", type: IconType.MaterialIcons }}
+      triggerComponent={
+        <ButtonSettings
+          title="numberOfSearchResults"
+          onPress={() => setIsModalVisible(true)}
+          iconProps={{ name: "numbers", type: IconType.MaterialIcons, color: "blue" }}
+          tooltipText="numberOfSearchResults"
+        />
+      }
       isModalVisibleProp={isModalVisible}
       setIsModalVisibleProp={setIsModalVisible}
-      tooltipText="numberOfSearchResults"
     >
       <View style={styles.container}>
         <ButtonIcon

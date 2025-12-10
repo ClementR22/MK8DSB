@@ -2,12 +2,30 @@ import React, { useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import useThemeStore from "@/stores/useThemeStore";
-import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
+import { BORDER_RADIUS_INF, BORDER_RADIUS_STANDARD, BUTTON_SIZE } from "@/utils/designTokens";
+
+type Shape = "circle" | "rectangle" | "square";
+
+const getContainerStyle = (shape: Shape, containerSize?: number) => {
+  if (shape === "circle") {
+    return {
+      height: containerSize,
+      width: containerSize,
+      borderRadius: BORDER_RADIUS_INF,
+    };
+  }
+  if (shape === "rectangle") {
+    return { height: 30, width: 46, borderRadius: 10 };
+  }
+  if (shape === "square") {
+    return { height: containerSize, width: containerSize, borderRadius: 6 };
+  }
+};
 
 interface IconContainerProps {
   iconName: string;
   iconType: IconType;
-  shape?: "circle" | "rectangle";
+  shape?: Shape;
   containerSize?: number;
   backgroundColor?: string;
   iconColor?: string;
@@ -24,16 +42,8 @@ const IconContainer = ({
 }: IconContainerProps) => {
   const { theme } = useThemeStore();
 
-  const shapeStyle =
-    shape === "circle"
-      ? {
-          height: containerSize,
-          width: containerSize,
-          borderRadius: BORDER_RADIUS_INF,
-        }
-      : { height: 30, width: 46, borderRadius: 10 };
-
   const iconSize = (24 / BUTTON_SIZE) * containerSize;
+  const containerStyle = getContainerStyle(shape, containerSize);
 
   return (
     <View
@@ -44,7 +54,7 @@ const IconContainer = ({
           width: containerSize,
           backgroundColor: backgroundColor || theme.primary,
         },
-        shapeStyle,
+        containerStyle,
       ]}
     >
       <Icon name={iconName} type={iconType} size={iconSize} color={iconColor || theme.on_primary} {...iconProps} />
