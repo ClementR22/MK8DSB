@@ -6,8 +6,11 @@ import Text from "@/primitiveComponents/Text";
 import { vh } from "../styles/theme";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonSettings from "@/primitiveComponents/ButtonSettings";
+import useThemeStore from "@/stores/useThemeStore";
 
 const ButtonLicenses = () => {
+  const theme = useThemeStore((state) => state.theme);
+
   return (
     <ButtonAndModal
       modalTitle="licenses"
@@ -30,7 +33,7 @@ const ButtonLicenses = () => {
           const [licenseName, licenseUrl] = item;
           return (
             <Pressable key={index} onPress={() => Linking.openURL(licenseUrl)} style={styles.licenseItem}>
-              <Text role="title" size="small" color="blue" namespace="not">
+              <Text role="title" size="small" color={theme.isLight ? "#1D4ED8" : "#93C5FD"} namespace="not">
                 {licenseName}
               </Text>
             </Pressable>

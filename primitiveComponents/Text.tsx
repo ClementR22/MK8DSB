@@ -11,6 +11,7 @@ interface TextProps {
   weight?: TextWeight;
   fontStyle?: "italic" | "normal";
   textAlign?: "auto" | "left" | "right" | "center" | "justify"; // from React StyleProps.d.ts
+  flexShrink?: number;
   color?: string;
   inverse?: boolean;
   numberOfLines?: number;
@@ -26,6 +27,7 @@ const Text: React.FC<TextProps> = ({
   weight,
   fontStyle = "normal",
   textAlign,
+  flexShrink,
   color,
   inverse = false,
   numberOfLines,
@@ -50,6 +52,7 @@ const Text: React.FC<TextProps> = ({
       color: textColor,
       fontStyle: fontStyle,
       textAlign: textAlign,
+      flexShrink: flexShrink,
     },
     weight && { fontWeight: fontWeights[weight] },
     style,

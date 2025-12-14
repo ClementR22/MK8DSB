@@ -1,6 +1,6 @@
 import { IconProps } from "@/types";
 import React from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import Text from "./Text";
 import IconContainer from "./IconContainer";
 import useThemeStore from "@/stores/useThemeStore";
@@ -28,10 +28,9 @@ const ButtonSettings: React.FC<ButtonSettingsProps> = ({
   return (
     <Tooltip
       onPress={onPress}
-      childStyleInner={[styles.container, { backgroundColor: theme.surface }]}
+      childStyleInner={[styles.containerInner, { backgroundColor: theme.surface }]}
       tooltipText={tooltipText}
       disabled={disabled}
-      top={10}
     >
       <IconContainer
         iconName={iconProps.name}
@@ -41,7 +40,7 @@ const ButtonSettings: React.FC<ButtonSettingsProps> = ({
         shape="square"
         containerSize={30}
       />
-      <Text role="title" size="small" textAlign="center" namespace="button">
+      <Text role="title" size="small" textAlign="left" namespace="button" flexShrink={1}>
         {title}
       </Text>
     </Tooltip>
@@ -49,15 +48,12 @@ const ButtonSettings: React.FC<ButtonSettingsProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: "100%",
+  containerInner: {
     flexDirection: "row",
     alignItems: "center",
-    paddingLeft: 10,
-    paddingVertical: 10,
     gap: 10,
-    backgroundColor: "red",
-    alignSelf: "flex-start",
+    padding: 10,
+    borderRadius: 5,
   },
 });
 

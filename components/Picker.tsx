@@ -36,7 +36,7 @@ const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle,
   }, [itemList, t]);
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text role="title" size="small" weight="semibold" style={styles.title} namespace="text">
         {pickerTitle}
       </Text>
@@ -58,6 +58,9 @@ const Picker: React.FC<PickerProps> = ({ value, setValue, itemList, pickerTitle,
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+  },
   title: {
     marginBottom: 5,
   },
