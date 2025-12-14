@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 
 // Components import
@@ -22,8 +22,18 @@ import StatGaugeContainer from "@/components/statGauge/StatGaugeContainer";
 import StatGaugeBar from "@/components/statGauge/StatGaugeBar";
 import { useGameData } from "@/hooks/useGameData";
 import { useSlidersCompact } from "@/hooks/useSlidersCompact";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 const SearchBuildScreen: React.FC = () => {
+  // init tabBarHeight
+  const tabBarHeight = useBottomTabBarHeight();
+  const setTabBarHeight = useGeneralStore((state) => state.setTabBarHeight);
+
+  useEffect(() => {
+    setTabBarHeight(tabBarHeight);
+  }, [tabBarHeight]);
+  // end
+
   const { statNames } = useGameData();
 
   const scrollviewBuildsCardsRef = useRef<BuildCardsContainerHandles>(null);

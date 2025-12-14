@@ -185,13 +185,12 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
         ) : (
           <PagerView ref={pagerRef} style={styles.pagerView} initialPage={0} onPageSelected={handlePageSelected}>
             {pages.map((pageElements, index) => (
-              <View key={`page-${index}`} style={styles.pageContainer}>
-                <ElementsGrid
-                  elements={pageElements}
-                  selectedClassId={selectedClassId}
-                  onSelectElement={handleSelectElement}
-                />
-              </View>
+              <ElementsGrid
+                key={`page-${index}`}
+                elements={pageElements}
+                selectedClassId={selectedClassId}
+                onSelectElement={handleSelectElement}
+              />
             ))}
           </PagerView>
         )}

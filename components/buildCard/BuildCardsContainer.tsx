@@ -5,10 +5,10 @@ import {
   DimensionValue,
   LayoutChangeEvent,
   Pressable,
-  ScrollView,
   StyleSheet,
   View,
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import BuildCard from "./BuildCard";
 import useThemeStore from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";

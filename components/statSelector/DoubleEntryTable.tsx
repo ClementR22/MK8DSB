@@ -1,12 +1,13 @@
 // DoubleEntryTable.tsx
 import React, { useCallback } from "react";
-import { View, ScrollView, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import Checkbox from "expo-checkbox";
 import useThemeStore from "@/stores/useThemeStore";
 import Text from "@/primitiveComponents/Text";
 import { BORDER_RADIUS_MODAL_CHILDREN_CONTAINER } from "@/utils/designTokens";
 import { statsNamespaceByGame } from "@/translations/namespaces";
 import useGameStore from "@/stores/useGameStore";
+import { ScrollView } from "react-native-gesture-handler";
 
 export type ColumnName = "chosenStats" | "resultStats";
 

@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode, useCallback, useEffect, useRef } from "react";
-import { Dimensions, Modal as NativeModal, Pressable, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import Button from "@/primitiveComponents/Button";
 import useThemeStore from "@/stores/useThemeStore";
 import {
@@ -11,7 +11,7 @@ import { toastConfig } from "@/config/toastConfig";
 import Text from "./Text";
 import { MenuProvider } from "react-native-popup-menu";
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
-import { opacity } from "react-native-reanimated/lib/typescript/Colors";
+import useGeneralStore from "@/stores/useGeneralStore";
 
 interface ModalButtonProps {
   text: string;
@@ -66,6 +66,7 @@ const Modal = ({
   ...props
 }: ModalProps) => {
   const theme = useThemeStore((state) => state.theme);
+  const tabBarHeight = useGeneralStore((state) => state.tabBarHeight);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -80,8 +81,10 @@ const Modal = ({
   const buttonContainerFlexDirection = secondButtonPosition === "left" ? "row" : "row-reverse";
 
   const renderSecondButton = useCallback(() => {
+    let _button: React.ReactElement;
+
     if (secondButton) {
-      return React.cloneElement(secondButton, {
+      _button = React.cloneElement(secondButton, {
         onComplete: () => setIsModalVisible(false),
       });
     }
@@ -91,7 +94,11 @@ const Modal = ({
         const isSucces = secondButtonProps.onPress();
         if (closeAfterSecondButton || isSucces) setIsModalVisible(false);
       };
-      return <ModalButton {...secondButtonProps} onPress={completedOnPress} />;
+      _button = <ModalButton {...secondButtonProps} onPress={completedOnPress} />;
+    }
+
+    if (_button) {
+      return <View style={[styles.buttonContainer, { flexDirection: buttonContainerFlexDirection }]}>{_button}</View>;
     }
     return null;
   }, [secondButton, secondButtonProps, closeAfterSecondButton, setIsModalVisible]);
@@ -103,15 +110,15 @@ const Modal = ({
   return (
     <BottomSheetModal
       ref={bottomSheetModalRef}
-      enableDynamicSizing
-      enablePanDownToClose={false}
+      enablePanDownToClose={true}
       backgroundStyle={{ backgroundColor: theme.surface_container_highest }}
       backdropComponent={renderBackDrop}
       onDismiss={() => setIsModalVisible(false)}
       {...props}
+      enableContentPanningGesture={false}
     >
       <MenuProvider skipInstanceCheck>
-        <BottomSheetView>
+        <BottomSheetView style={{ paddingBottom: tabBarHeight + 10, gap: 10 }}>
           {modalTitle && (
             <Text role="headline" size="small" textAlign="center" style={styles.titleCenter} namespace="modal">
               {modalTitle}
@@ -126,9 +133,7 @@ const Modal = ({
             {children}
           </View>
 
-          <View style={[styles.buttonContainer, { flexDirection: buttonContainerFlexDirection }]}>
-            {renderSecondButton()}
-          </View>
+          {renderSecondButton()}
           <Toast config={toastConfig} bottomOffset={0} />
         </BottomSheetView>
       </MenuProvider>
@@ -151,11 +156,9 @@ const styles = StyleSheet.create({
   },
   titleCenter: {
     paddingHorizontal: 24,
-    marginBottom: 12,
     // fontFamily: "Roboto", // Ensure this font is loaded. If not, it falls back to default.
   },
   buttonContainer: {
-    marginTop: 10, // Consider adding this dynamically if needed
     flexDirection: "row",
     gap: 10,
     justifyContent: "center",
