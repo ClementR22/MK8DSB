@@ -47,7 +47,7 @@ const ResultsNumberSelector = () => {
         <ButtonSettings
           title="numberOfSearchResults"
           onPress={() => setIsModalVisible(true)}
-          iconProps={{ name: "numbers", type: IconType.MaterialIcons, color: "blue" }}
+          iconProps={{ name: "numbers", type: IconType.MaterialIcons }}
           tooltipText="numberOfSearchResults"
         />
       }

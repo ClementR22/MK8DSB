@@ -16,6 +16,7 @@ const ButtonDeleteAllBuildsInMemory = ({ deleteAllSavedBuilds }) => {
         <ButtonSettings
           title="deleteAllBuildsInMemory"
           iconProps={{ name: "trash-can", type: IconType.MaterialCommunityIcons, color: theme.on_error }}
+          backgroundColor={theme.error}
           tooltipText="deleteAllBuildsInMemory"
         />
       }

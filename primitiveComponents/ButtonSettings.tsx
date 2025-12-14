@@ -10,6 +10,7 @@ interface ButtonSettingsProps {
   title: React.ReactNode;
   onPress?: () => void;
   iconProps: IconProps;
+  backgroundColor?: string;
   tooltipText: string;
   disabled?: boolean;
 }
@@ -18,6 +19,7 @@ const ButtonSettings: React.FC<ButtonSettingsProps> = ({
   title,
   onPress,
   iconProps,
+  backgroundColor,
   tooltipText,
   disabled = false,
 }) => {
@@ -34,8 +36,8 @@ const ButtonSettings: React.FC<ButtonSettingsProps> = ({
       <IconContainer
         iconName={iconProps.name}
         iconType={iconProps.type}
-        iconColor={theme.on_primary}
-        backgroundColor={disabled ? "grey" : theme.primary}
+        iconColor={iconProps.color || theme.on_primary}
+        backgroundColor={disabled ? "grey" : backgroundColor || theme.primary}
         shape="square"
         containerSize={30}
       />

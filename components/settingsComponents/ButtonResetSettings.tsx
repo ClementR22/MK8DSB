@@ -15,6 +15,7 @@ const ButtonResetSettings = ({ resetSettings }) => {
         <ButtonSettings
           title="resetSettings"
           iconProps={{ name: "rotate-ccw", type: IconType.Feather, color: theme.on_error }}
+          backgroundColor={theme.error}
           tooltipText="resetSettings"
         />
       }

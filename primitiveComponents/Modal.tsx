@@ -111,11 +111,11 @@ const Modal = ({
     <BottomSheetModal
       ref={bottomSheetModalRef}
       enablePanDownToClose={true}
+      enableContentPanningGesture={false}
       backgroundStyle={{ backgroundColor: theme.surface_container_highest }}
       backdropComponent={renderBackDrop}
       onDismiss={() => setIsModalVisible(false)}
       {...props}
-      enableContentPanningGesture={false}
     >
       <MenuProvider skipInstanceCheck>
         <BottomSheetView style={{ paddingBottom: tabBarHeight + 10, gap: 10 }}>

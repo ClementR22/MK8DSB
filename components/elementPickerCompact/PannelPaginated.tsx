@@ -225,9 +225,6 @@ const styles = StyleSheet.create({
   pagerView: {
     height: ELEMENTS_GRID_HEIGHT,
   },
-  pageContainer: {
-    flex: 1,
-  },
   navigatorWrapper: {
     paddingHorizontal: PADDING_PANNEL_PAGINATED,
   },
