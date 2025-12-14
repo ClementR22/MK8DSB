@@ -17,7 +17,7 @@ const Popover: React.FC<PopoverProps> = ({ trigger, children }) => {
   const openPopover = () => setIsOpen(true);
   const closePopover = () => setIsOpen(false);
 
-  const backgroundColor = theme.isDark ? theme.surface_variant : undefined; // undefined = valeur par défaut
+  const backgroundColor = theme.isDark ? theme.surface_variant : theme.surface;
 
   return (
     <Menu
