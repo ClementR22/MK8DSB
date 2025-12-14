@@ -1,7 +1,6 @@
 // components/modal/LoadBuildModal.tsx
 import React, { memo } from "react"; // Import 'memo'
 import BuildCardsContainer from "../buildCard/BuildCardsContainer"; // Assuming correct path
-import ButtonImportBuild from "../managingBuildsButton/ButtonImportBuild"; // Assuming correct path
 import Modal from "@/primitiveComponents/Modal"; // Assuming correct path
 import useLoadBuildModalStore from "@/stores/useLoadBuildModalStore"; // Ensure this is correctly typed and implemented
 import { useScreenNameFromPath } from "@/hooks/useScreenNameFromPath";
@@ -20,7 +19,6 @@ const LoadBuildModal = () => {
       modalTitle={screenName === "search" ? "loadStatsOfABuild" : "loadABuild"}
       isModalVisible={isLoadBuildModalVisible}
       setIsModalVisible={setIsLoadBuildModalVisible}
-      secondButton={<ButtonImportBuild screenName={screenName} />}
       withoutChildrenContainer
     >
       <BuildCardsContainer builds={buildsListSaved} isInLoadBuildModal={true} screenNameFromProps={screenName} />

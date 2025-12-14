@@ -24,5 +24,8 @@
   "loadTheBuild": "Charger le build",
   "loadTheStatsToSearchScreen": "Charger les stats dans le Chercheur",
   "loadTheBuildToDisplayScreen": "Charger le build dans le Comparateur",
-  "share": "Partager"
+  "share": "Partager",
+
+  "collection": "Ouvrir la Collection",
+  "import": "Importer un build"
 }

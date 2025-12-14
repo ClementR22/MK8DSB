@@ -2,51 +2,18 @@ import React from "react";
 import { ScreenName } from "@/contexts/ScreenContext";
 import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
-import * as Clipboard from "expo-clipboard";
-import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
-import showToast from "@/utils/showToast";
-import useLoadBuildModalStore from "@/stores/useLoadBuildModalStore";
-import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
-import { useGameData } from "@/hooks/useGameData";
+import { useImportBuild } from "@/hooks/useImportBuild";
 
 interface ButtonImportBuildProps {
   screenName: ScreenName;
 }
 
 const ButtonImportBuild: React.FC<ButtonImportBuildProps> = ({ screenName }) => {
-  const { buildsDataMap } = useGameData();
-  const importBuild = useBuildsActionsStore((state) => state.importBuild);
-
-  const handleImport = async (screenName: ScreenName) => {
-    try {
-      const clipboardContent = await Clipboard.getStringAsync();
-      importBuild(clipboardContent, screenName, buildsDataMap);
-      if (screenName === "search") {
-        showToast("toast:statsImported", "success");
-      } else {
-        showToast("toast:buildImported", "success");
-      }
-      useLoadBuildModalStore.getState().setIsLoadBuildModalVisible(false);
-    } catch (e) {
-      if (e instanceof BuildAlreadyExistsError) {
-        // Construction du message avec sécurité
-        const targetMessage = e.target ? `|toast:in|toast:${e.target}` : "";
-        const buildNameMessage = e.buildName ? `|toast:withTheName|${e.buildName}` : "";
-
-        const fullMessage = `error:${e.message}${targetMessage}${buildNameMessage}`;
-
-        showToast(fullMessage, "importError");
-      } else if (e instanceof NameAlreadyExistsError) {
-        showToast(`error:${e.message}|${e.buildName}`, "importError");
-      } else {
-        showToast(`error:${e.message}`, "importError");
-      }
-    }
-  };
+  const importBuild = useImportBuild(screenName);
 
   return (
     <ButtonIcon
-      onPress={() => handleImport(screenName)}
+      onPress={importBuild}
       tooltipText="importACopiedBuild"
       iconName="content-paste"
       iconType={IconType.MaterialCommunityIcons}

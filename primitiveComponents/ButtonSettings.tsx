@@ -1,5 +1,5 @@
 import { IconProps } from "@/types";
-import React from "react";
+import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import Text from "./Text";
 import IconContainer from "./IconContainer";
@@ -58,4 +58,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ButtonSettings;
+export default memo(ButtonSettings);

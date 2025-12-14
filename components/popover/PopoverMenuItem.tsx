@@ -13,7 +13,7 @@ const PopoverMenuItem: React.FC<PopoverMenuItemProps> = ({ onPress, title, iconP
   return (
     <Pressable onPress={onPress} style={styles.container}>
       {iconProps && <Icon name={iconProps.name} type={iconProps.type} size={24} />}
-      <Text role="title" size="small" namespace="not" style={styles.text}>
+      <Text role="title" size="small" namespace="button" style={styles.text}>
         {title}
       </Text>
     </Pressable>

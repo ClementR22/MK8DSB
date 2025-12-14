@@ -24,5 +24,8 @@
   "loadTheBuild": "Load the build",
   "loadTheStatsToSearchScreen": "Load the stats to the Finder",
   "loadTheBuildToDisplayScreen": "Load the build to the Comparator",
-  "share": "Share"
+  "share": "Share",
+
+  "collection": "Open the Collection",
+  "import": "Import a build"
 }

@@ -4,7 +4,6 @@ import { StyleSheet } from "react-native";
 import { Menu, MenuOptions, MenuTrigger, renderers } from "react-native-popup-menu";
 import PopoverMenuItem from "./PopoverMenuItem";
 import { ActionIconProps } from "@/hooks/useActionIconPropsList";
-import { t } from "i18next";
 import { BUTTON_SIZE } from "@/utils/designTokens";
 
 interface PopoverMenuProps {
@@ -37,7 +36,7 @@ const PopoverMenu: React.FC<PopoverMenuProps> = ({ trigger, actionIconPropsList 
                 onPress();
                 closePopover();
               }}
-              title={t(title)}
+              title={title}
               iconProps={{ name, type }}
             />
           );
