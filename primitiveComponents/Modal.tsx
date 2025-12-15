@@ -117,26 +117,22 @@ const Modal = ({
       onDismiss={() => setIsModalVisible(false)}
       {...props}
     >
-      <MenuProvider skipInstanceCheck>
-        <BottomSheetView style={{ paddingBottom: tabBarHeight + 10, gap: 10 }}>
-          {modalTitle && (
-            <Text role="headline" size="small" textAlign="center" style={styles.titleCenter} namespace="modal">
-              {modalTitle}
-            </Text>
-          )}
+      <BottomSheetView style={{ paddingBottom: tabBarHeight + 10, gap: 10 }}>
+        {modalTitle && (
+          <Text role="headline" size="small" textAlign="center" style={styles.titleCenter} namespace="modal">
+            {modalTitle}
+          </Text>
+        )}
 
-          <View
-            style={
-              !withoutChildrenContainer && [styles.childrenContainer, { backgroundColor: theme.surface_container }]
-            }
-          >
-            {children}
-          </View>
+        <View
+          style={!withoutChildrenContainer && [styles.childrenContainer, { backgroundColor: theme.surface_container }]}
+        >
+          {children}
+        </View>
 
-          {renderSecondButton()}
-          <Toast config={toastConfig} bottomOffset={0} />
-        </BottomSheetView>
-      </MenuProvider>
+        {renderSecondButton()}
+        <Toast config={toastConfig} bottomOffset={0} />
+      </BottomSheetView>
     </BottomSheetModal>
   );
 };
