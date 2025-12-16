@@ -11,7 +11,6 @@ const UpdateAvailableModal = () => {
 
   useEffect(() => setIsModalVisible(updateAvailable), [updateAvailable]);
 
-  console.log({ isModalVisible, updateAvailable });
   return (
     <Modal
       modalTitle="updateAvailable"

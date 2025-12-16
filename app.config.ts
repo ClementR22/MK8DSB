@@ -41,11 +41,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     translucent: true,
     backgroundColor: "#00000000", // Changé de "transparent" à "#00000000"
   },
+  */
   plugins: ["expo-router", "expo-localization", "expo-web-browser", "./custom.plugin"],
   experiments: {
     typedRoutes: true,
   },
-  */
 
   web: {
     bundler: "metro",

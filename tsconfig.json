@@ -18,6 +18,8 @@
     "components",
     "babel.config.js",
     "stores/usePressableElementsStore.ts",
-    "translations"
+    "translations",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
   ]
 }
