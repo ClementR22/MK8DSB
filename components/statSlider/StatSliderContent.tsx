@@ -7,7 +7,12 @@ import useStatsStore from "@/stores/useStatsStore";
 import { getStatSliderBorderColor } from "@/utils/getStatSliderBorderColor";
 import useThemeStore from "@/stores/useThemeStore";
 import { StatName } from "@/types";
-import { BORDER_RADIUS_INF, BORDER_RADIUS_STAT_GAUGE_CONTAINER, BUTTON_SIZE } from "@/utils/designTokens";
+import {
+  BORDER_RADIUS_INF,
+  BORDER_RADIUS_STAT_GAUGE_CONTAINER,
+  BUTTON_SIZE,
+  buttonPressed,
+} from "@/utils/designTokens";
 import { box_shadow_z1 } from "../styles/shadow";
 import Text from "@/primitiveComponents/Text";
 import useGameStore from "@/stores/useGameStore";
@@ -80,13 +85,16 @@ const StatSliderContent = ({
 
   return (
     <Pressable
-      style={StyleSheet.flatten([
-        styles.container,
-        {
-          backgroundColor: theme.surface,
-          borderColor: getStatSliderBorderColor(statFilterNumber, theme),
-        },
-      ])}
+      style={({ pressed }) =>
+        StyleSheet.flatten([
+          styles.container,
+          pressed && buttonPressed,
+          {
+            backgroundColor: theme.surface,
+            borderColor: getStatSliderBorderColor(statFilterNumber, theme),
+          },
+        ])
+      }
       onPress={onPress}
     >
       <View style={styles.containerLeft}>

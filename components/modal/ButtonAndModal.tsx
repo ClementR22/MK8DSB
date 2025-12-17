@@ -69,9 +69,9 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
 
   // Fonction pour ouvrir le modal
   const openModal = useCallback(() => {
-    onClose && onClose();
+    onOpen && onOpen();
     currentSetIsModalVisible(true);
-  }, [currentSetIsModalVisible, onClose]);
+  }, [currentSetIsModalVisible, onOpen]);
 
   // Clonez le trigger pour injecter la prop onPress
   const triggerComponent_ = React.cloneElement(triggerComponent, { onPress: openModal });

@@ -1,7 +1,7 @@
 import React from "react";
 import useThemeStore from "@/stores/useThemeStore";
 import { BUILD_CARD_BORDER_WIDTH } from "@/hooks/useBuildCardStyle";
-import { BORDER_RADIUS_STANDARD, BUILD_CARD_WIDTH } from "@/utils/designTokens";
+import { BORDER_RADIUS_STANDARD, BUILD_CARD_WIDTH, buttonPressed } from "@/utils/designTokens";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import Text from "@/primitiveComponents/Text";
 import { Pressable, StyleSheet } from "react-native";
@@ -25,15 +25,15 @@ const PlaceholderBuildCard = () => {
 
   return (
     <Pressable
-      style={[
+      style={({ pressed }) => [
         styles.container,
+        pressed && buttonPressed,
         {
           height: isBuildCardsCollapsed ? BUILD_CARD_HEIGHT[game].collapsed : BUILD_CARD_HEIGHT[game].expanded,
           borderColor: theme.primary,
           backgroundColor: theme.surface,
         },
       ]}
-      onPress={buildController.addRandomBuildInDisplay}
     >
       <Icon
         name="plus"

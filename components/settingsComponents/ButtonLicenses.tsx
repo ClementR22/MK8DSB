@@ -7,6 +7,7 @@ import { vh } from "../styles/theme";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonSettings from "@/primitiveComponents/ButtonSettings";
 import useThemeStore from "@/stores/useThemeStore";
+import { buttonPressed } from "@/utils/designTokens";
 
 const ButtonLicenses = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -32,7 +33,11 @@ const ButtonLicenses = () => {
         {Object.entries(licensesLinks).map((item, index) => {
           const [licenseName, licenseUrl] = item;
           return (
-            <Pressable key={index} onPress={() => Linking.openURL(licenseUrl)} style={styles.licenseItem}>
+            <Pressable
+              key={index}
+              onPress={() => Linking.openURL(licenseUrl)}
+              style={({ pressed }) => [styles.licenseItem, pressed && buttonPressed]}
+            >
               <Text role="title" size="small" color={theme.isLight ? "#1D4ED8" : "#93C5FD"} namespace="not">
                 {licenseName}
               </Text>

@@ -1,6 +1,6 @@
 import Text from "@/primitiveComponents/Text";
 import useThemeStore from "@/stores/useThemeStore";
-import { CORNER_SMALL } from "@/utils/designTokens";
+import { buttonPressed, CORNER_SMALL } from "@/utils/designTokens";
 import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { Pressable, StyleSheet, ViewStyle } from "react-native";
 import { Menu, MenuOptions, MenuTrigger, renderers } from "react-native-popup-menu";
@@ -70,7 +70,11 @@ const Tooltip: React.FC<TooltipProps> = ({
       style={childStyleOuter}
     >
       <MenuTrigger {...menuTriggerProps}>
-        <Pressable onLongPress={open} onPress={disabled ? undefined : onPress} style={childStyleInner}>
+        <Pressable
+          onLongPress={open}
+          onPress={disabled ? undefined : onPress}
+          style={({ pressed }) => [childStyleInner, pressed && buttonPressed]}
+        >
           {children}
         </Pressable>
       </MenuTrigger>

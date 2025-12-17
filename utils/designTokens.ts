@@ -52,3 +52,7 @@ export const LEFT_PANNEL_WIDTH_COLLAPSED = ELEMENT_PICKER_LIST_IMAGE_SIZE + BORD
 export const BUILD_CARD_WIDTH = 220;
 
 export const BUTTON_SIZE = 40;
+
+export const buttonPressed = {
+  opacity: 0.8, // léger effet d’opacité
+};

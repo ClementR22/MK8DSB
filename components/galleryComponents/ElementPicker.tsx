@@ -1,5 +1,6 @@
 import {
   BORDER_RADIUS_STANDARD,
+  buttonPressed,
   ELEMENT_PICKER_LIST_IMAGE_RATIO,
   ELEMENT_PICKER_LIST_IMAGE_SIZE,
   LIST_ITEM_SPACING,
@@ -24,7 +25,10 @@ const ElementPicker: React.FC<ElementPickerProps> = ({ name, imageUrl, onPress, 
   const game = useGameStore((state) => state.game);
 
   return (
-    <Pressable style={[defaultStyles.container, style.containerDynamic]} onPress={onPress}>
+    <Pressable
+      style={({ pressed }) => [defaultStyles.container, style.containerDynamic, pressed && buttonPressed]}
+      onPress={onPress}
+    >
       <View style={defaultStyles.imagePlaceholder}>
         {/* Placeholder background */}
         <Image style={defaultStyles.image} source={imageUrl} resizeMode="contain" />

@@ -1,4 +1,5 @@
 import Text from "@/primitiveComponents/Text";
+import { buttonPressed } from "@/utils/designTokens";
 import React from "react";
 import { Pressable, StyleSheet } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
@@ -11,7 +12,7 @@ interface PopoverMenuItemProps {
 
 const PopoverMenuItem: React.FC<PopoverMenuItemProps> = ({ onPress, title, iconProps }) => {
   return (
-    <Pressable onPress={onPress} style={styles.container}>
+    <Pressable onPress={onPress} style={({ pressed }) => [styles.container, pressed && buttonPressed]}>
       {iconProps && <Icon name={iconProps.name} type={iconProps.type} size={24} />}
       <Text role="title" size="small" namespace="button" style={styles.text}>
         {title}

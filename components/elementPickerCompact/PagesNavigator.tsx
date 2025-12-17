@@ -2,7 +2,7 @@ import React, { useCallback, memo } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import useThemeStore from "@/stores/useThemeStore";
-import { BORDER_RADIUS_INF, GAP_SORT_MODE_SELECTOR } from "@/utils/designTokens";
+import { BORDER_RADIUS_INF, buttonPressed, GAP_SORT_MODE_SELECTOR } from "@/utils/designTokens";
 
 // Constants
 const HEIGHT = 30;
@@ -32,7 +32,11 @@ const PagesNavigator: React.FC<PagesNavigatorProps> = ({ currentPage, setCurrent
   // Dots rendering
   const renderDots = () => {
     return Array.from({ length: numberOfPages }).map((_, index) => (
-      <Pressable key={`dot-${index}`} onPress={() => setCurrentPage(index)} style={styles.dotPressable}>
+      <Pressable
+        key={`dot-${index}`}
+        onPress={() => setCurrentPage(index)}
+        style={({ pressed }) => [styles.dotPressable, pressed && buttonPressed]}
+      >
         <View style={[styles.dot, { backgroundColor: index === currentPage ? theme.primary : theme.inactive_dot }]} />
       </Pressable>
     ));
@@ -80,7 +84,11 @@ const NavButton = memo(
     disabled: boolean;
     color: string;
   }) => (
-    <Pressable onPress={onPress} disabled={disabled} style={[styles.navButton, disabled && styles.navButtonDisabled]}>
+    <Pressable
+      onPress={onPress}
+      disabled={disabled}
+      style={({ pressed }) => [styles.navButton, disabled && styles.navButtonDisabled, pressed && buttonPressed]}
+    >
       <MaterialCommunityIcons name={icon} size={30} color={color} />
     </Pressable>
   )

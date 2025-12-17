@@ -1,5 +1,5 @@
 // StatSelector.tsx
-import React, { useMemo, useState, useCallback } from "react";
+import React, { useMemo, useState, useCallback, useEffect } from "react";
 import { View } from "react-native";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import DoubleEntryTable, { ColumnName, StatToggleMap } from "./DoubleEntryTable";
