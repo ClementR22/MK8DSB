@@ -35,8 +35,8 @@ interface ButtonAndModalProps {
   };
   closeAfterSecondButton?: boolean;
   secondButtonPosition?: "left" | "right";
-  onModalOpen?: () => void;
-  onModalClose?: () => void;
+  onOpen?: () => void;
+  onClose?: () => void;
 }
 
 const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
@@ -52,8 +52,8 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
   secondButtonProps,
   closeAfterSecondButton,
   secondButtonPosition = "left",
-  onModalOpen,
-  onModalClose,
+  onOpen,
+  onClose,
 }) => {
   // État interne pour gérer la visibilité si les props externes ne sont pas fournies
   const [internalIsModalVisible, setInternalIsModalVisible] = useState(false);
@@ -69,15 +69,9 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
 
   // Fonction pour ouvrir le modal
   const openModal = useCallback(() => {
-    onModalOpen && onModalOpen();
+    onClose && onClose();
     currentSetIsModalVisible(true);
-  }, [currentSetIsModalVisible, onModalOpen]);
-
-  // Fonction pour fermer le modal
-  const closeModal = useCallback(() => {
-    onModalClose && onModalClose();
-    currentSetIsModalVisible(false);
-  }, [currentSetIsModalVisible, onModalClose]);
+  }, [currentSetIsModalVisible, onClose]);
 
   // Clonez le trigger pour injecter la prop onPress
   const triggerComponent_ = React.cloneElement(triggerComponent, { onPress: openModal });
@@ -92,7 +86,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
         isModalVisible={currentIsModalVisible}
         setIsModalVisible={currentSetIsModalVisible}
         closeButtonText={closeButtonText}
-        onClose={closeModal} // Assurez-vous que onClose utilise aussi le setter approprié
+        onClose={onClose}
         secondButton={secondButton}
         secondButtonProps={secondButtonProps}
         closeAfterSecondButton={closeAfterSecondButton}

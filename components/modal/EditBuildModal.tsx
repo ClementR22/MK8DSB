@@ -37,16 +37,7 @@ const EditBuildModal: React.FC = () => {
         }
       }
     }
-    setIsEditBuildModalVisible(false);
-  }, [
-    isBuildsListUpdated,
-    selectedClassIdsByCategory,
-    screenName,
-    game,
-    updateBuildsList,
-    setIsBuildsListUpdated,
-    setIsEditBuildModalVisible,
-  ]);
+  }, [isBuildsListUpdated, selectedClassIdsByCategory, screenName, game, updateBuildsList, setIsBuildsListUpdated]);
 
   return (
     <Modal

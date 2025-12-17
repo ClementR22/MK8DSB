@@ -40,7 +40,7 @@ const StatSelector: React.FC<StatSelectorProps> = ({ children }) => {
   }, [screenName]);
 
   // Fusion de tous les stats dans un map par statName
-  const [statMap, setStatMap] = useState<StatToggleMap>();
+  const [statMap, setStatMap] = useState<StatToggleMap>({});
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [resultStatsBeforeSync, setResultStatsBeforeSync] = useState(resultStats);
@@ -117,8 +117,8 @@ const StatSelector: React.FC<StatSelectorProps> = ({ children }) => {
       modalTitle={modalTitle}
       isModalVisibleProp={isModalVisible}
       setIsModalVisibleProp={setIsModalVisible}
-      onModalClose={handleModalClose}
-      onModalOpen={initStatMap}
+      onOpen={initStatMap}
+      onClose={handleModalClose}
     >
       <View style={{ backgroundColor: theme.surface, padding: 16, gap: 10 }}>
         {children}

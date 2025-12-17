@@ -1,17 +1,17 @@
 import React, { ReactElement, ReactNode, useCallback, useEffect, useRef } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import Toast from "react-native-toast-message";
+
 import Button from "@/primitiveComponents/Button";
+import Text from "./Text";
 import useThemeStore from "@/stores/useThemeStore";
+import useGeneralStore from "@/stores/useGeneralStore";
 import {
   BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,
   MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER,
 } from "@/utils/designTokens";
-import Toast from "react-native-toast-message";
 import { toastConfig } from "@/config/toastConfig";
-import Text from "./Text";
-import { MenuProvider } from "react-native-popup-menu";
-import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
-import useGeneralStore from "@/stores/useGeneralStore";
 
 interface ModalButtonProps {
   text: string;
@@ -21,27 +21,24 @@ interface ModalButtonProps {
   buttonTextColor?: string;
 }
 
-const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, buttonTextColor }: ModalButtonProps) => {
-  return (
-    <Button buttonColor={buttonColor} buttonTextColor={buttonTextColor} onPress={onPress} tooltipText={tooltipText}>
-      {text}
-    </Button>
-  );
-});
+const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, buttonTextColor }: ModalButtonProps) => (
+  <Button buttonColor={buttonColor} buttonTextColor={buttonTextColor} onPress={onPress} tooltipText={tooltipText}>
+    {text}
+  </Button>
+));
 
 interface ModalProps {
   modalTitle: string;
   isModalVisible: boolean;
-  setIsModalVisible: (newVisible: boolean) => void;
+  setIsModalVisible: (v: boolean) => void;
   children: ReactNode;
-  onClose?: () => void; // option
+  onClose?: () => void;
+
   closeButtonText?: string;
-  // on peut donner un composant
   secondButton?: ReactElement<{ onComplete?: () => void }>;
-  // ou uniquement ses props
   secondButtonProps?: {
     text: string;
-    onPress: () => void;
+    onPress: () => boolean | void;
     tooltipText: string;
     buttonColor?: string;
     buttonTextColor?: string;
@@ -57,7 +54,6 @@ const Modal = ({
   setIsModalVisible,
   children,
   onClose,
-  closeButtonText = "close",
   secondButton,
   secondButtonProps,
   closeAfterSecondButton = true,
@@ -69,52 +65,87 @@ const Modal = ({
   const tabBarHeight = useGeneralStore((state) => state.tabBarHeight);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const isClosingRef = useRef(false);
 
   useEffect(() => {
     if (isModalVisible) {
       bottomSheetModalRef.current?.present();
     } else {
-      bottomSheetModalRef.current?.close();
+      bottomSheetModalRef.current?.dismiss();
     }
   }, [isModalVisible]);
+
+  const requestClose = useCallback(() => {
+    if (isClosingRef.current) return;
+
+    isClosingRef.current = true;
+
+    // AVANT fermeture (UX)
+    onClose?.();
+
+    // lance l’animation
+    bottomSheetModalRef.current?.dismiss();
+
+    // sync état React
+    setIsModalVisible(false);
+  }, [onClose, setIsModalVisible]);
+
+  const handleDismiss = useCallback(() => {
+    // cleanup interne
+    isClosingRef.current = false;
+
+    // sécurité si fermeture externe
+    if (isModalVisible) setIsModalVisible(false);
+  }, [isModalVisible, setIsModalVisible]);
+
+  const renderBackdrop = useCallback(
+    (props: any) => <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} onPress={requestClose} />,
+    [requestClose]
+  );
+
+  /* ---------------------------------------------------------------------- */
+  /*                              Second button                              */
+  /* ---------------------------------------------------------------------- */
 
   const buttonContainerFlexDirection = secondButtonPosition === "left" ? "row" : "row-reverse";
 
   const renderSecondButton = useCallback(() => {
-    let _button: React.ReactElement;
+    let button: ReactElement | null = null;
 
     if (secondButton) {
-      _button = React.cloneElement(secondButton, {
+      button = React.cloneElement(secondButton, {
         onComplete: () => setIsModalVisible(false),
       });
     }
 
     if (secondButtonProps) {
       const completedOnPress = () => {
-        const isSucces = secondButtonProps.onPress();
-        if (closeAfterSecondButton || isSucces) setIsModalVisible(false);
+        const isSuccess = secondButtonProps.onPress();
+        if (closeAfterSecondButton || isSuccess) {
+          setIsModalVisible(false);
+        }
       };
-      _button = <ModalButton {...secondButtonProps} onPress={completedOnPress} />;
+
+      button = <ModalButton {...secondButtonProps} onPress={completedOnPress} />;
     }
 
-    if (_button) {
-      return <View style={[styles.buttonContainer, { flexDirection: buttonContainerFlexDirection }]}>{_button}</View>;
-    }
-    return null;
-  }, [secondButton, secondButtonProps, closeAfterSecondButton, setIsModalVisible]);
+    if (!button) return null;
 
-  const renderBackDrop = useCallback((props: any) => {
-    return <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props} />;
-  }, []);
+    return <View style={[styles.buttonContainer, { flexDirection: buttonContainerFlexDirection }]}>{button}</View>;
+  }, [secondButton, secondButtonProps, closeAfterSecondButton, buttonContainerFlexDirection, setIsModalVisible]);
+
+  /* ---------------------------------------------------------------------- */
+  /*                                   Render                                 */
+  /* ---------------------------------------------------------------------- */
 
   return (
     <BottomSheetModal
       ref={bottomSheetModalRef}
-      enablePanDownToClose={true}
+      enablePanDownToClose={false} // swipe down désactivé
       enableContentPanningGesture={false}
       backgroundStyle={{ backgroundColor: theme.surface_container_highest }}
-      backdropComponent={renderBackDrop}
-      onDismiss={() => setIsModalVisible(false)}
+      backdropComponent={renderBackdrop}
+      onDismiss={handleDismiss}
       {...props}
     >
       <BottomSheetView style={{ paddingBottom: tabBarHeight + 10, gap: 10 }}>
@@ -137,28 +168,23 @@ const Modal = ({
   );
 };
 
+export default React.memo(Modal);
+
+/* -------------------------------------------------------------------------- */
+/*                                    Styles                                  */
+/* -------------------------------------------------------------------------- */
+
 const styles = StyleSheet.create({
-  background: {
-    height: Dimensions.get("screen").height, // ou "screen"
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
   childrenContainer: {
-    paddingHorizontal: 0,
     marginHorizontal: MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER,
     borderRadius: BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,
     overflow: "hidden",
   },
   titleCenter: {
     paddingHorizontal: 24,
-    // fontFamily: "Roboto", // Ensure this font is loaded. If not, it falls back to default.
   },
   buttonContainer: {
-    flexDirection: "row",
     gap: 10,
     justifyContent: "center",
   },
 });
-
-export default React.memo(Modal);
