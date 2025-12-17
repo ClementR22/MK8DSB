@@ -6,12 +6,12 @@ import Toast from "react-native-toast-message";
 import Button from "@/primitiveComponents/Button";
 import Text from "./Text";
 import useThemeStore from "@/stores/useThemeStore";
-import useGeneralStore from "@/stores/useGeneralStore";
 import {
   BORDER_RADIUS_MODAL_CHILDREN_CONTAINER,
   MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER,
 } from "@/utils/designTokens";
 import { toastConfig } from "@/config/toastConfig";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface ModalButtonProps {
   text: string;
@@ -62,7 +62,9 @@ const Modal = ({
   ...props
 }: ModalProps) => {
   const theme = useThemeStore((state) => state.theme);
-  const tabBarHeight = useGeneralStore((state) => state.tabBarHeight);
+
+  const insets = useSafeAreaInsets();
+  const bottomOffset = insets.bottom;
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const isClosingRef = useRef(false);
@@ -148,7 +150,7 @@ const Modal = ({
       onDismiss={handleDismiss}
       {...props}
     >
-      <BottomSheetView style={{ paddingBottom: tabBarHeight + 10, gap: 10 }}>
+      <BottomSheetView style={{ paddingBottom: bottomOffset, gap: 10 }}>
         {modalTitle && (
           <Text role="headline" size="small" textAlign="center" style={styles.titleCenter} namespace="modal">
             {modalTitle}

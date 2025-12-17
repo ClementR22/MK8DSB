@@ -9,9 +9,6 @@ interface GeneralStoreState {
   isScrollEnable: boolean;
   setIsScrollEnable: (newIsScrollEnable: boolean) => void;
 
-  tabBarHeight: number;
-  setTabBarHeight: (height: number) => void;
-
   showAllStatGaugeBonuses: boolean;
   toggleAllStatGaugeBonuses: () => void;
 
@@ -38,9 +35,6 @@ const useGeneralStore = create<GeneralStoreState>((set, get) => ({
 
   isScrollEnable: true,
   setIsScrollEnable: (newIsScrollEnable) => set({ isScrollEnable: newIsScrollEnable }),
-
-  tabBarHeight: 0,
-  setTabBarHeight: (height) => set({ tabBarHeight: height }),
 
   showAllStatGaugeBonuses: false,
   toggleAllStatGaugeBonuses: () => set((state) => ({ showAllStatGaugeBonuses: !state.showAllStatGaugeBonuses })),
