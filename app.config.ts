@@ -8,12 +8,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   slug: "MK8DSB",
   version: "{{VERSION}}",
   runtimeVersion: "exposdk:54.0.0",
-
-  android: {
-    package: "com.clement_rayer.MK8DSB",
-  },
-  /*
-  à modifier plutot dans android/app/src/main/AndroidManifest.xml
+  //*
+  // à modifier plutot dans android/app/src/main/AndroidManifest.xml
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   scheme: "myapp",
@@ -41,7 +37,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     translucent: true,
     backgroundColor: "#00000000", // Changé de "transparent" à "#00000000"
   },
-  */
+  //*/
   plugins: ["expo-router", "expo-localization", "expo-web-browser", "./custom.plugin"],
   experiments: {
     typedRoutes: true,

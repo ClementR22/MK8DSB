@@ -143,9 +143,9 @@ jobs:
         run: |
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           if [ -z "$LAST_TAG" ]; then
-            echo "LOG=$(git log --pretty=format:'- %s')" >> "$GITHUB_OUTPUT"
+            echo "changelog=$(git log --pretty=format:'- %s')" > changelog.txt
           else
-            echo "LOG=$(git log $LAST_TAG..HEAD --pretty=format:'- %s')" >> "$GITHUB_OUTPUT"
+            echo "changelog=$(git log $LAST_TAG..HEAD --pretty=format:'- %s')" > changelog.txt
           fi
 
       - name: Upload application artifacts
@@ -156,6 +156,7 @@ jobs:
             ./${{steps.build-name.outputs.value}}
             ./sha256sum.txt
             ./nightly-version.txt
+            ./changelog.txt
 
   nightly:
     if: ${{!inputs.stable}}
@@ -179,7 +180,7 @@ jobs:
       - name: Upload nightly release
         uses: ncipollo/release-action@v1
         with:
-          GITHUB_TOKEN: ${{github.token}}
+          token: ${{github.token}}
           tag: nightly-${{steps.nightly-version.outputs.value}}
           name: "Nightly ${{steps.nightly-version.outputs.value}}"
           draft: ${{inputs.is-draft}}
@@ -224,12 +225,23 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+          FILE=android/gradle.properties
+
           VERSION="${{ steps.version.outputs.v-version }}"
           CLEAN_VERSION="${VERSION#v}"
 
+          VERSION_CODE=$(grep VERSION_CODE $FILE | cut -d'=' -f2)
+          VERSION_CODE=$((VERSION_CODE+1))
+
+          sed -i "s/VERSION_NAME=.*/VERSION_NAME=$CLEAN_VERSION/" $FILE
+          sed -i "s/VERSION_CODE=.*/VERSION_CODE=$VERSION_CODE/" $FILE
+
+          echo "Android versionName=$CLEAN_VERSION"
+          echo "Android versionCode=$VERSION_CODE"
+
           npm version $CLEAN_VERSION --no-git-tag-version
 
-          git add package.json
+          git add package.json android/gradle.properties
           git commit -m "CI: bump version to ${VERSION}"
           git push
 
@@ -239,17 +251,23 @@ jobs:
           name: artifacts
           path: ./
 
+      - name: Extract Changelog content
+        id: changelog-content
+        run: echo "value=$(cat changelog.txt)" >> "$GITHUB_OUTPUT"
+
       - name: Upload stable release
         uses: ncipollo/release-action@v1
         with:
-          GITHUB_TOKEN: ${{ github.token }}
+          token: ${{ github.token }}
           name: MK8DSB ${{steps.version.outputs.v-version}}
           tag: ${{steps.version.outputs.v-version}}
           body: |
             ${{inputs.description}}
 
-            ## 🔧 Changelog
-            ${{needs.build.outputs.changelog}}
+            <details>
+              <summary>## 🔧 Changelog</summary>
+              ${{steps.changelog-content.outputs.value}}              
+            </details>
 
           draft: ${{inputs.is-draft}}
           prerelease: false

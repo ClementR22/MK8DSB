@@ -14,10 +14,12 @@ web-build/
 
 # Android - RÈGLES DE BASE
 # Ces fichiers DOIVENT être trackés par Git
-!android/app/build.gradle
-!android/gradle.properties
-!android/settings.gradle
-!android/build.gradle
+# !android/app/build.gradle
+# !android/gradle.properties
+# !android/settings.gradle
+# !android/build.gradle
+
+android/
 
 # Ces fichiers/dossiers DOIVENT être ignorés
 android/build/
