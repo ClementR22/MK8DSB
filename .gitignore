@@ -1,6 +1,7 @@
 node_modules/
 .expo/
 dist/
+.build/
 npm-debug.*
 *.jks
 *.p8
@@ -12,6 +13,12 @@ npm-debug.*
 *.aab
 web-build/
 
+android/
+
+##################################################
+### Fix build crash by removing Android folder ###
+##################################################
+
 # Android - RÈGLES DE BASE
 # Ces fichiers DOIVENT être trackés par Git
 # !android/app/build.gradle
@@ -19,12 +26,12 @@ web-build/
 # !android/settings.gradle
 # !android/build.gradle
 
-android/
-
 # Ces fichiers/dossiers DOIVENT être ignorés
-android/build/
-android/app/build/
-android/local.properties
+# android/build/
+# android/app/build/
+# android/local.properties
+
+##################################################
 
 .vscode/
 .idea/
