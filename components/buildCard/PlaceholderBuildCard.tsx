@@ -34,6 +34,7 @@ const PlaceholderBuildCard = () => {
           backgroundColor: theme.surface,
         },
       ]}
+      onPress={buildController.addRandomBuildInDisplay}
     >
       <Icon
         name="plus"
