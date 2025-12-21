@@ -14,7 +14,7 @@ interface TooltipProps {
   childStyleOuter?: ViewStyle | ViewStyle[];
   placement?: "top" | "right" | "bottom" | "left" | "auto";
   isButton?: boolean;
-  disabled?: boolean;
+  onPressDisabled?: boolean;
   top?: number;
   children: React.ReactNode;
 }
@@ -27,7 +27,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   childStyleOuter,
   placement = "top",
   isButton = false,
-  disabled = false,
+  onPressDisabled = false,
   top = 0,
   children,
 }) => {
@@ -76,7 +76,7 @@ const Tooltip: React.FC<TooltipProps> = ({
       <MenuTrigger {...menuTriggerProps}>
         <Pressable
           onLongPress={open}
-          onPress={disabled ? undefined : onPress}
+          onPress={onPressDisabled ? undefined : onPress}
           style={({ pressed }) => [childStyleInner, pressed && buttonPressed]}
         >
           {children}

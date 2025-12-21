@@ -51,5 +51,7 @@
 
   "confirm": "Confirmer",
   "cancel": "Retour",
-  "close": "Fermer"
+  "close": "Fermer",
+
+  "clickToScrollToTheCorrespondingBuild": "Click to scroll to the corresponding build"
 }

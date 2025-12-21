@@ -9,6 +9,7 @@ import { getBonusColor } from "@/utils/getBonusColor";
 import { useGameData } from "@/hooks/useGameData";
 import { statsNamespaceByGame } from "@/translations/namespaces";
 import useGameStore from "@/stores/useGameStore";
+import { useScreen } from "@/contexts/ScreenContext";
 
 interface StatGaugeContainerProps {
   name?: StatName;
@@ -28,9 +29,9 @@ const StatGaugeContainer = ({
   children,
 }: StatGaugeContainerProps) => {
   const game = useGameStore((state) => state.game);
-
   const { statNamesCompact } = useGameData();
   const theme = useThemeStore((state) => state.theme);
+  const screenName = useScreen();
 
   const showAllStatGaugeBonuses = useGeneralStore((state) => state.showAllStatGaugeBonuses);
   const toggleAllStatGaugeBonuses = useGeneralStore((state) => state.toggleAllStatGaugeBonuses);
@@ -74,13 +75,16 @@ const StatGaugeContainer = ({
     }
   }, [isInBuildCard, chosenValue, toggleAllStatGaugeBonuses]);
 
+  const tooltipText = screenName === "display" ? "clickToScrollToTheCorrespondingBuild" : name;
+  const namespace = screenName === "display" ? undefined : statsNamespaceByGame[game];
+
   return (
     <Tooltip
-      tooltipText={name}
+      tooltipText={tooltipText}
       childStyleOuter={styles.containerOuter}
       childStyleInner={styles.containerInner}
       onPress={handlePress}
-      namespace={statsNamespaceByGame[game]}
+      namespace={namespace}
     >
       {name && (
         <Text

@@ -39,7 +39,7 @@ const ButtonBase = ({
       namespace={namespace}
       placement={placement}
       isButton={isButton}
-      disabled={disabled}
+      onPressDisabled={disabled}
       {...props}
     >
       {children}
