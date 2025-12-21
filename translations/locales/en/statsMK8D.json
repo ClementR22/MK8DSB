@@ -10,7 +10,7 @@
   "handlingWater": "Water handling (WH)",
   "handlingAir": "Air handling (AH)",
   "traction": "Traction (Tra)",
-  "miniTurbo": "Mini-Turbo (MT)",
+  "miniTurbo": "Mini-Turbo (MTu)",
 
   "SG": "GS",
   "SAG": "AGS",
@@ -23,5 +23,5 @@
   "HW": "WH",
   "HA": "AH",
   "Tra": "Tra",
-  "MT": "MT"
+  "MTu": "MTu"
 }

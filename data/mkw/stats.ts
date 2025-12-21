@@ -22,7 +22,7 @@ export const statNamesCompact = {
   handlingSmooth: "HS",
   handlingRough: "HR",
   handlingWater: "HW",
-  miniTurbo: "MT",
+  miniTurbo: "MTu",
 };
 
 const statNamesSortDefault: StatNameSortDefault[] = [

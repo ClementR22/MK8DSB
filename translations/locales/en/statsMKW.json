@@ -8,7 +8,7 @@
   "handlingRough": "Handling rough (HR)",
   "handlingWater": "Water handling (HW)",
   "traction": "Traction (Tra)",
-  "miniTurbo": "Mini-Turbo (MT)",
+  "miniTurbo": "Mini-Turbo (MTu)",
 
   "SS": "SS",
   "SR": "SR",
@@ -19,5 +19,5 @@
   "HR": "HR",
   "HW": "HW",
   "Tra": "Tra",
-  "MT": "MT"
+  "MTu": "MTu"
 }

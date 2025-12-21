@@ -28,7 +28,7 @@ export const statNamesCompact = {
   handlingWater: "HW",
   handlingAir: "HA",
   traction: "Tra",
-  miniTurbo: "MT",
+  miniTurbo: "MTu",
 };
 
 const statNamesSortDefault: StatNameSortDefault[] = [

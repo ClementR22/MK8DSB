@@ -10,7 +10,7 @@
   "handlingWater": "Maniabilité eau (ME)",
   "handlingAir": "Maniabilité air (MA)",
   "traction": "Adhérence (Adh)",
-  "miniTurbo": "Mini-turbo (MT)",
+  "miniTurbo": "Mini-turbo (MTu)",
 
   "SG": "VS",
   "SAG": "VAG",
@@ -23,5 +23,5 @@
   "HW": "ME",
   "HA": "MA",
   "Tra": "Adh",
-  "MT": "MT"
+  "MTu": "MTu"
 }
