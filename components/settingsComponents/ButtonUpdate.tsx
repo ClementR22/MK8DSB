@@ -10,7 +10,7 @@ interface ButtonUpdateProps {
 
 const ButtonUpdate: React.FC<ButtonUpdateProps> = ({ isInModal }) => {
   const { updateAvailable, openDownloadPage } = useCheckUpdate();
-  const text = isInModal ? "update" : "updateTheApp";
+  const text = "updateTheApp";
 
   return (
     <ButtonSettings

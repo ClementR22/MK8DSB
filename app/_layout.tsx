@@ -221,6 +221,7 @@ export default function TabLayout() {
             </Tabs>
             <EditBuildModal />
             <LoadBuildModal />
+            <UpdateAvailableModal />
             <Toast config={toastConfig} bottomOffset={59} swipeable={false} />
           </BottomSheetModalProvider>
         </GestureHandlerRootView>

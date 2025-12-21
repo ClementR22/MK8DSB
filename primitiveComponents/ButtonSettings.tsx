@@ -30,7 +30,7 @@ const ButtonSettings: React.FC<ButtonSettingsProps> = ({
       onPress={onPress}
       childStyleInner={[styles.containerInner, { backgroundColor: theme.surface }]}
       tooltipText={tooltipText}
-      disabled={disabled}
+      onPressDisabled={disabled}
       top={-10}
     >
       <IconContainer
