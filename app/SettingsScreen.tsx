@@ -21,27 +21,14 @@ import useGameStore from "@/stores/useGameStore";
 import ButtonMakeADonation from "@/components/settingsComponents/ButtonMakeADonation";
 import ButtonSourceCode from "@/components/settingsComponents/ButtonSourceCode";
 import ButtonUpdate from "@/components/settingsComponents/ButtonUpdate";
-import Separator from "@/components/Separator";
-import { vw } from "@/components/styles/theme";
 import { StyleSheet, View } from "react-native";
-import { MARGIN_CONTAINER_LOWEST, PADDING_BOX_CONTAINER } from "@/utils/designTokens";
 import packageJSON from "@/package.json";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
-import useThemeStore from "@/stores/useThemeStore";
-
-const SectionTitle = ({ title }: { title: string }) => {
-  return (
-    <View style={{}}>
-      <Text role="title" size="large" namespace="text" textAlign="center">
-        {title}
-      </Text>
-    </View>
-  );
-};
+import useGeneralStore from "@/stores/useGeneralStore";
 
 const SettingsScreen: React.FC = () => {
   const game = useGameStore((state) => state.game);
-  const theme = useThemeStore((state) => state.theme);
+  const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const resetSettings = useResetSettings();
   const deleteAllSavedBuilds = useBuildsListStore((state) => state.deleteAllSavedBuilds);
@@ -68,7 +55,7 @@ const SettingsScreen: React.FC = () => {
 
   return (
     <ScreenProvider screenName="settings">
-      <ScrollViewScreen scrollEnabled={true} contentContainerStyle={{ paddingBottom: 5 }}>
+      <ScrollViewScreen scrollEnabled={isScrollEnable}>
         <BoxContainer>
           <LanguageSelector />
 
