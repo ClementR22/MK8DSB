@@ -1,4 +1,5 @@
 import Text from "@/primitiveComponents/Text";
+import useGeneralStore from "@/stores/useGeneralStore";
 import useThemeStore from "@/stores/useThemeStore";
 import { buttonPressed, CORNER_SMALL } from "@/utils/designTokens";
 import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
@@ -31,6 +32,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   children,
 }) => {
   const theme = useThemeStore((state) => state.theme);
+  const setIsScrollEnable = useGeneralStore((state) => state.setIsScrollEnable);
 
   const [isOpen, setIsOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -41,10 +43,12 @@ const Tooltip: React.FC<TooltipProps> = ({
       timeoutRef.current = null;
     }
     setIsOpen(false);
+    setIsScrollEnable(true);
   }, []);
 
   const open = useCallback(() => {
     setIsOpen(true);
+    setIsScrollEnable(false);
 
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(close, 2000);
