@@ -110,12 +110,6 @@ jobs:
         if: ${{inputs.stable}}
         run: sed -i app.config.ts -e 's|{{VERSION}}|${{ steps.version_build.outputs.v-version }}|g'
 
-      - name: Clean Android build
-        if: ${{inputs.reset-cache}}
-        run: |
-          cd android && ./gradlew clean && cd ..
-          rm -rf android/app/build
-
       - name: Build apk (local)
         if: ${{!inputs.skip-build}}
         run: eas build --non-interactive --platform android --profile preview --local
@@ -225,23 +219,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          FILE=android/gradle.properties
-
           VERSION="${{ steps.version.outputs.v-version }}"
           CLEAN_VERSION="${VERSION#v}"
 
-          VERSION_CODE=$(grep VERSION_CODE $FILE | cut -d'=' -f2)
-          VERSION_CODE=$((VERSION_CODE+1))
-
-          sed -i "s/VERSION_NAME=.*/VERSION_NAME=$CLEAN_VERSION/" $FILE
-          sed -i "s/VERSION_CODE=.*/VERSION_CODE=$VERSION_CODE/" $FILE
-
-          echo "Android versionName=$CLEAN_VERSION"
-          echo "Android versionCode=$VERSION_CODE"
-
           npm version $CLEAN_VERSION --no-git-tag-version
 
-          git add package.json android/gradle.properties
+          git add package.json
           git commit -m "CI: bump version to ${VERSION}"
           git push
 
