@@ -53,6 +53,8 @@ const SettingsScreen: React.FC = () => {
     deleteAllTheMemory();
   }, []);
 
+  console.log({ ok: packageJSON.version });
+
   return (
     <ScreenProvider screenName="settings">
       <ScrollViewScreen scrollEnabled={isScrollEnable}>
