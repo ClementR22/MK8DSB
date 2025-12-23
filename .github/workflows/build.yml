@@ -22,7 +22,7 @@ on:
       skip-build:
         type: boolean
         default: false
-        offering: Skip APK build ?
+        description: Skip APK build ?
       is-draft:
         type: boolean
         default: false
@@ -43,7 +43,6 @@ jobs:
           if [ "${{ inputs.stable }}" = "true" ] && [ -z "${{ inputs.description }}" ]; then
             echo "❌ Missing description for stable release"
             exit 1
-          fi
 
   build:
     runs-on: ubuntu-latest
@@ -111,7 +110,7 @@ jobs:
 
           git add app.config.ts package.json
           git commit -m "CI: release $VERSION"
-          git push
+          git push --force-with-lease
 
       # 📌 Android versionCode (strictly increasing)
       - name: Set Android versionCode
@@ -174,15 +173,9 @@ jobs:
           name: MK8DSB ${{ needs.build.outputs.version }}
           draft: ${{ inputs.is-draft }}
           prerelease: ${{ !inputs.stable }}
-          body: |
-            ${{ inputs.description }}
-
-            <details>
-              <summary>## 🔧 Changelog</summary>
-
-            $(cat changelog.txt)
-
-            </details>
+          bodyFile: changelog.txt
           artifacts: |
             *.apk
             sha256sum.txt
+          allowUpdates: true
+          replacesArtifacts: true
