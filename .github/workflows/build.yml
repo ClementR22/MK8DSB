@@ -39,10 +39,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Validate inputs
+        shell: bash
         run: |
           if [ "${{ inputs.stable }}" = "true" ] && [ -z "${{ inputs.description }}" ]; then
             echo "❌ Missing description for stable release"
             exit 1
+          fi
 
   build:
     runs-on: ubuntu-latest
