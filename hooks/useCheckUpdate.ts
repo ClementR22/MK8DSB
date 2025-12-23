@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import * as Linking from "expo-linking";
 import packageJSON from "@/package.json";
 
-async function fetchLatestVersion(): Promise<string | null> {
+export async function fetchLatestVersion(): Promise<string | null> {
   try {
     const response = await fetch("https://api.github.com/repos/ClementR22/MK8DSB/releases/latest");
 
