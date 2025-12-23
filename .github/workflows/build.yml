@@ -153,44 +153,30 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20.x
+
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
           name: artifacts
           path: ./
 
-      # 🔧 Sync package.json (stable only)
       - name: Bump package.json
         if: ${{ inputs.stable }}
         run: |
           VERSION="${{ needs.build.outputs.version }}"
           CLEAN_VERSION="${VERSION#v}"
-          npm version "$CLEAN_VERSION" --no-git-tag-version
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          npm version "$CLEAN_VERSION" --no-git-tag-version
           git add package.json
           git commit -m "CI: bump package.json to $VERSION"
           git push
-
-      - name: Read changelog
-        id: changelog
-        run: echo "value=$(cat changelog.txt)" >> "$GITHUB_OUTPUT"
-
-      - name: Publish GitHub release
-        uses: ncipollo/release-action@v1
-        with:
-          token: ${{ github.token }}
-          tag: ${{ needs.build.outputs.version }}
-          name: MK8DSB ${{ needs.build.outputs.version }}
-          draft: ${{ inputs.is-draft }}
-          prerelease: ${{ !inputs.stable }}
-          body: |
-            ${{ inputs.description }}
-
-            <details>
-              <summary>## 🔧 Changelog</summary>
-              ${{ steps.changelog.outputs.value }}
-            </details>
-          artifacts: |
-            *.apk
-            sha256sum.txt

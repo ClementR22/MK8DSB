@@ -10,6 +10,7 @@ import useBuildsListStore from "@/stores/useBuildsListStore";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { BuildAlreadyExistsError } from "@/errors/errors";
 import { useGameData } from "./useGameData";
+import { Platform } from "react-native";
 
 export interface ActionIconProps {
   title: string;
@@ -156,8 +157,8 @@ export function useActionIconPropsList(
       },
       share: {
         title: "share",
-        name: "share",
-        type: IconType.MaterialIcons,
+        name: Platform.OS === "ios" ? "share-outline" : "share",
+        type: Platform.OS === "ios" ? IconType.Ionicons : IconType.MaterialIcons,
         onPress: handleExportPress,
       },
     };

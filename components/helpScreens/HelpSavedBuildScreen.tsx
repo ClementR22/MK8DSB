@@ -7,6 +7,7 @@ import HelpStepItem from "../helpComponents/HelpStepItem";
 import HelpSection from "../helpComponents/HelpSection";
 import { sortsNamespaceByGame } from "@/translations/namespaces";
 import useGameStore from "@/stores/useGameStore";
+import { Platform } from "react-native";
 
 const HelpFavoritesScreen = () => {
   const game = useGameStore((state) => state.game);
@@ -101,8 +102,8 @@ const HelpFavoritesScreen = () => {
           tooltipText="loadTheStatsToSearchScreen"
         />
         <HelpButtonDescription
-          iconName="share"
-          iconType={IconType.MaterialIcons}
+          iconName={Platform.OS === "ios" ? "share-outline" : "share"}
+          iconType={Platform.OS === "ios" ? IconType.Ionicons : IconType.MaterialIcons}
           description="actions.label_export_set"
           namespaceDescription="helpSave"
           tooltipText="share"

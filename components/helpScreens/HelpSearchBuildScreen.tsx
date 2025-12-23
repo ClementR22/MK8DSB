@@ -1,5 +1,5 @@
 import React, { memo, useState } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal from "./HelpModal";
 import StatSliderPreview from "../statSlider/StatSliderPreview";
@@ -194,8 +194,8 @@ const HelpSearchBuildScreen = () => {
           tooltipText="loadTheBuildToDisplayScreen"
         />
         <HelpButtonDescription
-          iconName="share"
-          iconType={IconType.MaterialIcons}
+          iconName={Platform.OS === "ios" ? "share-outline" : "share"}
+          iconType={Platform.OS === "ios" ? IconType.Ionicons : IconType.MaterialIcons}
           description="results_management.export_set"
           namespaceDescription="helpSearch"
           tooltipText="share"

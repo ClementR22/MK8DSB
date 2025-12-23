@@ -11,6 +11,7 @@ import Button from "@/primitiveComponents/Button";
 import useGameStore from "@/stores/useGameStore";
 import { sortsNamespaceByGame } from "@/translations/namespaces";
 import { useGameData } from "@/hooks/useGameData";
+import { Platform } from "react-native";
 
 const HelpDisplayBuildScreen = () => {
   const { MAX_STAT_VALUE_BUILD } = useGameData();
@@ -144,8 +145,8 @@ const HelpDisplayBuildScreen = () => {
           tooltipText="loadTheStats"
         />
         <HelpButtonDescription
-          iconName="share"
-          iconType={IconType.MaterialIcons}
+          iconName={Platform.OS === "ios" ? "share-outline" : "share"}
+          iconType={Platform.OS === "ios" ? IconType.Ionicons : IconType.MaterialIcons}
           description="actions.label_export_set"
           namespaceDescription="helpDisplay"
           tooltipText="share"
