@@ -19,14 +19,10 @@ on:
           - minor
           - patch
         default: patch
-      reset-cache:
-        type: boolean
-        default: false
-        description: Delete cache ?
       skip-build:
         type: boolean
         default: false
-        description: Skip APK build ?
+        offering: Skip APK build ?
       is-draft:
         type: boolean
         default: false
@@ -39,23 +35,19 @@ env:
   GITHUB_TOKEN: ${{ github.token }}
 
 jobs:
-  check-description:
+  check-stable-inputs:
     runs-on: ubuntu-latest
     steps:
-      - name: Exit
-        if: ${{inputs.stable && !inputs.description}}
-        run: echo "❌ Missing description for a stable release" && exit 1
-
-  check-version-bump:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Exit
-        if: ${{inputs.stable && !inputs.version-bump}}
-        run: echo "❌ Missing version bump for a stable release" && exit 1
+      - name: Validate inputs
+        run: |
+          if [ "${{ inputs.stable }}" = "true" ] && [ -z "${{ inputs.description }}" ]; then
+            echo "❌ Missing description for stable release"
+            exit 1
+          fi
 
   build:
     runs-on: ubuntu-latest
-    needs: [check-description, check-version-bump]
+    needs: check-stable-inputs
     outputs:
       version: ${{ steps.final-version.outputs.value }}
     steps:
@@ -83,8 +75,7 @@ jobs:
         run: |
           if [ "${{ inputs.stable }}" = "true" ]; then
             LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-            NEXT=$(npx semver $LAST_TAG -i ${{ inputs.version-bump }})
-            VERSION="$NEXT"
+            VERSION=$(npx semver "$LAST_TAG" -i ${{ inputs.version-bump }})
           else
             BASE=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
             HASH=$(git rev-parse --short HEAD)
@@ -101,16 +92,28 @@ jobs:
         run: |
           sed -i app.config.ts -e 's|{{VERSION}}|${{ steps.final-version.outputs.value }}|g'
 
-      # 📌 Commit versioned config (stable only)
-      - name: Commit app.config.ts
+      # 🔁 Sync package.json + app.config.ts (STABLE ONLY)
+      - name: Commit versioned files
         if: ${{ inputs.stable }}
         run: |
+          VERSION="${{ steps.final-version.outputs.value }}"
+          CLEAN_VERSION="${VERSION#v}"
+
+          node -e "
+            const fs = require('fs');
+            const pkg = require('./package.json');
+            pkg.version = '$CLEAN_VERSION';
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+          "
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add app.config.ts
-          git commit -m "CI: set app version to ${{ steps.final-version.outputs.value }}"
+
+          git add app.config.ts package.json
+          git commit -m "CI: release $VERSION"
           git push
 
+      # 📌 Android versionCode (strictly increasing)
       - name: Set Android versionCode
         run: |
           echo "ANDROID_VERSION_CODE=$(date +%s)" >> $GITHUB_ENV
@@ -157,30 +160,29 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v5
-
-      - name: Setup Node
-        uses: actions/setup-node@v5
-        with:
-          node-version: 20.x
-
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
           name: artifacts
           path: ./
 
-      - name: Bump package.json
-        if: ${{ inputs.stable }}
-        run: |
-          VERSION="${{ needs.build.outputs.version }}"
-          CLEAN_VERSION="${VERSION#v}"
+      - name: Publish GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ github.token }}
+          tag: ${{ needs.build.outputs.version }}
+          name: MK8DSB ${{ needs.build.outputs.version }}
+          draft: ${{ inputs.is-draft }}
+          prerelease: ${{ !inputs.stable }}
+          body: |
+            ${{ inputs.description }}
 
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+            <details>
+              <summary>## 🔧 Changelog</summary>
 
-          npm version "$CLEAN_VERSION" --no-git-tag-version
-          git add package.json
-          git commit -m "CI: bump package.json to $VERSION"
-          git push
+            $(cat changelog.txt)
+
+            </details>
+          artifacts: |
+            *.apk
+            sha256sum.txt
