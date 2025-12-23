@@ -19,6 +19,10 @@ on:
           - minor
           - patch
         default: patch
+      reset-cache:
+        type: boolean
+        default: false
+        description: Delete cache ?
       skip-build:
         type: boolean
         default: false
@@ -31,44 +35,55 @@ on:
         required: false
         description: Description
 
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+
 jobs:
-  check-stable-inputs:
+  check-description:
     runs-on: ubuntu-latest
     steps:
-      - name: Validate inputs
-        run: |
-          if [ "${{inputs.stable}}" = "true" ] && [ -z "${{inputs.description}}" ]; then
-            echo "❌ Missing description for stable release"
-            exit 1
-          fi
+      - name: Exit
+        if: ${{inputs.stable && !inputs.description}}
+        run: echo "❌ Missing description for a stable release" && exit 1
+
+  check-version-bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exit
+        if: ${{inputs.stable && !inputs.version-bump}}
+        run: echo "❌ Missing version bump for a stable release" && exit 1
 
   build:
     runs-on: ubuntu-latest
-    needs: check-stable-inputs
+    needs: [check-description, check-version-bump]
     outputs:
-      version: ${{ steps.version.outputs.value }}
+      version: ${{ steps.final-version.outputs.value }}
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout repo
+        uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v5
+      - name: Setup Node
+        uses: actions/setup-node@v5
         with:
           node-version: 20.x
           cache: npm
 
-      - uses: expo/expo-github-action@v8
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - run: npm install
+      - name: Install dependencies
+        run: npm install
 
-      # 🔢 Version = app.config.ts (source unique)
+      # 🔢 Compute version (SINGLE source of truth)
       - name: Compute version
-        id: version
+        id: compute-version
         run: |
-          if [ "${{inputs.stable}}" = "true" ]; then
+          if [ "${{ inputs.stable }}" = "true" ]; then
             LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-            NEXT=$(npx semver $LAST_TAG -i ${{inputs.version-bump}})
+            NEXT=$(npx semver $LAST_TAG -i ${{ inputs.version-bump }})
             VERSION="$NEXT"
           else
             BASE=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
@@ -77,46 +92,53 @@ jobs:
           fi
           echo "value=$VERSION" >> "$GITHUB_OUTPUT"
 
-      # 🔁 Sync package.json (miroir automatique)
-      - name: Sync package.json version
-        run: |
-          VERSION="${{steps.version.outputs.value}}"
-          CLEAN_VERSION="${VERSION#v}"
-
-          node -e "
-            const fs = require('fs');
-            const pkg = require('./package.json');
-            pkg.version = '$CLEAN_VERSION';
-            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
-          "
-
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add package.json
-          git commit -m 'CI: sync package.json version to ${VERSION}'
-          git push
+      - name: Expose final version
+        id: final-version
+        run: echo "value=${{ steps.compute-version.outputs.value }}" >> "$GITHUB_OUTPUT"
 
       # 🧩 Inject version into app.config.ts
       - name: Update app.config.ts
-        run: sed -i app.config.ts -e 's|{{VERSION}}|${{steps.version.outputs.value}}|g'
+        run: |
+          sed -i app.config.ts -e 's|{{VERSION}}|${{ steps.final-version.outputs.value }}|g'
+
+      # 📌 Commit versioned config (stable only)
+      - name: Commit app.config.ts
+        if: ${{ inputs.stable }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add app.config.ts
+          git commit -m "CI: set app version to ${{ steps.final-version.outputs.value }}"
+          git push
 
       # 🏗 Build APK
       - name: Build APK
-        if: ${{!inputs.skip-build}}
+        if: ${{ !inputs.skip-build }}
         run: eas build --non-interactive --platform android --profile preview --local
 
-      # 📦 Rename artifact
+      # 📦 Rename APK
       - name: Rename APK
+        id: apk-name
         run: |
-          if [ "${{inputs.stable}}" = "true" ]; then
-            mv build-*.apk mk8dsb_${{steps.version.outputs.value}}.apk
+          if [ "${{ inputs.stable }}" = "true" ]; then
+            NAME="mk8dsb_${{ steps.final-version.outputs.value }}.apk"
           else
-            mv build-*.apk mk8dsb-nightly_${{steps.version.outputs.value}}.apk
+            NAME="mk8dsb-nightly_${{ steps.final-version.outputs.value }}.apk"
           fi
+          mv build-*.apk "$NAME"
+          echo "value=$NAME" >> "$GITHUB_OUTPUT"
 
       - name: SHA256
-        run: sha256sum *.apk > sha256sum.txt
+        run: sha256sum ${{ steps.apk-name.outputs.value }} > sha256sum.txt
+
+      - name: Generate changelog
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$LAST_TAG" ]; then
+            git log --pretty=format:'- %s' > changelog.txt
+          else
+            git log "$LAST_TAG"..HEAD --pretty=format:'- %s' > changelog.txt
+          fi
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -125,26 +147,50 @@ jobs:
           path: |
             *.apk
             sha256sum.txt
+            changelog.txt
 
   release:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
         with:
           name: artifacts
           path: ./
 
+      # 🔧 Sync package.json (stable only)
+      - name: Bump package.json
+        if: ${{ inputs.stable }}
+        run: |
+          VERSION="${{ needs.build.outputs.version }}"
+          CLEAN_VERSION="${VERSION#v}"
+          npm version "$CLEAN_VERSION" --no-git-tag-version
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json
+          git commit -m "CI: bump package.json to $VERSION"
+          git push
+
+      - name: Read changelog
+        id: changelog
+        run: echo "value=$(cat changelog.txt)" >> "$GITHUB_OUTPUT"
+
       - name: Publish GitHub release
         uses: ncipollo/release-action@v1
         with:
-          token: ${{github.token}}
-          tag: ${{needs.build.outputs.version}}
-          name: MK8DSB ${{needs.build.outputs.version}}
-          draft: ${{inputs.is-draft}}
-          prerelease: ${{!inputs.stable}}
+          token: ${{ github.token }}
+          tag: ${{ needs.build.outputs.version }}
+          name: MK8DSB ${{ needs.build.outputs.version }}
+          draft: ${{ inputs.is-draft }}
+          prerelease: ${{ !inputs.stable }}
           body: |
-            ${{inputs.description}}
+            ${{ inputs.description }}
+
+            <details>
+              <summary>## 🔧 Changelog</summary>
+              ${{ steps.changelog.outputs.value }}
+            </details>
           artifacts: |
             *.apk
             sha256sum.txt

@@ -1,7 +1,7 @@
 {
   "name": "mk8dsb",
   "main": "expo-router/entry",
-  "version": "0.0.1",
+  "version": "0.1.2",
   "scripts": {
     "start": "expo start --go",
     "reset-project": "node ./scripts/reset-project.js",
