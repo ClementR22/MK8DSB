@@ -111,6 +111,10 @@ jobs:
           git commit -m "CI: set app version to ${{ steps.final-version.outputs.value }}"
           git push
 
+      - name: Set Android versionCode
+        run: |
+          echo "ANDROID_VERSION_CODE=$(date +%s)" >> $GITHUB_ENV
+
       # 🏗 Build APK
       - name: Build APK
         if: ${{ !inputs.skip-build }}

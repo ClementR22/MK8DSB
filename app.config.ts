@@ -1,4 +1,3 @@
-// app.config.ts
 import { ExpoConfig, ConfigContext } from "expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
@@ -6,39 +5,48 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   owner: "lentrepriz",
   name: "MK8DSB",
   slug: "MK8DSB",
-  version: "0.0.1",
-  runtimeVersion: "exposdk:54.0.0",
-  //*
-  // à modifier plutot dans android/app/src/main/AndroidManifest.xml
+  version: "{{VERSION}}",
+
+  runtimeVersion: {
+    policy: "sdkVersion",
+  },
+
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   scheme: "myapp",
   userInterfaceStyle: "automatic",
+
   splash: {
     image: "./assets/images/splash.png",
     resizeMode: "contain",
     backgroundColor: "#ffffff",
   },
+
   ios: {
     supportsTablet: true,
   },
+
   android: {
+    package: "com.clement_rayer.MK8DSB",
+    edgeToEdgeEnabled: true,
+    versionCode: Number(process.env.ANDROID_VERSION_CODE ?? 1),
     adaptiveIcon: {
       foregroundImage: "./assets/images/adaptive-icon.png",
       backgroundColor: "#ffffff",
     },
-    package: "com.clement_rayer.MK8DSB",
-    edgeToEdgeEnabled: true,
   },
+
   androidNavigationBar: {
-    backgroundColor: "#FF0000", // Changé de "red" à "#FF0000"
+    backgroundColor: "#FF0000",
   },
+
   androidStatusBar: {
     translucent: true,
-    backgroundColor: "#00000000", // Changé de "transparent" à "#00000000"
+    backgroundColor: "#00000000",
   },
-  //*/
+
   plugins: ["expo-router", "expo-localization", "expo-web-browser", "./custom.plugin"],
+
   experiments: {
     typedRoutes: true,
   },
@@ -48,6 +56,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     output: "static",
     favicon: "./assets/images/favicon.png",
   },
+
   extra: {
     router: {
       origin: false,
