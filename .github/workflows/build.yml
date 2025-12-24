@@ -51,9 +51,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [check-inputs]
     outputs:
-      next-version: ${{ steps.version_build.outputs.v-version }}
-      nightly-version: ${{ steps.nightly-version.outputs.value }}
+      next-version: ${{ steps.version_build.outputs.v-version || steps.nightly-version.outputs.value }}
       build-name: ${{ steps.build-name.outputs.value }}
+      is-stable: ${{ inputs.stable }}
     steps:
       - name: Setup repo
         uses: actions/checkout@v5
@@ -97,28 +97,36 @@ jobs:
 
       - name: Store nightly version
         id: nightly-version
+        if: ${{ !inputs.stable }}
         run: |
-          echo "${{ steps.get-latest-tag.outputs.release }}-${{ steps.get-latest-commit.outputs.value }}" > nightly-version.txt
-          echo "value=$(cat nightly-version.txt)" >> "$GITHUB_OUTPUT"
+          VERSION="${{ steps.get-latest-tag.outputs.release }}-${{ steps.get-latest-commit.outputs.value }}"
+          echo "value=$VERSION" >> "$GITHUB_OUTPUT"
 
-      # 🔑 Récupération et incrémentation du versionCode pour Android
       - name: Fetch and Increment Android Version Code
         id: android-version
         run: |
-          # On essaie de récupérer le dernier code de version via les metadata de l'app sur EAS
-          # Si c'est la première fois ou que ça échoue, on part de 1.
-          CURRENT_VCODE=$(eas app:inspect --platform android --non-interactive | grep versionCode | awk '{print $2}' || echo "0")
+          # Tentative de récupération du versionCode actuel via EAS
+          # On nettoie la sortie pour ne garder que le nombre
+          CURRENT_VCODE=$(eas app:inspect --platform android --non-interactive 2>/dev/null | grep versionCode | awk '{print $2}' | tr -d '",')
+          if [ -z "$CURRENT_VCODE" ]; then CURRENT_VCODE=0; fi
           NEXT_VCODE=$((CURRENT_VCODE + 1))
           echo "value=$NEXT_VCODE" >> "$GITHUB_OUTPUT"
-          echo "Building with Android Version Code: $NEXT_VCODE"
+          echo "Next Android Version Code: $NEXT_VCODE"
 
-      - name: Update version in app.config.ts
+      # --- SYNCHRONISATION DES VERSIONS ---
+      - name: Update package.json and app.config.ts
         run: |
           if [ "${{ inputs.stable }}" = "true" ]; then
             VERSION="${{ steps.version_build.outputs.v-version }}"
           else
             VERSION="${{ steps.nightly-version.outputs.value }}"
           fi
+
+          # 1. Mise à jour du package.json (nettoyage du 'v' si présent)
+          CLEAN_VERSION=$(echo $VERSION | sed 's/^v//')
+          npm version $CLEAN_VERSION --no-git-tag-version
+
+          # 2. Injection dans app.config.ts
           sed -i "s/{{VERSION}}/$VERSION/g" app.config.ts
 
       - name: Build apk (local)
@@ -131,11 +139,9 @@ jobs:
         id: build-name
         run: |
           if [ "${{ inputs.stable }}" = "true" ]; then
-              VERSION_TAG="${{ steps.version_build.outputs.v-version }}"
-              echo "value=mk8dsb_${VERSION_TAG}.apk" >> "$GITHUB_OUTPUT"
+              echo "value=mk8dsb_${{ steps.version_build.outputs.v-version }}.apk" >> "$GITHUB_OUTPUT"
           else
-              VERSION_TAG="${{ steps.nightly-version.outputs.value }}"
-              echo "value=mk8dsb-nightly_${VERSION_TAG}.apk" >> "$GITHUB_OUTPUT"
+              echo "value=mk8dsb-nightly_${{ steps.nightly-version.outputs.value }}.apk" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Rename build
@@ -150,11 +156,7 @@ jobs:
         id: changelog
         run: |
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-          if [ -z "$LAST_TAG" ]; then
-            git log --pretty=format:'- %s' > changelog.txt
-          else
-            git log $LAST_TAG..HEAD --pretty=format:'- %s' > changelog.txt
-          fi
+          git log ${LAST_TAG:+$LAST_TAG..}HEAD --pretty=format:'- %s' > changelog.txt
 
       - name: Upload application artifacts
         uses: actions/upload-artifact@v4
@@ -163,8 +165,8 @@ jobs:
           path: |
             ./*.apk
             ./sha256sum.txt
-            ./nightly-version.txt
             ./changelog.txt
+            ./package.json
 
   nightly:
     if: ${{ !inputs.stable }}
@@ -177,16 +179,12 @@ jobs:
           name: artifacts
           path: ./
 
-      - name: Get app-version
-        run: echo "NIGHTLY_VER=$(cat nightly-version.txt)" >> $GITHUB_ENV
-
       - name: Upload nightly release
         uses: ncipollo/release-action@v1
         with:
           token: ${{ github.token }}
-          tag: nightly-${{ env.NIGHTLY_VER }}
-          name: "Nightly ${{ env.NIGHTLY_VER }}"
-          draft: ${{ inputs.is-draft }}
+          tag: nightly-${{ needs.build.outputs.next-version }}
+          name: "Nightly ${{ needs.build.outputs.next-version }}"
           prerelease: true
           body: |
             ⚠️ Unstable build (nightly)
@@ -209,18 +207,13 @@ jobs:
           name: artifacts
           path: ./
 
-      - name: Config Git
+      - name: Config Git & Push Version
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Bump Version in package.json
-        run: |
-          VERSION="${{ needs.build.outputs.next-version }}"
-          CLEAN_VERSION="${VERSION#v}"
-          npm version $CLEAN_VERSION --no-git-tag-version
+          # On récupère le package.json mis à jour pendant le build
           git add package.json
-          git commit -m "chore: bump version to $VERSION"
+          git commit -m "chore: bump version to ${{ needs.build.outputs.next-version }}"
           git push
 
       - name: Create Release and Tag
@@ -233,6 +226,4 @@ jobs:
             ${{ inputs.description }}
             ## 🔧 Changelog
             $(cat changelog.txt)
-          draft: ${{ inputs.is-draft }}
-          prerelease: false
           artifacts: "mk8dsb_*.apk,sha256sum.txt"
