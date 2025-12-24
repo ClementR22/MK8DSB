@@ -5,7 +5,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   owner: "lentrepriz",
   name: "MK8DSB",
   slug: "MK8DSB",
-  version: "0.0.1",
+  version: "{{VERSION}}",
 
   runtimeVersion: {
     policy: "sdkVersion",
