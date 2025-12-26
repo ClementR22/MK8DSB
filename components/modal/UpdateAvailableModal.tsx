@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useCheckUpdate } from "@/hooks/useCheckUpdate";
-import Button from "@/primitiveComponents/Button";
 import Modal from "@/primitiveComponents/Modal";
 import ButtonUpdate from "../settingsComponents/ButtonUpdate";
 import Text from "@/primitiveComponents/Text";

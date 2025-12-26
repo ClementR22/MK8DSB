@@ -53,5 +53,7 @@
   "cancel": "Retour",
   "close": "Fermer",
 
-  "clickToScrollToTheCorrespondingBuild": "Click to scroll to the corresponding build"
+  "clickToScrollToTheCorrespondingBuild": "Click to scroll to the corresponding build",
+
+  "thisIsAnExample": "Ceci est un exemple"
 }

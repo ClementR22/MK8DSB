@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback } from "react";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import LanguageSelector from "@/components/settingsComponents/LanguageSelector";
 import ThemeSelector from "@/components/settingsComponents/ThemeSelector";
@@ -25,7 +25,6 @@ import { StyleSheet, View } from "react-native";
 import packageJSON from "@/package.json";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { fetchLatestVersion } from "@/hooks/useCheckUpdate";
 
 const SettingsScreen: React.FC = () => {
   const game = useGameStore((state) => state.game);
@@ -53,20 +52,6 @@ const SettingsScreen: React.FC = () => {
     console.log("remove all the memory");
     deleteAllTheMemory();
   }, []);
-
-  const current = packageJSON.version;
-
-  const [latest, setLatest] = useState("v");
-
-  useEffect(() => {
-    (async () => {
-      const latest = await fetchLatestVersion();
-      setLatest(latest);
-    })();
-  }, []);
-
-  const test = current !== latest.replace(/^v/, "");
-  console.log({ current, latest, test });
 
   return (
     <ScreenProvider screenName="settings">
@@ -105,15 +90,7 @@ const SettingsScreen: React.FC = () => {
           </View>
 
           <Text role="body" size="medium" namespace={"not"}>
-            package {current}
-          </Text>
-
-          <Text role="body" size="medium" namespace={"not"}>
-            github {latest}
-          </Text>
-
-          <Text role="body" size="medium" namespace={"not"}>
-            test {test ? "diff" : "egal"}
+            Version {packageJSON.version}
           </Text>
         </BoxContainer>
       </ScrollViewScreen>

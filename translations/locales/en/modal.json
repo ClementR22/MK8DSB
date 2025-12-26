@@ -17,5 +17,6 @@
   "defaultDisplayedStats": "Default displayed stats in builds",
   "licenses": "Licenses",
 
-  "updateAvailable": "Update available"
+  "updateAvailable": "Update available",
+  "welcome": "Welcome in MK Lab!"
 }

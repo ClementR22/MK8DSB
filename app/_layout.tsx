@@ -31,6 +31,7 @@ import { useInitPressableElementsStore } from "@/hooks/useInitPressableElementsS
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import UpdateAvailableModal from "@/components/modal/UpdateAvailableModal";
+import IntroModal from "@/components/modal/IntroModal";
 
 export default function TabLayout() {
   const { t } = useTranslation("screens");
@@ -222,6 +223,7 @@ export default function TabLayout() {
             <EditBuildModal />
             <LoadBuildModal />
             <UpdateAvailableModal />
+            <IntroModal />
             <Toast config={toastConfig} bottomOffset={59} swipeable={false} />
           </BottomSheetModalProvider>
         </GestureHandlerRootView>

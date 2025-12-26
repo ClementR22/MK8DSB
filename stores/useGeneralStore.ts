@@ -27,6 +27,9 @@ interface GeneralStoreState {
 
   numberSavedBuilds: number;
   setNumberSavedBuilds: (newNumberSavedBuilds: number) => void;
+
+  isIntro: boolean;
+  hideIntro: () => void;
 }
 
 const useGeneralStore = create<GeneralStoreState>((set, get) => ({
@@ -65,6 +68,11 @@ const useGeneralStore = create<GeneralStoreState>((set, get) => ({
 
   numberSavedBuilds: 0,
   setNumberSavedBuilds: (newNumberSavedBuilds: number) => set({ numberSavedBuilds: newNumberSavedBuilds }),
+
+  isIntro: true,
+  hideIntro: () => {
+    set({ isIntro: false });
+  },
 }));
 
 export default useGeneralStore;

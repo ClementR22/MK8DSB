@@ -27,5 +27,7 @@
   "share": "Share",
 
   "collection": "Open the Collection",
-  "import": "Import a build"
+  "import": "Import a build",
+
+  "longPress": "Long press"
 }
