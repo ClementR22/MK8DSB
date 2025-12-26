@@ -10,7 +10,6 @@ type ButtonBaseProps = {
   placement?: "top" | "right" | "bottom" | "left" | "auto";
   containerStyleOuter?: ViewStyle | ViewStyle[];
   containerStyleInner?: ViewStyle | ViewStyle[];
-  isButton?: boolean;
   disabled?: boolean;
   [key: string]: any; // autres props à passer
 };
@@ -23,7 +22,6 @@ const ButtonBase = ({
   placement = "top",
   containerStyleOuter,
   containerStyleInner,
-  isButton = false,
   disabled = false,
   ...props
 }: ButtonBaseProps) => {
@@ -38,7 +36,6 @@ const ButtonBase = ({
       tooltipText={tooltipText}
       namespace={namespace}
       placement={placement}
-      isButton={isButton}
       onPressDisabled={disabled}
       {...props}
     >

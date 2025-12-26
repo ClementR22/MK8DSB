@@ -9,10 +9,9 @@ import Button from "@/primitiveComponents/Button";
 
 interface ButtonAddBuildProps {
   scrollRef: React.RefObject<ScrollView>;
-  withText?: boolean;
 }
 
-const ButtonAddBuild: React.FC<ButtonAddBuildProps> = ({ scrollRef, withText = false }) => {
+const ButtonAddBuild: React.FC<ButtonAddBuildProps> = ({ scrollRef }) => {
   const buildController = useBuildController(); // Nouveau hook propre
   const buildsListDisplayed = useBuildsListStore((state) => state.buildsListDisplayed);
 
@@ -36,19 +35,6 @@ const ButtonAddBuild: React.FC<ButtonAddBuildProps> = ({ scrollRef, withText = f
   useEffect(() => {
     return () => clearTimeout(timeoutRef.current);
   }, []);
-
-  if (withText) {
-    return (
-      <Button
-        onPress={handleAdd}
-        tooltipText="addABuild"
-        iconProps={{ name: "plus", type: IconType.MaterialCommunityIcons }}
-        disabled={disabled}
-      >
-        addABuild
-      </Button>
-    );
-  }
 
   return (
     <ButtonIcon

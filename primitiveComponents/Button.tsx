@@ -44,18 +44,22 @@ const Button: React.FC<ButtonProps> = ({
         },
       ]}
       containerStyleInner={styles.containerInner}
-      isButton={true}
       disabled={disabled}
     >
       {iconProps && (
-        <Icon type={iconProps.type} name={iconProps.name} size={24} color={iconProps.color || theme.on_primary} />
+        <Icon
+          type={iconProps.type}
+          name={iconProps.name}
+          size={24}
+          color={disabled ? theme.surface_container_highest : iconProps.color || theme.on_primary}
+        />
       )}
       <Text
         role="title"
         size="small"
         weight="semibold"
         textAlign="center"
-        color={buttonTextColor}
+        color={disabled ? theme.surface_container_highest : buttonTextColor || theme.on_primary}
         inverse
         namespace="button"
       >
@@ -71,14 +75,15 @@ const styles = StyleSheet.create({
     borderRadius: BORDER_RADIUS_INF,
     boxShadow: box_shadow_z2,
     minWidth: 100, // just for modal buttons
+    overflow: "hidden",
   },
   containerInner: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     gap: 5,
-    flex: 1,
-    paddingHorizontal: 15, // just for the search button in HelpSearhBuildScreen
+    height: BUTTON_SIZE,
+    paddingHorizontal: 15,
   },
 });
 

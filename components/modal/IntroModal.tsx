@@ -27,7 +27,7 @@ const IntroModal = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { gap: 20, padding: 10 },
+  container: { gap: 20, padding: 10, alignItems: "center" },
 });
 
 export default IntroModal;

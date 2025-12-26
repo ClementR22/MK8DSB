@@ -2,7 +2,7 @@ import Text from "@/primitiveComponents/Text";
 import useGeneralStore from "@/stores/useGeneralStore";
 import useThemeStore from "@/stores/useThemeStore";
 import { buttonPressed, CORNER_SMALL } from "@/utils/designTokens";
-import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, ViewStyle } from "react-native";
 import { Menu, MenuOptions, MenuTrigger, renderers } from "react-native-popup-menu";
 
@@ -13,7 +13,6 @@ interface TooltipProps {
   childStyleInner?: ViewStyle | ViewStyle[];
   childStyleOuter?: ViewStyle | ViewStyle[];
   placement?: "top" | "right" | "bottom" | "left" | "auto";
-  isButton?: boolean;
   onPressDisabled?: boolean;
   top?: number;
   children: React.ReactNode;
@@ -26,7 +25,6 @@ const Tooltip: React.FC<TooltipProps> = ({
   childStyleInner,
   childStyleOuter,
   placement = "top",
-  isButton = false,
   onPressDisabled = false,
   top = 0,
   children,
@@ -58,14 +56,6 @@ const Tooltip: React.FC<TooltipProps> = ({
     return () => timeoutRef.current && clearTimeout(timeoutRef.current);
   }, []);
 
-  const menuTriggerProps = useMemo(() => {
-    if (!isButton) return undefined;
-    return {
-      style: styles.menuTrigger,
-      customStyles: { triggerOuterWrapper: styles.triggerOuterWrapper },
-    };
-  }, [isButton]);
-
   return (
     <Menu
       opened={isOpen}
@@ -73,11 +63,11 @@ const Tooltip: React.FC<TooltipProps> = ({
       rendererProps={{ placement, anchorStyle: styles.anchor }}
       style={childStyleOuter}
     >
-      <MenuTrigger {...menuTriggerProps}>
+      <MenuTrigger>
         <Pressable
           onLongPress={open}
           onPress={onPressDisabled ? undefined : onPress}
-          style={({ pressed }) => [childStyleInner, pressed && buttonPressed]}
+          style={({ pressed }) => [childStyleInner, pressed && buttonPressed]} // childStyleInner
         >
           {children}
         </Pressable>
@@ -115,8 +105,6 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   anchor: { backgroundColor: "transparent" },
-  menuTrigger: { flex: 1 },
-  triggerOuterWrapper: { flex: 1 },
 });
 
 export default React.memo(Tooltip);
