@@ -35,6 +35,7 @@ interface ButtonAndModalProps {
   };
   closeAfterSecondButton?: boolean;
   secondButtonPosition?: "left" | "right";
+  horizontalScroll?: boolean;
   onOpen?: () => void;
   onClose?: () => void;
 }
@@ -52,6 +53,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
   secondButtonProps,
   closeAfterSecondButton,
   secondButtonPosition = "left",
+  horizontalScroll = false,
   onOpen,
   onClose,
 }) => {
@@ -91,6 +93,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
         secondButtonProps={secondButtonProps}
         closeAfterSecondButton={closeAfterSecondButton}
         secondButtonPosition={secondButtonPosition}
+        horizontalScroll={horizontalScroll}
       >
         {children}
       </Modal>

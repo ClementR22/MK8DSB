@@ -46,6 +46,7 @@ interface ModalProps {
   closeAfterSecondButton?: boolean;
   secondButtonPosition?: "left" | "right";
   withoutChildrenContainer?: boolean;
+  horizontalScroll?: boolean;
 }
 
 const Modal = ({
@@ -59,6 +60,7 @@ const Modal = ({
   closeAfterSecondButton = true,
   secondButtonPosition = "left",
   withoutChildrenContainer = false,
+  horizontalScroll = false,
   ...props
 }: ModalProps) => {
   const theme = useThemeStore((state) => state.theme);
@@ -143,12 +145,11 @@ const Modal = ({
   return (
     <BottomSheetModal
       ref={bottomSheetModalRef}
-      enablePanDownToClose={false} // swipe down désactivé
-      enableContentPanningGesture={false}
       backgroundStyle={{ backgroundColor: theme.surface_container_highest }}
       backdropComponent={renderBackdrop}
       onDismiss={handleDismiss}
-      {...props}
+      activeOffsetY={horizontalScroll ? [-5, 5] : undefined}
+      failOffsetX={horizontalScroll ? [-10, 10] : undefined}
     >
       <BottomSheetView style={{ paddingBottom: bottomOffset, gap: 10 }}>
         {modalTitle && (

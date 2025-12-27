@@ -1,13 +1,5 @@
 import React, { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
-import {
-  ActivityIndicator,
-  Dimensions,
-  DimensionValue,
-  LayoutChangeEvent,
-  Pressable,
-  StyleSheet,
-  View,
-} from "react-native";
+import { ActivityIndicator, Dimensions, DimensionValue, LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import BuildCard from "./BuildCard";
 import useThemeStore from "@/stores/useThemeStore";
@@ -151,7 +143,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ minWidth: "100%", width: calculatedContentWidth }}
       >
-        <Pressable
+        <View
           style={[
             styles.container,
             {
@@ -169,7 +161,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
           ) : (
             memoizedBuildCards
           )}
-        </Pressable>
+        </View>
       </ScrollView>
     );
   }

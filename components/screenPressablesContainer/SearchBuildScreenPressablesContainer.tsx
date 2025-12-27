@@ -182,6 +182,7 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
             badgeText={numberOfSelectedClassIds}
           />
         }
+        horizontalScroll={true}
       >
         <PannelPaginated
           selectionMode="multiple"
