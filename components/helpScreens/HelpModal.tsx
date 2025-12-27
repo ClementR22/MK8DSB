@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
-import { ScrollView, Pressable } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import { StyleSheet } from "react-native";
 import useThemeStore from "@/stores/useThemeStore";
+import { ScrollView } from "react-native-gesture-handler";
 
 type HelpModalProps = {
   title: string;
@@ -31,8 +31,8 @@ const HelpModal: React.FC<HelpModalProps> = ({ title, children }) => {
 
   return (
     <ButtonAndModal modalTitle={title} triggerComponent={triggerComponent}>
-      <ScrollView scrollEnabled={true} style={styles.scrollView}>
-        <Pressable style={styles.container}>{children}</Pressable>
+      <ScrollView scrollEnabled={true} style={styles.scrollView} contentContainerStyle={styles.container}>
+        {children}
       </ScrollView>
     </ButtonAndModal>
   );

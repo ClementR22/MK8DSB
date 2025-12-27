@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
+import { ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { SortName } from "@/types";
 import Popover from "../popover/Popover";
@@ -155,7 +155,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
 
   return (
     <Wrapper {...wrapperProps}>
-      <Pressable
+      <View
         style={[
           styles.container,
           { paddingHorizontal: screenName === "search" ? GAP_SORT_MODE_SELECTOR : PADDING_BOX_CONTAINER },
@@ -163,7 +163,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
         ]}
       >
         {mainButtons}
-      </Pressable>
+      </View>
     </Wrapper>
   );
 };

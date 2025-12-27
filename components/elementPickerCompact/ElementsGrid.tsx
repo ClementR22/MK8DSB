@@ -1,7 +1,7 @@
 import { Category } from "@/types";
 import { ElementData } from "@/types";
 import React, { memo } from "react";
-import { View, StyleSheet, Dimensions, Pressable } from "react-native"; // Removed Dimensions
+import { View, StyleSheet, Dimensions } from "react-native"; // Removed Dimensions
 import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
 import ElementPickerCompact from "./ElementPickerCompact";
 import {
@@ -37,7 +37,7 @@ const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, 
   const { elementPickerDynamicStyle, activeBorderStyle } = useElementPickerStyle({ size: ITEM_WIDTH }); // Passe la taille commune ici
 
   return (
-    <Pressable style={styles.container}>
+    <View style={styles.container}>
       {/* pour capturer le scroll */}
       {elements.map((element) => {
         const isSelected =
@@ -58,7 +58,7 @@ const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, 
       {fillingElements.map((_, i) => (
         <View key={`empty${i}`} style={FILLING_ELEMENT_STYLE} />
       ))}
-    </Pressable>
+    </View>
   );
 };
 

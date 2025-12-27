@@ -37,12 +37,12 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ statMap, columnName
     (statName: string) => {
       const vals = columnNames.map((col) => statMap[statName][col]);
       return (
-        <Pressable key={statName} style={styles.row}>
-          <View style={[styles.cell, { flex: labelFlex }]}>
+        <View key={statName} style={styles.row}>
+          <Pressable style={[styles.cell, { flex: labelFlex }]} onPress={() => onToggleStat(statName, columnNames[0])}>
             <Text role="title" size="small" namespace={statsNamespaceByGame[game]}>
               {statName}
             </Text>
-          </View>
+          </Pressable>
           {columnNames.map((col, i) => (
             <View key={col} style={[styles.cell, styles.checkboxCell]}>
               <Checkbox
@@ -53,7 +53,7 @@ const DoubleEntryTable: React.FC<DoubleEntryTableProps> = ({ statMap, columnName
               />
             </View>
           ))}
-        </Pressable>
+        </View>
       );
     },
     [statMap, columnNames, labelFlex, disabled, onToggleStat, theme.primary]

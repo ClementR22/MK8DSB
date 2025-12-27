@@ -2,7 +2,7 @@
 import React, { memo, useEffect, useMemo, useRef } from "react";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useThemeStore from "@/stores/useThemeStore";
-import { Pressable, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
 import { StyleSheet } from "react-native";
 import ElementPickerCompact from "./ElementPickerCompact";
@@ -86,20 +86,24 @@ const ElementsDeselector: React.FC = () => {
           none
         </Text>
       ) : (
-        <ScrollView ref={scrollViewRef} horizontal persistentScrollbar scrollEnabled={isScrollEnable}>
-          <Pressable style={styles.elementsContainer}>
-            {elementsToDisplay.map((item) => (
-              <ElementPickerCompact
-                key={item.name}
-                imageUrl={item.imageUrl}
-                name={item.name}
-                isSelected={true}
-                onPress={() => toggleMultiSelectElementsByClassId(item.category, item.classId)}
-                elementPickerDynamicStyle={elementPickerDynamicStyle}
-                activeBorderStyle={activeBorderStyle}
-              />
-            ))}
-          </Pressable>
+        <ScrollView
+          ref={scrollViewRef}
+          horizontal
+          persistentScrollbar
+          scrollEnabled={isScrollEnable}
+          contentContainerStyle={styles.elementsContainer}
+        >
+          {elementsToDisplay.map((item) => (
+            <ElementPickerCompact
+              key={item.name}
+              imageUrl={item.imageUrl}
+              name={item.name}
+              isSelected={true}
+              onPress={() => toggleMultiSelectElementsByClassId(item.category, item.classId)}
+              elementPickerDynamicStyle={elementPickerDynamicStyle}
+              activeBorderStyle={activeBorderStyle}
+            />
+          ))}
         </ScrollView>
       )}
     </View>
