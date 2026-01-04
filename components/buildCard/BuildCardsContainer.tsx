@@ -13,6 +13,7 @@ import BoxContainer from "@/primitiveComponents/BoxContainer";
 import PlaceholderBuildCard from "./PlaceholderBuildCard";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import ButtonAddBuild from "../managingBuildsButton/ButtonAddBuild";
+import { useScrollClamp } from "@/hooks/useScrollClamp";
 
 interface BuildWithColor extends Build {
   color: string;
@@ -32,6 +33,18 @@ export interface BuildCardsContainerHandles {
 const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsContainerProps>(
   ({ builds, isInLoadBuildModal = false, screenNameFromProps }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
+    const scrollClamp = useScrollClamp(scrollViewRef, "x");
+
+    // expose les fonctions au parent
+    useImperativeHandle(ref, () => ({
+      scrollToStart: () => {
+        scrollViewRef.current?.scrollTo({ x: 0, animated: true });
+      },
+      scrollToEnd: () => {
+        scrollViewRef.current?.scrollToEnd({ animated: true });
+      },
+    }));
+
     const buildCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
 
     // La logique d'availableColorsRef et son useEffect ont été déplacés dans DisplayBuildScreen
@@ -54,15 +67,6 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
       },
       [] // Dépendances vides car buildCardLayouts.current est une ref stable
     );
-
-    useImperativeHandle(ref, () => ({
-      scrollToStart: () => {
-        scrollViewRef.current?.scrollTo({ x: 0, animated: true });
-      },
-      scrollToEnd: () => {
-        scrollViewRef.current?.scrollToEnd({ animated: true });
-      },
-    }));
 
     const theme = useThemeStore((state) => state.theme);
     const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
@@ -139,16 +143,17 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
       <ScrollView
         ref={scrollViewRef}
         horizontal
+        {...scrollClamp}
+        scrollEventThrottle={16}
         scrollEnabled={isScrollEnable}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ minWidth: "100%", width: calculatedContentWidth }}
+        contentContainerStyle={[styles.contentContainerStyle, { width: calculatedContentWidth }]}
       >
         <View
           style={[
             styles.container,
             {
               backgroundColor: theme.surface_container,
-              flex: 1,
             },
           ]}
         >
@@ -168,6 +173,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
 );
 
 const styles = StyleSheet.create({
+  contentContainerStyle: { minWidth: "100%" },
   container: {
     marginHorizontal: MARGIN_CONTAINER_LOWEST,
     flexDirection: "row",
