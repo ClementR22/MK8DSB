@@ -19,7 +19,7 @@ const ButtonResetSettings = ({ resetSettings }) => {
           tooltipText="resetSettings"
         />
       }
-      secondButtonProps={{
+      bottomButtonProps={{
         text: "confirm",
         tooltipText: "confirm",
         onPress: resetSettings,

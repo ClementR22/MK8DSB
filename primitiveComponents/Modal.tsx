@@ -31,7 +31,7 @@ interface ModalProps {
   isModalVisible: boolean;
   setIsModalVisible: (v: boolean) => void;
   modalTitle: string;
-  secondButtonProps?: {
+  bottomButtonProps?: {
     text: string;
     onPress: () => boolean | void;
     tooltipText: string;
@@ -48,7 +48,7 @@ const Modal = ({
   isModalVisible,
   setIsModalVisible,
   modalTitle,
-  secondButtonProps,
+  bottomButtonProps,
   withoutChildrenContainer = false,
   horizontalScroll = false,
   children,
@@ -123,12 +123,12 @@ const Modal = ({
           {children}
         </View>
 
-        {secondButtonProps && (
+        {bottomButtonProps && (
           <View style={styles.buttonContainer}>
             <ModalButton
-              {...secondButtonProps}
+              {...bottomButtonProps}
               onPress={() => {
-                secondButtonProps.onPress();
+                bottomButtonProps.onPress();
                 setIsModalVisible(false);
               }}
             />

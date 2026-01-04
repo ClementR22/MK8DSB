@@ -8,7 +8,7 @@ interface ButtonAndModalProps {
   // Un élément React personnalisé qui servira de déclencheur pour ouvrir le modal.
   triggerComponent: React.ReactElement<{ onPress?: (event: GestureResponderEvent) => void } & Record<string, any>>;
   // Props pour un bouton en bas
-  secondButtonProps?: {
+  bottomButtonProps?: {
     text: string;
     onPress: () => void;
     tooltipText: string;
@@ -25,7 +25,7 @@ interface ButtonAndModalProps {
 const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
   modalTitle = undefined, // Initialisé à undefined pour ne pas passer null par défaut
   triggerComponent, // give a component OR
-  secondButtonProps,
+  bottomButtonProps,
   horizontalScroll = false,
   children,
   onOpen,
@@ -53,7 +53,7 @@ const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
         onClose={onClose}
-        secondButtonProps={secondButtonProps}
+        bottomButtonProps={bottomButtonProps}
         horizontalScroll={horizontalScroll}
       >
         {children}

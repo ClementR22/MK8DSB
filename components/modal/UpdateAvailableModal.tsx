@@ -16,7 +16,7 @@ const UpdateAvailableModal = () => {
       modalTitle="updateAvailable"
       isModalVisible={isModalVisible}
       setIsModalVisible={setIsModalVisible}
-      secondButtonProps={{ text: text, onPress: openDownloadPage, tooltipText: text }}
+      bottomButtonProps={{ text: text, onPress: openDownloadPage, tooltipText: text }}
     >
       <Text role="body" size="large" weight="regular" textAlign="center" style={{ padding: 20 }} namespace="text">
         updateAvailableText

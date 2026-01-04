@@ -20,7 +20,7 @@ const ButtonDeleteAllBuildsInMemory = ({ deleteAllSavedBuilds }) => {
           tooltipText="deleteAllBuildsInMemory"
         />
       }
-      secondButtonProps={{
+      bottomButtonProps={{
         text: "confirm",
         tooltipText: "confirm",
         onPress: deleteAllSavedBuilds,
