@@ -1,9 +1,8 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonSettings from "@/primitiveComponents/ButtonSettings";
-import useThemeStore from "@/stores/useThemeStore";
 import licenses from "@/assets/licenses.cleaned.json";
 import { ScrollView } from "react-native-gesture-handler";
 import { vh } from "../styles/theme";
@@ -12,8 +11,6 @@ import Separator from "../Separator";
 import { PADDING_BOX_CONTAINER } from "@/utils/designTokens";
 
 const ButtonLicenses = () => {
-  const theme = useThemeStore((state) => state.theme);
-
   return (
     <ButtonAndModal
       modalTitle="licenses"
@@ -35,7 +32,7 @@ const ButtonLicenses = () => {
               {data.licenseText}
             </Text>
 
-            <Separator direction="horizontal" wrapperStyle={{ marginVertical: 10 }} />
+            <Separator direction="horizontal" wrapperStyle={styles.separatorWrapper} />
           </>
         ))}
       </ScrollView>
@@ -54,15 +51,10 @@ const styles = StyleSheet.create({
   scrollView: {
     maxHeight: vh * 0.75,
   },
-  licenseItem: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-  },
+  separatorWrapper: { marginVertical: 10 },
 });
 
-// pour obtenir toutes les licences
-// npx license-checker --production --relativeLicensePath --json > licenses.json
+// pour mettre à jour la liste des licences
+// npm run generate:licenses
 
 export default React.memo(ButtonLicenses);
