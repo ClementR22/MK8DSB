@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   buttonContainer: {
-    gap: 10,
+    flexDirection: "row",
     justifyContent: "center",
   },
 });
