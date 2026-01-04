@@ -9,7 +9,8 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "generate:licenses": "npx license-checker --production --json > assets/licenses.json && node scripts/clean-licenses.js"
   },
   "jest": {
     "preset": "jest-expo"
