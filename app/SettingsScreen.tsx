@@ -82,7 +82,7 @@ const SettingsScreen: React.FC = () => {
 
             <ButtonLicenses />
 
-            <ButtonUpdate isInModal={false} />
+            <ButtonUpdate />
 
             <ButtonDeleteAllBuildsInMemory deleteAllSavedBuilds={handleDeleteAllSavedBuilds} />
 

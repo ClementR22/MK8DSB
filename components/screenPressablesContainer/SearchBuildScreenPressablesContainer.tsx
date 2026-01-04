@@ -48,7 +48,7 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
     if (disableSearch) {
       setDisableSearch(false);
     }
-  }, [chosenStats, chosenBodytype, selectedClassIdsByCategory]);
+  }, [chosenStats, chosenBodytype, selectedClassIdsByCategory, resultsNumber]);
 
   const search = () => {
     const chosenStatsChecked = chosenStats.map((stat) => stat.checked);

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useCheckUpdate } from "@/hooks/useCheckUpdate";
 import Modal from "@/primitiveComponents/Modal";
-import ButtonUpdate from "../settingsComponents/ButtonUpdate";
 import Text from "@/primitiveComponents/Text";
 
 const UpdateAvailableModal = () => {
@@ -17,7 +16,6 @@ const UpdateAvailableModal = () => {
       modalTitle="updateAvailable"
       isModalVisible={isModalVisible}
       setIsModalVisible={setIsModalVisible}
-      secondButton={<ButtonUpdate isInModal={true} />}
       secondButtonProps={{ text: text, onPress: openDownloadPage, tooltipText: text }}
     >
       <Text role="body" size="large" weight="regular" textAlign="center" style={{ padding: 20 }} namespace="text">

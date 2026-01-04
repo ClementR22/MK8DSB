@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import ButtonIcon from "@/primitiveComponents/ButtonIcon";
 import { IconType } from "react-native-dynamic-vector-icons";
@@ -14,29 +14,8 @@ const ResultsNumberSelector = () => {
   const resultsNumber = useGeneralStore((state) => state.resultsNumber);
   const setResultsNumber = useGeneralStore((state) => state.setResultsNumber);
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [resultsNumberInModal, setResultsNumberInModal] = useState(resultsNumber);
 
-  useEffect(() => {
-    if (isModalVisible) {
-      // À l'ouverture : charger la valeur du store
-      setResultsNumberInModal(resultsNumber);
-    } else if (resultsNumber !== resultsNumberInModal) {
-      // À la fermeture : sauvegarder dans le store
-      setResultsNumber(resultsNumberInModal);
-    }
-  }, [isModalVisible]);
-
-  // Handlers optimisés avec useCallback correct
-  const increment = useCallback(() => {
-    setResultsNumberInModal((prev) => Math.min(prev + 1, MAX_RESULTS));
-  }, []);
-
-  const decrement = useCallback(() => {
-    setResultsNumberInModal((prev) => Math.max(prev - 1, MIN_RESULTS));
-  }, []);
-
-  // États dérivés calculés à chaque render (pas de problème de performance ici)
   const canDecrement = resultsNumberInModal > MIN_RESULTS;
   const canIncrement = resultsNumberInModal < MAX_RESULTS;
 
@@ -46,27 +25,32 @@ const ResultsNumberSelector = () => {
       triggerComponent={
         <ButtonSettings
           title="numberOfSearchResults"
-          onPress={() => setIsModalVisible(true)}
           iconProps={{ name: "numbers", type: IconType.MaterialIcons }}
           tooltipText="numberOfSearchResults"
         />
       }
-      isModalVisibleProp={isModalVisible}
-      setIsModalVisibleProp={setIsModalVisible}
+      onOpen={() => setResultsNumberInModal(resultsNumber)}
+      onClose={() => {
+        if (resultsNumber !== resultsNumberInModal) {
+          setResultsNumber(resultsNumberInModal);
+        }
+      }}
     >
       <View style={styles.container}>
         <ButtonIcon
-          onPress={decrement}
+          onPress={() => setResultsNumberInModal((v) => Math.max(v - 1, MIN_RESULTS))}
           iconName="minus"
           iconType={IconType.MaterialCommunityIcons}
           disabled={!canDecrement}
           tooltipText="decrease"
         />
+
         <Text role="display" size="medium" textAlign="center" style={styles.resultsNumberText} namespace="not">
           {resultsNumberInModal}
         </Text>
+
         <ButtonIcon
-          onPress={increment}
+          onPress={() => setResultsNumberInModal((v) => Math.min(v + 1, MAX_RESULTS))}
           iconName="plus"
           iconType={IconType.MaterialCommunityIcons}
           disabled={!canIncrement}

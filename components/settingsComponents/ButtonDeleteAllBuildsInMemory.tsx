@@ -27,10 +27,6 @@ const ButtonDeleteAllBuildsInMemory = ({ deleteAllSavedBuilds }) => {
         buttonColor: theme.error,
         buttonTextColor: theme.on_error,
       }}
-      secondButtonType="danger"
-      closeButtonText="cancel"
-      buttonColor={theme.error}
-      buttonTextColor={theme.on_error}
     >
       <MaterialIcons
         style={{ alignSelf: "center", paddingTop: 12 }}

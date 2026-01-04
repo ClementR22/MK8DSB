@@ -1,14 +1,11 @@
 import React from "react";
-import Button from "@/primitiveComponents/Button";
 import { useCheckUpdate } from "@/hooks/useCheckUpdate";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonSettings from "@/primitiveComponents/ButtonSettings";
 
-interface ButtonUpdateProps {
-  isInModal: boolean;
-}
+interface ButtonUpdateProps {}
 
-const ButtonUpdate: React.FC<ButtonUpdateProps> = ({ isInModal }) => {
+const ButtonUpdate: React.FC<ButtonUpdateProps> = () => {
   const { updateAvailable, openDownloadPage } = useCheckUpdate();
   const text = "updateTheApp";
 
@@ -16,7 +13,7 @@ const ButtonUpdate: React.FC<ButtonUpdateProps> = ({ isInModal }) => {
     <ButtonSettings
       title={text}
       onPress={openDownloadPage}
-      iconProps={!isInModal && { name: "refresh", type: IconType.MaterialCommunityIcons }}
+      iconProps={{ name: "refresh", type: IconType.MaterialCommunityIcons }}
       tooltipText={text}
       disabled={!updateAvailable}
     />

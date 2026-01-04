@@ -1,5 +1,5 @@
 // StatSelector.tsx
-import React, { useMemo, useState, useCallback, useEffect } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import { View } from "react-native";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import DoubleEntryTable, { ColumnName, StatToggleMap } from "./DoubleEntryTable";
@@ -42,7 +42,6 @@ const StatSelector: React.FC<StatSelectorProps> = ({ children }) => {
   // Fusion de tous les stats dans un map par statName
   const [statMap, setStatMap] = useState<StatToggleMap>({});
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [resultStatsBeforeSync, setResultStatsBeforeSync] = useState(resultStats);
 
   // on réinitialiser statNames à chaque ouverture de la modal
@@ -115,8 +114,6 @@ const StatSelector: React.FC<StatSelectorProps> = ({ children }) => {
     <ButtonAndModal
       triggerComponent={triggerComponent}
       modalTitle={modalTitle}
-      isModalVisibleProp={isModalVisible}
-      setIsModalVisibleProp={setIsModalVisible}
       onOpen={initStatMap}
       onClose={handleModalClose}
     >

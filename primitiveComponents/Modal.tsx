@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useCallback, useEffect, useRef } from "react";
+import React, { ReactNode, useCallback, useEffect, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import Toast from "react-native-toast-message";
@@ -28,14 +28,9 @@ const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, butto
 ));
 
 interface ModalProps {
-  modalTitle: string;
   isModalVisible: boolean;
   setIsModalVisible: (v: boolean) => void;
-  children: ReactNode;
-  onClose?: () => void;
-
-  closeButtonText?: string;
-  secondButton?: ReactElement<{ onComplete?: () => void }>;
+  modalTitle: string;
   secondButtonProps?: {
     text: string;
     onPress: () => boolean | void;
@@ -43,25 +38,21 @@ interface ModalProps {
     buttonColor?: string;
     buttonTextColor?: string;
   };
-  closeAfterSecondButton?: boolean;
-  secondButtonPosition?: "left" | "right";
   withoutChildrenContainer?: boolean;
   horizontalScroll?: boolean;
+  children: ReactNode;
+  onClose?: () => void;
 }
 
 const Modal = ({
-  modalTitle,
   isModalVisible,
   setIsModalVisible,
-  children,
-  onClose,
-  secondButton,
+  modalTitle,
   secondButtonProps,
-  closeAfterSecondButton = true,
-  secondButtonPosition = "left",
   withoutChildrenContainer = false,
   horizontalScroll = false,
-  ...props
+  children,
+  onClose,
 }: ModalProps) => {
   const theme = useThemeStore((state) => state.theme);
 
@@ -108,37 +99,6 @@ const Modal = ({
   );
 
   /* ---------------------------------------------------------------------- */
-  /*                              Second button                              */
-  /* ---------------------------------------------------------------------- */
-
-  const buttonContainerFlexDirection = secondButtonPosition === "left" ? "row" : "row-reverse";
-
-  const renderSecondButton = useCallback(() => {
-    let button: ReactElement | null = null;
-
-    if (secondButton) {
-      button = React.cloneElement(secondButton, {
-        onComplete: () => setIsModalVisible(false),
-      });
-    }
-
-    if (secondButtonProps) {
-      const completedOnPress = () => {
-        const isSuccess = secondButtonProps.onPress();
-        if (closeAfterSecondButton || isSuccess) {
-          setIsModalVisible(false);
-        }
-      };
-
-      button = <ModalButton {...secondButtonProps} onPress={completedOnPress} />;
-    }
-
-    if (!button) return null;
-
-    return <View style={[styles.buttonContainer, { flexDirection: buttonContainerFlexDirection }]}>{button}</View>;
-  }, [secondButton, secondButtonProps, closeAfterSecondButton, buttonContainerFlexDirection, setIsModalVisible]);
-
-  /* ---------------------------------------------------------------------- */
   /*                                   Render                                 */
   /* ---------------------------------------------------------------------- */
 
@@ -157,14 +117,24 @@ const Modal = ({
             {modalTitle}
           </Text>
         )}
-
         <View
           style={!withoutChildrenContainer && [styles.childrenContainer, { backgroundColor: theme.surface_container }]}
         >
           {children}
         </View>
 
-        {renderSecondButton()}
+        {secondButtonProps && (
+          <View style={styles.buttonContainer}>
+            <ModalButton
+              {...secondButtonProps}
+              onPress={() => {
+                secondButtonProps.onPress();
+                setIsModalVisible(false);
+              }}
+            />
+          </View>
+        )}
+
         <Toast config={toastConfig} bottomOffset={0} />
       </BottomSheetView>
     </BottomSheetModal>
