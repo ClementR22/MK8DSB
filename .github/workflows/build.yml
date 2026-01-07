@@ -14,10 +14,7 @@ on:
         type: choice
         description: Version level
         required: false
-        options:
-          - major
-          - minor
-          - patch
+        options: [major, minor, patch]
         default: patch
       reset-cache:
         type: boolean
@@ -30,11 +27,10 @@ on:
       is-draft:
         type: boolean
         description: Draft release ?
-        required: false
         default: false
       description:
         required: false
-        description: Description
+        description: Release description
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
@@ -45,7 +41,15 @@ jobs:
     steps:
       - name: Exit if stable without description
         if: ${{ inputs.stable && !inputs.description }}
-        run: echo "Missing description for a stable release" && exit 1
+        run: |
+          echo "❌ Missing description for a stable release"
+          exit 1
+
+      - name: Exit if skip-build is enabled
+        if: ${{ inputs.skip-build }}
+        run: |
+          echo "⚠️ Warning: skip-build is enabled, no APK will be generated"
+          echo "This workflow will only update versions without creating a release"
 
   build:
     runs-on: ubuntu-latest
@@ -54,42 +58,47 @@ jobs:
       next-version: ${{ steps.version_build.outputs.v-version || steps.nightly-version.outputs.value }}
       build-name: ${{ steps.build-name.outputs.value }}
       is-stable: ${{ inputs.stable }}
+      skip-build: ${{ inputs.skip-build }}
     steps:
-      - name: Setup repo
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - name: Setup Node
-        uses: actions/setup-node@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 20.x
           cache: npm
 
-      - name: Setup EAS
-        uses: expo/expo-github-action@v8
+      # Reset cache if requested
+      - name: Clear npm cache
+        if: ${{ inputs.reset-cache }}
+        run: npm cache clean --force
+
+      - uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Install dependencies
-        run: npm install
+      - run: npm install
 
       - name: Get latest release tag
         id: get-latest-tag
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           repository: ClementR22/MK8DSB
-          excludes: "prerelease"
+          excludes: prerelease
 
+      # -------------------------
+      # Versioning
+      # -------------------------
       - name: Calculate next stable version
         id: version_build
         if: ${{ inputs.stable }}
         uses: reecetech/version-increment@2024.10.1
         with:
-          scheme: "semver"
+          scheme: semver
           increment: ${{ inputs.version-bump }}
-          tag_prefix: "v"
+          tag_prefix: v
 
       - name: Get latest commit hash
         id: get-latest-commit
@@ -99,135 +108,171 @@ jobs:
         id: nightly-version
         if: ${{ !inputs.stable }}
         run: |
-          VERSION="${{ steps.get-latest-tag.outputs.release }}-${{ steps.get-latest-commit.outputs.value }}"
+          BASE="${{ steps.get-latest-tag.outputs.release || 'v0.0.0' }}"
+          VERSION="$BASE-${{ steps.get-latest-commit.outputs.value }}"
           echo "value=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Fetch and Increment Android Version Code
+      # -------------------------
+      # Android version code
+      # -------------------------
+      - name: Increment Android Version Code
         id: android-version
+        if: ${{ !inputs.skip-build }}
         run: |
-          # Tentative de récupération du versionCode actuel via EAS
-          # On nettoie la sortie pour ne garder que le nombre
-          CURRENT_VCODE=$(eas app:inspect --platform android --non-interactive 2>/dev/null | grep versionCode | awk '{print $2}' | tr -d '",')
-          if [ -z "$CURRENT_VCODE" ]; then CURRENT_VCODE=0; fi
-          NEXT_VCODE=$((CURRENT_VCODE + 1))
-          echo "value=$NEXT_VCODE" >> "$GITHUB_OUTPUT"
-          echo "Next Android Version Code: $NEXT_VCODE"
+          CURRENT_VCODE=$(eas app:inspect --platform android --non-interactive 2>/dev/null \
+            | grep versionCode | awk '{print $2}' | tr -d '",')
+          CURRENT_VCODE=${CURRENT_VCODE:-0}
+          echo "value=$((CURRENT_VCODE + 1))" >> "$GITHUB_OUTPUT"
 
-      # --- SYNCHRONISATION DES VERSIONS ---
-      - name: Update package.json and app.config.ts
+      # -------------------------
+      # Update package.json & app.config.ts
+      # -------------------------
+      - name: Update versions
         run: |
-          if [ "${{ inputs.stable }}" = "true" ]; then
-            VERSION="${{ steps.version_build.outputs.v-version }}"
-          else
-            VERSION="${{ steps.nightly-version.outputs.value }}"
-          fi
-
-          # 1. Mise à jour du package.json (nettoyage du 'v' si présent)
-          CLEAN_VERSION=$(echo $VERSION | sed 's/^v//')
-          npm version $CLEAN_VERSION --no-git-tag-version
-
-          # 2. Injection dans app.config.ts
+          VERSION="${{ inputs.stable && steps.version_build.outputs.v-version || steps.nightly-version.outputs.value }}"
+          CLEAN_VERSION="${VERSION#v}"
+          npm version "$CLEAN_VERSION" --no-git-tag-version
           sed -i "s/{{VERSION}}/$VERSION/g" app.config.ts
 
-      - name: Build apk (local)
+      # -------------------------
+      # Build APK
+      # -------------------------
+      - name: Build APK
         if: ${{ !inputs.skip-build }}
         env:
           ANDROID_VERSION_CODE: ${{ steps.android-version.outputs.value }}
-        run: eas build --non-interactive --platform android --profile preview --local
+        run: eas build --platform android --profile preview --local --non-interactive
 
       - name: Store build name
         id: build-name
+        if: ${{ !inputs.skip-build }}
         run: |
           if [ "${{ inputs.stable }}" = "true" ]; then
-              echo "value=mk8dsb_${{ steps.version_build.outputs.v-version }}.apk" >> "$GITHUB_OUTPUT"
+            echo "value=mk8dsb_${{ steps.version_build.outputs.v-version }}.apk" >> "$GITHUB_OUTPUT"
           else
-              echo "value=mk8dsb-nightly_${{ steps.nightly-version.outputs.value }}.apk" >> "$GITHUB_OUTPUT"
+            echo "value=mk8dsb-nightly_${{ steps.nightly-version.outputs.value }}.apk" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Rename build
+      - name: Rename APK
         if: ${{ !inputs.skip-build }}
-        run: mv build-*.apk ${{ steps.build-name.outputs.value }}
+        run: mv build-*.apk "${{ steps.build-name.outputs.value }}"
 
-      - name: Generate SHA256 checksum
+      - name: Generate SHA256
         if: ${{ !inputs.skip-build }}
-        run: sha256sum ${{ steps.build-name.outputs.value }} > sha256sum.txt
+        run: sha256sum "${{ steps.build-name.outputs.value }}" > sha256sum.txt
 
-      - name: Generate changelog
-        id: changelog
-        run: |
-          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-          git log ${LAST_TAG:+$LAST_TAG..}HEAD --pretty=format:'- %s' > changelog.txt
-
-      - name: Upload application artifacts
+      - name: Upload artifacts
+        if: ${{ !inputs.skip-build }}
         uses: actions/upload-artifact@v4
         with:
           name: artifacts
           path: |
-            ./*.apk
-            ./sha256sum.txt
-            ./changelog.txt
-            ./package.json
+            *.apk
+            sha256sum.txt
 
+      # Always upload package.json for version tracking
+      - name: Upload package.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-json
+          path: package.json
+
+  # -------------------------
+  # Nightly release
+  # -------------------------
   nightly:
-    if: ${{ !inputs.stable }}
+    if: ${{ !inputs.stable && !inputs.skip-build }}
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           name: artifacts
-          path: ./
 
-      - name: Upload nightly release
+      - name: Publish nightly release
         uses: ncipollo/release-action@v1
         with:
           token: ${{ github.token }}
           tag: nightly-${{ needs.build.outputs.next-version }}
-          name: "Nightly ${{ needs.build.outputs.next-version }}"
+          name: Nightly ${{ needs.build.outputs.next-version }}
           prerelease: true
           body: |
-            ⚠️ Unstable build (nightly)
-            ${{ inputs.description }}
+            ⚠️ Unstable build - Use at your own risk
+
+            ${{ inputs.description || 'No description provided' }}
+
+            **Commit:** ${{ github.sha }}
           artifacts: "mk8dsb-nightly_*.apk,sha256sum.txt"
 
+  # -------------------------
+  # Stable release
+  # -------------------------
   release:
-    if: ${{ inputs.stable }}
+    if: ${{ inputs.stable && !inputs.skip-build }}
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           name: artifacts
-          path: ./
 
-      - name: Retrieve changelog
-        id: changelog
-        run: echo "changelog=$(cat changelog.txt)" >> "$GITHUB_OUTPUT"
+      - uses: actions/download-artifact@v4
+        with:
+          name: package-json
 
-      - name: Config Git & Push Version
+      - name: Commit version bump
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # On récupère le package.json mis à jour pendant le build
           git add package.json
-          git commit -m "chore: bump version to ${{ needs.build.outputs.next-version }}"
-          git push
 
-      - name: Create Release and Tag
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: bump version to ${{ needs.build.outputs.next-version }}"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Get the last stable release tag (excluding prereleases)
+          LAST_TAG=$(git tag -l --sort=-version:refname | grep -v '-' | head -n 1)
+
+          if [ -z "$LAST_TAG" ]; then
+            echo "First release - showing all commits"
+            git log --pretty=format:'- %s (%h)' > changelog.txt
+          else
+            echo "Changes since $LAST_TAG"
+            git log ${LAST_TAG}..HEAD --pretty=format:'- %s (%h)' > changelog.txt
+          fi
+
+          {
+            echo "content<<EOF"
+            cat changelog.txt
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub release
         uses: ncipollo/release-action@v1
         with:
           token: ${{ github.token }}
           name: MK8DSB ${{ needs.build.outputs.next-version }}
           tag: ${{ needs.build.outputs.next-version }}
+          draft: ${{ inputs.is-draft }}
           body: |
             ${{ inputs.description }}
+
             ## 🔧 Changelog
-            ${{ steps.changelog.outputs.changelog }}
+            ${{ steps.changelog.outputs.content }}
+
+            ## 📥 Installation
+            Download the APK file and install it on your Android device.
+
+            ## 🔐 Verification
+            Verify the download integrity using the SHA256 checksum provided in `sha256sum.txt`.
           artifacts: "mk8dsb_*.apk,sha256sum.txt"
