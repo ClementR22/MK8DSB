@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonSettings from "@/primitiveComponents/ButtonSettings";
-import licenses from "@/assets/licenses.cleaned.json";
+import licenses from "@/assets/licenses.json";
 import { ScrollView } from "react-native-gesture-handler";
 import { vh } from "../styles/theme";
 import Text from "@/primitiveComponents/Text";
