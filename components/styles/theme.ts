@@ -45,6 +45,11 @@ export const light_theme: ThemeColor = {
   inverse_on_surface: "#F5EFF7",
   surface_tint: "#6750A4",
 
+  color1: "#a2620d",
+  color2: "#8a2be2",
+  color3: "#0271e0",
+  color4: "#017e82",
+  
   outline: "#79747E",
   outline_variant: "#CAC4D0",
 
@@ -96,6 +101,11 @@ export const dark_theme: ThemeColor = {
   inverse_surface: "#E6E0E9",
   inverse_on_surface: "#322F35",
   surface_tint: "#D0BCFF",
+
+  color1: "#d2b48c",
+  color2: "#c6a4e7",
+  color3: "#73ade8",
+  color4: "#b0e0e6",
 
   outline: "#938F99",
   outline_variant: "#49454F",

@@ -1,23 +1,29 @@
 export interface ThemeColor {
   isLight: boolean;
   isDark: boolean;
+
   theme_surface: "dark" | "light";
+  
   primary: string;
   on_primary: string;
   primary_container: string;
   on_primary_container: string;
+  
   secondary: string;
   on_secondary: string;
   secondary_container: string;
   on_secondary_container: string;
+  
   tertiary: string;
   on_tertiary: string;
   tertiary_container: string;
   on_tertiary_container: string;
+  
   error: string;
   on_error: string;
   error_container: string;
   on_error_container: string;
+  
   surface: string;
   on_surface: string;
   surface_variant: string;
@@ -30,11 +36,21 @@ export interface ThemeColor {
   inverse_surface: string;
   inverse_on_surface: string;
   surface_tint: string;
+
+  color1: string,
+  color2: string,
+  color3: string,
+  color4: string,
+  
   outline: string;
   outline_variant: string;
+  
   scrim: string;
   boxShadow: string;
+  
   primary_hover: string;
+  
   inactive_dot: string;
+  
   toast_background_color: string;
 }
