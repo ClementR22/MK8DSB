@@ -3,7 +3,7 @@ import useBuildsListStore, { MAX_NUMBER_BUILDS_DISPLAY } from "@/stores/useBuild
 import { getRandomDataId } from "@/utils/getRandomDataId";
 
 export function useBuildController() {
-  const { numberOfElementsByCategory } = useGameData();
+  const { numberOfClassesByCategory } = useGameData();
   const addBuildInDisplay = useBuildsListStore((s) => s.addBuildInDisplay);
   const buildsListDisplayed = useBuildsListStore((s) => s.buildsListDisplayed);
 
@@ -12,7 +12,7 @@ export function useBuildController() {
       throw new Error("buildLimitReached");
     }
 
-    const build = getRandomDataId(numberOfElementsByCategory);
+    const build = getRandomDataId(numberOfClassesByCategory);
     addBuildInDisplay(build);
   }
 

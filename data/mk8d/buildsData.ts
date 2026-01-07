@@ -13,4 +13,4 @@ export const buildsDataMap: Map<string, BuildData> = new Map(
   buildsDataArray.map((buildData) => [buildData.buildDataId, buildData])
 );
 
-export const numberOfElementsByCategory: Array<number> = [16, 14, 9, 4];
+export const numberOfClassesByCategory: Array<number> = [16, 14, 9, 4];
