@@ -207,6 +207,10 @@ jobs:
           name: artifacts
           path: ./
 
+      - name: Retrieve changelog
+        id: changelog
+        run: echo "changelog=$(cat changelog.txt)" >> "$GITHUB_OUTPUT"
+
       - name: Config Git & Push Version
         run: |
           git config user.name "github-actions[bot]"
@@ -225,5 +229,5 @@ jobs:
           body: |
             ${{ inputs.description }}
             ## 🔧 Changelog
-            $(cat changelog.txt)
+            ${{ steps.changelog.outputs.changelog }}
           artifacts: "mk8dsb_*.apk,sha256sum.txt"
