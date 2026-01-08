@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonSettings from "@/primitiveComponents/ButtonSettings";
@@ -24,16 +24,16 @@ const ButtonLicenses = () => {
     >
       <ScrollView contentContainerStyle={styles.container} style={styles.scrollView}>
         {Object.entries(licenses).map(([packageName, data]: any) => (
-          <>
-            <Text role="label" size="large" namespace="not">
+          <View key={packageName} style={styles.licenseContainer}>
+            <Text key="packageName" role="label" size="large" namespace="not">
               {packageName}
             </Text>
-            <Text role="body" size="large" namespace="not">
+            <Text key="licenseText" role="body" size="large" namespace="not">
               {data.licenseText}
             </Text>
 
             <Separator direction="horizontal" wrapperStyle={styles.separatorWrapper} />
-          </>
+          </View>
         ))}
       </ScrollView>
     </ButtonAndModal>
@@ -45,12 +45,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     padding: PADDING_BOX_CONTAINER,
     paddingTop: 20,
-    gap: PADDING_BOX_CONTAINER,
     width: "100%",
   },
   scrollView: {
     maxHeight: vh * 0.75,
   },
+  licenseContainer: { gap: PADDING_BOX_CONTAINER },
   separatorWrapper: { marginVertical: 10 },
 });
 

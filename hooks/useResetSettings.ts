@@ -1,5 +1,4 @@
 import { useSettingsMap } from "@/hooks/useSettingsMap";
-import showToast from "@/utils/showToast";
 
 export const useResetSettings = () => {
   const settingsMap = useSettingsMap();
@@ -8,7 +7,5 @@ export const useResetSettings = () => {
     Object.values(settingsMap).forEach(({ setState, defaultValue }) => {
       return setState(defaultValue);
     });
-
-    showToast("toast:theSettingsHaveBeenReset", "success");
   };
 };

@@ -5,8 +5,8 @@
   "numberOfSearchResults": "Nombre de résultats",
   "defaultStats": "Stats affichées par défault",
   "sendFeedback": "Laisser un avis",
-  "sourceCode": "Code source",
   "makeADonation": "Faire un don",
+  "sourceCode": "Code source",
   "openSourceLicenses": "Licences Open Source",
   "update": "Mettre à jour",
   "updateTheApp": "Mettre à jour l'appli",
@@ -16,6 +16,7 @@
   "cancel": "Annuler",
   "close": "Fermer",
   "ok": "OK",
+  "open": "Ouvrir",
 
   "editTheBuild": "Editer le build",
   "remove": "Supprimer",

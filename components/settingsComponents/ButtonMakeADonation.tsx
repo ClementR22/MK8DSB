@@ -1,22 +1,23 @@
 import React, { useCallback } from "react";
 import { Linking } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
-import ButtonSettings from "@/primitiveComponents/ButtonSettings";
+import ButtonAndModalConfirm from "../modal/ButtonAndModalConfirm";
 
 const url = "https://www.paypal.com/donate/?hosted_button_id=7YMYSGASUL7A8";
 
-const ButtonMakeADonation = React.memo(() => {
+const ButtonMakeADonation = () => {
   const handleContactPress = useCallback(() => {
     Linking.openURL(url);
   }, []);
+
   return (
-    <ButtonSettings
+    <ButtonAndModalConfirm
       title="makeADonation"
-      onPress={handleContactPress}
       iconProps={{ name: "hand-heart", type: IconType.MaterialCommunityIcons }}
       tooltipText="makeADonation"
+      onPress={handleContactPress}
     />
   );
-});
+};
 
-export default ButtonMakeADonation;
+export default React.memo(ButtonMakeADonation);

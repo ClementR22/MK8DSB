@@ -1,22 +1,23 @@
 import React, { useCallback } from "react";
 import { Linking } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
-import ButtonSettings from "@/primitiveComponents/ButtonSettings";
+import ButtonAndModalConfirm from "../modal/ButtonAndModalConfirm";
 
 const url = "https://github.com/ClementR22/MK8DSB";
 
-const ButtonSourceCode = React.memo(() => {
+const ButtonSourceCode = () => {
   const handlePress = useCallback(() => {
     Linking.openURL(url);
   }, []);
+
   return (
-    <ButtonSettings
+    <ButtonAndModalConfirm
       title="sourceCode"
-      onPress={handlePress}
       iconProps={{ name: "github", type: IconType.AntDesign }}
       tooltipText="sourceCode"
+      onPress={handlePress}
     />
   );
-});
+};
 
-export default ButtonSourceCode;
+export default React.memo(ButtonSourceCode);

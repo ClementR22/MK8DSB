@@ -1,11 +1,7 @@
-import i18n from "@/translations";
+import i18n, { translateParts } from "@/translations";
 import ToastManager, { ToastType } from "./ToastManager";
 
 function showToast(messageKey: string, type?: ToastType) {
-  const keysWithNs = messageKey.split("|");
-
-  const translatedParts = keysWithNs.map((keyWithNs) => (keyWithNs.includes(":") ? i18n.t(keyWithNs) : keyWithNs));
-
   let prefix = "";
   if (type === "error") {
     prefix = i18n.t("toast:error") + i18n.t("text:colon");
@@ -15,7 +11,7 @@ function showToast(messageKey: string, type?: ToastType) {
     prefix = i18n.t("toast:success") + i18n.t("text:colon");
   }
 
-  const finalMessage = prefix + translatedParts.join(" ");
+  const finalMessage = prefix + translateParts(messageKey);
   ToastManager.show(finalMessage);
 }
 

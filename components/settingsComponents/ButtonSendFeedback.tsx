@@ -1,22 +1,23 @@
 import React, { useCallback } from "react";
 import { Linking } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
-import ButtonSettings from "@/primitiveComponents/ButtonSettings";
+import ButtonAndModalConfirm from "../modal/ButtonAndModalConfirm";
 
 const url = "https://forms.gle/YZvjYiu2pT9Futvd9";
 
-const ButtonSendFeedback = React.memo(() => {
+const ButtonSendFeedback = () => {
   const handlePress = useCallback(() => {
     Linking.openURL(url);
   }, []);
+
   return (
-    <ButtonSettings
+    <ButtonAndModalConfirm
       title="sendFeedback"
-      onPress={handlePress}
       iconProps={{ name: "chatbox-ellipses-outline", type: IconType.Ionicons }}
       tooltipText="sendFeedback"
+      onPress={handlePress}
     />
   );
-});
+};
 
-export default ButtonSendFeedback;
+export default React.memo(ButtonSendFeedback);

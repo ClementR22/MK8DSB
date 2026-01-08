@@ -23,6 +23,11 @@ export const getLanguageToUse = async () => {
   return savedLanguage; // 'fr' ou 'en'
 };
 
+export function translateParts(messageKey: string) {
+  const keysWithNs = messageKey.split("|");
+  return keysWithNs.map((keyWithNs) => (keyWithNs.includes(":") ? i18n.t(keyWithNs) : keyWithNs)).join(" ");
+}
+
 i18n.use(initReactI18next).init({
   resources,
   lng: "en",

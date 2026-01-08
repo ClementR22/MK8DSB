@@ -1,54 +1,29 @@
 import React from "react";
-import ButtonAndModal from "../modal/ButtonAndModal";
-import useThemeStore from "@/stores/useThemeStore";
-import Text from "@/primitiveComponents/Text";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import useBuildsListStore from "@/stores/useBuildsListStore";
+import useGameStore from "@/stores/useGameStore";
+import showToast from "@/utils/showToast";
+import ButtonAndModalConfirm from "../modal/ButtonAndModalConfirm";
 import { IconType } from "react-native-dynamic-vector-icons";
-import Button from "@/primitiveComponents/Button";
-import ButtonSettings from "@/primitiveComponents/ButtonSettings";
 
-const ButtonDeleteAllBuildsInMemory = ({ deleteAllSavedBuilds }) => {
-  const theme = useThemeStore((state) => state.theme);
+const ButtonDeleteAllBuildsInMemory = () => {
+  const game = useGameStore((state) => state.game);
+
+  const deleteAllSavedBuilds = useBuildsListStore((state) => state.deleteAllSavedBuilds);
+
+  const handleDeleteAllSavedBuilds = () => {
+    deleteAllSavedBuilds(game);
+    showToast("toast:allSavedBuildsHaveBeenDeleted", "success");
+  };
 
   return (
-    <ButtonAndModal
-      triggerComponent={
-        <ButtonSettings
-          title="deleteAllBuildsInMemory"
-          iconProps={{ name: "trash-can", type: IconType.MaterialCommunityIcons, color: theme.on_error }}
-          backgroundColor={theme.error}
-          tooltipText="deleteAllBuildsInMemory"
-        />
-      }
-      bottomButtonProps={{
-        text: "confirm",
-        tooltipText: "confirm",
-        onPress: deleteAllSavedBuilds,
-        buttonColor: theme.error,
-        buttonTextColor: theme.on_error,
-      }}
-    >
-      <MaterialIcons
-        style={{ alignSelf: "center", paddingTop: 12 }}
-        name="warning-amber"
-        size={48}
-        color={theme.error}
-      />
-      <Text role="headline" size="large" color={theme.error} textAlign="center" namespace="text">
-        warning
-      </Text>
-      <Text
-        role="body"
-        size="large"
-        weight="regular"
-        textAlign="center"
-        color={theme.on_error_container}
-        style={{ padding: 20 }}
-        namespace="text"
-      >
-        deleteAllBuildsInMemoryText
-      </Text>
-    </ButtonAndModal>
+    <ButtonAndModalConfirm
+      title="deleteAllBuildsInMemory"
+      iconProps={{ name: "trash-can", type: IconType.MaterialCommunityIcons }}
+      tooltipText="deleteAllBuildsInMemory"
+      text="deleteAllBuildsInMemoryText"
+      isWarning={true}
+      onPress={handleDeleteAllSavedBuilds}
+    />
   );
 };
 

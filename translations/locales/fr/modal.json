@@ -18,5 +18,11 @@
   "licenses": "Licences",
 
   "updateAvailable": "Mise à jour disponible",
-  "welcome": "Bienvenue dans MK Lab !"
+  "welcome": "Bienvenue dans MK Lab !",
+
+  "sendFeedback": "Laisser un avis",
+  "makeADonation": "Faire un don",
+  "sourceCode": "Code source",
+  "openSourceLicenses": "Licences Open Source",
+  "updateTheApp": "Mettre à jour l'appli"
 }

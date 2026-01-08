@@ -6,7 +6,6 @@ import ButtonResetSettings from "@/components/settingsComponents/ButtonResetSett
 import ButtonSendFeedback from "@/components/settingsComponents/ButtonSendFeedback";
 import ButtonLicenses from "@/components/settingsComponents/ButtonLicenses";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useResetSettings } from "@/hooks/useResetSettings";
 import { deleteAllTheMemory } from "@/utils/asyncStorageOperations";
 import ButtonDeleteAllBuildsInMemory from "@/components/settingsComponents/ButtonDeleteAllBuildsInMemory";
 import StatSelector from "@/components/statSelector/StatSelector";
@@ -14,10 +13,7 @@ import { ScreenProvider } from "@/contexts/ScreenContext";
 import ScrollViewScreen from "@/components/ScrollViewScreen";
 import ResultsNumberSelector from "@/components/settingsComponents/ResultsNumberSelector";
 import Text from "@/primitiveComponents/Text";
-import showToast from "@/utils/showToast";
-import useBuildsListStore from "@/stores/useBuildsListStore";
 import GameSelector from "@/components/settingsComponents/GameSelector";
-import useGameStore from "@/stores/useGameStore";
 import ButtonMakeADonation from "@/components/settingsComponents/ButtonMakeADonation";
 import ButtonSourceCode from "@/components/settingsComponents/ButtonSourceCode";
 import ButtonUpdate from "@/components/settingsComponents/ButtonUpdate";
@@ -27,16 +23,7 @@ import BoxContainer from "@/primitiveComponents/BoxContainer";
 import useGeneralStore from "@/stores/useGeneralStore";
 
 const SettingsScreen: React.FC = () => {
-  const game = useGameStore((state) => state.game);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
-
-  const resetSettings = useResetSettings();
-  const deleteAllSavedBuilds = useBuildsListStore((state) => state.deleteAllSavedBuilds);
-
-  const handleDeleteAllSavedBuilds = () => {
-    deleteAllSavedBuilds(game);
-    showToast("toast:allSavedBuildsHaveBeenDeleted", "success");
-  };
 
   // Mémoïsation des handlers DEBUG
   const handleShowMemory = useCallback(async () => {
@@ -84,9 +71,9 @@ const SettingsScreen: React.FC = () => {
 
             <ButtonUpdate />
 
-            <ButtonDeleteAllBuildsInMemory deleteAllSavedBuilds={handleDeleteAllSavedBuilds} />
+            <ButtonDeleteAllBuildsInMemory />
 
-            <ButtonResetSettings resetSettings={resetSettings} />
+            <ButtonResetSettings />
           </View>
 
           <Text role="body" size="medium" namespace={"not"}>
