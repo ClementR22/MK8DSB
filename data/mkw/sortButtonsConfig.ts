@@ -1,12 +1,5 @@
-import { SortName } from "@/types/mkw/sorts";
+import { SortButtonProps, SortName } from "@/types/mkw/sorts";
 import { IconType } from "react-native-dynamic-vector-icons";
-
-// Define the type for the properties of a statistic icon
-interface SortButtonProps {
-  iconName: string;
-  iconType: IconType;
-  backgroundColor?: string; // Make it optional as some might derive from theme
-}
 
 // Merged configuration for all icons
 export const sortButtonsConfig: { [key in SortName]: SortButtonProps } = {
@@ -22,34 +15,34 @@ export const sortButtonsConfig: { [key in SortName]: SortButtonProps } = {
   speedSmooth: {
     iconName: "speedometer",
     iconType: IconType.SimpleLineIcons,
-    backgroundColor: "tan",
+    backgroundColor: "smooth",
   },
   speedRough: {
     iconName: "speedometer",
     iconType: IconType.SimpleLineIcons,
-    backgroundColor: "blueviolet",
+    backgroundColor: "rough",
   },
   speedWater: {
     iconName: "speedometer",
     iconType: IconType.SimpleLineIcons,
-    backgroundColor: "dodgerblue",
+    backgroundColor: "water",
   },
 
   // Handling-related icons with specific background colors
   handlingSmooth: {
     iconName: "steering",
     iconType: IconType.MaterialCommunityIcons,
-    backgroundColor: "tan",
+    backgroundColor: "smooth",
   },
   handlingRough: {
     iconName: "steering",
     iconType: IconType.MaterialCommunityIcons,
-    backgroundColor: "blueviolet",
+    backgroundColor: "rough",
   },
   handlingWater: {
     iconName: "steering",
     iconType: IconType.MaterialCommunityIcons,
-    backgroundColor: "dodgerblue",
+    backgroundColor: "water",
   },
 
   // Other direct stat sorts

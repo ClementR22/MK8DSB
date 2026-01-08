@@ -1,3 +1,5 @@
+export type Terrain = "smooth" | "rough" | "water";
+
 export type StatName =
   | "speedSmooth"
   | "speedRough"

@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 import useGeneralStore from "@/stores/useGeneralStore";
-import { SortName } from "@/types";
+import { SortButtonProps, SortName } from "@/types";
 import Popover from "../popover/Popover";
 import ButtonIconWithBadge from "./ButtonIconWithBadge";
 import {
@@ -18,6 +18,7 @@ import showToast from "@/utils/showToast";
 import { useGameData } from "@/hooks/useGameData";
 import useGameStore from "@/stores/useGameStore";
 import { sortsNamespaceByGame } from "@/translations/namespaces";
+import useThemeStore from "@/stores/useThemeStore";
 
 interface SortModeSelectorProps {
   sortNumber: number;
@@ -28,6 +29,7 @@ interface SortModeSelectorProps {
 
 const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSortNumber, sortCase, containerStyle }) => {
   const game = useGameStore((state) => state.game);
+  const theme = useThemeStore((state) => state.theme);
 
   const { statNamesHandling, sortNamesElementDefault, sortNamesBuildCardDefault, statNamesSpeed, sortButtonsConfig } =
     useGameData();
@@ -35,30 +37,28 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
   const screenName = useScreen();
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
-  const statNamesSortDefault = useMemo(
+  const sortNamesDefault = useMemo(
     () => (sortCase === "element" ? sortNamesElementDefault : sortNamesBuildCardDefault),
     [sortCase, sortNamesElementDefault, sortNamesBuildCardDefault]
   );
 
   const [currentDirection, setCurrentDirection] = useState<"asc" | "desc">(getCurrentDirection(sortNumber));
-  const [activeSort, setActiveSort] = useState<SortName>(
-    getSortNameFromSortNumber(sortNumber) || statNamesSortDefault[0]
-  );
+  const [activeSort, setActiveSort] = useState<SortName>(getSortNameFromSortNumber(sortNumber) || sortNamesDefault[0]);
 
   const handlePress = useCallback(
-    (name: SortName) => {
-      const isActive = activeSort === name;
+    (sortName: SortName) => {
+      const isActive = activeSort === sortName;
       const newDirection = isActive ? (currentDirection === "asc" ? "desc" : "asc") : "asc";
 
-      setActiveSort(name);
+      setActiveSort(sortName);
       setCurrentDirection(newDirection);
 
-      const newOrderInfo = sortNameMap[name];
+      const newOrderInfo = sortNameMap[sortName];
       if (newOrderInfo) {
         setSortNumber(newDirection === "asc" ? newOrderInfo.asc : newOrderInfo.desc);
       }
 
-      showToast(`${sortsNamespaceByGame[game]}:${name}|${sortsNamespaceByGame[game]}:${newDirection}`);
+      showToast(`${sortsNamespaceByGame[game]}:${sortName}|${sortsNamespaceByGame[game]}:${newDirection}`);
     },
     [activeSort, currentDirection, setSortNumber]
   );
@@ -86,18 +86,19 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
           />
         )}
       >
-        {statNames.map((name) => {
-          const config = sortButtonsConfig[name];
-          const isActive = name === activeSort;
+        {statNames.map((statName) => {
+          const iconConfig: SortButtonProps = sortButtonsConfig[statName];
+          const isActive = statName === activeSort;
           return (
             <ButtonIconWithBadge
-              key={name}
-              onPress={() => handlePress(name)}
-              tooltipText={name}
+              key={statName}
+              onPress={() => handlePress(statName)}
+              tooltipText={statName}
               namespace={sortsNamespaceByGame[game]}
-              iconName={config.iconName}
-              iconType={config.iconType}
-              backgroundColor={config.backgroundColor}
+              iconName={iconConfig.iconName}
+              iconType={iconConfig.iconType}
+              iconColor={theme.inverse_on_surface}
+              backgroundColor={theme[iconConfig.backgroundColor]}
               direction={isActive ? currentDirection : undefined}
               isBadge={isActive}
             />
@@ -105,29 +106,29 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
         })}
       </Popover>
     ),
-    [sortButtonsConfig, activeSort, currentDirection, handlePress]
+    [sortButtonsConfig, activeSort, currentDirection, theme, handlePress]
   );
 
   const mainButtons = useMemo(() => {
-    return statNamesSortDefault.map((name) => {
-      const iconConfig = sortButtonsConfig[name];
+    return sortNamesDefault.map((sortName) => {
+      const iconConfig: SortButtonProps = sortButtonsConfig[sortName];
       if (!iconConfig) return null;
 
       // Menus spéciaux
-      if (name === "speed") {
+      if (sortName === "speed") {
         return createTooltipMenu("speed", statNamesSpeed, "speed", iconConfig.iconName, iconConfig.iconType);
       }
-      if (name === "handling") {
+      if (sortName === "handling") {
         return createTooltipMenu("handling", statNamesHandling, "handling", iconConfig.iconName, iconConfig.iconType);
       }
 
       // Boutons normaux
-      const isActive = name === activeSort;
+      const isActive = sortName === activeSort;
       return (
         <ButtonIconWithBadge
-          key={name}
-          onPress={() => handlePress(name)}
-          tooltipText={name}
+          key={sortName}
+          onPress={() => handlePress(sortName)}
+          tooltipText={sortName}
           namespace={sortsNamespaceByGame[game]}
           iconName={iconConfig.iconName}
           iconType={iconConfig.iconType}
@@ -136,7 +137,7 @@ const SortModeSelector: React.FC<SortModeSelectorProps> = ({ sortNumber, setSort
         />
       );
     });
-  }, [statNamesSortDefault, activeSort, currentDirection, handlePress, createTooltipMenu]);
+  }, [sortNamesDefault, activeSort, currentDirection, handlePress, createTooltipMenu]);
 
   const needsScroll = useMemo(() => {
     const numberOfButtons = mainButtons.length;

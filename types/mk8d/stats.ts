@@ -1,3 +1,5 @@
+export type Terrain = "ground" | "antiGravity" | "water" | "air";
+
 export type StatName =
   | "speedGround"
   | "speedAntiGravity"
