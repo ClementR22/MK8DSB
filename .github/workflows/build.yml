@@ -35,6 +35,9 @@ on:
 env:
   GITHUB_TOKEN: ${{ github.token }}
 
+# --------------------------------------------------
+# Check inputs
+# --------------------------------------------------
 jobs:
   check-inputs:
     runs-on: ubuntu-latest
@@ -45,20 +48,24 @@ jobs:
           echo "❌ Missing description for a stable release"
           exit 1
 
-      - name: Exit if skip-build is enabled
+      - name: Warn if skip-build enabled
         if: ${{ inputs.skip-build }}
         run: |
-          echo "⚠️ Warning: skip-build is enabled, no APK will be generated"
-          echo "This workflow will only update versions without creating a release"
+          echo "⚠️ skip-build enabled: no APK will be generated"
 
+  # --------------------------------------------------
+  # Build job
+  # --------------------------------------------------
   build:
     runs-on: ubuntu-latest
     needs: [check-inputs]
+
     outputs:
       next-version: ${{ steps.version_build.outputs.v-version || steps.nightly-version.outputs.value }}
       build-name: ${{ steps.build-name.outputs.value }}
       is-stable: ${{ inputs.stable }}
       skip-build: ${{ inputs.skip-build }}
+
     steps:
       - uses: actions/checkout@v5
         with:
@@ -69,7 +76,6 @@ jobs:
           node-version: 20.x
           cache: npm
 
-      # Reset cache if requested
       - name: Clear npm cache
         if: ${{ inputs.reset-cache }}
         run: npm cache clean --force
@@ -113,7 +119,29 @@ jobs:
           echo "value=$VERSION" >> "$GITHUB_OUTPUT"
 
       # -------------------------
-      # Android version code
+      # Write version (IDEMPOTENT)
+      # -------------------------
+      - name: Update package.json & app.config.ts
+        run: |
+          VERSION="${{ inputs.stable && steps.version_build.outputs.v-version || steps.nightly-version.outputs.value }}"
+          CLEAN_VERSION="${VERSION#v}"
+
+          node -e "
+          const fs = require('fs');
+          const pkg = require('./package.json');
+          if (pkg.version !== '$CLEAN_VERSION') {
+            pkg.version = '$CLEAN_VERSION';
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+            console.log('package.json updated');
+          } else {
+            console.log('Version already set, skipping');
+          }
+          "
+
+          sed -i "s/{{VERSION}}/$VERSION/g" app.config.ts
+
+      # -------------------------
+      # Android build
       # -------------------------
       - name: Increment Android Version Code
         id: android-version
@@ -124,19 +152,6 @@ jobs:
           CURRENT_VCODE=${CURRENT_VCODE:-0}
           echo "value=$((CURRENT_VCODE + 1))" >> "$GITHUB_OUTPUT"
 
-      # -------------------------
-      # Update package.json & app.config.ts
-      # -------------------------
-      - name: Update versions
-        run: |
-          VERSION="${{ inputs.stable && steps.version_build.outputs.v-version || steps.nightly-version.outputs.value }}"
-          CLEAN_VERSION="${VERSION#v}"
-          npm version "$CLEAN_VERSION" --no-git-tag-version
-          sed -i "s/{{VERSION}}/$VERSION/g" app.config.ts
-
-      # -------------------------
-      # Build APK
-      # -------------------------
       - name: Build APK
         if: ${{ !inputs.skip-build }}
         env:
@@ -170,16 +185,15 @@ jobs:
             *.apk
             sha256sum.txt
 
-      # Always upload package.json for version tracking
       - name: Upload package.json
         uses: actions/upload-artifact@v4
         with:
           name: package-json
           path: package.json
 
-  # -------------------------
+  # --------------------------------------------------
   # Nightly release
-  # -------------------------
+  # --------------------------------------------------
   nightly:
     if: ${{ !inputs.stable && !inputs.skip-build }}
     needs: [build]
@@ -197,16 +211,16 @@ jobs:
           name: Nightly ${{ needs.build.outputs.next-version }}
           prerelease: true
           body: |
-            ⚠️ Unstable build - Use at your own risk
+            ⚠️ Unstable build – use at your own risk
 
             ${{ inputs.description || 'No description provided' }}
 
             **Commit:** ${{ github.sha }}
           artifacts: "mk8dsb-nightly_*.apk,sha256sum.txt"
 
-  # -------------------------
+  # --------------------------------------------------
   # Stable release
-  # -------------------------
+  # --------------------------------------------------
   release:
     if: ${{ inputs.stable && !inputs.skip-build }}
     needs: [build]
@@ -229,13 +243,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add package.json
-
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "chore: bump version to ${{ needs.build.outputs.next-version }}"
-            git push origin HEAD:${{ github.ref_name }}
-          fi
+          git commit -m "chore: bump version to ${{ needs.build.outputs.next-version }}" || echo "No changes"
+          git push origin HEAD:${{ github.ref_name }}
 
       - name: Generate changelog
         id: changelog
@@ -269,5 +278,5 @@ jobs:
             Download the APK file and install it on your Android device.
 
             ## 🔐 Verification
-            Verify the download integrity using the SHA256 checksum provided in `sha256sum.txt`.
+            Verify the SHA256 checksum using `sha256sum.txt`.
           artifacts: "mk8dsb_*.apk,sha256sum.txt"
