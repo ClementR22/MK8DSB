@@ -240,22 +240,17 @@ jobs:
       - name: Generate changelog
         id: changelog
         run: |
-          # Get the last stable release tag (excluding prereleases)
           LAST_TAG=$(git tag -l --sort=-version:refname | grep -v '-' | head -n 1)
 
           if [ -z "$LAST_TAG" ]; then
-            echo "First release - showing all commits"
             git log --pretty=format:'- %s (%h)' > changelog.txt
           else
-            echo "Changes since $LAST_TAG"
             git log ${LAST_TAG}..HEAD --pretty=format:'- %s (%h)' > changelog.txt
           fi
 
-          {
-            echo "content<<EOF"
-            cat changelog.txt
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+          echo "content<<EOF" >> "$GITHUB_OUTPUT"
+          cat changelog.txt >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub release
         uses: ncipollo/release-action@v1
