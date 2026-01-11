@@ -249,17 +249,24 @@ jobs:
       - name: Generate changelog
         id: changelog
         run: |
-          LAST_TAG=$(git tag -l --sort=-version:refname | grep -v '-' | head -n 1)
+          # Récupère le dernier tag qui ne contient pas de tiret (ex: évite nightly-xxx)
+          LAST_TAG=$(git tag -l --sort=-version:refname | grep -v '-' | head -n 2 | tail -n 1)
+
+          echo "Generating changelog since $LAST_TAG"
+
+          # Création d'un délimiteur unique pour éviter les erreurs de parsing
+          EOF=$(dd if=/dev/urandom bs=15 count=1 2>/dev/null | base64)
 
           if [ -z "$LAST_TAG" ]; then
-            git log --pretty=format:'- %s (%h)' > changelog.txt
+            CHANGELOG=$(git log --pretty=format:'- %s (%h)' --max-count=20)
           else
-            git log ${LAST_TAG}..HEAD --pretty=format:'- %s (%h)' > changelog.txt
+            CHANGELOG=$(git log ${LAST_TAG}..HEAD --pretty=format:'- %s (%h)')
           fi
 
-          echo "content<<EOF" >> "$GITHUB_OUTPUT"
-          cat changelog.txt >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          # Écriture sécurisée dans GITHUB_OUTPUT
+          echo "content<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "$CHANGELOG" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub release
         uses: ncipollo/release-action@v1
