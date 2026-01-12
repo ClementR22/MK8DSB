@@ -120,7 +120,7 @@ jobs:
       - name: Build Binary
         env:
           ANDROID_VERSION_CODE: ${{ steps.android-version.outputs.value }}
-        run: eas build --platform ${{ matrix.platform }} --profile preview --local --non-interactive --app-version-source local
+        run: eas build --platform ${{ matrix.platform }} --profile preview --local --non-interactive
 
       - name: Package Artifact
         run: |
