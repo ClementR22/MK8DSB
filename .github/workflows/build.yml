@@ -10,6 +10,12 @@ on:
         type: boolean
         description: Stable release ?
         default: false
+      platform:
+        type: choice
+        description: Target platform
+        required: true
+        options: [android, ios, all]
+        default: android
       version-bump:
         type: choice
         description: Version level
@@ -23,7 +29,7 @@ on:
       skip-build:
         type: boolean
         default: false
-        description: Skip APK build ?
+        description: Skip binary build ?
       is-draft:
         type: boolean
         description: Draft release ?
@@ -51,7 +57,7 @@ jobs:
       - name: Warn if skip-build enabled
         if: ${{ inputs.skip-build }}
         run: |
-          echo "⚠️ skip-build enabled: no APK will be generated"
+          echo "⚠️ skip-build enabled: no binary will be generated"
 
   # --------------------------------------------------
   # Build job
@@ -62,7 +68,6 @@ jobs:
 
     outputs:
       next-version: ${{ steps.version_build.outputs.v-version || steps.nightly-version.outputs.value }}
-      build-name: ${{ steps.build-name.outputs.value }}
       is-stable: ${{ inputs.stable }}
       skip-build: ${{ inputs.skip-build }}
 
@@ -141,40 +146,48 @@ jobs:
           sed -i "s/{{VERSION}}/$VERSION/g" app.config.ts
 
       # -------------------------
-      # Android build
+      # Platform Build
       # -------------------------
       - name: Increment Android Version Code
         id: android-version
-        if: ${{ !inputs.skip-build }}
+        if: ${{ !inputs.skip-build && (inputs.platform == 'android' || inputs.platform == 'all') }}
         run: |
           CURRENT_VCODE=$(eas app:inspect --platform android --non-interactive 2>/dev/null \
             | grep versionCode | awk '{print $2}' | tr -d '",')
           CURRENT_VCODE=${CURRENT_VCODE:-0}
           echo "value=$((CURRENT_VCODE + 1))" >> "$GITHUB_OUTPUT"
 
-      - name: Build APK
+      - name: Build Binaries
         if: ${{ !inputs.skip-build }}
         env:
           ANDROID_VERSION_CODE: ${{ steps.android-version.outputs.value }}
-        run: eas build --platform all --profile preview --local --non-interactive
-
-      - name: Store build name
-        id: build-name
-        if: ${{ !inputs.skip-build }}
         run: |
-          if [ "${{ inputs.stable }}" = "true" ]; then
-            echo "value=mk8dsb_${{ steps.version_build.outputs.v-version }}.apk" >> "$GITHUB_OUTPUT"
+          if [ "${{ inputs.platform }}" == "all" ]; then
+            echo "🚀 Building for both Android and iOS..."
+            eas build --platform android --profile preview --local --non-interactive
+            eas build --platform ios --profile preview --local --non-interactive
           else
-            echo "value=mk8dsb-nightly_${{ steps.nightly-version.outputs.value }}.apk" >> "$GITHUB_OUTPUT"
+            echo "🚀 Building for ${{ inputs.platform }}..."
+            eas build --platform ${{ inputs.platform }} --profile preview --local --non-interactive
           fi
 
-      - name: Rename APK
+      - name: Rename and Hash Artifacts
         if: ${{ !inputs.skip-build }}
-        run: mv build-*.apk "${{ steps.build-name.outputs.value }}"
+        run: |
+          VERSION="${{ inputs.stable && steps.version_build.outputs.v-version || steps.nightly-version.outputs.value }}"
+          PREFIX="${{ inputs.stable && 'mk8dsb_' || 'mk8dsb-nightly_' }}"
 
-      - name: Generate SHA256
-        if: ${{ !inputs.skip-build }}
-        run: sha256sum "${{ steps.build-name.outputs.value }}" > sha256sum.txt
+          # Rename APK if exists
+          if [ -f build-*.apk ]; then
+            mv build-*.apk "${PREFIX}${VERSION}.apk"
+            sha256sum "${PREFIX}${VERSION}.apk" >> sha256sum.txt
+          fi
+
+          # Rename IPA if exists
+          if [ -f build-*.ipa ]; then
+            mv build-*.ipa "${PREFIX}${VERSION}.ipa"
+            sha256sum "${PREFIX}${VERSION}.ipa" >> sha256sum.txt
+          fi
 
       - name: Upload artifacts
         if: ${{ !inputs.skip-build }}
@@ -183,6 +196,7 @@ jobs:
           name: artifacts
           path: |
             *.apk
+            *.ipa
             sha256sum.txt
 
       - name: Upload package.json
@@ -216,7 +230,7 @@ jobs:
             ${{ inputs.description || 'No description provided' }}
 
             **Commit:** ${{ github.sha }}
-          artifacts: "mk8dsb-nightly_*.apk,sha256sum.txt"
+          artifacts: "mk8dsb-nightly_*,sha256sum.txt"
 
   # --------------------------------------------------
   # Stable release
@@ -249,21 +263,13 @@ jobs:
       - name: Generate changelog
         id: changelog
         run: |
-          # Récupère le dernier tag qui ne contient pas de tiret (ex: évite nightly-xxx)
           LAST_TAG=$(git tag -l --sort=-version:refname | grep -v '-' | head -n 2 | tail -n 1)
-
-          echo "Generating changelog since $LAST_TAG"
-
-          # Création d'un délimiteur unique pour éviter les erreurs de parsing
           EOF=$(dd if=/dev/urandom bs=15 count=1 2>/dev/null | base64)
-
           if [ -z "$LAST_TAG" ]; then
             CHANGELOG=$(git log --pretty=format:'- %s (%h)' --max-count=20)
           else
             CHANGELOG=$(git log ${LAST_TAG}..HEAD --pretty=format:'- %s (%h)')
           fi
-
-          # Écriture sécurisée dans GITHUB_OUTPUT
           echo "content<<$EOF" >> "$GITHUB_OUTPUT"
           echo "$CHANGELOG" >> "$GITHUB_OUTPUT"
           echo "$EOF" >> "$GITHUB_OUTPUT"
@@ -282,8 +288,8 @@ jobs:
             ${{ steps.changelog.outputs.content }}
 
             ## 📥 Installation
-            Download the APK file and install it on your Android device.
+            Download the binary for your device (APK for Android, IPA for iOS).
 
             ## 🔐 Verification
             Verify the SHA256 checksum using `sha256sum.txt`.
-          artifacts: "mk8dsb_*.apk,sha256sum.txt"
+          artifacts: "mk8dsb_*,sha256sum.txt"
