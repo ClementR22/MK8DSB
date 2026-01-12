@@ -106,14 +106,14 @@ jobs:
           node -e "const fs = require('fs'); const pkg = require('./package.json'); pkg.version = '$CLEAN_VERSION'; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
 
           # 2. Update app.config.ts (Version + Bundle ID fix)
-          # On remplace {{VERSION}} et on s'assure que ios possède un bundleIdentifier valide (pas d'underscore)
-          # Utilisation de com.clement-rayer.MK8DSB (avec tiret) au lieu de com.clement_rayer.MK8DSB
+          # Utilisation de com.clementrayer.mk8dsb (minuscules uniquement, pas d'underscore)
           if [[ "$OSTYPE" == "darwin"* ]]; then
             sed -i "" "s/{{VERSION}}/$VERSION/g" app.config.ts
-            sed -i "" "s/supportsTablet: true,/supportsTablet: true, bundleIdentifier: 'com.clement-rayer.MK8DSB',/g" app.config.ts
+            # Remplacement plus agressif pour s'assurer que bundleIdentifier est présent dans le bloc ios
+            sed -i "" "s/supportsTablet: true,/supportsTablet: true, bundleIdentifier: 'com.clementrayer.mk8dsb',/g" app.config.ts
           else
             sed -i "s/{{VERSION}}/$VERSION/g" app.config.ts
-            sed -i "s/supportsTablet: true,/supportsTablet: true, bundleIdentifier: 'com.clement-rayer.MK8DSB',/g" app.config.ts
+            sed -i "s/supportsTablet: true,/supportsTablet: true, bundleIdentifier: 'com.clementrayer.mk8dsb',/g" app.config.ts
           fi
 
       - name: Android Version Code
