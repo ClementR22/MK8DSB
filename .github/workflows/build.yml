@@ -97,15 +97,21 @@ jobs:
 
       - run: npm install
 
-      - name: Update Version Files
+      - name: Update Version and Config
         run: |
           VERSION="${{ needs.prepare.outputs.next-version }}"
           CLEAN_VERSION="${VERSION#v}"
-          # Update package.json
+
+          # 1. Update package.json version
           node -e "const fs = require('fs'); const pkg = require('./package.json'); pkg.version = '$CLEAN_VERSION'; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
-          # Update app.config.ts (Fix for macOS sed incompatibility)
+
+          # 2. Update app.config.ts (Version + Bundle ID fix)
+          # On remplace {{VERSION}} et on s'assure que ios possède un bundleIdentifier
           if [[ "$OSTYPE" == "darwin"* ]]; then
+            # Remplacement de la version
             sed -i "" "s/{{VERSION}}/$VERSION/g" app.config.ts
+            # Injection du bundleIdentifier si absent ou incomplet dans la section ios
+            sed -i "" "s/supportsTablet: true,/supportsTablet: true, bundleIdentifier: 'com.clement_rayer.MK8DSB',/g" app.config.ts
           else
             sed -i "s/{{VERSION}}/$VERSION/g" app.config.ts
           fi
@@ -134,7 +140,7 @@ jobs:
             FILE_NAME="${PREFIX}${VERSION}.ipa"
             mv build-*.ipa "$FILE_NAME"
           fi
-          # Checksum generation
+          # Checksum generation (universal)
           shasum -a 256 "$FILE_NAME" > "checksum-${{ matrix.platform }}.txt"
 
       - name: Upload

@@ -24,6 +24,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
 
   ios: {
     supportsTablet: true,
+    bundleIdentifier: "com.clement_rayer.MK8DSB",
   },
 
   android: {
