@@ -106,12 +106,11 @@ jobs:
           node -e "const fs = require('fs'); const pkg = require('./package.json'); pkg.version = '$CLEAN_VERSION'; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
 
           # 2. Update app.config.ts (Version + Bundle ID fix)
-          # On remplace {{VERSION}} et on s'assure que ios possède un bundleIdentifier
+          # On remplace {{VERSION}} et on s'assure que ios possède un bundleIdentifier valide (pas d'underscore)
           if [[ "$OSTYPE" == "darwin"* ]]; then
-            # Remplacement de la version
             sed -i "" "s/{{VERSION}}/$VERSION/g" app.config.ts
-            # Injection du bundleIdentifier si absent ou incomplet dans la section ios
-            sed -i "" "s/supportsTablet: true,/supportsTablet: true, bundleIdentifier: 'com.clement_rayer.MK8DSB',/g" app.config.ts
+            # Injection d'un bundleIdentifier sans underscore (_) pour iOS
+            sed -i "" "s/supportsTablet: true,/supportsTablet: true, bundleIdentifier: 'com.clement-rayer.MK8DSB',/g" app.config.ts
           else
             sed -i "s/{{VERSION}}/$VERSION/g" app.config.ts
           fi
