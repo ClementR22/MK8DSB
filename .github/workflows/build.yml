@@ -156,7 +156,7 @@ jobs:
         if: ${{ !inputs.skip-build }}
         env:
           ANDROID_VERSION_CODE: ${{ steps.android-version.outputs.value }}
-        run: eas build --platform android --profile preview --local --non-interactive
+        run: eas build --platform all --profile preview --local --non-interactive
 
       - name: Store build name
         id: build-name
