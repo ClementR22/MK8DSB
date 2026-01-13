@@ -30,7 +30,7 @@ const ButtonAndModalConfirm: React.FC<ButtonAndModalWarningProps> = ({
 
   return (
     <ButtonAndModal
-      modalTitle={!isWarning ? title : undefined}
+      modalTitle={isWarning ? undefined : title}
       triggerComponent={
         <ButtonSettings
           title={title}
@@ -46,8 +46,7 @@ const ButtonAndModalConfirm: React.FC<ButtonAndModalWarningProps> = ({
               text: "confirm",
               tooltipText: "confirm",
               onPress: onPress,
-              buttonColor: theme.error,
-              buttonTextColor: theme.on_error,
+              isErrorStyle: true,
             }
           : { text: "open", onPress: onPress, tooltipText: "open" }
       }

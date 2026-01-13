@@ -61,8 +61,6 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
           const screenWidth = Dimensions.get("window").width;
           const scrollX = layout.x - screenWidth / 2 + layout.width / 2;
           scrollViewRef.current.scrollTo({ x: scrollX, animated: true });
-        } else {
-          // Optionnel : garder le warn si besoin de debug
         }
       },
       [] // Dépendances vides car buildCardLayouts.current est une ref stable

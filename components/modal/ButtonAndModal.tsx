@@ -1,20 +1,14 @@
 import React, { memo, useCallback, useState } from "react";
 import { GestureResponderEvent } from "react-native";
-import Modal from "@/primitiveComponents/Modal";
+import Modal, { ModalButtonProps } from "@/primitiveComponents/Modal";
 
 interface ButtonAndModalProps {
   // Permet de passer un titre en dur (string) ou de ne pas avoir de titre (null).
-  modalTitle?: string | null;
+  modalTitle: string | null;
   // Un élément React personnalisé qui servira de déclencheur pour ouvrir le modal.
   triggerComponent: React.ReactElement<{ onPress?: (event: GestureResponderEvent) => void } & Record<string, any>>;
   // Props pour un bouton en bas
-  bottomButtonProps?: {
-    text: string;
-    onPress: () => void;
-    tooltipText: string;
-    buttonColor?: string;
-    buttonTextColor?: string;
-  };
+  bottomButtonProps?: ModalButtonProps;
   horizontalScroll?: boolean;
   // Le contenu principal du modal. Peut être un composant, du texte, etc.
   children: React.ReactNode;
@@ -23,7 +17,7 @@ interface ButtonAndModalProps {
 }
 
 const ButtonAndModal: React.FC<ButtonAndModalProps> = ({
-  modalTitle = undefined, // Initialisé à undefined pour ne pas passer null par défaut
+  modalTitle,
   triggerComponent, // give a component OR
   bottomButtonProps,
   horizontalScroll = false,

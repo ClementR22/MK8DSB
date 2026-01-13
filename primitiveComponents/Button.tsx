@@ -10,11 +10,12 @@ import { IconProps } from "@/types";
 
 interface ButtonProps {
   children: ReactNode;
-  buttonColor?: string;
-  buttonTextColor?: string;
   onPress?: () => void;
   tooltipText: string;
   iconProps?: IconProps;
+  buttonColor?: string;
+  buttonTextColor?: string;
+  isErrorStyle?: boolean;
   flex?: number;
   disabled?: boolean;
   [key: string]: any;
@@ -22,15 +23,28 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({
   children,
-  buttonColor,
-  buttonTextColor,
   onPress,
   tooltipText,
   iconProps,
+  buttonColor,
+  buttonTextColor,
+  isErrorStyle,
   flex,
   disabled = false,
 }) => {
   const theme = useThemeStore((state) => state.theme);
+
+  let backgroundColor: string, contentColor: string;
+  if (disabled) {
+    backgroundColor = "grey";
+    contentColor = theme.surface_container_highest;
+  } else if (isErrorStyle) {
+    backgroundColor = theme.error;
+    contentColor = theme.on_error;
+  } else {
+    backgroundColor = buttonColor || theme.primary;
+    contentColor = buttonTextColor || theme.on_primary;
+  }
 
   return (
     <ButtonBase
@@ -39,27 +53,20 @@ const Button: React.FC<ButtonProps> = ({
       containerStyleOuter={[
         styles.containerOuter,
         {
-          backgroundColor: disabled ? "grey" : buttonColor || theme.primary,
+          backgroundColor: backgroundColor,
           flex: flex,
         },
       ]}
       containerStyleInner={styles.containerInner}
       disabled={disabled}
     >
-      {iconProps && (
-        <Icon
-          type={iconProps.type}
-          name={iconProps.name}
-          size={24}
-          color={disabled ? theme.surface_container_highest : iconProps.color || theme.on_primary}
-        />
-      )}
+      {iconProps && <Icon type={iconProps.type} name={iconProps.name} size={24} color={contentColor} />}
       <Text
         role="title"
         size="small"
         weight="semibold"
         textAlign="center"
-        color={disabled ? theme.surface_container_highest : buttonTextColor || theme.on_primary}
+        color={contentColor}
         inverse
         namespace="button"
       >

@@ -13,16 +13,15 @@ import {
 import { toastConfig } from "@/config/toastConfig";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-interface ModalButtonProps {
+export interface ModalButtonProps {
   text: string;
   onPress: () => void;
   tooltipText: string;
-  buttonColor?: string;
-  buttonTextColor?: string;
+  isErrorStyle?: boolean;
 }
 
-const ModalButton = React.memo(({ text, onPress, tooltipText, buttonColor, buttonTextColor }: ModalButtonProps) => (
-  <Button buttonColor={buttonColor} buttonTextColor={buttonTextColor} onPress={onPress} tooltipText={tooltipText}>
+const ModalButton = React.memo(({ text, onPress, tooltipText, isErrorStyle }: ModalButtonProps) => (
+  <Button onPress={onPress} tooltipText={tooltipText} isErrorStyle={isErrorStyle}>
     {text}
   </Button>
 ));
@@ -31,13 +30,7 @@ interface ModalProps {
   isModalVisible: boolean;
   setIsModalVisible: (v: boolean) => void;
   modalTitle: string;
-  bottomButtonProps?: {
-    text: string;
-    onPress: () => boolean | void;
-    tooltipText: string;
-    buttonColor?: string;
-    buttonTextColor?: string;
-  };
+  bottomButtonProps?: ModalButtonProps;
   withoutChildrenContainer?: boolean;
   horizontalScroll?: boolean;
   children: ReactNode;

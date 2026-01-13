@@ -71,6 +71,11 @@ export const runMigrations = async (): Promise<string | null> => {
 };
 
 function compareVersions(v1: string, v2: string): number {
+  if (!v2) {
+    // si lastMigrationVersion est undefined
+    return 1; // alors on fait la migration
+  }
+
   const parts1 = v1.split(".").map(Number);
   const parts2 = v2.split(".").map(Number);
 

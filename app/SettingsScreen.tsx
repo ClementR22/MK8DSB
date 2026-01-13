@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { ResultStatsProvider } from "@/contexts/ResultStatsContext";
 import LanguageSelector from "@/components/settingsComponents/LanguageSelector";
 import ThemeSelector from "@/components/settingsComponents/ThemeSelector";
@@ -17,28 +17,36 @@ import GameSelector from "@/components/settingsComponents/GameSelector";
 import ButtonMakeADonation from "@/components/settingsComponents/ButtonMakeADonation";
 import ButtonSourceCode from "@/components/settingsComponents/ButtonSourceCode";
 import ButtonUpdate from "@/components/settingsComponents/ButtonUpdate";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import packageJSON from "@/package.json";
 import BoxContainer from "@/primitiveComponents/BoxContainer";
 import useGeneralStore from "@/stores/useGeneralStore";
+import Modal from "@/primitiveComponents/Modal";
+import Button from "@/primitiveComponents/Button";
+import { ScrollView } from "react-native-gesture-handler";
 
 const SettingsScreen: React.FC = () => {
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
-  // Mémoïsation des handlers DEBUG
-  const handleShowMemory = useCallback(async () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [debugDump, setDebugDump] = useState<string | null>(null);
+
+  const updateDebugDump = useCallback(async () => {
     const keys = await AsyncStorage.getAllKeys();
-    // eslint-disable-next-line no-console
-    console.log("keys", keys);
-    // eslint-disable-next-line no-console
-    console.log("items", await AsyncStorage.multiGet(keys));
+    const items = await AsyncStorage.multiGet(keys);
+
+    console.log("item", items);
+
+    setDebugDump(JSON.stringify(Object.fromEntries(items), null, 2));
   }, []);
 
-  const handleRemoveMemory = useCallback(() => {
+  const handleRemoveMemory = useCallback(async () => {
     // eslint-disable-next-line no-console
     console.log("remove all the memory");
-    deleteAllTheMemory();
-  }, []);
+    await deleteAllTheMemory();
+
+    await updateDebugDump();
+  }, [deleteAllTheMemory, updateDebugDump]);
 
   return (
     <ScreenProvider screenName="settings">
@@ -76,9 +84,34 @@ const SettingsScreen: React.FC = () => {
             <ButtonResetSettings />
           </View>
 
-          <Text role="body" size="medium" namespace={"not"}>
-            Version {packageJSON.version}
-          </Text>
+          <Pressable
+            onLongPress={() => {
+              updateDebugDump();
+              setIsModalVisible(true);
+            }}
+          >
+            <Text role="body" size="medium" namespace="not">
+              Version {packageJSON.version}
+            </Text>
+          </Pressable>
+
+          <Modal modalTitle={undefined} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
+            <BoxContainer>
+              <Text role="title" size="large" namespace="not">
+                Debug
+              </Text>
+
+              <ScrollView style={styles.debugDump} showsVerticalScrollIndicator>
+                <Text role="body" size="large" namespace="not">
+                  {debugDump}
+                </Text>
+              </ScrollView>
+
+              <Button onPress={handleRemoveMemory} tooltipText="deleteAllData" isErrorStyle>
+                deleteAllData
+              </Button>
+            </BoxContainer>
+          </Modal>
         </BoxContainer>
       </ScrollViewScreen>
     </ScreenProvider>
@@ -92,6 +125,7 @@ const styles = StyleSheet.create({
     gap: 1,
     overflow: "hidden",
   },
+  debugDump: { maxHeight: 300 },
 });
 
 SettingsScreen.displayName = "SettingsScreen";

@@ -12,6 +12,7 @@
   "updateTheApp": "Update the app",
   "resetSettings": "Reset settings",
   "deleteAllBuildsInMemory": "Delete all saved builds",
+  "deleteAllData": "Delete all data",
   "confirm": "Confirm",
   "cancel": "Cancel",
   "close": "Close",

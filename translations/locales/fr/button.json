@@ -12,6 +12,7 @@
   "updateTheApp": "Mettre à jour l'appli",
   "resetSettings": "Réinitialiser les préférences",
   "deleteAllBuildsInMemory": "Supprimer tous les builds enregistrés",
+  "deleteAllData": "Supprimer les données",
   "confirm": "Confirmer",
   "cancel": "Annuler",
   "close": "Fermer",

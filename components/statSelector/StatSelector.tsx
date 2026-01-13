@@ -112,8 +112,8 @@ const StatSelector: React.FC<StatSelectorProps> = ({ children }) => {
 
   return (
     <ButtonAndModal
-      triggerComponent={triggerComponent}
       modalTitle={modalTitle}
+      triggerComponent={triggerComponent}
       onOpen={initStatMap}
       onClose={handleModalClose}
     >
