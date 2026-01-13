@@ -2,6 +2,7 @@ import { getContainerLowestStyle } from "@/utils/getScreenStyle";
 import useGeneralStore from "@/stores/useGeneralStore";
 import React, { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { ScrollView } from "react-native";
+import { useScrollClamp } from "@/hooks/useScrollClamp";
 
 interface ScrollViewScreenProps {
   scrollEnabled: boolean;
@@ -16,6 +17,7 @@ export interface ScrollViewScreenHandles {
 const ScrollViewScreen = forwardRef<ScrollViewScreenHandles, ScrollViewScreenProps>(
   ({ scrollEnabled, children }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
+    const scrollClamp = useScrollClamp(scrollViewRef, "y");
     const shouldScrollToTop = useGeneralStore((state) => state.shouldScrollToTop);
     const resetScrollToTop = useGeneralStore((state) => state.resetScrollToTop);
 
@@ -39,7 +41,13 @@ const ScrollViewScreen = forwardRef<ScrollViewScreenHandles, ScrollViewScreenPro
     const containerLowestStyle = getContainerLowestStyle("scrollview");
 
     return (
-      <ScrollView scrollEnabled={scrollEnabled} contentContainerStyle={[containerLowestStyle]} ref={scrollViewRef}>
+      <ScrollView
+        ref={scrollViewRef}
+        {...scrollClamp}
+        scrollEventThrottle={16}
+        scrollEnabled={scrollEnabled}
+        contentContainerStyle={[containerLowestStyle]}
+      >
         {children}
       </ScrollView>
     );
