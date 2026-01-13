@@ -1,5 +1,5 @@
 import React, { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
-import { ActivityIndicator, Dimensions, DimensionValue, LayoutChangeEvent, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Dimensions, LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import BuildCard from "./BuildCard";
 import useThemeStore from "@/stores/useThemeStore";
@@ -33,61 +33,53 @@ export interface BuildCardsContainerHandles {
 const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsContainerProps>(
   ({ builds, isInLoadBuildModal = false, screenNameFromProps }, ref) => {
     const scrollViewRef = useRef<ScrollView>(null);
-    const scrollClamp = useScrollClamp(scrollViewRef, "x");
-
-    // expose les fonctions au parent
-    useImperativeHandle(ref, () => ({
-      scrollToStart: () => {
-        scrollViewRef.current?.scrollTo({ x: 0, animated: true });
-      },
-      scrollToEnd: () => {
-        scrollViewRef.current?.scrollToEnd({ animated: true });
-      },
-    }));
-
     const buildCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
+    const [hasShownSearchQuestionIcon, setHasShownSearchQuestionIcon] = useState(false);
 
-    // La logique d'availableColorsRef et son useEffect ont été déplacés dans DisplayBuildScreen
-
-    const onBuildCardLayout = useCallback((id: string, event: LayoutChangeEvent) => {
-      const { x, width } = event.nativeEvent.layout;
-      buildCardLayouts.current.set(id, { x, width }); // Utilisez l'ID build comme clé
-    }, []);
-
-    const scrollToBuildCard = useCallback(
-      (id: string) => {
-        const layout = buildCardLayouts.current.get(id);
-        if (scrollViewRef.current && layout) {
-          const screenWidth = Dimensions.get("window").width;
-          const scrollX = layout.x - screenWidth / 2 + layout.width / 2;
-          scrollViewRef.current.scrollTo({ x: scrollX, animated: true });
-        }
-      },
-      [] // Dépendances vides car buildCardLayouts.current est une ref stable
-    );
-
+    const scrollClamp = useScrollClamp(scrollViewRef, "x");
     const theme = useThemeStore((state) => state.theme);
     const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
-    const screenName = useScreen();
     const isLoading = useGeneralStore((state) => state.isLoading);
+    const screenName = useScreen();
     const scrollRequest = useBuildsListStore((state) => state.scrollRequest);
     const clearScrollRequest = useBuildsListStore((state) => state.clearScrollRequest);
 
-    const [hasShownSearchQuestionIcon, setHasShownSearchQuestionIcon] = useState(false);
-
     const noBuildToShow = builds.length === 0;
+    const isDisplayScreen = screenName === "display";
+    const shouldBeFullWidth = noBuildToShow && !isDisplayScreen;
 
-    const calculatedContentWidth: DimensionValue | undefined = noBuildToShow ? "100%" : undefined;
+    // ========== IMPERATIVE HANDLE ==========
+    useImperativeHandle(
+      ref,
+      () => ({
+        scrollToStart: () => scrollViewRef.current?.scrollTo({ x: 0, animated: true }),
+        scrollToEnd: () => scrollViewRef.current?.scrollToEnd({ animated: true }),
+      }),
+      []
+    );
 
+    // ========== CALLBACKS ==========
+    // La logique d'availableColorsRef et son useEffect ont été déplacés dans DisplayBuildScreen
+    const onBuildCardLayout = useCallback((id: string, event: LayoutChangeEvent) => {
+      const { x, width } = event.nativeEvent.layout;
+      buildCardLayouts.current.set(id, { x, width });
+    }, []);
+
+    const scrollToBuildCard = useCallback((id: string) => {
+      const layout = buildCardLayouts.current.get(id);
+      if (scrollViewRef.current && layout) {
+        const screenWidth = Dimensions.get("window").width;
+        const scrollX = layout.x - screenWidth / 2 + layout.width / 2;
+        scrollViewRef.current.scrollTo({ x: scrollX, animated: true });
+      }
+    }, []);
+
+    // ========== EFFECTS ==========
     useEffect(() => {
-      if (!scrollRequest) return;
-      const { source, buildDataId } = scrollRequest;
-      // Ce container est-il concerné ?
-      if (source !== screenName) return;
-      scrollToBuildCard(buildDataId);
-      // Puis reset pour éviter de scanner inutilement
+      if (!scrollRequest || scrollRequest.source !== screenName) return;
+      scrollToBuildCard(scrollRequest.buildDataId);
       clearScrollRequest();
-    }, [scrollRequest]);
+    }, [scrollRequest, screenName, scrollToBuildCard, clearScrollRequest]);
 
     useEffect(() => {
       if (!noBuildToShow && !hasShownSearchQuestionIcon) {
@@ -95,27 +87,23 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
       }
     }, [noBuildToShow, hasShownSearchQuestionIcon]);
 
-    const placeHolder = useMemo(() => {
+    // ========== MEMOIZED CONTENT ==========
+    const placeholder = useMemo(() => {
       if (!noBuildToShow) return null;
 
       if (screenName === "search") {
-        if (!hasShownSearchQuestionIcon) {
-          return <Placeholder text="searchEmpty" />;
-        }
-        return <Placeholder text="searchNotFound" />;
+        return <Placeholder text={hasShownSearchQuestionIcon ? "searchNotFound" : "searchEmpty"} />;
       }
-      if (screenName === "display") {
+      if (isDisplayScreen) {
         return <PlaceholderBuildCard />;
       }
       return <Placeholder text="savedEmpty" />;
-    }, [noBuildToShow, screenName, theme.on_surface, hasShownSearchQuestionIcon]);
+    }, [noBuildToShow, screenName, isDisplayScreen, hasShownSearchQuestionIcon]);
 
-    const memoizedBuildCards = useMemo(() => {
-      if (noBuildToShow) {
-        return null;
-      }
+    const buildCards = useMemo(() => {
+      if (noBuildToShow) return null;
 
-      let buildsComponent = builds.map((build: BuildWithColor) => (
+      const cards = builds.map((build: BuildWithColor) => (
         <BuildCard
           key={build.buildDataId}
           buildDataId={build.buildDataId}
@@ -127,16 +115,18 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
         />
       ));
 
-      if (screenName === "display") {
-        buildsComponent.push(
-          <View key="buttonAddBuildWrapper" style={[{ justifyContent: "center", paddingHorizontal: 10 }]}>
+      if (isDisplayScreen) {
+        cards.push(
+          <View key="buttonAddBuildWrapper" style={styles.addBuildWrapper}>
             <ButtonAddBuild scrollRef={scrollViewRef} />
           </View>
         );
       }
-      return buildsComponent;
-    }, [builds, isInLoadBuildModal, screenNameFromProps, onBuildCardLayout]);
 
+      return cards;
+    }, [builds, noBuildToShow, isDisplayScreen, isInLoadBuildModal, screenNameFromProps, onBuildCardLayout]);
+
+    // ========== RENDER ==========
     return (
       <ScrollView
         ref={scrollViewRef}
@@ -145,14 +135,13 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
         scrollEventThrottle={16}
         scrollEnabled={isScrollEnable}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={[styles.contentContainerStyle, { width: calculatedContentWidth }]}
+        contentContainerStyle={[styles.contentContainerStyle, shouldBeFullWidth && styles.fullWidth]}
       >
         <View
           style={[
             styles.container,
-            {
-              backgroundColor: theme.surface_container,
-            },
+            { backgroundColor: theme.surface_container },
+            !shouldBeFullWidth && styles.flexContainer,
           ]}
         >
           {isLoading ? (
@@ -160,9 +149,9 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
               <ActivityIndicator size={50} color={theme.primary} />
             </BoxContainer>
           ) : noBuildToShow ? (
-            placeHolder
+            placeholder
           ) : (
-            memoizedBuildCards
+            buildCards
           )}
         </View>
       </ScrollView>
@@ -171,7 +160,12 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
 );
 
 const styles = StyleSheet.create({
-  contentContainerStyle: { minWidth: "100%" },
+  contentContainerStyle: {
+    minWidth: "100%",
+  },
+  fullWidth: {
+    width: "100%",
+  },
   container: {
     marginHorizontal: MARGIN_CONTAINER_LOWEST,
     flexDirection: "row",
@@ -179,8 +173,17 @@ const styles = StyleSheet.create({
     gap: PADDING_STANDARD / 1.5,
     borderRadius: BORDER_RADIUS_CONTAINER_LOWEST,
     boxShadow: box_shadow_z1,
-    marginBottom: 2, // so the shadow is visible
+    marginBottom: 2, // pour que l'ombre soit visible
+  },
+  flexContainer: {
+    flex: 1,
+  },
+  addBuildWrapper: {
+    justifyContent: "center",
+    paddingHorizontal: 10,
   },
 });
+
+BuildCardsContainer.displayName = "BuildCardsContainer";
 
 export default memo(BuildCardsContainer);
