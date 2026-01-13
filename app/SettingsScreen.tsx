@@ -24,8 +24,13 @@ import useGeneralStore from "@/stores/useGeneralStore";
 import Modal from "@/primitiveComponents/Modal";
 import Button from "@/primitiveComponents/Button";
 import { ScrollView } from "react-native-gesture-handler";
+import useThemeStore from "@/stores/useThemeStore";
+import useGameStore from "@/stores/useGameStore";
+import { GAME_VERSIONS } from "@/data/registry";
 
 const SettingsScreen: React.FC = () => {
+  const theme = useThemeStore((state) => state.theme);
+  const game = useGameStore((state) => state.game);
   const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -90,8 +95,8 @@ const SettingsScreen: React.FC = () => {
               setIsModalVisible(true);
             }}
           >
-            <Text role="body" size="medium" namespace="not">
-              Version {packageJSON.version}
+            <Text role="body" size="medium" namespace="not" color={theme.on_surface_variant}>
+              {`Mario Kalc v${packageJSON.version}  •  ${game} v${GAME_VERSIONS[game]}`}
             </Text>
           </Pressable>
 

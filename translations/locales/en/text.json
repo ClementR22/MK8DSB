@@ -29,11 +29,5 @@
 
   "tutoImportation": "Copy the text, go to 'Collection', and click the 'Import' (clipboard) button.",
 
-  "modified": "modified",
-
-  "general": "General",
-  "displaying": "Display",
-  "community": "Community",
-  "developer": "Developer",
-  "maintenance": "Maintenance"
+  "modified": "modified"
 }

@@ -7,3 +7,4 @@ export * from "./elementsStats";
 export * from "./resultStatsInitConfig";
 export * from "./sortButtonsConfig";
 export * from "./stats";
+export * from "./version";
