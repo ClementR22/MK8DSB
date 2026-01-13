@@ -19,6 +19,10 @@ const useLanguageStore = create<LanguageState>((set, get) => ({
 
   // Changer la langue
   setLanguage: async (language: LanguageMode) => {
+    if (!language) {
+      language = LANGUAGE_DEFAULT;
+    }
+
     // Sauvegarder le choix ('fr', 'en', ou 'system')
     await saveThingInMemory(LANGUAGE_KEY, language);
 

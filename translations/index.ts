@@ -13,16 +13,6 @@ export const getSystemLanguage = () => {
   return (["fr", "en"].includes(systemLang) ? systemLang : "en") as Language;
 };
 
-// Fonction pour obtenir la langue à utiliser
-export const getLanguageToUse = async () => {
-  const savedLanguage: LanguageMode = await loadThingFromMemory("language");
-
-  if (savedLanguage == "system" || !savedLanguage) {
-    return getSystemLanguage();
-  }
-  return savedLanguage; // 'fr' ou 'en'
-};
-
 export function translateParts(messageKey: string) {
   const keysWithNs = messageKey.split("|");
   return keysWithNs.map((keyWithNs) => (keyWithNs.includes(":") ? i18n.t(keyWithNs) : keyWithNs)).join(" ");
