@@ -28,8 +28,10 @@ interface GeneralStoreState {
   numberSavedBuilds: number;
   setNumberSavedBuilds: (newNumberSavedBuilds: number) => void;
 
-  isIntro: boolean;
-  hideIntro: () => void;
+  isWelcome: boolean;
+  welcomeMessage: string | null; // Message à afficher dans WelcomeModal
+  showWelcome: (message?: string) => void;
+  hideWelcome: () => void;
 }
 
 const useGeneralStore = create<GeneralStoreState>((set, get) => ({
@@ -69,9 +71,13 @@ const useGeneralStore = create<GeneralStoreState>((set, get) => ({
   numberSavedBuilds: 0,
   setNumberSavedBuilds: (newNumberSavedBuilds: number) => set({ numberSavedBuilds: newNumberSavedBuilds }),
 
-  isIntro: true,
-  hideIntro: () => {
-    set({ isIntro: false });
+  isWelcome: false,
+  welcomeMessage: null,
+  showWelcome: (message = "welcomeText") => {
+    set({ isWelcome: true, welcomeMessage: message });
+  },
+  hideWelcome: () => {
+    set({ isWelcome: false, welcomeMessage: null });
   },
 }));
 

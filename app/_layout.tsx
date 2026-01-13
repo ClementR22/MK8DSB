@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect } from "react";
+// _layout.tsx
+import React, { useCallback, useEffect, useState } from "react";
 import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Appearance, StyleSheet } from "react-native";
@@ -18,7 +19,6 @@ import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 
-import { useLoadSettings } from "@/hooks/useLoadSettings";
 import { toastConfig } from "@/config/toastConfig";
 import { useTranslation } from "react-i18next";
 
@@ -31,44 +31,88 @@ import { useInitPressableElementsStore } from "@/hooks/useInitPressableElementsS
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import UpdateAvailableModal from "@/components/modal/UpdateAvailableModal";
-import IntroModal from "@/components/modal/IntroModal";
+import WelcomeModal from "@/components/modal/WelcomeModal";
+import { runMigrations } from "@/utils/migrations";
+import { loadThingFromMemory } from "@/utils/asyncStorageOperations";
+import { useSettingsMap } from "@/hooks/useSettingsMap";
+import { Game } from "@/types";
 
 export default function TabLayout() {
-  const { t } = useTranslation("screens");
-  const game = useGameStore((state) => state.game);
-  const theme = useThemeStore((state) => state.theme);
+  const [isReady, setIsReady] = useState(false);
 
+  const { t } = useTranslation("screens");
+  const theme = useThemeStore((state) => state.theme);
+  const game = useGameStore((state) => state.game);
   const isSettingsLoaded = useGeneralStore((state) => state.isSettingsLoaded);
-  const loadBuildsSaved = useBuildsActionsStore((state) => state.loadBuildsSaved);
-  const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
+  const setIsSettingsLoaded = useGeneralStore((state) => state.setIsSettingsLoaded);
   const buildsListSaved = useBuildsListStore((state) => state.buildsListSaved);
   const numberSavedBuilds = useGeneralStore((state) => state.numberSavedBuilds);
   const setNumberSavedBuilds = useGeneralStore((state) => state.setNumberSavedBuilds);
+  const updateSystemTheme = useThemeStore((state) => state.updateSystemTheme);
+  const loadBuildsSaved = useBuildsActionsStore((state) => state.loadBuildsSaved);
 
+  const settingsMap = useSettingsMap();
+
+  // 1. INITIALISATION AU DÉMARRAGE (une seule fois)
+  useEffect(() => {
+    const initApp = async () => {
+      try {
+        // Exécuter les migrations et récupérer le changelog
+        const changelogMessage = await runMigrations();
+
+        // Charger les settings
+        let persistedGame: Game;
+        for (const [key, { setState }] of Object.entries(settingsMap)) {
+          if (key === "game") {
+            persistedGame = await loadThingFromMemory(key, setState);
+          } else {
+            await loadThingFromMemory(key, setState);
+          }
+        }
+
+        // Charger les builds pour le game persisté
+        await loadBuildsSaved(persistedGame);
+
+        setIsSettingsLoaded(true);
+
+        // Si une migration a un message, l'afficher
+        if (changelogMessage) {
+          const showWelcome = useGeneralStore.getState().showWelcome;
+          showWelcome(changelogMessage);
+        }
+
+        setIsReady(true);
+      } catch (error) {
+        console.error("App initialization failed:", error);
+        setIsReady(true);
+      }
+    };
+
+    initApp();
+  }, []); // Vide, s'exécute une seule fois
+
+  // 2. ÉCOUTER LES CHANGEMENTS DE THÈME SYSTÈME
   useEffect(() => {
     const listener = Appearance.addChangeListener(updateSystemTheme);
     return () => listener.remove();
   }, [updateSystemTheme]);
 
-  useLoadSettings();
-
-  useInitStatsStore();
-
-  useInitPressableElementsStore();
-
+  // 3. RECHARGER LES BUILDS QUAND LE JEU CHANGE
   useEffect(() => {
     if (!isSettingsLoaded) return;
+    loadBuildsSaved();
+  }, [game, isSettingsLoaded, loadBuildsSaved]);
 
-    const load = async () => {
-      await loadBuildsSaved();
-    };
-    load();
-  }, [game]); // uniquement à chaque changement de game (mais pas au démarrage car useLoadSettings le fait)
-
+  // 4. METTRE À JOUR LE COMPTEUR DE BUILDS
   useEffect(() => {
     setNumberSavedBuilds(buildsListSaved.length);
-  }, [buildsListSaved]);
+  }, [buildsListSaved, setNumberSavedBuilds]);
 
+  // 5. INITIALISER LES STORES
+  useInitStatsStore();
+  useInitPressableElementsStore();
+
+  // 6. CALLBACKS MÉMOÏSÉS POUR LES HEADERS
   const renderSearchHeader = useCallback(
     () => (
       <CustomHeader
@@ -80,6 +124,7 @@ export default function TabLayout() {
     ),
     []
   );
+
   const renderDisplayHeader = useCallback(
     () => (
       <CustomHeader
@@ -91,6 +136,7 @@ export default function TabLayout() {
     ),
     []
   );
+
   const renderSavedHeader = useCallback(
     () => (
       <CustomHeader
@@ -102,14 +148,21 @@ export default function TabLayout() {
     ),
     []
   );
+
   const renderGalleryHeader = useCallback(
     () => <CustomHeader iconName="image" iconType={IconType.Ionicons} title="galleryTitle" />,
     []
   );
+
   const renderSettingsHeader = useCallback(
     () => <CustomHeader iconName="settings" iconType={IconType.Ionicons} title="settingsTitle" />,
     []
   );
+
+  // Return anticipé APRÈS tous les hooks
+  if (!isReady) {
+    return null; // ou <SplashScreen />
+  }
 
   return (
     <SafeAreaProvider>
@@ -223,7 +276,7 @@ export default function TabLayout() {
             <EditBuildModal />
             <LoadBuildModal />
             <UpdateAvailableModal />
-            <IntroModal />
+            <WelcomeModal />
             <Toast config={toastConfig} bottomOffset={59} swipeable={false} />
           </BottomSheetModalProvider>
         </GestureHandlerRootView>

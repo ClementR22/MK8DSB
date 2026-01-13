@@ -67,4 +67,4 @@ const Text: React.FC<TextProps> = ({
 
 Text.displayName = "Text";
 
-export default React.memo(Text);
+export default Text;
