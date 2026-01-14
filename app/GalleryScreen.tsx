@@ -22,37 +22,48 @@ const GalleryScreen = () => {
 
   const { elementsDataByCategory, statNames, classesStatsByCategory } = useGameData();
   const { t } = useTranslation(elementsNamespaceByGame[game]);
-
   const [selectedElementId, setSelectedElementId] = useState(0);
   const [isLeftPannelExpanded, setIsLeftPannelExpanded] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [sortNumber, setSortNumber] = useState(0);
 
   const { categoryElementsSorted, classesStats } = useMemo(() => {
-    const categoryElementsSorted: ElementData[] = sortElements<ElementData>(
-      elementsDataByCategory[selectedCategory],
-      sortNumber,
-      t
-    );
-    const classesStats: Map<number, number[]> = classesStatsByCategory[selectedCategory];
-    return { categoryElementsSorted, classesStats };
-  }, [selectedCategory, sortNumber, t, classesStatsByCategory, sortElements]);
-  // dépendances : toutes
+    const elements = elementsDataByCategory?.[selectedCategory];
+
+    // pendant le chargement des données dû à un changement de game
+    if (!elements || elements.length === 0) {
+      return {
+        categoryElementsSorted: [],
+        classesStats: new Map(),
+      };
+    }
+
+    return {
+      categoryElementsSorted: sortElements<ElementData>(elements, sortNumber, t),
+      classesStats: classesStatsByCategory[selectedCategory],
+    };
+  }, [elementsDataByCategory, classesStatsByCategory, selectedCategory, sortNumber, t]);
 
   const overlayOpacity = useSharedValue(isLeftPannelExpanded ? 0.5 : 0);
 
   const elementCard = useMemo(() => {
+    if (categoryElementsSorted.length === 0) return null;
+
     const { selectedElementName, selectedElementStats } = getSelectedElementData(
       categoryElementsSorted,
       selectedElementId,
       classesStats,
       statNames
     );
+
+    // pendant le chargement dû au changement de game
+    if (selectedElementName === "N/A") return null;
+
     return <ElementCard name={selectedElementName} stats={selectedElementStats} category={selectedCategory} />;
-  }, [selectedElementId, statNames]);
+  }, [selectedElementId, game]);
   // dépendances :
   // selectedElementId car ElementCard doit correspondre à selectedElementId
-  // statNames pour réagir au changement de jeu
+  // game pour réagir au changement de jeu
 
   const handleElementPickerPress = useCallback(
     (id: number) => {
@@ -74,6 +85,12 @@ const GalleryScreen = () => {
     setSelectedElementId(categoryElementsSorted[0].id);
   }, [selectedCategory]);
 
+  useEffect(() => {
+    setSelectedCategory("character");
+    setSelectedElementId(0);
+    setIsLeftPannelExpanded(true);
+  }, [game]);
+
   const animatedOverlayStyle = useAnimatedStyle(() => ({
     opacity: overlayOpacity.value,
   }));
@@ -81,7 +98,8 @@ const GalleryScreen = () => {
   const containerLowestStyle = getContainerLowestStyle("view");
 
   return (
-    <ScreenProvider screenName="gallery">
+    <ScreenProvider screenName="gallery" key={game}>
+      {/* key pour forcer le re-render quand game change */}
       <View style={containerLowestStyle}>
         <ScrollView
           style={{
