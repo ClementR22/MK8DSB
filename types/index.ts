@@ -15,6 +15,8 @@ export type Bodytype = MK8D.Bodytype | MKW.Bodytype;
 
 export type ElementData = MK8D.ElementData | MKW.ElementData;
 
+export type ElementStats = MK8D.ElementStats | MKW.ElementStats;
+
 export type StatName = MK8D.StatName | MKW.StatName | MKW.StatName;
 
 export type SortName = MK8D.SortName | MKW.SortName;

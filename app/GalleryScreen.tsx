@@ -20,29 +20,27 @@ import useGameStore from "@/stores/useGameStore";
 const GalleryScreen = () => {
   const game = useGameStore((state) => state.game);
 
-  const { elementsDataByCategory, statNames, classesStatsByCategory } = useGameData();
+  const { elementsDataByCategory, statNames, classesStats } = useGameData();
   const { t } = useTranslation(elementsNamespaceByGame[game]);
   const [selectedElementId, setSelectedElementId] = useState(0);
   const [isLeftPannelExpanded, setIsLeftPannelExpanded] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<Category>("character");
   const [sortNumber, setSortNumber] = useState(0);
 
-  const { categoryElementsSorted, classesStats } = useMemo(() => {
+  const { categoryElementsSorted } = useMemo(() => {
     const elements = elementsDataByCategory?.[selectedCategory];
 
     // pendant le chargement des données dû à un changement de game
     if (!elements || elements.length === 0) {
       return {
         categoryElementsSorted: [],
-        classesStats: new Map(),
       };
     }
 
     return {
       categoryElementsSorted: sortElements<ElementData>(elements, sortNumber, t),
-      classesStats: classesStatsByCategory[selectedCategory],
     };
-  }, [elementsDataByCategory, classesStatsByCategory, selectedCategory, sortNumber, t]);
+  }, [elementsDataByCategory, selectedCategory, sortNumber, t]);
 
   const overlayOpacity = useSharedValue(isLeftPannelExpanded ? 0.5 : 0);
 

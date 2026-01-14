@@ -12,7 +12,7 @@ export const maxValues: Record<Category, number> = {
 
 export const STEP = 0.25;
 
-export const baseStatsByClassId: { [key: number]: ElementStats } = {
+export const classesStats: { [key: number]: ElementStats } = {
   // --- Character Class Stats ---
   0: {
     // Baby Peach, Baby Daisy

@@ -1,4 +1,4 @@
-import { baseStatsByClassId } from "./classStats";
+import { classesStats } from "./classesStats";
 import {
   ElementDataCharacter,
   ElementDataBody,
@@ -12,9 +12,9 @@ import { Category } from "@/types/mk8d/categories";
 export const maxNumberOfImages = 5;
 
 function getElementStats(classId: number, overrides?: Partial<ElementStats>): ElementStats {
-  const baseStats = baseStatsByClassId[classId];
+  const stats = classesStats[classId];
 
-  if (!baseStats) {
+  if (!stats) {
     // Fallback for classIds not yet defined, or if you prefer a strict check
     console.warn(`Warning: No base stats found for classId: ${classId}. Using default zero stats.`);
     return {
@@ -32,7 +32,7 @@ function getElementStats(classId: number, overrides?: Partial<ElementStats>): El
       miniTurbo: 0,
     };
   }
-  return { ...baseStats, ...overrides };
+  return { ...stats, ...overrides };
 }
 
 export const elementsData = [
