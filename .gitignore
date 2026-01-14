@@ -15,6 +15,9 @@ web-build/
 
 android/
 
+scripts/generateElementsMetadata.mjs
+data/mkw/elementsMeta.generated.ts
+
 ##################################################
 ### Fix build crash by removing Android folder ###
 ##################################################

@@ -10,16 +10,16 @@ export const bodytype: Bodytype[] = ["kart", "bike", "ATV"];
 export const bodytypesItems = [
   {
     name: "kart",
-    imageUrl: require("@/assets/images/elementsImages/mkw/karts/Standard Kart.png"),
+    imageUrl: require("@/assets/images/elementsImages/mkw/karts/StandardKart.png"),
   } as BodytypeItem,
 
   {
     name: "bike",
-    imageUrl: require("@/assets/images/elementsImages/mkw/bikes/Standard Bike.png"),
+    imageUrl: require("@/assets/images/elementsImages/mkw/bikes/StandardBike.png"),
   } as BodytypeItem,
 
   {
     name: "ATV",
-    imageUrl: require("@/assets/images/elementsImages/mkw/ATVs/Funky Dorrie.png"),
+    imageUrl: require("@/assets/images/elementsImages/mkw/ATVs/FunkyDorrie.png"),
   } as BodytypeItem,
 ];

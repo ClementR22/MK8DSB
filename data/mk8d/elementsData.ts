@@ -82,7 +82,7 @@ export const elementsData = [
     name: "TanookiMario",
     category: "character",
     classId: 8,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Tanooki Mario.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/TanookiMario.png"),
     ...getElementStats(8),
   } as ElementDataCharacter,
   {
@@ -90,7 +90,7 @@ export const elementsData = [
     name: "CatPeach",
     category: "character",
     classId: 6,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Cat Peach.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/CatPeach.png"),
     ...getElementStats(6),
   } as ElementDataCharacter,
   {
@@ -130,7 +130,7 @@ export const elementsData = [
     name: "ShyGuy",
     category: "character",
     classId: 5,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Shy Guy.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/ShyGuy.png"),
     ...getElementStats(5),
   } as ElementDataCharacter,
   {
@@ -154,7 +154,7 @@ export const elementsData = [
     name: "KingBoo",
     category: "character",
     classId: 11,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/King Boo.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/KingBoo.png"),
     ...getElementStats(11),
   } as ElementDataCharacter,
   {
@@ -162,7 +162,7 @@ export const elementsData = [
     name: "PeteyPiranha",
     category: "character",
     classId: 12,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Petey Piranha.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/PeteyPiranha.png"),
     ...getElementStats(12),
   } as ElementDataCharacter,
   {
@@ -170,7 +170,7 @@ export const elementsData = [
     name: "BabyMario",
     category: "character",
     classId: 2,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Baby Mario.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/BabyMario.png"),
     ...getElementStats(2),
   } as ElementDataCharacter,
   {
@@ -178,7 +178,7 @@ export const elementsData = [
     name: "BabyLuigi",
     category: "character",
     classId: 2,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Baby Luigi.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/BabyLuigi.png"),
     ...getElementStats(2),
   } as ElementDataCharacter,
   {
@@ -186,7 +186,7 @@ export const elementsData = [
     name: "BabyPeach",
     category: "character",
     classId: 0,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Baby Peach.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/BabyPeach.png"),
     ...getElementStats(0),
   } as ElementDataCharacter,
   {
@@ -194,7 +194,7 @@ export const elementsData = [
     name: "BabyDaisy",
     category: "character",
     classId: 0,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Baby Daisy.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/BabyDaisy.png"),
     ...getElementStats(0),
   } as ElementDataCharacter,
   {
@@ -202,7 +202,7 @@ export const elementsData = [
     name: "BabyRosalina",
     category: "character",
     classId: 1,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Baby Rosalina.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/BabyRosalina.png"),
     ...getElementStats(1),
   } as ElementDataCharacter,
   {
@@ -210,16 +210,15 @@ export const elementsData = [
     name: "MetalMario",
     category: "character",
     classId: 12,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Metal Mario.png"),
-    // Example of an override if Metal Mario had unique stats compared to other class 12 characters
-    ...getElementStats(12, { speedGround: 5.3, weight: 5.1 }),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/MetalMario.png"),
+    ...getElementStats(12),
   } as ElementDataCharacter,
   {
     id: 22,
     name: "PinkGoldPeach",
     category: "character",
     classId: 12,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Pink Gold Peach.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/PinkGoldPeach.png"),
     ...getElementStats(12),
   } as ElementDataCharacter,
   {
@@ -251,7 +250,7 @@ export const elementsData = [
     name: "DonkeyKong",
     category: "character",
     classId: 13,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Donkey Kong.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/DonkeyKong.png"),
     ...getElementStats(13),
   } as ElementDataCharacter,
   {
@@ -267,7 +266,7 @@ export const elementsData = [
     name: "DryBones",
     category: "character",
     classId: 2,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Dry Bones.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/DryBones.png"),
     ...getElementStats(2),
   } as ElementDataCharacter,
   {
@@ -275,7 +274,7 @@ export const elementsData = [
     name: "BowserJr.",
     category: "character",
     classId: 4,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Bowser Jr..png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/BowserJr..png"),
     ...getElementStats(4),
   } as ElementDataCharacter,
   {
@@ -283,7 +282,7 @@ export const elementsData = [
     name: "DryBowser",
     category: "character",
     classId: 14,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Dry Bowser.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/DryBowser.png"),
     ...getElementStats(14),
   } as ElementDataCharacter,
   {
@@ -363,7 +362,7 @@ export const elementsData = [
     name: "InklingGirl",
     category: "character",
     classId: 6,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Inkling Girl.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/InklingGirl.png"),
     ...getElementStats(6),
   } as ElementDataCharacter,
   {
@@ -371,7 +370,7 @@ export const elementsData = [
     name: "InklingBoy",
     category: "character",
     classId: 8,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Inkling Boy.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/InklingBoy.png"),
     ...getElementStats(8),
   } as ElementDataCharacter,
   {
@@ -379,7 +378,7 @@ export const elementsData = [
     name: "VillagerMale",
     category: "character",
     classId: 8,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Villager Male.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/VillagerMale.png"),
     ...getElementStats(8),
   } as ElementDataCharacter,
   {
@@ -387,7 +386,7 @@ export const elementsData = [
     name: "VillagerFemale",
     category: "character",
     classId: 6,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Villager Female.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/VillagerFemale.png"),
     ...getElementStats(6),
   } as ElementDataCharacter,
   {
@@ -411,7 +410,7 @@ export const elementsData = [
     name: "DiddyKong",
     category: "character",
     classId: 6,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Diddy Kong.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/DiddyKong.png"),
     ...getElementStats(6),
   } as ElementDataCharacter,
   {
@@ -419,7 +418,7 @@ export const elementsData = [
     name: "FunkyKong",
     category: "character",
     classId: 14,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Funky Kong.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/FunkyKong.png"),
     ...getElementStats(14),
   } as ElementDataCharacter,
   {
@@ -435,7 +434,7 @@ export const elementsData = [
     name: "LightMii",
     category: "character",
     classId: 2,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Light Mii.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/LightMii.png"),
     ...getElementStats(2),
   } as ElementDataCharacter,
   {
@@ -443,7 +442,7 @@ export const elementsData = [
     name: "MediumMii",
     category: "character",
     classId: 9,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Medium Mii.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/MediumMii.png"),
     ...getElementStats(9),
   } as ElementDataCharacter,
   {
@@ -451,7 +450,7 @@ export const elementsData = [
     name: "HeavyMii",
     category: "character",
     classId: 14,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/Heavy Mii.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/characters/HeavyMii.png"),
     ...getElementStats(14),
   } as ElementDataCharacter,
 
@@ -462,7 +461,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 16,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/Standard Kart.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/StandardKart.png"),
     ...getElementStats(16),
   } as ElementDataBody,
   {
@@ -471,7 +470,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 17,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/Pipe Frame.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/PipeFrame.png"),
     ...getElementStats(17),
   } as ElementDataBody,
   {
@@ -480,7 +479,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 18,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/Mach 8.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/Mach8.png"),
     ...getElementStats(18),
   } as ElementDataBody,
   {
@@ -489,7 +488,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 19,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/Steel Driver.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/SteelDriver.png"),
     ...getElementStats(19),
   } as ElementDataBody,
   {
@@ -498,7 +497,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 20,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/Cat Cruiser.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/CatCruiser.png"),
     ...getElementStats(20),
   } as ElementDataBody,
   {
@@ -507,7 +506,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 21,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/Circuit Special.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/CircuitSpecial.png"),
     ...getElementStats(21),
   } as ElementDataBody,
   {
@@ -570,7 +569,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 18,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/Sports Coupe.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/SportsCoupe.png"),
     ...getElementStats(18),
   } as ElementDataBody,
   {
@@ -579,7 +578,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 26,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/Gold Kart.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/GoldKart.png"),
     ...getElementStats(26),
   } as ElementDataBody,
   {
@@ -597,7 +596,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 27,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/W 25 Silver Arrow.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/W25SilverArrow.png"),
     ...getElementStats(27),
   } as ElementDataBody,
   {
@@ -606,7 +605,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 16,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/300 SL Roadster.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/300SLRoadster.png"),
     ...getElementStats(16),
   } as ElementDataBody,
   {
@@ -615,7 +614,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 28,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/Blue Falcon.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/BlueFalcon.png"),
     ...getElementStats(28),
   } as ElementDataBody,
   {
@@ -624,7 +623,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 29,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/Tanooki Buggy.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/TanookiBuggy.png"),
     ...getElementStats(29),
   } as ElementDataBody,
   {
@@ -633,7 +632,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 21,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/B Dasher.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/BDasher.png"),
     ...getElementStats(21),
   } as ElementDataBody,
   {
@@ -660,7 +659,7 @@ export const elementsData = [
     category: "body",
     bodytype: "kart",
     classId: 29,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/Koopa Clown.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/karts/KoopaClown.png"),
     ...getElementStats(29),
   } as ElementDataBody,
   {
@@ -669,7 +668,7 @@ export const elementsData = [
     category: "body",
     bodytype: "bike",
     classId: 27,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/bikes/Standard Bike.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/bikes/StandardBike.png"),
     ...getElementStats(27),
   } as ElementDataBody,
   {
@@ -678,7 +677,7 @@ export const elementsData = [
     category: "body",
     bodytype: "bike",
     classId: 16,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/bikes/The Duke.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/bikes/TheDuke.png"),
     ...getElementStats(16),
   } as ElementDataBody,
   {
@@ -687,7 +686,7 @@ export const elementsData = [
     category: "body",
     bodytype: "bike",
     classId: 27,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/bikes/Flame Rider.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/bikes/FlameRider.png"),
     ...getElementStats(27),
   } as ElementDataBody,
   {
@@ -705,7 +704,7 @@ export const elementsData = [
     category: "body",
     bodytype: "bike",
     classId: 24,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/bikes/Mr. Scooty.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/bikes/Mr.Scooty.png"),
     ...getElementStats(24),
   } as ElementDataBody,
   {
@@ -714,7 +713,7 @@ export const elementsData = [
     category: "body",
     bodytype: "bike",
     classId: 29,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/bikes/Master Cycle Zero.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/bikes/MasterCycleZero.png"),
     ...getElementStats(29),
   } as ElementDataBody,
   {
@@ -723,7 +722,7 @@ export const elementsData = [
     category: "body",
     bodytype: "bike",
     classId: 17,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/bikes/City Tripper.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/bikes/CityTripper.png"),
     ...getElementStats(17),
   } as ElementDataBody,
   {
@@ -741,7 +740,7 @@ export const elementsData = [
     category: "body",
     bodytype: "sportBike",
     classId: 23,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/sportBikes/Sport Bike.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/sportBikes/SportBike.png"),
     ...getElementStats(23),
   } as ElementDataBody,
   {
@@ -750,7 +749,7 @@ export const elementsData = [
     category: "body",
     bodytype: "sportBike",
     classId: 23,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/sportBikes/Jet Bike.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/sportBikes/JetBike.png"),
     ...getElementStats(23),
   } as ElementDataBody,
   {
@@ -759,7 +758,7 @@ export const elementsData = [
     category: "body",
     bodytype: "sportBike",
     classId: 20,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/sportBikes/Yoshi Bike.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/sportBikes/YoshiBike.png"),
     ...getElementStats(20),
   } as ElementDataBody,
   {
@@ -768,7 +767,7 @@ export const elementsData = [
     category: "body",
     bodytype: "sportBike",
     classId: 26,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/sportBikes/Master Cycle.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/sportBikes/MasterCycle.png"),
     ...getElementStats(26),
   } as ElementDataBody,
   {
@@ -777,7 +776,7 @@ export const elementsData = [
     category: "body",
     bodytype: "ATV",
     classId: 22,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/ATVs/Standard ATV.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/ATVs/StandardATV.png"),
     ...getElementStats(22),
   } as ElementDataBody,
   {
@@ -786,7 +785,7 @@ export const elementsData = [
     category: "body",
     bodytype: "ATV",
     classId: 27,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/ATVs/Wild Wiggler.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/ATVs/WildWiggler.png"),
     ...getElementStats(27),
   } as ElementDataBody,
   {
@@ -795,7 +794,7 @@ export const elementsData = [
     category: "body",
     bodytype: "ATV",
     classId: 20,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/ATVs/Teddy Buggy.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/ATVs/TeddyBuggy.png"),
     ...getElementStats(20),
   } as ElementDataBody,
   {
@@ -804,7 +803,7 @@ export const elementsData = [
     category: "body",
     bodytype: "ATV",
     classId: 19,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/ATVs/Bone Rattler.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/ATVs/BoneRattler.png"),
     ...getElementStats(19),
   } as ElementDataBody,
   {
@@ -813,7 +812,7 @@ export const elementsData = [
     category: "body",
     bodytype: "ATV",
     classId: 28,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/ATVs/Splat Buggy.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/ATVs/SplatBuggy.png"),
     ...getElementStats(28),
   } as ElementDataBody,
   {
@@ -920,7 +919,7 @@ export const elementsData = [
     name: "BlueStandard",
     category: "wheel",
     classId: 30,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/Blue Standard.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/BlueStandard.png"),
     ...getElementStats(30),
   } as ElementDataWheel,
   {
@@ -928,7 +927,7 @@ export const elementsData = [
     name: "HotMonster",
     category: "wheel",
     classId: 31,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/Hot Monster.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/HotMonster.png"),
     ...getElementStats(31),
   } as ElementDataWheel,
   {
@@ -936,7 +935,7 @@ export const elementsData = [
     name: "AzureRoller",
     category: "wheel",
     classId: 32,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/Azure Roller.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/AzureRoller.png"),
     ...getElementStats(32),
   } as ElementDataWheel,
   {
@@ -944,7 +943,7 @@ export const elementsData = [
     name: "CrimsonSlim",
     category: "wheel",
     classId: 33,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/Crimson Slim.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/CrimsonSlim.png"),
     ...getElementStats(33),
   } as ElementDataWheel,
   {
@@ -952,7 +951,7 @@ export const elementsData = [
     name: "CyberSlick",
     category: "wheel",
     classId: 34,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/Cyber Slick.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/CyberSlick.png"),
     ...getElementStats(34),
   } as ElementDataWheel,
   {
@@ -960,7 +959,7 @@ export const elementsData = [
     name: "RetroOff-Road",
     category: "wheel",
     classId: 37,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/Retro Off-Road.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/RetroOff-Road.png"),
     ...getElementStats(37),
   } as ElementDataWheel,
   {
@@ -968,7 +967,7 @@ export const elementsData = [
     name: "GoldTires",
     category: "wheel",
     classId: 35,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/Gold Tires.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/GoldTires.png"),
     ...getElementStats(35),
   } as ElementDataWheel,
   {
@@ -976,7 +975,7 @@ export const elementsData = [
     name: "GLATires",
     category: "wheel",
     classId: 30,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/GLA Tires.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/GLATires.png"),
     ...getElementStats(30),
   } as ElementDataWheel,
   {
@@ -984,7 +983,7 @@ export const elementsData = [
     name: "TriforceTires",
     category: "wheel",
     classId: 37,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/Triforce Tires.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/TriforceTires.png"),
     ...getElementStats(37),
   } as ElementDataWheel,
   {
@@ -992,7 +991,7 @@ export const elementsData = [
     name: "AncientTires",
     category: "wheel",
     classId: 31,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/Ancient Tires.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/AncientTires.png"),
     ...getElementStats(31),
   } as ElementDataWheel,
   {
@@ -1000,7 +999,7 @@ export const elementsData = [
     name: "LeafTires",
     category: "wheel",
     classId: 36,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/Leaf Tires.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/wheels/LeafTires.png"),
     ...getElementStats(36),
   } as ElementDataWheel,
 
@@ -1010,7 +1009,7 @@ export const elementsData = [
     name: "SuperGlider",
     category: "glider",
     classId: 39,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/Super Glider.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/SuperGlider.png"),
     ...getElementStats(39),
   } as ElementDataGlider,
   {
@@ -1018,7 +1017,7 @@ export const elementsData = [
     name: "CloudGlider",
     category: "glider",
     classId: 40,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/Cloud Glider.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/CloudGlider.png"),
     ...getElementStats(40),
   } as ElementDataGlider,
   {
@@ -1026,7 +1025,7 @@ export const elementsData = [
     name: "WarioWing",
     category: "glider",
     classId: 41,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/Wario Wing.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/WarioWing.png"),
     ...getElementStats(41),
   } as ElementDataGlider,
   {
@@ -1034,7 +1033,7 @@ export const elementsData = [
     name: "WaddleWing",
     category: "glider",
     classId: 39,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/Waddle Wing.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/WaddleWing.png"),
     ...getElementStats(39),
   } as ElementDataGlider,
   {
@@ -1042,7 +1041,7 @@ export const elementsData = [
     name: "PeachParasol",
     category: "glider",
     classId: 42,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/Peach Parasol.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/PeachParasol.png"),
     ...getElementStats(42),
   } as ElementDataGlider,
   {
@@ -1050,7 +1049,7 @@ export const elementsData = [
     name: "ParachuteGlider",
     category: "glider",
     classId: 40,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/Parachute Glider.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/ParachuteGlider.png"),
     ...getElementStats(40),
   } as ElementDataGlider,
   {
@@ -1058,7 +1057,7 @@ export const elementsData = [
     name: "ParafoilGlider",
     category: "glider",
     classId: 42,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/Parafoil Glider.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/ParafoilGlider.png"),
     ...getElementStats(42),
   } as ElementDataGlider,
   {
@@ -1066,7 +1065,7 @@ export const elementsData = [
     name: "FlowerGlider",
     category: "glider",
     classId: 40,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/Flower Glider.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/FlowerGlider.png"),
     ...getElementStats(40),
   } as ElementDataGlider,
   {
@@ -1074,7 +1073,7 @@ export const elementsData = [
     name: "BowserKite",
     category: "glider",
     classId: 42,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/Bowser Kite.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/BowserKite.png"),
     ...getElementStats(42),
   } as ElementDataGlider,
   {
@@ -1082,7 +1081,7 @@ export const elementsData = [
     name: "PlaneGlider",
     category: "glider",
     classId: 41,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/Plane Glider.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/PlaneGlider.png"),
     ...getElementStats(41),
   } as ElementDataGlider,
   {
@@ -1090,7 +1089,7 @@ export const elementsData = [
     name: "MKTVParafoilGlider",
     category: "glider",
     classId: 42,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/MKTV Parafoil Glider.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/MKTVParafoilGlider.png"),
     ...getElementStats(42),
   } as ElementDataGlider,
   {
@@ -1098,7 +1097,7 @@ export const elementsData = [
     name: "GoldGlider",
     category: "glider",
     classId: 41,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/Gold Glider.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/GoldGlider.png"),
     ...getElementStats(41),
   } as ElementDataGlider,
   {
@@ -1106,7 +1105,7 @@ export const elementsData = [
     name: "HylianKite",
     category: "glider",
     classId: 39,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/Hylian Kite.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/HylianKite.png"),
     ...getElementStats(39),
   } as ElementDataGlider,
   {
@@ -1122,7 +1121,7 @@ export const elementsData = [
     name: "PaperGlider",
     category: "glider",
     classId: 40,
-    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/Paper Glider.png"),
+    imageUrl: require("@/assets/images/elementsImages/mk8d/gliders/PaperGlider.png"),
     ...getElementStats(40),
   } as ElementDataGlider,
 ] as ElementData[];

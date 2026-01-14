@@ -12,7 +12,7 @@ export const categoriesItems = [
 
   {
     name: "body",
-    imageUrl: require("@/assets/images/elementsImages/mkw/karts/Standard Kart.png"),
+    imageUrl: require("@/assets/images/elementsImages/mkw/karts/StandardKart.png"),
   } as CategoryItem,
 ];
 
