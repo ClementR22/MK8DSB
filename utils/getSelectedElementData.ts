@@ -1,13 +1,12 @@
 import { ElementData } from "@/types/mk8d/elements";
-import { StatName, ElementStats } from "@/types";
+import { StatName, ElementStats, Stat } from "@/types";
 
 export const getSelectedElementData = (
   categoryElementsSorted: ElementData[],
   selectedElementId: number,
   classesStats: {
     [key: number]: ElementStats;
-  },
-  statNames: StatName[]
+  }
 ) => {
   const currentElement = categoryElementsSorted.find((element) => element.id === selectedElementId);
 
@@ -15,13 +14,10 @@ export const getSelectedElementData = (
     return { selectedElementName: "N/A", selectedElementStats: [] };
   }
 
-  const statsArray = classesStats[currentElement.classId];
-  const stats = statsArray
-    ? statNames.map((statName, index) => ({
-        name: statName,
-        value: statsArray[index],
-      }))
-    : [];
+  const stats: Stat[] = Object.entries(classesStats[currentElement.classId]).map(([name, value]) => ({
+    name: name as StatName,
+    value,
+  }));
 
   return {
     selectedElementName: currentElement.name,

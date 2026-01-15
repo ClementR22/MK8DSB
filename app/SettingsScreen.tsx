@@ -40,8 +40,6 @@ const SettingsScreen: React.FC = () => {
     const keys = await AsyncStorage.getAllKeys();
     const items = await AsyncStorage.multiGet(keys);
 
-    console.log("item", items);
-
     setDebugDump(JSON.stringify(Object.fromEntries(items), null, 2));
   }, []);
 

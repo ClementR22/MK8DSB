@@ -19,6 +19,8 @@ export type ElementStats = MK8D.ElementStats | MKW.ElementStats;
 
 export type StatName = MK8D.StatName | MKW.StatName | MKW.StatName;
 
+export type Stat = { name: StatName; value: number };
+
 export type SortName = MK8D.SortName | MKW.SortName;
 
 export type SortButtonProps = MK8D.SortButtonProps | MKW.SortButtonProps;

@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-import { Category } from "@/types";
+import { Category, ElementStats, Stat } from "@/types";
 import { BORDER_RADIUS_18, LIST_ITEM_SPACING, PADDING_HORIZONTAL_ELEMENT_CARD } from "@/utils/designTokens";
 import useThemeStore from "@/stores/useThemeStore";
 import StatGaugeRelativeBar from "../statGaugeElementCard/StatGaugeRelativeBar";
@@ -12,14 +12,9 @@ import { useGameData } from "@/hooks/useGameData";
 import { elementsNamespaceByGame } from "@/translations/namespaces";
 import useGameStore from "@/stores/useGameStore";
 
-type ElementStat = {
-  name: StatName;
-  value: number;
-};
-
 interface ElementCardProps {
   name: string;
-  stats: ElementStat[];
+  stats: Stat[];
   category: Category;
 }
 
@@ -30,7 +25,7 @@ const ElementCard: React.FC<ElementCardProps> = memo(({ name, stats, category })
   const theme = useThemeStore((state) => state.theme);
 
   const renderStat = useCallback(
-    ({ name, value }: ElementStat) => (
+    ({ name, value }: Stat) => (
       <StatGaugeContainerElementCard key={name} name={name}>
         {category !== "character" ? (
           <StatGaugeRelativeBar value={value} maxValue={maxValues[category]} />
