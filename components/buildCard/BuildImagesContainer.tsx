@@ -3,11 +3,11 @@ import { Image, Pressable, StyleSheet, View } from "react-native";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
 import { useScreen } from "@/contexts/ScreenContext";
 import { BUILD_CARD_WIDTH, PADDING_BUILD_CARD } from "@/utils/designTokens";
-import { Category } from "@/types";
 import Tooltip from "../Tooltip";
 import { useGameData } from "@/hooks/useGameData";
 import { elementsNamespaceByGame } from "@/translations/namespaces";
 import useGameStore from "@/stores/useGameStore";
+import { useBuildImages } from "@/hooks/useBuildImages";
 
 const MAX_WIDTH_IN_BUILD_CARD = BUILD_CARD_WIDTH - PADDING_BUILD_CARD * 2; // 200
 
@@ -20,11 +20,6 @@ interface BuildImagesContainerProps {
   buildDataId: string;
 }
 
-type BuildImageCategoryData = {
-  category: string;
-  elements: Array<{ name: string; image: any }>;
-};
-
 const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
   classIds,
   isCollapsed,
@@ -33,22 +28,10 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
 }) => {
   const game = useGameStore((state) => state.game);
 
-  const { elementsData, categories, maxNumberOfImages } = useGameData();
+  const { maxNumberOfImages } = useGameData();
   const screenName = useScreen();
 
-  const data = useMemo<BuildImageCategoryData[]>(() => {
-    return categories.map((category: Category, index: number) => {
-      const matchedElements = elementsData.filter((element) => element.classId === classIds[index]);
-
-      return {
-        category: category,
-        elements: matchedElements.map((element) => ({
-          name: element.name,
-          image: element.imageUrl,
-        })),
-      };
-    });
-  }, [classIds]);
+  const buildImages = useBuildImages(classIds);
 
   // inutile de donner isSaved à useActionIconPropsList donc on donne false
   const [editActionProps] = useActionIconPropsList(["edit"], screenName, isInLoadBuildModal, buildDataId, false);
@@ -65,18 +48,18 @@ const BuildImagesContainer: React.FC<BuildImagesContainerProps> = ({
   return (
     <Pressable onPress={onImagesPress} style={styles.pressable}>
       <View style={[styles.container, isCollapsed && styles.containerCollapsed]}>
-        {data.map((item) => (
-          <View key={item.category} style={styles.category}>
-            {item.elements.map(
-              ({ name, image }, index) =>
-                (!isCollapsed || index === 0) && (
+        {buildImages.map((item, indexCat) => (
+          <View key={indexCat} style={styles.category}>
+            {item.map(
+              ({ name, imageUrl }, indexEl) =>
+                (!isCollapsed || indexEl === 0) && (
                   <Tooltip
-                    key={`${item.category}-${index}`}
+                    key={`${indexCat}-${indexEl}`}
                     tooltipText={name}
                     namespace={elementsNamespaceByGame[game]}
                     onPress={onImagesPress}
                   >
-                    <Image source={image} style={imageStyle} resizeMode="contain" />
+                    <Image source={imageUrl} style={imageStyle} resizeMode="contain" />
                   </Tooltip>
                 )
             )}

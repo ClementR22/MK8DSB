@@ -3,9 +3,9 @@ import React, { memo, useEffect, useMemo, useRef } from "react";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import useThemeStore from "@/stores/useThemeStore";
 import { ScrollView, View } from "react-native";
-import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
+import { useElementStyle } from "@/hooks/useElementStyle";
 import { StyleSheet } from "react-native";
-import ElementPickerCompact from "./ElementPickerCompact";
+import ElementShort from "./ElementShort";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { BORDER_RADIUS_MODAL_CHILDREN_CONTAINER } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
@@ -54,7 +54,7 @@ const ElementsDeselector: React.FC = () => {
     return () => clearTimeout(timeoutId);
   }, [elementsToDisplay]);
 
-  const { elementPickerDynamicStyle, activeBorderStyle } = useElementPickerStyle({
+  const { elementDynamicStyle, activeBorderStyle } = useElementStyle({
     size: ITEM_ELEMENT_WIDTH,
   }); // Passe la taille commune ici
 
@@ -94,13 +94,13 @@ const ElementsDeselector: React.FC = () => {
           contentContainerStyle={styles.elementsContainer}
         >
           {elementsToDisplay.map((item) => (
-            <ElementPickerCompact
+            <ElementShort
               key={item.name}
               imageUrl={item.imageUrl}
               name={item.name}
               isSelected={true}
               onPress={() => toggleMultiSelectElementsByClassId(item.category, item.classId)}
-              elementPickerDynamicStyle={elementPickerDynamicStyle}
+              elementDynamicStyle={elementDynamicStyle}
               activeBorderStyle={activeBorderStyle}
             />
           ))}

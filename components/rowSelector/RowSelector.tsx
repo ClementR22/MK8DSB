@@ -1,8 +1,8 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import { View, StyleSheet, Image, ImageSourcePropType, ViewStyle, DimensionValue } from "react-native";
 import Tooltip from "@/components/Tooltip";
 
-interface IconSelectorProps<T extends string> {
+interface RowSelectorProps<T extends string> {
   options: {
     name: T;
     imageUrl: ImageSourcePropType;
@@ -18,7 +18,7 @@ interface IconSelectorProps<T extends string> {
 
 const BUTTON_SIZE = 50;
 
-const IconSelector = <T extends string>({
+const RowSelector = <T extends string>({
   options,
   namespace,
   selectedValues,
@@ -26,7 +26,7 @@ const IconSelector = <T extends string>({
   buttonStyle,
   activeStyle,
   containerStyle,
-}: IconSelectorProps<T>) => {
+}: RowSelectorProps<T>) => {
   return (
     <View style={[styles.container, containerStyle]}>
       {options.map((option) => {
@@ -40,7 +40,7 @@ const IconSelector = <T extends string>({
             namespace={namespace}
             onPress={() => onSelect(option.name)}
             childStyleOuter={[styles.button, buttonStyle, isActive && activeStyle]}
-            childStyleInner={{ paddingHorizontal: 100 }} // pour élargir la zone pressable
+            childStyleInner={styles.childStyleInner} // pour élargir la zone pressable
           >
             <Image source={option.imageUrl} style={styles.image} resizeMode="contain" />
           </Tooltip>
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     width: BUTTON_SIZE,
     height: BUTTON_SIZE * 0.8,
   },
+  childStyleInner: { paddingHorizontal: 100 },
 });
 
-export default memo(IconSelector) as typeof IconSelector;
+export default memo(RowSelector) as typeof RowSelector;

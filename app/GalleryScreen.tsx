@@ -10,7 +10,7 @@ import ScreenPressablesContainer from "@/components/screenPressablesContainer/Sc
 import { ScreenProvider } from "@/contexts/ScreenContext";
 import { getContainerLowestStyle } from "@/utils/getScreenStyle";
 import { MARGIN_CONTAINER_LOWEST } from "@/utils/designTokens";
-import Pannel from "@/components/galleryComponents/Pannel";
+import PannelElementsSide from "@/components/galleryComponents/PannelElementsSide";
 import Animated, { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
 import { useGameData } from "@/hooks/useGameData";
@@ -58,7 +58,7 @@ const GalleryScreen = () => {
   // selectedElementId car ElementCard doit correspondre à selectedElementId
   // game pour réagir au changement de jeu
 
-  const handleElementPickerPress = useCallback(
+  const handleElementPress = useCallback(
     (id: number) => {
       if (id === selectedElementId) {
         setIsLeftPannelExpanded(!isLeftPannelExpanded);
@@ -123,7 +123,7 @@ const GalleryScreen = () => {
           />
         </ScreenPressablesContainer>
 
-        <Pannel
+        <PannelElementsSide
           isLeftPannelExpanded={isLeftPannelExpanded}
           setIsLeftPannelExpanded={setIsLeftPannelExpanded}
           overlayOpacity={overlayOpacity}
@@ -132,9 +132,9 @@ const GalleryScreen = () => {
             categoryElementsSorted={categoryElementsSorted}
             selectedElementId={selectedElementId}
             isLeftPannelExpanded={isLeftPannelExpanded}
-            onElementPickerPress={handleElementPickerPress}
+            onElementPress={handleElementPress}
           />
-        </Pannel>
+        </PannelElementsSide>
       </View>
     </ScreenProvider>
   );

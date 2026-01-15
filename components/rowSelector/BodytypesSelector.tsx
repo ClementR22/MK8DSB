@@ -1,7 +1,7 @@
 // components/BodytypesSelector.tsx
 import React, { useCallback, useMemo } from "react";
 import { Bodytype } from "@/types";
-import IconSelector from "./IconSelector";
+import RowSelector from "./RowSelector";
 import useThemeStore from "@/stores/useThemeStore";
 import { StyleSheet } from "react-native";
 import { GAP_ELEMENTS_GRID } from "@/utils/designTokens";
@@ -35,7 +35,7 @@ const BodytypesSelector: React.FC<BodytypesSelectorProps> = ({ selectedBodytypes
   const activeStyle = useMemo(() => ({ borderColor: theme.primary }), [theme.primary]);
 
   return (
-    <IconSelector<Bodytype>
+    <RowSelector<Bodytype>
       options={bodytypesItems}
       selectedValues={selectedBodytypes}
       onSelect={handleSelect}

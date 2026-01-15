@@ -11,7 +11,7 @@ import { Bodytype } from "@/types";
 import BodytypesSelector from "../rowSelector/BodytypesSelector";
 import useThemeStore from "@/stores/useThemeStore";
 import CategorySelector from "../rowSelector/CategorySelector";
-import ElementsGrid, { ELEMENTS_GRID_HEIGHT, ELEMENTS_PER_PAGE } from "./ElementsGrid";
+import ElementsSelector, { ELEMENTS_GRID_HEIGHT, ELEMENTS_PER_PAGE } from "./ElementsSelector";
 import PagesNavigator from "./PagesNavigator";
 import {
   BORDER_RADIUS_STANDARD,
@@ -26,14 +26,14 @@ import { useGameData } from "@/hooks/useGameData";
 import useGameStore from "@/stores/useGameStore";
 import { elementsNamespaceByGame } from "@/translations/namespaces";
 
-interface ElementPickerCompactSelectorPannelProps {
+interface ElementShortSelectorPannelProps {
   selectionMode?: "single" | "multiple";
   selectedBodytypes?: Set<Bodytype>;
   setSelectedBodytypes?: React.Dispatch<React.SetStateAction<Set<Bodytype>>>;
   children?: React.ReactNode;
 }
 
-const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
+const PannelElementsBottom: React.FC<ElementShortSelectorPannelProps> = ({
   selectionMode = "single",
   selectedBodytypes,
   setSelectedBodytypes,
@@ -71,11 +71,12 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
 
   const isFilterMode = selectionMode === "multiple";
 
-  const selectedClassId = usePressableElementsStore((state) => {
-    return isFilterMode
+  const { selectedClassId, selectedClassIds } = usePressableElementsStore((state) => ({
+    selectedClassId: isFilterMode
       ? state.multiSelectedClassIdsByCategory[selectedCategory]
-      : state.selectedClassIdsByCategory[selectedCategory];
-  });
+      : state.selectedClassIdsByCategory[selectedCategory],
+    selectedClassIds: state.selectedClassIdsByCategory,
+  }));
 
   const selectElementsByClassId = usePressableElementsStore((state) => state.selectElementsByClassId);
 
@@ -94,16 +95,15 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
   const isProgrammaticScroll = useRef(false);
 
   // Gestion du changement de page
-  const handleSetPage = useCallback(
-    (page: number | ((prev: number) => number)) => {
-      const newPage = typeof page === "function" ? page(currentPage) : page;
-      setCurrentPage(newPage);
+  const handleSetPage = useCallback((page: number | ((prev: number) => number)) => {
+    setCurrentPage((prev) => {
+      const newPage = typeof page === "function" ? page(prev) : page;
       isProgrammaticScroll.current = true;
       pagerRef.current?.setPage(newPage);
       flatlistRef.current?.scrollToIndex({ index: newPage });
-    },
-    [currentPage]
-  );
+      return newPage;
+    });
+  }, []);
 
   // Synchronisation quand on swipe manuellement
   const handlePageSelected = useCallback((e: any) => {
@@ -134,6 +134,7 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
   return (
     <>
       {children}
+
       <View style={styles.middleContainer}>
         {isFilterMode && (
           <>
@@ -161,7 +162,11 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
 
       <View style={[styles.paginatedWrapperContainer, { backgroundColor: theme.surface }]}>
         <View style={styles.categorySelectorWrapper}>
-          <CategorySelector selectedCategory={selectedCategory} onCategoryPress={handleCategoryChange} />
+          <CategorySelector
+            selectedCategory={selectedCategory}
+            onCategoryPress={handleCategoryChange}
+            selectedClassIds={!isFilterMode && selectedClassIds}
+          />
         </View>
 
         {Platform.OS === "web" ? (
@@ -171,7 +176,11 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
             keyExtractor={(_, index) => index.toString()}
             renderItem={({ item }) => {
               return (
-                <ElementsGrid elements={item} selectedClassId={selectedClassId} onSelectElement={handleSelectElement} />
+                <ElementsSelector
+                  elements={item}
+                  selectedClassId={selectedClassId}
+                  onSelectElement={handleSelectElement}
+                />
               );
             }}
             horizontal
@@ -185,7 +194,7 @@ const PannelPaginated: React.FC<ElementPickerCompactSelectorPannelProps> = ({
         ) : (
           <PagerView ref={pagerRef} style={styles.pagerView} initialPage={0} onPageSelected={handlePageSelected}>
             {pages.map((pageElements, index) => (
-              <ElementsGrid
+              <ElementsSelector
                 key={`page-${index}`}
                 elements={pageElements}
                 selectedClassId={selectedClassId}
@@ -230,4 +239,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(PannelPaginated);
+export default memo(PannelElementsBottom);

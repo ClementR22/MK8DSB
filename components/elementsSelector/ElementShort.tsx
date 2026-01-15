@@ -4,7 +4,7 @@ import Tooltip from "../Tooltip";
 import { elementsNamespaceByGame } from "@/translations/namespaces";
 import useGameStore from "@/stores/useGameStore";
 
-interface ElementPickerCompactProps {
+interface ElementShortProps {
   // Propriétés spécifiques à l'élément affiché
   imageUrl: ImageSourcePropType; // source de l'image (peut être un number pour require(), ou une URI)
   name: string; // Nom de l'élément pour le tooltip
@@ -14,16 +14,16 @@ interface ElementPickerCompactProps {
   onPress: () => void; // L'action à effectuer lors du clic
 
   // Styles dynamiques passés par le parent
-  elementPickerDynamicStyle: ViewStyle; // Styles du conteneur (ex: elementCardDynamicStyle, bodytypeCardDynamicStyle)
+  elementDynamicStyle: ViewStyle; // Styles du conteneur (ex: elementCardDynamicStyle, bodytypeCardDynamicStyle)
   activeBorderStyle: ViewStyle; // Styles de la bordure active (quand isSelected est true)
 }
 
-const ElementPickerCompact: React.FC<ElementPickerCompactProps> = ({
+const ElementShort: React.FC<ElementShortProps> = ({
   imageUrl,
   name,
   isSelected,
   onPress,
-  elementPickerDynamicStyle,
+  elementDynamicStyle,
   activeBorderStyle,
 }) => {
   const game = useGameStore((state) => state.game);
@@ -33,7 +33,7 @@ const ElementPickerCompact: React.FC<ElementPickerCompactProps> = ({
       tooltipText={name}
       namespace={elementsNamespaceByGame[game]}
       onPress={onPress}
-      childStyleInner={StyleSheet.flatten([elementPickerDynamicStyle, isSelected && activeBorderStyle])}
+      childStyleInner={StyleSheet.flatten([elementDynamicStyle, isSelected && activeBorderStyle])}
     >
       <Image source={imageUrl} style={styles.image} resizeMode="contain" />
     </Tooltip>
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(ElementPickerCompact);
+export default memo(ElementShort);

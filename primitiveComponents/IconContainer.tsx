@@ -1,8 +1,8 @@
-import React, { useMemo } from "react";
-import { StyleSheet, View, ViewStyle } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import useThemeStore from "@/stores/useThemeStore";
-import { BORDER_RADIUS_INF, BORDER_RADIUS_STANDARD, BUTTON_SIZE } from "@/utils/designTokens";
+import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
 
 type Shape = "circle" | "rectangle" | "square";
 

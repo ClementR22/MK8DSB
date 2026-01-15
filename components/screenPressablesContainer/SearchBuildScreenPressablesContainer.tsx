@@ -4,8 +4,7 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import ButtonAndModal from "../modal/ButtonAndModal";
 import Button from "../../primitiveComponents/Button";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
-import PannelPaginated from "../elementPickerCompact/PannelPaginated";
-import ElementsDeselector from "../elementPickerCompact/ElementsDeselector";
+import PannelElementsBottom from "../elementsSelector/PannelElementsBottom";
 import "react-native-get-random-values";
 import { Bodytype, Build } from "@/types";
 import { MARGIN_CONTAINER_LOWEST, PADDING_SEARCH_CONTAINER } from "@/utils/designTokens";
@@ -15,6 +14,7 @@ import ButtonIconWithBadge from "../sortModeSelector/ButtonIconWithBadge";
 import useStatsStore from "@/stores/useStatsStore";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import { useGameData } from "@/hooks/useGameData";
+import ElementsDeselector from "../elementsSelector/ElementsDeselector";
 
 interface SearchBuildScreenPressablesContainerProps {
   scrollviewBuildsCardsRef: React.RefObject<any>;
@@ -184,13 +184,13 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
         }
         horizontalScroll={true}
       >
-        <PannelPaginated
+        <PannelElementsBottom
           selectionMode="multiple"
           selectedBodytypes={chosenBodytype}
           setSelectedBodytypes={setChosenBodytype}
         >
           <ElementsDeselector />
-        </PannelPaginated>
+        </PannelElementsBottom>
       </ButtonAndModal>
     </View>
   );

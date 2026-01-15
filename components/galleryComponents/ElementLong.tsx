@@ -1,8 +1,8 @@
 import {
   BORDER_RADIUS_STANDARD,
   buttonPressed,
-  ELEMENT_PICKER_LIST_IMAGE_RATIO,
-  ELEMENT_PICKER_LIST_IMAGE_SIZE,
+  ELEMENT_LONG_IMAGE_RATIO,
+  ELEMENT_LONG_IMAGE_SIZE,
   LIST_ITEM_SPACING,
 } from "@/utils/designTokens";
 import React, { memo } from "react";
@@ -12,7 +12,7 @@ import Text from "@/primitiveComponents/Text";
 import { elementsNamespaceByGame } from "@/translations/namespaces";
 import useGameStore from "@/stores/useGameStore";
 
-interface ElementPickerProps {
+interface ElementLongProps {
   name: string;
   imageUrl: ReturnType<typeof require>;
   onPress: () => void;
@@ -21,7 +21,7 @@ interface ElementPickerProps {
   style: any;
 }
 
-const ElementPicker: React.FC<ElementPickerProps> = ({ name, imageUrl, onPress, isCollapsed, style }) => {
+const ElementLong: React.FC<ElementLongProps> = ({ name, imageUrl, onPress, isCollapsed, style }) => {
   const game = useGameStore((state) => state.game);
 
   return (
@@ -50,7 +50,7 @@ const ElementPicker: React.FC<ElementPickerProps> = ({ name, imageUrl, onPress, 
   );
 };
 
-ElementPicker.displayName = "ElementPicker";
+ElementLong.displayName = "ElementLong";
 
 const defaultStyles = StyleSheet.create({
   container: {
@@ -62,8 +62,8 @@ const defaultStyles = StyleSheet.create({
     overflow: "hidden", // Ensures shadow works nicely
   },
   imagePlaceholder: {
-    width: ELEMENT_PICKER_LIST_IMAGE_SIZE, // Slightly larger image placeholder
-    height: ELEMENT_PICKER_LIST_IMAGE_SIZE * ELEMENT_PICKER_LIST_IMAGE_RATIO,
+    width: ELEMENT_LONG_IMAGE_SIZE, // Slightly larger image placeholder
+    height: ELEMENT_LONG_IMAGE_SIZE * ELEMENT_LONG_IMAGE_RATIO,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -73,4 +73,4 @@ const defaultStyles = StyleSheet.create({
   },
 });
 
-export default memo(ElementPicker);
+export default memo(ElementLong);

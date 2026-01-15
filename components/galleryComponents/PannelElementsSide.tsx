@@ -11,7 +11,7 @@ import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-g
 import Animated, { useSharedValue, withTiming, useAnimatedStyle, runOnJS, SharedValue } from "react-native-reanimated";
 import { box_shadow_z1 } from "../styles/shadow";
 
-interface PannelProps {
+interface PannelElementsSideProps {
   isLeftPannelExpanded: boolean;
   setIsLeftPannelExpanded: React.Dispatch<React.SetStateAction<boolean>>;
   overlayOpacity: SharedValue<number>;
@@ -22,7 +22,12 @@ const THRESHOLD = (LEFT_PANNEL_WIDTH_COLLAPSED + LEFT_PANNEL_WIDTH_EXPANDED) / 2
 const HANDLE_WIDTH = 25;
 const OVERLAY_MAX = 0.5;
 
-const Pannel: React.FC<PannelProps> = ({ isLeftPannelExpanded, setIsLeftPannelExpanded, overlayOpacity, children }) => {
+const PannelElementsSide: React.FC<PannelElementsSideProps> = ({
+  isLeftPannelExpanded,
+  setIsLeftPannelExpanded,
+  overlayOpacity,
+  children,
+}) => {
   const theme = useThemeStore((state) => state.theme);
 
   const width = useSharedValue(isLeftPannelExpanded ? LEFT_PANNEL_WIDTH_EXPANDED : LEFT_PANNEL_WIDTH_COLLAPSED);
@@ -138,4 +143,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Pannel;
+export default PannelElementsSide;

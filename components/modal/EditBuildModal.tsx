@@ -1,7 +1,7 @@
 import React, { memo, useCallback } from "react";
 import useEditBuildModalStore from "@/stores/useEditBuildModalStore";
 import Modal from "../../primitiveComponents/Modal";
-import PannelPaginated from "../elementPickerCompact/PannelPaginated";
+import PannelElementsBottom from "../elementsSelector/PannelElementsBottom";
 import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { useScreenNameFromPath } from "@/hooks/useScreenNameFromPath";
 import useBuildsListStore from "@/stores/useBuildsListStore";
@@ -46,7 +46,7 @@ const EditBuildModal: React.FC = () => {
       setIsModalVisible={setIsEditBuildModalVisible}
       onClose={handleCloseEditBuildModal}
     >
-      <PannelPaginated />
+      <PannelElementsBottom />
     </Modal>
   );
 };

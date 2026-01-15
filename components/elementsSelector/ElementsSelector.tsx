@@ -2,15 +2,15 @@ import { Category } from "@/types";
 import { ElementData } from "@/types";
 import React, { memo } from "react";
 import { View, StyleSheet, Dimensions } from "react-native"; // Removed Dimensions
-import { useElementPickerStyle } from "@/hooks/useElementPickerStyle";
-import ElementPickerCompact from "./ElementPickerCompact";
+import { useElementStyle } from "@/hooks/useElementStyle";
+import ElementShort from "./ElementShort";
 import {
   GAP_ELEMENTS_GRID,
   MARGIN_HORIZONTAL_MODAL_CHILDREN_CONTAINER,
   PADDING_PANNEL_PAGINATED,
 } from "@/utils/designTokens";
 
-interface ElementsGridProps {
+interface ElementsSelectorProps {
   elements: ElementData[];
   selectedClassId: Set<number> | number | null;
   onSelectElement: (category: Category, classId: number) => void;
@@ -31,10 +31,10 @@ const FILLING_ELEMENT_STYLE = { width: ITEM_WIDTH, height: ITEM_HEIGHT };
 
 export const ELEMENTS_GRID_HEIGHT = ITEM_HEIGHT * NUM_LINES + GAP_ELEMENTS_GRID * (NUM_LINES - 1);
 
-const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, onSelectElement }) => {
+const ElementsSelector: React.FC<ElementsSelectorProps> = ({ elements, selectedClassId, onSelectElement }) => {
   const fillingElements = Array.from({ length: ELEMENTS_PER_PAGE - elements.length });
 
-  const { elementPickerDynamicStyle, activeBorderStyle } = useElementPickerStyle({ size: ITEM_WIDTH }); // Passe la taille commune ici
+  const { elementDynamicStyle, activeBorderStyle } = useElementStyle({ size: ITEM_WIDTH }); // Passe la taille commune ici
 
   return (
     <View style={styles.container}>
@@ -44,13 +44,13 @@ const ElementsGrid: React.FC<ElementsGridProps> = ({ elements, selectedClassId, 
           selectedClassId instanceof Set ? selectedClassId.has(element.classId) : selectedClassId === element.classId;
 
         return (
-          <ElementPickerCompact
+          <ElementShort
             key={element.id}
             imageUrl={element.imageUrl}
             name={element.name}
             isSelected={isSelected}
             onPress={() => onSelectElement(element.category, element.classId)}
-            elementPickerDynamicStyle={elementPickerDynamicStyle}
+            elementDynamicStyle={elementDynamicStyle}
             activeBorderStyle={activeBorderStyle}
           />
         );
@@ -73,4 +73,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(ElementsGrid);
+export default memo(ElementsSelector);

@@ -1,18 +1,18 @@
-// hooks/useElementPickerStyle.ts
+// hooks/useElementStyle.ts
 import { useMemo } from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import useThemeStore from "@/stores/useThemeStore"; // N'oublie pas d'importer useThemeStore
 import { box_shadow_z1 } from "@/components/styles/shadow";
 
-interface ElementPickerStyleProps {
+interface ElementStyleProps {
   size: number;
 }
 
-export const useElementPickerStyle = ({ size }: ElementPickerStyleProps) => {
+export const useElementStyle = ({ size }: ElementStyleProps) => {
   const theme = useThemeStore((state) => state.theme);
 
   // Calcule le style de la carte une seule fois
-  const elementPickerDynamicStyle = useMemo(() => {
+  const elementDynamicStyle = useMemo(() => {
     return StyleSheet.flatten([
       {
         // Styles de base communs à toutes les cartes
@@ -33,7 +33,7 @@ export const useElementPickerStyle = ({ size }: ElementPickerStyleProps) => {
   const activeBorderStyle = useMemo(() => ({ borderColor: theme.primary } as ViewStyle), [theme.primary]);
 
   return {
-    elementPickerDynamicStyle,
+    elementDynamicStyle,
     activeBorderStyle,
   };
 };

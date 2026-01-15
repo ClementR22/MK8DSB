@@ -1,22 +1,25 @@
-// components/CategorySelector.tsx
-import React, { memo, useMemo } from "react";
-import { Category } from "@/types";
-import IconSelector from "./IconSelector";
+// components/rowSelector/CategorySelector.tsx
+import React, { useMemo } from "react";
+import { Category, SelectedClassIdsByCategory } from "@/types";
+import RowSelector from "./RowSelector";
 import useThemeStore from "@/stores/useThemeStore";
 import { StyleSheet } from "react-native";
 import { BORDER_WIDTH_CATEGORY_SELECTOR, BORDER_RADIUS_CATEGORY_SELECTOR } from "@/utils/designTokens";
 import { box_shadow_z1 } from "@/components/styles/shadow";
 import { useGameData } from "@/hooks/useGameData";
+import { useBuildImages } from "@/hooks/useBuildImages";
 
 interface CategorySelectorProps {
   selectedCategory: Category;
   onCategoryPress: (category: Category) => void;
+  selectedClassIds?: SelectedClassIdsByCategory;
   isInGalleryScreen?: boolean;
 }
 
 const CategorySelector: React.FC<CategorySelectorProps> = ({
   selectedCategory,
   onCategoryPress,
+  selectedClassIds,
   isInGalleryScreen = false,
 }) => {
   const { categoriesItems } = useGameData();
@@ -24,9 +27,13 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
 
   const activeStyle = useMemo(() => ({ backgroundColor: theme.primary }), [theme.primary]);
 
+  const buildImages = useBuildImages(selectedClassIds ? Object.values(selectedClassIds) : [], true);
+
+  const options = selectedClassIds ? buildImages : categoriesItems;
+
   return (
-    <IconSelector<Category>
-      options={categoriesItems}
+    <RowSelector<Category>
+      options={options}
       namespace="categories"
       selectedValues={selectedCategory}
       onSelect={onCategoryPress}
