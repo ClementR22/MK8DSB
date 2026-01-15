@@ -5,17 +5,16 @@ export const checkFormatBuildImported = (obj: unknown): obj is BuildPersistant =
     return false;
   }
 
-  const importedBuild = obj as Record<string, unknown>;
+  const importedBuild = obj as BuildPersistant;
   const keys = Object.keys(importedBuild);
 
-  const dataIdRegex = /^\d+(?:-\d+){3}$/;
-  // signifie : un ou plusieurs chiffres, suivis de 3 répétitions de "-nombre"
+  const dataIdRegex = /^(?:\d+(?:-\d+){1}|\d+(?:-\d+){3})$/;
 
-  const isCorrectFormat =
-    keys.length === 2 && // Exactement 2 clés
+  return (
+    keys.length === 2 &&
     typeof importedBuild.name === "string" &&
     importedBuild.name.trim() !== "" &&
     typeof importedBuild.buildDataId === "string" &&
-    dataIdRegex.test(importedBuild.buildDataId);
-  return isCorrectFormat;
+    dataIdRegex.test(importedBuild.buildDataId)
+  );
 };
