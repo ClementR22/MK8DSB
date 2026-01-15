@@ -41,10 +41,10 @@ const StatGaugeGroupCompare: React.FC<StatGaugeGroupCompareProps> = ({ buildsCol
 
   return (
     <BoxContainer gap={7} boxShadow={box_shadow_z1} borderRadius={BORDER_RADIUS_CONTAINER_LOWEST}>
-      {noGaugeToShow ? (
-        <Placeholder text="chooseStatsToCompare" />
-      ) : noBuildsToShow ? (
+      {noBuildsToShow ? (
         <Placeholder text="noBuildToCompare" />
+      ) : noGaugeToShow ? (
+        <Placeholder text="chooseStatsToCompare" />
       ) : (
         data.map(({ name, buildsIdAndValueWithColor }) => {
           return <StatGaugeContainerCompare key={name} name={name} buildsIdAndValue={buildsIdAndValueWithColor} />;
