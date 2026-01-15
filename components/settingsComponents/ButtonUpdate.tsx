@@ -11,7 +11,7 @@ const ButtonUpdate: React.FC<ButtonUpdateProps> = () => {
   return (
     <ButtonAndModalConfirm
       title="updateTheApp"
-      iconProps={{ name: "refresh", type: IconType.MaterialCommunityIcons }}
+      iconProps={{ name: "system-update-alt", type: IconType.MaterialIcons }}
       tooltipText="updateTheApp"
       onPress={openDownloadPage}
       disabled={!updateAvailable}
