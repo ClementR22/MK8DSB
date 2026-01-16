@@ -1,4 +1,5 @@
 import { ScreenName } from "@/contexts/ScreenContext";
+import { Game } from "@/types";
 
 export class BuildAlreadyExistsError extends Error {
   target: ScreenName;
@@ -16,8 +17,17 @@ export class BuildAlreadyExistsError extends Error {
 export class NameAlreadyExistsError extends Error {
   buildName: string;
 
-  constructor(target: ScreenName, buildName: string) {
+  constructor(buildName: string) {
     super("nameAlreadyExists");
     this.buildName = buildName;
+  }
+}
+
+export class WrongGameBuildImportedError extends Error {
+  gameTarget: Game;
+
+  constructor(gameTarget: Game) {
+    super("wrongGameBuildImported");
+    this.gameTarget = gameTarget;
   }
 }

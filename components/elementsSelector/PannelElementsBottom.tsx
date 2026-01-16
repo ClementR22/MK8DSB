@@ -71,12 +71,13 @@ const PannelElementsBottom: React.FC<ElementShortSelectorPannelProps> = ({
 
   const isFilterMode = selectionMode === "multiple";
 
-  const { selectedClassId, selectedClassIds } = usePressableElementsStore((state) => ({
-    selectedClassId: isFilterMode
+  const selectedClassId = usePressableElementsStore((state) =>
+    isFilterMode
       ? state.multiSelectedClassIdsByCategory[selectedCategory]
-      : state.selectedClassIdsByCategory[selectedCategory],
-    selectedClassIds: state.selectedClassIdsByCategory,
-  }));
+      : state.selectedClassIdsByCategory[selectedCategory]
+  );
+
+  const selectedClassIds = usePressableElementsStore((state) => state.selectedClassIdsByCategory);
 
   const selectElementsByClassId = usePressableElementsStore((state) => state.selectElementsByClassId);
 

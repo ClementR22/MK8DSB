@@ -10,7 +10,7 @@ class ToastManager {
     this.show = this.show.bind(this);
   }
 
-  show(text1: string): void {
+  show(text1: string, delay?: number): void {
     // Masquer le toast actuel avant d'en afficher un nouveau
     Toast.hide();
 
@@ -20,7 +20,7 @@ class ToastManager {
         type: "info",
         text1,
         position: "bottom",
-        visibilityTime: 2000,
+        visibilityTime: delay || 2000,
       });
     }, 100);
   }

@@ -185,7 +185,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     // pour la suite, newName est censé être non vide
     const isNameFree = useDeckStore.getState().checkNameFree(newName);
     if (!isNameFree) {
-      throw new NameAlreadyExistsError(screenName, newName);
+      throw new NameAlreadyExistsError(newName);
     }
 
     if (isSaved) {

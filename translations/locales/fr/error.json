@@ -7,6 +7,8 @@
   "buildLimitReachedInThisScreen": "limite de builds atteinte",
   "nameAlreadyExists": "ce nom est déjà pris :",
   "buildAlreadyExists": "ce build est déjà présent",
+  "wrongGameBuildImported": "ce build a été créé pour",
+  "pleaseSwitchGame": "donc sélectionnez ce jeu dans les paramètres pour pouvoir l'utiliser",
 
   "buildNameRequiredForSharing": "vous devez entrer un nom pour partager un build",
   "buildNameRequiredForSaving": "vous devez entrer un nom pour enregister un build",

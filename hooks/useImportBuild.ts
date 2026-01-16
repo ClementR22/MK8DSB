@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import * as Clipboard from "expo-clipboard";
 import showToast from "@/utils/showToast";
 import useLoadBuildModalStore from "@/stores/useLoadBuildModalStore";
-import { BuildAlreadyExistsError, NameAlreadyExistsError } from "@/errors/errors";
+import { BuildAlreadyExistsError, NameAlreadyExistsError, WrongGameBuildImportedError } from "@/errors/errors";
 import { useGameData } from "./useGameData";
 import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
 import { ScreenName } from "@/contexts/ScreenContext";
@@ -28,6 +28,8 @@ export const useImportBuild = (screenName: ScreenName) => {
         showToast(`error:${e.message}${targetMessage}${buildNameMessage}`, "importError");
       } else if (e instanceof NameAlreadyExistsError) {
         showToast(`error:${e.message}|${e.buildName}`, "importError");
+      } else if (e instanceof WrongGameBuildImportedError) {
+        showToast(`error:${e.message}|${e.gameTarget}|error:pleaseSwitchGame`, "importError", 4000);
       } else {
         showToast(`error:${e.message}`, "importError");
       }

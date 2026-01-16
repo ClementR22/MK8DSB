@@ -18,7 +18,7 @@ import useBuildsPersistenceStore from "./useBuildsPersistenceStore";
 import useGeneralStore from "./useGeneralStore";
 import useDeckStore from "./useDeckStore";
 import { t } from "i18next";
-import { BuildAlreadyExistsError } from "@/errors/errors";
+import { BuildAlreadyExistsError, WrongGameBuildImportedError } from "@/errors/errors";
 import { useGenerateUniqueName } from "@/hooks/useGenerateUniqueName";
 import { BuildData } from "@/types";
 import useGameStore from "./useGameStore";
@@ -199,6 +199,15 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
     }
 
     const { buildDataId, name } = parsedBuild;
+
+    const numberOfCategoriesBuildImported = buildDataId.split("-").length;
+    const gameTarget: Game =
+      numberOfCategoriesBuildImported === 2 ? "MKW" : numberOfCategoriesBuildImported === 4 ? "MK8D" : null;
+    const gameCurrent = useGameStore.getState().game;
+    if (gameTarget != gameCurrent) {
+      throw new WrongGameBuildImportedError(gameTarget);
+    }
+
     const build: Build = { buildDataId };
 
     if (screenName === "search") {

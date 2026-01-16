@@ -1,7 +1,7 @@
 import i18n, { translateParts } from "@/translations";
 import ToastManager, { ToastType } from "./ToastManager";
 
-function showToast(messageKey: string, type?: ToastType) {
+function showToast(messageKey: string, type?: ToastType, delay?: number) {
   let prefix = "";
   if (type === "error") {
     prefix = i18n.t("toast:error") + i18n.t("text:colon");
@@ -12,7 +12,7 @@ function showToast(messageKey: string, type?: ToastType) {
   }
 
   const finalMessage = prefix + translateParts(messageKey);
-  ToastManager.show(finalMessage);
+  ToastManager.show(finalMessage, delay);
 }
 
 export default showToast;
