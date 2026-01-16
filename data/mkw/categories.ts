@@ -7,6 +7,8 @@ type CategoryItem = {
 
 export const categories: Category[] = ["character", "body"];
 
+export const numberOfCategories = categories.length;
+
 export const categoriesItems = [
   { name: "character", imageUrl: require("@/assets/images/elementsImages/mkw/characters/Mario.png") } as CategoryItem,
 

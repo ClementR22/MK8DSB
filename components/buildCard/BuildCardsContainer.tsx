@@ -14,6 +14,7 @@ import PlaceholderBuildCard from "./PlaceholderBuildCard";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import ButtonAddBuild from "../managingBuildsButton/ButtonAddBuild";
 import { useScrollClamp } from "@/hooks/useScrollClamp";
+import BuildCardSkeleton from "./BuildCardSkeleton";
 
 interface BuildWithColor extends Build {
   color: string;
@@ -43,6 +44,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
     const screenName = useScreen();
     const scrollRequest = useBuildsListStore((state) => state.scrollRequest);
     const clearScrollRequest = useBuildsListStore((state) => state.clearScrollRequest);
+    const resultsNumber = useGeneralStore((state) => state.resultsNumber);
 
     const noBuildToShow = builds.length === 0;
     const isDisplayScreen = screenName === "display";
@@ -100,6 +102,11 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
       return <Placeholder text="savedEmpty" />;
     }, [noBuildToShow, screenName, isDisplayScreen, hasShownSearchQuestionIcon]);
 
+    const buildCardSkeletons = useMemo(
+      () => Array.from({ length: resultsNumber }).map((_, index) => <BuildCardSkeleton key={index} />),
+      [resultsNumber]
+    );
+
     const buildCards = useMemo(() => {
       if (noBuildToShow) return null;
 
@@ -144,15 +151,7 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
             !shouldBeFullWidth && styles.flexContainer,
           ]}
         >
-          {isLoading ? (
-            <BoxContainer height={200}>
-              <ActivityIndicator size={50} color={theme.primary} />
-            </BoxContainer>
-          ) : noBuildToShow ? (
-            placeholder
-          ) : (
-            buildCards
-          )}
+          {isLoading ? buildCardSkeletons : noBuildToShow ? placeholder : buildCards}
         </View>
       </ScrollView>
     );

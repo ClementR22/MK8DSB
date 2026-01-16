@@ -25,11 +25,7 @@ const BuildNameInputContent: React.FC<BuildNameInputContentProps> = ({
   const theme = useThemeStore((state) => state.theme);
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
+    <View style={styles.container}>
       <TextInput
         id={id}
         ref={inputRef}
@@ -53,6 +49,9 @@ const BuildNameInputContent: React.FC<BuildNameInputContentProps> = ({
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   textInput: {
     fontSize: typography.title.medium.fontSize,
     margin: 0,

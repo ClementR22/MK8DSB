@@ -2,17 +2,17 @@ import React, { useMemo } from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
 import { useScreen } from "@/contexts/ScreenContext";
-import { BUILD_CARD_WIDTH, PADDING_BUILD_CARD } from "@/utils/designTokens";
+import {
+  GAP_BUILD_IMAGES_CONTAINER,
+  MAX_WIDTH_IN_BUILD_CARD,
+  PADDING_VERTICAL_BUILD_IMAGES_CONTAINER,
+} from "@/utils/designTokens";
 import Tooltip from "../Tooltip";
 import { useGameData } from "@/hooks/useGameData";
 import { elementsNamespaceByGame } from "@/translations/namespaces";
 import useGameStore from "@/stores/useGameStore";
 import { useBuildImages } from "@/hooks/useBuildImages";
 
-const MAX_WIDTH_IN_BUILD_CARD = BUILD_CARD_WIDTH - PADDING_BUILD_CARD * 2; // 200
-
-const PADDING_VERTICAL_CONTAINER = 7;
-const GAP_CONTAINER = 14;
 interface BuildImagesContainerProps {
   classIds: number[];
   isCollapsed: boolean;
@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   container: {
-    paddingVertical: PADDING_VERTICAL_CONTAINER,
-    gap: GAP_CONTAINER,
+    paddingVertical: PADDING_VERTICAL_BUILD_IMAGES_CONTAINER,
+    gap: GAP_BUILD_IMAGES_CONTAINER,
   },
   containerCollapsed: { gap: 0, flexDirection: "row", justifyContent: "space-around" },
   category: {

@@ -34,7 +34,7 @@ const BuildCardHeader: React.FC<BuildCardHeaderProps> = ({
       <BuildNameInput name={name} buildDataId={buildDataId} editable={isNameEditable} isSaved={isSaved} />
 
       {percentage && (
-        <Text role="title" size="medium" weight="bold" color={theme.primary} namespace="not">
+        <Text role="title" size="medium" weight="bold" color={theme.primary} namespace="not" style={styles.percentage}>
           {percentage}%
         </Text>
       )}
@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: BUTTON_SIZE, // taille du buttonIcon
     gap: 10,
-    marginBottom: 5,
   },
+  percentage: { width: "30%" },
 });
 
 export default memo(BuildCardHeader);
