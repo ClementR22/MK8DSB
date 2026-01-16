@@ -2,6 +2,7 @@ import React, { ReactNode, useCallback, useEffect, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import Toast from "react-native-toast-message";
+import { BackHandler } from "react-native";
 
 import Button from "@/primitiveComponents/Button";
 import Text from "./Text";
@@ -12,6 +13,7 @@ import {
 } from "@/utils/designTokens";
 import { toastConfig } from "@/config/toastConfig";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useFocusEffect } from "@react-navigation/native";
 
 export interface ModalButtonProps {
   text: string;
@@ -89,6 +91,23 @@ const Modal = ({
   const renderBackdrop = useCallback(
     (props: any) => <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} onPress={requestClose} />,
     [requestClose]
+  );
+
+  // Gérer le bouton retour Android
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        if (isModalVisible) {
+          requestClose();
+          return true; // On bloque le back
+        }
+        return false; // On laisse le comportement par défaut
+      };
+
+      const subscription = BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+      return () => subscription.remove();
+    }, [isModalVisible])
   );
 
   /* ---------------------------------------------------------------------- */
