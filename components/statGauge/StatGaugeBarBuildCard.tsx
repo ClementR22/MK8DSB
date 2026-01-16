@@ -24,12 +24,9 @@ const StatGaugeBarBuildCard: React.FC<StatGaugeBarBuildCardProps> = ({
 
   // Memoized calculations
   const gaugeData = useMemo(() => {
-    let isBonus: boolean;
-    if (chosenValue === undefined || obtainedValue === chosenValue) {
-      isBonus = undefined;
-    } else {
-      isBonus = obtainedValue > chosenValue;
-    }
+    const isBonus: boolean | undefined =
+      chosenValue === undefined || obtainedValue === chosenValue ? undefined : obtainedValue > chosenValue;
+
     const obtainedWidth = getWidth(obtainedValue);
     const chosenWidth = chosenValue !== undefined ? getWidth(chosenValue) : obtainedWidth;
     const purpleWidth = isInSearchScreen && isBonus ? chosenWidth : obtainedWidth;
@@ -68,6 +65,7 @@ const StatGaugeBarBuildCard: React.FC<StatGaugeBarBuildCardProps> = ({
       {/* rouge hachuré (indicatif) ou vert mélé au violet */}
       {
         <View
+          key={gaugeData.isBonus ? "bonus" : "malus"} // pour forcer le re-render pour assurer overflow: "hidden"
           style={[
             stylesDynamic.thick,
             {
