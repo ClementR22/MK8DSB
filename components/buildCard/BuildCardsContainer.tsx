@@ -1,20 +1,19 @@
 import React, { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
-import { ActivityIndicator, Dimensions, LayoutChangeEvent, StyleSheet, View } from "react-native";
+import { Dimensions, LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import BuildCard from "./BuildCard";
 import useThemeStore from "@/stores/useThemeStore";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { ScreenName, useScreen } from "@/contexts/ScreenContext";
 import { Build } from "@/types";
-import Placeholder from "./Placeholder";
+import Placeholder from "./placeholder/Placeholder";
 import { BORDER_RADIUS_CONTAINER_LOWEST, MARGIN_CONTAINER_LOWEST, PADDING_STANDARD } from "@/utils/designTokens";
 import { box_shadow_z1 } from "../styles/shadow";
-import BoxContainer from "@/primitiveComponents/BoxContainer";
-import PlaceholderBuildCard from "./PlaceholderBuildCard";
+import PlaceholderBuildCard from "./placeholder/PlaceholderBuildCard";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import ButtonAddBuild from "../managingBuildsButton/ButtonAddBuild";
 import { useScrollClamp } from "@/hooks/useScrollClamp";
-import BuildCardSkeleton from "./BuildCardSkeleton";
+import BuildCardSkeleton from "./skeleton/BuildCardSkeleton";
 
 interface BuildWithColor extends Build {
   color: string;
@@ -33,11 +32,6 @@ export interface BuildCardsContainerHandles {
 
 const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsContainerProps>(
   ({ builds, isInLoadBuildModal = false, screenNameFromProps }, ref) => {
-    const scrollViewRef = useRef<ScrollView>(null);
-    const buildCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
-    const [hasShownSearchQuestionIcon, setHasShownSearchQuestionIcon] = useState(false);
-
-    const scrollClamp = useScrollClamp(scrollViewRef, "x");
     const theme = useThemeStore((state) => state.theme);
     const isScrollEnable = useGeneralStore((state) => state.isScrollEnable);
     const isLoading = useGeneralStore((state) => state.isLoading);
@@ -45,6 +39,11 @@ const BuildCardsContainer = forwardRef<BuildCardsContainerHandles, BuildCardsCon
     const scrollRequest = useBuildsListStore((state) => state.scrollRequest);
     const clearScrollRequest = useBuildsListStore((state) => state.clearScrollRequest);
     const resultsNumber = useGeneralStore((state) => state.resultsNumber);
+
+    const scrollViewRef = useRef<ScrollView>(null);
+    const scrollClamp = useScrollClamp(scrollViewRef, "x");
+    const buildCardLayouts = useRef<Map<string, { x: number; width: number }>>(new Map());
+    const [hasShownSearchQuestionIcon, setHasShownSearchQuestionIcon] = useState(false);
 
     const noBuildToShow = builds.length === 0;
     const isDisplayScreen = screenName === "display";

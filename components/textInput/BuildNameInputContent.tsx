@@ -2,6 +2,7 @@ import useThemeStore from "@/stores/useThemeStore";
 import React from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { typography } from "../styles/typography";
+import { BORDER_RADIUS_INPUT } from "@/utils/designTokens";
 
 interface BuildNameInputContentProps {
   value: string;
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     padding: 0,
     height: 35,
     paddingLeft: 10,
-    borderRadius: 7,
+    borderRadius: BORDER_RADIUS_INPUT,
   },
 });
 

@@ -87,9 +87,7 @@ const PannelElementsSide: React.FC<PannelElementsSideProps> = ({
         },
       ]}
     >
-      <Animated.View
-        style={[styles.container, animatedContainerStyle, { backgroundColor: theme.surface_container_high }]}
-      >
+      <Animated.View style={[styles.container, animatedContainerStyle, { backgroundColor: theme.surface_container }]}>
         <View style={styles.childrenWrapper}>{children}</View>
 
         {/* la poignée de glissement (Handle) */}

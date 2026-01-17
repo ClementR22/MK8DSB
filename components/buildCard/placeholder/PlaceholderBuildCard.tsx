@@ -1,7 +1,7 @@
 import React from "react";
 import useThemeStore from "@/stores/useThemeStore";
 import { BUILD_CARD_BORDER_WIDTH } from "@/hooks/useBuildCardStyle";
-import { BORDER_RADIUS_STANDARD, BUILD_CARD_WIDTH, buttonPressed } from "@/utils/designTokens";
+import { BORDER_RADIUS_STANDARD, WIDTH_BUILD_CARD, buttonPressed } from "@/utils/designTokens";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import Text from "@/primitiveComponents/Text";
 import { Pressable, StyleSheet } from "react-native";
@@ -11,8 +11,8 @@ import { Game } from "@/types";
 import useGameStore from "@/stores/useGameStore";
 
 const BUILD_CARD_HEIGHT: Record<Game, { collapsed: number; expanded: number }> = {
-  MK8D: { collapsed: 119, expanded: 341 },
-  MKW: { collapsed: 129, expanded: 253 },
+  MK8D: { collapsed: 114, expanded: 336 },
+  MKW: { collapsed: 124, expanded: 248 },
 };
 
 const PlaceholderBuildCard = () => {
@@ -51,7 +51,7 @@ const PlaceholderBuildCard = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: BUILD_CARD_WIDTH,
+    width: WIDTH_BUILD_CARD,
     borderWidth: BUILD_CARD_BORDER_WIDTH,
     borderRadius: BORDER_RADIUS_STANDARD,
     justifyContent: "center",

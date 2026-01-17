@@ -3,7 +3,7 @@ import { Platform, View } from "react-native";
 import { IconType } from "react-native-dynamic-vector-icons";
 import HelpModal from "./HelpModal";
 import StatSliderPreview from "../statSlider/StatSliderPreview";
-import { BUILD_CARD_WIDTH } from "@/utils/designTokens";
+import { WIDTH_BUILD_CARD } from "@/utils/designTokens";
 import Button from "@/primitiveComponents/Button";
 import HelpButtonDescription from "../helpComponents/HelpButtonDescription";
 import StatGaugeContainer from "../statGauge/StatGaugeContainer";
@@ -26,7 +26,7 @@ const HelpSearchBuildScreen = () => {
 
   const [statFilterNumber, setStatFilterNumber] = useState(0);
 
-  const { buildCardStyle } = useBuildCardStyle(BUILD_CARD_WIDTH);
+  const { buildCardStyle } = useBuildCardStyle(WIDTH_BUILD_CARD);
 
   return (
     <HelpModal title="guideBuildFinder">

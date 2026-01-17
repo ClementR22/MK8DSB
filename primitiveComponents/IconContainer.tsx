@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import useThemeStore from "@/stores/useThemeStore";
-import { BORDER_RADIUS_INF, BUTTON_SIZE } from "@/utils/designTokens";
+import { BORDER_RADIUS_INF, BORDER_RADIUS_MEDIUM, BUTTON_SIZE } from "@/utils/designTokens";
 
 type Shape = "circle" | "rectangle" | "square";
 
@@ -15,7 +15,7 @@ const getContainerStyle = (shape: Shape, containerSize?: number) => {
     };
   }
   if (shape === "rectangle") {
-    return { height: 30, width: 46, borderRadius: 10 };
+    return { height: 30, width: 46, borderRadius: BORDER_RADIUS_MEDIUM };
   }
   if (shape === "square") {
     return { height: containerSize, width: containerSize, borderRadius: 6 };

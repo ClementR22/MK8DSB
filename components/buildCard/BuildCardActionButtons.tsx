@@ -4,6 +4,7 @@ import ButtonIcon from "../../primitiveComponents/ButtonIcon";
 import { useActionIconPropsList } from "@/hooks/useActionIconPropsList";
 import { ActionNamesList } from "@/hooks/useBuildCardConfig";
 import { ScreenName } from "@/contexts/ScreenContext";
+import { BORDER_RADIUS_MEDIUM } from "@/utils/designTokens";
 
 interface BuildCardActionButtonsProps {
   actionNamesList: ActionNamesList;
@@ -34,7 +35,7 @@ const BuildCardActionButtons: React.FC<BuildCardActionButtonsProps> = ({
       key="comparatorTitleActionButtonContainer"
       marginHorizontal={0}
       justifyContent="space-around"
-      borderRadius={10}
+      borderRadius={BORDER_RADIUS_MEDIUM}
     >
       {actionIconPropsList.map((actionProps) => {
         const { title, name, type, onPress } = actionProps;

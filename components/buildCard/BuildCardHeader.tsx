@@ -4,7 +4,7 @@ import BuildCardMoreActionsButton from "./BuildCardMoreActionsButton";
 import { ScreenName } from "@/contexts/ScreenContext";
 import { ActionNamesList } from "@/hooks/useBuildCardConfig";
 import BuildNameInput from "../textInput/BuildNameInput";
-import { BUTTON_SIZE } from "@/utils/designTokens";
+import { BUTTON_SIZE, WIDTH_BUILD_CARD_CONTENT } from "@/utils/designTokens";
 import Text from "@/primitiveComponents/Text";
 import useThemeStore from "@/stores/useThemeStore";
 
@@ -50,16 +50,14 @@ const BuildCardHeader: React.FC<BuildCardHeaderProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   headerContainer: {
-    width: "100%",
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     height: BUTTON_SIZE, // taille du buttonIcon
     gap: 10,
   },
-  percentage: { width: "30%" },
+  percentage: { width: WIDTH_BUILD_CARD_CONTENT * 0.3 },
 });
 
 export default memo(BuildCardHeader);

@@ -60,7 +60,7 @@ const StatGaugeGroupBuildCard: React.FC<StatGaugeGroupBuildCardProps> = ({ stats
   return <View style={[containerStyle, styles.container]}>{sliderContent}</View>;
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     gap: GAP_STAT_GAUGE_GROUP,
     padding: 0,

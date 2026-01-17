@@ -76,9 +76,9 @@ const DisplayBuildScreen = () => {
     () =>
       buildsListDisplayed.map((build) => ({
         ...build,
-        color: buildsColorsMap?.get(build.buildDataId) || theme.surface_variant || theme.surface_container_high,
+        color: buildsColorsMap?.get(build.buildDataId) || theme.surface_variant,
       })),
-    [buildsListDisplayed, buildsColorsMap, theme.surface_variant, theme.surface_container_high]
+    [buildsListDisplayed, buildsColorsMap, theme.surface_variant]
   );
 
   return (

@@ -5,7 +5,7 @@ import BuildCardActionButtons from "./BuildCardActionButtons";
 import BuildImagesContainer from "./BuildImagesContainer";
 import BuildCardHeader from "./BuildCardHeader";
 import { useBuildCardStyle } from "@/hooks/useBuildCardStyle";
-import { BUILD_CARD_WIDTH } from "@/utils/designTokens";
+import { WIDTH_BUILD_CARD } from "@/utils/designTokens";
 import useGeneralStore from "@/stores/useGeneralStore";
 import { useBuildCardConfig } from "@/hooks/useBuildCardConfig";
 import useDeckStore from "@/stores/useDeckStore";
@@ -46,7 +46,7 @@ const BuildCard: React.FC<BuildCardProps> = ({
 
   const config = useBuildCardConfig(situation, screenName);
 
-  const { buildCardStyle } = useBuildCardStyle(BUILD_CARD_WIDTH);
+  const { buildCardStyle } = useBuildCardStyle(WIDTH_BUILD_CARD);
 
   return (
     <View style={styles.wrapper} onLayout={onLayout}>

@@ -6,7 +6,7 @@ import { DimensionValue, StyleSheet } from "react-native";
 export const useStatGaugeStyles = (width: DimensionValue = 13) => {
   const theme = useThemeStore((state) => state.theme);
 
-  const emptyContainer = [styles.emptyContainer, { backgroundColor: theme.surface_container_highest, height: width }];
+  const emptyContainer = [styles.emptyContainer, { backgroundColor: theme.surface_variant, height: width }];
   const thick = styles.thick;
 
   return useMemo(

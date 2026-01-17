@@ -125,7 +125,7 @@ const StatSliderContent = ({
           trackStyle={styles.track}
           renderThumbComponent={renderCustomThumb}
           minimumTrackStyle={{ backgroundColor: theme.primary }}
-          maximumTrackStyle={{ backgroundColor: theme.surface_container_highest }}
+          maximumTrackStyle={{ backgroundColor: theme.surface_variant }}
         />
       </View>
       <View style={styles.containerRight}>

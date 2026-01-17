@@ -124,38 +124,17 @@ const SearchBuildScreenPressablesContainer: React.FC<SearchBuildScreenPressables
     }
   };
 
-  const timeoutRefMain = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const timeoutRefScroll = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   const handleSearch = useCallback(() => {
     setIsLoading(true);
-    scrollviewBuildsCardsRef?.current?.scrollToStart();
     setDisableSearch(true);
+    scrollviewBuildsCardsRef?.current?.scrollToStart();
 
-    // Annule tout ancien timeout avant d’en créer un nouveau
-    if (timeoutRefMain.current) clearTimeout(timeoutRefMain.current);
-    if (timeoutRefScroll.current) clearTimeout(timeoutRefScroll.current);
-
-    // Donner le temps à l'UI de se mettre à jour avant de lancer le calcul
     setTimeout(() => {
-      // Faire le calcul lourd
       search();
-
-      timeoutRefScroll.current = setTimeout(() => {
-        scrollviewMainRef?.current?.scrollToEnd();
-      }, 20);
-
-      // Terminer le loading
       setIsLoading(false);
-    }, 50); // 50ms suffit pour que l'UI se rafraîchisse
-  }, [search, scrollviewBuildsCardsRef, scrollviewMainRef]);
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRefMain.current) clearTimeout(timeoutRefMain.current);
-      if (timeoutRefScroll.current) clearTimeout(timeoutRefScroll.current);
-    };
-  }, []);
+    }, 0);
+    scrollviewMainRef?.current?.scrollToEnd();
+  }, [search]);
 
   return (
     <View style={styles.screenPressablesContainer}>

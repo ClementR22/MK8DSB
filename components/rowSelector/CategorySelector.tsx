@@ -42,7 +42,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
       containerStyle={
         isInGalleryScreen
           ? styles.containerGallery
-          : [styles.containerPannel, { backgroundColor: theme.surface_container_high }]
+          : [styles.containerPannel, { backgroundColor: theme.surface_container }]
       }
     />
   );

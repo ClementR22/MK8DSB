@@ -7,7 +7,7 @@ import { box_shadow_z1 } from "../styles/shadow";
 import { BORDER_RADIUS_CONTAINER_LOWEST } from "@/utils/designTokens";
 import useBuildsListStore from "@/stores/useBuildsListStore";
 import { useGameData } from "@/hooks/useGameData";
-import Placeholder from "../buildCard/Placeholder";
+import Placeholder from "../buildCard/placeholder/Placeholder";
 
 interface StatGaugeGroupCompareProps {
   buildsColorsMap: Map<string, string>;

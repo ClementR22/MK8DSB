@@ -1,6 +1,6 @@
 // hooks/useBuildCardStyle.ts
 import { useMemo } from "react";
-import { DimensionValue, StyleSheet, ViewStyle } from "react-native";
+import { DimensionValue, ViewStyle } from "react-native";
 import useThemeStore from "@/stores/useThemeStore";
 import { BORDER_RADIUS_STANDARD, PADDING_BUILD_CARD } from "@/utils/designTokens";
 import { box_shadow_z1 } from "@/components/styles/shadow";
@@ -22,7 +22,7 @@ export const useBuildCardStyle = (width?: DimensionValue) => {
       borderColor: theme.surface,
       boxShadow: box_shadow_z1,
     } as ViewStyle;
-  }, [theme.surface, theme.surface_container_high]); // Dépendances
+  }, [theme.surface]); // Dépendances
 
   return {
     buildCardStyle,

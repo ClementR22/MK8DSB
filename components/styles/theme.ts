@@ -32,6 +32,9 @@ export const light_theme: ThemeColor = {
   error_container: "#F9DEDC",
   on_error_container: "#8C1D18",
 
+  disabled: "grey",
+  on_disabled: "#E7E0EC", // = surface_variant
+
   surface: "#FEF7FF",
   on_surface: "#1D1B20",
   surface_variant: "#E7E0EC",
@@ -90,6 +93,9 @@ export const dark_theme: ThemeColor = {
   on_error: "#601410",
   error_container: "#8C1D18",
   on_error_container: "#F9DEDC",
+
+  disabled: "grey",
+  on_disabled: "#49454F", // = surface_variant
 
   surface: "#141218",
   on_surface: "#E6E0E9",

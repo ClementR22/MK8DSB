@@ -24,6 +24,9 @@ export interface ThemeColor {
   error_container: string;
   on_error_container: string;
 
+  disabled: string;
+  on_disabled: string;
+
   surface: string;
   on_surface: string;
   surface_variant: string;
