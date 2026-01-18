@@ -2,15 +2,17 @@ import i18n from "i18next";
 import * as Localization from "expo-localization";
 import { initReactI18next } from "react-i18next";
 import { resources } from "./resources";
-
-import { loadThingFromMemory } from "@/utils/asyncStorageOperations";
-import { Language, LanguageMode } from "@/stores/useLanguageStore";
+import { Language } from "@/stores/useLanguageStore";
 
 // Fonction pour obtenir la langue système
-export const getSystemLanguage = () => {
-  const systemLang = Localization.getLocales()[0]?.languageCode;
-  // Retourne 'fr' ou 'en', fallback sur 'en' si non supporté
-  return (["fr", "en"].includes(systemLang) ? systemLang : "en") as Language;
+export const getSystemLanguage = (): Language => {
+  const locales = Localization.getLocales();
+
+  for (const locale of locales) {
+    if (locale.languageCode === "fr") return "fr";
+    if (locale.languageCode === "en") return "en";
+  }
+  return "en";
 };
 
 export function translateParts(messageKey: string) {

@@ -85,16 +85,13 @@ const StatSliderContent = ({
 
   return (
     <Pressable
-      style={({ pressed }) =>
-        StyleSheet.flatten([
-          styles.container,
-          pressed && buttonPressed,
-          {
-            backgroundColor: theme.surface,
-            borderColor: getStatSliderBorderColor(statFilterNumber, theme),
-          },
-        ])
-      }
+      style={StyleSheet.flatten([
+        styles.container,
+        {
+          backgroundColor: theme.surface,
+          borderColor: getStatSliderBorderColor(statFilterNumber, theme),
+        },
+      ])}
       onPress={onPress}
     >
       <View style={styles.containerLeft}>
