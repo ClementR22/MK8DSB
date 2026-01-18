@@ -154,14 +154,14 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
 
     const build = useBuildsListStore.getState().getBuild(source, buildDataId);
 
-    const name = useDeckStore.getState().deck.get(build.buildDataId)?.name;
+    const name = useDeckStore.getState().deck.get(buildDataId)?.name;
     if (!name) {
       throw new Error("buildNameRequiredForSaving");
     }
 
     get().loadBuildCard({ build: build, target: "save" });
     const game = useGameStore.getState().game;
-    await useBuildsPersistenceStore.getState().saveBuildInMemory(build, name, game);
+    await useBuildsPersistenceStore.getState().saveBuildInMemory(buildDataId, name, game);
     useDeckStore.getState().saveBuild(build.buildDataId);
   },
 
@@ -223,11 +223,11 @@ const useBuildsActionsStore = create<BuildsActionsStoreState>((set, get) => ({
       const newName = isNameFree ? name : useGenerateUniqueName(name);
 
       get().loadBuildCard({ build, name: newName, target: screenName });
-      useDeckStore.getState().setBuildName(build.buildDataId, newName);
+      useDeckStore.getState().setBuildName(buildDataId, newName);
 
       if (screenName === "save") {
         const game = useGameStore.getState().game;
-        useBuildsPersistenceStore.getState().saveBuildInMemory(build, newName, game);
+        useBuildsPersistenceStore.getState().saveBuildInMemory(buildDataId, newName, game);
       }
     }
   },

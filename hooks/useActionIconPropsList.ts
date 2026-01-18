@@ -2,8 +2,6 @@ import { IconType } from "react-native-dynamic-vector-icons";
 import { useCallback, useMemo } from "react";
 import { ScreenName } from "@/contexts/ScreenContext";
 import useBuildsActionsStore from "@/stores/useBuildsActionsStore";
-import useEditBuildModalStore from "@/stores/useEditBuildModalStore";
-import useLoadBuildModalStore from "@/stores/useLoadBuildModalStore";
 import { ActionName, ActionNamesList } from "./useBuildCardConfig";
 import showToast from "@/utils/showToast";
 import useBuildsListStore from "@/stores/useBuildsListStore";
@@ -11,6 +9,8 @@ import usePressableElementsStore from "@/stores/usePressableElementsStore";
 import { BuildAlreadyExistsError } from "@/errors/errors";
 import { useGameData } from "./useGameData";
 import { Platform } from "react-native";
+import { useModal } from "@/contexts/ModalContext";
+import useEditBuildModalStore from "@/stores/useEditBuildModalStore";
 
 export interface ActionIconProps {
   title: string;
@@ -32,7 +32,6 @@ export function useActionIconPropsList(
 
   const updateSelectionFromBuild = usePressableElementsStore((state) => state.updateSelectionFromBuild);
   const setBuildEditedDataId = useBuildsListStore((state) => state.setBuildEditedDataId);
-  const setIsEditBuildModalVisible = useEditBuildModalStore((state) => state.setIsEditBuildModalVisible);
   const loadToSearch = useBuildsActionsStore((state) => state.loadToSearch);
   const loadToDisplay = useBuildsActionsStore((state) => state.loadToDisplay);
   const saveBuild = useBuildsActionsStore((state) => state.saveBuild);
@@ -40,29 +39,31 @@ export function useActionIconPropsList(
   const removeBuild = useBuildsListStore((state) => state.removeBuild);
   const exportBuild = useBuildsActionsStore((state) => state.exportBuild);
   const setScrollRequest = useBuildsListStore((state) => state.setScrollRequest);
-  const setIsLoadBuildModalVisible = useLoadBuildModalStore((state) => state.setIsLoadBuildModalVisible);
+  const modalContext = useModal();
+  const openEditBuildModal = useEditBuildModalStore((state) => state.openEditBuildModal);
 
   const handleEditPress = useCallback(() => {
     setBuildEditedDataId(buildDataId);
     updateSelectionFromBuild(buildsDataMap.get(buildDataId).classIds, categories);
-    setIsEditBuildModalVisible(true);
-  }, [buildDataId, setBuildEditedDataId, updateSelectionFromBuild, setIsEditBuildModalVisible]);
+    openEditBuildModal();
+  }, [buildDataId, setBuildEditedDataId, updateSelectionFromBuild, openEditBuildModal]);
 
   const handleLoadToSearchPress = useCallback(() => {
     loadToSearch({ source, buildDataId }, buildsDataMap);
-
-    showToast("toast:buildStatsHaveBeenLoaded", "success");
-    setIsLoadBuildModalVisible(false);
-  }, [source, buildDataId, loadToSearch, setIsLoadBuildModalVisible]);
+    showToast("toast:buildStatsHaveBeenLoaded", "success", 3000);
+    modalContext && modalContext.close();
+  }, [source, buildDataId, loadToSearch]);
 
   const handleLoadToDisplayPress = useCallback(() => {
     try {
       loadToDisplay({ source, buildDataId });
-      showToast("toast:buildHasBeenLoadedInTheComparator", "success");
-      setIsLoadBuildModalVisible(false);
+      showToast("toast:buildHasBeenLoadedInTheComparator", "success", 3000);
+      modalContext && modalContext.close();
     } catch (e) {
       if (e instanceof BuildAlreadyExistsError) {
-        // e.buildName peut etre undefined (inutile de le préciser car le build en conflit est égal au build à charger)
+        // e.buildName peut etre undefined
+        // en effet, parfois il est inutile de le donner
+        // par exemple quand le build en conflit est égal au build à charger
 
         // Construction du message avec sécurité
         const targetMessage = e.target ? `|toast:in|toast:${e.target}` : "";
@@ -80,13 +81,13 @@ export function useActionIconPropsList(
         showToast("error:unknownError", "error");
       }
     }
-  }, [source, buildDataId, loadToDisplay, setIsLoadBuildModalVisible]);
+  }, [source, buildDataId, loadToDisplay]);
 
   const handleSavePress = useCallback(async () => {
     try {
       if (!isSaved) {
         await saveBuild(source, buildDataId);
-        showToast("toast:buildHasBeenSaved", "success");
+        showToast("toast:buildHasBeenSaved", "success", 4000);
       } else {
         await unSaveBuild(buildDataId);
         showToast("toast:buildHasBeenUnsaved", "success");
@@ -105,7 +106,7 @@ export function useActionIconPropsList(
   const handleExportPress = useCallback(() => {
     try {
       exportBuild(source, buildDataId);
-      showToast("toast:buildCopiedInClipboard", "success");
+      showToast("toast:buildCopiedInClipboard", "success", 4000);
     } catch (e) {
       showToast(`error:${e.message}`, "error");
     }
@@ -170,16 +171,16 @@ export function useActionIconPropsList(
     source,
     isInLoadBuildModal,
     isSaved,
+    modalContext,
     setBuildEditedDataId,
     updateSelectionFromBuild,
-    setIsEditBuildModalVisible,
     loadToSearch,
     loadToDisplay,
     saveBuild,
     unSaveBuild,
     removeBuild,
-    setIsLoadBuildModalVisible,
     exportBuild,
+    openEditBuildModal,
   ]);
 
   return actionIconPropsList;

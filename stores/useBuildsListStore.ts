@@ -177,7 +177,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
     // si le nouveau nom est vide
     if (!newName.trim()) {
-      useDeckStore.getState().removeBuildName(build.buildDataId); // on retire le nom de useDeckStore
+      useDeckStore.getState().removeBuildName(buildDataId); // on retire le nom de useDeckStore
       newName = undefined;
       return;
     }
@@ -189,7 +189,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     }
 
     if (isSaved) {
-      useBuildsPersistenceStore.getState().saveBuildInMemory(build, newName, game);
+      useBuildsPersistenceStore.getState().saveBuildInMemory(buildDataId, newName, game);
     }
 
     useDeckStore.getState().setBuildName(build.buildDataId, newName);
@@ -197,6 +197,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
 
   updateBuildsList: (selectedClassIdsByCategory, screenName, game) => {
     const { buildsList, buildsListName } = get().getBuildsList(screenName);
+    const deck = useDeckStore.getState().deck;
 
     const formerBuildDataId = get().buildEditedDataId;
 
@@ -205,7 +206,7 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     const sameBuild = get().findSameBuildInScreen({ buildDataId: newBuildDataId, buildsList: buildsList });
     // si le build existe deja dans l'ecran, alors on annule la MAJ du build actuel
     if (sameBuild) {
-      const buildName = useDeckStore.getState().deck.get(sameBuild.buildDataId)?.name;
+      const buildName = deck.get(sameBuild.buildDataId)?.name;
       throw new BuildAlreadyExistsError(screenName, buildName);
     }
 
@@ -219,17 +220,22 @@ const useBuildsListStore = create<BuildsListStoreState>((set, get) => ({
     });
 
     set({ [buildsListName]: buildsListUpdated });
+    const name = deck.get(formerBuildDataId)?.name;
 
-    const name = useDeckStore.getState().deck.get(formerBuildDataId).name;
-
+    // si on est dans dans la collection
     if (screenName === "save") {
+      // 1. le build est enregistré donc on met à jour la mémoire
       useBuildsPersistenceStore.getState().removeBuildInMemory(formerBuildDataId);
-
-      useBuildsPersistenceStore.getState().saveBuildInMemory(newBuild, name, game);
-
+      useBuildsPersistenceStore.getState().saveBuildInMemory(newBuildDataId, name, game);
+      // 2. on met à jour le deck
       useDeckStore.getState().updateBuildDataId(formerBuildDataId, newBuildDataId);
-    } else {
-      // screenName == "display"
+      return;
+    }
+
+    // si on n'est pas dans la collection mais que le build est enregistré
+    // (on est dans le comparateur)
+    if (deck.get(formerBuildDataId)?.isSaved) {
+      // l'instance du build devient indépendante donc on donne un nom à ce nouveau build
       let nameM = `${name} ${t("text:modified")}`;
       const isNameFree = useDeckStore.getState().checkNameFree(nameM);
       const newName = isNameFree ? nameM : useGenerateUniqueName(nameM);

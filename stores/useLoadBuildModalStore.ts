@@ -2,12 +2,14 @@ import { create } from "zustand";
 
 interface LoadBuildModaState {
   isLoadBuildModalVisible: boolean;
-  setIsLoadBuildModalVisible: (visible: boolean) => void;
+  setIsLoadBuildModalVisible: (newVisible: boolean) => void;
+  openLoadBuildModal: () => void;
 }
 
 const useLoadBuildModalStore = create<LoadBuildModaState>((set) => ({
   isLoadBuildModalVisible: false,
-  setIsLoadBuildModalVisible: (visible: boolean) => set({ isLoadBuildModalVisible: visible }),
+  setIsLoadBuildModalVisible: (newVisible: boolean) => set({ isLoadBuildModalVisible: newVisible }),
+  openLoadBuildModal: () => set({ isLoadBuildModalVisible: true }),
 }));
 
 export default useLoadBuildModalStore;

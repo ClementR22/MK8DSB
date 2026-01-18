@@ -5,12 +5,13 @@
 import Toast from "react-native-toast-message";
 
 export type ToastType = "success" | "error" | "importError" | "info";
+export type VisibilityTime = 2000 | 3000 | 4000;
 class ToastManager {
   constructor() {
     this.show = this.show.bind(this);
   }
 
-  show(text1: string, delay?: number): void {
+  show(text1: string, visibilityTime?: VisibilityTime): void {
     // Masquer le toast actuel avant d'en afficher un nouveau
     Toast.hide();
 
@@ -20,7 +21,7 @@ class ToastManager {
         type: "info",
         text1,
         position: "bottom",
-        visibilityTime: delay || 2000,
+        visibilityTime: visibilityTime || 2000,
       });
     }, 100);
   }

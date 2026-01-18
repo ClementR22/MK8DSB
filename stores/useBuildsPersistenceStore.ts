@@ -18,7 +18,7 @@ interface BuildsPersistenceStoreState {
   setSortNumberSavedBuilds: (newSortNumberSavedBuilds: number) => Promise<void>;
   fetchBuildsSavedKeys: (game: Game) => Promise<string[]>;
   fetchBuildsSaved: (game: Game) => Promise<BuildPersistant[]>;
-  saveBuildInMemory: (build: Build, name: string, game: Game) => Promise<void>;
+  saveBuildInMemory: (buildDataId: string, name: string, game: Game) => Promise<void>;
   removeBuildInMemory: (keyToRemove: string) => Promise<void>;
   loadSortNumberFromMemory: () => Promise<void>;
 }
@@ -52,9 +52,9 @@ const useBuildsPersistenceStore = create<BuildsPersistenceStoreState>((set, get)
     return buildsValuesParsed;
   },
 
-  saveBuildInMemory: async (build, name, game) => {
-    const buildPersistant: BuildPersistant = { buildDataId: build.buildDataId, name: name };
-    await saveThingInMemory(`${game}:${build.buildDataId}`, buildPersistant);
+  saveBuildInMemory: async (buildDataId, name, game) => {
+    const buildPersistant: BuildPersistant = { buildDataId, name };
+    await saveThingInMemory(`${game}:${buildDataId}`, buildPersistant);
   },
 
   removeBuildInMemory: async (keyToRemove) => {

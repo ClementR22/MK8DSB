@@ -14,6 +14,7 @@ import {
 import { toastConfig } from "@/config/toastConfig";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
+import { ModalProvider } from "@/contexts/ModalContext";
 
 export interface ModalButtonProps {
   text: string;
@@ -99,6 +100,12 @@ const Modal = ({
     }, [isModalVisible])
   );
 
+  // la fonction open est donnée par le store
+  // la fonction close est donnée ici via le context
+  const close = useCallback(() => {
+    requestClose();
+  }, [requestClose]);
+
   /* ---------------------------------------------------------------------- */
   /*                                   Render                                 */
   /* ---------------------------------------------------------------------- */
@@ -131,7 +138,7 @@ const Modal = ({
         <View
           style={!withoutChildrenContainer && [styles.childrenContainer, { backgroundColor: theme.surface_container }]}
         >
-          {children}
+          <ModalProvider close={close}>{children}</ModalProvider>
         </View>
 
         {bottomButtonProps && (
@@ -145,8 +152,6 @@ const Modal = ({
             />
           </View>
         )}
-
-        <Toast config={toastConfig} bottomOffset={0} />
       </BottomSheetView>
     </BottomSheetModal>
   );

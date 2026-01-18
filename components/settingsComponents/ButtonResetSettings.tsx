@@ -9,7 +9,7 @@ const ButtonResetSettings = () => {
 
   const handleResetSettings = () => {
     resetSettings();
-    showToast("toast:theSettingsHaveBeenReset", "success");
+    showToast("toast:theSettingsHaveBeenReset", "success", 3000);
   };
 
   return (

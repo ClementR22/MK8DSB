@@ -33,7 +33,7 @@ const EditBuildModal: React.FC = () => {
 
           const fullMessage = `error:${e.message}${targetMessage}${buildNameMessage}`;
 
-          showToast(fullMessage, "importError");
+          showToast(fullMessage, "error");
         }
       }
     }

@@ -15,7 +15,7 @@ interface ButtonLoadBuildProps {
 const ButtonLoadBuild: React.FC<ButtonLoadBuildProps> = ({ tooltipText }) => {
   const screenName = useScreen();
   const importBuild = useImportBuild(screenName);
-  const setIsLoadBuildModalVisible = useLoadBuildModalStore((state) => state.setIsLoadBuildModalVisible);
+  const openLoadBuildModal = useLoadBuildModalStore((state) => state.openLoadBuildModal);
   const numberSavedBuilds = useGeneralStore((state) => state.numberSavedBuilds);
 
   const actionIconPropsList: ActionIconProps[] = useMemo(
@@ -24,7 +24,7 @@ const ButtonLoadBuild: React.FC<ButtonLoadBuildProps> = ({ tooltipText }) => {
         title: "collection",
         name: "cards-outline",
         type: IconType.MaterialCommunityIcons,
-        onPress: () => setIsLoadBuildModalVisible(true),
+        onPress: openLoadBuildModal,
       },
       {
         title: "import",
@@ -33,7 +33,7 @@ const ButtonLoadBuild: React.FC<ButtonLoadBuildProps> = ({ tooltipText }) => {
         onPress: importBuild,
       },
     ],
-    []
+    [openLoadBuildModal, importBuild]
   );
 
   return (

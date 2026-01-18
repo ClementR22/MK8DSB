@@ -1,7 +1,7 @@
 import i18n, { translateParts } from "@/translations";
-import ToastManager, { ToastType } from "./ToastManager";
+import ToastManager, { ToastType, VisibilityTime } from "./ToastManager";
 
-function showToast(messageKey: string, type?: ToastType, delay?: number) {
+function showToast(messageKey: string, type?: ToastType, visibilityTime?: VisibilityTime) {
   let prefix = "";
   if (type === "error") {
     prefix = i18n.t("toast:error") + i18n.t("text:colon");
@@ -10,9 +10,13 @@ function showToast(messageKey: string, type?: ToastType, delay?: number) {
   } else if (type === "success") {
     prefix = i18n.t("toast:success") + i18n.t("text:colon");
   }
-
   const finalMessage = prefix + translateParts(messageKey);
-  ToastManager.show(finalMessage, delay);
+
+  if (type === "error" || type === "importError") {
+    visibilityTime = 4000;
+  }
+
+  ToastManager.show(finalMessage, visibilityTime);
 }
 
 export default showToast;

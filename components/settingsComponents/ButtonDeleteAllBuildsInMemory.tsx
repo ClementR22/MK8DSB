@@ -12,7 +12,7 @@ const ButtonDeleteAllBuildsInMemory = () => {
 
   const handleDeleteAllSavedBuilds = () => {
     deleteAllSavedBuilds(game);
-    showToast("toast:allSavedBuildsHaveBeenDeleted", "success");
+    showToast("toast:allSavedBuildsHaveBeenDeleted", "success", 3000);
   };
 
   return (
