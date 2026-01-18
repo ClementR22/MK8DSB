@@ -60,33 +60,22 @@ const Modal = ({
   useEffect(() => {
     if (isModalVisible) {
       bottomSheetModalRef.current?.present();
-    } else {
-      bottomSheetModalRef.current?.dismiss();
     }
   }, [isModalVisible]);
 
   const requestClose = useCallback(() => {
     if (isClosingRef.current) return;
-
     isClosingRef.current = true;
 
-    // AVANT fermeture (UX)
+    // COMMIT métier AVANT fermeture
     onClose?.();
 
-    // lance l’animation
+    // on ferme la modal
     bottomSheetModalRef.current?.dismiss();
 
-    // sync état React
+    // Sync état React
     setIsModalVisible(false);
   }, [onClose, setIsModalVisible]);
-
-  const handleDismiss = useCallback(() => {
-    // cleanup interne
-    isClosingRef.current = false;
-
-    // sécurité si fermeture externe
-    if (isModalVisible) setIsModalVisible(false);
-  }, [isModalVisible, setIsModalVisible]);
 
   const renderBackdrop = useCallback(
     (props: any) => <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} onPress={requestClose} />,
@@ -119,7 +108,17 @@ const Modal = ({
       ref={bottomSheetModalRef}
       backgroundStyle={{ backgroundColor: theme.surface_container_highest }}
       backdropComponent={renderBackdrop}
-      onDismiss={handleDismiss}
+      onAnimate={(fromIndex, toIndex) => {
+        // onAnimate est plus rapide que onChange
+        if (fromIndex === 0 && toIndex === -1) {
+          // la modal va se fermer
+          requestClose();
+        }
+      }}
+      onDismiss={() => {
+        // cleanup SEULEMENT
+        isClosingRef.current = false;
+      }}
       activeOffsetY={horizontalScroll ? [-5, 5] : undefined}
       failOffsetX={horizontalScroll ? [-10, 10] : undefined}
     >
@@ -141,7 +140,7 @@ const Modal = ({
               {...bottomButtonProps}
               onPress={() => {
                 bottomButtonProps.onPress();
-                setIsModalVisible(false);
+                requestClose();
               }}
             />
           </View>
